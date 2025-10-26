@@ -1805,9 +1805,7 @@
            (ww (string-append (number->string (- x4 x3)) "cm"))
            (hh (string-append (number->string (- y4 y3)) "cm"))
            (opt `(!option ,(string-append "width=" ww ",height=" hh)))
-           (rat (/ y3 (- y4 y3)))
-           (dy `(!concat ,(number->string rat) (height)))
-           (rb `(raisebox ,dy (includegraphics ,opt ,name-string))))
+           (rb `(includegraphics ,opt ,name-string)))
       ;; TODO: top and bottom margins
       ;;(display* name-url ": " x1 ", " y1 "; " x2 ", " y2 "\n")
       ;;(display* name-url ": " x3 ", " y3 "; " x4 ", " y4 "\n")
