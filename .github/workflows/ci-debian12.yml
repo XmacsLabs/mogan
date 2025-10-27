@@ -41,7 +41,7 @@ jobs:
           DEBIAN_FRONTEND=noninteractive apt-get install -y gcc git 7zip unzip curl build-essential \
               fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev libfontconfig-dev \
               libmimalloc-dev libgit2-dev zlib1g-dev libssl-dev libjpeg62-turbo-dev cmake \
-              pandoc xmake
+              pandoc xmake python3.13
       - uses: actions/checkout@v3
         with:
           fetch-depth: 1
