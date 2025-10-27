@@ -17,7 +17,7 @@
 (import (liii check)(liii path))
 
 (tm-define (test_202_53)
-  (let* ((test-doc (tmu->texmacs (path-read-text (string-append (url->system (get-texmacs-path)) "/tests/tmu/202_53.tmu"))))
+  (let* ((test-doc (tmu->texmacs (path-read-text (string-append (url->system (get-texmacs-path)) "\\tests\\tmu\\202_53.tmu"))))
          (non-chinese (count-words test-doc))
          (chars-no-space (count-chars-no-space test-doc))
          (chinese (count-chinese-and-words test-doc))
@@ -30,11 +30,11 @@
     ;; 测试字数 - 预期: 16 (10个中文字符 + 6个非中文单词)
     (check (+ (car chinese) non-chinese) => 16)
 
-    ;; 测试字符数(计空格) - 预期: 30
-    (check char-count => 30)
+    ;; 测试字符数(计空格) - 预期: 28
+    (check char-count => 28)
 
-    ;; 测试字符数(不计空格) - 预期: 25
-    (check chars-no-space => 25)
+    ;; 测试字符数(不计空格) - 预期: 23
+    (check chars-no-space => 23)
 
     ;; 测试段落数 - 预期: 3
     (check line-count => 3)

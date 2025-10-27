@@ -21,9 +21,14 @@
 
 ;; TODO: if string in scheme represent unicode codepoint with single character 
 ;;   rather than utf-8 encoding, replace u8-string-length with string-length
+(define (compress-newline s)
+  (let* ((s1 (string-replace s "\r\n" ""))
+         (s2 (string-replace s1 "\n" "")))
+    (if (== s2 s) s (compress-newline s2))))
+
 (tm-define (count-characters doc)
   (with s (convert doc "texmacs-tree" "verbatim-snippet")
-    (u8-string-length s)))
+    (u8-string-length (compress-newline s))))
 
 (define (compress-spaces s)
   (let* ((s1 (string-replace s "\n" " "))
@@ -58,7 +63,7 @@
 
 (tm-define (count-chars-no-space doc)
   (with s (convert doc "texmacs-tree" "verbatim-snippet")
-    (u8-string-length (string-replace s " " ""))))
+    (u8-string-length (compress-newline (string-replace s " " "")))))
 
 (tm-define (count-chinese-and-words doc)
   (with s (convert doc "texmacs-tree" "verbatim-snippet")
