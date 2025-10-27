@@ -1136,6 +1136,18 @@ if not (is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():
     for _, filepath in ipairs(all_cpp_tests) do
         if not string.find(filepath, "tests/L3/") then
             add_target_cpp_test(filepath, "libmogan")
+            add_includedirs(".") -- 项目根目录
+            add_includedirs("moebius") 
+            add_includedirs("moebius/Kernel/Types")
+            add_includedirs("moebius/Kernel/Abstractions")
+            add_includedirs("3rdparty/lolly/Kernel/Containers")
+            add_includedirs("moebius/Data/Tree")
+            add_includedirs("moebius/Data/String")
+            add_includedirs("moebius/Data/History")
+            add_includedirs("moebius/moebius")
+            add_includedirs("moebius/Scheme")
+            add_includedirs("moebius/Scheme/Scheme")
+            add_includedirs("moebius/Scheme/S7")
         end
     end
 end
