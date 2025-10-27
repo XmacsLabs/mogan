@@ -493,6 +493,11 @@
   (make 'eqnarray*)
   (temp-proof-fix))
 
+(tm-define (make-align)
+  (:applicable (not (selection-active-non-small?)))
+  (make 'align)
+  (temp-proof-fix))
+
 (tm-define (focus-label t)
   (:require (tree-is? t 'equation))
   (focus-list-search-label (tree-children t)))

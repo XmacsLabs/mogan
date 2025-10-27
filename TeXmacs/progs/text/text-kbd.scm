@@ -475,6 +475,7 @@
   (:mode in-std-text?)
   ("text $" (make-equation*))
   ("text &" (make-eqnarray*))
+  ("C-$" (make-align))
 
   ("text a" (make 'abbr))
   ("text d" (make-tmlist 'description))

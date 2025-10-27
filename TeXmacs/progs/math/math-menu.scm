@@ -22,7 +22,8 @@
   ("Inline formula" (make 'math))
   (if (style-has? "env-math-dtd")
       ("Displayed formula" (make-equation*))
-      ("Several equations" (make-eqnarray*))))
+      ("Several equations" (make-eqnarray*))
+      ("Alignment equations" (make-align))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General purpose markup that is also relevant for mathematics
