@@ -150,11 +150,24 @@ edit_interface_rep::mouse_drag (SI x, SI y) {
 void
 edit_interface_rep::mouse_select (SI x, SI y, int mods, bool drag) {
   if (mouse_message ("select", x, y)) return;
-  if (!is_nil (mouse_ids) && (mods & Mod2Mask) == 0 &&
-      (mods & ControlMask) != 0 && !drag) {
-    call ("link-follow-ids", object (mouse_ids), object ("click"));
-    disable_double_clicks ();
-    return;
+  if (!is_nil (mouse_ids) && (mods & Mod2Mask) == 0 && !drag) {
+    bool is_inner_link=
+        as_bool (call ("link-contains-inner-link?", object (mouse_ids)));
+    if (is_inner_link) {
+      if (!(mods & ControlMask)) {
+        call ("link-follow-ids", object (mouse_ids), object ("click"));
+        disable_double_clicks ();
+        return;
+      }
+    }
+    else {
+      if (mods & ControlMask) {
+        call ("link-follow-ids", object (mouse_ids), object ("click"));
+        disable_double_clicks ();
+        return;
+      }
+      else call ("show-hlink-tooltip", object (mouse_ids));
+    }
   }
   tree g;
   bool b0= inside_graphics (false);

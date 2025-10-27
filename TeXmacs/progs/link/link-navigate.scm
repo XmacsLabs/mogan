@@ -224,6 +224,15 @@
   (with r (exclude-link-list (ids->link-list l) "focus")
     (list-remove-duplicates (map link-item-id r))))
 
+(tm-define (link-contains-inner-link? l)
+  (:synopsis "Check if link list contains inner links (URLs starting with #)")
+  (exists? (lambda (item)
+    (exists? (lambda (vertex)
+      (and (func? vertex 'url 1)
+           (string-starts? (cadr vertex) "#")))
+             (link-item-vertices item)))
+           (ids->link-list l)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Navigation lists contain concrete propositions for link traversal.
 ;; One item is of the form
@@ -647,3 +656,12 @@
   (let* ((ts (link-active-upwards (cursor-tree)))
          (ids (append-map tree->ids ts)))
     (link-follow-ids ids "click")))
+
+(tm-define (show-hlink-tooltip ids)
+  (:synopsis "Show tooltip for hlinks")
+  (when (nnull? ids)
+    (close-tooltip)
+    (delayed
+      (:idle 10)
+      (show-tooltip "link-tooltip" (cursor-tree) (utf8->cork "按住Ctrl并单击可打开")
+                    "mouse-center" "prefer-mouse-top" "mouse" 3.0))))

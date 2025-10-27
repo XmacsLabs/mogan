@@ -1,0 +1,44 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha>>
+
+<style|<tuple|generic|chinese|number-europe|smart-ref>>
+
+<\body>
+  <hlink|website link|https://liiistem.com/>
+
+  \;
+
+  <hlink|file link|202_58.tmu>
+
+  \;
+
+  \;
+
+  <\equation>
+    <rsub|><big|int><rsub|a><rsup|b>f<around*|(|x|)>\<mathd\>x=F<around*|(|b|)>-F<around*|(|a|)><label|formula:NL>
+  </equation>
+
+  \;
+
+  \;
+
+  \;
+
+  smart-ref:<smart-ref|formula:NL>
+
+  \;
+
+  reference:<reference|formula:NL>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|formula:NL|<tuple|1|1>>
+  </collection>
+</references>
