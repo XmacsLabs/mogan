@@ -6,6 +6,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: write
+
 jobs:
   windowsbuild:
     runs-on: windows-2025
