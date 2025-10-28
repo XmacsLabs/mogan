@@ -199,8 +199,8 @@ end
 
 add_requires("libjpeg")
 if is_plat("linux") then
-    add_requires("apt::libpng-dev", {alias="libpng"})
-    add_requires("apt::libcurl4-openssl-dev", {alias="libcurl"})
+    add_requires("libpng", {alias="libpng"})
+    add_requires("libcurl", {alias="libcurl"})
 end
 
 add_requires("liii-pdfhummus", {system=false,configs={libpng=true,libjpeg=true}})
@@ -209,7 +209,7 @@ if using_legacy_apt() then
     add_requireconfs("liii-pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
 else
     if is_plat("linux") then
-        add_requires("apt::libfreetype-dev", {alias="freetype"})
+        add_requires("freetype", {alias="libfreetype"})
     else
         add_requires("freetype "..FREETYPE_VERSION, {system=false, configs={png=true}})
     end
