@@ -270,30 +270,6 @@ function build_glue_on_config()
     end)
 end
 
-local moe_files = {
-    "moebius/Data/History/**.cpp",
-    "moebius/Data/String/**.cpp",
-    "moebius/Data/Tree/**.cpp",
-    "moebius/Kernel/Types/**.cpp",
-    "moebius/Kernel/Abstractions/**.cpp",
-    "moebius/Scheme/**.cpp",
-    "moebius/moebius/**.cpp",
-}
-local moe_includedirs = {
-    "moebius/Data/History",
-    "moebius/Data/String",
-    "moebius/Data/Tree",
-    "moebius/Kernel/Types",
-    "moebius/Kernel/Abstractions",
-    "moebius/Scheme",
-    "moebius/Scheme/L1",
-    "moebius/Scheme/L2",
-    "moebius/Scheme/L3",
-    "moebius/Scheme/S7",
-    "moebius/Scheme/Scheme",
-    "moebius/",
-}
-
 target("libmoebius") do
     set_kind ("static")
     set_languages("c++17")
@@ -705,7 +681,6 @@ target("libmogan") do
             "src/Data/Parser",
             "src/Data/String",
             "src/Data/Tree",
-            "src/Data/Scheme",
             "src/Edit",
             "src/Edit/Editor",
             "src/Edit/Interface",
@@ -723,17 +698,12 @@ target("libmogan") do
             "src/Graphics/Spacial",
             "src/Graphics/Types",
             "src/Kernel/Abstractions",
-            "src/Kernel/Algorithms",
-            "src/Kernel/Basic",
-            "src/Kernel/Containers",
             "src/Kernel/Types",
             "src/Plugins",
             "src/Plugins/Pdf",
             "src/Plugins/Qt",
-            "src/Plugins/UniversalStacktrace",
             "src/Plugins/Html",
             "src/Scheme",
-            "src/Scheme/L1",
             "src/Scheme/L2",
             "src/Scheme/L3",
             "src/Scheme/L4",
@@ -741,18 +711,13 @@ target("libmogan") do
             "src/Scheme/Plugins",
             "src/Scheme/S7",
             "src/Scheme/Scheme",
-            "src/Style/Environment",
-            "src/Style/Evaluate",
-            "src/Style/Memorizer",
             "src/System",
             "src/System/Boot",
             "src/System/Classes",
             "src/System/Config",
             "src/System/Files",
-            "src/System/IO",
             "src/System/Language",
             "src/System/Link",
-            "src/System/Memory",
             "src/System/Misc",
             "src/Texmacs",
             "src/Texmacs/Data",
@@ -1135,7 +1100,7 @@ end
 if not (is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)) then
     for _, filepath in ipairs(all_cpp_tests) do
         if not string.find(filepath, "tests/L3/") then
-            add_target_cpp_test(filepath, "libmogan")
+            add_target_cpp_test(filepath, "libmogan", "libmoebius")
         end
     end
 end
