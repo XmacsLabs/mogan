@@ -6,6 +6,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: write
+
 jobs:
   ubuntubuild:
     runs-on: ubuntu-22.04
@@ -24,7 +27,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y wget pandoc ghostscript libfontconfig1-dev \
-            libcurl4-openssl-dev pkg-config qtbase5-dev libqt5svg5-dev \
+            libcurl4-openssl-dev pkg-config qt6-base-dev libqt6svg6-dev \
             libjpeg-turbo8-dev libpng-dev libgit2-dev fakeroot debhelper
       - name: config
         run: xmake config --yes -vD -m release
@@ -57,4 +60,4 @@ jobs:
         with:
           prerelease: true
           files: |
-            mogan-stem*.deb 
+            mogan-stem*.deb
