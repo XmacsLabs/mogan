@@ -204,17 +204,9 @@ if is_plat("linux") then
 end
 
 add_requires("liii-pdfhummus", {system=false,configs={libpng=true,libjpeg=true}})
-if using_legacy_apt() then
-    add_requires("freetype "..FREETYPE_VERSION, {system=false})
-    add_requireconfs("liii-pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, override=true})
-else
-    if is_plat("linux") then
-        add_requires("apt::libfreetype-dev", {alias="freetype"})
-    else
-        add_requires("freetype "..FREETYPE_VERSION, {system=false, configs={png=true}})
-    end
-    
-end
+add_requires("freetype "..FREETYPE_VERSION, {system=false, configs={png=true}})
+add_requireconfs("liii-pdfhummus.freetype", {version = FREETYPE_VERSION, system = false, configs={png=true}, override=true})
+
 add_requires("argh v1.3.2")
 
 --- package: qt6widgets
