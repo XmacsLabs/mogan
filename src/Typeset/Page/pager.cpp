@@ -20,7 +20,7 @@ using namespace moebius;
 
 pager_rep::pager_rep (path ip2, edit_env env2, array<page_item> l2)
     : ip (ip2), env (env2), style (UNINIT), l (l2) {
-  style (PAGE_THE_PAGE)     = tree (MACRO, compound ("page-nr"));
+  style (PAGE_THE_PAGE)     = env->read (PAGE_THE_PAGE);
   style (PAGE_THE_TOTAL)    = tree ("1");
   style (PAGE_ODD_HEADER)   = env->read (PAGE_ODD_HEADER);
   style (PAGE_ODD_FOOTER)   = env->read (PAGE_ODD_FOOTER);
@@ -203,8 +203,9 @@ pager_rep::end_page (bool flag) {
 box
 pager_rep::make_header (bool empty_flag) {
   if (!show_hf || empty_flag) return empty_box (decorate ());
-  env->write (PAGE_NR, as_string (N (pages) + 1 + page_offset));
-  env->write (PAGE_THE_PAGE, style[PAGE_THE_PAGE]);
+  int current_page= N (pages) + 1 + page_offset;
+  if (current_page <= 0) env->write (PAGE_NR, "");
+  else env->write (PAGE_NR, as_string (current_page));
   tree   old  = env->local_begin (PAR_COLUMNS, "1");
   string which= (N (pages) & 1) == 0 ? PAGE_ODD_HEADER : PAGE_EVEN_HEADER;
   if (style[PAGE_THIS_HEADER] != "") which= PAGE_THIS_HEADER;
@@ -218,7 +219,9 @@ pager_rep::make_header (bool empty_flag) {
 box
 pager_rep::make_footer (bool empty_flag) {
   if (!show_hf || empty_flag) return empty_box (decorate ());
-  env->write (PAGE_NR, as_string (N (pages) + 1 + page_offset));
+  int current_page= N (pages) + 1 + page_offset;
+  if (current_page <= 0) env->write (PAGE_NR, "");
+  else env->write (PAGE_NR, as_string (current_page));
   env->write (PAGE_THE_PAGE, style[PAGE_THE_PAGE]);
   tree   old  = env->local_begin (PAR_COLUMNS, "1");
   string which= (N (pages) & 1) == 0 ? PAGE_ODD_FOOTER : PAGE_EVEN_FOOTER;

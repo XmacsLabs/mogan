@@ -1,0 +1,770 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  this is the context for page 1
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  this is the context for page 2
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  this is the context for page 3
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  this is the context for page 4
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  this is the context for page 5
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  this is the context for page 6
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  this is the context for page 7
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  this is the context for page 8
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  this is the context for page 9
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  this is the context for page 10
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  this is the context for page 11
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-first|1>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+    <associate|page-the-page|<macro|<pn-g3>>>
+    <associate|pn-enable|true>
+    <associate|pn-g0|<macro|<value|page-nr>>>
+    <associate|pn-g1|<macro|<if|<or|<less|<value|page-nr>|1>|<greater|<value|page-nr>|2>>|<pn-g0>|<pn-l1>>>>
+    <associate|pn-g2|<macro|<if|<or|<less|<value|page-nr>|3>|<greater|<value|page-nr>|6>>|<pn-g1>|<pn-l2>>>>
+    <associate|pn-g3|<macro|<if|<or|<less|<value|page-nr>|7>|<greater|<value|page-nr>|11>>|<pn-g2>|<pn-l3>>>>
+    <associate|pn-l1|<macro|<if|<less|<pn-m1>|1>||<number|<pn-m1>|roman>>>>
+    <associate|pn-l2|<macro|<if|<less|<pn-m2>|1>||<number|<pn-m2>|Roman>>>>
+    <associate|pn-l3|<macro|<if|<less|<pn-m3>|1>||<number|<pn-m3>|arabic>>>>
+    <associate|pn-m1|<macro|<minus|<value|page-nr>|0>>>
+    <associate|pn-m2|<macro|<minus|<value|page-nr>|3>>>
+    <associate|pn-m3|<macro|<minus|<value|page-nr>|6>>>
+    <associate|pn-next|4>
+  </collection>
+</initial>

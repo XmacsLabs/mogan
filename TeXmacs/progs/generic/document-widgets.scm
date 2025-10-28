@@ -149,7 +149,49 @@
   (cond ((== s "") "none")
         (else s)))
 
+(define (pn-enable? u)
+  (and (initial-defined? u "pn-enable")
+       (== (initial-get u "pn-enable") "true")))
+
+(define (pn-name prefix index)
+  (string-append prefix (number->string index)))
+
+(define (make-pn-m-stree name first)
+  (let* ((first-num (string->number first))
+         (offset (if (and first-num (>= first-num 1)) (- first-num 1) 0)))
+    `(macro (minus (value "page-nr") ,(number->string offset)))))
+
+(define (make-pn-l-stree name m-name style)
+  (let ((m-sym (string->symbol m-name)))
+    `(macro (if (less (,m-sym) "1") "" (number (,m-sym) ,style)))))
+
+(define (make-pn-g-stree name prev-name l-name ps pe)
+  (let ((prev-sym (string->symbol prev-name))
+    (l-sym (string->symbol l-name)))
+  `(macro (if (or (less (value "page-nr") ,ps)
+      (greater (value "page-nr") ,pe))
+      (,prev-sym)
+      (,l-sym)))))
+
+(define (assign-page-number u pf ps pe nt)
+  (let* ((seed (string->number (initial-get u "pn-next")))
+         (next (if (and (integer? seed) (>= seed 1)) seed 1))
+         (m-name (pn-name "pn-m" next))
+         (l-name (pn-name "pn-l" next))
+         (g-name (pn-name "pn-g" next))
+         (prev-g-name (pn-name "pn-g" (- next 1))))
+    (initial-set u "page-first" "1")
+    (when (= next 1)
+      (initial-set-tree u "pn-g0" '(macro (value "page-nr"))))
+    (initial-set-tree u m-name (make-pn-m-stree m-name pf))
+    (initial-set-tree u l-name (make-pn-l-stree l-name m-name nt))
+    (initial-set-tree u g-name (make-pn-g-stree g-name prev-g-name l-name ps pe))
+    (initial-set-tree u "page-the-page" `(macro (,(string->symbol g-name))))
+    (initial-set u "pn-next" (number->string (+ next 1)))
+    (refresh-window)))
+
 (tm-widget (page-formatter-format u quit)
+  (let ((pf "1") (ps "1") (pe (number->string (get-page-count))) (nt "arabic"))
   (centered
     (refreshable "page-format-settings"
       (aligned
@@ -170,15 +212,31 @@
           (enum (initial-set u "page-orientation" answer)
                 '("portrait" "landscape")
                 (initial-get u "page-orientation") "10em"))
-        (item (text "First page:")
-          (enum (initial-set u "page-first" answer)
-                (list (initial-get u "page-first") "")
-                (initial-get u "page-first") "10em"))
         (item (text "Crop marks:")
           (enum (initial-set u "page-crop-marks" (encode-crop-marks answer))
                 '("none" "a3" "a4" "letter")
                 (decode-crop-marks (initial-get u "page-crop-marks"))
-                "10em")))))
+                "10em"))
+        (item (text "Advanced page numbering:")
+          (toggle (begin
+                  (initial-set u "pn-enable" (if answer "true" "false"))
+                  (refresh-now "page-format-settings"))
+                  (pn-enable? u)))
+        (item (text "Applying from:")
+          (when (pn-enable? u)
+            (input (set! ps answer) "string" (list ps) "6em")))
+        (item (text "Applying to:")
+          (when (pn-enable? u)
+            (input (set! pe answer) "string" (list pe) "6em")))
+        (item (text "First page:")
+          (when (pn-enable? u)
+            (input (set! pf answer) "string" (list pf) "6em")))
+        (item (text "Number style:")
+          (when (pn-enable? u)
+            (enum (begin (set! nt answer))
+                  '("arabic" "roman" "Roman" "hanzi")
+                  "arabic"
+                  "10em"))))))
   ===
   (centered
     (refreshable "page-user-format-settings"
@@ -205,7 +263,9 @@
       (refresh-now "page-format-settings")
       (refresh-now "page-user-format-settings"))
      // //
-     ("Ok" (quit)))))
+     ("Ok"
+        (when (pn-enable? u) (assign-page-number u pf ps pe nt))
+        (quit))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Document -> Page / Margins
