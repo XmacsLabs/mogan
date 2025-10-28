@@ -30,14 +30,14 @@
     => (strip-lambda '(("a tab" ((#<lambda ()>) "<alpha>" "")))))
   (check (strip-lambda (kbd-find-prefix "e "))
     => (strip-lambda '(
-                       ("e tab tab" ((#<lambda ()>) "<mathe>" ""))
-                       ("e tab tab tab" ((#<lambda ()>) "<epsilon>" ""))
                        ("e tab tab tab tab" ((#<lambda ()>) "<backepsilon>" ""))
+                       ("e tab tab tab" ((#<lambda ()>) "<epsilon>" ""))
+                       ("e tab tab" ((#<lambda ()>) "<mathe>" ""))
                        ("e tab" ((#<lambda ()>) "<varepsilon>" "")))))
   (check (strip-lambda (kbd-find-prefix "e tab tab tab"))
     => (strip-lambda '(
-                       ("e tab tab tab" ((#<lambda ()>) "<epsilon>" ""))
-                       ("e tab tab tab tab" ((#<lambda ()>) "<backepsilon>" ""))))))
+                       ("e tab tab tab tab" ((#<lambda ()>) "<backepsilon>" ""))
+                       ("e tab tab tab" ((#<lambda ()>) "<epsilon>" ""))))))
 
 (define (test-math-tabcycle-symbols)
   (make 'math)
