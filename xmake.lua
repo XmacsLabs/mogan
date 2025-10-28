@@ -270,30 +270,6 @@ function build_glue_on_config()
     end)
 end
 
-local moe_files = {
-    "moebius/Data/History/**.cpp",
-    "moebius/Data/String/**.cpp",
-    "moebius/Data/Tree/**.cpp",
-    "moebius/Kernel/Types/**.cpp",
-    "moebius/Kernel/Abstractions/**.cpp",
-    "moebius/Scheme/**.cpp",
-    "moebius/moebius/**.cpp",
-}
-local moe_includedirs = {
-    "moebius/Data/History",
-    "moebius/Data/String",
-    "moebius/Data/Tree",
-    "moebius/Kernel/Types",
-    "moebius/Kernel/Abstractions",
-    "moebius/Scheme",
-    "moebius/Scheme/L1",
-    "moebius/Scheme/L2",
-    "moebius/Scheme/L3",
-    "moebius/Scheme/S7",
-    "moebius/Scheme/Scheme",
-    "moebius/",
-}
-
 target("libmoebius") do
     set_kind ("static")
     set_languages("c++17")
@@ -1135,7 +1111,7 @@ end
 if not (is_plat("linux") and (linuxos.name () == "ubuntu" and linuxos.version():major() == 20)) then
     for _, filepath in ipairs(all_cpp_tests) do
         if not string.find(filepath, "tests/L3/") then
-            add_target_cpp_test(filepath, "libmogan")
+            add_target_cpp_test(filepath, "libmogan", "libmoebius")
         end
     end
 end

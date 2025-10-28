@@ -1,4 +1,4 @@
-function add_target_cpp_test(filepath, dep)
+function add_target_cpp_test(filepath, dep1, dep2)
     local testname = path.basename(filepath)
     target(testname) do
         -- QWindowKit on macOS
@@ -10,12 +10,9 @@ function add_target_cpp_test(filepath, dep)
         end
         set_enabled(not is_plat("wasm"))
         add_runenvs("TEXMACS_PATH", path.join(os.projectdir(), "TeXmacs"))
-        if dep == "libkernel_l3" then
-            set_group("kernel_l3_tests")
-        else
-            set_group("tests")
-        end
-        add_deps(dep)
+        set_group("tests")
+        add_deps(dep1)
+        add_deps(dep2)
         set_languages("c++17")
         set_policy("check.auto_ignore_flags", false)
         set_encodings("utf-8") -- eliminate warning C4819 on msvc
@@ -37,20 +34,7 @@ function add_target_cpp_test(filepath, dep)
         add_packages("liii-pdfhummus")
 
         add_includedirs({"$(buildir)", "tests/Base"})
-        add_includedirs({
-            "3rdparty/moebius/Data/History",
-            "3rdparty/moebius/Data/String",
-            "3rdparty/moebius/Data/Tree",
-            "3rdparty/moebius/Kernel/Types",
-            "3rdparty/moebius/Kernel/Abstractions",
-            "3rdparty/moebius/Scheme",
-            "3rdparty/moebius/Scheme/L1",
-            "3rdparty/moebius/Scheme/L2",
-            "3rdparty/moebius/Scheme/L3",
-            "3rdparty/moebius/Scheme/S7",
-            "3rdparty/moebius/Scheme/Scheme",
-            "3rdparty/moebius/",
-        })
+        add_includedirs(moe_includedirs)
         add_includedirs(libstem_headers)
         build_glue_on_config()
         add_files("tests/Base/base.cpp")
@@ -99,20 +83,7 @@ function add_target_cpp_bench(filepath, dep)
         add_packages("liii-pdfhummus")
 
         add_includedirs({"$(buildir)", "tests/Base"})
-        add_includedirs({
-            "3rdparty/moebius/Data/History",
-            "3rdparty/moebius/Data/String",
-            "3rdparty/moebius/Data/Tree",
-            "3rdparty/moebius/Kernel/Types",
-            "3rdparty/moebius/Kernel/Abstractions",
-            "3rdparty/moebius/Scheme",
-            "3rdparty/moebius/Scheme/L1",
-            "3rdparty/moebius/Scheme/L2",
-            "3rdparty/moebius/Scheme/L3",
-            "3rdparty/moebius/Scheme/S7",
-            "3rdparty/moebius/Scheme/Scheme",
-            "3rdparty/moebius/",
-        })
+        add_includedirs(moe_includedirs)
         add_includedirs(libstem_headers)
         build_glue_on_config()
         add_files("tests/Base/base.cpp")
