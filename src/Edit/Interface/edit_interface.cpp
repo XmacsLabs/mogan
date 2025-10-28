@@ -532,28 +532,56 @@ edit_interface_rep::compute_env_rects (path p, rectangles& rs, bool recurse) {
   if ((is_func (st, TABLE) || is_func (st, SUBTABLE)) && recurse &&
       get_preference ("show table cells") == "on") {
     rectangles rl;
-    for (int i= 0; i < N (st); i++) {
-      if (is_func (st[i], ROW))
+
+    int table_rows= N (st);
+
+    array<int> row_sizes;
+    for (int i= 0; i < table_rows; i++) {
+      if (is_func (st[i], ROW)) {
+        row_sizes << N (st[i]);
+      }
+      else {
+        row_sizes << 0;
+      }
+    }
+
+    array<array<selection>> cell_cache;
+    for (int i= 0; i < table_rows; i++) {
+      array<selection> row_cache;
+      if (is_func (st[i], ROW)) {
         for (int j= 0; j < N (st[i]); j++) {
           selection sel=
               eb->find_check_selection (p * i * j * 0, p * i * j * 1);
+          row_cache << sel;
+        }
+      }
+      cell_cache << row_cache;
+    }
+
+    for (int i= 0; i < table_rows; i++) {
+      if (is_func (st[i], ROW)) {
+        for (int j= 0; j < N (st[i]); j++) {
+          selection  sel = cell_cache[i][j];
           rectangles rsel= copy (thicken (sel->rs, 0, 2 * pixel));
-          if (i > 0 && is_func (st[i - 1], ROW) && j < N (st[i - 1])) {
-            selection  bis = eb->find_check_selection (p * (i - 1) * j * 0,
-                                                       p * (i - 1) * j * 1);
+
+          if (i > 0 && j < row_sizes[i - 1] && N (cell_cache[i - 1]) > j) {
+            selection  bis = cell_cache[i - 1][j];
             rectangles rbis= copy (thicken (bis->rs, 0, 2 * pixel));
             correct_adjacent (rbis, rsel);
           }
-          if (i + 1 < N (st) && is_func (st[i + 1], ROW) && j < N (st[i + 1])) {
-            selection  bis = eb->find_check_selection (p * (i + 1) * j * 0,
-                                                       p * (i + 1) * j * 1);
+
+          if (i + 1 < table_rows && j < row_sizes[i + 1] &&
+              N (cell_cache[i + 1]) > j) {
+            selection  bis = cell_cache[i + 1][j];
             rectangles rbis= copy (thicken (bis->rs, 0, 2 * pixel));
             correct_adjacent (rsel, rbis);
           }
+
           rectangles selp= thicken (rsel, pixel / 2, pixel / 2);
           rectangles selm= thicken (rsel, -pixel / 2, -pixel / 2);
           rl << simplify (::correct (selp - selm));
         }
+      }
     }
     rs << simplify (rl);
     if (recurse) compute_env_rects (path_up (p), rs, recurse);
