@@ -213,6 +213,9 @@ add_requires("argh v1.3.2")
 QT6_VERSION="6.8.3"
 add_requires("qt6widgets "..QT6_VERSION)
 
+--- package: qt6imageformats
+add_requires("qt6imageformats "..QT6_VERSION)
+
 if has_config("mupdf") then
     if (linuxos.name() == "debian" and linuxos.version():major() >= CURRENT_DEBIAN_VERSION) or
        (linuxos.name() == "ubuntu" and linuxos.version():major() >= CURRENT_UBUNTU_VERSION)
@@ -582,6 +585,7 @@ target("libmogan") do
     add_packages("freetype")
     add_packages("s7")
     add_packages("argh")
+    add_packages("qt6imageformats")
     if not is_plat("macosx") then
         add_packages("libiconv")
     end
@@ -930,6 +934,94 @@ target("stem") do
             os.execv(target:targetfile(), {"-d"}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
         else
             print("Unsupported plat $(plat)")
+        end
+    end)
+
+    after_install(function (target)
+        -- 复制qt6imageformats插件到安装目录
+        local target_plugins_dir = path.join(target:installdir(), "bin", "imageformats")
+
+        -- 查找qt6imageformats包的安装目录
+        local qt6imageformats_install_dir = nil
+
+        -- 在Windows上查找包目录
+        if is_plat("windows") then
+            local search_dirs = {
+                path.join(os.getenv("USERPROFILE") or os.getenv("HOME"), "AppData", "Local", ".xmake", "packages", "q", "qt6imageformats", "6.8.3"),
+                path.join(os.getenv("LOCALAPPDATA") or "", ".xmake", "packages", "q", "qt6imageformats", "6.8.3"),
+                path.join(os.getenv("HOME") or "", ".xmake", "packages", "q", "qt6imageformats", "6.8.3")
+            }
+
+            for _, search_dir in ipairs(search_dirs) do
+                if os.isdir(search_dir) then
+                    qt6imageformats_install_dir = search_dir
+                    break
+                end
+            end
+        elseif is_plat("linux", "macosx") then
+            local search_dirs = {
+                path.join(os.getenv("HOME") or "", ".xmake", "packages", "q", "qt6imageformats", "6.8.3"),
+                path.join("/usr", "local", "share", ".xmake", "packages", "q", "qt6imageformats", "6.8.3"),
+                path.join("/usr", "share", ".xmake", "packages", "q", "qt6imageformats", "6.8.3")
+            }
+
+            for _, search_dir in ipairs(search_dirs) do
+                if os.isdir(search_dir) then
+                    qt6imageformats_install_dir = search_dir
+                    break
+                end
+            end
+        end
+
+        if qt6imageformats_install_dir then
+            -- 查找包含插件的哈希目录
+            local found_plugins_dir = nil
+            for _, hash_dir in ipairs(os.dirs(path.join(qt6imageformats_install_dir, "*"))) do
+                local test_plugins_dir = path.join(hash_dir, "plugins", "imageformats")
+                if os.isdir(test_plugins_dir) then
+                    found_plugins_dir = test_plugins_dir
+                    break
+                end
+            end
+
+            if found_plugins_dir then
+                os.mkdir(target_plugins_dir)
+
+                -- 根据构建模式选择插件文件
+                local is_debug = is_mode("debug") or is_mode("releasedbg")
+                local files_to_copy = {}
+
+                -- 根据平台选择文件扩展名
+                local file_ext = is_plat("windows") and "*.dll" or (is_plat("linux") and "*.so" or "*.dylib")
+
+                for _, filepath in ipairs(os.files(path.join(found_plugins_dir, file_ext))) do
+                    local filename = path.filename(filepath)
+
+                    -- Windows平台需要区分debug/release版本
+                    if is_plat("windows") then
+                        local is_debug_file = filename:endswith("d.dll")
+                        if (is_debug and is_debug_file) or (not is_debug and not is_debug_file) then
+                            table.insert(files_to_copy, filepath)
+                        end
+                    else
+                        -- Linux/macOS: 复制所有文件
+                        table.insert(files_to_copy, filepath)
+                    end
+                end
+
+                -- 复制选中的文件
+                for _, filepath in ipairs(files_to_copy) do
+                    local filename = path.filename(filepath)
+                    os.cp(filepath, path.join(target_plugins_dir, filename))
+                end
+
+                print("Copied qt6imageformats plugins to " .. target_plugins_dir)
+                print("Mode: " .. (is_debug and "debug" or "release"))
+            else
+                print("Warning: qt6imageformats plugins directory not found in " .. qt6imageformats_install_dir)
+            end
+        else
+            print("Warning: qt6imageformats package installation directory not found")
         end
     end)
 

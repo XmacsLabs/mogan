@@ -16,7 +16,9 @@
 #include "file.hpp"
 #include "image_files.hpp"
 #include "new_view.hpp"
+#include "qt_utilities.hpp"
 #include "tm_url.hpp"
+#include <QImage>
 
 /******************************************************************************
  * Abstract mupdf pictures
@@ -249,6 +251,43 @@ mupdf_load_image (url u) {
       fz_drop_pixmap (mupdf_context (), pix);
     }
   }
+  else if (suf == "webp") {
+    // Use Qt to load WebP images since MuPDF doesn't support WebP
+    QImage qimage (utf8_to_qstring (concretize (u)));
+    if (!qimage.isNull ()) {
+      // prefer Format_RGBA8888 when available (Qt 5.5+): memory layout is
+      // R,G,B,A
+      int          width         = qimage.width ();
+      int          height        = qimage.height ();
+      fz_pixmap*   pix           = NULL;
+      const uchar* src_data      = NULL;
+      int          bytes_per_line= 0;
+
+      // Use Format_RGBA8888: memory layout is R,G,B,A per byte — memcpy rows
+      QImage img    = qimage.convertToFormat (QImage::Format_RGBA8888);
+      src_data      = img.constBits ();
+      bytes_per_line= img.bytesPerLine ();
+      pix= fz_new_pixmap (ctx, fz_device_rgb (ctx), width, height, NULL, 1);
+      unsigned char* dst_data= fz_pixmap_samples (ctx, pix);
+
+      for (int y= 0; y < height; ++y) {
+        const uchar*   src_row= src_data + y * bytes_per_line;
+        unsigned char* dst_row= dst_data + y * width * 4;
+        memcpy (dst_row, src_row, width * 4);
+      }
+
+      im= fz_new_image_from_pixmap (ctx, pix, NULL);
+      fz_drop_pixmap (ctx, pix);
+
+      if (DEBUG_CONVERT)
+        debug_convert << "Successfully loaded WebP image via Qt: " << width
+                      << " x " << height << LF;
+    }
+    else {
+      if (DEBUG_CONVERT)
+        debug_convert << "Failed to load WebP image via Qt" << LF;
+    }
+  }
   else {
     // Othre format.
     fz_try (ctx) { im= fz_new_image_from_buffer (ctx, buffer); }
@@ -343,7 +382,7 @@ mupdf_supports (string extension) {
     return true;
   }
   if (extension == "pdf" || extension == "jpg" || extension == "tif" ||
-      extension == "svg") {
+      extension == "svg" || extension == "webp") {
     return true;
   }
   return false;
@@ -362,6 +401,25 @@ mupdf_normal_image_size (url image, int& w, int& h, string* out_wcm_pointer,
     fz_drop_buffer (ctx, buf);
   }
   if (im == NULL) {
+    // Check if it's a WebP file and use Qt to get the size
+    string suf= suffix (image);
+    if (suf == "webp") {
+      QImage qimage (utf8_to_qstring (concretize (image)));
+      if (!qimage.isNull ()) {
+        index_type px (qimage.width (), qimage.height ());
+        index_type dpi (72, 72); // Default DPI for WebP
+        format_picsize_string (px, dpi, w, h, out_wcm_pointer, out_hcm_pointer);
+        if (DEBUG_CONVERT)
+          debug_convert << "mupdf_normal_image_size (WebP via Qt): " << w
+                        << " x " << h << LF;
+        return true;
+      }
+      else {
+        if (DEBUG_CONVERT)
+          debug_convert << "Failed to get WebP image size via Qt" << LF;
+      }
+    }
+
     convert_error << "Cannot read image file '" << image << "'"
                   << " in mupdf_normal_image_size" << LF;
     w= 35;
@@ -430,6 +488,26 @@ mupdf_load_and_parse_image (const char* path, int& w, int& h, string extension,
   else if (extension == "eps" || extension == "ps" || extension == "svg") {
     w= 0;
     h= 0;
+  }
+  else if (extension == "webp") {
+    // For WebP files, use Qt to get the image size directly from the file
+    QImage qimage (path);
+    if (!qimage.isNull ()) {
+      index_type px (qimage.width (), qimage.height ());
+      index_type dpi (72, 72); // Default DPI for WebP
+      format_picsize_string (px, dpi, w, h, out_wcm_pointer, out_hcm_pointer);
+      if (DEBUG_CONVERT)
+        debug_convert << "mupdf_load_and_parse_image (WebP via Qt): " << w
+                      << " x " << h << LF;
+    }
+    else {
+      // Fallback to default size if Qt fails
+      w= 35;
+      h= 35;
+      if (DEBUG_CONVERT)
+        debug_convert << "Failed to get WebP image size via Qt, using default"
+                      << LF;
+    }
   }
   else {
     mupdf_normal_image_size (image, w, h, out_wcm_pointer, out_hcm_pointer);

@@ -39,6 +39,7 @@
 ("Play" "播放")
 ("Popup" "弹出")
 ("Portable Document Format" "便携式文档格式")
+("WebP Image Format" "WebP图像格式")
 ("Portable Network Graphics" "便携式网络图形")
 ("Prompt on scripts" "每次接受脚本时都询问")
 ("Replace TeXmacs styles with no LaTeX equivalents" "替换没有 LaTeX 等价项的 TeXmacs 样式")

@@ -693,7 +693,8 @@ QTMWidget::dropEvent (QDropEvent* event) {
                (extension == "svg") ||
 #endif
                (extension == "pdf") || (extension == "png") ||
-               (extension == "jpg") || (extension == "jpeg")) {
+               (extension == "jpg") || (extension == "jpeg") ||
+               (extension == "webp")) {
         QBuffer qbuf (&buf);
         QImage  image;
         qbuf.open (QIODevice::WriteOnly);

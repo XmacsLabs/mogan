@@ -191,7 +191,8 @@ qt_chooser_widget_rep::set_type (const string& _type) {
     return false;
   }
   if (_type == "image") {
-    mainNameFilter+= " (*.jpg *.jpeg *.jpe *.png *.bmp *.tif *.tiff *.svg)";
+    mainNameFilter+=
+        " (*.jpg *.jpeg *.jpe *.png *.bmp *.tif *.tiff *.svg *.webp)";
     nameFilters << mainNameFilter;
     nameFilters << to_qstring (translate ("JPEG File InterChange Format") *
                                " (*.jpg *.jpeg *.jpe)");
@@ -204,6 +205,7 @@ qt_chooser_widget_rep::set_type (const string& _type) {
                                " (*.svg)");
     nameFilters << to_qstring (translate ("Portable Document Format") *
                                " (*.pdf)");
+    nameFilters << to_qstring (translate ("WebP Image Format") * " (*.webp)");
   }
   else if (_type == "generic") {
     mainNameFilter+= " (*.txt)";
