@@ -24,7 +24,7 @@ box text_at_box (path ip, box b, SI x, SI y, SI hx, SI hy, SI axis, SI pad);
 box point_box (path ip, point p, SI r, pencil pen, brush br, string style);
 box curve_box (path ip, curve c, double portion, pencil pen, array<bool> style,
                array<point> motif, SI style_unit, brush fill_br,
-               array<box> arrows);
+               array<box> arrows, bool is_pending_ellipse= false);
 box spacial_box (path ip, spacial obj);
 box grid_box (path ip, grid g, frame f, SI un, point lim1, point lim2);
 

@@ -14,6 +14,7 @@
 
 #include "QTMPixmapOrImage.hpp"
 #include "basic_renderer.hpp"
+#include "curve.hpp"
 #include "qimage.h"
 #include <QImage>
 #include <QPainter>
@@ -56,9 +57,12 @@ public:
   void fill_arc (SI x1, SI y1, SI x2, SI y2, int alpha, int delta);
   void polygon (array<SI> x, array<SI> y, bool convex= true);
   void draw_triangle (SI x1, SI y1, SI x2, SI y2, SI x3, SI y3);
+  void draw_curve (curve c, bool filled= false) override;
+  bool support_native_curve (curve c) override;
 
   void draw_clipped (QImage* im, int w, int h, SI x, SI y);
   void draw_clipped (QTMPixmapOrImage* im, int w, int h, SI x, SI y);
+  void draw_ellipse (const curve& c);
 
   void new_shadow (renderer& ren);
   void delete_shadow (renderer& ren);

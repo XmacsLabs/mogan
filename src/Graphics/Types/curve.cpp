@@ -13,7 +13,6 @@
 #include "basic.hpp"
 #include "curve.hpp"
 #include "equations.hpp"
-#include "frame.hpp"
 #include "math_util.hpp"
 #include "merge_sort.hpp"
 #include "path.hpp"
@@ -1006,26 +1005,6 @@ arc_rep::get_control_points (array<double>& abs, array<point>& pts,
  * Ellipse curves
  ******************************************************************************/
 
-struct ellipse_rep : public curve_rep {
-  array<point> points;
-  array<path>  cip;
-  point        f1, f2;       // two foci of the ellipsis
-  point        center;       // the center of the ellipse
-  double       focal_length; // the distance between f1 and f2
-  double sum_of_two_dis; // The sum of the distances of any point on the ellipse
-                         // to f1 and f2
-  point  i, j;           // The two base vectors of the ellipsis's 2D plane
-  double r1, r2;         // The two radiuses of the ellipsis
-  ellipse_rep (array<point> a, array<path> cip, bool close);
-  point  evaluate (double t) override;
-  void   rectify_cumul (array<point>& cum, double eps) override;
-  double bound (double t, double eps) override;
-  point  grad (double t, bool& error) override;
-  double curvature (double t1, double t2) override;
-  int    get_control_points (array<double>& abs, array<point>& pts,
-                             array<path>& cip) override;
-};
-
 ellipse_rep::ellipse_rep (array<point> a2, array<path> cip2, bool close)
     : points (a2), cip (cip2) {
   int n= N (points);
@@ -1218,27 +1197,6 @@ invert (curve c) {
 /******************************************************************************
  * Transformed curves
  ******************************************************************************/
-
-struct transformed_curve_rep : public curve_rep {
-  frame f;
-  curve c;
-  int   n;
-  transformed_curve_rep (frame f2, curve c2)
-      : f (f2), c (c2), n (c->nr_components ()) {}
-  int    nr_components () { return n; }
-  point  evaluate (double t) { return f (c (t)); }
-  void   rectify_cumul (array<point>& a, double eps);
-  double bound (double t, double eps) { return curve_rep::bound (t, eps); }
-  point  grad (double t, bool& error);
-  double curvature (double t1, double t2) {
-    (void) t1;
-    (void) t2;
-    TM_FAILED ("not yet implemented");
-    return 0.0;
-  }
-  int get_control_points (array<double>& abs, array<point>& pts,
-                          array<path>& cip);
-};
 
 void
 transformed_curve_rep::rectify_cumul (array<point>& a, double eps) {

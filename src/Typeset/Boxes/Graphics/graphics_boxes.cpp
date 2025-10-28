@@ -267,8 +267,8 @@ point_box_rep::display (renderer ren) {
   array<point> a= get_contour (style);
   for (int i= 0; i < N (a); i++)
     a[i]= p + ((double) r) * a[i];
-  if (style == "none")
-    ;
+  if (style == "none") {
+  }
   else if (N (a) != 0) {
     if (br->get_type () != brush_none) {
       ren->set_pencil (pen);
@@ -301,6 +301,7 @@ point_box_rep::display (renderer ren) {
     SI rx= cx + r;
     SI ty= cy + r;
     if (style == "disk" || br->get_type () != brush_none) {
+      ren->set_pencil (pen);
       ren->set_brush (style == "disk" ? pen->get_brush () : br);
       ren->arc (lx, by + w, rx, ty + w, 0, 64 * 360);
       ren->fill_arc (lx, by + w, rx, ty + w, 0, 64 * 360);
@@ -317,6 +318,7 @@ point_box_rep::display (renderer ren) {
  ******************************************************************************/
 
 struct curve_box_rep : public box_rep {
+  bool         is_pending_ellipse;
   array<point> a;
   pencil       pen;
   curve        c;
@@ -328,7 +330,7 @@ struct curve_box_rep : public box_rep {
   array<box>   arrows;
   curve_box_rep (path ip, curve c, pencil pen, array<bool> style,
                  array<point> motif, SI style_unit, brush fill_br,
-                 array<box> arrows);
+                 array<box> arrows, bool is_pending_ellipse);
   box           transform (frame fr);
   SI            graphical_distance (SI x, SI y);
   gr_selections graphical_select (SI x, SI y, SI dist);
@@ -343,10 +345,13 @@ struct curve_box_rep : public box_rep {
 curve_box_rep::curve_box_rep (path ip2, curve c2, pencil pen2,
                               array<bool> style2, array<point> motif2,
                               SI style_unit2, brush fill_br2,
-                              array<box> arrows2)
+                              array<box> arrows2, bool is_pending_ellipse2)
     : box_rep (ip2), pen (pen2), c (c2), style (style2), motif (motif2),
-      style_unit (style_unit2), fill_br (fill_br2) {
-  a= c->rectify (PIXEL / 4);
+      style_unit (style_unit2), fill_br (fill_br2),
+      is_pending_ellipse (is_pending_ellipse2) {
+
+  a= c2->rectify (PIXEL / 4);
+
   apply_motif (arrows2);
   int i, n= N (a);
   x1= y1= x3= y3= MAX_SI;
@@ -490,8 +495,9 @@ void
 curve_box_rep::display (renderer ren) {
   int  i, n;
   bool use_native_drawing= ren->support_native_curve (c);
-  if (fill_br->get_type () != brush_none) {
-    ren->set_brush (fill_br);
+
+  ren->set_brush (fill_br);
+  if (!is_pending_ellipse && fill_br->get_type () != brush_none) {
     if (use_native_drawing) {
       ren->draw_curve (c, true);
     }
@@ -505,8 +511,9 @@ curve_box_rep::display (renderer ren) {
       ren->polygon (x, y, false);
     }
   }
+  ren->set_pencil (pen->set_cap (cap_flat));
   if (pen->get_type () != pencil_none) {
-    ren->set_pencil (pen->set_cap (cap_flat));
+
     // TODO: Add options for handling round/nonround joins & line ends
     if (N (style) == 0) {
       if (use_native_drawing) {
@@ -769,11 +776,11 @@ point_box (path ip, point p, SI r, pencil pen, brush br, string style) {
 
 box
 curve_box (path ip, curve c, double portion, pencil pen, array<bool> style,
-           array<point> motif, SI style_unit, brush fill_br,
-           array<box> arrows) {
+           array<point> motif, SI style_unit, brush fill_br, array<box> arrows,
+           bool is_pending_ellipse) {
   if (portion < 1.0) c= truncate (c, max (portion, 1.0e-5), PIXEL / 10.0);
   return tm_new<curve_box_rep> (ip, c, pen, style, motif, style_unit, fill_br,
-                                arrows);
+                                arrows, is_pending_ellipse);
 }
 
 box

@@ -224,37 +224,41 @@ void
 qt_renderer_rep::set_pencil (pencil np) {
   painter->setOpacity (qreal (1.0));
   basic_renderer_rep::set_pencil (np);
-  QPen   p (painter->pen ());
-  QBrush b (painter->brush ());
-  QColor qc= to_qcolor (pen->get_color ());
-  p.setColor (qc);
-  b.setColor (qc);
-  // SI pw= 0;
-  // if (pen->get_width () > pixel)
-  // pw= (pen->get_width () + thicken) / (1.0*pixel);
-  // p.setWidth (pw);
+
   qreal pw= (qreal) (((double) pen->get_width ()) / ((double) pixel));
-  p.setWidthF (pw);
+  QPen  new_pen (to_qcolor (pen->get_color ()), pw);
+
   if (np->get_type () == pencil_brush) {
-    brush   br           = np->get_brush ();
-    QImage* pm           = get_pattern_image (br, pixel);
-    int     pattern_alpha= br->get_alpha ();
-    painter->setOpacity (qreal (pattern_alpha) / qreal (255));
+    brush   br= np->get_brush ();
+    QImage* pm= get_pattern_image (br, pixel);
+
     if (pm != NULL) {
-      b= QBrush (*pm);
+      QBrush brush_for_pen;
+      int    pattern_alpha= br->get_alpha ();
+      if (pattern_alpha < 255) {
+        QPixmap pixmap= QPixmap::fromImage (*pm);
+        QPixmap transparent (pixmap.size ());
+        transparent.fill (Qt::transparent);
+        QPainter p (&transparent);
+        p.setOpacity (qreal (pattern_alpha) / 255.0);
+        p.drawPixmap (0, 0, pixmap);
+        p.end ();
+        brush_for_pen= QBrush (transparent);
+      }
+      else brush_for_pen= QBrush (*pm);
       double pox, poy;
       decode (0, 0, pox, poy);
       QTransform tr;
       tr.translate (pox, poy);
-      b.setTransform (tr);
-      p= QPen (b, pw);
+      brush_for_pen.setTransform (tr);
+      new_pen= QPen (brush_for_pen, pw);
     }
   }
-  p.setStyle (Qt::SolidLine);
-  p.setCapStyle (pen->get_cap () == cap_round ? Qt::RoundCap : Qt::SquareCap);
-  p.setJoinStyle (Qt::RoundJoin);
-  painter->setPen (p);
-  painter->setBrush (b);
+  new_pen.setStyle (Qt::SolidLine);
+  new_pen.setCapStyle (pen->get_cap () == cap_round ? Qt::RoundCap
+                                                    : Qt::SquareCap);
+  new_pen.setJoinStyle (Qt::RoundJoin);
+  painter->setPen (new_pen);
 }
 
 void
@@ -265,25 +269,31 @@ qt_renderer_rep::set_brush (brush br) {
     painter->setBrush (QBrush (Qt::NoBrush));
   }
   else {
-    QPen   p (painter->pen ());
-    QBrush b (painter->brush ());
-    QColor col= to_qcolor (pen->get_color ());
-    p.setColor (col);
-    b.setColor (col);
-    painter->setPen (p);
+    QBrush b (to_qcolor (br->get_color ()));
     painter->setBrush (b);
   }
   if (br->get_type () == brush_pattern) {
     QImage* pm           = get_pattern_image (br, pixel);
     int     pattern_alpha= br->get_alpha ();
-    painter->setOpacity (qreal (pattern_alpha) / qreal (255));
     if (pm != NULL) {
-      QBrush b (*pm);
+      QBrush b;
+      if (pattern_alpha < 255) {
+        QPixmap pixmap= QPixmap::fromImage (*pm);
+        QPixmap transparent (pixmap.size ());
+        transparent.fill (Qt::transparent);
+        QPainter p (&transparent);
+        p.setOpacity (qreal (pattern_alpha) / 255.0);
+        p.drawPixmap (0, 0, pixmap);
+        p.end ();
+        b= QBrush (transparent);
+      }
+      else {
+        b= QBrush (*pm);
+      }
       double pox, poy;
       decode (0, 0, pox, poy);
       QTransform tr;
       tr.translate (pox, poy);
-      // tr.rotate (45.0);
       b.setTransform (tr);
       painter->setBrush (b);
     }
@@ -423,10 +433,10 @@ qt_renderer_rep::polygon (array<SI> x, array<SI> y, bool convex) {
     poly[i]= QPointF (qx, qy);
   }
   QBrush br= painter->brush ();
-  if (is_nil (fg_brush) || fg_brush->get_type () != brush_pattern)
-    // FIXME: is this really necessary?
-    // The brush should have been set at the moment of set_pencil or set_brush
-    br= QBrush (to_qcolor (pen->get_color ()));
+  // if (is_nil (fg_brush) || fg_brush->get_type () != brush_pattern)
+  // FIXME: is this really necessary?
+  // The brush should have been set at the moment of set_pencil or set_brush
+  // br= QBrush (to_qcolor (pen->get_color ()));
   QPainterPath pp;
   pp.addPolygon (poly);
   pp.closeSubpath ();
@@ -467,6 +477,44 @@ qt_renderer_rep::draw_triangle (SI x1, SI y1, SI x2, SI y2, SI x3, SI y3) {
   pp.setFillRule (Qt::OddEvenFill);
   painter->setRenderHints (QPainter::Antialiasing, false);
   painter->fillPath (pp, br);
+}
+
+/******************************************************************************
+ * Qt curves
+ ******************************************************************************/
+
+curve
+unwrap_transformed_curve (curve c) {
+  while (auto tr= dynamic_cast<transformed_curve_rep*> (c.get_rep ())) {
+    if (is_nil (tr->c)) break;
+    c= tr->c;
+  }
+  return c;
+}
+
+void
+qt_renderer_rep::draw_curve (curve c, bool filled) {
+  curve base= unwrap_transformed_curve (c);
+  if (is_nil (base)) {
+    return;
+  }
+  if (auto ellipse= dynamic_cast<ellipse_rep*> (base.get_rep ())) {
+    if (filled) return;
+    else draw_ellipse (c);
+    return;
+  }
+  // TODO: Handle other specific curve types here
+
+  // Fallback: 其它未知曲线，抛出错误或走父类（比如 basic_renderer_rep）兜底
+  basic_renderer_rep::draw_curve (c, filled);
+}
+
+bool
+qt_renderer_rep::support_native_curve (curve c) {
+  curve base= unwrap_transformed_curve (c);
+  if (dynamic_cast<ellipse_rep*> (base.get_rep ())) return true;
+  // TODO: 加其它类型
+  return false;
 }
 
 /******************************************************************************
@@ -918,4 +966,34 @@ qt_shadow_renderer_rep::get_shadow (renderer ren, SI x1, SI y1, SI x2, SI y2) {
   else {
     shadow->painter->setClipRect (QRect ());
   }
+}
+
+void
+qt_renderer_rep::draw_ellipse (const curve& c) {
+  point p0= c.get_rep ()->evaluate (0.0);  // 右
+  point p1= c.get_rep ()->evaluate (0.25); // 上
+  point p2= c.get_rep ()->evaluate (0.5);  // 左
+  point p3= c.get_rep ()->evaluate (0.75); // 下
+
+  point center= (p0 + p2) * 0.5;
+
+  point  dx   = p0 - center;
+  point  dy   = p1 - center;
+  double rx   = norm (dx);
+  double ry   = norm (dy);
+  double angle= atan2 (-dx[1], dx[0]) * 180.0 / M_PI;
+
+  SI     cx_si= (SI) center[0];
+  SI     cy_si= (SI) center[1];
+  double d_cx, d_cy;
+  decode (cx_si, cy_si, d_cx, d_cy);
+
+  painter->save ();
+  painter->setRenderHints (QPainter::Antialiasing);
+  painter->translate (d_cx, d_cy);
+  painter->rotate (angle);
+  painter->drawEllipse (QPointF (0, 0), rx / pixel, ry / pixel);
+  painter->restore ();
+
+  return;
 }

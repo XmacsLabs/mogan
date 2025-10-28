@@ -415,7 +415,8 @@ adjust_extremities (curve& c, array<rectangle> a) {
 }
 
 void
-concater_rep::typeset_line (tree t, path ip, bool close) {
+concater_rep::typeset_line (tree t, path ip, bool close,
+                            bool isPendingEllipse) {
   BEGIN_MAGNIFY
   int          i, n= N (t);
   array<point> a (n);
@@ -438,7 +439,7 @@ concater_rep::typeset_line (tree t, path ip, bool close) {
     adjust_extremities (c, env->white_zones);
     print (curve_box (ip, c, env->line_portion, env->pen, env->dash_style,
                       env->dash_motif, env->dash_style_unit, env->fill_brush,
-                      typeset_line_arrows (ip)));
+                      typeset_line_arrows (ip), isPendingEllipse));
   }
   END_MAGNIFY
 }
@@ -482,8 +483,10 @@ concater_rep::typeset_ellipse (tree t, path ip, bool close) {
     cip[i]= descend (ip, i);
   if (N (a) == 0 || N (a[0]) == 0) typeset_error (t, ip);
   else {
-    if (n != 3 || linearly_dependent (a[0], a[1], a[2]))
-      typeset_line (t, ip, close);
+    if (n != 3 || linearly_dependent (a[0], a[1], a[2])) {
+      // cout << "typeset_ellipse: linearly dependent points "<< "\n";
+      typeset_line (t, ip, close, true);
+    }
     else {
       double focal_length, sum_of_two_dis;
       point  f1= a[0], f2= a[1], o3= a[2];

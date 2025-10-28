@@ -162,17 +162,17 @@ class concater_rep {
   void       typeset_document_at (tree t, path ip);
   void       typeset_point (tree t, path ip);
   array<box> typeset_line_arrows (path ip);
-  void       typeset_line (tree t, path ip, bool close);
-  void       typeset_arc (tree t, path ip, bool close);
-  void       typeset_ellipse (tree t, path ip, bool close);
-  void       typeset_spline (tree t, path ip, bool close);
-  void       typeset_var_spline (tree t, path ip);
-  void       typeset_cspline (tree t, path ip);
-  void       typeset_bezier (tree t, path ip);
-  void       typeset_calligraphy (tree t, path ip);
-  void       typeset_fill (tree t, path ip);
-  void       typeset_image (tree t, path ip);
-  void       typeset_graphics_3d (tree t, path ip);
+  void typeset_line (tree t, path ip, bool close, bool isPendingEllipse= false);
+  void typeset_arc (tree t, path ip, bool close);
+  void typeset_ellipse (tree t, path ip, bool close);
+  void typeset_spline (tree t, path ip, bool close);
+  void typeset_var_spline (tree t, path ip);
+  void typeset_cspline (tree t, path ip);
+  void typeset_bezier (tree t, path ip);
+  void typeset_calligraphy (tree t, path ip);
+  void typeset_fill (tree t, path ip);
+  void typeset_image (tree t, path ip);
+  void typeset_graphics_3d (tree t, path ip);
 
   // markup for graphical user interface
   void typeset_canvas (tree t, path ip);
