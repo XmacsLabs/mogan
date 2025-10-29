@@ -27,7 +27,7 @@
     (define-case-class rich-string
       ((data string?))
   
-      (define N (u8-string-length data))
+      (define N (utf8-string-length data))
 
       (define (@empty . args)
         (chain-apply args (rich-string "")))
@@ -66,22 +66,22 @@
       (define (%head)
         (if (string-null? data)
             (index-error "rich-string%head: string is empty")
-            ($ data 0)))
+            (%char-at 0)))
 
       (define (%head-option)
         (if (string-null? data)
             (none)
-            (option ($ data 0))))
+            (option (%char-at 0))))
 
       (define (%last)
         (if (string-null? data)
             (index-error "rich-string%last: string is empty")
-            ($ data (- N 1))))
+            (%char-at (- N 1))))
 
       (define (%last-option)
         (if (string-null? data)
             (none)
-            (option ($ data (- N 1)))))
+            (option (%char-at (- N 1)))))
 
       (define (%slice from until . args)
         (chain-apply args
@@ -154,7 +154,7 @@
           (let loop ((i 0) (pos 0))
             (if (>= i char-index)
                 pos
-                (loop (+ i 1) (bytevector-advance-u8 bv pos size)))))
+                (loop (+ i 1) (bytevector-advance-utf8 bv pos size)))))
   
         (define* (inner-index-of str start-index)
           (if (or (string-null? data) (string-null? str))
@@ -173,7 +173,7 @@
                           ((bytes-match? data-bv byte-pos str-bv str-size data-size)
                            current-char-index)
                           (else
-                           (search (bytevector-advance-u8 data-bv byte-pos data-size)
+                           (search (bytevector-advance-utf8 data-bv byte-pos data-size)
                                    (+ current-char-index 1))))))))))
 
         (unless (integer? start-index)
@@ -224,7 +224,7 @@
             (cond
               ((>= byte-pos len) -1)
               (else
-               (let* ((next-pos (bytevector-advance-u8 bytes byte-pos len))
+               (let* ((next-pos (bytevector-advance-utf8 bytes byte-pos len))
                       (char-bytes (bytevector-copy bytes byte-pos next-pos))
                       (char (rich-char :from-bytevector char-bytes)))
                  (if (pred char)
@@ -257,7 +257,7 @@
               (let loop ((i 0) (j 0))
                 (if (>= i N)
                     result
-                    (let* ((next-j (bytevector-advance-u8 bv j bv-size))
+                    (let* ((next-j (bytevector-advance-utf8 bv j bv-size))
                            (ch (rich-char :from-bytevector (bytevector-copy bv j next-j))))
                       (vector-set! result i ch)
                       (loop (+ i 1) next-j)))))))
@@ -316,21 +316,27 @@
         (chain-apply args
           (rich-string (replace-helper data old new 0))))
 
-      (define* (%pad-left len (char #\space) . args)
-        (let ((result (rich-string (string-pad data len char))))
+      (define* (%pad-left len ch . args)
+        (let ((result (if (<= len N)
+                          (%this)
+                          (let ((padding (make-string (- len N) ch)))
+                            (rich-string (string-append padding data))))))
           (if (null? args)
               result
               (apply result args))))
 
-      (define* (%pad-right len (char #\space) . args)
-        (let ((result (rich-string (string-pad-right data len char))))
+      (define* (%pad-right len ch . args)
+        (let ((result (if (<= len N)
+                          (%this)
+                          (let ((padding (make-string (- len N) ch)))
+                            (rich-string (string-append data padding))))))
           (if (null? args)
               result
               (apply result args))))
 
       (define (%split sep)
         (let ((str-len N)
-              (sep-len (u8-string-length sep)))
+              (sep-len (utf8-string-length sep)))
     
           (define (split-helper start acc)
             (let ((next-pos (%index-of sep start)))

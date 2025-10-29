@@ -42,7 +42,8 @@
               (option value))))
 
       (define (%equals that)
-        (class=? value (that 'value)))
+        (and (option :is-type-of that)
+             (class=? value (that 'value))))
 
       (define (%defined?) (not (null? value)))
   

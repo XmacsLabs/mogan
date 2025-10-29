@@ -19,8 +19,4 @@
   (begin
 
     (define (atom? x)
-      (not (pair? x)))
-
-    ) ; end of begin
-  ) ; end of define-library
-
+      (not (pair? x)))))

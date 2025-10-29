@@ -1,5 +1,5 @@
 ;
-; Copyright (C) 2024 The Goldfish Scheme Authors
+; Copyright (C) 2025 The Goldfish Scheme Authors
 ;
 ; Licensed under the Apache License, Version 2.0 (the "License");
 ; you may not use this file except in compliance with the License.
@@ -14,14 +14,17 @@
 ; under the License.
 ;
 
-(define-library (liii sys)
-  (export argv executable)
-  (import (scheme process-context))
-  (begin
-    (define (argv) (command-line))
-    
-    (define (executable) (g_executable))
+;;; (scheme complex) library for R7RS
+;;; Complex number operations
 
-    ) ; end of begin
-  ) ; end of define-library
+(define-library (scheme complex)
+  (export make-rectangular
+          make-polar
+          real-part
+          imag-part
+          magnitude
+          angle)
+  (import (scheme base)))
 
+;; Note: These functions are implemented in the underlying S7 scheme engine
+;; and are made available through the library export mechanism.

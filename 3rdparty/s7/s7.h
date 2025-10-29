@@ -1,10 +1,10 @@
 #ifndef S7_H
 #define S7_H
 
-#define S7_VERSION "11.2"
-#define S7_DATE "30-Dec-2024"
+#define S7_VERSION "11.5"
+#define S7_DATE "22-Sep-2025"
 #define S7_MAJOR_VERSION 11
-#define S7_MINOR_VERSION 2
+#define S7_MINOR_VERSION 5
 
 #include <stdint.h>           /* for int64_t */
 
@@ -30,17 +30,16 @@ typedef double s7_double;
   #include <mpc.h>
 #endif
 
-#if __TINYC__ || _MSC_VER || (__clang__ && __cplusplus)
+#if __TINYC__ || _MSC_VER
   /* _MSC_VER should also set HAVE_COMPLEX_NUMBERS to 0 */
   typedef double s7_complex;
 #else
-  #if __cplusplus /* only __GNUC__ */
+  #if __cplusplus
     #include <complex>
-    #ifdef __GNUC__
-      typedef std::complex<double> s7_complex;
+    #ifdef __clang__ /* defines __GNUC__ */
+      typedef _Complex double s7_complex;
     #else
-      using s7_complex = std::complex<double>;
-      /* sort of works in clang++ but there are many more problems */
+      typedef std::complex<double> s7_complex;
     #endif
   #else
     #include <complex.h>
@@ -296,6 +295,7 @@ s7_double s7_number_to_real_with_caller(s7_scheme *sc, s7_pointer x, const char 
 s7_double s7_number_to_real_with_location(s7_scheme *sc, s7_pointer x, s7_pointer caller);
 s7_int s7_number_to_integer(s7_scheme *sc, s7_pointer x);
 s7_int s7_number_to_integer_with_caller(s7_scheme *sc, s7_pointer x, const char *caller);
+char *s7_number_to_string(s7_scheme *sc, s7_pointer obj, s7_int radix);     /* (number->string obj radix) */
 
 bool s7_is_rational(s7_pointer arg);                                        /* (rational? arg) -- integer or ratio */
 bool s7_is_ratio(s7_pointer arg);                                           /* true if arg is a ratio, not an integer */
@@ -303,6 +303,7 @@ s7_pointer s7_make_ratio(s7_scheme *sc, s7_int a, s7_int b);                /* r
 s7_pointer s7_rationalize(s7_scheme *sc, s7_double x, s7_double error);     /* (rationalize x error) */
 s7_int s7_numerator(s7_pointer x);                                          /* (numerator x) */
 s7_int s7_denominator(s7_pointer x);                                        /* (denominator x) */
+
 s7_double s7_random(s7_scheme *sc, s7_pointer state);                       /* (random x) */
 s7_pointer s7_random_state(s7_scheme *sc, s7_pointer seed);                 /* (random-state seed) */
 s7_pointer s7_random_state_to_list(s7_scheme *sc, s7_pointer args);         /* (random-state->list r) */
@@ -313,49 +314,52 @@ bool s7_is_complex(s7_pointer arg);                                         /* (
 s7_pointer s7_make_complex(s7_scheme *sc, s7_double a, s7_double b);        /* returns the Scheme object a+bi */
 s7_double s7_real_part(s7_pointer z);                                       /* (real-part z) */
 s7_double s7_imag_part(s7_pointer z);                                       /* (imag-part z) */
-char *s7_number_to_string(s7_scheme *sc, s7_pointer obj, s7_int radix);     /* (number->string obj radix) */
 
 bool s7_is_vector(s7_pointer p);                                            /* (vector? p) */
-s7_int s7_vector_length(s7_pointer vec);                                    /* (vector-length vec) */
-s7_int s7_vector_rank(s7_pointer vect);                                     /* number of dimensions in vect */
-s7_int s7_vector_dimension(s7_pointer vec, s7_int dim);
-s7_pointer *s7_vector_elements(s7_pointer vec);                             /* a pointer to the array of s7_pointers */
-s7_int *s7_int_vector_elements(s7_pointer vec);
-uint8_t *s7_byte_vector_elements(s7_pointer vec);
-s7_double *s7_float_vector_elements(s7_pointer vec);
 bool s7_is_float_vector(s7_pointer p);                                      /* (float-vector? p) */
 bool s7_is_complex_vector(s7_pointer p);                                    /* (complex-vector? p) */
 bool s7_is_int_vector(s7_pointer p);                                        /* (int-vector? p) */
 bool s7_is_byte_vector(s7_pointer p);                                       /* (byte-vector? p) */
 
+s7_int s7_vector_length(s7_pointer vec);                                    /* (vector-length vec) */
+s7_int s7_vector_rank(s7_pointer vect);                                     /* number of dimensions in vect */
+s7_int s7_vector_dimension(s7_pointer vec, s7_int dim);
+s7_int s7_vector_dimensions(s7_pointer vec, s7_int *dims, s7_int dims_size); /* vector dimensions */
+s7_int s7_vector_offsets(s7_pointer vec, s7_int *offs, s7_int offs_size);
+
+s7_pointer *s7_vector_elements(s7_pointer vec);                             /* a pointer to the array of s7_pointers */
+s7_int *s7_int_vector_elements(s7_pointer vec);
+uint8_t *s7_byte_vector_elements(s7_pointer vec);
+s7_double *s7_float_vector_elements(s7_pointer vec);
+
 s7_pointer s7_vector_ref(s7_scheme *sc, s7_pointer vec, s7_int index);                            /* (vector-ref vec index) */
 s7_pointer s7_vector_set(s7_scheme *sc, s7_pointer vec, s7_int index, s7_pointer a);              /* (vector-set! vec index a) */
 s7_pointer s7_vector_ref_n(s7_scheme *sc, s7_pointer vector, s7_int indices, ...);                   /* multidimensional vector-ref */
 s7_pointer s7_vector_set_n(s7_scheme *sc, s7_pointer vector, s7_pointer value, s7_int indices, ...); /* multidimensional vector-set! */
-s7_int s7_vector_dimensions(s7_pointer vec, s7_int *dims, s7_int dims_size); /* vector dimensions */
-s7_int s7_vector_offsets(s7_pointer vec, s7_int *offs, s7_int offs_size);
-
-s7_int s7_int_vector_ref(s7_pointer vec, s7_int index);
-s7_int s7_int_vector_set(s7_pointer vec, s7_int index, s7_int value);
-uint8_t s7_byte_vector_ref(s7_pointer vec, s7_int index);
-uint8_t s7_byte_vector_set(s7_pointer vec, s7_int index, uint8_t value);
-s7_double s7_float_vector_ref(s7_pointer vec, s7_int index);
-s7_double s7_float_vector_set(s7_pointer vec, s7_int index, s7_double value);
-
 s7_pointer s7_make_vector(s7_scheme *sc, s7_int len);                                 /* (make-vector len) */
 s7_pointer s7_make_normal_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info); /* make-vector but possibly multidimensional */
 s7_pointer s7_make_and_fill_vector(s7_scheme *sc, s7_int len, s7_pointer fill);       /* (make-vector len fill) */
+
+s7_int s7_int_vector_ref(s7_pointer vec, s7_int index);
+s7_int s7_int_vector_set(s7_pointer vec, s7_int index, s7_int value);
 s7_pointer s7_make_int_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info);
+s7_pointer s7_make_int_vector_wrapper(s7_scheme *sc, s7_int len, s7_int *data, s7_int dims, s7_int *dim_info, bool free_data);
+
+uint8_t s7_byte_vector_ref(s7_pointer vec, s7_int index);
+uint8_t s7_byte_vector_set(s7_pointer vec, s7_int index, uint8_t value);
 s7_pointer s7_make_byte_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info);
+
+s7_double s7_float_vector_ref(s7_pointer vec, s7_int index);
+s7_double s7_float_vector_set(s7_pointer vec, s7_int index, s7_double value);
 s7_pointer s7_make_float_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info);
 s7_pointer s7_make_float_vector_wrapper(s7_scheme *sc, s7_int len, s7_double *data, s7_int dims, s7_int *dim_info, bool free_data);
 
 #if (!__TINYC__) && ((!defined(__clang__)) || (!__cplusplus))
-  s7_pointer s7_make_complex_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info);
-  s7_pointer s7_make_complex_vector_wrapper(s7_scheme *sc, s7_int len, s7_complex *data, s7_int dims, s7_int *dim_info, bool free_data);
   s7_complex *s7_complex_vector_elements(s7_pointer vec);
   s7_complex s7_complex_vector_ref(s7_pointer vec, s7_int index);
   s7_complex s7_complex_vector_set(s7_pointer vec, s7_int index, s7_complex value);
+  s7_pointer s7_make_complex_vector(s7_scheme *sc, s7_int len, s7_int dims, s7_int *dim_info);
+  s7_pointer s7_make_complex_vector_wrapper(s7_scheme *sc, s7_int len, s7_complex *data, s7_int dims, s7_int *dim_info, bool free_data);
 #endif
 
 void s7_vector_fill(s7_scheme *sc, s7_pointer vec, s7_pointer obj);                   /* (vector-fill! vec obj) */
@@ -384,17 +388,17 @@ s7_pointer s7_hook_set_functions(s7_scheme *sc, s7_pointer hook, s7_pointer func
 
 bool s7_is_input_port(s7_scheme *sc, s7_pointer p);                         /* (input-port? p) */
 bool s7_is_output_port(s7_scheme *sc, s7_pointer p);                        /* (output-port? p) */
-const char *s7_port_filename(s7_scheme *sc, s7_pointer x);                  /* (port-filename p) */
-s7_int s7_port_line_number(s7_scheme *sc, s7_pointer p);                    /* (port-line-number p) */
+const char *s7_port_filename(s7_scheme *sc, s7_pointer port);               /* (port-filename port) */
+s7_int s7_port_line_number(s7_scheme *sc, s7_pointer port);                 /* (port-line-number port) */
 
 s7_pointer s7_current_input_port(s7_scheme *sc);                            /* (current-input-port) */
-s7_pointer s7_set_current_input_port(s7_scheme *sc, s7_pointer p);          /* (set-current-input-port) */
+s7_pointer s7_set_current_input_port(s7_scheme *sc, s7_pointer port);       /* (set-current-input-port port) */
 s7_pointer s7_current_output_port(s7_scheme *sc);                           /* (current-output-port) */
-s7_pointer s7_set_current_output_port(s7_scheme *sc, s7_pointer p);         /* (set-current-output-port) */
+s7_pointer s7_set_current_output_port(s7_scheme *sc, s7_pointer port);      /* (set-current-output-port port) */
 s7_pointer s7_current_error_port(s7_scheme *sc);                            /* (current-error-port) */
-s7_pointer s7_set_current_error_port(s7_scheme *sc, s7_pointer port);       /* (set-current-error-port port) */
-void s7_close_input_port(s7_scheme *sc, s7_pointer p);                      /* (close-input-port p) */
-void s7_close_output_port(s7_scheme *sc, s7_pointer p);                     /* (close-output-port p) */
+s7_pointer s7_set_current_error_port(s7_scheme *sc, s7_pointer port);       /* (set-current-error-port port port) */
+void s7_close_input_port(s7_scheme *sc, s7_pointer port);                   /* (close-input-port port) */
+void s7_close_output_port(s7_scheme *sc, s7_pointer port);                  /* (close-output-port port) */
 s7_pointer s7_open_input_file(s7_scheme *sc, const char *name, const char *mode);
                                                                             /* (open-input-file name mode) */
 s7_pointer s7_open_output_file(s7_scheme *sc, const char *name, const char *mode);
@@ -405,8 +409,8 @@ s7_pointer s7_open_input_string(s7_scheme *sc, const char *input_string);
 s7_pointer s7_open_output_string(s7_scheme *sc);                            /* (open-output-string) */
 const char *s7_get_output_string(s7_scheme *sc, s7_pointer out_port);       /* (get-output-string port) -- current contents of output string */
   /*    don't free the string */
-s7_pointer s7_output_string(s7_scheme *sc, s7_pointer p);                   /*    same but returns an s7 string */
-bool s7_flush_output_port(s7_scheme *sc, s7_pointer p);                     /* (flush-output-port port) */
+s7_pointer s7_output_string(s7_scheme *sc, s7_pointer port);                /*    same but returns an s7 string */
+bool s7_flush_output_port(s7_scheme *sc, s7_pointer port);                  /* (flush-output-port port) */
 
 typedef enum {S7_READ, S7_READ_CHAR, S7_READ_LINE, S7_PEEK_CHAR, S7_IS_CHAR_READY, S7_NUM_READ_CHOICES} s7_read_t;
 s7_pointer s7_open_output_function(s7_scheme *sc, void (*function)(s7_scheme *sc, uint8_t c, s7_pointer port));
@@ -514,14 +518,22 @@ s7_pointer s7_define_constant_with_environment(s7_scheme *sc, s7_pointer envir, 
 bool s7_is_function(s7_pointer p);
 bool s7_is_procedure(s7_pointer x);                                         /* (procedure? x) */
 bool s7_is_macro(s7_scheme *sc, s7_pointer x);                              /* (macro? x) */
-s7_pointer s7_closure_body(s7_scheme *sc, s7_pointer p);
-s7_pointer s7_closure_let(s7_scheme *sc, s7_pointer p);
-s7_pointer s7_closure_args(s7_scheme *sc, s7_pointer p);
+
+#if !S7_DISABLE_DEPRECATED
+  s7_pointer s7_closure_body(s7_scheme *sc, s7_pointer p);
+  s7_pointer s7_closure_let(s7_scheme *sc, s7_pointer p);
+  s7_pointer s7_closure_args(s7_scheme *sc, s7_pointer p);
+#endif
+s7_pointer s7_lambda_body(s7_scheme *sc, s7_pointer p);
+s7_pointer s7_lambda_let(s7_scheme *sc, s7_pointer p);
+s7_pointer s7_lambda_parameters(s7_scheme *sc, s7_pointer p);
+
 s7_pointer s7_funclet(s7_scheme *sc, s7_pointer p);                         /* (funclet x) */
 bool s7_is_aritable(s7_scheme *sc, s7_pointer x, s7_int args);              /* (aritable? x args) */
 s7_pointer s7_arity(s7_scheme *sc, s7_pointer x);                           /* (arity x) */
 const char *s7_help(s7_scheme *sc, s7_pointer obj);                         /* (help obj) */
 s7_pointer s7_make_continuation(s7_scheme *sc);                             /* call/cc... (see example below) */
+s7_pointer s7_function_let(s7_scheme *sc, s7_pointer obj);                  /* obj is from s7_make_c_function and friends */
 
 const char *s7_documentation(s7_scheme *sc, s7_pointer p);                  /* (documentation x) if any (don't free the string) */
 const char *s7_set_documentation(s7_scheme *sc, s7_pointer p, const char *new_doc);
@@ -702,7 +714,7 @@ s7_pointer s7_c_object_set_let(s7_scheme *sc, s7_pointer obj, s7_pointer e);
 
 s7_int s7_make_c_type(s7_scheme *sc, const char *name);     /* create a new c_object type */
 
-/* old style free/mark/equal */
+/* old style free/mark/equal -- I'd like to deprecate these, but much old code depends on them */
 void s7_c_type_set_free         (s7_scheme *sc, s7_int tag, void (*gc_free)(void *value));
 void s7_c_type_set_mark         (s7_scheme *sc, s7_int tag, void (*mark)(void *value));
 void s7_c_type_set_equal        (s7_scheme *sc, s7_int tag, bool (*equal)(void *value1, void *value2));
@@ -942,6 +954,12 @@ bool s7_is_bignum(s7_pointer obj);
  *
  *        s7 changes
  *
+ * 7-June:    *s7* 'hash-table-missing-key-value and 'iterator-at-end-value.
+ *            replace s7_closure* with s7_lambda*.
+ * 3-Apr:     c-object-let.
+ * 10-Mar-24: s7_make_int_vector_wrapper.
+ * --------
+ * 31-Dec:    s7_function_let as an experiment.
  * 31-Aug:    s7_define_expansion.
  * 26-Aug:    deprecate s7_immutable and add s7_set_immutable with s7_scheme* argument.
  * 16-Aug:    s7 complex vectors.

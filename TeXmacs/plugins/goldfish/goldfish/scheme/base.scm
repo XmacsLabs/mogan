@@ -22,7 +22,7 @@
     ; R7RS 6.2: Numbers
     square exact inexact max min floor floor/ s7-floor ceiling s7-ceiling truncate truncate/ s7-truncate
     round s7-round floor-quotient floor-remainder gcd lcm s7-lcm modulo boolean=? exact-integer-sqrt
-    numerator denominator exact-integer?
+    numerator denominator exact-integer? number->string string->number
     ; R7RS 6.4: list
     pair? cons car cdr set-car! set-cdr! caar cadr cdar cddr
     null? list? make-list list length append reverse list-tail
@@ -38,7 +38,7 @@
     ; R7RS 6.9: Bytevectors
     bytevector? make-bytevector bytevector bytevector-length bytevector-u8-ref
     bytevector-u8-set! bytevector-copy bytevector-append
-    utf8->string string->utf8 u8-string-length bytevector-advance-u8
+    utf8->string string->utf8 utf8-string-length bytevector-advance-utf8
     ; Input and Output
     call-with-port port? binary-port? textual-port? input-port-open? output-port-open?
     open-binary-input-file open-binary-output-file close-port eof-object
@@ -402,7 +402,7 @@ wrong-type-arg
 
     (define bytevector-append append)
 
-    (define* (bytevector-advance-u8 bv index (end (length bv)))
+    (define* (bytevector-advance-utf8 bv index (end (length bv)))
       (if (>= index end)
           index  ; Reached the end without errors, sequence is valid
           (let ((byte (bv index)))
@@ -445,13 +445,13 @@ wrong-type-arg
                         (+ index 4)))))
              (else index)))))  ; Invalid leading byte
 
-    (define (u8-string-length str)
+    (define (utf8-string-length str)
       (let ((bv (string->byte-vector str))
             (N (string-length str)))
         (if (zero? N)
             0
             (let loop ((pos 0) (cnt 0))
-              (let ((next-pos (bytevector-advance-u8 bv pos N)))
+              (let ((next-pos (bytevector-advance-utf8 bv pos N)))
                 (cond
                  ((= next-pos N)
                   (+ cnt 1))
@@ -463,7 +463,7 @@ wrong-type-arg
       (if (or (< start 0) (> end (bytevector-length bv)) (> start end))
           (error 'out-of-range start end)
           (let loop ((pos start))
-            (let ((next-pos (bytevector-advance-u8 bv pos end)))
+            (let ((next-pos (bytevector-advance-utf8 bv pos end)))
               (cond
                ((= next-pos end)
                 (copy bv (make-string (- end start)) start end))
@@ -478,7 +478,7 @@ wrong-type-arg
         (let ((bv (string->byte-vector str))
               (N (string-length str)))
           (let loop ((pos 0) (cnt 0) (start-pos 0))
-            (let ((next-pos (bytevector-advance-u8 bv pos N)))
+            (let ((next-pos (bytevector-advance-utf8 bv pos N)))
               (cond
                ((and (not (zero? start)) (zero? start-pos) (= cnt start))
                 (loop next-pos (+ cnt 1) pos))
@@ -493,7 +493,7 @@ wrong-type-arg
   
       (when (not (string? str))
         (error 'type-error "str must be string"))
-      (let ((N (u8-string-length str)))
+      (let ((N (utf8-string-length str)))
         (when (and (> N 0) (or (< start 0) (>= start N)))
           (error 'out-of-range
                  (string-append "start must >= 0 and < " (number->string N))))
@@ -610,7 +610,7 @@ wrong-type-arg
     ; Bill Schottstaedt
     ; from S7 source repo: r7rs.scm
     (define* (string->vector s (start 0) end)
-      (let ((stop (or end (length s)))) 
+      (let ((stop (or end (length s))))
         (copy s (make-vector (- stop start)) start stop)))
 
     ) ; end of begin

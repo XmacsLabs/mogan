@@ -23,7 +23,7 @@
     make-vector vector vector-length vector-ref vector-set! vector->list list->vector
     ; from (scheme base)
     vector-copy vector-fill! vector-copy! vector->string string->vector
-    vector-map vector-for-each
+    vector-map vector-for-each vector-append
     ; from (srfi srfi-133)
     vector-empty?
     vector-fold vector-fold-right
@@ -52,6 +52,7 @@
               (begin
                 (vector-set! result-vec i (car lst))
                 (loop (- i 1) (cdr lst)))))))
+
 
     ) ; end of begin
   ) ; end of define-library

@@ -26,7 +26,7 @@
     ; R7RS 6.2: Numbers
     square exact inexact max min floor floor/ s7-floor ceiling s7-ceiling truncate truncate/ s7-truncate
     round s7-round floor-quotient floor-remainder gcd lcm s7-lcm modulo exact-integer-sqrt
-    numerator denominator exact-integer?
+    numerator denominator exact-integer? number->string string->number
     ; R7RS 6.3: Booleans
     boolean=?
     ; R7RS 6.4: list
@@ -40,11 +40,11 @@
     ; R7RS 6.7: String
     string-copy
     ; R7RS 6.8 Vector
-    vector->string string->vector vector-copy vector-copy! vector-fill!
+    vector->string string->vector vector-copy vector-copy! vector-fill! vector-append
     ; R7RS 6.9 Bytevectors
     bytevector? make-bytevector bytevector bytevector-length bytevector-u8-ref
     bytevector-u8-set! bytevector-copy bytevector-append
-    utf8->string string->utf8 u8-string-length u8-substring bytevector-advance-u8
+    utf8->string string->utf8 utf8-string-length u8-substring bytevector-advance-utf8
     ; Input and Output
     call-with-port port? binary-port? textual-port? input-port-open? output-port-open?
     open-binary-input-file open-binary-output-file close-port eof-object

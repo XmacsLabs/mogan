@@ -15,7 +15,7 @@
 ;
 
 (define-library (liii rich-hash-table)
-  (import (liii hash-table) (liii oop) (srfi srfi-8))
+  (import (liii hash-table) (liii oop) (liii option) (srfi srfi-8))
   (export rich-hash-table)
   (begin
 
@@ -95,6 +95,9 @@
                 (when (f k v) (hash-table-set! r k v)))
               data)
             (rich-hash-table r))))
+
+      (define (%size)
+        (hash-table-size data))
 
       ) ; end of define-case-class
 

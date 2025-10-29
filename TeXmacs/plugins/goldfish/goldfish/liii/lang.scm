@@ -17,7 +17,7 @@
 (define-library (liii lang)
                 
   (import (only (liii base)
-                u8-string-length any? receive u8-substring)
+                utf8-string-length any? receive u8-substring)
           (only (liii oop)
                 define-case-class display* @ typed-define case-class? chained-define
                 define-object define-class chain-apply object->string)

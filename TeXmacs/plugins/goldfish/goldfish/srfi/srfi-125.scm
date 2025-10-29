@@ -15,21 +15,13 @@
 ;
 
 (define-library (srfi srfi-125)
-  (import (srfi srfi-1)
-          (liii base)
-          (liii error))
-  (export
-    make-hash-table hash-table hash-table-unfold alist->hash-table
-    hash-table? hash-table-contains? hash-table-empty? hash-table=?
-    hash-table-mutable?
-    hash-table-ref hash-table-ref/default
-    hash-table-set! hash-table-delete! hash-table-intern! hash-table-update!
-    hash-table-update!/default hash-table-pop! hash-table-clear!
-    hash-table-size hash-table-keys hash-table-values hash-table-entries
-    hash-table-find hash-table-count
-    hash-table-for-each hash-table-map->list
-    hash-table->alist
-    )
+  (import (srfi srfi-1) (liii base) (liii error))
+  (export make-hash-table hash-table hash-table-unfold alist->hash-table hash-table?
+          hash-table-contains? hash-table-empty? hash-table=? hash-table-mutable? hash-table-ref
+          hash-table-ref/default hash-table-set! hash-table-delete! hash-table-intern!
+          hash-table-update! hash-table-update!/default hash-table-pop! hash-table-clear!
+          hash-table-size hash-table-keys hash-table-values hash-table-entries hash-table-find
+          hash-table-count hash-table-for-each hash-table-map->list hash-table->alist)
   (begin
 
     (define (assert-hash-table-type ht f)
@@ -71,30 +63,30 @@
 
     (define (hash-table-ref/default ht key default)
       (or (hash-table-ref ht key)
-          (if (procedure? default) (default) default)))
+          (if (procedure? default)
+              (default)
+              default)))
 
     (define (hash-table-set! ht . rest)
       (assert-hash-table-type ht hash-table-set!)
       (let1 len (length rest)
         (when (or (odd? len) (zero? len))
           (error 'wrong-number-of-args len "but must be even and non-zero"))
-    
         (s7-hash-table-set! ht (car rest) (cadr rest))
         (when (> len 2)
-              (apply hash-table-set! (cons ht (cddr rest))))))
+          (apply hash-table-set! (cons ht (cddr rest))))))
 
     (define (hash-table-delete! ht key . keys)
       (assert-hash-table-type ht hash-table-delete!)
       (let1 all-keys (cons key keys)
         (length
-          (filter
-            (lambda (x)
-              (if (hash-table-contains? ht x)
-                  (begin
-                    (s7-hash-table-set! ht x #f)
-                    #t)
-                  #f))
-            all-keys))))
+         (filter (lambda (x)
+                   (if (hash-table-contains? ht x)
+                       (begin
+                         (s7-hash-table-set! ht x #f)
+                         #t)
+                       #f))
+                 all-keys))))
 
     (define (hash-table-update! ht key value)
       (hash-table-set! ht key value))
@@ -103,10 +95,7 @@
       (hash-table-set! ht key (updater (hash-table-ref/default ht key default))))
 
     (define (hash-table-clear! ht)
-      (for-each
-        (lambda (key)
-          (hash-table-set! ht key #f))
-        (hash-table-keys ht)))
+      (for-each (lambda (key) (hash-table-set! ht key #f)) (hash-table-keys ht)))
 
     (define hash-table-size s7-hash-table-entries)
 
@@ -137,25 +126,17 @@
 
     (define hash-table-count
       (typed-lambda ((pred? procedure?) (ht hash-table?))
-        (count (lambda (x) (pred? (car x) (cdr x)))
-               (map values ht))))
+        (count (lambda (x) (pred? (car x) (cdr x))) (map values ht))))
 
     (define hash-table-for-each
       (typed-lambda ((proc procedure?) (ht hash-table?))
-        (for-each (lambda (x) (proc (car x) (cdr x)))
-                  ht)))
+        (for-each (lambda (x) (proc (car x) (cdr x))) ht)))
 
     (define hash-table-map->list
       (typed-lambda ((proc procedure?) (ht hash-table?))
-        (map (lambda (x) (proc (car x) (cdr x)))
-             ht)))
+        (map (lambda (x) (proc (car x) (cdr x))) ht)))
 
     (define hash-table->alist
       (typed-lambda ((ht hash-table?))
-        (append-map
-          (lambda (x) (list (car x) (cdr x)))
-          (map values ht))))
-
-    ) ; end of begin
-  ) ; end of define-library
+        (append-map (lambda (x) (list (car x) (cdr x))) (map values ht))))))
 

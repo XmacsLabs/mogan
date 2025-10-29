@@ -16,9 +16,8 @@
 
 ; see https://docs.python.org/3/library/exceptions.html#exception-hierarchy
 (define-library (liii error)
-  (export ???
-    os-error file-not-found-error not-a-directory-error file-exists-error
-    timeout-error type-error type-error? key-error value-error index-error)
+  (export ??? os-error file-not-found-error not-a-directory-error file-exists-error timeout-error
+          type-error type-error? key-error value-error index-error)
   (begin
 
     (define (os-error . args)
@@ -40,7 +39,8 @@
       (apply error (cons 'type-error args)))
 
     (define (type-error? err)
-      (not (null? (member err `(type-error wrong-type-arg)))))
+      (not
+       (null? (member err '(type-error wrong-type-arg)))))
 
     (define (key-error . args)
       (apply error (cons 'key-error args)))
@@ -52,8 +52,5 @@
       (apply error (cons 'index-error args)))
 
     (define (??? . args)
-      (apply error (cons '??? args)))
-
-    ) ; begin
-  ) ; define-library
+      (apply error (cons '??? args)))))
 

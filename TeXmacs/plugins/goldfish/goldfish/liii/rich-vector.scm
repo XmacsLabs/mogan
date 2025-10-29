@@ -46,6 +46,10 @@
         (chain-apply args
           (rich-vector (make-vector n elem))))
 
+      (define (@concat v1 v2 . args)
+        (chain-apply args
+          (rich-vector (vector-append (v1 :collect) (v2 :collect)))))
+
       (define (%collect) data)
 
       (define (%length)

@@ -14,16 +14,16 @@
 ; under the License.
 ;
 
-(define-library (liii bitwise)
-  (import (srfi srfi-151) (liii error))
-  ; S7 built-in
-  (export lognot logand logior logxor ash)
-  ; from (srfi srfi-151)
-  (export bitwise-not bitwise-and bitwise-ior bitwise-xor bitwise-eqv bitwise-or bitwise-nor
-          bitwise-nand bit-count bitwise-orc1 bitwise-orc2 bitwise-andc1 bitwise-andc2
-          arithmetic-shift integer-length bitwise-if bit-set? copy-bit bit-swap any-bit-set?
-          every-bit-set? first-set-bit bit-field bit-field-any? bit-field-every? bit-field-clear
-          bit-field-set)
+(define-library (liii time)
+  (export sleep current-second current-jiffy jiffies-per-second)
+  (import (liii base)
+          (scheme time))
   (begin
-    (define bitwise-or bitwise-ior)))
 
+    (define (sleep seconds)
+      (if (not (number? seconds))
+        (error 'type-error "(sleep seconds): seconds must be a number")
+        (g_sleep seconds)))
+
+    ) ; end of begin
+  ) ; end of define-library

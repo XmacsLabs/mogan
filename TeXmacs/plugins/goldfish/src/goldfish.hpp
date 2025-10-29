@@ -24,6 +24,7 @@
 #include <s7.h>
 #include <string>
 #include <vector>
+#include <thread>
 
 #include <tbox/platform/file.h>
 #include <tbox/platform/path.h>
@@ -55,7 +56,7 @@
 #include <isocline.h>
 #endif
 
-#define GOLDFISH_VERSION "17.11.20"
+#define GOLDFISH_VERSION "17.11.21"
 
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
@@ -522,6 +523,25 @@ glue_getpid (s7_scheme* sc) {
   glue_define (sc, name, desc, f_getpid, 0, 0);
 }
 
+static s7_pointer
+f_sleep(s7_scheme* sc, s7_pointer args) {
+  s7_double seconds = s7_real(s7_car(args));
+  
+  // 使用 tbox 的 tb_sleep 函数，参数是毫秒
+  tb_msleep((tb_long_t)(seconds * 1000));
+
+  return s7_nil(sc);
+}
+
+inline void
+glue_sleep(s7_scheme* sc) {
+  const char* name = "g_sleep";
+  const char* desc = "(g_sleep seconds) => nil, sleep for the specified number of seconds";
+  glue_define(sc, name, desc, f_sleep, 1, 0);
+}
+
+
+
 inline void
 glue_liii_os (s7_scheme* sc) {
   glue_os_arch (sc);
@@ -922,6 +942,11 @@ glue_date_now (s7_scheme* sc) {
 }
 
 inline void
+glue_liii_time (s7_scheme* sc) {
+  glue_sleep (sc);
+}
+
+inline void
 glue_liii_datetime (s7_scheme* sc) {
   glue_datetime_now (sc);
   glue_date_now (sc);
@@ -995,6 +1020,7 @@ glue_for_community_edition (s7_scheme* sc) {
   glue_liii_os (sc);
   glue_liii_path (sc);
   glue_liii_list (sc);
+  glue_liii_time (sc);
   glue_liii_datetime (sc);
   glue_liii_uuid (sc);
 }

@@ -15,7 +15,7 @@
 ;
 
 (define-library (liii rich-char)
-  (import (liii oop) (liii bitwise) (liii base) (liii string))
+  (import (liii oop) (liii bitwise) (liii base) (liii string) (liii unicode))
   (export rich-char)
   (begin
 
@@ -91,65 +91,10 @@
                 code-point))))
 
       (define (%to-bytevector)
-        (cond
-          ((<= code-point #x7F)
-           (bytevector code-point))
-
-          ((<= code-point #x7FF)
-           (let ((byte1 (bitwise-ior #b11000000 (bitwise-and (arithmetic-shift code-point -6) #b00011111)))
-                 (byte2 (bitwise-ior #b10000000 (bitwise-and code-point #b00111111))))
-             (bytevector byte1 byte2)))
-
-          ((<= code-point #xFFFF)
-           (let ((byte1 (bitwise-ior #b11100000 (bitwise-and (arithmetic-shift code-point -12) #b00001111)))
-                 (byte2 (bitwise-ior #b10000000 (bitwise-and (arithmetic-shift code-point -6) #b00111111)))
-                 (byte3 (bitwise-ior #b10000000 (bitwise-and code-point #b00111111))))
-             (bytevector byte1 byte2 byte3)))
-
-          ((<= code-point #x10FFFF)
-           (let ((byte1 (bitwise-ior #b11110000 (bitwise-and (arithmetic-shift code-point -18) #b00000111)))
-                 (byte2 (bitwise-ior #b10000000 (bitwise-and (arithmetic-shift code-point -12) #b00111111)))
-                 (byte3 (bitwise-ior #b10000000 (bitwise-and (arithmetic-shift code-point -6) #b00111111)))
-                 (byte4 (bitwise-ior #b10000000 (bitwise-and code-point #b00111111))))
-             (bytevector byte1 byte2 byte3 byte4)))
-
-          (else
-           (value-error "Invalid code point"))))
+        (codepoint->utf8 code-point))
 
       (define (@from-bytevector x)
-        (define (utf8-byte-sequence->code-point byte-seq)
-          (let ((len (bytevector-length byte-seq)))
-            (cond
-              ((= len 1)
-               (bytevector-u8-ref byte-seq 0))
-              ((= len 2)
-               (let ((b1 (bytevector-u8-ref byte-seq 0))
-                     (b2 (bytevector-u8-ref byte-seq 1)))
-                 (bitwise-ior
-                  (arithmetic-shift (bitwise-and b1 #x1F) 6)
-                  (bitwise-and b2 #x3F))))
-              ((= len 3)
-               (let ((b1 (bytevector-u8-ref byte-seq 0))
-                     (b2 (bytevector-u8-ref byte-seq 1))
-                     (b3 (bytevector-u8-ref byte-seq 2)))
-                 (bitwise-ior
-                  (arithmetic-shift (bitwise-and b1 #x0F) 12)
-                  (arithmetic-shift (bitwise-and b2 #x3F) 6)
-                  (bitwise-and b3 #x3F))))
-              ((= len 4)
-               (let ((b1 (bytevector-u8-ref byte-seq 0))
-                     (b2 (bytevector-u8-ref byte-seq 1))
-                     (b3 (bytevector-u8-ref byte-seq 2))
-                     (b4 (bytevector-u8-ref byte-seq 3)))
-                 (bitwise-ior
-                   (arithmetic-shift (bitwise-and b1 #x07) 18)
-                   (arithmetic-shift (bitwise-and b2 #x3F) 12)
-                   (arithmetic-shift (bitwise-and b3 #x3F) 6)
-                   (bitwise-and b4 #x3F))))
-              (else
-               (value-error "Invalid UTF-8 byte sequence length")))))
-
-        (rich-char (utf8-byte-sequence->code-point x)))
+        (rich-char (utf8->codepoint x)))
 
       (define (%to-string)
         (if (%ascii?)

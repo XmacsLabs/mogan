@@ -99,11 +99,6 @@
                       (list-sort less-p larger))))))
 
     (define (list-sort! less-p lst)
-      ;; 辅助函数：返回列表的最后一个元素
-      (define (last-pair lst)
-        (if (null? (cdr lst))
-            lst
-            (last-pair (cdr lst))))
       ;; 辅助函数：将列表分成小于和大于 pivot 的部分
       (define (partition! lst pivot less-p)
         (let loop ((lst lst) (less '()) (greater '()))

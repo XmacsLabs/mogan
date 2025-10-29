@@ -16,13 +16,158 @@
 
 (define-library (scheme char)
   (export
-    char-upcase char-downcase char-upper-case? char-lower-case? digit-value
+    char-upcase char-downcase char-foldcase char-upper-case? char-lower-case? digit-value
+    char-numeric? char-alphabetic? char-whitespace? char-ci=? char-ci<? char-ci>? char-ci<=? char-ci>=?
     )
   (begin
     (define (digit-value ch)
       (if (char-numeric? ch)
           (- (char->integer ch) (char->integer #\0))
           #f))
+
+    (define s7-char-upcase char-upcase)
+
+    (define (char-upcase char)
+      (unless (char? char)
+        (error 'type-error "char-upcase: parameter must be character"))
+      (s7-char-upcase char))
+
+    (define s7-char-downcase char-downcase)
+
+    (define (char-downcase char)
+      (unless (char? char)
+        (error 'type-error "char-downcase: parameter must be character"))
+      (s7-char-downcase char))
+
+    (define (char-foldcase char)
+      (unless (char? char)
+        (error 'type-error "char-foldcase: parameter must be character"))
+      (char-downcase char))
+
+    (define s7-char-numeric? char-numeric?)
+
+    (define (char-numeric? char)
+      (unless (char? char)
+        (error 'type-error "char-numeric?: parameter must be character"))
+      (s7-char-numeric? char))
+
+    (define s7-char-alphabetic? char-alphabetic?)
+
+    (define (char-alphabetic? char)
+      (unless (char? char)
+        (error 'type-error "char-alphabetic?: parameter must be character"))
+      (s7-char-alphabetic? char))
+
+    (define s7-char-whitespace? char-whitespace?)
+
+    (define (char-whitespace? char)
+      (unless (char? char)
+        (error 'type-error "char-whitespace?: parameter must be character"))
+      (s7-char-whitespace? char))
+
+    (define s7-char-upper-case? char-upper-case?)
+
+    (define (char-upper-case? char)
+      (unless (char? char)
+        (error 'type-error "char-upper-case?: parameter must be character"))
+      (s7-char-upper-case? char))
+
+    (define s7-char-lower-case? char-lower-case?)
+
+    (define (char-lower-case? char)
+      (unless (char? char)
+        (error 'type-error "char-lower-case?: parameter must be character"))
+      (s7-char-lower-case? char))
+
+    (define s7-char-ci=? char-ci=?)
+
+    (define (char-ci=? char1 char2 . rest)
+      (unless (char? char1)
+        (error 'type-error "char-ci=?: first parameter must be character"))
+      (unless (char? char2)
+        (error 'type-error "char-ci=?: second parameter must be character"))
+      (let loop ((current (s7-char-ci=? char1 char2))
+                 (remaining rest))
+        (if (null? remaining)
+            current
+            (let ((next-char (car remaining)))
+              (unless (char? next-char)
+                (error 'type-error "char-ci=?: parameter must be character"))
+              (and current
+                   (loop (s7-char-ci=? char2 next-char)
+                         (cdr remaining)))))))
+
+    (define s7-char-ci<? char-ci<?)
+
+    (define (char-ci<? char1 char2 . rest)
+      (unless (char? char1)
+        (error 'type-error "char-ci<?: first parameter must be character"))
+      (unless (char? char2)
+        (error 'type-error "char-ci<?: second parameter must be character"))
+      (let loop ((current (s7-char-ci<? char1 char2))
+                 (remaining rest))
+        (if (null? remaining)
+            current
+            (let ((next-char (car remaining)))
+              (unless (char? next-char)
+                (error 'type-error "char-ci<?: parameter must be character"))
+              (and current
+                   (loop (s7-char-ci<? char2 next-char)
+                         (cdr remaining)))))))
+
+    (define s7-char-ci>? char-ci>?)
+
+    (define (char-ci>? char1 char2 . rest)
+      (unless (char? char1)
+        (error 'type-error "char-ci>?: first parameter must be character"))
+      (unless (char? char2)
+        (error 'type-error "char-ci>?: second parameter must be character"))
+      (let loop ((current (s7-char-ci>? char1 char2))
+                 (remaining rest))
+        (if (null? remaining)
+            current
+            (let ((next-char (car remaining)))
+              (unless (char? next-char)
+                (error 'type-error "char-ci>?: parameter must be character"))
+              (and current
+                   (loop (s7-char-ci>? char2 next-char)
+                         (cdr remaining)))))))
+
+    (define s7-char-ci>=? char-ci>=?)
+
+    (define (char-ci>=? char1 char2 . rest)
+      (unless (char? char1)
+        (error 'type-error "char-ci>=?: first parameter must be character"))
+      (unless (char? char2)
+        (error 'type-error "char-ci>=?: second parameter must be character"))
+      (let loop ((current (s7-char-ci>=? char1 char2))
+                 (remaining rest))
+        (if (null? remaining)
+            current
+            (let ((next-char (car remaining)))
+              (unless (char? next-char)
+                (error 'type-error "char-ci>=?: parameter must be character"))
+              (and current
+                   (loop (s7-char-ci>=? char2 next-char)
+                         (cdr remaining)))))))
+
+    (define s7-char-ci<=? char-ci<=?)
+
+    (define (char-ci<=? char1 char2 . rest)
+      (unless (char? char1)
+        (error 'type-error "char-ci<=?: first parameter must be character"))
+      (unless (char? char2)
+        (error 'type-error "char-ci<=?: second parameter must be character"))
+      (let loop ((current (s7-char-ci<=? char1 char2))
+                 (remaining rest))
+        (if (null? remaining)
+            current
+            (let ((next-char (car remaining)))
+              (unless (char? next-char)
+                (error 'type-error "char-ci<=?: parameter must be character"))
+              (and current
+                   (loop (s7-char-ci<=? char2 next-char)
+                         (cdr remaining)))))))
 
     ) ; end of begin
   ) ; end of define-library
