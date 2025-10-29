@@ -263,8 +263,11 @@ mupdf_load_image (url u) {
       const uchar* src_data      = NULL;
       int          bytes_per_line= 0;
 
-      // Use Format_RGBA8888: memory layout is R,G,B,A per byte — memcpy rows
-      QImage img    = qimage.convertToFormat (QImage::Format_RGBA8888);
+      // 使用 Qt 的预乘 (premultiplied) RGBA 格式，既正确处理
+      // alpha，又能提高性能。 Qt 6.8 支持
+      // QImage::Format_RGBA8888_Premultiplied，可直接按行 memcpy。
+      QImage img=
+          qimage.convertToFormat (QImage::Format_RGBA8888_Premultiplied);
       src_data      = img.constBits ();
       bytes_per_line= img.bytesPerLine ();
       pix= fz_new_pixmap (ctx, fz_device_rgb (ctx), width, height, NULL, 1);
