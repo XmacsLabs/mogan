@@ -50,6 +50,28 @@ jobs:
           wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/gs.exe
       - name: Generate Installer
         run: xmake pack --yes -vD stem
+      - name: Rename installer using XMACS_VERSION
+        shell: pwsh
+        run: |
+          $content = Get-Content "xmake/vars.lua" -Raw -ErrorAction SilentlyContinue
+          if ($content -match 'XMACS_VERSION.*"(.*)"') {
+            $ver = $Matches[1]
+            Write-Host "Found version: $ver"
+            $packDir = Join-Path -Path "build" -ChildPath "xpack/stem"
+            if (Test-Path $packDir) {
+              $exe = Get-ChildItem -Path $packDir -Filter "*.exe" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+              if ($exe) {
+                $newName = "MoganSTEM-v${ver}-64bit-installer.exe"
+                Write-Host "Renaming $($exe.Name) -> $newName"
+                Rename-Item -Path $exe.FullName -NewName $newName -Force
+                Write-Host "Rename complete"
+              } else {
+                Write-Warning "No .exe installer found in $packDir"
+              }
+            } else {
+              Write-Warning "Package directory '$packDir' not found"
+            }
+          }
       - name: Upload 
         uses: actions/upload-artifact@v4
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
