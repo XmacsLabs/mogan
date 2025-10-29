@@ -14,16 +14,16 @@
   (data tmu)
   (texmacs texmacs tm-tools))
 
-(import (liii check)(liii path))
+(import (liii check)
+        (liii path))
 
 (tm-define (test_202_53)
-  (let* ((test-doc (tmu->texmacs (path-read-text (string-append (url->system (get-texmacs-path)) "\\tests\\tmu\\202_53.tmu"))))
+  (let* ((test-doc (tmu->texmacs ((path (url->system (get-texmacs-path))) :/ "tests" :/ "tmu" :/ "202_53.tmu" :read-text)))
          (non-chinese (count-words test-doc))
          (chars-no-space (count-chars-no-space test-doc))
          (chinese (count-chinese-and-words test-doc))
          (line-count (count-lines test-doc))
-         (char-count (count-characters test-doc))
-        )
+         (char-count (count-characters test-doc)))
 
     ;; 测试页数 - 预期: 2
 

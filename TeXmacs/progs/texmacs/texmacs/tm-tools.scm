@@ -20,7 +20,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; TODO: if string in scheme represent unicode codepoint with single character 
-;;   rather than utf-8 encoding, replace u8-string-length with string-length
+;;   rather than utf-8 encoding, replace utf8-string-length with string-length
 (define (compress-newline s)
   (let* ((s1 (string-replace s "\r\n" ""))
          (s2 (string-replace s1 "\n" "")))
@@ -28,7 +28,7 @@
 
 (tm-define (count-characters doc)
   (with s (convert doc "texmacs-tree" "verbatim-snippet")
-    (u8-string-length (compress-newline s))))
+    (utf8-string-length (compress-newline s))))
 
 (define (compress-spaces s)
   (let* ((s1 (string-replace s "\n" " "))
@@ -63,7 +63,7 @@
 
 (tm-define (count-chars-no-space doc)
   (with s (convert doc "texmacs-tree" "verbatim-snippet")
-    (u8-string-length (compress-newline (string-replace s " " "")))))
+    (utf8-string-length (compress-newline (string-replace s " " "")))))
 
 (tm-define (count-chinese-and-words doc)
   (with s (convert doc "texmacs-tree" "verbatim-snippet")
@@ -75,7 +75,7 @@
       (let loop ((pos 0))
         (if (>= pos byte-len)
             (cons cnt-c cnt-w)
-            (let ((next-pos (bytevector-advance-u8 bv pos byte-len)))
+            (let ((next-pos (bytevector-advance-utf8 bv pos byte-len)))
               (when (> next-pos pos)
                 (let ((cp (decode-utf8-from-bv bv pos next-pos)))
                   (cond
