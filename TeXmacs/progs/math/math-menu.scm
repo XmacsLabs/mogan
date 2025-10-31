@@ -566,7 +566,8 @@
   (symbol "<nsqsubset>")
   (symbol "<nsqsubseteq>")
   (symbol "<nsqsupset>")
-  (symbol "<nsqsupseteq>"))
+  (symbol "<nsqsupseteq>")
+  (symbol "<nmid>"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Greek characters
