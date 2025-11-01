@@ -32,6 +32,8 @@
 
   <assign|sectional-short-style|<macro|true>>
 
+  <drd-props|sectional-short-style|macro-parameter|boolean>
+
   <drd-props|sectional-sep|macro-parameter|regular>
 
   <\active*>
