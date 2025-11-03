@@ -7,7 +7,7 @@
 sudo apt install xmake
 
 sudo apt update
-sudo apt install --yes build-essential libfontconfig1-dev  qt6-base-dev libqt6svg6-dev qt6-image-formats-plugins libcurl4-openssl-dev libfreetype-dev libgit2-dev zlib1g-dev libssl-dev libjpeg-turbo8-dev cmake
+sudo apt install -y gcc git 7zip unzip curl build-essential fonts-noto-cjk libcurl4-openssl-dev libfreetype-dev libfontconfig-dev libmimalloc-dev libgit2-dev zlib1g-dev libssl-dev libjpeg62-turbo-dev cmake pandoc xmake python3.13 ninja-build libdbus-1-3 libglib2.0-0t64 libegl1 libgl-dev libxkbcommon0
 ```
 
 有时候需要保持xrepo是最新的，以保证使用最新的依赖的构建定义
@@ -16,18 +16,11 @@ xrepo update-repo
 ```
 
 ### 第二步：编译
+-vD 会显示具体debug日志，qt的安装缓存：/home/username/.xmake/packages
+比如 /home/jiadong/.xmake/packages/q/qt6base/6.8.3/7c1ea54729db483fa6eee7744bd4a333
 ```
-xmake config --yes
+xmake config --yes -vD
 xmake build stem
-```
-
-如果找不到Qt，那么在config的时候，可以手动指定，比如：
-```
-xmake config --qt=/usr/lib/`arch`-linux-gnu/qt6/
-```
-切换到Qt 5，也只需要：
-```
-xmake config --qt=/usr/lib/`arch`-linux-gnu/qt5/
 ```
 
 ### 第三步：测试
@@ -36,6 +29,16 @@ xmake config --qt=/usr/lib/`arch`-linux-gnu/qt5/
 ### 第四步：启动墨干
 ``` bash
 xmake run stem
+```
+
+### 某些情况下需要清除缓存（比如菜单栏消失等情况）
+缓存目录
+``` bash
+rm -rf ~/.cache/MoganLab 
+```
+运行中的缓存
+``` bash
+rm -rf ~/.local/share/moganlab
 ```
 
 ## 使用VSCode帮助代码补全
