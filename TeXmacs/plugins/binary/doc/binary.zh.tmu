@@ -1,43 +1,27 @@
-<TeXmacs|2.1.2>
+<TMU|<tuple|1.1.0|2025.1.4>>
 
-<style|<tuple|tmdoc|british>>
+<style|<tuple|tmdoc|chinese|python>>
 
 <\body>
-  <tmdoc-title|Binary Plugin>
+  <tmdoc-title|二进制插件>
 
-  Binary plugins are a type of plugins that are primarily used for:
+  二进制插件是一类插件，主要用于：\ 
 
   <\itemize>
-    <item>Locating the position of executable files and determining whether
-    they exist.
+    <item>定位可执行文件的位置并判断可执行文件是否存在
 
-    <item>Invoking executable files based on actual needs, and encapsulating
-    the preprocessing of inputs and post-processing logic of outputs.
+    <item>依据实际需求调用可执行文件，并封装输入的预处理和输出的后置处理逻辑
   </itemize>
 
-  For the complete documentation, please refer to the <hlink|Binary Plugin
-  page|https://mogan.app/guide/plugins.html> on our official website. This
-  document will demonstrate how to configure binary plugins through a Scheme
-  session in the form of a Scheme session. Taking <shell|python3> as an
-  example, you can replace <shell|python3> with other binary plugins (such as
-  <shell|gs>) through the <menu|Edit|Replace> function. The Scheme session
-  described in this document will still be valid.
+  完整的文档请阅读官网的<hlink|二进制插件|https://mogan.app/zh/guide/plugins.html>页面。本文档将以Scheme会话的形式，演示如何用Scheme会话配置二进制插件。本文以<shell|python3>为例，通过<menu|Insert|Replace>可以将<shell|python3>替换为其他的二进制插件（比如<shell|gs>），本文的Scheme会话仍旧生效。
 
-  <section*|Location>
+  <section*|定位>
 
   <\session|scheme|default>
     <\folded-io|Scheme] >
       (use-modules (binary python3))
     <|folded-io>
-      (#1=(inlet 'supports-slidemove? supports-slidemove? 'supports-python?
-      supports-python? 'python-launcher python-launcher 'python-utf8-command
-      python-utf8-command 'python-serialize python-serialize
-      'scala-snippet-\<gtr\>texmacs scala-snippet-\<gtr\>texmacs
-      'scala-\<gtr\>texmacs scala-\<gtr\>texmacs 'texmacs-\<gtr\>scala
-      texmacs-\<gtr\>scala 'python-snippet-\<gtr\>texmacs
-      python-snippet-\<gtr\>texmacs 'python-\<gtr\>texmacs
-      python-\<gtr\>texmacs 'texmacs-\<gtr\>python texmacs-\<gtr\>python
-      'julia-snippet-\<gtr\>texmacs julia-snippet-\<gtr\>texmacs ...))
+      (#1=(inlet 'supports-slidemove? supports-slidemove? 'supports-python? supports-python? 'python-launcher python-launcher 'python-utf8-command python-utf8-command 'python-serialize python-serialize 'scala-snippet-\<gtr\>texmacs scala-snippet-\<gtr\>texmacs 'scala-\<gtr\>texmacs scala-\<gtr\>texmacs 'texmacs-\<gtr\>scala texmacs-\<gtr\>scala 'python-snippet-\<gtr\>texmacs python-snippet-\<gtr\>texmacs 'python-\<gtr\>texmacs python-\<gtr\>texmacs 'texmacs-\<gtr\>python texmacs-\<gtr\>python 'julia-snippet-\<gtr\>texmacs julia-snippet-\<gtr\>texmacs ...))
     </folded-io>
 
     <\unfolded-io|Scheme] >
@@ -57,10 +41,9 @@
     </input>
   </session>
 
-  <section*|Customization>
+  <section*|定制>
 
-  Taking the Python plugin as an example, insert Python session via
-  <menu|Insert|Fold|Executable|Python>:
+  以Python插件为例，可以通过<menu|Insert|Fold|Executable|Python>插入Python会话：
 
   <\session|python|default>
     <\output>
@@ -80,8 +63,7 @@
 
   \;
 
-  The Python interpreter used by the default Python session is determined by
-  <scm|(find-binary-python3)>.
+  默认的Python会话使用的Python解释器是由<scm|(find-binary-python3)>决定的。
 
   <\session|scheme|default>
     <\unfolded-io|Scheme] >
@@ -119,9 +101,7 @@
 
   \;
 
-  We have already set the default binary path for python3 to
-  <scm|"/usr/bin/python3.11">. Now, by restarting Mogan, you can insert a
-  Python session for Python 3.11.
+  我们已经将<shell|python3>的默认二进制路径设置为<scm|"/usr/bin/python3.11">。此时重启墨干，就可以插入Python 3.11的Python会话：
 
   <\session|python|default>
     <\output>
@@ -139,10 +119,9 @@
     </input>
   </session>
 
-  <section*|Security>
+  <section*|安全>
 
-  Given the potential security risks associated with calling external
-  commands, it is also possible to completely disable binary plugins:
+  考虑到调用外部命令存在的安全隐患，也可以完全禁用二进制插件：
 
   <\session|scheme|default>
     <\unfolded-io|Scheme] >
