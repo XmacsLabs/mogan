@@ -755,6 +755,7 @@
 ("flexibility" "弹性")
 ("floating algorithm" "浮动算法")
 ("floating figure" "浮动图形")
+("Floating phantom" "浮动占位符")
 ("floating object" "浮动对象")
 ("floating table" "浮动表格")
 ("fn" "字符")
