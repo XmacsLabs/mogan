@@ -1871,6 +1871,7 @@
 ("search results for" "")
 ("search toolbar" "搜索工具栏")
 ("search words in my documents" "")
+("Search words in recent documents:" "在最近打开文档中搜索:")
 ("search words in the documentation" "在文档中搜索")
 ("search words in the source code" "在源代码中搜索")
 ("search" "查找")
