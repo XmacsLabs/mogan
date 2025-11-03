@@ -1,0 +1,48 @@
+<TMU|<tuple|1.1.0|2025.1.4>>
+
+<style|<tuple|tmdoc|chinese|julia>>
+
+<\body>
+  <\hide-preamble>
+    <assign|code-name|julia>
+
+    <assign|code-Name|Julia>
+  </hide-preamble>
+
+  <tmdoc-title|<value|code-Name> 代码 插件>
+
+  <paragraph|<value|code-Name> 样式包>
+
+  点击 <menu|Document|Style|Add package|Code|<value|code-name>> 或点击 <menu|<icon|tm_add.svg>|Code|<value|code-name>> 来添加 <value|code-Name> 样式包。
+
+  在 <code-Name> 样式包中, <markup|<value|code-name>>用于行内代码片段, <markup|<value|code-name>-code> 用于julia代码块
+
+  <paragraph|<value|code-Name> 语法>
+
+  <value|code-Name>语法定义在:
+
+  <slink|$TEXMACS_PATH/plugins/dot/progs/code/<value|code-name>-lang.scm>
+
+  以下是一个带有语法高亮的<value|code-Name> code 代码块示例:
+
+  <\julia-code>
+    println("Hello, World!")
+  </julia-code>
+
+  <paragraph|<value|code-Name> 编辑>
+
+  <value|code-Name>代码的编辑功能定义在:
+
+  <slink|$TEXMACS_PATH/plugins/<value|code-name>/progs/code/<value|code-name>-edit.scm>
+
+  <tmdoc-copyright|2024|Darcy Shen>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|papyrus>
+    <associate|page-screen-margin|true>
+  </collection>
+</initial>
