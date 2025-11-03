@@ -754,7 +754,7 @@
   ((check (balloon (icon "tm_carc_mode.xpm") "Insert circles")
           "v" (== (graphics-mode) '(edit circle)))
    (graphics-set-mode '(edit circle)))
-  ((check (balloon (icon "tm_elliptical.xpm") "Insert ellipticals")
+  ((check (balloon (icon "tm_elliptical.xpm") "Insert ellipses")
           "v" (== (graphics-mode) '(edit ellipse)))
    (graphics-set-mode '(edit ellipse)))
   /

@@ -1020,6 +1020,7 @@
 ("insert big vertical space" "")
 ("insert chapter" "")
 ("insert circles" "插入圆")
+("insert ellipses" "插入椭圆")
 ("insert closed splines" "插入闭合曲线")
 ("insert column to the left" "插入列(在左侧)")
 ("insert column to the right" "插入列(在右侧)")
