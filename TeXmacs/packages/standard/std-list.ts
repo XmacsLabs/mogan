@@ -113,16 +113,16 @@
   </macro>>
 
   <assign|list|<\macro|item-render|item-transform|body>
-    <\with|current-item|<arg|item-render>|transform-item|<arg|item-transform>|item-nr|0>
+    <\with|current-item|<arg|item-render>|transform-item|<arg|item-transform>|item-nr|<value|item-nr>>
       <render-list|<arg|body>>
     </with>
   </macro>>
 
   <assign|list*|<\macro|item-render|item-transform|body>
-    <\with|current-item|<arg|item-render>|transform-item|<quasiquote|<macro|name|<unquote|<value|last-item>>.<compound|<unquote|<arg|item-transform>>|<arg|name>>>>|item-nr|0|last-item-nr|0>
+    <\with|current-item|<arg|item-render>|transform-item|<quasiquote|<macro|name|<unquote|<value|last-item>>.<compound|<unquote|<arg|item-transform>>|<arg|name>>>>|item-nr|<value|item-nr>|last-item-nr|0>
       <render-list|<arg|body>>
     </with>
-  </macro>>
+  </macro>> 
 
   <assign|list-continued|<\macro|item-render|item-transform|body>
     <\with|current-item|<arg|item-render>|transform-item|<arg|item-transform>|item-nr|<value|last-item-nr>>

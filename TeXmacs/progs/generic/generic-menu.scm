@@ -243,6 +243,9 @@
   (cond ((not (tm? val)) (noop))
         ((== mode :global)
          (set-init-env l val))
+        ((and (func? mode :local)
+              (parameter-local-special-set l val mode))
+         (noop))
         ((and (func? mode :local) (tree-is? (focus-tree) (cadr mode)))
          (tree-with-set (focus-tree) l val))))
 
@@ -460,13 +463,14 @@
   (set! parameters-list-cache (make-ahash-table)))
 
 (tm-menu (focus-parameters-menu t mode)
-  (with ps (focus-parameters-list-memo t mode)
-    (if (nnull? ps)
-        (group "Style parameters")
-        (for (p ps)
-          (dynamic (focus-parameter-menu-item p mode)))
-        (if (tree-label-extension? (tree-label t))
-            ---))))
+  (with base (focus-parameters-list-memo t mode)
+    (with ps (rendering-parameters-merge t base mode)
+      (if (nnull? ps)
+          (group "Style parameters")
+          (for (p ps)
+            (dynamic (focus-parameter-menu-item p mode)))
+          (if (tree-label-extension? (tree-label t))
+              ---)))))
 
 (tm-menu (focus-theme-parameters-submenu th mode)
   (with mems (theme->members th)
@@ -947,3 +951,52 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-modules (generic document-menu))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Rendering options for tag helpers
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (rendering-parameters-merge t base mode)
+  (if (func? mode :local)
+      (let ((global (focus-parameters-list-memo t :global)))
+        (if (and (in? "item-nr" global)
+                 (not (in? "item-nr" base)))
+            (append base (list "item-nr"))
+            base))
+      base))
+
+(tm-define (parameter-item-nr-set l val mode)
+  (with focus (focus-tree)
+    (let* ((same? (tree-is? focus (cadr mode)))
+           (item-node (tree-search-upwards focus '(item item*)))
+           (list-node (and item-node
+                           (or (tree-search-upwards item-node (enumerate-tag-list))
+                               (tree-search-upwards item-node (list-tag-list)))))
+           (target (cond (list-node list-node)
+                         (same? focus)
+                         (item-node item-node)
+                         (else focus)))
+           (done? #f))
+      (if (not (or same? item-node))
+          #f
+          (begin
+            (when (and item-node list-node)
+              (with wrapper (tree-up item-node)
+                (when (and wrapper
+                           (tree-is? wrapper 'with)
+                           (let loop ((i 0))
+                             (cond ((>= i (- (tree-arity wrapper) 1)) #f)
+                                   ((tm-equal? (tree-ref wrapper i) l) #t)
+                                   (else (loop (+ i 2))))))
+                  (tree-with-reset wrapper l)
+                  (set! done? #t))))
+            (when target
+              (tree-with-set target l val)
+              (set! done? #t))
+            done?)))))
+
+(tm-define (parameter-local-special-set l val mode)
+  ;; Extend this dispatch when adding more rendering options handled via locals.
+  (case (string->symbol l)
+    ((item-nr) (parameter-item-nr-set l val mode))
+    (else #f)))
