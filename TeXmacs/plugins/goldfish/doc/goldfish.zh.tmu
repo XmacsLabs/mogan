@@ -7,9 +7,9 @@
     <assign|font|math=Latin Modern Math,cjk=Noto CJK SC,CMU>
   </hide-preamble>
 
-  <tmdoc-title|金鱼Scheme插件>
+  <tmdoc-title|Goldfish Scheme插件>
 
-  <hlink|金鱼Scheme|https://gitee.com/LiiiLabs/goldfish>是基于S7 Scheme实现的Scheme解释器。通过<menu|Insert|Session|Goldfish Scheme>就可以插入金鱼Scheme会话。金鱼Scheme会话和墨干是运行在不同的操作系统进程中的，故而金鱼Scheme会话的死循环并不会导致墨干卡死，然而默认的Scheme会话中运行死循环是能导致墨干卡死的。墨干理工套件中的金鱼Scheme是金鱼Scheme解释器的社区版，三鲤理工套件中的金鱼Scheme是商业版。
+  <hlink|Goldfish Scheme|https://gitee.com/XmacsLabs/goldfish>是基于S7 Scheme实现的Scheme解释器。通过<menu|Insert|Session|Goldfish Scheme>就可以插入金鱼Scheme会话。金鱼Scheme会话和墨干是运行在不同的操作系统进程中的，故而金鱼Scheme会话的死循环并不会导致墨干卡死，然而默认的Scheme会话中运行死循环是能导致墨干卡死的。墨干理工套件中的金鱼Scheme是金鱼Scheme解释器的社区版，三鲤理工套件中的金鱼Scheme是商业版。
 
   下面是金鱼Scheme会话的一些特性：
 
@@ -75,7 +75,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      0(document (frac "分子" "分母"))
+      `(document (frac "分子" "分母"))
     <|unfolded-io>
       <frac|分子|分母>
     </unfolded-io>
@@ -83,7 +83,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      0(math (frac "1" "2"))
+      `(math (frac "1" "2"))
     <|unfolded-io>
       <math|<frac|1|2>>
     </unfolded-io>
@@ -91,7 +91,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      0(with "color" "red" "Hello")
+      `(with "color" "red" "Hello")
     <|unfolded-io>
       <with|color|red|Hello>
     </unfolded-io>
@@ -303,7 +303,7 @@
     <|unfolded-io>
       (runtime)
     <|unfolded-io>
-      <goldfish-result|1735109175544>
+      <goldfish-result|1762239312547>
     </unfolded-io>
 
     <\input>
@@ -979,7 +979,7 @@
     </input>
   </session>
 
-  <tmdoc-copyright|2024|沈达>
+  <tmdoc-copyright|2024-2025|沈达>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
 </body>
