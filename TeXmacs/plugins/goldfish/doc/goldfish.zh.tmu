@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2.1.4>>
+<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
 
 <style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|goldfish|chinese>>
 
@@ -7,15 +7,13 @@
     <assign|font|math=Latin Modern Math,cjk=Noto CJK SC,CMU>
   </hide-preamble>
 
-  <tmdoc-title|\<#91D1\>\<#9C7C\>Scheme\<#63D2\>\<#4EF6\>>
+  <tmdoc-title|金鱼Scheme插件>
 
-  <hlink|\<#91D1\>\<#9C7C\>Scheme|https://gitee.com/LiiiLabs/goldfish>\<#662F\>\<#57FA\>\<#4E8E\>S7
-  Scheme\<#5B9E\>\<#73B0\>\<#7684\>Scheme\<#89E3\>\<#91CA\>\<#5668\>\<#3002\>\<#901A\>\<#8FC7\><menu|Insert|Session|Goldfish
-  Scheme>\<#5C31\>\<#53EF\>\<#4EE5\>\<#63D2\>\<#5165\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#3002\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#548C\>\<#58A8\>\<#5E72\>\<#662F\>\<#8FD0\>\<#884C\>\<#5728\>\<#4E0D\>\<#540C\>\<#7684\>\<#64CD\>\<#4F5C\>\<#7CFB\>\<#7EDF\>\<#8FDB\>\<#7A0B\>\<#4E2D\>\<#7684\>\<#FF0C\>\<#6545\>\<#800C\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#7684\>\<#6B7B\>\<#5FAA\>\<#73AF\>\<#5E76\>\<#4E0D\>\<#4F1A\>\<#5BFC\>\<#81F4\>\<#58A8\>\<#5E72\>\<#5361\>\<#6B7B\>\<#FF0C\>\<#7136\>\<#800C\>\<#9ED8\>\<#8BA4\>\<#7684\>Scheme\<#4F1A\>\<#8BDD\>\<#4E2D\>\<#8FD0\>\<#884C\>\<#6B7B\>\<#5FAA\>\<#73AF\>\<#662F\>\<#80FD\>\<#5BFC\>\<#81F4\>\<#58A8\>\<#5E72\>\<#5361\>\<#6B7B\>\<#7684\>\<#3002\>\<#58A8\>\<#5E72\>\<#7406\>\<#5DE5\>\<#5957\>\<#4EF6\>\<#4E2D\>\<#7684\>\<#91D1\>\<#9C7C\>Scheme\<#662F\>\<#91D1\>\<#9C7C\>Scheme\<#89E3\>\<#91CA\>\<#5668\>\<#7684\>\<#793E\>\<#533A\>\<#7248\>\<#FF0C\>\<#4E09\>\<#9CA4\>\<#7406\>\<#5DE5\>\<#5957\>\<#4EF6\>\<#4E2D\>\<#7684\>\<#91D1\>\<#9C7C\>Scheme\<#662F\>\<#5546\>\<#4E1A\>\<#7248\>\<#3002\>
+  <hlink|金鱼Scheme|https://gitee.com/LiiiLabs/goldfish>是基于S7 Scheme实现的Scheme解释器。通过<menu|Insert|Session|Goldfish Scheme>就可以插入金鱼Scheme会话。金鱼Scheme会话和墨干是运行在不同的操作系统进程中的，故而金鱼Scheme会话的死循环并不会导致墨干卡死，然而默认的Scheme会话中运行死循环是能导致墨干卡死的。墨干理工套件中的金鱼Scheme是金鱼Scheme解释器的社区版，三鲤理工套件中的金鱼Scheme是商业版。
 
-  \<#4E0B\>\<#9762\>\<#662F\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#7684\>\<#4E00\>\<#4E9B\>\<#7279\>\<#6027\>\<#FF1A\>
+  下面是金鱼Scheme会话的一些特性：
 
-  <paragraph|Unicode\<#652F\>\<#6301\>>
+  <paragraph|Unicode支持>
 
   <\session|goldfish|default>
     <\output>
@@ -25,15 +23,15 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      '\<#4E2D\>\<#6587\>
+      '中文
     <|unfolded-io>
-      <goldfish-result|\<#4E2D\>\<#6587\>>
+      <goldfish-result|中文>
     </unfolded-io>
 
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (length "\<#4E2D\>\<#6587\>")
+      (length "中文")
     <|unfolded-io>
       <goldfish-result|6>
     </unfolded-io>
@@ -49,7 +47,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      (u8-string-length "\<#4E2D\>\<#6587\>")
+      (utf8-string-length "中文")
     <|unfolded-io>
       <goldfish-result|2>
     </unfolded-io>
@@ -57,9 +55,9 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      "\<#4E2D\>\<#6587\>"
+      "中文"
     <|unfolded-io>
-      <goldfish-result|"\<#4E2D\>\<#6587\>">
+      <goldfish-result|"中文">
     </unfolded-io>
 
     <\input>
@@ -69,23 +67,23 @@
     </input>
   </session>
 
-  <paragraph|\<#7279\>\<#6B8A\>\<#7684\>\<#6E32\>\<#67D3\>\<#89C4\>\<#5219\>>
+  <paragraph|特殊的渲染规则>
 
-  \<#58A8\>\<#5E72\>\<#7684\>\<#6587\>\<#6863\>\<#672C\>\<#8D28\>\<#4E0A\>\<#662F\>Scheme\<#4EE3\>\<#7801\>\<#FF0C\>\<#91D1\>\<#9C7C\>Scheme\<#4F1A\>\<#8BDD\>\<#7684\>\<#6C42\>\<#503C\>\<#7ED3\>\<#679C\>\<#FF0C\>\<#5982\>\<#679C\>\<#4EE5\><markup|document>\<#3001\><markup|math>\<#3001\><markup|equation*>\<#3001\><markup|align>\<#3001\><markup|with>\<#3001\><markup|graphics>\<#5F00\>\<#5934\>\<#FF0C\>\<#90A3\>\<#4E48\>\<#4F1A\>\<#88AB\>\<#6E32\>\<#67D3\>\<#4E3A\>\<#58A8\>\<#5E72\>\<#6587\>\<#6863\>\<#7247\>\<#6BB5\>\<#FF1A\>
+  墨干的文档本质上是Scheme代码，金鱼Scheme会话的求值结果，如果以<markup|document>、<markup|math>、<markup|equation*>、<markup|align>、<markup|with>、<markup|graphics>开头，那么会被渲染为墨干文档片段：
 
   <\session|goldfish|default>
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      \0(document (frac "\<#5206\>\<#5B50\>" "\<#5206\>\<#6BCD\>"))
+      0(document (frac "分子" "分母"))
     <|unfolded-io>
-      <frac|\<#5206\>\<#5B50\>|\<#5206\>\<#6BCD\>>
+      <frac|分子|分母>
     </unfolded-io>
 
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      \0(math (frac "1" "2"))
+      0(math (frac "1" "2"))
     <|unfolded-io>
       <math|<frac|1|2>>
     </unfolded-io>
@@ -93,7 +91,7 @@
     <\unfolded-io>
       \<gtr\>\ 
     <|unfolded-io>
-      \0(with "color" "red" "Hello")
+      0(with "color" "red" "Hello")
     <|unfolded-io>
       <with|color|red|Hello>
     </unfolded-io>
@@ -105,9 +103,9 @@
     </input>
   </session>
 
-  <paragraph|\<#526F\>\<#4F5C\>\<#7528\>\<#548C\>\<#6C42\>\<#503C\>\<#7ED3\>\<#679C\>>
+  <paragraph|副作用和求值结果>
 
-  \<#6C42\>\<#503C\>\<#7ED3\>\<#679C\>\<#4EE5\>\<#6D45\>\<#7EFF\>\<#8272\>\<#7684\>\<#80CC\>\<#666F\>\<#8272\>\<#6807\>\<#6CE8\>\<#3002\>\<#526F\>\<#4F5C\>\<#7528\>\<#7684\>\<#80CC\>\<#666F\>\<#8272\>\<#662F\>\<#6587\>\<#6863\>\<#7684\>\<#80CC\>\<#666F\>\<#8272\>\<#FF0C\>\<#901A\>\<#5E38\>\<#662F\>\<#767D\>\<#8272\>\<#3002\>
+  求值结果以浅绿色的背景色标注。副作用的背景色是文档的背景色，通常是白色。
 
   <\session|goldfish|default>
     <\unfolded-io>
@@ -141,33 +139,33 @@
     </input>
   </session>
 
-  <paragraph|\<#91D1\>\<#9C7C\>\<#6807\>\<#51C6\>\<#5E93\>>
+  <paragraph|金鱼标准库>
 
-  \<#66F4\>\<#591A\>\<#6807\>\<#51C6\>\<#5E93\>\<#FF0C\>\<#8BF7\>\<#8BBF\>\<#95EE\>\<#91D1\>\<#9C7C\>Scheme\<#5B98\>\<#7F51\>\<#FF1A\><slink|https://gitee.com/LiiiLabs/goldfish>
+  更多标准库，请访问金鱼Scheme官网：<slink|https://gitee.com/LiiiLabs/goldfish>
 
   <\wide-tabular>
     <tformat|<table|<row|<\cell>
       <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/base.scm>
     </cell>|<\cell>
-      R7RS\<#57FA\>\<#7840\>\<#5E93\>
+      R7RS基础库
     </cell>|<\cell>
       <scm|(import (scheme base))>
     </cell>>|<row|<\cell>
       <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/case-lambda.scm>
     </cell>|<\cell>
-      \<#63D0\>\<#4F9B\>case-lambda
+      提供case-lambda
     </cell>|<\cell>
       <scm|(import (scheme case-lambda))>
     </cell>>|<row|<\cell>
       <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/file.scm>
     </cell>|<\cell>
-      R7RS\<#6587\>\<#4EF6\>\<#64CD\>\<#4F5C\>
+      R7RS文件操作
     </cell>|<\cell>
       <scm|(import (scheme file))>
     </cell>>|<row|<\cell>
       <hlink|R7RS|$TEXMACS_PATH/plugins/goldfish/goldfish/scheme/time.scm>
     </cell>|<\cell>
-      R7RS\<#65F6\>\<#95F4\>\<#5E93\>
+      R7RS时间库
     </cell>|<\cell>
       <scm|(import (scheme time))>
     </cell>>|<row|<\cell>
@@ -267,7 +265,7 @@
     </input>
   </session>
 
-  \<#76F4\>\<#63A5\>\<#542F\>\<#52A8\>\<#91D1\>\<#9C7C\>Scheme\<#7684\>sicp\<#542F\>\<#52A8\>\<#5668\>\<#FF0C\>\<#53EF\>\<#4EE5\>\<#5F97\>\<#5230\>\<#548C\>SICP\<#8FD9\>\<#672C\>\<#4E66\>\<#63CF\>\<#8FF0\>\<#7684\>Scheme\<#4E00\>\<#81F4\>\<#7684\>\<#8BED\>\<#6CD5\>\<#FF1A\>
+  直接启动金鱼Scheme的sicp启动器，可以得到和SICP这本书描述的Scheme一致的语法：
 
   <\session|goldfish|sicp>
     <\output>
@@ -317,8 +315,7 @@
 
   \;
 
-  \<#4E0B\>\<#6587\>\<#7684\>\<#4EE3\>\<#7801\>\<#7247\>\<#6BB5\>\<#6765\>\<#81EA\>\<#4E8E\><hlink|S7
-  Scheme\<#7684\>\<#5B98\>\<#7F51\>|https://ccrma.stanford.edu/software/s7/s7.html>\<#3002\>
+  下文的代码片段来自于<hlink|S7 Scheme的官网|https://ccrma.stanford.edu/software/s7/s7.html>。
 
   <paragraph|help>
 
@@ -328,8 +325,7 @@
     <|unfolded-io>
       (help 'equal?)
     <|unfolded-io>
-      <goldfish-result|"(equal? obj1 obj2) returns #t if obj1 is equal to
-      obj2">
+      <goldfish-result|"(equal? obj1 obj2) returns #t if obj1 is equal to obj2">
     </unfolded-io>
 
     <\unfolded-io>
@@ -337,8 +333,7 @@
     <|unfolded-io>
       (help 'cdar)
     <|unfolded-io>
-      <goldfish-result|"(cdar lst) returns (cdr (car lst)): (cdar '((1 2 3)))
-      -\> '(2 3)">
+      <goldfish-result|"(cdar lst) returns (cdr (car lst)): (cdar '((1 2 3))) -\> '(2 3)">
     </unfolded-io>
 
     <\input>
@@ -870,8 +865,7 @@
 
       \ \ \ \ \ \ (apply format #t (cadr args))))
     <|unfolded-io>
-      abs: too many arguments: (abs 1 2)<goldfish-result|"abs: too many
-      arguments: (abs 1 2)">
+      abs: too many arguments: (abs 1 2)<goldfish-result|"abs: too many arguments: (abs 1 2)">
     </unfolded-io>
 
     <\unfolded-io>
@@ -985,14 +979,9 @@
     </input>
   </session>
 
-  <tmdoc-copyright|2024|\<#6C88\>\<#8FBE\>>
+  <tmdoc-copyright|2024|沈达>
 
-  <tmdoc-license|Permission is granted to copy, distribute and/or modify this
-  document under the terms of the GNU Free Documentation License, Version 1.1
-  or any later version published by the Free Software Foundation; with no
-  Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
-  Texts. A copy of the license is included in the section entitled "GNU Free
-  Documentation License".>
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
 </body>
 
 <\initial>
