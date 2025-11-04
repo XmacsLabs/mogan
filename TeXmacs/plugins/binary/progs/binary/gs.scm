@@ -39,7 +39,8 @@
 
 (define (get-image-size-from-bbox line)
   (let* ((box (string-drop line (length "%%BoundingBox: ")))
-         (fbox (and (> (length box) 0) (map string->float (string-split box #\space)))))
+         (num-box (string-replace box "\r" ""))
+         (fbox (and (> (length box) 0) (map string->float (string-split num-box #\space)))))
     (and (== (length fbox) 4)
          (list (floor (first fbox)) ;; x1
                (floor (second fbox)) ;; y1
