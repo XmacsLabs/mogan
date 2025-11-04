@@ -127,6 +127,7 @@ QTMMathCompletionPopup::getCachedPosition (int& x, int& y) {
       cached_canvas_x) /
      256;
   y= -((cached_cursor_y - 5000 - cached_scroll_y) * cached_magf) / 256;
+  y+= 10;
 }
 
 void
