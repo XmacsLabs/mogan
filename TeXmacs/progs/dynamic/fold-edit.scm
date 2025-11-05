@@ -628,7 +628,13 @@
 (define (dynamic-operate-sub t mode)
   (if (tree-compound? t)
       (for-each (lambda (x) (dynamic-operate x mode)) (tree-children t)))
-  (cond ((toggle-first-context? t)
+  (cond ((and (converter-context? t) (toggle-first-context? t))
+         ;; 对于converter-input，不进行折叠或展开操作
+         #f)
+        ((and (converter-context? t) (toggle-second-context? t))
+         ;; 对于converter-output，不进行折叠或展开操作
+         #f)
+        ((toggle-first-context? t)
          (cond ((== mode :var-last)
                 (tree-insert-node! t 0 '(traversed)))
                ((in? mode '(:unfold :expand :var-expand :last))
@@ -960,6 +966,12 @@
          (if (== mode :var-next) (set! mode :next))
          (if (== mode :var-previous) (set! mode :previous))
          (dynamic-traverse (tree-ref t 0) mode))
+        ((and (converter-context? t) (toggle-first-context? t))
+         ;; 对于converter-input，直接遍历其内容而不切换状态
+         (dynamic-traverse (tree-ref t 1) mode))
+        ((and (converter-context? t) (toggle-second-context? t))
+         ;; 对于converter-output，直接遍历其内容而不切换状态
+         (dynamic-traverse (tree-ref t 2) mode))
         ((toggle-first-context? t)
          (or (dynamic-traverse (tree-ref t 0) mode)
              (dynamic-traverse-folded t mode)))
