@@ -16,7 +16,16 @@ import ast
 import os
 import platform
 import sys
+import tempfile
 from inspect import getsource, getsourcefile
+try:
+    import matplotlib.pyplot as plt
+    from matplotlib.lines import Line2D
+    MATPLOTLIB_AVALIABLE = True
+except ImportError as e:
+    MATPLOTLIB_AVALIABLE = False
+    print("{e}")
+
 
 from tmpy.capture import CaptureStdout
 from tmpy.completion import complete, parse_complete_command
@@ -54,6 +63,15 @@ def flush_output(data):
             flush_verbatim("")
         else:
             flush_file(data.content)
+    elif isinstance(data, Line2D):
+        if MATPLOTLIB_AVALIABLE:
+            x, y = data.get_data()
+            fig, ax = plt.subplots()
+            ax.plot(x, y)
+            with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp:
+                fig.savefig(tmp.name)
+                flush_file(tmp.name)
+            plt.close(fig)
     else:
         flush_verbatim(str(data).strip())
 
