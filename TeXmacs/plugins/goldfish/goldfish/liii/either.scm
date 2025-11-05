@@ -33,12 +33,7 @@
         value)
 
       (define (%or-else default)
-        (unless (case-class? default) 
-          (type-error 
-            (format #f "In funtion #<~a ~a>: argument *~a* must be *~a*!    **Got ~a**" 
-              %or-else '(default) 'default "case-class" (object->string default))))  
-  
-        (when (not (default :is-instance-of 'either))
+        (when (not (either :is-type-of default))
           (type-error "The first parameter of either%or-else must be a either case class"))
 
         (if (%right?)

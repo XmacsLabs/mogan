@@ -27,7 +27,7 @@
   (begin
 
 
-    (define-case-class rich-list ((data list?))
+    (define-final-class rich-list ((data list?))
 
       (define (@range start end . step-and-args)
         (chain-apply (if (null? step-and-args) 

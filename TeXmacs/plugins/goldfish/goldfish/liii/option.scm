@@ -19,7 +19,7 @@
   (export option none)
   (begin
 
-    (define-case-class option ((value any?))
+    (define-final-class option ((value any?))
 
       (define (%get)
         (if (null? value)
