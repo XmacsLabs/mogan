@@ -159,6 +159,7 @@ tm_server_rep::tm_server_rep (app_type app) : def_zoomf (1.0) {
   set_wait_handler (texmacs_wait_handler);
 
   init_app (app);
+  m_account= new QTMOAuth ();
 
 #ifdef OS_GNU_LINUX
   return; // in order to avoid segmentation faults
@@ -338,6 +339,11 @@ tm_server_rep::restart () {
 #endif
 
   _exit (0);
+}
+
+void
+tm_server_rep::login () {
+  m_account->login ();
 }
 
 /******************************************************************************

@@ -297,9 +297,9 @@ package("qtbase")
             end
         end
 
-        -- 临时方案，强制下载 qtimageformats 模块
         table.insert(aqt_args, "-m")
         table.insert(aqt_args, "qtimageformats")
+        table.insert(aqt_args, "qtnetworkauth")
 
         os.vrunv("aqt", aqt_args)
 

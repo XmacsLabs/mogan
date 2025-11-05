@@ -26,6 +26,7 @@
 #include "tm_file.hpp"
 #include "tm_window.hpp"
 
+#include "QTMOAuth.hpp"
 #include "qt_gui.hpp"
 #include "qt_renderer.hpp" // for the_qt_renderer
 #include "qt_simple_widget.hpp"
@@ -555,6 +556,7 @@ qt_gui_rep::event_loop () {
   else app= QApplication::instance ();
   update ();
   // need_update();
+  QTMOAuth* account= new QTMOAuth ();
   app->exec ();
 }
 

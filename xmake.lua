@@ -567,7 +567,7 @@ target("libmogan") do
     on_install(function (target)
         print("No need to install libmogan")
     end)
-    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
+    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtNetwork", "QtNetworkAuth")
 
     build_glue_on_config()
     set_configvar("QTTEXMACS", 1)
@@ -889,7 +889,7 @@ target("stem") do
         add_rules("qt.widgetapp")
     end
 
-    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg")
+    add_frameworks("QtGui", "QtWidgets", "QtCore", "QtPrintSupport", "QtSvg", "QtNetwork", "QtNetworkAuth")
     add_packages("s7")
     add_packages("lolly")
     add_deps("libmogan")

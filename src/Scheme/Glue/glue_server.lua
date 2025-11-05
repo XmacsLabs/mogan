@@ -370,6 +370,11 @@ function main()
                 cpp_name = "restart",
                 ret_type = "void"
             },
+            {
+                scm_name = "login",
+                cpp_name = "login",
+                ret_type = "void"
+            }
         }
     }
 end

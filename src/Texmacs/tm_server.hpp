@@ -11,7 +11,9 @@
 
 #ifndef TM_SERVER_H
 #define TM_SERVER_H
+
 #include "../Mogan/app_type.hpp"
+#include "QTMOAuth.hpp"
 #include "tm_buffer.hpp"
 #include "tm_config.hpp"
 #include "tm_data.hpp"
@@ -48,6 +50,10 @@ public:
   void   quit ();
   void   restart ();
   void   shell (string s);
+  void   login ();
+
+private:
+  QTMOAuth* m_account= nullptr;
 };
 
 #endif // defined TM_SERVER_H

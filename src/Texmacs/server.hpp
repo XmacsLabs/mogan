@@ -113,6 +113,7 @@ public:
   virtual void   quit ()                                  = 0;
   virtual void   restart ()                               = 0;
   virtual void   shell (string s)                         = 0;
+  virtual void   login ()                                 = 0;
 };
 
 class server {
