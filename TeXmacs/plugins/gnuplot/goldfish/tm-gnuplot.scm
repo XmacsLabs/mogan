@@ -60,6 +60,15 @@
       (mkdir gnuplot-tmpdir))
     (string-append gnuplot-tmpdir "/" (uuid4))))
 
+(define (gen-pdf-precode pdf-path)
+  (string-append
+   "reset\n"
+   "set terminal pdfcairo enhanced\n"
+   "set output\n"
+   "set output '" pdf-path "'\n"
+   "set size 1,1\n"
+   "set autoscale\n"))
+
 (define (gen-eps-precode eps-path)
   (string-append
    "reset\n"
@@ -90,6 +99,7 @@
   (cond ((string=? format "png") (gen-png-precode path))
         ((string=? format "svg") (gen-svg-precode path))
         ((string=? format "eps") (gen-eps-precode path))
+        ((string=? format "pdf") (gen-pdf-precode path))
         (else (error 'wrong-args))))
 
 (define (gnuplot-dump-code code-path image-format image-path code)
