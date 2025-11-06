@@ -1,9 +1,16 @@
 # 在GNU/Linux上开发
 
 ## 使用xmake
-### 第一步：安装xmake和Qt 6
+### 第一步：安装xmake和相关依赖
 以Debian及衍生版为例：
-```
+
+由于本项目使用xmake管理qt,所以需要将本地qt移除
+``` bash
+sudo apt remove qt6-base-dev qt6-base-dev-tools qmake6 
+``` 
+
+安装xmake和相关依赖
+``` bash
 sudo apt install xmake
 
 sudo apt update
@@ -11,14 +18,14 @@ sudo apt install -y gcc git 7zip unzip curl build-essential fonts-noto-cjk libcu
 ```
 
 有时候需要保持xrepo是最新的，以保证使用最新的依赖的构建定义
-```
+``` bash
 xrepo update-repo
 ```
 
 ### 第二步：编译
 -vD 会显示具体debug日志，qt的安装缓存：/home/username/.xmake/packages
 比如 /home/jiadong/.xmake/packages/q/qt6base/6.8.3/7c1ea54729db483fa6eee7744bd4a333
-```
+``` bash
 xmake config --yes -vD
 xmake build stem
 ```
@@ -41,15 +48,10 @@ rm -rf ~/.cache/MoganLab
 rm -rf ~/.local/share/moganlab
 ```
 
-### 开发用--去除本地的qt及qmake，用mogan内置的
-``` bash
-sudo apt remove qt6-base-dev qt6-base-dev-tools qmake6
-``` 
-
 ## 使用VSCode帮助代码补全
 安装VSCode，Clangd以及VSCode的Clangd插件。
 之后在mogan文件夹执行
-```
+``` bash
 xmake project -k compile_commands
 ```
 这个命令会在mogan文件夹下生成一个compile_commands.json文件，Clangd会读取它以理解项目的组织结构，从而避免找不到头文件的错误。
