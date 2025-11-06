@@ -287,14 +287,15 @@ url_temp (string suffix) {
 
 url
 url_temp_dir_sub () {
-  string user = get_user_name();
-  url base;
+  string user= get_user_name ();
+  url    base;
 #if defined(OS_WIN) || defined(OS_MINGW)
   base= url_system ("$TMP");
 #else
   base= url_system ("/tmp");
 #endif
-  static url tmp_dir= base * url (user) * url(".lolly") * url (as_string (get_process_id ()));
+  static url tmp_dir=
+      base * url (user) * url (".lolly") * url (as_string (get_process_id ()));
   return (tmp_dir);
 }
 

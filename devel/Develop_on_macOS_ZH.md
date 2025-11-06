@@ -35,3 +35,5 @@ xmake build stem
 ``` bash
 xmake run stem
 ```
+## commit前请格式化
+[格式化链接](https://gitee.com/XmacsLabs/mogan/blob/main/devel/Format_ZH.md)

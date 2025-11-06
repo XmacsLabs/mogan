@@ -12,13 +12,13 @@
 #include <iostream>
 #include <string>
 
-url url_temp_dir();
+url url_temp_dir ();
 url unix_root= url_system ("/");
 url xmake_lua= url_pwd () * "xmake.lua";
 
 void
 remove_if_exist (const url& u1) {
-  c_string path1 (as_string (u1));
+  c_string       path1 (as_string (u1));
   tb_file_info_t info;
   if (tb_file_info (path1, &info)) {
     tb_file_remove (path1);
@@ -156,7 +156,7 @@ TEST_CASE ("chdir") {
 }
 
 TEST_CASE ("remove") {
-  url lolly_tmp= url_temp_dir ();
+  url       lolly_tmp= url_temp_dir ();
   tb_hong_t time     = tb_time ();
 
   SUBCASE ("single file") {

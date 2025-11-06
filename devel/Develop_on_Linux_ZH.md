@@ -55,3 +55,6 @@ rm -rf ~/.local/share/moganlab
 xmake project -k compile_commands
 ```
 这个命令会在mogan文件夹下生成一个compile_commands.json文件，Clangd会读取它以理解项目的组织结构，从而避免找不到头文件的错误。
+
+## commit前请格式化
+[格式化链接](https://gitee.com/XmacsLabs/mogan/blob/main/devel/Format_ZH.md)
