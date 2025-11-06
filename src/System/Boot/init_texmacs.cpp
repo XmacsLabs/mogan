@@ -258,9 +258,7 @@ process_running (int pid) {
 
 static void
 clean_temp_dirs () {
-  bool          err         = false;
-  url           main_tmp_dir= url_system ("$TMP") * url (".lolly");
-  array<string> a           = read_directory (main_tmp_dir, err);
+  array<string> a = read_directory (url_temp_dir_sub(), err);
   for (int i= 0; i < N (a); i++)
     if (is_int (a[i]))
       if (!process_running (as_int (a[i])))

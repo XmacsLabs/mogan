@@ -9,24 +9,16 @@
 #include "sys_utils.hpp"
 #include "tbox/tbox.h"
 #include <cstring>
+#include <iostream>
+#include <string>
 
+url url_temp_dir();
 url unix_root= url_system ("/");
 url xmake_lua= url_pwd () * "xmake.lua";
 
-url
-get_lolly_tmp () {
-#if defined(OS_WIN) || defined(OS_MINGW)
-  return url_system ("$TMP") * url (".lolly");
-#elif defined(OS_MACOS)
-  return url_system ("/private/tmp") * url (".lolly");
-#else
-  return url_system ("/tmp") * url (".lolly");
-#endif
-}
-
 void
 remove_if_exist (const url& u1) {
-  c_string       path1 (as_string (u1));
+  c_string path1 (as_string (u1));
   tb_file_info_t info;
   if (tb_file_info (path1, &info)) {
     tb_file_remove (path1);
@@ -61,7 +53,7 @@ TEST_CASE ("is_directory/is_regular") {
 }
 
 TEST_CASE ("is_newer") {
-  url lolly_tmp= get_lolly_tmp ();
+  url lolly_tmp= url_temp_dir ();
   mkdir (lolly_tmp);
   url old_dir= lolly_tmp * url ("old");
   url new_dir= lolly_tmp * url ("new");
@@ -93,7 +85,7 @@ TEST_CASE ("last_modified") {
 }
 
 TEST_CASE ("mkdir/rmdir") {
-  url lolly_tmp = get_lolly_tmp ();
+  url lolly_tmp = url_temp_dir ();
   url test_mkdir= lolly_tmp * url ("tmp_dir");
   mkdir (test_mkdir);
   CHECK (is_directory (test_mkdir));
@@ -102,7 +94,7 @@ TEST_CASE ("mkdir/rmdir") {
 }
 
 TEST_CASE ("chdir") {
-  url lolly_tmp= get_lolly_tmp ();
+  url lolly_tmp= url_temp_dir ();
   url old      = url_pwd ();
 
   SUBCASE ("tmp directory") {
@@ -164,7 +156,7 @@ TEST_CASE ("chdir") {
 }
 
 TEST_CASE ("remove") {
-  url       lolly_tmp= get_lolly_tmp ();
+  url lolly_tmp= url_temp_dir ();
   tb_hong_t time     = tb_time ();
 
   SUBCASE ("single file") {
@@ -193,7 +185,7 @@ TEST_CASE ("remove") {
 }
 
 TEST_CASE ("move") {
-  url       lolly_tmp= get_lolly_tmp ();
+  url       lolly_tmp= url_temp_dir ();
   tb_hong_t time     = tb_time ();
   url       m1       = lolly_tmp * url ("move_1.txt");
   url       m2       = lolly_tmp * url ("move_2.txt");
@@ -205,7 +197,7 @@ TEST_CASE ("move") {
 }
 
 TEST_CASE ("copy") {
-  url       lolly_tmp= get_lolly_tmp ();
+  url       lolly_tmp= url_temp_dir ();
   tb_hong_t time     = tb_time ();
   url       c1       = lolly_tmp * url ("copy_1.txt");
   url       c2       = lolly_tmp * url ("copy_2.txt");
@@ -218,8 +210,6 @@ TEST_CASE ("copy") {
   remove (c2);
 }
 
-TEST_MEMORY_LEAK_ALL
-
 TEST_CASE ("url_temp") {
   url       tmp1= url_temp ("png");
   tb_hong_t time= tb_time ();
@@ -231,6 +221,8 @@ TEST_CASE ("url_temp") {
 // because url_temp_dir will initialize static variable, occupied memory will
 // increase
 TEST_MEMORY_LEAK_RESET
+
+TEST_MEMORY_LEAK_ALL
 
 TEST_CASE ("read_directory") {
   bool flag1= false;
@@ -249,7 +241,7 @@ TEST_CASE ("subdirectories") {
 }
 
 TEST_CASE ("load_string from empty file") {
-  url    lolly_tmp= get_lolly_tmp ();
+  url    lolly_tmp= url_temp_dir ();
   url    u1       = lolly_tmp * url ("load_empty.txt");
   string s1;
   tb_file_create (c_string (as_string (u1)));
@@ -258,7 +250,7 @@ TEST_CASE ("load_string from empty file") {
 }
 
 TEST_CASE ("load_string from newly created file") {
-  url      lolly_tmp= get_lolly_tmp ();
+  url      lolly_tmp= url_temp_dir ();
   url      u1       = lolly_tmp * url ("load_string_1.txt");
   c_string s1 (as_string (u1));
   // can access file?
@@ -331,7 +323,7 @@ TEST_CASE ("load_string from read only file") {
 #endif
 
 TEST_CASE ("save to empty file") {
-  url    lolly_tmp= get_lolly_tmp ();
+  url    lolly_tmp= url_temp_dir ();
   url    u1       = lolly_tmp * url ("save_empty.txt");
   string s1 ("test");
   tb_file_touch (c_string (as_string (u1)), 0, 0);
@@ -342,7 +334,7 @@ TEST_CASE ("save to empty file") {
 }
 
 TEST_CASE ("save to empty file with unicode filename") {
-  url    lolly_tmp= get_lolly_tmp ();
+  url    lolly_tmp= url_temp_dir ();
   url    u1       = lolly_tmp * url ("保存到空文件.txt");
   string s1 ("测试内容");
   tb_file_touch (c_string (as_string (u1)), 0, 0);
@@ -353,7 +345,7 @@ TEST_CASE ("save to empty file with unicode filename") {
 }
 
 TEST_CASE ("create and save to file") {
-  url lolly_tmp= get_lolly_tmp ();
+  url lolly_tmp= url_temp_dir ();
   url u1       = lolly_tmp * url ("save_nonexist.txt");
   remove_if_exist (u1);
   string s1 ("test");
@@ -364,7 +356,7 @@ TEST_CASE ("create and save to file") {
 }
 
 TEST_CASE ("save to exist file") {
-  url      lolly_tmp= get_lolly_tmp ();
+  url      lolly_tmp= url_temp_dir ();
   url      u1       = lolly_tmp * url ("save_exist.txt");
   c_string path1 (as_string (u1));
   tb_file_touch (path1, 0, 0);
@@ -381,7 +373,7 @@ TEST_CASE ("save to exist file") {
 }
 
 TEST_CASE ("append to empty file") {
-  url lolly_tmp= get_lolly_tmp ();
+  url lolly_tmp= url_temp_dir ();
 
   SUBCASE ("file not exist") {
     url    u1= lolly_tmp * url ("append_not_exist.txt");
@@ -408,7 +400,7 @@ TEST_CASE ("append to empty file") {
 }
 
 TEST_CASE ("append file not empty") {
-  url lolly_tmp= get_lolly_tmp ();
+  url lolly_tmp= url_temp_dir ();
   SUBCASE ("test file not empty") {
     url u1= lolly_tmp * url ("append_not_empty.txt");
     tb_file_create (c_string (as_string (u1)));
