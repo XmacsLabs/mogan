@@ -41,6 +41,11 @@ rm -rf ~/.cache/MoganLab
 rm -rf ~/.local/share/moganlab
 ```
 
+### 开发用--去除本地的qt及qmake，用mogan内置的
+``` bash
+sudo apt remove qt6-base-dev qt6-base-dev-tools qmake6
+``` 
+
 ## 使用VSCode帮助代码补全
 安装VSCode，Clangd以及VSCode的Clangd插件。
 之后在mogan文件夹执行
