@@ -1227,7 +1227,6 @@
 ("list of figures" "图形目录")
 ("list of tables" "表格目录")
 ("list" "")
-("listings" "")
 ("load LaTeX file" "打开 LaTeX 文件")
 ("load TeX file" "打开 TeX 文件")
 ("load TeXmacs file" "打开 TeXmacs 文件")

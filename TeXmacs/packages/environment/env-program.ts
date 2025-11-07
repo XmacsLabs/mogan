@@ -258,17 +258,13 @@
     </src-comment>
   </active*>
 
-  <assign|alternate-background-color|false>
+  <assign|striped-table|<macro|body|<tformat|<cwith|1|-1|1|-1|cell-background|<if|<equal|<mod|<value|cell-row-nr>|2>|0>|#f4f4ff|>>|<twith|table-width|1par>|<twith|table-hmode|exact>|<arg|body>>>>
 
-  <drd-props|alternate-background-color|macro-parameter|boolean>
-
-  <assign|listings|<\macro|body>
-    <if|<equal|<value|alternate-background-color>|true>|
-      <extern|ext-listing|<quote-arg|body>>|
-      <extern|ext-listing-no-stripes|<quote-arg|body>>>
+  <assign|listing|<\macro|body>
+    <extern|ext-listing|<quote-arg|body>>
   </macro>>
 
-  <drd-props|listings|arity|1|accessible|all>
+  <drd-props|listing|arity|1|accessible|all>
 </body>
 
 <\initial>
