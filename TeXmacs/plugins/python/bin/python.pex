@@ -20,7 +20,9 @@ import tempfile
 from inspect import getsource, getsourcefile
 try:
     import matplotlib.pyplot as plt
-    from matplotlib.lines import Line2D
+    from matplotlib.figure import Figure
+    from matplotlib.axes import Axes
+    from matplotlib.artist import Artist
     MATPLOTLIB_AVALIABLE = True
 except ImportError as e:
     MATPLOTLIB_AVALIABLE = False
@@ -47,6 +49,18 @@ from tmpy.protocol import (
 def flush_output(data):
     """Do some parsing on the output according to its type.
 
+    刷新输出数据到前端。
+
+    支持类型：
+    - None: 空输出
+    - PSOutDummy: PostScript 内容
+    - FileOutDummy: 文件内容
+    - matplotlib.figure.Figure: 直接保存
+    - matplotlib.axes.Axes: 保存其所属的 figure
+    - matplotlib.artist.Artist: 保存其所属的 figure
+    - list/tuple/dict: 递归查找第一个包含 figure 的对象
+    - 其他: 转为字符串
+
     Non printable characters in unicode strings are escaped and objects
     of type None are not printed (so that procedure calls, as opposed to
     function calls, don't produce any output).
@@ -63,18 +77,68 @@ def flush_output(data):
             flush_verbatim("")
         else:
             flush_file(data.content)
-    elif isinstance(data, Line2D):
-        if MATPLOTLIB_AVALIABLE:
-            x, y = data.get_data()
-            fig, ax = plt.subplots()
-            ax.plot(x, y)
-            with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp:
-                fig.savefig(tmp.name)
-                flush_file(tmp.name)
-            plt.close(fig)
+    elif is_matplotlib_object(data):
+        fig = convert_matplotlib_object_to_figure(data)
+        flush_matplotlib_figure(fig)
     else:
         flush_verbatim(str(data).strip())
 
+def flush_matplotlib_figure(fig) -> None:
+    """内部辅助：安全保存并关闭 figure"""
+    if not MATPLOTLIB_AVALIABLE:
+        flush_verbatim("<Matplotlib not available>")
+        return
+
+    tmp_path = None
+    try:
+        with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as f:
+            tmp_path = f.name
+            fig.savefig(tmp_path, dpi=100, bbox_inches='tight')
+            flush_file(tmp_path)
+    except Exception as e:
+        flush_verbatim(f"<渲染图像失败: {e}>")
+    finally:
+        plt.close(fig)
+
+def is_matplotlib_object(obj):
+    module = type(obj)
+    if "matplotlib" in module.__module__:
+        return True
+    elif isinstance(obj, (list, tuple)):
+        for item in obj:
+            if isinstance(item, Artist):
+                return True
+            elif hasattr(item, '__getitem__') and len(item) > 0:
+                f = item[0]
+                if isinstance(f, Artist):
+                    return f.figure
+    elif isinstance(obj, dict):
+        if obj.get('boxes'):
+            if isinstance(obj['boxes'][0], Artist):
+                return True
+    else:
+        return False
+
+def convert_matplotlib_object_to_figure(obj):
+    if MATPLOTLIB_AVALIABLE:
+        if isinstance(obj, Figure):
+            return obj
+        elif isinstance(obj, Axes):
+            return obj.get_figure()
+        elif isinstance(obj, Artist):
+            return obj.figure
+        elif isinstance(obj, list) and len(obj) > 0:
+            return obj[0].figure
+        elif isinstance(obj, dict) and len(obj) > 0:
+            return obj['boxes'][0].figure
+        elif isinstance(obj, tuple) and len(obj) > 0:
+            for item in obj:
+                if isinstance(item, Artist):
+                    return item.figure
+                elif hasattr(item, '__getitem__') and len(item) > 0:
+                    f = item[0]
+                    if isinstance(f, Artist):
+                        return f.figure
 
 def as_scm_string(text):
     return '"%s"' % text.replace("\\", "\\\\").replace('"', '\\"')
