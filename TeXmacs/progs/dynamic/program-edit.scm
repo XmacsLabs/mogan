@@ -388,6 +388,10 @@
   (:require (== l "textput"))
   (prog-field-parameters "textput"))
 
+(tm-define (standard-parameters l)
+  (:require (== l "listings"))
+  (list "alternate-background-color"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Subroutines
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
