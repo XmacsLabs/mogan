@@ -1,0 +1,20 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
+
+<style|<tuple|beamer|chinese|number-europe>>
+
+<\body>
+  <screens|<\shown>
+    \;
+  </shown>|<\hidden>
+    <converter-output|latex|\\int_{0}^{\\infty} e^{-x^2} dx = \\frac{\\sqrt{\\pi}}{2}|<big|int><rsub|0><rsup|\<infty\>> e<rsup|-x<rsup|2>> dx = <frac|<sqrt|\<pi\>>|2>>
+  </hidden>|<\hidden>
+    \;
+  </hidden>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|beamer>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
