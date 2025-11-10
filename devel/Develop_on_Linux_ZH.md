@@ -9,6 +9,11 @@
 sudo apt remove qt6-base-dev qt6-base-dev-tools qmake6 
 ``` 
 
+若qt依赖有问题，可以使用该命令删除xmake的qt全局缓存
+``` bash
+rm -rf ~/.xmake/cache ~/.xmake/packages/qt
+```
+
 安装xmake和相关依赖
 ``` bash
 sudo apt install xmake
