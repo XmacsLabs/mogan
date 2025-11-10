@@ -27,6 +27,13 @@ try:
 except ImportError as e:
     MATPLOTLIB_AVALIABLE = False
     print("{e}")
+try:
+    import pandas as pd
+    from pandas import DataFrame
+    PANDAS_AVALIABLE = True
+except ImportError as e:
+    PANDAS_AVALIABLE = False
+    print("{e}")
 
 
 from tmpy.capture import CaptureStdout
@@ -80,6 +87,10 @@ def flush_output(data):
     elif is_matplotlib_object(data):
         fig = convert_matplotlib_object_to_figure(data)
         flush_matplotlib_figure(fig)
+    elif isinstance(data, DataFrame):
+        if PANDAS_AVALIABLE:
+            dfstr = convert_dataframe_to_scheme_str(data)
+            flush_scheme(dfstr)
     else:
         flush_verbatim(str(data).strip())
 
@@ -139,6 +150,23 @@ def convert_matplotlib_object_to_figure(obj):
                     f = item[0]
                     if isinstance(f, Artist):
                         return f.figure
+                    
+def convert_dataframe_to_scheme_str(obj: DataFrame):
+    row_head = "(row "
+    cell_head = "(cell "
+    result = "(document (tabular (tformat (cwith \\\"1\\\" \\\"1\\\" \\\"1\\\" \\\"-1\\\" \\\"cell-bborder\\\" \\\"1ln\\\") (table "
+    row_index = row_head + f"{cell_head}\\\"\\\" )"
+    for column in obj.columns:
+        row_index = row_index + f" {cell_head}\\\"{column}\\\")" #(row (cell \"\") (cell \"{column}\")
+    result = result + f"{row_index})"#row_index = (row (cell \"\") (cell \"index[1]\")...(cell \"index[n]\"))
+    row_str = row_head
+    for row in obj.itertuples():
+        row_str = row_head + f"{cell_head}\\\"{row.Index}\\\")"#(row (cell \"row.Index\")
+        for column in obj.columns:
+            row_str = row_str + f" {cell_head}\\\"{getattr(row, column)}\\\")" #(row (cell \"row.Index\") (cell \"row.column[1]\")...(cell \"row.column[n]\")
+        result = result + f" {row_str})"
+    result = result + "))))"
+    return result
 
 def as_scm_string(text):
     return '"%s"' % text.replace("\\", "\\\\").replace('"', '\\"')
