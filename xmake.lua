@@ -14,6 +14,7 @@ includes("xmake/stem.lua")
 
 set_project(stem_project_name)
 set_languages("c++17")
+set_encodings("utf-8")
 
 option("mupdf")
     set_default(true)
