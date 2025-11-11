@@ -60,7 +60,7 @@
 
   <assign|dark-scene-context-color|#4556>
 
-  <assign|dark-scene-selection-color|#f44>
+  <assign|dark-scene-selection-color|#2d69f033>
 
   <assign|dark-scene-table-selection-color|#c4f>
 

@@ -552,15 +552,8 @@ renderer_rep::draw_rectangles (rectangles rs) {
 void
 renderer_rep::draw_selection (rectangles rs) {
   color fg= get_pencil ()->get_color ();
-  int   r, g, b, a;
-  get_rgb_color (fg, r, g, b, a);
-  color      pfg= rgb_color (r, g, b, (a + 1) / 16);
-  rectangles inn= ::thicken (rs, -pixel, -pixel);
-  rectangles out= ::correct (rs - inn);
-  set_pencil (pfg);
-  draw_rectangles (::simplify (inn));
   set_pencil (fg);
-  draw_rectangles (::simplify (out));
+  draw_rectangles (::simplify (rs));
 }
 
 /******************************************************************************

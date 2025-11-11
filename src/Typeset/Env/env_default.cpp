@@ -61,7 +61,7 @@ initialize_default_env () {
   env (MATH_CURSOR_COLOR)    = "#b0f";      // cursor color in math mode
   env (FOCUS_COLOR)          = "#0ff";      // color of focus rectangles
   env (CONTEXT_COLOR)        = "#00555518"; // color of context rectangles
-  env (SELECTION_COLOR)      = "red";       // color of selections
+  env (SELECTION_COLOR)      = "#2d69f033"; // color of selections
   env (TABLE_SELECTION_COLOR)= "#b0f";    // color of selections of table cells
   env (MATCH_COLOR)          = "#eb0";    // color of search matches
   env (CLICKABLE_COLOR)      = "#20a060"; // color to indicate clickable loci
