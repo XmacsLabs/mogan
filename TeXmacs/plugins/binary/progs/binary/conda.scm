@@ -16,11 +16,14 @@
 
 (define (conda-binary-candidates)
   (cond ((os-macos?)
-         (list "$HOME/miniconda3/bin/conda"))
+         (list "$HOME/anaconda3/bin/conda"
+               "$HOME/miniconda3/bin/conda"))
         ((os-win32?)
-         (list "$USERPROFILE/miniconda3/Scripts/conda.exe"))
+         (list "$USERPROFILE/anaconda3/Scripts/conda.exe"
+               "$USERPROFILE/miniconda3/Scripts/conda.exe"))
         (else
-         (list "$HOME/miniconda3/bin/conda"))))
+         (list "$HOME/anaconda3/bin/conda"
+               "$HOME/miniconda3/bin/conda"))))
 
 (tm-define (find-binary-conda)
   (:synopsis "Find the url to the conda binary, return (url-none) if not found")
