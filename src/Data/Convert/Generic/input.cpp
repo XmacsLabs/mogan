@@ -181,15 +181,23 @@ texmacs_input_rep::eof () {
 void
 texmacs_input_rep::write (tree u) {
   if (!docs->contains (channel)) docs (channel)= tree (DOCUMENT, "");
+
   tree& t= docs (channel);
   if (!is_document (u)) u= tree (DOCUMENT, u);
-  if (t[N (t) - 1] == "") t[N (t) - 1]= u[0];
-  else if (u[0] != "") {
-    if (!is_concat (t[N (t) - 1])) t[N (t) - 1]= tree (CONCAT, t[N (t) - 1]);
-    if (!is_concat (u[0])) u[0]= tree (CONCAT, u[0]);
-    t[N (t) - 1] << A (u[0]);
+
+  int t_N= N (t);
+  int u_N= N (u);
+
+  if (t_N > 0 && u_N > 0) {
+    if (t[t_N - 1] == "") t[t_N - 1]= u[0];
+    else if (u[0] != "") {
+      if (!is_concat (t[t_N - 1])) t[t_N - 1]= tree (CONCAT, t[t_N - 1]);
+      if (!is_concat (u[0])) u[0]= tree (CONCAT, u[0]);
+      t[t_N - 1] << A (u[0]);
+    }
   }
-  if (N (u) > 1) t << A (u (1, N (u)));
+
+  if (u_N > 1) t << A (u (1, u_N));
 }
 
 tree

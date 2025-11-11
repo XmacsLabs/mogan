@@ -1,0 +1,32 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
+
+<style|<tuple|generic|chinese|number-europe|goldfish>>
+
+<\body>
+  <\session|goldfish|default>
+    <\output>
+      Goldfish Scheme 17.11.22 Community Edition by LiiiLabs
+
+      implemented on S7 Scheme (11.5, 22-Sep-2025)
+    </output>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      `(document "")
+    </input>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      `(document )
+    </input>
+  </session>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
