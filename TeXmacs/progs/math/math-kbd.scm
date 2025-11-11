@@ -907,6 +907,7 @@
   ("< = = var var var >" "<LRleftrightarrow>")
   ("< = = > var var" "<Llongleftrightarrow>")
   
+  ("- var" (make 'textendash))
   ("- / var" "<rightharpoondown>")
   ("- / var var" "<rightharpoonup>")
   ("- / var var var" "<downharpoonleft>")
