@@ -252,6 +252,22 @@
 
   <drd-props|numbered|arity|1|accessible|all>
 
+  <assign|listing|<\macro|body>
+    <\with|dummy1|<value|numbered-offset>|dummy2|<value|numbered-color>|dummy3|<value|numbered-font-size>>
+      <extern|ext-numbered-prog|<quote-arg|body>|verbatim>
+    </with>
+  </macro>>
+
+  <drd-props|listing|arity|1|accessible|all>
+
+  <assign|cpp-listing|<\macro|body>
+    <\with|dummy1|<value|numbered-offset>|dummy2|<value|numbered-color>|dummy3|<value|numbered-font-size>>
+      <extern|ext-numbered-prog|<quote-arg|body>|cpp>
+    </with>
+  </macro>>
+
+  <drd-props|cpp-listing|arity|1|accessible|all>
+
   <\active*>
     <\src-comment>
       Fancy listings using stripes
@@ -259,13 +275,6 @@
   </active*>
 
   <assign|striped-table|<macro|body|<tformat|<cwith|1|-1|1|-1|cell-background|<if|<equal|<mod|<value|cell-row-nr>|2>|0>|#f4f4ff|>>|<twith|table-width|1par>|<twith|table-hmode|exact>|<arg|body>>>>
-
-  <assign|listing|<\macro|body>
-    <extern|ext-listing|<quote-arg|body>>
-  </macro>>
-
-  <drd-props|listing|arity|1|accessible|all>
-</body>
 
 <\initial>
   <\collection>

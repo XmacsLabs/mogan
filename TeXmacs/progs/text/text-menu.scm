@@ -429,12 +429,15 @@
   ("Aligned" (make-tmlist 'description-aligned))
   ("Dashes" (make-tmlist 'description-dash))
   ("Long" (make-tmlist 'description-long))
-  ("Paragraphs" (make-tmlist 'description-paragraphs)))
+  ("Paragraphs" (make-tmlist 'description-paragraphs))
+  ---
+  ("Numbered" (make 'numbered)))
 
 (menu-bind lists-menu
   (-> "Itemize" (link itemize-menu))
   (-> "Enumerate" (link enumerate-menu))
-  (-> "Description" (link description-menu)))
+  (-> "Description" (link description-menu))
+  ("Numbered" (make 'numbered)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Automatically generated content

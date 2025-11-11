@@ -1,0 +1,92 @@
+<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <\numbered>
+    这是 numbered
+
+    \;
+
+    \;
+  </numbered>
+
+  \;
+
+  <\listing>
+    这是 listing （纯文本）
+
+    \;
+
+    \;
+  </listing>
+
+  \;
+
+  <\cpp-listing>
+    这是 cpp-listing (C++)
+
+    \;
+
+    tree
+
+    edit_env_rep::exec_quote_arg (tree t) {
+
+    \ \ if (N (t) \<less\> 1) return tree (ERROR, "bad quote-arg");
+
+    \ \ tree r= t[0];
+
+    \ \ if (is_compound (r)) return tree (ERROR, "bad quote-arg");
+
+    \ \ if (is_nil (macro_arg) \|\| (!macro_arg-\<gtr\>item-\<gtr\>contains (r-\<gtr\>label)))
+
+    \ \ \ \ return tree (ERROR, "quoted argument " * r-\<gtr\>label);
+
+    \ \ r= macro_arg-\<gtr\>item[r-\<gtr\>label];
+
+    \ \ if (N (t) \<gtr\> 1) {
+
+    \ \ \ \ int i, n= N (t);
+
+    \ \ \ \ for (i= 1; i \<less\> n; i++) {
+
+    \ \ \ \ \ \ tree u= exec (t[i]);
+
+    \ \ \ \ \ \ if (!is_int (u)) break;
+
+    \ \ \ \ \ \ int nr= as_int (u);
+
+    \ \ \ \ \ \ if ((!is_compound (r)) \|\| (nr \<less\> 0) \|\| (nr \<gtr\>= N (r))) break;
+
+    \ \ \ \ \ \ r= r[nr];
+
+    \ \ \ \ }
+
+    \ \ }
+
+    \ \ if (quote_substitute && !is_func (r, ARG)) {
+
+    \ \ \ \ int <nbsp>i, n= N (r);
+
+    \ \ \ \ tree s (r, n);
+
+    \ \ \ \ for (i= 0; i \<less\> n; i++)
+
+    \ \ \ \ \ \ s[i]= tree (ARG, A (t)) * tree (ARG, as_string (i));
+
+    \ \ \ \ return s;
+
+    \ \ }
+
+    \ \ return r;
+
+    }
+  </cpp-listing>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

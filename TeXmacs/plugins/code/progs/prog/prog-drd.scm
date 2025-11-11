@@ -26,3 +26,6 @@
   verbatim-code scm-code cpp-code mmx-code r-code fortran-code
   octave-code python-code scilab-code shell-code)
 
+;; Listings
+(define-group listing-tag
+  listing cpp-listing)

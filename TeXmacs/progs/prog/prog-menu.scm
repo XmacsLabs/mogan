@@ -120,6 +120,9 @@
       ("C++" (make 'cpp-code))
       ("Scheme" (make 'scm-code))
       ("Shell" (make 'shell-code)))
+  (-> "Listing" 
+      ("Verbatim" (make 'listing))
+      ("C++" (make 'cpp-listing)))
   ---
   (-> "Goldfish"
       (when (style-has? "goldfish-lang")

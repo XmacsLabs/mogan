@@ -176,30 +176,42 @@
       `(numbered-block (document ,@(map ext-numbered-line (tm-children body))))
       body))
 
+;; Numbered function with programming language support
+(tm-define (ext-numbered-prog body lang)
+  (:secure #t)
+  (set! ext-numbered-root body)
+  (if (tm-func? body 'document)
+      `(numbered-block (document ,@(map (lambda (line)
+                                          (if (tree-multi-line? line)
+                                              (ext-numbered-sub line)
+                                              `(numbered-line (with "mode" "prog" "prog-language" ,lang "font-family" "rm" ,line))))
+                                        (tm-children body))))
+      body))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Fancy listings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (ext-listing-row body row)
-  `(row (cell (with "color" "dark grey" "prog-language" "verbatim"
-                    ,(number->string (+ row 1))))
-        (cell (document ,(tm-ref body row)))))
+;;(define (ext-listing-row body row)
+;;  `(row (cell (with "color" "dark grey" "prog-language" "verbatim"
+;;                    ,(number->string (+ row 1))))
+;;        (cell (document ,(tm-ref body row)))))
 
-(tm-define (ext-listing body)
-  (:secure #t)
-  (if (tm-func? body 'document)
-      `(tformat
-         (twith "table-width" "1par")
-         (twith "table-hmode" "exact")
-         (twith "table-hyphen" "y")
-         (cwith "1" "-1" "1" "1" "cell-halign" "r")
-         (cwith "1" "-1" "1" "1" "cell-lsep" "0em")
-         (cwith "1" "-1" "2" "2" "cell-halign" "l")
-         (cwith "1" "-1" "2" "2" "cell-rsep" "0em")
-         (cwith "1" "-1" "2" "2" "cell-hpart" "1")
-         (cwith "1" "-1" "2" "2" "cell-hyphen" "t")
-         (cwith "1" "-1" "1" "-1" "cell-background"
-                (if (equal (mod (value "cell-row-nr") "2") "0") "#f4f4ff" ""))
-         (table ,@(map (lambda (row) (ext-listing-row body row))
-                       (.. 0 (tm-arity body)))))
-      body))
+;;(tm-define (ext-listing body)
+;;  (:secure #t)
+;;  (if (tm-func? body 'document)
+;;      `(tformat
+;;         (twith "table-width" "1par")
+;;         (twith "table-hmode" "exact")
+;;         (twith "table-hyphen" "y")
+;;         (cwith "1" "-1" "1" "1" "cell-halign" "r")
+;;         (cwith "1" "-1" "1" "1" "cell-lsep" "0em")
+;;         (cwith "1" "-1" "2" "2" "cell-halign" "l")
+;;         (cwith "1" "-1" "2" "2" "cell-rsep" "0em")
+;;         (cwith "1" "-1" "2" "2" "cell-hpart" "1")
+;;         (cwith "1" "-1" "2" "2" "cell-hyphen" "t")
+;;         (cwith "1" "-1" "1" "-1" "cell-background"
+;;                (if (equal (mod (value "cell-row-nr") "2") "0") "#f4f4ff" ""))
+;;        (table ,@(map (lambda (row) (ext-listing-row body row))
+;;                       (.. 0 (tm-arity body)))))
+;;      body))
