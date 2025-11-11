@@ -24,16 +24,27 @@ try:
     from matplotlib.axes import Axes
     from matplotlib.artist import Artist
     MATPLOTLIB_AVALIABLE = True
-except ImportError as e:
+except ModuleNotFoundError:
     MATPLOTLIB_AVALIABLE = False
-    print("{e}")
+    flush_verbatim ("Please install matplotlib first, for example:\n")
+    flush_verbatim ("    pip install matplotlib")
 try:
     import pandas as pd
     from pandas import DataFrame
     PANDAS_AVALIABLE = True
-except ImportError as e:
+except ModuleNotFoundError:
     PANDAS_AVALIABLE = False
-    print("{e}")
+    flush_verbatim ("Please install pandas first, for example:\n")
+    flush_verbatim ("    pip install pandas")
+try:
+    from sympy.printing import latex
+    from sympy import Basic, MatrixBase
+    import sympy
+    SYMPY_AVALIABLE = True
+except ModuleNotFoundError:
+    SYMPY_AVALIABLE = False
+    flush_verbatim ("Please install sympy first, for example:\n")
+    flush_verbatim ("    pip install sympy")
 
 
 from tmpy.capture import CaptureStdout
@@ -47,6 +58,7 @@ from tmpy.protocol import (
     flush_ps,
     flush_scheme,
     flush_verbatim,
+    flush_latex,
 )
 
 # import logging as log
@@ -91,6 +103,9 @@ def flush_output(data):
         if PANDAS_AVALIABLE:
             dfstr = convert_dataframe_to_scheme_str(data)
             flush_scheme(dfstr)
+    elif is_sympy_object(data):
+        if SYMPY_AVALIABLE:
+            flush_sympy(data)
     else:
         flush_verbatim(str(data).strip())
 
@@ -167,6 +182,24 @@ def convert_dataframe_to_scheme_str(obj: DataFrame):
         result = result + f" {row_str})"
     result = result + "))))"
     return result
+
+def is_sympy_object(obj):
+    module = type(obj)
+    if "sympy" in module.__module__:
+        return True
+    elif isinstance(obj, (list, tuple, set)) and all(isinstance(item, (Basic, MatrixBase)) for item in obj):
+        return True
+    elif isinstance(obj, dict) and all(isinstance(value, (Basic, MatrixBase)) for value in obj.values()):
+            return True
+
+def flush_sympy(obj):
+    if SYMPY_AVALIABLE:
+        if isinstance (obj, (Basic, MatrixBase)):
+            flush_latex(latex(obj))
+        elif (isinstance(obj, (list, tuple, set)) and all(isinstance(item, (Basic, MatrixBase)) for item in obj)):
+            flush_latex(latex(obj))
+        elif (isinstance(obj, dict)) and all(isinstance(value, (Basic, MatrixBase)) for value in obj.values()):
+            flush_latex(latex(obj))
 
 def as_scm_string(text):
     return '"%s"' % text.replace("\\", "\\\\").replace('"', '\\"')
