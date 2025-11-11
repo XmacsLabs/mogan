@@ -293,6 +293,10 @@ pager_rep::make_pages () {
         }
       }
 
+  array<SI> x (nr_pages);
+  array<SI> y (nr_pages);
+
+  // nx >= 1
   array<SI> xx (nx);
   xx[0]= 0;
   for (int i= 1; i < nx; i++) {
@@ -303,26 +307,28 @@ pager_rep::make_pages () {
     }
   }
 
-  array<SI> yy (ny);
-  yy[0]= 0;
-  for (int j= 1; j < ny; j++) {
-    yy[j]= yy[j - 1];
-    for (int i= 0; i < nx; i++) {
-      int p= j * nx + i - d;
-      if (p >= 0 && p < nr_pages) yy[j]= min (yy[j - 1] - pg[p]->h (), yy[j]);
-    }
-  }
+  if (ny > 0) {
+    array<SI> yy (ny);
+    yy[0]= 0;
 
-  array<SI> x (nr_pages);
-  array<SI> y (nr_pages);
-  for (int i= 0; i < nx; i++)
-    for (int j= 0; j < ny; j++) {
-      int p= j * nx + i - d;
-      if (p >= 0 && p < nr_pages) {
-        x[p]= xx[i];
-        y[p]= yy[j];
+    for (int j= 1; j < ny; j++) {
+      yy[j]= yy[j - 1];
+      for (int i= 0; i < nx; i++) {
+        int p= j * nx + i - d;
+        if (p >= 0 && p < nr_pages) yy[j]= min (yy[j - 1] - pg[p]->h (), yy[j]);
       }
     }
+
+    for (int i= 0; i < nx; i++) {
+      for (int j= 0; j < ny; j++) {
+        int p= j * nx + i - d;
+        if (p >= 0 && p < nr_pages) {
+          x[p]= xx[i];
+          y[p]= yy[j];
+        }
+      }
+    }
+  }
 
   return move_box (ip, scatter_box (ip, pg, x, y, nr_pages > 1), 0, 0);
 }

@@ -150,14 +150,16 @@ typesetter_rep::typeset () {
   env->complete= br->my_typeset_will_be_complete ();
   tree st      = br->st;
   int  i= 0, n= N (st);
-  if (is_compound (st[0], "show-preamble")) {
-    i++;
-    env->complete= false;
-  }
-  if (is_compound (st[0], "hide-preamble")) i++;
-  for (; i < n && env->complete; i++) {
-    if (is_compound (st[i], "hide-part")) env->complete= false;
-    if (!is_compound (st[i], "show-part")) break;
+  if (n > 0) {
+    if (is_compound (st[0], "show-preamble")) {
+      i++;
+      env->complete= false;
+    }
+    if (is_compound (st[0], "hide-preamble")) i++;
+    for (; i < n && env->complete; i++) {
+      if (is_compound (st[i], "hide-part")) env->complete= false;
+      if (!is_compound (st[i], "show-part")) break;
+    }
   }
 
   // Typeset
