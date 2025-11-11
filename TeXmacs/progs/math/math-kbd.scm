@@ -1720,6 +1720,7 @@
   ("y var" "<psi>")
   ("z var" "<zeta>")
 
+  ("@ A" "<AA>")
   ("A var" "<Alpha>")
   ("A var var" "<forall>")
   ("A var var var" "<aleph>")
