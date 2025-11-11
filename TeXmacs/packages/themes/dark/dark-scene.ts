@@ -62,9 +62,9 @@
 
   <assign|dark-scene-selection-color|#2d69f033>
 
-  <assign|dark-scene-table-selection-color|#c4f>
+  <assign|dark-scene-table-selection-color|#50f3>
 
-  <assign|dark-scene-match-color|#f8e080>
+  <assign|dark-scene-match-color|#f8e08033>
 
   <assign|dark-scene-clickable-color|#106030>
 
