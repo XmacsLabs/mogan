@@ -11,7 +11,7 @@
       when better support for Unicode will be implemented.
     </src-purpose>
 
-    <src-copyright|1998--2004|Joris van der Hoeven>
+    <src-copyright|1998--2025|Joris van der Hoeven, Darcy Shen>
 
     <\src-license>
       This software falls under the <hlink|GNU general public license,
@@ -92,6 +92,10 @@
   <assign|textquotesingle|'>
 
   <assign|mathscr|<macro|body|<with|font|cal*|<arg|body>>>>
+
+  <assign|textendash|\U>
+
+  <assign|textemdash|\V>
 
   \;
 </body>
