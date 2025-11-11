@@ -140,7 +140,10 @@
 (tm-define (kbd-remove t forwards?)
   (:require (tree-in? t '(image)))
   (and-with p (tree-up t)
-    (tree-remove! p (tree-index t) 1)))
+    (when (tree-is? p 'document)
+      (if (= (tree-arity p) 1)
+          (tree-assign! p `(document ""))
+          (tree-remove! p (tree-index t) 1)))))
 
 (tm-define (kbd-remove t forwards?)
   (:require (and (in-source?)
