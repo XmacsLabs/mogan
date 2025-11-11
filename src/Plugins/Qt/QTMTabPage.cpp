@@ -420,7 +420,7 @@ QTMTabPageContainer::setHitTestVisibleForTabPages (
 
 int
 QTMTabPageContainer::mapToPointing (QDropEvent* e, QPoint& p_indicatorPos) {
-  QPoint pos= e->pos ();
+  QPoint pos= e->position ().toPoint ();
   // Now we use g_tabWidth to calculate the pointing index, instead of geometry
   if (g_tabWidth <= 0) {
     p_indicatorPos= QPoint (0, 0);

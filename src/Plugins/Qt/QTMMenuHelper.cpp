@@ -1197,12 +1197,12 @@ QTMTreeView::callOnChange (const QModelIndex& index, bool mouse) {
   // docs state the index is valid, no need to check
   QVariant d= tmModel ()->data (index, QTMTreeModel::CommandRole);
   // If there's no CommandRole, we return the subtree by default
-  if (!d.isValid () || !d.canConvert (QVariant::String))
+  if (!d.isValid () || !d.canConvert<QString> ())
     arguments= cons (tmModel ()->item_from_index (index), arguments);
   else arguments= cons (from_qstring (d.toString ()), arguments);
   int cnt= QTMTreeModel::TMUserRole;
   d      = tmModel ()->data (index, cnt);
-  while (d.isValid () && d.canConvert (QVariant::String)) {
+  while (d.isValid () && d.canConvert<QString> ()) {
     arguments= cons (from_qstring (d.toString ()), arguments);
     d        = tmModel ()->data (index, ++cnt);
   }
