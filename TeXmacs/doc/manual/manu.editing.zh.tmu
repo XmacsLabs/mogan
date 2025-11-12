@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+<TMU|<tuple|1.1.0|2025.2.0-alpha>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -33,7 +33,8 @@
 
   <section|拼写检查><label|sec-man-spell-checking>
 
-  在您的系统上已安装<shell|ispell>的前提下，使用<shortcut|(interactive-spell)> 或者<menu|Edit|Spell>可以检查您的文本中是否有拼写错误。使用前，还请您先检查一下您所用语言的字典是否已经安装。
+  在您的系统上已安装<shell|ispell>的前提下(Windows系统不支持ispell)，使用<key|Win+$><space|0.5pt> （Linux）或<key|Cmd+;>（Mac）或者<with|font-family|ss|Edit><math|\<rightarrow\>><with|font-family|ss|Spell>可以检查您的文本中是否有拼写错误。使用前，还请您先检查一下您所用语言的字典是否已经安装。
+
 
   对全文或者选中文本启用拼写后，您将会在底端收到错词的修正提示，有以下选项供您选择：
 
