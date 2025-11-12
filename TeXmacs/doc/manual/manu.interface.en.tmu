@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -81,10 +81,10 @@
 
   By default, <TeXmacs> will attempt to evaluate the input field when pressing <key|return>. Multiline input can be created using <key|S-return>. Alternatively, when selecting the multiline input mode using <menu|Session|Input mode|Multiline input>, the <key|return> key will behave as usual and <key|S-return> may be used in order to evaluate the input field. Notice finally that certain systems admit built-in heuristics for testing whether the input has been completed; if not, then the <key|return> may behave as usual.
 
-  Certain applications allow you to type the mathematical input in a graphical, two dimensional form. This feature can be used by selecting <menu|Session|Input mode|Mathematical input>. If this feature is available, then it is usually also possible to copy and paste output back into the input. However, it depends on the particular application how well this works. Keep in mind that some key combinations may be used by the <subsubmenu|Session|Input|Mathematical input> mode: for instance the key <key|$> is usually redefined inside math mode, so if you want to input it you'll have to type <key|S-F5><key|$>. You can read more about the prefix key <key|S-F5> in “<hlink|Keyboard shortcuts for text mode|../text/keyboard/man-text-kbd.en.tm>”.
+  Certain applications allow you to type the mathematical input in a graphical, two dimensional form. This feature can be used by selecting <menu|Session|Input mode|Mathematical input>. If this feature is available, then it is usually also possible to copy and paste output back into the input. However, it depends on the particular application how well this works. Keep in mind that some key combinations may be used by the <subsubmenu|Session|Input|Mathematical input> mode: for instance the key <key|$> is usually redefined inside math mode, so if you want to input it you'll have to type <key|S-F5><key|$>. You can read more about the prefix key <key|S-F5> in “<hlink|Keyboard shortcuts for text mode|../configuration/conf.keyconfig.en.tmu>”.
 
   <\example>
-    Below, you will find the <hlink|previous example session|man-session-edit.en.tm#session-example>, but now using mathematical input:
+    Below, you will find the <hlink|previous example session|manu.example-man-session-edit.en.tmu>, but now using mathematical input:
 
     <\session|maxima|default>
       <\output>

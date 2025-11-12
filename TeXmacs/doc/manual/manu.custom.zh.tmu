@@ -1,11 +1,11 @@
-<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
 <\body>
   <tmdoc-title|定制<TeXmacs>><label|sec-man-scheme>
 
-  高度可定制性是<TeXmacs>的主要特点之一。一般需求可在<em|><menu|编辑|首选项>中简单<hlink|配置|../config/man-configuration.zh.tm>，深入定制则需使用<name|Guile>/<name|Scheme>扩展。我们用简单的例子简要概述其工作原理。
+  高度可定制性是<TeXmacs>的主要特点之一。一般需求可在<em|><menu|编辑|首选项>中简单<hlink|配置|../configuration/conf.man-configuration.zh.tmu>，深入定制则需使用<name|Guile>/<name|Scheme>扩展。我们用简单的例子简要概述其工作原理。
 
   <section|<name|Guile>扩展语言入门><label|sec-man-guile-intro>
 

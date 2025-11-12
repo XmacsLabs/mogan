@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -30,7 +30,7 @@
 
     <item*|<menu|插入|数学|多行公式>或者<shortcut|(make-eqnarray*)>>
 
-    这个条目创建了一个<markup|eqnarray<math|<rsup|\<ast\>>>>，一个三列宽的类似表格的环境（详见<hlink|创建表格|../table/man-create-table.zh.tm>）。在这个环境中可以方便地输入多行公式，比如：
+    这个条目创建了一个<markup|eqnarray<math|<rsup|\<ast\>>>>，一个三列宽的类似表格的环境（详见<hlink|创建表格|manu.man-create-table.zh.tmu>）。在这个环境中可以方便地输入多行公式，比如：
 
     <\eqnarray*>
       <tformat|<table|<row|<cell|x+0>|<cell|=>|<cell|x>>|<row|<cell|x+<around*|(|-x|)>>|<cell|=>|<cell|0>>|<row|<cell|x+y >|<cell|=>|<cell|y+x>>|<row|<cell|<around*|(|x+y|)>+z>|<cell|=>|<cell|x+<around*|(|y+z|)>>>>>
@@ -69,7 +69,7 @@
 
   注意到某些符号的数学意义不一样，然而长得很是相似;这类符号被称为homoglyphs。比如竖直条\|可以是集合定义中的分隔符，如<math|R<rsup|\<gtr\>>=<around*|{|x\<in\>R\|x\<gtr\>0|}>>，也可以是二元关系整除，如<math|11\<divides\>1001>。往往，homoglyphs之间的空白是不同。最恼人的多意性可以以空白为例，如不可见的乘法空白 <math|x*y> 和函数空白 <math|sin x>，两者分别是使用<key|*> 和<key|space>输入的。
 
-  为了方便<TeXmacs>自动处理你的文档以方便数学公式的语法检查等，我们鼓励用户在输入公式时注意到homoglyph的问题。更多信息，可参见<hlink|数学符号的语义|semantics/man-semantics-symbols.zh.tm>。
+  为了方便<TeXmacs>自动处理你的文档以方便数学公式的语法检查等，我们鼓励用户在输入公式时注意到homoglyph的问题。更多信息，可参见<hlink|数学符号的语义|manu.man-semantics-symbols.zh.tmu>
 
   <section|主要的数学结构><label|sec-man-main>
 
@@ -81,13 +81,13 @@
 
   <big-table|<descriptive-table|<tformat|<table|<row|<cell|快捷键>|<cell|目标>|<cell|例子>>|<row|<cell|<key|'>>|<cell|撇号>|<cell|<math|f<rprime|'>> or <math|<around|(|g+h|)><rprime|'''>>>>|<row|<cell|<key|‘>>|<cell|反撇号>|<cell|<math|<lprime|‘>f>>>|<row|<cell|<key|_>>|<cell|下标>|<cell|<math|x<rsub|n>> or <math|x<rsub|i<rsub|3>>>>>|<row|<cell|<key|^>>|<cell|上标>|<cell|<math|x<rsup|2>>, <math|x<rsub|n><rsup|2>> or <math|\<mathe\><rsup|\<mathe\><rsup|x>>>>>|<row|<cell|<key|math l _>>|<cell|左下标>|<cell|<math|<lsub|2>x>>>|<row|<cell|<key|math l ^>>|<cell|左上标>|<cell|<math|<lsup|\<pi\>>x> or <math|<lsub|\<ast\>><lsup|\<ast\>>He<rsub|\<ast\>><rsup|\<ast\>>>>>>>>|撇、上下标的创建>
 
-  另外一些重要的数学结构实际上是广义的表格，如矩阵、行列式等，详细请参见<hlink|表格结构|../table/man-create-table.zh.tmml>。
+  另外一些重要的数学结构实际上是广义的表格，如矩阵、行列式等，详细请参见<hlink|表格结构|manu.tables.zh.tmu>。
 
   <section|输入大型分隔符><label|sec-man-large>
 
   数学公式中的括号必须匹配：在你输入“(”时，<TeXmacs>会自动插入“)”。你可以<menu|Edit|Preferences|Keyboard|Automatic brackets|Disable>禁用此特性。注意: 文档中旧有的括号可能会自动与你输入的括号匹配。
 
-  有时，你不需要封闭的括号，或者你的括号匹配的种类不同。没有关系：如果光标正好在右括号的前面<math|<around*|(|a,b<cursor>|)>>，此时按下<key|]>可以得到表达式<math|<around|(|a,b|]><cursor>>。类似地，删除一个括号会导致其变为<hlink|不可见括号|semantics/man-semantics-symbols.en.tm#nobracket>，然后你就可以使用任意类型左或者右括号去替换。<math|>
+  有时，你不需要封闭的括号，或者你的括号匹配的种类不同。没有关系：如果光标正好在右括号的前面<math|<around*|(|a,b<cursor>|)>>，此时按下<key|]>可以得到表达式<math|<around|(|a,b|]><cursor>>。类似地，删除一个括号会导致其变为不可见括号，然后你就可以使用任意类型左或者右括号去替换。<math|>
 
   默认地，括号的大小会随着其中公式的大小自动调整。使用<prefix|math:small>键前缀产生的小分隔符大小不会随之改变。你还可以使用<shortcut|(alternate-toggle (focus-tree))>让分隔符在大小之间切换。
 
@@ -159,7 +159,7 @@
 
   更进一步，其它语义相关的工具其实已经集成到了某些特性中，如语义搜索和替换或者互联网上的语义搜索。
 
-  点击<menu|Edit|Preferences|Mathematics|Semantic editing>激活语义编辑工具。 在语义编辑模式下，您将使用到针对公式句法结构的结构化编辑特性。比如，<em|语义焦点><label|semantic-focus>通常是<hlink|当前焦点|../text/man-structure.en.tm>的子公式。又如，您只能选中句法上有意义的子公式。
+  点击<menu|Edit|Preferences|Mathematics|Semantic editing>激活语义编辑工具。 在语义编辑模式下，您将使用到针对公式句法结构的结构化编辑特性。比如，<em|语义焦点><label|semantic-focus>通常是<hlink|当前焦点|manu.typing.zh.tmu>的子公式。又如，您只能选中句法上有意义的子公式。
 
   语义焦点的意义如下所述：首先，句法上正确的公式显示为绿色，错误的则为红色。这样您就可以在输入公式时迅速发现“typos”。其二，如果您对某个数学操作符或者关系的优先级存在任何疑问，从语义焦点便可以看出缺省优先级。具体地，将您的光标置于操作符的右边，则该操作符所作用的子表达式会高亮显示。在加法（或者更一般的结合算符）这个例子中，所有的被加数都会高亮显示。
 
@@ -168,7 +168,7 @@
   默认情况下，语义编辑模式“能够理解”最经典的数学符号。这是通过使用专门为主流数学设计的语法实现的。显然，使用固定的语法会导致下列问题：\ 
 
   <\itemize>
-    <item>数学公式常常会包含一些<em|特别的>记号。例如，公式可能会含有一些文字或有含义的空格。另一个<with|font-shape|italic|特别的>记号的例子是符号序列<math|++-+-+>。这些情况下，用户应该<hlink|明确注明|semantics/semantics/man-semantic-annotation.en.tm>公式的合适部分，这样这些公式才会在语义上有意义。
+    <item>数学公式常常会包含一些<em|特别的>记号。例如，公式可能会含有一些文字或有含义的空格。另一个<with|font-shape|italic|特别的>记号的例子是符号序列<math|++-+-+>。这些情况下，用户应该明确注明公式的合适部分，这样这些公式才会在语义上有意义。
 
     <item>用来解释数学公式的<TeXmacs>语法可能在某些情况下不够完备。可以使用<TeXmacs>宏机制来自定义或扩展该语法。特定领域的符号可以写在一个专用的样式包里。
   </itemize>
@@ -178,12 +178,12 @@
   <\itemize>
     <item>由于<TeXmacs>是一个所见即所得的编辑器，一些文档结构对用户来说是不可见的。比如，数学公式<math|x+y>的呈现意味着用到了斜体和特殊的空格。而对于公式<math|f<around*|(|x|)>>，很容易把右半个括号输入到公式外面，但看起来没什么不同。
 
-    <item>许多数学符号是有歧义的。比如，<math|a*<around*|(|b+c|)>>通常会理解为<math|a\<cdot\><around*|(|b+c|)>>，而<math|f<around*|(|x+y|)>>则会理解为一个函数应用。在语义编辑模式，用户要消除这个歧义就需要手动用<key|*>加入乘号和<key|space>加入空格。乘法/函数应用歧义是语法错误的主要来源之一，因为许多用户不会注意不可见的区别。同样， <math|\<wedge\>>字形既可以表示“逻辑与”也可以表示“楔积”。这个“同形异义”问题在<hlink|数学符号的语义|semantics/semantics/man-semantics-symbols.zh.tm>一节给出了更详细的解释。\ 
+    <item>许多数学符号是有歧义的。比如，<math|a*<around*|(|b+c|)>>通常会理解为<math|a\<cdot\><around*|(|b+c|)>>，而<math|f<around*|(|x+y|)>>则会理解为一个函数应用。在语义编辑模式，用户要消除这个歧义就需要手动用<key|*>加入乘号和<key|space>加入空格。乘法/函数应用歧义是语法错误的主要来源之一，因为许多用户不会注意不可见的区别。同样， <math|\<wedge\>>字形既可以表示“逻辑与”也可以表示“楔积”。这个“同形异义”问题在数学符号的语义一节给出了更详细的解释。\ 
 
     <item>有可能一段文字最初是用<LaTeX>或者老版本的<TeXmacs>写的。在这种情况下，文档不会包含大运算符范围内的括号匹配的信息。例如，在公式<math|<around*|[|x,y|[>>中，我们是否应该把第二个括号看成是右半个括号呢？而这是右侧开区间的法国标准记法。更一般地，在把语义与已有文档关联起来的时候，有可能会出现我们前面提到的各种问题。
   </itemize>
 
-  在开启语义编辑模式之后，要检查一个公式是否是正确的，就要把光标移到公式内部，然后观察<hlink|语义焦点|semantics/semantics/man-semantics.en.tm#semantic-focus>的外框的颜色：绿色代表公式正确，红色代表存在错误。或者，如果你的焦点在一个数学公式上的话，可以点<menu|Focus|Preferences|Highlight incorrect formulas>，这样所有不正确的公式都会高亮，用红色方框标出。
+  在开启语义编辑模式之后，要检查一个公式是否是正确的，就要把光标移到公式内部，然后观察语义焦点的外框的颜色：绿色代表公式正确，红色代表存在错误。或者，如果你的焦点在一个数学公式上的话，可以点<menu|Focus|Preferences|Highlight incorrect formulas>，这样所有不正确的公式都会高亮，用红色方框标出。
 
   对于第二种“容易犯的”错误， <TeXmacs>提供了一个自动语法修正器。把光标焦点放在公式上之后，就可以用<menu|Edit|Correct|Correct all>来修正你文档中所有的公式，或只修正选中部分的公式。 如果启用了版本工具，可以用<menu|Edit|Correct|Correct manually>来查看原文档和修正过的文档的差异。你可以用版本工具来对比这些差异，并选择合适的版本。
 

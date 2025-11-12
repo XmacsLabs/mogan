@@ -1,0 +1,56 @@
+<TMU|<tuple|1.1.0|2025.1.4>>
+
+<style|<tuple|tmdoc|chinese|old-spacing|old-dots|old-lengths>>
+
+<\body>
+  <tmdoc-title|创建表格>
+
+  你可以使用<menu|插入|表格>或者以下快捷键来创建表格：
+
+  <\description>
+    <item*|<key|table N t>>创建普通无框表格。
+
+    <item*|<key|table N T>>创建居中无框表格。
+
+    <item*|<key|table N b>>创建普通有框表格。
+
+    <item*|<key|table N B>>创建居中有框表格。
+  </description>
+
+  在数学模式下，提供如下类表格结构：
+
+  <\description>
+    <item*|<key|table N m>>创建一个矩阵<glossary-explain|矩阵|matrix>。
+
+    <item*|<key|table N d>>创建一个行列式。
+
+    <item*|<key|table N c>>创建一个选择<glossary-explain|选择|choice list>。
+  </description>
+
+  下面演示的是普通表格，居中有框表格和矩阵。下面的带标题的小表格是通过<menu|插入|表格|小表格标题>得到的。小表格允许你将多个表格并列排在一行上，而大表格一行只能有一个。通过<menu|插入|表格|大表格标题>可插入大表格。<vspace|0.5fn>
+
+  <small-table|<tabular|<tformat|<table|<row|<cell|boom>|<cell|tree>>|<row|<cell|hallo>|<cell|hello>>|<row|<cell|wiskunde>|<cell|mathematics>>>>>|普通无框表格><small-table|<block*|<tformat|<table|<row|<cell|boom>|<cell|tree>>|<row|<cell|hallo>|<cell|hello>>|<row|<cell|wiskunde>|<cell|mathematics>>>>>|居中有框表格><small-table|<math|<matrix|<tformat|<table|<row|<cell|a>|<cell|b>>|<row|<cell|c>|<cell|d>>>>>>|矩阵>
+
+  <vspace|0.5fn>还有其他类似的类表格环境，除此之外新的环境也可以由用户自己创建。比如，通过<menu|插入|数学|多行公式>或者<key|math &>，你可以进入<markup|eqnarray<math|<rsup|\<ast\>>>>环境。在此环境下，关注数学排版的用户可以轻易地对齐一组等式。例如：
+
+  <\eqnarray*>
+    <tformat|<table|<row|<cell|sin <around*|(|f<around*|(|x|)>g<around*|(|x|)>|)><rprime|'>>|<cell|=>|<cell|<around*|(|f<around*|(|x|)>g<around*|(|x|)>|)><rprime|'>cos <around*|(|f<around*|(|x|)>g<around*|(|x|)>|)>>>|<row|<cell|>|<cell|=>|<cell|<around*|(|f<rprime|'><around*|(|x|)>g<around*|(|x|)>+f<around*|(|x|)>g<rprime|'><around*|(|x|)>|)>cos<around*|(|f<around*|(|x|)>g<around*|(|x|)>|)>>>>>
+  </eqnarray*>
+
+  新创建一个表格时，默认大小为最小（一般是1<math|\<times\>>1），且所有单元格都是空的。通过快捷键 <shortcut|(structured-insert-left)>，<shortcut|(structured-insert-right)>，<shortcut|(structured-insert-up)>和<shortcut|(structured-insert-down)>可以插入新列和新行。比如说，<shortcut|(structured-insert-right)>在当前光标所在位置的右边插入新列，详情参见下图。你也可以用<key|return>在当前光标所在位置的下面插入新行。
+
+  <\big-figure>
+    <\equation*>
+      <matrix|<tformat|<table|<row|<cell|a<cursor>>|<cell|b>>|<row|<cell|c>|<cell|d>>>>><space|2em>\<longrightarrow\><space|2em><matrix|<tformat|<table|<row|<cell|a>|<cell|<cursor>>|<cell|b>>|<row|<cell|c>|<cell|>|<cell|d>>>>>
+    </equation*>
+  <|big-figure>
+    一个在矩阵中插入新列的例子。如果光标在左边的矩阵所示位置处，此时按下<shortcut|(structured-insert-right)>所得到的即右边的矩阵。
+  </big-figure>
+
+  <tmdoc-copyright|2013–2023|Joris van der Hoeven|沈达>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
+</body>
+
+<initial|<\collection>
+</collection>>

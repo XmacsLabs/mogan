@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.2.0-alpha>>
+<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -33,7 +33,7 @@
 
   <section|拼写检查><label|sec-man-spell-checking>
 
-  在您的系统上已安装<shell|ispell>的前提下(Windows系统不支持ispell)，使用<key|Win+$><space|0.5pt> （Linux）或<key|Cmd+;>（Mac）或者<with|font-family|ss|Edit><math|\<rightarrow\>><with|font-family|ss|Spell>可以检查您的文本中是否有拼写错误。使用前，还请您先检查一下您所用语言的字典是否已经安装。
+  在您的系统上已安装<shell|ispell>的前提下，使用<key|Win+$><space|0.5pt> （Linux）或<key|Cmd+;>（Mac）或者<with|font-family|ss|Edit><math|\<rightarrow\>><with|font-family|ss|Spell>可以检查您的文本中是否有拼写错误。使用前，还请您先检查一下您所用语言的字典是否已经安装。
 
 
   对全文或者选中文本启用拼写后，您将会在底端收到错词的修正提示，有以下选项供您选择：
@@ -192,13 +192,13 @@
 
   假定我们有同一个文档的两个版本<shell|old.tm>和<shell|new.tm>。通过以下步骤可以显示旧版本和新版本的差异：首先打开<shell|new.tm>这个文件，然后点击<menu|Version|Compare|With older version>选中<shell|old.tm>打开。此时，缓冲区的命名仍为<shell|new.tm>，更改通过特殊的标记显示在缓冲区中。假定存在差异，那么光标初始定位在第一个差异处。类似地，你还可以先打开旧版本，在点击<menu|Version|Compare|With newer version>和新版本比较。
 
-  通过子菜单<menu|Version|Move>，你可以在文档中的差异间上下移动。相应的快捷键是 <shortcut|(version-previous-difference)>和<shortcut|(version-next-difference)>。如果你已经了解了<hlink|结构化光标移动|man-structured-move.zh.tm>，不妨使用更加通用的快捷键，即 <shortcut|(traverse-first)> ， <shortcut|(traverse-last)> ， <shortcut|(traverse-previous)> 和 <shortcut|(traverse-next)>。
+  通过子菜单<menu|Version|Move>，你可以在文档中的差异间上下移动。相应的快捷键是 <shortcut|(version-previous-difference)>和<shortcut|(version-next-difference)>。如果你已经了解了结构化光标移动，不妨使用更加通用的快捷键，即 <shortcut|(traverse-first)> ， <shortcut|(traverse-last)> ， <shortcut|(traverse-previous)> 和 <shortcut|(traverse-next)>。
 
   <paragraph*|差异的可视化>
 
   版本间的差异有三种方式显示：只显示旧版本，只显示新版本，或者两者兼顾。旧版本字体呈深红色的，新版本则为墨绿。
 
-  每一个差异的可视化的显示方式都可以通过 <menu|Version|Show> 或者快捷键<shortcut|(version-show 'version-old)> (旧)， <shortcut|(version-show 'version-new)> (新) and <shortcut|(version-show 'version-both)> (兼)更改。也可以用<shortcut|(variant-circulate (focus-tree) #t)>在这些方式间轮换，此即所谓<hlink|结构化变元|man-structured-variants.zh.tm>。通过选中文本，可以扩大以上快捷键的作用域，特别地，选中全文，则所有差异的显示方式同步更改。
+  每一个差异的可视化的显示方式都可以通过 <menu|Version|Show> 或者快捷键<shortcut|(version-show 'version-old)> (旧)， <shortcut|(version-show 'version-new)> (新) and <shortcut|(version-show 'version-both)> (兼)更改。也可以用<shortcut|(variant-circulate (focus-tree) #t)>在这些方式间轮换，此即所谓结构化变元。通过选中文本，可以扩大以上快捷键的作用域，特别地，选中全文，则所有差异的显示方式同步更改。
 
   <paragraph*|保留特定版本>
 

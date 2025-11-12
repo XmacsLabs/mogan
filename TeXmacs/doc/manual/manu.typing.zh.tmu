@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -57,7 +57,7 @@
     </big-envbox>
   </quote-env>
 
-  类似地，焦点工具栏左部的箭头按钮可允许您跳转到相似标记。在本例中，它们会让你迅速在文档中所有的公式或者方程间浏览。关于<hlink|结构化编辑|../editing/man-structured-editing.zh.tm>和<hlink|结构化编辑工具|../editing/man-editing-tools.zh.tm>，还请移步细看。
+  类似地，焦点工具栏左部的箭头按钮可允许您跳转到相似标记。在本例中，它们会让你迅速在文档中所有的公式或者方程间浏览。关于<hlink|结构化编辑|manu.editing.zh.tmu>和<hlink|结构化编辑工具|manu.editing.zh.tmu>，还请移步细看。
 
   第二个重要的概念是编辑模式。有五种主要的模式：文本模式，数学模式，程序模式，图形模式和源代码模式。模式切换比焦点的切换要少得多，其工具栏就在焦点工具栏的上方。<menu|Insert>和<menu|Format>菜单都是模式相关的。
 
@@ -109,7 +109,7 @@
 
   <section|环境><label|sec-man-environments>
 
-  与属性标记类似，环境的作用是赋予一段文字以特殊含义。<hlink|属性标记|man-content-tags.zh.tm>通常作用于一小段文字，而环境的作用范围往往横跨多行。数学中常用的环境是<markup|theorem>和<markup|proof>，如下所示:
+  与属性标记类似，环境的作用是赋予一段文字以特殊含义。属性标记通常作用于一小段文字，而环境的作用范围往往横跨多行。数学中常用的环境是<markup|theorem>和<markup|proof>，如下所示:
 
   <\theorem>
     不存在这样的正整数<math|a,b,c>和<math|n<around*|(|n\<geqslant\>3|)>>使得<math|a<rsup|n>+b<rsup|n>=c<rsup|n>>。
@@ -157,7 +157,7 @@
 
   <section|精通键盘><label|sec-man-keyboard>
 
-  本节主讲快捷键，相关内容除本节外还可以参考<hlink|配置键盘|../config/man-config-keyboard.zh.tm>。
+  本节主讲快捷键，相关内容除本节外还可以参考<hlink|配置键盘|../configuration/conf.keyconfig.zh.tmu>。
 
   <subsection|基本前缀规则><label|sec-man-general-rules>
 
@@ -168,18 +168,18 @@
 
     <item*|<prefix|cmd>><TeXmacs>快捷键，往往依赖于当前的编辑模式。比如， <key|text s> 在文本模式下产生strong文本，在数学模式下则是<math|<sqrt|>>（平方根）。
 
-    <item*|<prefix|altcmd>>组合式<TeXmacs>快捷键。 通常，这些快捷键是用于先指示命令将要应用的标记的类别再指定具体的命令。比如<key|executable>键前缀用于插入可执行的标记以用于<hlink|撰写样式文件|../../devel/style/style.en.tm>。一个例子是快捷键<key|executable +>用于插入加法。
+    <item*|<prefix|altcmd>>组合式<TeXmacs>快捷键。 通常，这些快捷键是用于先指示命令将要应用的标记的类别再指定具体的命令。比如<key|executable>键前缀用于插入可执行的标记以用于<hlink|撰写样式文件|manu.styles.ch.tmu>。一个例子是快捷键<key|executable +>用于插入加法。
 
-    <item*|<prefix|structured:geometry>>此键前缀用于和方向键及其它特殊键组合，用于<hlink|移动和缩放对象|../editing/man-structured-geometry.zh.tm>。
+    <item*|<prefix|structured:geometry>>此键前缀用于和方向键及其它特殊键组合，用于<hlink|移动和缩放对象|manu.editing.zh.tmu>。
 
-    <item*|<prefix|structured:move>>此键前缀用于和方向键及其它特殊键组合，用于<hlink|结构化光标移动|../editing/man-structured-move.zh.tm>。
+    <item*|<prefix|structured:move>>此键前缀用于和方向键及其它特殊键组合，用于<hlink|结构化光标移动|manu.editing.zh.tmu>。
 
     <item*|<prefix|special>>此键前缀偶用于和字母和标点符号组合以创建一些额外的简单易记的快捷键。
 
-    <item*|<prefix|symbol>>此键前缀可和常用字符组合使用以插入特殊符号。比如，使用<key|text:symbol s>得到<with|font|roman|ß>以及<key|math:symbol a>得到<math|<op|\<amalg\>>>。<prefix|symbol>键前缀还用于插入字面意义上的字符。比如，<key|symbol \\>总是产生\\，而 <key|\\>用于进入<hlink|混合命令|keyboard/man-hybrid.zh.tm>。
+    <item*|<prefix|symbol>>此键前缀可和常用字符组合使用以插入特殊符号。比如，使用<key|text:symbol s>得到<with|font|roman|ß>以及<key|math:symbol a>得到<math|<op|\<amalg\>>>。<prefix|symbol>键前缀还用于插入字面意义上的字符。比如，<key|symbol \\>总是产生\\，而 <key|\\>用于进入混合命令。
   </description>
 
-  不巧的是， 基于<prefix|altcmd>快捷键在一些系统上面被系统的快捷键所覆盖。比如，在Mac OS上重音字符和常见的特殊字符是使用该快捷键输入的。此时，你可以使用<key*|escape>作为替代。更多信息，参见<hlink|配置键盘|../config/man-config-keyboard.en.tm>。
+  不巧的是， 基于<prefix|altcmd>快捷键在一些系统上面被系统的快捷键所覆盖。比如，在Mac OS上重音字符和常见的特殊字符是使用该快捷键输入的。此时，你可以使用<key*|escape>作为替代。更多信息，参见<hlink|配置键盘|../configuration/conf.keyconfig.zh.tmu>。
 
   <subsection|文本模式下的快捷键><label|sec-man-text-kbd>
 
@@ -199,7 +199,7 @@
 
   「英文」的引号是相继两个重音符或者单引号的连接。它们可以使用<key|‘ ‘>创建<key|' '> ，但是实际上这是两个字符的特殊展示，而不是单个特殊的字符。
 
-  一些快捷键在特定语言环境下生效。你可以使用 <menu|Document|Language> 设置文档的语言，或者 <menu|Format|Language> 设置选中区域的语言(见<hlink|输入文本概况|man-generalities.zh.tm>)。
+  一些快捷键在特定语言环境下生效。你可以使用 <menu|Document|Language> 设置文档的语言，或者 <menu|Format|Language> 设置选中区域的语言。
 
   <big-table|<with|font|roman|<with|language|british|<descriptive-table|<tformat|<cwith|1|1|1|-1|cell-row-span|1>|<cwith|1|1|1|-1|cell-col-span|2>|<cwith|1|1|1|-1|cell-halign|c>|<cwith|1|-1|3|3|cell-lborder|1ln>|<cwith|1|-1|5|5|cell-lborder|1ln>|<cwith|1|-1|7|7|cell-lborder|1ln>|<cwith|6|11|1|4|cell-bborder|0>|<cwith|6|11|1|4|cell-rborder|0>|<cwith|6|11|3|3|cell-lborder|0>|<cwith|1|1|5|5|cell-row-span|1>|<cwith|1|1|5|5|cell-col-span|4>|<twith|table-lborder|0>|<cwith|1|-1|1|1|cell-lborder|0>|<twith|table-bborder|0>|<cwith|1|1|1|1|cell-lborder|1ln>|<cwith|2|5|1|1|cell-lborder|1ln>|<cwith|5|5|1|4|cell-bborder|1ln>|<cwith|11|11|5|8|cell-bborder|1ln>|<cwith|1|-1|2|2|cell-halign|c>|<cwith|1|-1|4|4|cell-halign|c>|<cwith|1|-1|6|6|cell-halign|c>|<cwith|1|-1|8|8|cell-halign|c>|<table|<row|<cell|匈牙利语>|<cell|>|<cell|西班牙语>|<cell|>|<cell|波兰语>|<cell|>|<cell|>|<cell|>>|<row|<cell|<key|symbol o>>|<cell|<with|language|hungarian|ő>>|<cell|<key|! var>>|<cell|<with|language|spanish|¡>>|<cell|<key|symbol a>>|<cell|<with|language|polish|ą>>|<cell|<key|symbol o>>|<cell|<with|language|polish|ó>>>|<row|<cell|<key|symbol O>>|<cell|<with|language|hungarian|Ő>>|<cell|<key|? var>>|<cell|<with|language|spanish|¿>>|<cell|<key|symbol A>>|<cell|<with|language|polish|Ą>>|<cell|<key|symbol O>>|<cell|<with|language|polish|Ó>>>|<row|<cell|<key|symbol u>>|<cell|<with|language|hungarian|ű>>|<cell|<key|! ‘>>|<cell|<with|language|spanish|¡>>|<cell|<key|symbol c>>|<cell|<with|language|polish|ć>>|<cell|<key|symbol s>>|<cell|<with|language|polish|ś>>>|<row|<cell|<key|symbol U>>|<cell|<with|language|hungarian|Ű>>|<cell|<key|? ‘>>|<cell|<with|language|spanish|¿>>|<cell|<key|symbol C>>|<cell|<with|language|polish|Ć>>|<cell|<key|symbol S>>|<cell|<with|language|polish|Ś>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol e>>|<cell|<with|language|polish|ę>>|<cell|<key|symbol x>>|<cell|<with|language|polish|ź>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol E>>|<cell|<with|language|polish|Ę>>|<cell|<key|symbol X>>|<cell|<with|language|polish|Ź>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol l>>|<cell|<with|language|polish|ł>>|<cell|<key|symbol z>>|<cell|<with|language|polish|ż>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol L>>|<cell|<with|language|polish|Ł>>|<cell|<key|symbol Z>>|<cell|<with|language|polish|Ż>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol n>>|<cell|<with|language|polish|ń>>|<cell|<key|symbol z var>>|<cell|<with|language|polish|ź>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol N>>|<cell|<with|language|polish|Ń>>|<cell|<key|symbol Z var>>|<cell|<with|language|polish|Ź>>>>>>>>|语言相关的文本快捷键>
 
@@ -233,7 +233,7 @@
 
   <subsection|一些有用的键盘快捷键><label|sec-man-standard>
 
-  一些常用的组合快捷键如下表<nbsp><reference|various-useful-shortcuts>所示。特别注意的是由<shortcut|(make-space "1em")>，<shortcut|(make-space "0.2spc")>和 <shortcut|(make-space "-0.2spc")>插入的空白可用<shortcut|(geometry-left)>和<shortcut|(geometry-right)><hlink|改变大小|../editing/man-structured-geometry.en.tm>。这种缩放的方式实际上适用于更一般的从菜单<menu|Format|Space>插入的或水平或竖直的空白，也可以是一些其它的对象如图片。
+  一些常用的组合快捷键如下表<nbsp><reference|various-useful-shortcuts>所示。特别注意的是由<shortcut|(make-space "1em")>，<shortcut|(make-space "0.2spc")>和 <shortcut|(make-space "-0.2spc")>插入的空白可用<shortcut|(geometry-left)>和<shortcut|(geometry-right)><hlink|改变大小|editing.zh.tmu>。这种缩放的方式实际上适用于更一般的从菜单<menu|Format|Space>插入的或水平或竖直的空白，也可以是一些其它的对象如图片。
 
   <\big-table|<descriptive-table|<tformat|<table|<row|<cell|快捷键>|<cell|动作>>|<row|<cell|<shortcut|(remove-structure-upwards)>>|<cell|除去所包含的对象或环境。>>|<row|<cell|<shortcut|(make 'nbsp)>>|<cell|插入一个不间断的空白。>>|<row|<cell|<shortcut|(make-space "1em")>>|<cell|插入一个quad空白。>>|<row|<cell|<shortcut|(make-space "0.2spc")>>|<cell|插入一个小空白。>>|<row|<cell|<shortcut|(make-space "-0.2spc")>>|<cell|插入一个负空白。>>|<row|<cell|<shortcut|(make-htab "5mm")>>|<cell|插入一个<with|font|roman|“tab”>。>>|<row|<cell|<shortcut|(go-start)>>|<cell|移动到文档头部。>>|<row|<cell|<shortcut|(go-end)>>|<cell|移动到文档尾部。>>|<row|<cell|<shortcut|(make 'line-break)>>|<cell|插入一个换行符。>>|<row|<cell|<shortcut|(make-rigid)>>|<cell|插入一段不能断行（rigid）的文字。>>>>>>
     <label|various-useful-shortcuts>一些有用的键盘快捷键
