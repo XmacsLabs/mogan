@@ -117,9 +117,9 @@ def flush_matplotlib_figure(fig) -> None:
 
     tmp_path = None
     try:
-        with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as f:
+        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as f:
             tmp_path = f.name
-            fig.savefig(tmp_path, dpi=100, bbox_inches='tight')
+            fig.savefig(tmp_path, bbox_inches='tight')
             flush_file(tmp_path)
     except Exception as e:
         flush_verbatim(f"<渲染图像失败: {e}>")
