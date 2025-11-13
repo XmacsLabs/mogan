@@ -18,6 +18,20 @@ import platform
 import sys
 import tempfile
 from inspect import getsource, getsourcefile
+from tmpy.capture import CaptureStdout
+from tmpy.completion import complete, parse_complete_command
+from tmpy.postscript import FileOutDummy, PSOutDummy, pdf_out, ps_out
+from tmpy.protocol import (
+    DATA_COMMAND,
+    flush_command,
+    flush_file,
+    flush_prompt,
+    flush_ps,
+    flush_scheme,
+    flush_verbatim,
+    flush_latex,
+)
+
 try:
     import matplotlib.pyplot as plt
     from matplotlib.figure import Figure
@@ -45,21 +59,6 @@ except ModuleNotFoundError:
     SYMPY_AVALIABLE = False
     flush_verbatim ("Please install sympy first, for example:\n")
     flush_verbatim ("    pip install sympy")
-
-
-from tmpy.capture import CaptureStdout
-from tmpy.completion import complete, parse_complete_command
-from tmpy.postscript import FileOutDummy, PSOutDummy, pdf_out, ps_out
-from tmpy.protocol import (
-    DATA_COMMAND,
-    flush_command,
-    flush_file,
-    flush_prompt,
-    flush_ps,
-    flush_scheme,
-    flush_verbatim,
-    flush_latex,
-)
 
 # import logging as log
 # log.basicConfig(filename='/tmp/tm_python.log',level=log.INFO)
@@ -105,7 +104,7 @@ def flush_output(data):
             flush_scheme(dfstr)
     elif is_sympy_object(data):
         if SYMPY_AVALIABLE:
-            flush_sympy(data)
+            flush_latex(latex(data))
     else:
         flush_verbatim(str(data).strip())
 
@@ -191,17 +190,8 @@ def is_sympy_object(obj):
         return True
     elif isinstance(obj, (list, tuple, set)) and all(isinstance(item, (Basic, MatrixBase)) for item in obj):
         return True
-    elif isinstance(obj, dict) and all(isinstance(value, (Basic, MatrixBase)) for value in obj.values()):
+    elif (isinstance(obj, dict)) and (all(isinstance(key, (Basic, MatrixBase)) for key in obj.keys()) or all(isinstance(value, (Basic, MatrixBase)) for value in obj.values())):
             return True
-
-def flush_sympy(obj):
-    if SYMPY_AVALIABLE:
-        if isinstance (obj, (Basic, MatrixBase)):
-            flush_latex(latex(obj))
-        elif (isinstance(obj, (list, tuple, set)) and all(isinstance(item, (Basic, MatrixBase)) for item in obj)):
-            flush_latex(latex(obj))
-        elif (isinstance(obj, dict)) and all(isinstance(value, (Basic, MatrixBase)) for value in obj.values()):
-            flush_latex(latex(obj))
 
 def as_scm_string(text):
     return '"%s"' % text.replace("\\", "\\\\").replace('"', '\\"')
