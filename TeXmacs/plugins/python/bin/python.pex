@@ -130,6 +130,8 @@ def is_matplotlib_object(obj):
     module = type(obj)
     if "matplotlib" in module.__module__:
         return True
+    elif "mpl_toolkits" in module.__module__:
+        return True
     elif isinstance(obj, (list, tuple)):
         for item in obj:
             if isinstance(item, Artist):
