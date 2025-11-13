@@ -1,4 +1,5 @@
 (texmacs-module (liii account))
+(import (liii os))
 
 (tm-define (account-save-token-display token)
   (display "OAuth2 Token: ")
@@ -21,7 +22,12 @@
 (tm-define (account-save-token token)
   (ensure-cache-dir-exists)
   (let ((cache-file (get-token-cache-file)))
-    (string-save token cache-file)))
+    ;; 如果文件存在则删除后重新创建，确保覆盖内容
+    (when (url-exists? cache-file)
+      (system-remove cache-file))
+    ;; 保存token到文件
+    (string-save token cache-file)
+    ))
 
 ;; 读取token缓存文件
 (tm-define (account-load-token)
@@ -29,10 +35,3 @@
     (if (url-exists? cache-file)
         (string-load cache-file)
         "")))
-
-;; 删除 token 缓存文件
-(tm-define (account-delete-token)
-  (let ((cache-file (get-token-cache-file)))
-    (if (url-exists? cache-file)
-        (system-remove cache-file)
-        #f)))

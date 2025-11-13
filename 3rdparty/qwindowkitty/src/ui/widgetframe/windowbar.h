@@ -56,6 +56,7 @@ namespace QWK {
         void setIconFollowWindow(bool value);
 
     Q_SIGNALS:
+        void loginRequested();
         void pinRequested(bool pin = false);
         void minimizeRequested();
         void maximizeRequested(bool max = false);

@@ -29,6 +29,7 @@ public:
     IconButton,
     MenuWidget,
     TitleLabel,
+    LoginButton,
     PinButton,
     MinimizeButton,
     MaximizeButton,

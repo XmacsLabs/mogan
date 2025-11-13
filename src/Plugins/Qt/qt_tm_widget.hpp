@@ -26,9 +26,12 @@
 
 #include <QLayout>
 #include <QMainWindow>
+#include <QSettings>
 #include <QStackedWidget>
 
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+#include "../QWindowKit/loginbutton.h"
+#include "../QWindowKit/logindialog.h"
 #include "../QWindowKit/windowbar.hpp"
 #include "../QWindowKit/windowbutton.hpp"
 #include <QWKWidgets/widgetwindowagent.h>
@@ -75,6 +78,14 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   QTMTabPageContainer*    tabPageContainer;
   QTMAuxiliaryWidget*     auxiliaryWidget;
   QWK::WidgetWindowAgent* windowAgent;
+  QWK::LoginButton*       loginButton;
+  QWK::LoginDialog*       m_loginDialog;
+  QLabel*                 avatarLabel;
+  QLabel*                 nameLabel;
+  QLabel*                 accountIdLabel;
+  QLabel*                 membershipPeriodLabel;
+  QPushButton*            registerButton;
+  QPushButton*            loginActionButton;
 
 #ifdef Q_OS_MAC
   QToolBar* dumbToolBar;
@@ -92,7 +103,15 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   bool full_screen;
 
 private:
-  void onAddTabRequested ();
+  void    onAddTabRequested ();
+  void    setupLoginDialog (QWK::LoginDialog* loginDialog);
+  void    checkLocalTokenAndLogin ();
+  void    fetchUserInfo (const QString& token);
+  void    triggerOAuth2 ();
+  QString getMembershipStatus (const QJsonObject& userData);
+  void    updateDialogContent (const QString& name, const QString& avatarText,
+                               const QString& accountId,
+                               const QString& membershipPeriod);
 
   qt_widget main_widget;
   qt_widget main_menu_widget;

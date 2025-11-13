@@ -23,13 +23,20 @@
 #include <QtCore/qjsondocument.h>
 
 QTMOAuth::QTMOAuth (QObject* parent) {
+
   static auto authorizationUrl=
-      "http://test-www.liiistem.cn:8080/oauth2/authorize"; // 测试环境
+      "http://test-www.liiistem.cn:8080/oauth2/authorize"; // 测试环境 static
   static auto accessTokenUrl=
       "http://test-www.liiistem.cn:8080/oauth2/token"; // 测试环境
+
+  // static auto authorizationUrl="http://127.0.0.1:8080/oauth2/authorize"; //
+  // 本地环境 static auto accessTokenUrl= "http://127.0.0.1:8080/oauth2/token";
+  // // 本地环境
   static auto scope= "openid+profile+email";
-  m_reply          = new QOAuthHttpServerReplyHandler (
-      QHostAddress (QString::fromUtf8 ("127.0.0.1")), 3000, this);
+
+  int port= 1895;
+  m_reply = new QOAuthHttpServerReplyHandler (
+      QHostAddress (QString::fromUtf8 ("127.0.0.1")), port, this);
   m_reply->setCallbackPath ("/callback");
   oauth2.setReplyHandler (m_reply);
   oauth2.setAuthorizationUrl (QUrl (authorizationUrl));

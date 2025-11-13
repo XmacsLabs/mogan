@@ -11,16 +11,24 @@
 
 #include <QApplication>
 #include <QComboBox>
+#include <QDateTime>
+#include <QDesktopServices>
 #include <QDialog>
 #include <QDockWidget>
 #include <QIcon>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QLayoutItem>
 #include <QMainWindow>
 #include <QMenuBar>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QResource>
 #include <QScreen>
 #include <QSettings>
 #include <QStatusBar>
+#include <QTimer>
 #include <QToolBar>
 #include <QToolButton>
 
@@ -37,6 +45,7 @@
 #include "QTMGuiHelper.hpp" // needed to connect()
 #include "QTMInteractiveInputHelper.hpp"
 #include "QTMInteractivePrompt.hpp"
+#include "QTMOAuth.hpp"
 #include "QTMStyle.hpp" // qtstyle()
 #include "QTMTabPage.hpp"
 #include "QTMWindow.hpp"
@@ -210,6 +219,22 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   iconBtn->setAttribute (Qt::WA_TransparentForMouseEvents, true);
   iconBtn->setCursor (Qt::ArrowCursor);
   iconBtn->setContextMenuPolicy (Qt::NoContextMenu);
+#endif
+
+  // 登录按钮 - 作为最左边的自定义按钮
+  loginButton= new QWK::LoginButton (windowBar);
+  loginButton->setFlat (true);
+  loginButton->setFocusPolicy (Qt::NoFocus);
+  loginButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+  loginButton->setFixedSize (buttonWidth, buttonHeight);
+  loginButton->setIconSize (QSize (iconBaseSize, iconBaseSize));
+  loginButton->setIconNormal (QIcon (":/window-bar/login.svg"));
+  loginButton->setObjectName ("login-button");
+  loginButton->setProperty ("system-button", true);
+  windowBar->setLoginButton (loginButton);
+  if (windowAgent) {
+    windowAgent->setHitTestVisible (loginButton, true);
+  }
 
   auto pinBtn= new QWK::WindowButton (windowBar);
   pinBtn->setCheckable (true);
@@ -289,8 +314,10 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
                       mw->show ();
                       pinBtn->setChecked (on);
                     });
-
-#endif
+  m_loginDialog= new QWK::LoginDialog (mainwindow ());
+  setupLoginDialog (m_loginDialog);
+  QObject::connect (loginButton, &QWK::LoginButton::clicked,
+                    [this] () { checkLocalTokenAndLogin (); });
 
   // there is a bug in the early implementation of toolbars in Qt 4.6
   // which has been fixed in 4.6.2 (at least)
@@ -438,6 +465,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
   mw->setCentralWidget (cw);
 
+  menuToolBar->setObjectName ("menuToolBar");
   mainToolBar->setObjectName ("mainToolBar");
   modeToolBar->setObjectName ("modeToolBar");
   focusToolBar->setObjectName ("focusToolBar");
@@ -1577,4 +1605,290 @@ qt_tm_widget_rep::onAddTabRequested () {
   lastCallTime= QTime::currentTime ();
 
   exec_delayed (scheme_cmd ("(new-document)"));
+}
+
+void
+qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
+  // 创建登录对话框内容
+  QWidget* contentWidget= new QWidget ();
+  contentWidget->setStyleSheet ("background: white; border-radius: 8px;");
+  auto mainLayout= new QVBoxLayout (contentWidget);
+  mainLayout->setContentsMargins (16, 16, 16, 16);
+  mainLayout->setSpacing (16);
+
+  // 顶部区域：头像、名称、账户ID
+  auto topSection= new QWidget ();
+  auto topLayout = new QHBoxLayout (topSection);
+  topLayout->setContentsMargins (0, 0, 0, 0);
+  topLayout->setSpacing (12);
+
+  // 左侧：头像
+  auto avatarContainer= new QWidget ();
+  avatarContainer->setFixedSize (60, 60);
+  auto avatarLayout= new QVBoxLayout (avatarContainer);
+  avatarLayout->setContentsMargins (0, 0, 0, 0);
+  avatarLayout->setAlignment (Qt::AlignCenter);
+
+  // 头像标签 - 后续通过API设置
+  avatarLabel= new QLabel ();
+  avatarLabel->setFixedSize (50, 50);
+  avatarLabel->setStyleSheet (
+      "background: #007AFF; border-radius: 25px; color: white; font-size: "
+      "18px; font-weight: bold;");
+  avatarLabel->setAlignment (Qt::AlignCenter);
+  avatarLabel->setText ("Liii"); // 默认值
+  avatarLayout->addWidget (avatarLabel);
+
+  // 右侧：名称和账户ID
+  auto infoContainer= new QWidget ();
+  auto infoLayout   = new QVBoxLayout (infoContainer);
+  infoLayout->setContentsMargins (0, 0, 0, 0);
+  infoLayout->setSpacing (4);
+
+  // 会员名称标签 - 后续通过API设置
+  nameLabel= new QLabel (qt_translate ("未登录"));
+  nameLabel->setStyleSheet ("font-size: 16px; font-weight: bold; color: "
+                            "#1D1D1F; background: transparent;");
+  nameLabel->setMinimumWidth (120);
+
+  // 账户ID标签 - 后续通过API设置
+  accountIdLabel= new QLabel (qt_translate ("请登录查看账户信息"));
+  accountIdLabel->setStyleSheet (
+      "font-size: 12px; color: #86868B; background: transparent;");
+  accountIdLabel->setMinimumWidth (120);
+
+  infoLayout->addWidget (nameLabel);
+  infoLayout->addWidget (accountIdLabel);
+
+  topLayout->addWidget (avatarContainer);
+  topLayout->addWidget (infoContainer);
+  topLayout->addStretch ();
+
+  // 底部区域：会员期限
+  auto bottomSection= new QWidget ();
+  bottomSection->setStyleSheet (
+      "background: #FFD700; border-radius: 8px; padding: 12px;");
+  auto bottomLayout= new QVBoxLayout (bottomSection);
+  bottomLayout->setContentsMargins (12, 12, 12, 12);
+  bottomLayout->setSpacing (4);
+
+  auto membershipTitle= new QLabel (qt_translate ("会员状态"));
+  membershipTitle->setStyleSheet (
+      "font-size: 14px; font-weight: bold; color: #1D1D1F;");
+
+  // 会员期限标签 - 后续通过API设置
+  membershipPeriodLabel= new QLabel (qt_translate ("非会员"));
+  membershipPeriodLabel->setStyleSheet ("font-size: 12px; color: #86868B;");
+
+  // 注册按钮 - 当用户不是会员时显示
+  registerButton= new QPushButton (qt_translate ("注册会员"));
+  registerButton->setObjectName ("register-button");
+  registerButton->setStyleSheet (
+      "QPushButton#register-button { background: #007AFF; color: white; "
+      "border: none; border-radius: 6px; padding: 8px 16px; font-size: 12px; "
+      "font-weight: bold; } QPushButton#register-button:hover { background: "
+      "#0056CC; }");
+  registerButton->setVisible (false); // 默认隐藏
+
+  // 登录按钮 - 当用户未登录时显示
+  loginActionButton= new QPushButton (qt_translate ("登录"));
+  loginActionButton->setObjectName ("login-action-button");
+  loginActionButton->setStyleSheet (
+      "QPushButton#login-action-button { background: #007AFF; color: white; "
+      "border: none; border-radius: 6px; padding: 8px 16px; font-size: 12px; "
+      "font-weight: bold; } QPushButton#login-action-button:hover { "
+      "background: #0056CC; }");
+  loginActionButton->setVisible (true);
+
+  bottomLayout->addWidget (membershipTitle);
+  bottomLayout->addWidget (membershipPeriodLabel);
+  bottomLayout->addWidget (loginActionButton);
+  bottomLayout->addWidget (registerButton);
+
+  // 添加区域到主布局
+  mainLayout->addWidget (topSection);
+  mainLayout->addWidget (bottomSection);
+  mainLayout->addStretch ();
+
+  // 设置对话框内容
+  loginDialog->setContentWidget (contentWidget);
+
+  // 连接按钮信号 - 现在使用认证流程
+  QObject::connect (loginActionButton, &QPushButton::clicked, [this] () {
+    qDebug ("Login button clicked - triggering OAuth2 flow");
+    // 触发OAuth2登录流程
+    triggerOAuth2 ();
+  });
+
+  QObject::connect (registerButton, &QPushButton::clicked, [] () {
+    // 打开第三方注册链接
+    QDesktopServices::openUrl (QUrl ("https://liiistem.cn/pricing-fruit.html"));
+  });
+}
+
+void
+qt_tm_widget_rep::checkLocalTokenAndLogin () {
+  // 使用scheme代码获取本地token缓存
+  eval ("(use-modules (liii account))");
+  string  token  = as_string (call ("account-load-token"));
+  QString q_token= to_qstring (token);
+  qDebug ("Cached token: %s", q_token.isEmpty () ? "empty" : "found");
+
+  if (!q_token.isEmpty ()) {
+    // 有token，尝试获取用户信息
+    fetchUserInfo (q_token);
+  }
+  else {
+    // 没有token，显示登录对话框（用户需要手动点击登录按钮）
+    QPoint buttonBottomCenter= loginButton->mapToGlobal (
+        QPoint (loginButton->width () / 2, loginButton->height ()));
+    m_loginDialog->showAtPosition (buttonBottomCenter);
+  }
+}
+
+void
+qt_tm_widget_rep::fetchUserInfo (const QString& token) {
+  // 创建网络访问管理器
+  QNetworkAccessManager* manager= new QNetworkAccessManager ();
+
+  // 去掉token末尾的'˙'字符
+  QString clean_token= token;
+  if (clean_token.endsWith ("˙")) {
+    clean_token= clean_token.left (clean_token.length () - 1);
+  }
+
+  // 把 "Bearer " 和 token合并成 auth_str
+  QString q_auth_str= "Bearer " + clean_token;
+  string  auth_str  = from_qstring (q_auth_str);
+  // qDebug ("Authorization:%s", q_auth_str.toUtf8().constData());
+
+  // 创建请求
+  QNetworkRequest request;
+  request.setUrl (
+      QUrl ("http://test-www.liiistem.cn/api/oauthUser/info")); // 测试环境
+  // request.setUrl(QUrl("http://127.0.0.1:8080/api/oauthUser/info")); // 本地
+  request.setRawHeader ("Authorization", to_qstring (auth_str).toUtf8 ());
+  request.setRawHeader ("Content-Type", "application/json");
+
+  // 发送请求
+  QNetworkReply* reply= manager->get (request);
+
+  // 连接信号处理响应
+  QObject::connect (
+      reply, &QNetworkReply::finished, [this, reply, manager, token] () {
+        if (reply->error () == QNetworkReply::NoError) {
+          // 解析响应数据
+          QByteArray    responseData= reply->readAll ();
+          QJsonDocument doc         = QJsonDocument::fromJson (responseData);
+          QJsonObject   json        = doc.object ();
+
+          if (json.contains ("success") && json["success"].toBool ()) {
+            QJsonObject userData= json["data"].toObject ();
+
+            QString userName  = userData["nickName"].toString ("三鲤用户");
+            QString avatarText= userData["nickName"].toString ("liii").left (
+                4); // 取昵称前2个字符作为头像文本
+            QString accountEmail= userData["email"].toString ("liii@lii.pro");
+            QString membershipPeriod= getMembershipStatus (userData);
+
+            // 更新弹窗内容
+            updateDialogContent (userName, avatarText, accountEmail,
+                                 membershipPeriod);
+
+            // 显示弹窗
+            QPoint buttonBottomCenter= loginButton->mapToGlobal (
+                QPoint (loginButton->width () / 2, loginButton->height ()));
+            m_loginDialog->showAtPosition (buttonBottomCenter);
+          }
+          else {
+            // API返回错误
+            updateDialogContent (qt_translate ("未登录"), "liii",
+                                 qt_translate ("登录有误，请重新登陆"),
+                                 qt_translate ("非会员"));
+          }
+        }
+        else {
+          // 检查HTTP状态码
+          QVariant statusCode=
+              reply->attribute (QNetworkRequest::HttpStatusCodeAttribute);
+          if (statusCode.isValid () && statusCode.toInt () == 401) {
+            // 更新UI显示token失效信息
+            updateDialogContent (qt_translate ("未登录"), "liii",
+                                 qt_translate ("登录已过期，请重新登录"),
+                                 qt_translate ("非会员"));
+          }
+          else {
+            // 其他网络错误
+            updateDialogContent (qt_translate ("未登录"), "liii",
+                                 qt_translate ("网络错误，请重试"),
+                                 qt_translate ("非会员"));
+          }
+
+          QPoint buttonBottomCenter= loginButton->mapToGlobal (
+              QPoint (loginButton->width () / 2, loginButton->height ()));
+          m_loginDialog->showAtPosition (buttonBottomCenter);
+        }
+
+        // 清理资源
+        reply->deleteLater ();
+        manager->deleteLater ();
+      });
+}
+
+void
+qt_tm_widget_rep::triggerOAuth2 () {
+  // 隐藏对话框，因为需要用户进行OAuth2认证
+  if (m_loginDialog->isVisible ()) {
+    m_loginDialog->hide ();
+  }
+  // 直接调用scheme代码触发OAuth2登录流程
+  eval ("(use-modules (liii account))");
+  call ("(login)");
+}
+
+QString
+qt_tm_widget_rep::getMembershipStatus (const QJsonObject& userData) {
+  int     vipLevelId   = userData["vipLevelId"].toInt (0);
+  QString vipExpireTime= userData["vipExpireTime"].toString ("");
+
+  if (vipLevelId > 0 && !vipExpireTime.isEmpty ()) {
+    // 解析VIP过期时间，格式："2038-09-26T06:38:45.419+00:00"
+    QDateTime expireTime= QDateTime::fromString (vipExpireTime, Qt::ISODate);
+    if (expireTime.isValid ()) {
+      return qt_translate ("会员至") + expireTime.toString ("yyyy-MM-dd");
+    }
+  }
+
+  return qt_translate ("非会员");
+}
+
+void
+qt_tm_widget_rep::updateDialogContent (const QString& name,
+                                       const QString& avatarText,
+                                       const QString& accountEmail,
+                                       const QString& membershipPeriod) {
+  // 更新对话框中的UI组件内容
+  if (avatarLabel) {
+    avatarLabel->setText (avatarText);
+  }
+  if (nameLabel) {
+    nameLabel->setText (name);
+  }
+  if (accountIdLabel) {
+    accountIdLabel->setText (accountEmail);
+  }
+  if (membershipPeriodLabel) {
+    membershipPeriodLabel->setText (membershipPeriod);
+  }
+
+  // 根据用户状态更新按钮可见性
+  bool isLoggedIn= (name != qt_translate ("未登录"));
+  if (loginActionButton) {
+    loginActionButton->setVisible (!isLoggedIn);
+  }
+  if (registerButton) {
+    // 如果不是会员，显示注册按钮
+    bool isMember= (membershipPeriod != qt_translate ("非会员"));
+    registerButton->setVisible (!isMember && isLoggedIn);
+  }
 }

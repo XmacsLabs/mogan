@@ -26,6 +26,7 @@ public:
   QLabel*          titleLabel () const;  // 保留的QLabel接口，可能返回nullptr
   QWidget*         titleWidget () const; // 新接口：获取任意类型的标题Widget
   QAbstractButton* iconButton () const;
+  QAbstractButton* loginButton () const;
   QAbstractButton* pinButton () const;
   QAbstractButton* minButton () const;
   QAbstractButton* maxButton () const;
@@ -35,6 +36,7 @@ public:
   void setTitleLabel (QLabel* label);
   void setTitleWidget (QWidget* widget); // 新接口：支持任意QWidget
   void setIconButton (QAbstractButton* btn);
+  void setLoginButton (QAbstractButton* btn);
   void setPinButton (QAbstractButton* btn);
   void setMinButton (QAbstractButton* btn);
   void setMaxButton (QAbstractButton* btn);
@@ -44,6 +46,7 @@ public:
   QLabel*          takeTitleLabel ();
   QWidget*         takeTitleWidget (); // 新接口：获取标题Widget
   QAbstractButton* takeIconButton ();
+  QAbstractButton* takeLoginButton ();
   QAbstractButton* takePinButton ();
   QAbstractButton* takeMinButton ();
   QAbstractButton* takeMaxButton ();
@@ -59,6 +62,7 @@ public:
   void setIconFollowWindow (bool value);
 
 Q_SIGNALS:
+  void loginRequested ();
   void pinRequested (bool pin= false);
   void minimizeRequested ();
   void maximizeRequested (bool max= false);

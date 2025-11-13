@@ -94,6 +94,13 @@ WindowBar::iconButton () const {
 }
 
 QAbstractButton*
+WindowBar::loginButton () const {
+  Q_D (const WindowBar);
+  return static_cast<QAbstractButton*> (
+      d->widgetAt (WindowBarPrivate::LoginButton));
+}
+
+QAbstractButton*
 WindowBar::pinButton () const {
   Q_D (const WindowBar);
   return static_cast<QAbstractButton*> (
@@ -164,6 +171,16 @@ WindowBar::setIconButton (QAbstractButton* btn) {
 }
 
 void
+WindowBar::setLoginButton (QAbstractButton* btn) {
+  Q_D (WindowBar);
+  auto org= takeLoginButton ();
+  if (org) org->deleteLater ();
+  if (!btn) return;
+  d->setWidgetAt (WindowBarPrivate::LoginButton, btn);
+  // 登录按钮的点击事件在qt_tm_widget.cpp中直接处理，这里不需要额外连接
+}
+
+void
 WindowBar::setPinButton (QAbstractButton* btn) {
   Q_D (WindowBar);
   auto org= takePinButton ();
@@ -227,6 +244,18 @@ WindowBar::takeIconButton () {
   Q_D (WindowBar);
   return static_cast<QAbstractButton*> (
       d->takeWidgetAt (WindowBarPrivate::IconButton));
+}
+
+QAbstractButton*
+WindowBar::takeLoginButton () {
+  Q_D (WindowBar);
+  auto btn= static_cast<QAbstractButton*> (
+      d->takeWidgetAt (WindowBarPrivate::LoginButton));
+  if (!btn) {
+    return nullptr;
+  }
+  // 登录按钮的点击事件在qt_tm_widget.cpp中直接处理，这里不需要额外断开连接
+  return btn;
 }
 
 QAbstractButton*

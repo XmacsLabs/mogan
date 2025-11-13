@@ -772,6 +772,7 @@ target("libmogan") do
         add_includedirs("src/Plugins/QWindowKit", {public = true})
         add_files("src/Plugins/QWindowKit/**.cpp")
         add_files("src/Plugins/QWindowKit/**.hpp")
+        add_files("src/Plugins/QWindowKit/**.h")
     end
 
     if has_config("mupdf") then
