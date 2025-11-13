@@ -90,5 +90,5 @@
 ;(set-program-multiline-input "python" "default" #t)
 
 (when (supports-python?)
-  (import-from (python-widgets) (python-menus)))
+  (import-from (python-menus)))
 
