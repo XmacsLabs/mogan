@@ -61,14 +61,14 @@ jobs:
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: ${{ runner.os }}-xrepo-qt68-${{ hashFiles('**/packages.lua') }}
+          key: ${{ runner.os }}-xrepo-qt683-${{ hashFiles('**/packages.lua') }}
 
       - name: cache xmake
         uses: actions/cache@v3
         with:
           path: |
             tmp/build/.build_cache
-          key: ${{ runner.os }}-build-qt68-${{ hashFiles('**/packages.lua') }}
+          key: ${{ runner.os }}-build-qt683-${{ hashFiles('**/packages.lua') }}
 
       - name: config
         run: xmake config -vD --policies=build.ccache -o tmp/build -m releasedbg --yes
