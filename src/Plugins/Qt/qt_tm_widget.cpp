@@ -184,6 +184,14 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     mw->setMenuWidget (outBar);
   };
 
+  QScreen* screen        = QGuiApplication::primaryScreen ();
+  double   dpi           = screen ? screen->logicalDotsPerInch () : 96.0;
+  double   scale         = dpi / 96.0;
+  int      titleBarHeight= int (32 * scale);
+  int      buttonWidth   = int (46 * scale);
+  int      buttonHeight  = int (32 * scale);
+  int      iconBaseSize  = int (12 * scale);
+
 #if defined(Q_OS_MAC)
   // 无边框布局（macOS）
   QWK::WindowBar* windowBar= nullptr;
@@ -196,17 +204,11 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   Q_INIT_RESOURCE (styles);
   QWK::WindowBar* windowBar= nullptr;
   windowAgent              = nullptr;
-  QScreen* screen          = QGuiApplication::primaryScreen ();
-  double   dpi             = screen ? screen->logicalDotsPerInch () : 96.0;
-  double   scale           = dpi / 96.0;
-  int      titleBarHeight  = int (32 * scale);
-  int      buttonWidth     = int (46 * scale);
-  int      buttonHeight    = int (32 * scale);
-  int      iconBaseSize    = int (12 * scale);
   setupWindowBar (windowBar, windowAgent, /*minHeight*/ titleBarHeight,
                   /*setSafeArea*/ false);
   windowBar->setMinimumHeight (titleBarHeight);
   windowBar->setFixedHeight (titleBarHeight);
+#endif
 
   // 系统按钮（图标来自 3rdparty/qwindowkitty/src/styles/styles.qrc）
   auto iconBtn= new QWK::WindowButton (windowBar);
@@ -219,7 +221,6 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   iconBtn->setAttribute (Qt::WA_TransparentForMouseEvents, true);
   iconBtn->setCursor (Qt::ArrowCursor);
   iconBtn->setContextMenuPolicy (Qt::NoContextMenu);
-#endif
 
   // 登录按钮 - 作为最左边的自定义按钮
   loginButton= new QWK::LoginButton (windowBar);

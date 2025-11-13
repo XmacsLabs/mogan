@@ -15,7 +15,9 @@ if (eq $platform:os windows) {
     $E:HOME/bin
   ]
 } else {
-  # macOS has already set PATH in .zshrc
+  set paths = [
+    /opt/homebrew/opt/llvm@19/bin/
+  ]
 }
 
 clang-format --version
