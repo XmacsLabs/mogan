@@ -23,26 +23,27 @@
 #include <QtCore/qjsondocument.h>
 
 QTMOAuth::QTMOAuth (QObject* parent) {
+  // 加载 OAuth2 配置
+  eval ("(use-modules (liii account))");
 
-  static auto authorizationUrl=
-      "http://test-www.liiistem.cn:8080/oauth2/authorize"; // 测试环境 static
-  static auto accessTokenUrl=
-      "http://test-www.liiistem.cn:8080/oauth2/token"; // 测试环境
+  c_string authorizationUrl (
+      as_string (call ("account-oauth2-config", "authorization-url")));
+  c_string accessTokenUrl (
+      as_string (call ("account-oauth2-config", "access-token-url")));
+  c_string clientIdentifier (
+      as_string (call ("account-oauth2-config", "client-identifier")));
+  c_string scope (as_string (call ("account-oauth2-config", "scope")));
+  c_string portStr (as_string (call ("account-oauth2-config", "port")));
 
-  // static auto authorizationUrl="http://127.0.0.1:8080/oauth2/authorize"; //
-  // 本地环境 static auto accessTokenUrl= "http://127.0.0.1:8080/oauth2/token";
-  // // 本地环境
-  static auto scope= "openid+profile+email";
-
-  int port= 1895;
+  int port= QString ((char*) portStr).toInt ();
   m_reply = new QOAuthHttpServerReplyHandler (
       QHostAddress (QString::fromUtf8 ("127.0.0.1")), port, this);
   m_reply->setCallbackPath ("/callback");
   oauth2.setReplyHandler (m_reply);
-  oauth2.setAuthorizationUrl (QUrl (authorizationUrl));
-  oauth2.setAccessTokenUrl (QUrl (accessTokenUrl));
-  oauth2.setScope (scope);
-  oauth2.setClientIdentifier ("public-client");
+  oauth2.setAuthorizationUrl (QUrl ((char*) authorizationUrl));
+  oauth2.setAccessTokenUrl (QUrl ((char*) accessTokenUrl));
+  oauth2.setScope ((char*) scope);
+  oauth2.setClientIdentifier ((char*) clientIdentifier);
 
   connect (&oauth2, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, this,
            &QDesktopServices::openUrl);

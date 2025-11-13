@@ -1722,7 +1722,10 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
 
   QObject::connect (registerButton, &QPushButton::clicked, [] () {
     // 打开第三方注册链接
-    QDesktopServices::openUrl (QUrl ("https://liiistem.cn/pricing-fruit.html"));
+    eval ("(use-modules (liii account))");
+    string pricingUrl=
+        as_string (call ("account-oauth2-config", "pricing-url"));
+    QDesktopServices::openUrl (QUrl (to_qstring (pricingUrl)));
   });
 }
 
@@ -1764,9 +1767,11 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
 
   // 创建请求
   QNetworkRequest request;
-  request.setUrl (
-      QUrl ("http://test-www.liiistem.cn/api/oauthUser/info")); // 测试环境
-  // request.setUrl(QUrl("http://127.0.0.1:8080/api/oauthUser/info")); // 本地
+  // 从Scheme配置获取用户信息API URL
+  eval ("(use-modules (liii account))");
+  string userInfoUrl=
+      as_string (call ("account-oauth2-config", "user-info-url"));
+  request.setUrl (QUrl (to_qstring (userInfoUrl)));
   request.setRawHeader ("Authorization", to_qstring (auth_str).toUtf8 ());
   request.setRawHeader ("Content-Type", "application/json");
 

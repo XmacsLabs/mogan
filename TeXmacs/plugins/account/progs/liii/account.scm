@@ -1,6 +1,43 @@
 (texmacs-module (liii account))
 (import (liii os))
 
+;; 生产
+; (tm-define (account-oauth2-config key)
+;   (cond
+;     ((== key "authorization-url") "http://www.liiistem.cn:8080/oauth2/authorize")
+;     ((== key "access-token-url") "http://www.liiistem.cn:8080/oauth2/token")
+;     ((== key "client-identifier") "public-client")
+;     ((== key "scope") "openid+profile+email")
+;     ((== key "port") "1895")
+;     ((== key "user-info-url") "http://www.liiistem.cn/api/oauthUser/info")
+;     ((== key "pricing-url") "https://liiistem.cn/pricing-fruit.html")
+;     (else "")))
+
+;; 变量配置
+(tm-define (account-oauth2-config key)
+  (cond
+    ((== key "authorization-url") "http://test-www.liiistem.cn:8080/oauth2/authorize")
+    ((== key "access-token-url") "http://test-www.liiistem.cn:8080/oauth2/token")
+    ((== key "client-identifier") "public-client")
+    ((== key "scope") "openid+profile+email")
+    ((== key "port") "1895")
+    ((== key "user-info-url") "http://test-www.liiistem.cn/api/oauthUser/info")
+    ((== key "pricing-url") "https://liiistem.cn/pricing-fruit.html")
+    (else "")))
+
+;; 本地
+; (tm-define (account-oauth2-config key)
+;   (cond
+;     ((== key "authorization-url") "http://127.0.0.1:8080/oauth2/authorize")
+;     ((== key "access-token-url") "http://127.0.0.1:8080/oauth2/token")
+;     ((== key "client-identifier") "public-client")
+;     ((== key "scope") "openid+profile+email")
+;     ((== key "port") "1895")
+;     ((== key "user-info-url") "http://127.0.0.1:8080/api/oauthUser/info")
+;     ((== key "pricing-url") "https://liiistem.cn/pricing-fruit.html")
+;     (else "")))
+
+
 (tm-define (account-save-token-display token)
   (display "OAuth2 Token: ")
   (display token)
