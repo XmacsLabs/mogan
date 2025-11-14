@@ -28,6 +28,7 @@ from tmpy.protocol import (
     flush_prompt,
     flush_ps,
     flush_scheme,
+    flush_scheme_u8,
     flush_verbatim,
     flush_latex,
 )
@@ -101,7 +102,7 @@ def flush_output(data):
     elif isinstance(data, DataFrame):
         if PANDAS_AVALIABLE:
             dfstr = convert_dataframe_to_scheme_str(data)
-            flush_scheme(dfstr)
+            flush_scheme_u8(dfstr)
     elif is_sympy_object(data):
         if SYMPY_AVALIABLE:
             flush_latex(latex(data))
@@ -168,18 +169,27 @@ def convert_matplotlib_object_to_figure(obj):
                         return f.figure
                     
 def convert_dataframe_to_scheme_str(obj: DataFrame):
+    """ 将dataframe中的数据取出，转换成scheme代码字符串
+    """
     row_head = "(row "
     cell_head = "(cell "
     result = "(document (tabular (tformat (cwith \\\"1\\\" \\\"1\\\" \\\"1\\\" \\\"-1\\\" \\\"cell-bborder\\\" \\\"1ln\\\") (table "
     row_index = row_head + f"{cell_head}\\\"\\\" )"
     for column in obj.columns:
-        row_index = row_index + f" {cell_head}\\\"{column}\\\")" #(row (cell \"\") (cell \"{column}\")
+        column_str = str(column)
+        if ' ' in column_str:
+            column_str = column_str.replace(' ', '\\ ')
+        row_index = row_index + f" {cell_head}\\\"{column_str}\\\")" #(row (cell \"\") (cell \"{column}\")
     result = result + f"{row_index})"#row_index = (row (cell \"\") (cell \"index[1]\")...(cell \"index[n]\"))
-    row_str = row_head
+    row_str = ' '
+    columns_list = list(obj.columns)
     for row in obj.itertuples():
         row_str = row_head + f"{cell_head}\\\"{row.Index}\\\")"#(row (cell \"row.Index\")
-        for column in obj.columns:
-            row_str = row_str + f" {cell_head}\\\"{getattr(row, column)}\\\")" #(row (cell \"row.Index\") (cell \"row.column[1]\")...(cell \"row.column[n]\")
+        for i, column in enumerate(columns_list, 1):
+            value = str(row[i]) 
+            if ' ' in value:
+                value = value.replace(' ', '\\ ')
+            row_str = row_str + f" {cell_head}\\\"{value}\\\")" #(row (cell \"row.Index\") (cell \"row.column[1]\")...(cell \"row.column[n]\")
         result = result + f" {row_str})"
     result = result + "))))"
     return result
