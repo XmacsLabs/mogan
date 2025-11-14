@@ -28,4 +28,4 @@
 
 ;; Listings
 (define-group listing-tag
-  listing cpp-listing)
+  listing shell-listing scm-listing cpp-listing)

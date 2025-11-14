@@ -244,8 +244,10 @@
 
   <assign|numbered-line|<macro|body|<assign|line-nr|<plus|<value|line-nr>|1>><render-line-number|<value|line-nr>|<value|numbered-offset>><arg|body>>>
 
+  <assign|listing-sep|0.2fn>
+
   <assign|numbered|<\macro|body>
-    <\with|dummy1|<value|numbered-offset>|dummy2|<value|numbered-color>|dummy3|<value|numbered-font-size>>
+    <\with|dummy1|<value|numbered-offset>|dummy2|<value|numbered-color>|dummy3|<value|numbered-font-size>|par-sep|<value|listing-sep>|par-par-sep|0fn>
       <extern|ext-numbered|<quote-arg|body>>
     </with>
   </macro>>
@@ -253,15 +255,31 @@
   <drd-props|numbered|arity|1|accessible|all>
 
   <assign|listing|<\macro|body>
-    <\with|dummy1|<value|numbered-offset>|dummy2|<value|numbered-color>|dummy3|<value|numbered-font-size>>
+    <\with|dummy1|<value|numbered-offset>|dummy2|<value|numbered-color>|dummy3|<value|numbered-font-size>|par-sep|<value|listing-sep>|par-par-sep|0fn>
       <extern|ext-numbered-prog|<quote-arg|body>|verbatim>
     </with>
   </macro>>
 
   <drd-props|listing|arity|1|accessible|all>
 
+  <assign|shell-listing|<\macro|body>
+    <\with|dummy1|<value|numbered-offset>|dummy2|<value|numbered-color>|dummy3|<value|numbered-font-size>|par-sep|<value|listing-sep>|par-par-sep|0fn>
+      <extern|ext-numbered-prog|<quote-arg|body>|shell>
+    </with>
+  </macro>>
+
+  <drd-props|shell-listing|arity|1|accessible|all>
+
+  <assign|scm-listing|<\macro|body>
+    <\with|dummy1|<value|numbered-offset>|dummy2|<value|numbered-color>|dummy3|<value|numbered-font-size>|par-sep|<value|listing-sep>|par-par-sep|0fn>
+      <extern|ext-numbered-prog|<quote-arg|body>|scheme>
+    </with>
+  </macro>>
+
+  <drd-props|scm-listing|arity|1|accessible|all>
+
   <assign|cpp-listing|<\macro|body>
-    <\with|dummy1|<value|numbered-offset>|dummy2|<value|numbered-color>|dummy3|<value|numbered-font-size>>
+    <\with|dummy1|<value|numbered-offset>|dummy2|<value|numbered-color>|dummy3|<value|numbered-font-size>|par-sep|<value|listing-sep>|par-par-sep|0fn>
       <extern|ext-numbered-prog|<quote-arg|body>|cpp>
     </with>
   </macro>>

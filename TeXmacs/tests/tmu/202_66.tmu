@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
+<TMU|<tuple|1.1.0|2025.2.0-beta1>>
 
 <style|<tuple|generic|chinese|number-europe>>
 
@@ -24,7 +24,7 @@
   \;
 
   <\cpp-listing>
-    这是 cpp-listing (C++)
+    这是 cpp-listing
 
     \;
 
@@ -82,11 +82,49 @@
 
     }
   </cpp-listing>
+
+  \;
+
+  <\scm-listing>
+    这是 scm-listing
+
+    \;
+
+    (define (max x . xs)
+
+    \ \ \ \ \ \ (let loop ((current-max x) (remaining xs))
+
+    \ \ \ \ \ \ \ \ (if (null? remaining)
+
+    \ \ \ \ \ \ \ \ \ \ \ \ current-max
+
+    \ \ \ \ \ \ \ \ \ \ \ \ (loop (max2 current-max (car remaining))
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (cdr remaining)))))
+  </scm-listing>
+
+  \;
+
+  <\shell-listing>
+    这是 shell-listing
+
+    \;
+
+    if [ -d "$DIRECTORY" ]; then
+
+    echo "$DIRECTORY 存在."
+
+    else
+
+    echo "$DIRECTORY 不存在."
+
+    fi
+  </shell-listing>
 </body>
 
 <\initial>
   <\collection>
-    <associate|page-medium|paper>
+    <associate|page-medium|papyrus>
     <associate|page-screen-margin|false>
   </collection>
 </initial>
