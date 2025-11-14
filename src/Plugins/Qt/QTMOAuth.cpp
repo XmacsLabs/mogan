@@ -39,6 +39,19 @@ QTMOAuth::QTMOAuth (QObject* parent) {
   m_reply = new QOAuthHttpServerReplyHandler (
       QHostAddress (QString::fromUtf8 ("127.0.0.1")), port, this);
   m_reply->setCallbackPath ("/callback");
+
+  // 设置自定义成功页面
+  QString customHtml=
+      "<!doctype html><html><head>"
+      "<meta charset='utf-8'>"
+      "<style>body{font-family:Arial;background:#f2f2f2;margin:0;padding:20px}"
+      "h2{color:#000;margin:0}</style>"
+      "</head><body>"
+      "<h2>登录成功！您可以关闭此页面并返回应用。</h2>"
+      "<script>window.setTimeout(function(){window.close()},3000);</script>"
+      "</body></html>";
+  m_reply->setCallbackText (customHtml);
+
   oauth2.setReplyHandler (m_reply);
   oauth2.setAuthorizationUrl (QUrl ((char*) authorizationUrl));
   oauth2.setAccessTokenUrl (QUrl ((char*) accessTokenUrl));
