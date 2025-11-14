@@ -490,7 +490,7 @@ QDialog {
 }
 
 QDialog QLabel {
-  margin-bottom: 12px;
+	text-align: center;
 }
 
 QDialog QLabel#titleLabel {

@@ -494,7 +494,7 @@ QDialog {
 }
 
 QDialog QLabel {
-  margin-bottom: 12px;
+  text-align: center;
   color: #ffffff;
 }
 
