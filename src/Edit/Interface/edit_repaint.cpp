@@ -87,6 +87,7 @@ void
 edit_interface_rep::draw_cursor (renderer ren) {
   if (get_preference ("draw cursor") == "on" && !temp_invalid_cursor &&
       (got_focus || full_screen)) {
+    if (cursor_blink_active && !cursor_blink_visible) return;
     cursor cu= get_cursor ();
     if (!inside_active_graphics ()) {
       SI dw= 0;

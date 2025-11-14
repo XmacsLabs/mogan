@@ -57,7 +57,7 @@ initialize_default_env () {
   env (GLOBAL_SUBJECT)= "";           // global document subject
   env (LENGTH_MODE)   = "magnified";  // length units under magnification
 
-  env (CURSOR_COLOR)         = "red";       // cursor color in user interface
+  env (CURSOR_COLOR)         = "#000000";   // cursor color in user interface
   env (MATH_CURSOR_COLOR)    = "#b0f";      // cursor color in math mode
   env (FOCUS_COLOR)          = "#0ff";      // color of focus rectangles
   env (CONTEXT_COLOR)        = "#00555518"; // color of context rectangles

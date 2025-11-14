@@ -52,7 +52,7 @@
     </src-comment>
   </active*>
 
-  <assign|dark-scene-cursor-color|#f44>
+  <assign|dark-scene-cursor-color|#ffffff>
 
   <assign|dark-scene-math-cursor-color|#c4f>
 

@@ -546,6 +546,17 @@ edit_interface_rep::handle_keyboard_focus (bool has_focus, time_t t) {
     drag_right_reset ();
   }
   got_focus= has_focus;
+  if (got_focus) {
+    cursor_blink_visible= true;
+    cursor_blink_active = (cursor_blink_period > 0);
+    if (cursor_blink_active)
+      cursor_blink_next= texmacs_time () + cursor_blink_period;
+  }
+  else {
+    cursor_blink_active = false;
+    cursor_blink_visible= false;
+    cursor_blink_next   = 0;
+  }
   (void) t;
   notify_change (THE_FREEZE);
   notify_change (THE_FOCUS);

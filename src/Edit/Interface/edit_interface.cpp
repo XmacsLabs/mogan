@@ -66,9 +66,11 @@ edit_interface_rep::edit_interface_rep ()
       pixel ((SI) tm_round ((std_shrinkf * PIXEL) / zoomf)),
       zpixel (max ((SI) tm_round (std_shrinkf * PIXEL), pixel)), copy_always (),
       last_x (0), last_y (0), last_t (0), tremble_count (0),
-      tremble_right (false), table_selection (false), mouse_adjusting (false),
-      oc (0, 0), temp_invalid_cursor (false), shadow (NULL), stored (NULL),
-      cur_sb (2), cur_wb (2) {
+      tremble_right (false), cursor_blink_visible (true),
+      cursor_blink_active (false), cursor_blink_next (0),
+      cursor_blink_period (500), table_selection (false),
+      mouse_adjusting (false), oc (0, 0), temp_invalid_cursor (false),
+      shadow (NULL), stored (NULL), cur_sb (2), cur_wb (2) {
   user_active= false;
   input_mode = INPUT_NORMAL;
   gui_root_extents (cur_wx, cur_wy);
@@ -92,8 +94,11 @@ edit_interface_rep::suspend () {
     interrupt_shortcut ();
     set_message ("", "", false);
   }
-  got_focus = false;
-  env_change= env_change & (~THE_FREEZE);
+  got_focus           = false;
+  cursor_blink_active = false;
+  cursor_blink_visible= false;
+  cursor_blink_next   = 0;
+  env_change          = env_change & (~THE_FREEZE);
   notify_change (THE_FOCUS);
   if (shadow != NULL) tm_delete (shadow);
   if (stored != NULL) tm_delete (stored);
@@ -333,7 +338,10 @@ absval (SI x) {
 
 void
 edit_interface_rep::make_cursor_visible () {
-  cursor cu= get_cursor ();
+  cursor cu           = get_cursor ();
+  cursor_blink_visible= true;
+  if (cursor_blink_active && cursor_blink_period > 0)
+    cursor_blink_next= texmacs_time () + cursor_blink_period;
   update_visible ();
   bool must_update=
       (cu->ox < vx1) || (cu->ox >= vx2) || (cu->oy < vy1) || (cu->oy >= vy2);
@@ -345,8 +353,11 @@ edit_interface_rep::make_cursor_visible () {
 
 void
 edit_interface_rep::cursor_visible () {
-  path   sp= find_innermost_scroll (eb, tp);
-  cursor cu= get_cursor ();
+  path   sp           = find_innermost_scroll (eb, tp);
+  cursor cu           = get_cursor ();
+  cursor_blink_visible= true;
+  if (cursor_blink_active && cursor_blink_period > 0)
+    cursor_blink_next= texmacs_time () + cursor_blink_period;
   if (is_nil (sp)) {
     update_visible ();
     cu->y1-= 2 * pixel;
@@ -1104,10 +1115,26 @@ edit_interface_rep::apply_changes () {
 
 void
 edit_interface_rep::animate () {
-  if (((double) texmacs_time ()) >= anim_next) {
+  time_t now_ms= texmacs_time ();
+  if (((double) now_ms) >= anim_next) {
     rectangles rs= eb->anim_invalid ();
     invalidate (rs);
     stored_rects= rectangles ();
+  }
+  if (cursor_blink_active && cursor_blink_period > 0 &&
+      get_preference ("draw cursor") == "on" && now_ms >= cursor_blink_next) {
+    cursor_blink_visible= !cursor_blink_visible;
+    cursor_blink_next   = now_ms + cursor_blink_period;
+    cursor cu           = get_cursor ();
+    SI     dw           = 0;
+    if (tremble_count > 3) dw= (1 + min (tremble_count - 3, 25)) * 2 * pixel;
+    SI x_pad= 3 * zpixel + dw;
+    SI y_pad= 3 * zpixel;
+    SI x1   = cu->ox + ((SI) ((cu->y1 - dw) * cu->slope)) - x_pad;
+    SI y1   = cu->oy + (cu->y1 - dw) - y_pad;
+    SI x2   = cu->ox + ((SI) ((cu->y2 + dw) * cu->slope)) + (2 * zpixel) + dw;
+    SI y2   = cu->oy + (cu->y2 + dw) + y_pad;
+    invalidate (x1, y1, x2, y2);
   }
 }
 
