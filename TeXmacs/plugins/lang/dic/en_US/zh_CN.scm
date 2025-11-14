@@ -2395,3 +2395,5 @@
 ("zoom" "缩放")
 ("zoom/unzoom objects" "放大/缩小对象")
 ("zoom/unzoom" "放大/缩小")
+("line wrapping inside cell" "单元格内换行")
+("manual path" "手动设置路径")
