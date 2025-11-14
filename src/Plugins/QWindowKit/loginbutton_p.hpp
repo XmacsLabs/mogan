@@ -1,5 +1,5 @@
 /******************************************************************************
- * MODULE     : loginbutton_p.h
+ * MODULE     : loginbutton_p.hpp
  * COPYRIGHT  : (C) 2025 Liii
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
@@ -12,33 +12,33 @@
 
 #include <QIcon>
 
-#include "loginbutton.h"
+#include "loginbutton.hpp"
 
 namespace QWK {
 
-    class LoginButtonPrivate {
-        Q_DECLARE_PUBLIC(LoginButton)
-    public:
-        LoginButtonPrivate();
-        virtual ~LoginButtonPrivate();
+class LoginButtonPrivate {
+  Q_DECLARE_PUBLIC (LoginButton)
+public:
+  LoginButtonPrivate ();
+  virtual ~LoginButtonPrivate ();
 
-        void init();
-        void reloadIcon();
+  void init ();
+  void reloadIcon ();
 
-        LoginButton *q_ptr;
+  LoginButton* q_ptr;
 
-        QIcon iconNormal;
-        QIcon iconHover;
-        QIcon iconPressed;
-        QIcon iconDisabled;
+  QIcon iconNormal;
+  QIcon iconHover;
+  QIcon iconPressed;
+  QIcon iconDisabled;
 
-        bool hovered;
-        bool pressed;
+  bool hovered;
+  bool pressed;
 
-    private:
-        Q_DISABLE_COPY(LoginButtonPrivate)
-    };
+private:
+  Q_DISABLE_COPY (LoginButtonPrivate)
+};
 
-}
+} // namespace QWK
 
 #endif // LOGINBUTTONPRIVATE_H

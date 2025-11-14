@@ -30,8 +30,8 @@
 #include <QStackedWidget>
 
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-#include "../QWindowKit/loginbutton.h"
-#include "../QWindowKit/logindialog.h"
+#include "../QWindowKit/loginbutton.hpp"
+#include "../QWindowKit/logindialog.hpp"
 #include "../QWindowKit/windowbar.hpp"
 #include "../QWindowKit/windowbutton.hpp"
 #include <QWKWidgets/widgetwindowagent.h>

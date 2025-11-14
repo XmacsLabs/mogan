@@ -7,8 +7,8 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "loginbutton.h"
-#include "loginbutton_p.h"
+#include "loginbutton.hpp"
+#include "loginbutton_p.hpp"
 
 #include <QtCore/QDebug>
 #include <QtGui/QtEvents>

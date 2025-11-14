@@ -7,8 +7,8 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "logindialog.h"
-#include "logindialog_p.h"
+#include "logindialog.hpp"
+#include "logindialog_p.hpp"
 
 #include <QtCore/QDebug>
 #include <QtGui/QtEvents>

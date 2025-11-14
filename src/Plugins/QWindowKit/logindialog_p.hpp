@@ -1,5 +1,5 @@
 /******************************************************************************
- * MODULE     : logindialog_p.h
+ * MODULE     : logindialog_p.hpp
  * COPYRIGHT  : (C) 2025 Liii
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
@@ -12,27 +12,27 @@
 
 #include <QVBoxLayout>
 
-#include "logindialog.h"
+#include "logindialog.hpp"
 
 namespace QWK {
 
-    class LoginDialogPrivate {
-        Q_DECLARE_PUBLIC(LoginDialog)
-    public:
-        LoginDialogPrivate();
-        virtual ~LoginDialogPrivate();
+class LoginDialogPrivate {
+  Q_DECLARE_PUBLIC (LoginDialog)
+public:
+  LoginDialogPrivate ();
+  virtual ~LoginDialogPrivate ();
 
-        void init();
+  void init ();
 
-        LoginDialog *q_ptr;
+  LoginDialog* q_ptr;
 
-        QVBoxLayout *layout;
-        QWidget *contentWidget;
+  QVBoxLayout* layout;
+  QWidget*     contentWidget;
 
-    private:
-        Q_DISABLE_COPY(LoginDialogPrivate)
-    };
+private:
+  Q_DISABLE_COPY (LoginDialogPrivate)
+};
 
-}
+} // namespace QWK
 
 #endif // LOGINDIALOGPRIVATE_H

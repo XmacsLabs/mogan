@@ -320,7 +320,7 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
   if (im_preedit_switch && !preedit_string.isEmpty ()) {
     // find cursor position in the preedit string
     QList<QInputMethodEvent::Attribute> const& attrs= event->attributes ();
-    //    int pos = preedit_string.count();
+    //    int pos = preedit_string.size();
     int  pos        = 0;
     bool visible_cur= false;
     for (int i= 0; i < attrs.count (); i++)
@@ -332,7 +332,7 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
     // find selection in the preedit string
     int sel_start = 0;
     int sel_length= 0;
-    if (pos < preedit_string.count ()) {
+    if (pos < preedit_string.size ()) {
       for (int i= 0; i < attrs.count (); i++)
         if ((attrs[i].type == QInputMethodEvent::TextFormat) &&
             (attrs[i].start <= pos) &&
@@ -449,9 +449,10 @@ QTMWidget::tabletEvent (QTabletEvent* event) {
     else s= "press-" * mouse_decode (mstate);
   }
   if ((mstate & 4) == 0 || s == "press-right") {
-    QPoint        point= event->pos () + origin () - surface ()->pos ();
-    double        x = point.x () + event->hiResGlobalX () - event->globalX ();
-    double        y = point.y () + event->hiResGlobalY () - event->globalY ();
+    QPoint point=
+        event->position ().toPoint () + origin () - surface ()->pos ();
+    double        x = point.x ();
+    double        y = point.y ();
     coord2        pt= coord2 ((SI) (x * PIXEL), (SI) (-y * PIXEL));
     array<double> data;
     data << ((double) event->pressure ()) << ((double) event->rotation ())
