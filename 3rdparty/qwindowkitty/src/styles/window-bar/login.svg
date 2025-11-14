@@ -1,4 +1,6 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="24" height="24" fill="none"/>
-  <text x="12" y="16" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="currentColor">登录</text>
+  <!-- Elegant person silhouette -->
+  <circle cx="12" cy="7" r="4" fill="currentColor"/>
+  <path d="M7 12 C7 10 17 10 17 12 V16 C17 17 7 17 7 16 V12" fill="currentColor"/>
 </svg>

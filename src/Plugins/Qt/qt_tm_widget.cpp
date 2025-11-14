@@ -193,14 +193,14 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   int      iconBaseSize  = int (12 * scale);
 
 #if defined(Q_OS_MAC)
-  // 无边框布局（macOS）
+  // 无边框布局（macOS）- 只显示登录按钮
+  Q_INIT_RESOURCE (styles);
   QWK::WindowBar* windowBar= nullptr;
   windowAgent              = nullptr;
   setupWindowBar (windowBar, windowAgent, /*minHeight*/ 20,
                   /*setSafeArea*/ true);
 #elif defined(Q_OS_WIN) || defined(Q_OS_LINUX)
   // 无边框布局（Windows / Linux），并使用 /styles 资源中的图标
-  // 若样式资源被打包进静态库，需显式初始化资源
   Q_INIT_RESOURCE (styles);
   QWK::WindowBar* windowBar= nullptr;
   windowAgent              = nullptr;
@@ -229,9 +229,13 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   loginButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
   loginButton->setFixedSize (buttonWidth, buttonHeight);
   loginButton->setIconSize (QSize (iconBaseSize, iconBaseSize));
+
+  // 设置登录图标
   loginButton->setIconNormal (QIcon (":/window-bar/login.svg"));
+
   loginButton->setObjectName ("login-button");
   loginButton->setProperty ("system-button", true);
+
   windowBar->setLoginButton (loginButton);
   if (windowAgent) {
     windowAgent->setHitTestVisible (loginButton, true);
@@ -291,6 +295,15 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   closeBtn->setProperty ("system-button", true);
   windowBar->setCloseButton (closeBtn);
   windowAgent->setSystemButton (QWK::WindowAgentBase::Close, closeBtn);
+
+#ifdef Q_OS_MAC
+  // macOS特定调整：隐藏所有系统按钮，只显示登录按钮
+  iconBtn->setVisible (false);
+  pinBtn->setVisible (false);
+  minBtn->setVisible (false);
+  maxBtn->setVisible (false);
+  closeBtn->setVisible (false);
+#endif
 
   // 按钮信号连接到窗口行为
   QObject::connect (windowBar, &QWK::WindowBar::minimizeRequested, mw,

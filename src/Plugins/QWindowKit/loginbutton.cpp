@@ -27,6 +27,24 @@ LoginButtonPrivate::init () {
   Q_Q (LoginButton);
   q->setFixedSize (46, 32);
   q->setFocusPolicy (Qt::NoFocus);
+
+#ifdef Q_OS_MAC
+  // macOS特定调整：确保按钮在macOS上正确显示
+  q->setStyleSheet ("QPushButton { "
+                    "  background: transparent; "
+                    "  border: none; "
+                    "  min-width: 46px; "
+                    "  min-height: 32px; "
+                    "}"
+                    "QPushButton:hover { "
+                    "  background: rgba(0,0,0,0.1); "
+                    "  border-radius: 4px; "
+                    "}"
+                    "QPushButton:pressed { "
+                    "  background: rgba(0,0,0,0.2); "
+                    "  border-radius: 4px; "
+                    "}");
+#endif
 }
 
 void
