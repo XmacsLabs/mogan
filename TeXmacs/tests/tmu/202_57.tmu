@@ -1,15 +1,17 @@
-<TMU|<tuple|1.1.0|2025.2.0-alpha>>
+<TMU|<tuple|1.1.0|2025.2.0-beta2>>
 
-<style|<tuple|generic|chinese|number-europe|smart-ref>>
+<style|<tuple|generic|chinese|number-europe|smart-ref|goldfish>>
 
 <\body>
+  <section|网站链接>
+
   <hlink|website link|https://liiistem.com/>
 
-  \;
+  <section|本地文件链接>
 
   <hlink|file link|202_58.tmu>
 
-  \;
+  <section|引用链接>
 
   \;
 
@@ -25,9 +27,33 @@
 
   smart-ref:<smart-ref|formula:NL>
 
-  \;
-
   reference:<reference|formula:NL>
+
+  <section|可折叠结构>
+
+  暂时相关处理代码还是错误的。
+
+  <\session|goldfish|default>
+    <\output>
+      Goldfish Scheme 17.11.22 Community Edition by LiiiLabs
+
+      implemented on S7 Scheme (11.2, 30-Dec-2024)
+    </output>
+
+    <\folded-io>
+      \<gtr\>\ 
+    <|folded-io>
+      (+ 1 2)
+    <|folded-io>
+      <goldfish-result|3>
+    </folded-io>
+
+    <\input>
+      \<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
 </body>
 
 <\initial>
@@ -39,6 +65,24 @@
 
 <\references>
   <\collection>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|2|1>>
+    <associate|auto-3|<tuple|3|1>>
+    <associate|auto-4|<tuple|4|1>>
     <associate|formula:NL|<tuple|1|1>>
   </collection>
 </references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>网站链接> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>本地文件链接> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>引用链接> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-3><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>可折叠结构> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4><vspace|0.5fn>
+    </associate>
+  </collection>
+</auxiliary>

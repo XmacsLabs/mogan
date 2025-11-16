@@ -888,6 +888,8 @@
 ("high resolution settings" "高分屏设置")
 ("highlight errors" "高亮错误")
 ("history" "历史")
+("hold down CTRL and click the mouse to follow the link" "按住CTRL并单击鼠标以跟踪链接")
+("hold down COMMAND and click the mouse to follow the link" "按住COMMAND并单击鼠标以跟踪链接")
 ("home" "主页")
 ("homepage" "主页")
 ("homoglyphs" "同形异义符")

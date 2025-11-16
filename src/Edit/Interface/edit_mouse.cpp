@@ -16,6 +16,7 @@
 #include "observers.hpp"
 #include "qapplication.h"
 #include "qnamespace.h"
+#include "sys_utils.hpp"
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
 
@@ -150,11 +151,14 @@ edit_interface_rep::mouse_drag (SI x, SI y) {
 void
 edit_interface_rep::mouse_select (SI x, SI y, int mods, bool drag) {
   if (mouse_message ("select", x, y)) return;
-  if (!is_nil (mouse_ids) && (mods & Mod2Mask) == 0 && !drag) {
+  if (!is_nil (mouse_ids) && !drag) {
+    bool ctrl_pressed   = ((mods & ControlMask) != 0);
+    bool command_pressed= ((mods & Mod2Mask) != 0);
     bool is_inner_link=
         as_bool (call ("link-contains-inner-link?", object (mouse_ids)));
-    if ((is_inner_link && !(mods & ControlMask)) ||
-        (!is_inner_link && mods & ControlMask)) {
+    if (is_inner_link ||
+        (!is_inner_link && ((!(os_macos ()) && ctrl_pressed) ||
+                            (os_macos () && command_pressed)))) {
       call ("link-follow-ids", object (mouse_ids), object ("click"));
       disable_double_clicks ();
       return;

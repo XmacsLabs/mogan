@@ -660,21 +660,21 @@
 (tm-define (show-hlink-tooltip ids)
   (:synopsis "Show tooltip for hlinks")
   (when (nnull? ids)
-    (with items (ids->link-list ids)
-      (with anchor-id (link-item-id (car items))
-        (with anchor-tree
-          (or (and-with trees (and anchor-id (id->trees anchor-id))
-                (car trees))
-              (cursor-tree))
-          (with ver (link-item-vertices (car items))
-            (with url (cadr (cadr ver))
-              (with base "按住CTRL并单击鼠标以跟踪链接："
-                (with text (string-append base url)
-                  (with tip `(with "preview-bg-color" "#ddeeff"
-                                 (preview-balloon
-                                  (verbatim ,(utf8->cork text))))
-                    (close-tooltip)
-                    (delayed
-                      (:idle 100)
-                      (show-tooltip "link-tooltip" anchor-tree
-                                    tip "Top" "Top" "default" 2.2))))))))))))
+    (let* ((items (ids->link-list ids))
+           (anchor-id (link-item-id (car items)))
+           (anchor-tree (or (and-with trees (and anchor-id (id->trees anchor-id))
+                                      (car trees))
+                            (cursor-tree)))
+           (ver (link-item-vertices (car items)))
+           (url (cadr (cadr ver)))
+           (base (if (os-macos?)
+                     "Hold down COMMAND and click the mouse to follow the link"
+                     "Hold down CTRL and click the mouse to follow the link"))
+           (text (string-append (translate base) ": " url))
+           (tip `(with "preview-bg-color" "#ddeeff"
+                   (preview-balloon (verbatim ,text)))))
+      (close-tooltip)
+      (delayed
+        (:idle 100)
+        (show-tooltip "link-tooltip" anchor-tree
+                      tip "Top" "Top" "default" 2.2)))))
