@@ -153,20 +153,11 @@ edit_interface_rep::mouse_select (SI x, SI y, int mods, bool drag) {
   if (!is_nil (mouse_ids) && (mods & Mod2Mask) == 0 && !drag) {
     bool is_inner_link=
         as_bool (call ("link-contains-inner-link?", object (mouse_ids)));
-    if (is_inner_link) {
-      if (!(mods & ControlMask)) {
-        call ("link-follow-ids", object (mouse_ids), object ("click"));
-        disable_double_clicks ();
-        return;
-      }
-    }
-    else {
-      if (mods & ControlMask) {
-        call ("link-follow-ids", object (mouse_ids), object ("click"));
-        disable_double_clicks ();
-        return;
-      }
-      else call ("show-hlink-tooltip", object (mouse_ids));
+    if ((is_inner_link && !(mods & ControlMask)) ||
+        (!is_inner_link && mods & ControlMask)) {
+      call ("link-follow-ids", object (mouse_ids), object ("click"));
+      disable_double_clicks ();
+      return;
     }
   }
   tree g;
@@ -309,6 +300,7 @@ edit_interface_rep::set_pointer (string curs_name, string mask_name) {
 void
 edit_interface_rep::set_cursor_style (string style_name) {
   QWidget* mainwindow= QApplication::activeWindow ();
+  if (mainwindow == nullptr) return;
   if (style_name == "openhand") mainwindow->setCursor (Qt::OpenHandCursor);
   else if (style_name == "normal" || style_name == "top_left_arrow")
     mainwindow->setCursor (Qt::ArrowCursor);
@@ -570,13 +562,24 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
       (type == "move" || type == "dragging-left" || type == "dragging-right");
   if ((!move_like) || (is_attached (this) && !check_event (MOTION_EVENT)))
     update_mouse_loci ();
+
+  bool hovering_hlink= false;
   if (!is_nil (mouse_ids) && type == "move") {
     notify_change (THE_FREEZE);
     // NOTE: this notification is needed to prevent the window to scroll to
     // the current cursor position when hovering over the locus
     // but a cleaner solution would be welcome
     call ("link-follow-ids", object (mouse_ids), object ("mouse-over"));
+    bool is_inner_link=
+        as_bool (call ("link-contains-inner-link?", object (mouse_ids)));
+    if (!is_inner_link) {
+      call ("show-hlink-tooltip", object (mouse_ids));
+      hovering_hlink= true;
+    }
   }
+  if (hovering_hlink) set_cursor_style ("pointing_hand");
+  else set_cursor_style ("normal");
+
   if (type == "move") mouse_message ("move", x, y);
 
   if (type == "leave") set_pointer ("XC_top_left_arrow");
