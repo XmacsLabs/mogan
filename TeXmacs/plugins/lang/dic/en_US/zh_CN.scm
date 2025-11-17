@@ -2399,3 +2399,7 @@
 ("zoom/unzoom" "放大/缩小")
 ("line wrapping inside cell" "单元格内换行")
 ("manual path" "手动设置路径")
+("High resolution screen srttings" "高分屏设置")
+("Double the zoom factor for TeXmacs documents" "将TeXmacs文档的显示放大两倍")
+("Use high resolution icons" "使用高分辨率图标")
+("Scale of the graphical user interface" "图形界面显示比例")
