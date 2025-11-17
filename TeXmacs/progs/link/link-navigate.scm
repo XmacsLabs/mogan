@@ -225,13 +225,25 @@
     (list-remove-duplicates (map link-item-id r))))
 
 (tm-define (link-contains-inner-link? l)
-  (:synopsis "Check if link list contains inner links (URLs starting with #)")
-  (exists? (lambda (item)
-    (exists? (lambda (vertex)
-      (and (func? vertex 'url 1)
-           (string-starts? (cadr vertex) "#")))
-             (link-item-vertices item)))
-           (ids->link-list l)))
+  (:synopsis "Check if link list contains inner links (URLs starting with #), or no url vertex at all")
+  (let* ((link-list (ids->link-list l))
+         (has-url-vertex? #f))
+    (for-each
+      (lambda (item)
+        (for-each
+          (lambda (vertex)
+            (when (func? vertex 'url 1)
+              (set! has-url-vertex? #t)))
+          (link-item-vertices item)))
+      link-list)
+    (if (not has-url-vertex?)
+        #t
+        (exists? (lambda (item)
+          (exists? (lambda (vertex)
+            (and (func? vertex 'url 1)
+                 (string-starts? (cadr vertex) "#")))
+                   (link-item-vertices item)))
+                 link-list))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Navigation lists contain concrete propositions for link traversal.
