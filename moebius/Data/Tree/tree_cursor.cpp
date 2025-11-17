@@ -191,6 +191,7 @@ closest_accessible (tree t, path p, int dir) {
     if (p->item == 2 && dir > 0) return path (1);
     if (p->item == 0) return path (1, start (t[1]));
     if (p->item == 2) return path (1, end (t[1]));
+    return path ();
   }
   else {
     int i, k= p->item, n= N (t);
