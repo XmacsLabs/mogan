@@ -528,6 +528,73 @@ QDialog QPushButton:disabled {
 }
 
 /****************************************************************************
+* 登录对话框样式
+****************************************************************************/
+QWidget#login-dialog-content {
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+QLabel#login-avatar-label {
+  background: #007AFF;
+  border-radius: 25px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  qproperty-alignment: AlignCenter;
+}
+
+QLabel#login-name-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1D1D1F;
+  background: transparent;
+  min-width: 120px;
+}
+
+QLabel#login-account-label {
+  font-size: 12px;
+  color: #86868B;
+  background: transparent;
+  min-width: 120px;
+}
+
+QWidget#login-bottom-section {
+  background: #FFD700;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+QLabel#login-membership-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1D1D1F;
+  background: transparent;
+}
+
+QLabel#login-membership-period {
+  font-size: 12px;
+  color: #86868B;
+  background: transparent;
+}
+
+QPushButton#register-button,
+QPushButton#login-action-button {
+  background: #007AFF;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+QPushButton#register-button:hover,
+QPushButton#login-action-button:hover {
+  background: #0056CC;
+}
+
+/****************************************************************************
 * 分组框样式
 ****************************************************************************/
 QGroupBox {

@@ -208,7 +208,6 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
                   /*setSafeArea*/ false);
   windowBar->setMinimumHeight (titleBarHeight);
   windowBar->setFixedHeight (titleBarHeight);
-#endif
 
   // 系统按钮（图标来自 3rdparty/qwindowkitty/src/styles/styles.qrc）
   auto iconBtn= new QWK::WindowButton (windowBar);
@@ -221,25 +220,6 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   iconBtn->setAttribute (Qt::WA_TransparentForMouseEvents, true);
   iconBtn->setCursor (Qt::ArrowCursor);
   iconBtn->setContextMenuPolicy (Qt::NoContextMenu);
-
-  // 登录按钮 - 作为最左边的自定义按钮
-  loginButton= new QWK::LoginButton (windowBar);
-  loginButton->setFlat (true);
-  loginButton->setFocusPolicy (Qt::NoFocus);
-  loginButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-  loginButton->setFixedSize (buttonWidth, buttonHeight);
-  loginButton->setIconSize (QSize (iconBaseSize, iconBaseSize));
-
-  // 设置登录图标
-  loginButton->setIconNormal (QIcon (":/window-bar/login.svg"));
-
-  loginButton->setObjectName ("login-button");
-  loginButton->setProperty ("system-button", true);
-
-  windowBar->setLoginButton (loginButton);
-  if (windowAgent) {
-    windowAgent->setHitTestVisible (loginButton, true);
-  }
 
   auto pinBtn= new QWK::WindowButton (windowBar);
   pinBtn->setCheckable (true);
@@ -296,15 +276,6 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   windowBar->setCloseButton (closeBtn);
   windowAgent->setSystemButton (QWK::WindowAgentBase::Close, closeBtn);
 
-#ifdef Q_OS_MAC
-  // macOS特定调整：隐藏所有系统按钮，只显示登录按钮
-  iconBtn->setVisible (false);
-  pinBtn->setVisible (false);
-  minBtn->setVisible (false);
-  maxBtn->setVisible (false);
-  closeBtn->setVisible (false);
-#endif
-
   // 按钮信号连接到窗口行为
   QObject::connect (windowBar, &QWK::WindowBar::minimizeRequested, mw,
                     [mw] () { mw->showMinimized (); });
@@ -328,6 +299,27 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
                       mw->show ();
                       pinBtn->setChecked (on);
                     });
+#endif
+
+  // 登录按钮 - 作为最左边的自定义按钮
+  loginButton= new QWK::LoginButton (windowBar);
+  loginButton->setFlat (true);
+  loginButton->setFocusPolicy (Qt::NoFocus);
+  loginButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+  loginButton->setFixedSize (buttonWidth, buttonHeight);
+  loginButton->setIconSize (QSize (iconBaseSize, iconBaseSize));
+
+  // 设置登录图标
+  loginButton->setIconNormal (QIcon (":/window-bar/login.svg"));
+
+  loginButton->setObjectName ("login-button");
+  loginButton->setProperty ("system-button", true);
+
+  windowBar->setLoginButton (loginButton);
+  if (windowAgent) {
+    windowAgent->setHitTestVisible (loginButton, true);
+  }
+
   m_loginDialog= new QWK::LoginDialog (mainwindow ());
   setupLoginDialog (m_loginDialog);
   QObject::connect (loginButton, &QWK::LoginButton::clicked,
@@ -479,7 +471,6 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
   mw->setCentralWidget (cw);
 
-  menuToolBar->setObjectName ("menuToolBar");
   mainToolBar->setObjectName ("mainToolBar");
   modeToolBar->setObjectName ("modeToolBar");
   focusToolBar->setObjectName ("focusToolBar");
@@ -1621,11 +1612,12 @@ qt_tm_widget_rep::onAddTabRequested () {
   exec_delayed (scheme_cmd ("(new-document)"));
 }
 
+// 登录相关代码
 void
 qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
   // 创建登录对话框内容
   QWidget* contentWidget= new QWidget ();
-  contentWidget->setStyleSheet ("background: white; border-radius: 8px;");
+  contentWidget->setObjectName ("login-dialog-content");
   auto mainLayout= new QVBoxLayout (contentWidget);
   mainLayout->setContentsMargins (16, 16, 16, 16);
   mainLayout->setSpacing (16);
@@ -1646,9 +1638,7 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
   // 头像标签 - 后续通过API设置
   avatarLabel= new QLabel ();
   avatarLabel->setFixedSize (50, 50);
-  avatarLabel->setStyleSheet (
-      "background: #007AFF; border-radius: 25px; color: white; font-size: "
-      "18px; font-weight: bold;");
+  avatarLabel->setObjectName ("login-avatar-label");
   avatarLabel->setAlignment (Qt::AlignCenter);
   avatarLabel->setText ("Liii"); // 默认值
   avatarLayout->addWidget (avatarLabel);
@@ -1661,14 +1651,12 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
 
   // 会员名称标签 - 后续通过API设置
   nameLabel= new QLabel (qt_translate ("未登录"));
-  nameLabel->setStyleSheet ("font-size: 16px; font-weight: bold; color: "
-                            "#1D1D1F; background: transparent;");
+  nameLabel->setObjectName ("login-name-label");
   nameLabel->setMinimumWidth (120);
 
   // 账户ID标签 - 后续通过API设置
   accountIdLabel= new QLabel (qt_translate ("请登录查看账户信息"));
-  accountIdLabel->setStyleSheet (
-      "font-size: 12px; color: #86868B; background: transparent;");
+  accountIdLabel->setObjectName ("login-account-label");
   accountIdLabel->setMinimumWidth (120);
 
   infoLayout->addWidget (nameLabel);
@@ -1680,38 +1668,26 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
 
   // 底部区域：会员期限
   auto bottomSection= new QWidget ();
-  bottomSection->setStyleSheet (
-      "background: #FFD700; border-radius: 8px; padding: 12px;");
+  bottomSection->setObjectName ("login-bottom-section");
   auto bottomLayout= new QVBoxLayout (bottomSection);
   bottomLayout->setContentsMargins (12, 12, 12, 12);
   bottomLayout->setSpacing (4);
 
   auto membershipTitle= new QLabel (qt_translate ("会员状态"));
-  membershipTitle->setStyleSheet (
-      "font-size: 14px; font-weight: bold; color: #1D1D1F;");
+  membershipTitle->setObjectName ("login-membership-title");
 
   // 会员期限标签 - 后续通过API设置
   membershipPeriodLabel= new QLabel (qt_translate ("非会员"));
-  membershipPeriodLabel->setStyleSheet ("font-size: 12px; color: #86868B;");
+  membershipPeriodLabel->setObjectName ("login-membership-period");
 
   // 注册按钮 - 当用户不是会员时显示
   registerButton= new QPushButton (qt_translate ("注册会员"));
   registerButton->setObjectName ("register-button");
-  registerButton->setStyleSheet (
-      "QPushButton#register-button { background: #007AFF; color: white; "
-      "border: none; border-radius: 6px; padding: 8px 16px; font-size: 12px; "
-      "font-weight: bold; } QPushButton#register-button:hover { background: "
-      "#0056CC; }");
   registerButton->setVisible (false); // 默认隐藏
 
   // 登录按钮 - 当用户未登录时显示
   loginActionButton= new QPushButton (qt_translate ("登录"));
   loginActionButton->setObjectName ("login-action-button");
-  loginActionButton->setStyleSheet (
-      "QPushButton#login-action-button { background: #007AFF; color: white; "
-      "border: none; border-radius: 6px; padding: 8px 16px; font-size: 12px; "
-      "font-weight: bold; } QPushButton#login-action-button:hover { "
-      "background: #0056CC; }");
   loginActionButton->setVisible (true);
 
   bottomLayout->addWidget (membershipTitle);
