@@ -480,6 +480,7 @@
   (with (base qry) (process-url u)
     (with fm (file-format base)
       (cond ((== qry "") (noop))
+            ((== fm "tmu-file") (texmacs-file-post qry))
             ((== fm "texmacs-file") (texmacs-file-post qry))
             ((== fm "generic-file") (generic-file-post qry))
             ((== fm "scheme-file") (source-file-post qry))
