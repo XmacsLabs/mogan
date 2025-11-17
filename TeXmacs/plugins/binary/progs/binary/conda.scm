@@ -20,6 +20,7 @@
                "$HOME/miniconda3/bin/conda"))
         ((os-win32?)
          (list "$USERPROFILE/anaconda3/Scripts/conda.exe"
+               "$PROGRAMDATA/anaconda3/Scripts/conda.exe"
                "$USERPROFILE/miniconda3/Scripts/conda.exe"))
         (else
          (list "$HOME/anaconda3/bin/conda"
