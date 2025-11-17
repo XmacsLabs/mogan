@@ -149,10 +149,6 @@
   (cond ((== s "") "none")
         (else s)))
 
-(define (pn-enable? u)
-  (and (initial-defined? u "pn-enable")
-       (== (initial-get u "pn-enable") "true")))
-
 (define (pn-name prefix index)
   (string-append prefix (number->string index)))
 
@@ -190,8 +186,39 @@
     (initial-set u "pn-next" (number->string (+ next 1)))
     (refresh-window)))
 
+(tm-widget ((page-number-style-editor u) quit)
+  (let* ((pf "") (ps "") (pe "") (nt "arabic")
+         (filled? (lambda (s) (and (string? s) (!= s "")))))
+  (centered
+    (aligned
+      (item (text "Applying from:")
+        (input (set! ps answer) "string" (list ps) "6em"))
+      (item (text "Applying to:")
+        (input (set! pe answer) "string" (list pe) "6em"))
+      (item (text "First page:")
+        (input (set! pf answer) "string" (list pf) "6em"))
+      (item (text "Number style:")
+        (enum (begin (set! nt answer))
+              '("arabic" "roman" "Roman" "hanzi")
+              "arabic"
+              "10em"))))
+  ======
+  (explicit-buttons
+    (hlist
+      >>>
+      ("Cancel" (quit))
+      // //
+      ("Ok"
+        (when (and (filled? pf) (filled? ps)
+                    (filled? pe) (filled? nt))
+          (assign-page-number u pf ps pe nt)
+          (quit)))))))
+
+(define (open-page-number-style-window u)
+  (dialogue-window (page-number-style-editor u) noop
+                   "Page number style layer"))
+
 (tm-widget (page-formatter-format u quit)
-  (let ((pf "1") (ps "1") (pe (number->string (get-page-count))) (nt "arabic"))
   (centered
     (refreshable "page-format-settings"
       (aligned
@@ -218,25 +245,8 @@
                 (decode-crop-marks (initial-get u "page-crop-marks"))
                 "10em"))
         (item (text "Advanced page numbering:")
-          (toggle (begin
-                  (initial-set u "pn-enable" (if answer "true" "false"))
-                  (refresh-now "page-format-settings"))
-                  (pn-enable? u)))
-        (item (text "Applying from:")
-          (when (pn-enable? u)
-            (input (set! ps answer) "string" (list ps) "6em")))
-        (item (text "Applying to:")
-          (when (pn-enable? u)
-            (input (set! pe answer) "string" (list pe) "6em")))
-        (item (text "First page:")
-          (when (pn-enable? u)
-            (input (set! pf answer) "string" (list pf) "6em")))
-        (item (text "Number style:")
-          (when (pn-enable? u)
-            (enum (begin (set! nt answer))
-                  '("arabic" "roman" "Roman" "hanzi")
-                  "arabic"
-                  "10em"))))))
+          (explicit-buttons ("New page number style layer"
+                            (open-page-number-style-window u)))))))
   ===
   (centered
     (refreshable "page-user-format-settings"
@@ -263,9 +273,7 @@
       (refresh-now "page-format-settings")
       (refresh-now "page-user-format-settings"))
      // //
-     ("Ok"
-        (when (pn-enable? u) (assign-page-number u pf ps pe nt))
-        (quit))))))
+     ("Ok" (quit)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Document -> Page / Margins
