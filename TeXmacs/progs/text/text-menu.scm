@@ -110,7 +110,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (menu-bind chapter-menu
-  ("Part" (make-section 'part))
+  (if (style-has? "book-style")
+      ("Part" (make-section 'part)))
   ("Chapter" (make-section 'chapter))
   ("Appendix" (make-section 'appendix))
   ("Prologue" (make-unnamed-section 'prologue))
@@ -122,9 +123,7 @@
   ("Subsubsection" (make-section 'subsubsection))
   ---
   ("Paragraph::section" (make-section 'paragraph))
-  ("Subparagraph" (make-section 'subparagraph))
-  ---
-  ("Appendix" (make-section 'appendix)))
+  ("Subparagraph" (make-section 'subparagraph)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enunciations, quotations and programs
@@ -473,8 +472,8 @@
       (-> "Header" (link letter-header-menu)))
   (if (style-has? "header-exam-dtd")
       (-> "Header" (link exam-header-menu)))
-  (if (style-has? "book-style")
-      (-> "Chapter" (link chapter-menu)))
+  
+  (-> "Chapter" (link chapter-menu))
   (if (and (style-has? "section-base-dtd")
            (not (style-has? "header-exam-dtd")))
       (-> "Section" (link section-menu)))
