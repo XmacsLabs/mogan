@@ -17,9 +17,3 @@
 ;; Toolbars and menus
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(menu-bind session-help-icons
-  (:require (and (in-python?) (in-session?)))
-  /
-  ((balloon (icon "tm_help.xpm") "Python plugin help") ; FIXME: user newer icon
-       (load-help-article "python")))
-
