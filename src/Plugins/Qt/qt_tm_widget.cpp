@@ -437,14 +437,18 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   // NOTICE: setFixedHeight must be after setIconSize
   // TODO: the size of the toolbar should be calculated dynamically
   {
-    double scale= retina_scale;
-    int    h    = (int) floor (36 * scale + 0.5);
+    double scale       = retina_scale;
+    int    h           = (int) floor (36 * scale + 0.5);
+    int    tabRowHeight= h;
+#ifdef Q_OS_MAC
+    tabRowHeight= (int) floor (30 * scale + 0.5);
+#endif
 
     // 工具栏高度相等
     mainToolBar->setFixedHeight (h);
     modeToolBar->setFixedHeight (h);
     focusToolBar->setFixedHeight (h);
-    tabPageContainer->setRowHeight (h);
+    tabPageContainer->setRowHeight (tabRowHeight);
 
     // 保持可移动行为一致
     mainToolBar->setMovable (true);

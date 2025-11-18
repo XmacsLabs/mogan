@@ -54,6 +54,7 @@ protected:
 
 private:
   void updateCloseButtonVisibility ();
+  void initializeCloseButton ();
 };
 
 /*! QTMTabPageAction is used as a carrier of QTMTabPage widget.

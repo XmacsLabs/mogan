@@ -15,6 +15,7 @@
 #include "tm_window.hpp"
 #include <QGuiApplication>
 #include <QScreen>
+#include <QSize>
 
 // The minimum width of a single tab page (in pixels).
 const int MIN_TAB_PAGE_WIDTH= 150;
@@ -28,6 +29,16 @@ const int TAB_CONTAINER_PADDING= 75;
 const int TAB_CONTAINER_PADDING= 0;
 #endif
 
+#ifdef Q_OS_MAC
+constexpr int TAB_CONTENT_VERTICAL_OFFSET   = 4.5;
+constexpr int ADD_TAB_BUTTON_VERTICAL_OFFSET= 4;
+constexpr int TAB_RIGHT_EXTRA_GAP           = 0;
+#else
+constexpr int TAB_CONTENT_VERTICAL_OFFSET   = 0;
+constexpr int ADD_TAB_BUTTON_VERTICAL_OFFSET= 0;
+constexpr int TAB_RIGHT_EXTRA_GAP           = 66;
+#endif
+
 // DPI scaling utility functions
 static double
 getDPIScaleFactor () {
@@ -38,12 +49,33 @@ getDPIScaleFactor () {
 
 static int
 getScaledSystemBarHeight () {
-  return int (36 * getDPIScaleFactor ()); // 基准高度36px，根据DPI缩放
+#ifdef Q_OS_MAC
+  constexpr int baseHeight= 30;
+#else
+  constexpr int baseHeight= 36;
+#endif
+  return int (baseHeight * getDPIScaleFactor ());
 }
 
 static int
 getScaledSystemButtonHeight () {
-  return int (24 * getDPIScaleFactor ()); // 基准高度24px，根据DPI缩放
+#ifdef Q_OS_MAC
+  constexpr int baseHeight= 20;
+#else
+  constexpr int baseHeight= 24;
+#endif
+  return int (baseHeight * getDPIScaleFactor ());
+}
+
+static QSize
+getScaledTabCloseButtonSize () {
+#ifdef Q_OS_MAC
+  constexpr int baseSize= 16;
+#else
+  constexpr int baseSize= 20;
+#endif
+  int side= qMax (baseSize, int (baseSize * getDPIScaleFactor ()));
+  return QSize (side, side);
 }
 
 /**
@@ -79,21 +111,29 @@ QTMTabPage::QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
   p_title->setChecked (p_isActive);
   setDefaultAction (p_title);
   setFocusPolicy (Qt::NoFocus);
-
-  m_closeBtn= new QToolButton (this);
-  m_closeBtn->setObjectName ("tabpage-close-button");
+  initializeCloseButton ();
   m_closeBtn->setDefaultAction (p_closeBtn);
-  m_closeBtn->setFocusPolicy (Qt::NoFocus);
-  updateCloseButtonVisibility ();
   connect (m_closeBtn, &QToolButton::clicked, this,
            [=] () { g_mostRecentlyClosedTab= m_viewUrl; });
 }
 
 QTMTabPage::QTMTabPage () : m_viewUrl (url_none ()) {
   setFocusPolicy (Qt::NoFocus);
+  initializeCloseButton ();
+}
+
+void
+QTMTabPage::initializeCloseButton () {
   m_closeBtn= new QToolButton (this);
   m_closeBtn->setObjectName ("tabpage-close-button");
   m_closeBtn->setFocusPolicy (Qt::NoFocus);
+#ifdef Q_OS_MAC
+  m_closeBtn->setProperty ("platform", "mac");
+#endif
+  const QSize closeBtnSize= getScaledTabCloseButtonSize ();
+  m_closeBtn->setFixedSize (closeBtnSize);
+  const int closeIconSide= qMax (closeBtnSize.width () - 4, 8);
+  m_closeBtn->setIconSize (QSize (closeIconSide, closeIconSide));
   updateCloseButtonVisibility ();
 }
 
@@ -125,6 +165,7 @@ QTMTabPage::paintEvent (QPaintEvent*) {
 
   int fontBoxH   = fm.height ();
   int centeredTop= (getScaledSystemBarHeight () - fontBoxH) / 2;
+  centeredTop+= TAB_CONTENT_VERTICAL_OFFSET;
 #ifdef Q_OS_WIN
   // Windows 上字体度量与控件背景的边距叠加，通常需要轻微上移 1px 以达到光学居中
   const int opticalAdjust= -1;
@@ -148,6 +189,7 @@ QTMTabPage::resizeEvent (QResizeEvent* e) {
   int h= m_closeBtn->height ();
   int x= e->size ().width () - w - 12;
   int y= (getScaledSystemBarHeight () - h) / 2;
+  y+= TAB_CONTENT_VERTICAL_OFFSET;
 
   m_closeBtn->setGeometry (x, y, w, h);
 }
@@ -246,9 +288,13 @@ QTMTabPageContainer::QTMTabPageContainer (QWidget* p_parent)
   m_addTabButton= new QToolButton (this);
   m_addTabButton->setObjectName ("add-tab-button");
   m_addTabButton->setText ("+");
-  m_addTabButton->setMinimumSize (getScaledSystemButtonHeight (),
-                                  getScaledSystemButtonHeight ());
+  int addButtonSide= getScaledSystemButtonHeight ();
+  m_addTabButton->setMinimumSize (addButtonSide, addButtonSide);
+  m_addTabButton->setFixedSize (addButtonSide, addButtonSide);
   m_addTabButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+#ifdef Q_OS_MAC
+  m_addTabButton->setProperty ("platform", "mac");
+#endif
   connect (m_addTabButton, &QToolButton::clicked, this,
            &QTMTabPageContainer::onAddTabClicked);
   m_addTabButton->hide ();
@@ -316,11 +362,14 @@ QTMTabPageContainer::arrangeTabPages () {
   const int windowWidth=
       parentWidget () ? parentWidget ()->width () : this->width ();
   // 动态计算右侧预留空间，防止标签页覆盖系统按钮
-  double scale        = getDPIScaleFactor ();
-  int    buttonWidth  = int (46 * scale); // 按钮宽度
-  int    buttonCount  = 4;                // pin, min, max, close
-  int    extraGap     = int (66 * scale); // 标签页和按钮之间的额外间隔
-  int    reservedRight= buttonCount * buttonWidth + extraGap;
+  double scale      = getDPIScaleFactor ();
+  int    buttonWidth= int (46 * scale); // 按钮宽度
+  int    buttonCount= 5;                // pin, min, max, close,login
+#ifdef Q_OS_MAC
+  buttonCount= 1; // macOS 仅保留 login
+#endif
+  int extraGap= int (TAB_RIGHT_EXTRA_GAP * scale); // 标签页和按钮之间的额外间隔
+  int reservedRight= buttonCount * buttonWidth + extraGap;
 
   int visibleTabCount= 0;
   // cout << "most recently closed tab:" << g_mostRecentlyClosedTab << LF;
@@ -387,6 +436,7 @@ QTMTabPageContainer::arrangeTabPages () {
     int buttonX        = accumWidth;
     // 调整按钮垂直位置，与系统按钮对齐
     int buttonY= (getScaledSystemBarHeight () - addButtonHeight) / 2;
+    buttonY+= ADD_TAB_BUTTON_VERTICAL_OFFSET;
     m_addTabButton->setGeometry (buttonX, buttonY, addButtonWidth,
                                  addButtonHeight);
     m_addTabButton->show ();
