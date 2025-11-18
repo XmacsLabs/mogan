@@ -1238,6 +1238,7 @@
   ("@ * . ." "<otimes><cdots><otimes>")
   ("@ * var" "<oast>")
   ("@ x var . ." "<oast><cdots><oast>")
+  ("@ A" "<AA>")
   ("@ R" "<circledR>")
   ("@ S" "<circledS>")
   ("@ / var" "<oslash>")
@@ -1720,7 +1721,6 @@
   ("y var" "<psi>")
   ("z var" "<zeta>")
 
-  ("@ A" "<AA>")
   ("A var" "<Alpha>")
   ("A var var" "<forall>")
   ("A var var var" "<aleph>")
