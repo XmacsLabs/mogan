@@ -97,7 +97,7 @@ def flush_output(data):
         dfstr = convert_dataframe_to_scheme_str(data)
         flush_scheme_u8(dfstr)
     elif is_sympy_object(data):
-        flush_latex(latex(data))
+        flush_latex("\\rmfamily{" + latex(data) + "}")
     else:
         flush_verbatim(str(data).strip())
 

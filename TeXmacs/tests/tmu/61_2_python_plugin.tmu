@@ -1,8 +1,146 @@
-<TMU|<tuple|1.1.0|2025.2.0-beta1>>
+<TMU|<tuple|1.1.0|2025.2.0-beta2>>
 
 <style|<tuple|generic|chinese|number-europe|python>>
 
 <\body>
+  <\table-of-contents|toc>
+    <vspace*|1fn><with|font-series|bold|math-font-series|bold|1<space|2spc>基本功能测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+
+    <with|par-left|1tab|1.1<space|2spc>未安装依赖库可以正常使用基本 Python 功能 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2>>
+
+    <vspace*|1fn><with|font-series|bold|math-font-series|bold|2<space|2spc>matplotlib测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-3><vspace|0.5fn>
+
+    <with|par-left|1tab|2.1<space|2spc>如果未安装matplotlib库： <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4>>
+
+    <with|par-left|1tab|2.2<space|2spc>2D matplotlib绘图测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5>>
+
+    <with|par-left|1tab|2.3<space|2spc>3Dmatplotlib绘图（"mpl_toolkits"）测试： <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6>>
+
+    <vspace*|1fn><with|font-series|bold|math-font-series|bold|3<space|2spc>DataFrame测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7><vspace|0.5fn>
+
+    <with|par-left|1tab|3.1<space|2spc>常规测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-8>>
+
+    <with|par-left|1tab|3.2<space|2spc>含有空格的字符串与中文字符 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-9>>
+
+    <vspace*|1fn><with|font-series|bold|math-font-series|bold|4<space|2spc>anaconda环境测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-10><vspace|0.5fn>
+
+    <with|par-left|1tab|4.1<space|2spc>Windows <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-11>>
+
+    <with|par-left|1tab|4.2<space|2spc>macOS <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-12>>
+
+    <vspace*|1fn><with|font-series|bold|math-font-series|bold|5<space|2spc>sympy数学符号测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-13><vspace|0.5fn>
+
+    <with|par-left|1tab|5.1<space|2spc>常见类型测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-14>>
+
+    <with|par-left|1tab|5.2<space|2spc>dict类型测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-15>>
+
+    <with|par-left|1tab|5.3<space|2spc>字体测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-16>>
+  </table-of-contents>
+
+  <section|基本功能测试>
+
+  <subsection|未安装依赖库可以正常使用基本 Python 功能>
+
+  <\session|python|default>
+    <\output>
+      Python 3.13.9 [D:\\miniconda3\\python.exe]
+
+      Python plugin for TeXmacs.
+
+      Please see the documentation in Help -\<gtr\> Plugins -\<gtr\> Python
+    </output>
+
+    <\unfolded-io>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|unfolded-io>
+      import matplotlib
+    <|unfolded-io>
+      File "\<less\>string\<gtr\>", line 1
+
+      \ \ \ \ import matplotlib
+
+      \ \ \ \ ^^^^^^
+
+      SyntaxError: invalid syntax
+
+      \;
+
+      During handling of the above exception, another exception occurred:
+
+      \;
+
+      ModuleNotFoundError: No module named 'matplotlib'
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|unfolded-io>
+      import pandas
+    <|unfolded-io>
+      File "\<less\>string\<gtr\>", line 1
+
+      \ \ \ \ import pandas
+
+      \ \ \ \ ^^^^^^
+
+      SyntaxError: invalid syntax
+
+      \;
+
+      During handling of the above exception, another exception occurred:
+
+      \;
+
+      ModuleNotFoundError: No module named 'pandas'
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|unfolded-io>
+      import sympy
+    <|unfolded-io>
+      File "\<less\>string\<gtr\>", line 1
+
+      \ \ \ \ import sympy
+
+      \ \ \ \ ^^^^^^
+
+      SyntaxError: invalid syntax
+
+      \;
+
+      During handling of the above exception, another exception occurred:
+
+      \;
+
+      ModuleNotFoundError: No module named 'sympy'
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|unfolded-io>
+      1+1
+    <|unfolded-io>
+      2
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|unfolded-io>
+      2*3
+    <|unfolded-io>
+      6
+    </unfolded-io>
+
+    <\unfolded-io>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|unfolded-io>
+      print("Hello World")
+    <|unfolded-io>
+      Hello World
+    </unfolded-io>
+  </session>
+
   <section|matplotlib测试>
 
   <subsection|如果未安装matplotlib库：>
@@ -567,7 +705,7 @@
 
       Assignment(x, y + 1)
     <|unfolded-io>
-      <math|<math-up|Assignment><around*|(|x,y+1|)>>
+      <math|<with|font-family|rm|<math-up|Assignment><around*|(|x,y+1|)>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -577,7 +715,7 @@
 
       expr
     <|unfolded-io>
-      <math|-<frac|Z*e<rsup|2>*k|2*r>>
+      <math|<with|font-family|rm|-<frac|Z*e<rsup|2>*k|2*r>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -591,7 +729,7 @@
 
       expr
     <|unfolded-io>
-      <math|<frac|T*x*<around*|(|T*n|)>*sin <around*|(|<frac|-T*n+t|T>|)>|-T*n+t>>
+      <math|<with|font-family|rm|<frac|T*x*<around*|(|T*n|)>*sin <around*|(|<frac|-T*n+t|T>|)>|-T*n+t>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -613,7 +751,7 @@
 
       sympy_dict
     <|unfolded-io>
-      <math|<around*|{|<with|math-font-family|tt|mode|text|derivative>:2*x,<with|math-font-family|tt|mode|text|equation>:x+y=5,<with|math-font-family|tt|mode|text|integral>:<big|int>sin <around*|(|x|)>*<space|0.17em>d*x|}>>
+      <math|<with|font-family|rm|<around*|{|<with|math-font-family|tt|mode|text|font-family|rm|derivative>:2*x,<with|math-font-family|tt|mode|text|font-family|rm|equation>:x+y=5,<with|math-font-family|tt|mode|text|font-family|rm|integral>:<big|int>sin <around*|(|x|)>*<space|0.17em>d*x|}>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -623,7 +761,7 @@
 
       sympy_set
     <|unfolded-io>
-      <math|<around*|{|x<rsup|2>,e<rsup|x>,cos <around*|(|x|)>|}>>
+      <math|<with|font-family|rm|<around*|{|x<rsup|2>,e<rsup|x>,cos <around*|(|x|)>|}>>>
     </unfolded-io>
 
     <\input>
@@ -659,7 +797,7 @@
     <|unfolded-io>
       sympy_list
     <|unfolded-io>
-      <math|<around*|[|x<rsup|2>,sin <around*|(|x|)>+cos <around*|(|y|)>,3*x<rsup|2>,<big|int>e<rsup|-x>*<space|0.17em>d*x,x+y=10,<around*|[|<tabular*|<tformat|<table|<row|<cell|1>|<cell|x>>|<row|<cell|y>|<cell|2>>>>>|]>,<frac|3|4>,x-<frac|x<rsup|2>|2>+<frac|x<rsup|3>|3>+O<around*|(|x<rsup|4>|)>|]>>
+      <math|<with|font-family|rm|<around*|[|x<rsup|2>,sin <around*|(|x|)>+cos <around*|(|y|)>,3*x<rsup|2>,<big|int>e<rsup|-x>*<space|0.17em>d*x,x+y=10,<around*|[|<tabular*|<tformat|<table|<row|<cell|1>|<cell|x>>|<row|<cell|y>|<cell|2>>>>>|]>,<frac|3|4>,x-<frac|x<rsup|2>|2>+<frac|x<rsup|3>|3>+O<around*|(|x<rsup|4>|)>|]>>>
     </unfolded-io>
 
     <\input>
@@ -693,7 +831,7 @@
     <|unfolded-io>
       sympy_tuple
     <|unfolded-io>
-      <math|<around*|(|<sqrt|x>,e<rsup|x>*log <around*|(|y|)>,lim<rsub|x\<to\>0<rsup|+>><around*|(|<frac|sin <around*|(|x|)>|x>|)>,<big|sum><rsub|x=1><rsup|n>x<rsup|2>,120,i,\<pi\>,\<infty\>|)>>
+      <math|<with|font-family|rm|<around*|(|<sqrt|x>,e<rsup|x>*log <around*|(|y|)>,lim<rsub|x\<to\>0<rsup|+>><around*|(|<frac|sin <around*|(|x|)>|x>|)>,<big|sum><rsub|x=1><rsup|n>x<rsup|2>,120,i,\<pi\>,\<infty\>|)>>>
     </unfolded-io>
 
     <\input>
@@ -743,7 +881,7 @@
     <|unfolded-io>
       a
     <|unfolded-io>
-      <math|<around*|{|<frac|3|2>-<frac|<sqrt|17>|2>:1,<frac|3|2>+<frac|<sqrt|17>|2>:1|}>>
+      <math|<with|font-family|rm|<around*|{|<frac|3|2>-<frac|<sqrt|17>|2>:1,<frac|3|2>+<frac|<sqrt|17>|2>:1|}>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -765,7 +903,7 @@
 
       sympy_dict
     <|unfolded-io>
-      <math|<around*|{|<with|math-font-family|tt|mode|text|derivative>:2*x,<with|math-font-family|tt|mode|text|equation>:x+y=5,<with|math-font-family|tt|mode|text|integral>:<big|int>sin <around*|(|x|)>*<space|0.17em>d*x|}>>
+      <math|<with|font-family|rm|<around*|{|<with|math-font-family|tt|mode|text|font-family|rm|derivative>:2*x,<with|math-font-family|tt|mode|text|font-family|rm|equation>:x+y=5,<with|math-font-family|tt|mode|text|font-family|rm|integral>:<big|int>sin <around*|(|x|)>*<space|0.17em>d*x|}>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -795,7 +933,7 @@
 
       eigen_dict
     <|unfolded-io>
-      <math|<around*|{|<frac|3|2>-<frac|<sqrt|17>|2>:<around*|[|<tabular*|<tformat|<table|<row|<cell|-<frac|<sqrt|17>|4>-<frac|1|4>>>|<row|<cell|1>>>>>|]>,<frac|3|2>+<frac|<sqrt|17>|2>:<around*|[|<tabular*|<tformat|<table|<row|<cell|-<frac|1|4>+<frac|<sqrt|17>|4>>>|<row|<cell|1>>>>>|]>|}>>
+      <math|<with|font-family|rm|<around*|{|<frac|3|2>-<frac|<sqrt|17>|2>:<around*|[|<tabular*|<tformat|<table|<row|<cell|-<frac|<sqrt|17>|4>-<frac|1|4>>>|<row|<cell|1>>>>>|]>,<frac|3|2>+<frac|<sqrt|17>|2>:<around*|[|<tabular*|<tformat|<table|<row|<cell|-<frac|1|4>+<frac|<sqrt|17>|4>>>|<row|<cell|1>>>>>|]>|}>>>
     </unfolded-io>
 
     <\input>
@@ -804,6 +942,112 @@
       \;
     </input>
   </session>
+
+  <subsection|字体测试>
+
+  以下是原本的tt字体。
+
+  <\session|python|conda_plot>
+    <\input>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|input>
+      from sympy import symbols, latex
+
+      \;
+
+      alpha, beta = symbols('alpha beta')
+
+      expr = alpha + beta
+    </input>
+
+    <\unfolded-io>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|unfolded-io>
+      expr
+    <|unfolded-io>
+      <math|<with|font-family|tt|\<alpha\>+\<beta\>>>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  某些特殊符号会出现如上乱码问题。
+
+  经过修改后，可以避免上述问题，并使符号更加美观。
+
+  <\session|python|conda_plot>
+    <\input>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|input>
+      from sympy import symbols, latex
+
+      \;
+
+      alpha, beta = symbols('alpha beta')
+
+      expr = alpha + beta
+    </input>
+
+    <\unfolded-io>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|unfolded-io>
+      expr
+    <|unfolded-io>
+      <math|<with|font-family|rm|\<alpha\>+\<beta\>>>
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  <section|?查看帮助窗口功能移除>
+
+  <\session|python|conda_plot>
+    <\unfolded-io>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|unfolded-io>
+      ps_out?
+    <|unfolded-io>
+      File "\<less\>unknown\<gtr\>", line 1
+
+      \ \ \ \ ps_out?
+
+      \ \ \ \ \ \ \ \ \ \ ^
+
+      SyntaxError: invalid syntax
+
+      \;
+
+      During handling of the above exception, another exception occurred:
+
+      \;
+
+      \ \ File "python", line 1
+
+      \ \ \ \ ps_out?
+
+      \ \ \ \ \ \ \ \ \ \ ^
+
+      SyntaxError: invalid syntax
+    </unfolded-io>
+
+    <\input>
+      \<gtr\>\<gtr\>\<gtr\>\ 
+    <|input>
+      \;
+    </input>
+  </session>
+
+  \;
+
+  \;
 </body>
 
 <\initial>
@@ -816,45 +1060,59 @@
 <\references>
   <\collection>
     <associate|auto-1|<tuple|1|1>>
-    <associate|auto-10|<tuple|3.2|11>>
-    <associate|auto-11|<tuple|4|12>>
-    <associate|auto-12|<tuple|4.1|?>>
-    <associate|auto-13|<tuple|4.2|?>>
+    <associate|auto-10|<tuple|4|10>>
+    <associate|auto-11|<tuple|4.1|10>>
+    <associate|auto-12|<tuple|4.2|11>>
+    <associate|auto-13|<tuple|5|12>>
+    <associate|auto-14|<tuple|5.1|12>>
+    <associate|auto-15|<tuple|5.2|14>>
+    <associate|auto-16|<tuple|5.3|15>>
+    <associate|auto-17|<tuple|6|?>>
     <associate|auto-2|<tuple|1.1|1>>
-    <associate|auto-3|<tuple|1.2|2>>
-    <associate|auto-4|<tuple|1.3|5>>
-    <associate|auto-5|<tuple|2|7>>
-    <associate|auto-6|<tuple|2.1|8>>
-    <associate|auto-7|<tuple|2.2|8>>
-    <associate|auto-8|<tuple|3|9>>
-    <associate|auto-9|<tuple|3.1|11>>
+    <associate|auto-3|<tuple|2|2>>
+    <associate|auto-4|<tuple|2.1|2>>
+    <associate|auto-5|<tuple|2.2|2>>
+    <associate|auto-6|<tuple|2.3|6>>
+    <associate|auto-7|<tuple|3|9>>
+    <associate|auto-8|<tuple|3.1|9>>
+    <associate|auto-9|<tuple|3.2|9>>
   </collection>
 </references>
 
 <\auxiliary>
   <\collection>
     <\associate|toc>
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>matplotlib测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>基本功能测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
 
-      <with|par-left|<quote|1tab>|1.1<space|2spc>如果未安装matplotlib库： <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2>>
+      <with|par-left|<quote|1tab>|1.1<space|2spc>未安装依赖库可以正常使用基本 Python 功能 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2>>
 
-      <with|par-left|<quote|1tab>|1.2<space|2spc>2D matplotlib绘图测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-3>>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>matplotlib测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-3><vspace|0.5fn>
 
-      <with|par-left|<quote|1tab>|1.3<space|2spc>3Dmatplotlib绘图（"mpl_toolkits"）测试： <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4>>
+      <with|par-left|<quote|1tab>|2.1<space|2spc>如果未安装matplotlib库： <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4>>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>DataFrame测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5><vspace|0.5fn>
+      <with|par-left|<quote|1tab>|2.2<space|2spc>2D matplotlib绘图测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5>>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>anaconda环境测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6><vspace|0.5fn>
+      <with|par-left|<quote|1tab>|2.3<space|2spc>3Dmatplotlib绘图（"mpl_toolkits"）测试： <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6>>
 
-      <with|par-left|<quote|1tab>|3.1<space|2spc>Windows <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7>>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>DataFrame测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7><vspace|0.5fn>
 
-      <with|par-left|<quote|1tab>|3.2<space|2spc>macOS <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-8>>
+      <with|par-left|<quote|1tab>|3.1<space|2spc>常规测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-8>>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>sympy数学符号测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-9><vspace|0.5fn>
+      <with|par-left|<quote|1tab>|3.2<space|2spc>含有空格的字符串与中文字符 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-9>>
 
-      <with|par-left|<quote|1tab>|4.1<space|2spc>常见类型测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-10>>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>anaconda环境测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-10><vspace|0.5fn>
 
-      <with|par-left|<quote|1tab>|4.2<space|2spc>dict类型测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-11>>
+      <with|par-left|<quote|1tab>|4.1<space|2spc>Windows <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-11>>
+
+      <with|par-left|<quote|1tab>|4.2<space|2spc>macOS <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-12>>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>sympy数学符号测试> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-13><vspace|0.5fn>
+
+      <with|par-left|<quote|1tab>|5.1<space|2spc>常见类型测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-14>>
+
+      <with|par-left|<quote|1tab>|5.2<space|2spc>dict类型测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-15>>
+
+      <with|par-left|<quote|1tab>|5.3<space|2spc>字体测试 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-16>>
     </associate>
   </collection>
 </auxiliary>
