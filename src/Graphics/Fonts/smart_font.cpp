@@ -408,6 +408,10 @@ in_unicode_range (string c, string range) {
     if (got == "hangul" || got == "hiragana" ||
         got == "enclosed_alphanumerics" || got == "latin")
       return true;
+
+    // TeXmacs 特定的数学符号标记
+    if (c == "<sqrt>") return true;
+
     return is_cjk_punct (uc);
   }
   // There are actually two ranges (cjk/hangul) for Korean characters and
