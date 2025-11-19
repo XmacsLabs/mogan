@@ -44,12 +44,24 @@
     (url-append (url-append (find-binary-conda) (url-parent)) (url-parent))))
 
 (tm-define (conda-env-python-list)
-  (with path (if (os-win32?) "envs/*/python.exe" "envs/*/bin/python")
-    (url->list (url-expand (url-complete (url-append (conda-prefix) path) "fr")))))
+  (let* ((path (if (os-win32?) "envs/*/python.exe" "envs/*/bin/python"))
+         (env-python-list
+          (url->list
+           (url-expand
+            (url-complete (url-append (conda-prefix) path) "fr"))))
+         (base-python-raw
+           (url-append (conda-prefix)
+                       (if (os-win32?) "python.exe" "bin/python")))
+         (base-python (url-complete base-python-raw "fr"))
+         (base-python-list
+          (if (url-exists? base-python) (list base-python) (list))))
+    (append base-python-list env-python-list)))
 
 (tm-define (conda-env-name u)
   (:synopsis "Extract the conda env name from the interpreter path")
   (if (os-win32?)
-    (url->string (url-tail (url-head u)))
+    (if (== (url-tail (url-head (url-head u)))
+            (string->url "envs"))
+        (url->string (url-tail (url-head u)))
+        "base")
     (url->string (url-tail (url-head (url-head u))))))
-

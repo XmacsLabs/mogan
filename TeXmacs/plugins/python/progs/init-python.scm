@@ -71,15 +71,23 @@
           "$TEXMACS_PATH/plugins/python/bin/python.pex"))))))
 
 (define (conda-launchers)
-  (map (lambda (path) (list :launch (string-append "conda_" (conda-env-name path)) (conda-launcher path)))
+  (map (lambda (path)
+         (list :launch
+               (string-append "conda_" (conda-env-name path)) (conda-launcher path)))
        (conda-env-python-list)))
 
 (define (all-python-launchers)
-  (cons (list :launch (python-launcher))
-        (conda-launchers)))
+  (let* ((launchers (conda-launchers))
+         (default-launcher
+           (cond ((has-binary-python3?) (python-launcher))
+                 ((has-binary-conda?) (caddr (car launchers)))
+                 (else ""))))
+    (cons (list :launch default-launcher)
+          launchers)))
 
 (plugin-configure python
-  (:require (has-binary-python3?))
+  (:require (or (has-binary-conda?)
+                (has-binary-python3?)))
   ,@(all-python-launchers)
   (:tab-completion #t)
   (:serializer ,python-serialize)
