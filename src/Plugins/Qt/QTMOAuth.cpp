@@ -15,12 +15,19 @@
 
 #include <QtGui/qdesktopservices.h>
 
+#include <QtNetwork/qnetworkaccessmanager.h>
+#include <QtNetwork/qnetworkreply.h>
+#include <QtNetwork/qnetworkrequest.h>
 #include <QtNetwork/qrestaccessmanager.h>
 #include <QtNetwork/qrestreply.h>
 
+#include <QtCore/qcryptographichash.h>
+#include <QtCore/qdatetime.h>
 #include <QtCore/qdebug.h>
 #include <QtCore/qjsonarray.h>
 #include <QtCore/qjsondocument.h>
+#include <QtCore/qrandom.h>
+#include <QtCore/qurlquery.h>
 
 QTMOAuth::QTMOAuth (QObject* parent) {
   // 加载 OAuth2 配置
@@ -32,6 +39,8 @@ QTMOAuth::QTMOAuth (QObject* parent) {
       as_string (call ("account-oauth2-config", "access-token-url")));
   c_string clientIdentifier (
       as_string (call ("account-oauth2-config", "client-identifier")));
+  // c_string clientSecret (
+  //     as_string (call ("account-oauth2-config", "client-secret")));
   c_string scope (as_string (call ("account-oauth2-config", "scope")));
   c_string portStr (as_string (call ("account-oauth2-config", "port")));
 
@@ -39,6 +48,10 @@ QTMOAuth::QTMOAuth (QObject* parent) {
   m_reply = new QOAuthHttpServerReplyHandler (
       QHostAddress (QString::fromUtf8 ("127.0.0.1")), port, this);
   m_reply->setCallbackPath ("/callback");
+
+  // 生成PKCE参数
+  m_codeVerifier = generateCodeVerifier ();
+  m_codeChallenge= generateCodeChallenge (m_codeVerifier);
 
   // 设置自定义成功页面
   QString customHtml=
@@ -61,15 +74,291 @@ QTMOAuth::QTMOAuth (QObject* parent) {
   connect (&oauth2, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, this,
            &QDesktopServices::openUrl);
 
-  QObject::connect (&oauth2, &QAbstractOAuth::granted, this, [this] {
-    eval ("(use-modules (liii account))");
-    call ("account-save-token", from_qstring (oauth2.token ()));
-  });
+  // 连接token授权成功信号
+  QObject::connect (&oauth2, &QAbstractOAuth::granted, this,
+                    &QTMOAuth::onTokenGranted);
+
+  // 连接回调URL捕获信号
+  connect (m_reply, &QOAuthHttpServerReplyHandler::callbackReceived, this,
+           [this] (const QVariantMap& values) {
+             // 提取授权码
+             if (values.contains ("code")) {
+               QString code= values["code"].toString ();
+
+               // 手动处理授权码交换
+               handleAuthorizationCode (code);
+             }
+             else {
+               qDebug () << "No authorization code found in callback";
+             }
+           });
+
+  // 初始化定时器用于定期检查token状态
+  m_tokenCheckTimer= new QTimer (this);
+  connect (m_tokenCheckTimer, &QTimer::timeout, this,
+           &QTMOAuth::checkTokenStatus);
+  m_tokenCheckTimer->start (600000); // 每10分钟检查一次
+
+  // 加载现有的token信息
+  loadExistingToken ();
 }
 
 void
 QTMOAuth::login () {
   if (m_reply->isListening ()) {
-    oauth2.grant ();
+    // 手动构建授权URL
+    QUrl      authUrl (oauth2.authorizationUrl ());
+    QUrlQuery query;
+    query.addQueryItem ("response_type", "code");
+    query.addQueryItem ("client_id", oauth2.clientIdentifier ());
+    query.addQueryItem ("redirect_uri", "http://127.0.0.1:1895/callback");
+    query.addQueryItem ("scope", oauth2.scope ());
+    query.addQueryItem ("code_challenge", m_codeChallenge);
+    query.addQueryItem ("code_challenge_method", "S256");
+
+    authUrl.setQuery (query);
+    // 手动打开浏览器进行授权
+    QDesktopServices::openUrl (authUrl);
   }
+}
+
+void
+QTMOAuth::handleAuthorizationCode (const QString& code) {
+  // 手动交换授权码为访问令牌
+  QUrl      url (oauth2.accessTokenUrl ());
+  QUrlQuery query;
+  query.addQueryItem ("grant_type", "authorization_code");
+  query.addQueryItem ("code", code);
+  query.addQueryItem ("redirect_uri", "http://127.0.0.1:1895/callback");
+  query.addQueryItem ("client_id", oauth2.clientIdentifier ());
+  query.addQueryItem ("code_verifier", m_codeVerifier);
+
+  QNetworkRequest request (url);
+  request.setHeader (QNetworkRequest::ContentTypeHeader,
+                     "application/x-www-form-urlencoded");
+
+  QNetworkAccessManager* manager= new QNetworkAccessManager (this);
+  QNetworkReply*         reply=
+      manager->post (request, query.toString (QUrl::FullyEncoded).toUtf8 ());
+
+  connect (reply, &QNetworkReply::finished, this, [this, reply, manager] {
+    if (reply->error () == QNetworkReply::NoError) {
+      QByteArray response= reply->readAll ();
+
+      QJsonDocument doc= QJsonDocument::fromJson (response);
+      QJsonObject   obj= doc.object ();
+
+      if (obj.contains ("access_token")) {
+        QString accessToken = obj["access_token"].toString ();
+        QString refreshToken= obj["refresh_token"].toString ();
+        int     expiresIn   = obj["expires_in"].toInt ();
+
+        // 设置token
+        oauth2.setToken (accessToken);
+
+        // 保存token信息
+        eval ("(use-modules (liii account))");
+        call ("account-save-token", from_qstring (accessToken));
+
+        if (!refreshToken.isEmpty ()) {
+          m_refreshToken= refreshToken;
+          call ("account-save-refresh-token", from_qstring (refreshToken));
+        }
+
+        m_tokenExpiryTime= QDateTime::currentSecsSinceEpoch () + expiresIn;
+        call ("account-save-token-expiry",
+              from_qstring (QString::number (m_tokenExpiryTime)));
+
+        qDebug () << "Token exchange successful";
+        emit tokenRefreshed ();
+      }
+      else {
+        qDebug () << "Token exchange failed: Invalid response";
+      }
+    }
+    else {
+      qDebug () << "Token exchange failed:" << reply->errorString ();
+    }
+
+    reply->deleteLater ();
+    manager->deleteLater ();
+  });
+}
+
+void
+QTMOAuth::refreshToken () {
+  if (m_refreshToken.isEmpty ()) {
+    emit tokenRefreshFailed ("No refresh token available");
+    // 清除无效的token信息
+    clearInvalidTokens ();
+    return;
+  }
+
+  // 使用refresh_token刷新access_token
+  QUrl      url (oauth2.accessTokenUrl ());
+  QUrlQuery query;
+  query.addQueryItem ("grant_type", "refresh_token");
+  query.addQueryItem ("refresh_token", m_refreshToken);
+  query.addQueryItem ("client_id", oauth2.clientIdentifier ());
+
+  QNetworkRequest request (url);
+  request.setHeader (QNetworkRequest::ContentTypeHeader,
+                     "application/x-www-form-urlencoded");
+
+  // 发送刷新请求
+  QNetworkAccessManager* manager= new QNetworkAccessManager (this);
+  QNetworkReply*         reply=
+      manager->post (request, query.toString (QUrl::FullyEncoded).toUtf8 ());
+
+  connect (reply, &QNetworkReply::finished, this, [this, reply, manager] {
+    if (reply->error () == QNetworkReply::NoError) {
+      QByteArray response= reply->readAll ();
+
+      QJsonDocument doc= QJsonDocument::fromJson (response);
+      QJsonObject   obj= doc.object ();
+
+      if (obj.contains ("access_token")) {
+        QString newAccessToken = obj["access_token"].toString ();
+        QString newRefreshToken= obj["refresh_token"].toString ();
+        int     expiresIn      = obj["expires_in"].toInt ();
+
+        // 更新token
+        oauth2.setToken (newAccessToken);
+
+        // 保存新的token信息
+        eval ("(use-modules (liii account))");
+        call ("account-save-token", from_qstring (newAccessToken));
+
+        if (!newRefreshToken.isEmpty ()) {
+          m_refreshToken= newRefreshToken;
+          call ("account-save-refresh-token", from_qstring (newRefreshToken));
+          qDebug () << "Token refreshed successfully";
+        }
+        else {
+          qDebug () << "No new refresh token received, keeping existing one";
+        }
+
+        // 计算并保存新的过期时间
+        m_tokenExpiryTime= QDateTime::currentSecsSinceEpoch () + expiresIn;
+        call ("account-save-token-expiry",
+              from_qstring (QString::number (m_tokenExpiryTime)));
+
+        emit tokenRefreshed ();
+      }
+      else {
+        emit tokenRefreshFailed ("Invalid response from server");
+        // 清除无效的token信息
+        clearInvalidTokens ();
+      }
+    }
+    else {
+      qDebug () << "ERROR: Network error during refresh:"
+                << reply->errorString ();
+      qDebug () << "Error code:" << reply->error ();
+      emit tokenRefreshFailed (reply->errorString ());
+      // 清除无效的token信息
+      clearInvalidTokens ();
+    }
+
+    reply->deleteLater ();
+    manager->deleteLater ();
+  });
+}
+
+bool
+QTMOAuth::checkTokenValidity () {
+  if (oauth2.token ().isEmpty ()) {
+    return false;
+  }
+
+  qint64 currentTime= QDateTime::currentSecsSinceEpoch ();
+
+  // 如果token已经过期
+  if (currentTime >= m_tokenExpiryTime) {
+    emit tokenExpired ();
+    return false;
+  }
+
+  // 如果token将在5分钟内过期，自动刷新
+  if (m_tokenExpiryTime - currentTime <= 300) { // 5分钟
+    refreshToken ();
+  }
+
+  return true;
+}
+
+void
+QTMOAuth::onTokenGranted () {
+  // 处理token等逻辑已经在handleAuthorizationCode
+}
+
+void
+QTMOAuth::checkTokenStatus () {
+  checkTokenValidity ();
+}
+
+void
+QTMOAuth::loadExistingToken () {
+  eval ("(use-modules (liii account))");
+
+  // 加载access_token
+  c_string tokenStr (as_string (call ("account-load-token")));
+  QString  token= QString ((char*) tokenStr);
+  if (!token.isEmpty ()) {
+    oauth2.setToken (token);
+  }
+
+  // 加载refresh_token
+  c_string refreshTokenStr (as_string (call ("account-load-refresh-token")));
+  m_refreshToken= QString ((char*) refreshTokenStr);
+
+  // 加载token过期时间
+  c_string expiryStr (as_string (call ("account-load-token-expiry")));
+  QString  expiryTimeStr= QString ((char*) expiryStr);
+  if (!expiryTimeStr.isEmpty ()) {
+    m_tokenExpiryTime= expiryTimeStr.toLongLong ();
+  }
+}
+
+void
+QTMOAuth::clearInvalidTokens () {
+  eval ("(use-modules (liii account))");
+  call ("account-clear-tokens");
+
+  // 清除内存中的token信息
+  oauth2.setToken ("");
+  m_refreshToken.clear ();
+  m_tokenExpiryTime= 0;
+}
+
+QString
+QTMOAuth::generateCodeVerifier () {
+  // 生成43-128个字符的随机字符串
+  const QString possibleCharacters (
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~");
+  const int length= 64; // 推荐长度
+
+  QString randomString;
+  for (int i= 0; i < length; ++i) {
+    int index=
+        QRandomGenerator::global ()->bounded (possibleCharacters.length ());
+    QChar nextChar= possibleCharacters.at (index);
+    randomString.append (nextChar);
+  }
+
+  return randomString;
+}
+
+QString
+QTMOAuth::generateCodeChallenge (const QString& verifier) {
+  // 使用SHA-256哈希code_verifier，然后进行base64url编码
+  QByteArray verifierBytes= verifier.toUtf8 ();
+  QByteArray hash=
+      QCryptographicHash::hash (verifierBytes, QCryptographicHash::Sha256);
+
+  // Base64 URL编码（替换+为-，/为_，移除=填充）
+  QString base64= hash.toBase64 (QByteArray::Base64UrlEncoding |
+                                 QByteArray::OmitTrailingEquals);
+
+  return base64;
 }

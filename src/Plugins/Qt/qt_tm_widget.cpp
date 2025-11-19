@@ -1736,6 +1736,7 @@ qt_tm_widget_rep::checkLocalTokenAndLogin () {
     fetchUserInfo (q_token);
   }
   else {
+    // 有问题，把token文件删除了，这里没生效！
     // 没有token，显示登录对话框（用户需要手动点击登录按钮）
     QPoint buttonBottomCenter= loginButton->mapToGlobal (
         QPoint (loginButton->width () / 2, loginButton->height ()));

@@ -1,28 +1,35 @@
 (texmacs-module (liii account))
 (import (liii os))
 
+;; 获取当前时间戳（秒）
+(define (get-current-time)
+  (let* ((now (current-time))
+         (seconds (car now))
+         (microseconds (cdr now)))
+    (+ seconds (/ microseconds 1000000.0))))
+
 ;; 生产
 ; (tm-define (account-oauth2-config key)
 ;   (cond
 ;     ((== key "authorization-url") "http://www.liiistem.cn:8080/oauth2/authorize")
 ;     ((== key "access-token-url") "http://www.liiistem.cn:8080/oauth2/token")
 ;     ((== key "client-identifier") "public-client")
-;     ((== key "scope") "openid+profile+email")
+;     ((== key "scope") "user+llm")
 ;     ((== key "port") "1895")
 ;     ((== key "user-info-url") "http://www.liiistem.cn/api/oauthUser/info")
 ;     ((== key "pricing-url") "https://liiistem.cn/pricing-fruit.html")
 ;     (else "")))
 
-;; 变量配置
+;; 测试
 (tm-define (account-oauth2-config key)
   (cond
     ((== key "authorization-url") "http://test-www.liiistem.cn:8080/oauth2/authorize")
     ((== key "access-token-url") "http://test-www.liiistem.cn:8080/oauth2/token")
     ((== key "client-identifier") "public-client")
-    ((== key "scope") "openid+profile+email")
+    ((== key "scope") "user+llm")
     ((== key "port") "1895")
     ((== key "user-info-url") "http://test-www.liiistem.cn/api/oauthUser/info")
-    ((== key "pricing-url") "https://liiistem.cn/pricing-fruit.html")
+    ((== key "pricing-url") "https://test-liiistem.cn/pricing-fruit.html")
     (else "")))
 
 ;; 本地
@@ -31,10 +38,11 @@
 ;     ((== key "authorization-url") "http://127.0.0.1:8080/oauth2/authorize")
 ;     ((== key "access-token-url") "http://127.0.0.1:8080/oauth2/token")
 ;     ((== key "client-identifier") "public-client")
-;     ((== key "scope") "openid+profile+email")
+;     ((== key "client-secret") "secret")
+;     ((== key "scope") "user+llm")
 ;     ((== key "port") "1895")
 ;     ((== key "user-info-url") "http://127.0.0.1:8080/api/oauthUser/info")
-;     ((== key "pricing-url") "https://liiistem.cn/pricing-fruit.html")
+;     ((== key "pricing-url") "https://test-liiistem.cn/pricing-fruit.html")
 ;     (else "")))
 
 
@@ -72,3 +80,64 @@
     (if (url-exists? cache-file)
         (string-load cache-file)
         "")))
+
+;; 获取refresh_token缓存文件路径
+(define (get-refresh-token-cache-file)
+  (let* ((cache-dir (url-append (get-tm-cache-path) "account"))
+         (cache-file (url-append cache-dir "refresh_token.txt")))
+    cache-file))
+
+;; refresh_token 保存到缓存文件
+(tm-define (account-save-refresh-token refresh-token)
+  (ensure-cache-dir-exists)
+  (let ((cache-file (get-refresh-token-cache-file)))
+    ;; 如果文件存在则删除后重新创建，确保覆盖内容
+    (when (url-exists? cache-file)
+      (system-remove cache-file))
+    ;; 保存refresh_token到文件
+    (string-save refresh-token cache-file)
+    ))
+
+;; 读取refresh_token缓存文件
+(tm-define (account-load-refresh-token)
+  (let ((cache-file (get-refresh-token-cache-file)))
+    (if (url-exists? cache-file)
+        (string-load cache-file)
+        "")))
+
+;; 获取token过期时间缓存文件路径
+(define (get-token-expiry-cache-file)
+  (let* ((cache-dir (url-append (get-tm-cache-path) "account"))
+         (cache-file (url-append cache-dir "token_expiry.txt")))
+    cache-file))
+
+;; token过期时间保存到缓存文件
+(tm-define (account-save-token-expiry expiry-time)
+  (ensure-cache-dir-exists)
+  (let ((cache-file (get-token-expiry-cache-file)))
+    ;; 如果文件存在则删除后重新创建，确保覆盖内容
+    (when (url-exists? cache-file)
+      (system-remove cache-file))
+    ;; 保存过期时间到文件
+    (string-save expiry-time cache-file)
+    ))
+
+;; 读取token过期时间缓存文件
+(tm-define (account-load-token-expiry)
+  (let ((cache-file (get-token-expiry-cache-file)))
+    (if (url-exists? cache-file)
+        (string-load cache-file)
+        "")))
+
+;; 清除所有token缓存
+(tm-define (account-clear-tokens)
+  (ensure-cache-dir-exists)
+  (let ((token-file (get-token-cache-file))
+        (refresh-token-file (get-refresh-token-cache-file))
+        (expiry-file (get-token-expiry-cache-file)))
+    (when (url-exists? token-file)
+      (system-remove token-file))
+    (when (url-exists? refresh-token-file)
+      (system-remove refresh-token-file))
+    (when (url-exists? expiry-file)
+      (system-remove expiry-file))))

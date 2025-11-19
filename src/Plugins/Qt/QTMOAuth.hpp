@@ -20,6 +20,7 @@
 #include <QtCore/qabstractitemmodel.h>
 #include <QtCore/qjsonobject.h>
 #include <QtCore/qpointer.h>
+#include <QtCore/qtimer.h>
 
 QT_FORWARD_DECLARE_CLASS (QRestAccessManager)
 
@@ -29,11 +30,33 @@ class QTMOAuth : public QObject {
 public:
   QTMOAuth (QObject* parent= nullptr);
   void login ();
+  void refreshToken ();
+  bool checkTokenValidity ();
+  void handleAuthorizationCode (const QString& code);
+
+private slots:
+  void onTokenGranted ();
+  void checkTokenStatus ();
+
+signals:
+  void tokenRefreshed ();
+  void tokenRefreshFailed (const QString& error);
+  void tokenExpired ();
 
 private:
+  void    loadExistingToken ();
+  void    clearInvalidTokens ();
+  QString generateCodeVerifier ();
+  QString generateCodeChallenge (const QString& verifier);
+
   QRestAccessManager*           network= nullptr;
   QOAuth2AuthorizationCodeFlow  oauth2;
   QOAuthHttpServerReplyHandler* m_reply;
+  QTimer*                       m_tokenCheckTimer;
+  QString                       m_refreshToken;
+  qint64                        m_tokenExpiryTime= 0;
+  QString                       m_codeVerifier;
+  QString                       m_codeChallenge;
 };
 
 #endif
