@@ -449,7 +449,7 @@
 
 (tm-define (parameter-choice-list l)
   (:require (== l "item-nr"))
-  (list "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" :other))
+  (list "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" :other))
 
 (tm-define (parameter-choice-list l)
   (:require (in? l (list "item-tag" "item-1" "item-2" "item-3" "item-4")))

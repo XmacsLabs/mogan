@@ -1,0 +1,44 @@
+<TMU|<tuple|1.1.0|2025.2.0-beta2>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <with|item-nr|7|<\enumerate>
+    <item>enumerate-level: <value|enumerate-level>
+
+    <item>
+
+    <item>
+
+    <\enumerate>
+      <item>enumerate-level: <value|enumerate-level>
+
+      <item>
+
+      <item>
+
+      <\enumerate>
+        <item>enumerate-level: <value|enumerate-level>
+
+        <item>
+
+        <item>
+
+        <\enumerate>
+          <item>enumerate-level: <value|enumerate-level>
+
+          <item>
+
+          <item>
+        </enumerate>
+      </enumerate>
+    </enumerate>
+  </enumerate>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

@@ -113,7 +113,7 @@
   </macro>>
 
   <assign|list|<\macro|item-render|item-transform|body>
-    <\with|current-item|<arg|item-render>|transform-item|<arg|item-transform>|item-nr|<value|item-nr>>
+    <\with|current-item|<arg|item-render>|transform-item|<arg|item-transform>|item-nr|<if|<equal|<value|enumerate-level>|1>|<value|item-nr>|0>>
       <render-list|<arg|body>>
     </with>
   </macro>>
