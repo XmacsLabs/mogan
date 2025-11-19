@@ -25,10 +25,10 @@
       (upcase-first s1))))
 
 (menu-bind basic-theme-menu
-  ("Plain" (select-default-basic-theme))
+  ((eval '(verbatim "Plain")) (select-default-basic-theme))
   ---
   (for (theme (basic-themes))
-    ((check (eval (basic-theme-name theme)) "v" (has-style-package? theme))
+    ((check (eval `(verbatim ,(basic-theme-name theme))) "v" (has-style-package? theme))
      (add-style-package theme)))
   ---
   ((check "Alternative colors" "v" (has-style-package? "alt-colors"))
