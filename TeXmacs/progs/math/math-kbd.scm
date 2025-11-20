@@ -2459,6 +2459,9 @@
 
 (kbd-map
   (:mode in-math-not-hybrid?)
+  ("1 1 var" "<bbb-1>")
+  ("1 1 var var" "<b-1>")
+  ("1 1 var var var" (math-insert '(with "math-font" "Bbb" "1")))
   ("A A" "<bbb-A>")
   ("A A var" "<cal-A>")
   ("A A var var" "<frak-A>")
