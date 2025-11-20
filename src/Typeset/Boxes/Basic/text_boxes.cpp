@@ -348,9 +348,18 @@ text_box_rep::find_cursor (path bp) {
     tm_char_backwards (str, k);
     fn->get_extents (str (k, l), ex);
   }
-  cu->y1   = min (ex->y1, 0);
-  cu->y2   = max (ex->y2, fn->yx);
-  cu->slope= fn->get_right_slope (str);
+  cu->y1= min (ex->y1, 0);
+  cu->y2= max (ex->y2, fn->yx);
+
+  // 修复：对于非斜体文本模式，强制光标垂直
+  // 特别是对于 CJK 字符和数学符号，避免光标倾斜
+  double font_slope= fn->get_right_slope (str);
+  if (abs (font_slope) < 0.15) { // 如果字体斜率很小，视为正体
+    cu->slope= 0.0;              // 强制垂直光标
+  }
+  else {
+    cu->slope= font_slope;
+  }
   return cu;
 }
 

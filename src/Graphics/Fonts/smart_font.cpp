@@ -1610,7 +1610,35 @@ smart_font_rep::get_right_slope (string s) {
   while (i < n)
     advance (s, i, r, nr);
   nr= max (nr, 0);
-  return fn[nr]->get_right_slope (r);
+
+  double slope= fn[nr]->get_right_slope (r);
+
+  // 修复：对于数学符号和 CJK 字符的光标倾斜问题
+  // 如果不是明确的斜体模式，且斜率很小，则强制垂直
+  if (math_kind == 0 && abs (slope) < 0.15) {
+    // 检查是否是数学符号或 CJK 字符被映射到 CJK 字体的情况
+    string uc  = strict_cork_to_utf8 (s);
+    int    pos = 0;
+    int    code= decode_from_utf8 (uc, pos);
+
+    // CJK 字符的 Unicode 范围
+    bool is_cjk_char= lolly::data::is_cjk_unified_ideographs (code);
+
+    // 常见数学符号的 Unicode 范围
+    bool is_math_symbol=
+        (code >= 0x2200 && code <= 0x22ff) || // Mathematical Operators
+        starts (s, "<sqrt>") || starts (s, "<sum>") || starts (s, "<int>") ||
+        starts (s, "<pm>") || starts (s, "<times>") || starts (s, "<div>");
+
+    // 对于 CJK 字符和数学符号，强制垂直光标
+    if (is_cjk_char || is_math_symbol) {
+      // cout << "SmartFont: 强制垂直光标 -> 字符='" << s
+      //      << "', CJK=" << is_cjk_char << ", Math=" << is_math_symbol <<
+      //      "\n";
+      return 0.0; // 强制垂直光标
+    }
+  }
+  return slope;
 }
 
 SI
