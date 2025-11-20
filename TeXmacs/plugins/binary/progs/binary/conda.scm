@@ -16,8 +16,10 @@
 
 (define (conda-binary-candidates)
   (cond ((os-macos?)
-         (list "/opt/anaconda3/bin/conda"
-               "$HOME/miniconda3/bin/conda"))
+         (list "/opt/homebrew/anaconda3/bin/conda"
+               "/opt/anaconda3/bin/conda"
+               "/opt/homebrew/miniconda3/bin/conda"
+               "/opt/miniconda3/bin/conda"))
         ((os-win32?)
          (list "$USERPROFILE/anaconda3/Scripts/conda.exe"
                "$PROGRAMDATA/anaconda3/Scripts/conda.exe"
