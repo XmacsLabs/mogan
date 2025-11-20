@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.2.0-beta2>>
+<TMU|<tuple|1.1.0|2025.2.0-rc1>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -55,7 +55,7 @@
 
   必要时，建议你设定文档的全局设置，这些设置一般都在<menu|Document>菜单中。首先，你可能需要在<menu|Document|Style>中指定文档的样式比如article，book，seminar。如果你使用多种语言编辑文档，你可以在<menu|Document|Language>中指定该文档的默认语言。类似地，在<menu|Document|Page|Size>中可指定页面的类型。
 
-  对于新建的文档，样式和页面大小也可以通过<menu|Focus>菜单或者焦点工具栏上的按钮改变。一般来说，焦点工具栏就是菜单下面的第三行工具栏。焦点菜单和焦点工具栏在编辑<hlink|结构化文档|./manu.editing.zh.tmu>时尤为方便，其菜单项会跟随光标所在的上下文改变。
+  对于新建的文档，样式和页面大小也可以通过<menu|Focus>菜单或者焦点工具栏上的按钮改变。一般来说，焦点工具栏就是菜单下面的第三行工具栏。焦点菜单和焦点工具栏在编辑<hlink|结构化文档|./manu.editing.zh.tmu#sec-man-structured-editing>时尤为方便，其菜单项会跟随光标所在的上下文改变。
 
   修改文档之后，点击<menu|File|Save>保存文档。文档可以通过<menu|File|Load>打开。注意，在<TeXmacs>中你可以在同一个窗口下编辑多个文档<strong|>，我们把每一个打开的文档叫做缓冲区，使用菜单<menu|Go>可以在不同的<em|缓冲区>间切换。
 
