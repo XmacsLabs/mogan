@@ -54,6 +54,11 @@ try:
     SYMPY_AVALIABLE = True
 except ModuleNotFoundError:
     SYMPY_AVALIABLE = False
+try:
+    from PIL import Image
+    PIL_AVALIABLE = True
+except ModuleNotFoundError:
+    PIL_AVALIABLE = False
 
 # import logging as log
 # log.basicConfig(filename='/tmp/tm_python.log',level=log.INFO)
@@ -98,13 +103,14 @@ def flush_output(data):
         flush_scheme_u8(dfstr)
     elif is_sympy_object(data):
         flush_latex("\\rmfamily{" + latex(data) + "}")
+    elif is_pil_object(data):
+        flush_pil_Image(data)
     else:
         flush_verbatim(str(data).strip())
 
 def flush_matplotlib_figure(fig):
     """将Figure对象保存为PDF并显示
     """
-    tmp_path = None
     try:
         with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as f:
             tmp_path = f.name
@@ -209,6 +215,22 @@ def is_sympy_object(obj):
             return False
     else:
         return False
+    
+def is_pil_object(obj):
+    if PIL_AVALIABLE:
+        if isinstance(obj, Image.Image):
+            return True
+        else:
+            return False
+        
+def flush_pil_Image(obj):
+    try:
+        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as f:
+            tmp_path = f.name
+            obj.save(tmp_path, resolution=300.0)
+            flush_file(tmp_path)
+    except Exception as e:
+        flush_verbatim(f"<渲染图像失败: {e}>")
 
 def as_scm_string(text):
     return '"%s"' % text.replace("\\", "\\\\").replace('"', '\\"')
