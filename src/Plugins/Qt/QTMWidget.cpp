@@ -627,7 +627,7 @@ void
 QTMWidget::dropEvent (QDropEvent* event) {
   if (is_nil (tmwid)) return;
 
-  QPoint point= event->pos () + origin ();
+  QPoint point= event->position ().toPoint () + origin ();
   coord2 pt   = from_qpoint (point);
 
   tree             doc (CONCAT);
