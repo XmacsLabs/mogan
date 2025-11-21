@@ -68,7 +68,7 @@
 (define (cond-env-name-on-nix u)
   (if (== (url-tail (url-head (url-head (url-head u))))
           (string->url "envs"))
-      (url->string (url-tail (url-head u)))
+      (url->string (url-tail (url-head (url-head u))))
       "base"))
 
 (tm-define (conda-env-name u)
