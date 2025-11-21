@@ -215,8 +215,10 @@ QTMTabPage::mouseMoveEvent (QMouseEvent* e) {
   }
   e->accept ();
 
-  QPixmap pixmap (size ());
-  render (&pixmap);
+  // 创建一个保留 alpha 通道和设备像素比 (devicePixelRatio) 的控件快照。
+  // 使用 QWidget::grab() 可以避免生成带有黑色背景的 pixmap，
+  // 并防止因额外缩放导致的模糊。
+  QPixmap pixmap= this->grab ();
   setDown (false); // to avoid keeping the pressed state
 
   g_mostRecentlyDraggedTab= this->m_viewUrl;
