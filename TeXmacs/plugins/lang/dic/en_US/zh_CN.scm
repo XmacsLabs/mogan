@@ -2063,6 +2063,7 @@
 ("structured remove upwards" "往上删除")
 ("structured variant" "结构变体")
 ("style" "样式")
+("style for laptop presentations" "幻灯片样式")
 ("styles" "样式文件")
 ("stylesheet language" "样式文件的语言")
 ("sub" "子项")
