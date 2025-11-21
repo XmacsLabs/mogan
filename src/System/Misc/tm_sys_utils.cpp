@@ -237,3 +237,16 @@ system_wait (string message, string argument, int level) {
   }
   else the_wait_handler (message, argument, level);
 }
+
+/******************************************************************************
+ * Community version check
+ ******************************************************************************/
+
+bool
+is_community_stem () {
+#ifdef IS_COMMUNITY
+  return true;
+#else
+  return false;
+#endif
+}

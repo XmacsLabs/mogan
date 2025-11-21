@@ -1733,6 +1733,13 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
 
 void
 qt_tm_widget_rep::checkLocalTokenAndLogin () {
+  // 检查是否为社区版本，如果是则打开官方网址
+  if (is_community_stem ()) {
+    string pricingUrl= as_string (call ("account-oauth2-config", "liii-url"));
+    QDesktopServices::openUrl (QUrl (to_qstring (pricingUrl)));
+    return;
+  }
+
   // 使用scheme代码获取本地token缓存
   eval ("(use-modules (liii account))");
   string  token  = as_string (call ("account-load-token"));

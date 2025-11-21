@@ -85,3 +85,5 @@ ${define USE_PLUGIN_SPARKLE}
 
 /* Use MuPDF library */
 ${define USE_MUPDF_RENDERER}
+
+${define IS_COMMUNITY}
