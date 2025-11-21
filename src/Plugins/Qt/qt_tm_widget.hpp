@@ -84,7 +84,6 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   QLabel*                 nameLabel;
   QLabel*                 accountIdLabel;
   QLabel*                 membershipPeriodLabel;
-  QPushButton*            registerButton;
   QPushButton*            loginActionButton;
 
 #ifdef Q_OS_MAC

@@ -34,16 +34,13 @@ LoginDialogPrivate::init () {
   q->setWindowFlags (Qt::Popup | Qt::FramelessWindowHint |
                      Qt::NoDropShadowWindowHint);
   q->setAttribute (Qt::WA_TranslucentBackground);
-  q->setFixedWidth (270); // 固定宽度，高度根据内容自动调整
 
   // 安装事件过滤器以处理外部点击关闭
   q->installEventFilter (q);
 
   // 创建默认内容区域
   contentWidget= new QWidget (q);
-  contentWidget->setObjectName ("loginDialogContent");
-  contentWidget->setStyleSheet (
-      "background: white; border-radius: 8px; border: 1px solid #e0e0e0;");
+  contentWidget->setObjectName ("login-dialog-content");
   layout->addWidget (contentWidget);
 }
 

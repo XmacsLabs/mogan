@@ -191,6 +191,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   int      buttonWidth   = int (46 * scale);
   int      buttonHeight  = int (32 * scale);
   int      iconBaseSize  = int (12 * scale);
+  int      iconSize      = int (20 * scale);
+  int      macosiconSize = int (32 * scale);
 
 #if defined(Q_OS_MAC)
   // 无边框布局（macOS）- 只显示登录按钮
@@ -307,7 +309,11 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   loginButton->setFocusPolicy (Qt::NoFocus);
   loginButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
   loginButton->setFixedSize (buttonWidth, buttonHeight);
-  loginButton->setIconSize (QSize (iconBaseSize, iconBaseSize));
+#if defined(Q_OS_MAC)
+  loginButton->setIconSize (QSize (macosiconSize, macosiconSize));
+#else
+  loginButton->setIconSize (QSize (iconSize, iconSize));
+#endif
 
   // 设置登录图标
   loginButton->setIconNormal (QIcon (":/window-bar/login.svg"));
@@ -1634,14 +1640,12 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
 
   // 左侧：头像
   auto avatarContainer= new QWidget ();
-  avatarContainer->setFixedSize (60, 60);
-  auto avatarLayout= new QVBoxLayout (avatarContainer);
+  auto avatarLayout   = new QVBoxLayout (avatarContainer);
   avatarLayout->setContentsMargins (0, 0, 0, 0);
   avatarLayout->setAlignment (Qt::AlignCenter);
 
   // 头像标签 - 后续通过API设置
   avatarLabel= new QLabel ();
-  avatarLabel->setFixedSize (50, 50);
   avatarLabel->setObjectName ("login-avatar-label");
   avatarLabel->setAlignment (Qt::AlignCenter);
   avatarLabel->setText ("Liii"); // 默认值
@@ -1656,12 +1660,10 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
   // 会员名称标签 - 后续通过API设置
   nameLabel= new QLabel (qt_translate ("未登录"));
   nameLabel->setObjectName ("login-name-label");
-  nameLabel->setMinimumWidth (120);
 
   // 账户ID标签 - 后续通过API设置
   accountIdLabel= new QLabel (qt_translate ("请登录查看账户信息"));
   accountIdLabel->setObjectName ("login-account-label");
-  accountIdLabel->setMinimumWidth (120);
 
   infoLayout->addWidget (nameLabel);
   infoLayout->addWidget (accountIdLabel);
@@ -1673,10 +1675,7 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
   // 底部区域：会员期限
   auto bottomSection= new QWidget ();
   bottomSection->setObjectName ("login-bottom-section");
-  auto bottomLayout= new QVBoxLayout (bottomSection);
-  bottomLayout->setContentsMargins (12, 12, 12, 12);
-  bottomLayout->setSpacing (4);
-
+  auto bottomLayout   = new QVBoxLayout (bottomSection);
   auto membershipTitle= new QLabel (qt_translate ("会员状态"));
   membershipTitle->setObjectName ("login-membership-title");
 
@@ -1684,20 +1683,13 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
   membershipPeriodLabel= new QLabel (qt_translate ("非会员"));
   membershipPeriodLabel->setObjectName ("login-membership-period");
 
-  // 注册按钮 - 当用户不是会员时显示
-  registerButton= new QPushButton (qt_translate ("注册会员"));
-  registerButton->setObjectName ("register-button");
-  registerButton->setVisible (false); // 默认隐藏
-
-  // 登录按钮 - 当用户未登录时显示
+  // 动作按钮 - 根据用户状态显示登录或注册
   loginActionButton= new QPushButton (qt_translate ("登录"));
   loginActionButton->setObjectName ("login-action-button");
-  loginActionButton->setVisible (true);
 
   bottomLayout->addWidget (membershipTitle);
   bottomLayout->addWidget (membershipPeriodLabel);
   bottomLayout->addWidget (loginActionButton);
-  bottomLayout->addWidget (registerButton);
 
   // 添加区域到主布局
   mainLayout->addWidget (topSection);
@@ -1707,19 +1699,35 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
   // 设置对话框内容
   loginDialog->setContentWidget (contentWidget);
 
-  // 连接按钮信号 - 现在使用认证流程
-  QObject::connect (loginActionButton, &QPushButton::clicked, [this] () {
-    qDebug ("Login button clicked - triggering OAuth2 flow");
-    // 触发OAuth2登录流程
-    triggerOAuth2 ();
-  });
+#if defined(Q_OS_MAC)
+  // 在 macOS 下将登录对话框内容整体右移 100px：
+  if (contentWidget->parentWidget ()) {
+    QLayout* parentLayout= contentWidget->parentWidget ()->layout ();
+    if (parentLayout) {
+      int left, top, right, bottom;
+      parentLayout->getContentsMargins (&left, &top, &right, &bottom);
+      parentLayout->setContentsMargins (left + 100, top, right, bottom);
+      parentLayout->invalidate ();
+      loginDialog->updateGeometry ();
+      loginDialog->adjustSize ();
+    }
+  }
+#endif
 
-  QObject::connect (registerButton, &QPushButton::clicked, [] () {
-    // 打开第三方注册链接
-    eval ("(use-modules (liii account))");
-    string pricingUrl=
-        as_string (call ("account-oauth2-config", "pricing-url"));
-    QDesktopServices::openUrl (QUrl (to_qstring (pricingUrl)));
+  // 连接按钮信号 - 根据文本动态处理
+  QObject::connect (loginActionButton, &QPushButton::clicked, [this] () {
+    if (loginActionButton->text () == qt_translate ("登录")) {
+      qDebug ("Login button clicked - triggering OAuth2 flow");
+      // 触发OAuth2登录流程
+      triggerOAuth2 ();
+    }
+    else if (loginActionButton->text () == qt_translate ("注册会员")) {
+      // 打开第三方注册链接
+      eval ("(use-modules (liii account))");
+      string pricingUrl=
+          as_string (call ("account-oauth2-config", "pricing-url"));
+      QDesktopServices::openUrl (QUrl (to_qstring (pricingUrl)));
+    }
   });
 }
 
@@ -1881,14 +1889,18 @@ qt_tm_widget_rep::updateDialogContent (const QString& name,
     membershipPeriodLabel->setText (membershipPeriod);
   }
 
-  // 根据用户状态更新按钮可见性
+  // 根据用户状态更新按钮
   bool isLoggedIn= (name != qt_translate ("未登录"));
-  if (loginActionButton) {
-    loginActionButton->setVisible (!isLoggedIn);
+  bool isMember  = (membershipPeriod != qt_translate ("非会员"));
+  if (!isLoggedIn) {
+    loginActionButton->setText (qt_translate ("登录"));
+    loginActionButton->setVisible (true);
   }
-  if (registerButton) {
-    // 如果不是会员，显示注册按钮
-    bool isMember= (membershipPeriod != qt_translate ("非会员"));
-    registerButton->setVisible (!isMember && isLoggedIn);
+  else if (!isMember) {
+    loginActionButton->setText (qt_translate ("注册会员"));
+    loginActionButton->setVisible (true);
+  }
+  else {
+    loginActionButton->setVisible (false);
   }
 }
