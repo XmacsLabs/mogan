@@ -1,0 +1,31 @@
+/* tmdoc-custom.css — TeXmacs documentation style overrides
+   Location: styles/documentation/texmacs/
+
+   Adjust the variable --tm-code-bg below to change code-block background.
+*/
+:root {
+  --tm-code-bg: #f5f6f7; /* light gray/blue — change this hex as desired */
+}
+
+/* Generic code / verbatim blocks (includes program/session variants so all share same bg) */
+pre, pre.verbatim, .verbatim, code, .prog, .program, pre.program, .input, .output, .session, pre.session {
+  background-color: var(--tm-code-bg);
+  padding: 0.5em 0.75em;
+  border-radius: 6px;
+  margin: 0.5em 0;
+  overflow: auto;
+  font-family: monospace, "Courier New", monospace;
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+
+/* Ensure inline code keeps a subtle background */
+code {
+  padding: 0.08em 0.2em;
+  border-radius: 4px;
+}
+
+/* Removed special-case contrast for program/session so backgrounds are unified above. */
+
+/* Make sure long lines scroll horizontally */
+pre { white-space: pre; }

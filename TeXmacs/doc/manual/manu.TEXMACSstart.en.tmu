@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.1.4>>
+<TMU|<tuple|1.1.0|2025.2.0-rc1>>
 
 <style|<tuple|tmdoc|old-dots|old-lengths>>
 
@@ -106,6 +106,34 @@
   The two mechanisms can be combined: can you guess how the mathematical symbol <math|\<Updownarrow\>> can be obtained? Hint: it is a variant of <math|\<Leftrightarrow\>>.
 
   Don't forget entering <em|math mode> before trying to insert mathematical symbols or markup. New formulas can be inserted using <icon|tm_math_x2.png> icon on the mode-dependent icon toolbar or using the keyboard shortcuts <key|$> (inline formula) or <shortcut|(make-equation*)> (displayed equation).
+
+  <section|Compatibility with other formats><label|Compatibility with other formats>
+
+  <TeXmacs> documents can be saved without loss of information in three formats: the native <TeXmacs> format (file extension .tm), Xml (.tmml) and as a Scheme expression (.stm). <TeXmacs> also provides bi-directional converters for <LaTeX>, <name|Html> and <name|MathML>.
+
+  In addition to the above textual formats,<TeXmacs> documents can be exported in a wysiwyg (what-you-see-is-what-you-get) way to either Postscript or Pdf, which are used as the primary formats for printing documents. <TeXmacs> can also export document fragments to several vector or raster image formats.
+
+  <TeXmacs> documents can be converted to other formats using the different items in the File\<rightarrow\>Export menu. Similarly, the File\<rightarrow\>Import menu contains all formats which can be imported into <TeXmacs>. Besides exporting or importing entire documents, it is also possible to copy and paste document fragments in various formats using Edit\<rightarrow\>Copy to and Edit\<rightarrow\>Paste from. The default formats for copy and pasting can be specified in Tools\<rightarrow\>Miscellaneous\<rightarrow\>Export selections as and Tools\<rightarrow\>Miscellaneous\<rightarrow\>Import selections as.
+
+  \<bullet\> \ <LaTeX>
+
+  \<bullet\> \ <name|Html> and MathML
+
+  \<bullet\> \ Exporting to image formats
+
+  \<bullet\> \ Adding new converters
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  \;
 
   <tmdoc-copyright|2021|Basile Audoly|Joris van der Hoeven>
 

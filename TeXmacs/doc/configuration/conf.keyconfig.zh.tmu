@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+<TMU|<tuple|1.1.0|2025.2.0-rc1>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -12,14 +12,14 @@
   <TeXmacs>键盘的行为模式由<menu|Edit|Preferences>中的一些用户选项指定：
 
   <\itemize>
-    <item><hlink|<menu|Look and feel>|man-preferences.en.tm#preferences:look-and-feel>旨在提供和其他平台类似的快捷键与动作绑定的规则。
+    <item><hlink|<menu|Look and feel>|conf.userpref.zh.tmu#preferences:look-and-feel>旨在提供和其他平台类似的快捷键与动作绑定的规则。
 
-    <item>细微的调整可在<hlink|<menu|Edit|Preferences|Keyboard>|man-preferences.en.tm#preferences:keyboard>中解决。
+    <item>细微的调整可在<hlink|<menu|Edit|Preferences|Keyboard>|conf.userpref.zh.tmu#preferences:keyboard>中解决。
   </itemize>
 
   下面要讨论的是在不同系统上的键盘配置问题。
 
-  关于快捷键在文档中的显示，请阅读<hlink|惯例|../start/man-conventions.zh.tm>。另外，键盘快捷键的相关细节，请参考<hlink|精通键盘|../text/keyboard/man-keyboard.zh.tm>这一节。
+  关于快捷键在文档中的显示，请阅读<hlink|惯例|../manual/manu.gettingstarted.zh.tmu#sec-man-conventions>。另外，键盘快捷键的相关细节，请参考<hlink|精通键盘|../manual/manu.typing.zh.tmu#sec-man-keyboard>这一节。
 
   <paragraph*|一致的标准键位>
 
@@ -55,7 +55,7 @@
 
   <paragraph*|用户自定义快捷键>
 
-  <TeXmacs>默认的快捷键不合你的心意时，你还可以<hlink|配置你自己的快捷键|../scheme/man-keyboard.zh.tm>.
+  <TeXmacs>默认的快捷键不合你的心意时，你还可以<hlink|配置你自己的快捷键|../manual/manu.custom.zh.tmu#sec-man-custom-keyboard>.
 </body>
 
 <\initial>

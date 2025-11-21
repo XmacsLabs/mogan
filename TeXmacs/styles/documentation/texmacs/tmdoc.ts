@@ -48,7 +48,7 @@
 
   <assign|sectional-post-sep|<macro|<space|2spc>>>
 
-  <assign|html-css|https://www.texmacs.org/css/tmdoc.css>
+  <assign|html-css|tmdoc-custom.css>
 
   <assign|html-head-javascript-src|https://www.texmacs.org/javascript/texmacs_functions.js>
 
@@ -57,7 +57,7 @@
       Sections, subsections and subsubsections.
     </src-comment>
   </active*>
-
+  
   <assign|sectional-sep|<macro|.<space|2spc>>>
 
   <assign|section-font|<macro|name|<large|<arg|name>>>>
