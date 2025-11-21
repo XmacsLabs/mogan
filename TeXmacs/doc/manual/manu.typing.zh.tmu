@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
+<TMU|<tuple|1.1.0|2025.2.0-rc1>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -170,9 +170,9 @@
 
     <item*|<prefix|altcmd>>组合式<TeXmacs>快捷键。 通常，这些快捷键是用于先指示命令将要应用的标记的类别再指定具体的命令。比如<key|executable>键前缀用于插入可执行的标记以用于<hlink|撰写样式文件|manu.styles.ch.tmu>。一个例子是快捷键<key|executable +>用于插入加法。
 
-    <item*|<prefix|structured:geometry>>此键前缀用于和方向键及其它特殊键组合，用于<hlink|移动和缩放对象|manu.editing.zh.tmu>。
+    <item*|<prefix|structured:geometry>>此键前缀用于和方向键及其它特殊键组合，用于<hlink|移动和缩放对象|manu.editing.zh.tmu#sec-man-structured-geometry>。
 
-    <item*|<prefix|structured:move>>此键前缀用于和方向键及其它特殊键组合，用于<hlink|结构化光标移动|manu.editing.zh.tmu>。
+    <item*|<prefix|structured:move>>此键前缀用于和方向键及其它特殊键组合，用于<hlink|结构化光标移动|manu.editing.zh.tmu#sec-man-structured-move>。
 
     <item*|<prefix|special>>此键前缀偶用于和字母和标点符号组合以创建一些额外的简单易记的快捷键。
 
@@ -221,7 +221,7 @@
 
   <subsection|动态对象><label|sec-man-dynamic>
 
-  某些更加复杂的对象在编辑的过程中可以有不同状态。这种动态对象的一个例子便是标签和引用，因为引用的标号必须动态确定。另外一些动态标记的例子可以在<hlink|撰写样式文件|../../devel/style/keyboard/style-kbd.zh.tm>这章中找到。
+  某些更加复杂的对象在编辑的过程中可以有不同状态。这种动态对象的一个例子便是标签和引用，因为引用的标号必须动态确定。另外一些动态标记的例子可以在撰写样式文件这章中找到。
 
   编辑进入动态对象时，比如使用<shortcut|(make-label)>插入标签，默认的状态是不激活的。在这种不激活的状态中，你可以输入和这个动态对象相关的信息，比如在标签这个例子中就是标签的名字。有一些动态对象的参数数量不是固定的，可以用<key|var>插入新的参数。
 
@@ -233,7 +233,7 @@
 
   <subsection|一些有用的键盘快捷键><label|sec-man-standard>
 
-  一些常用的组合快捷键如下表<nbsp><reference|various-useful-shortcuts>所示。特别注意的是由<shortcut|(make-space "1em")>，<shortcut|(make-space "0.2spc")>和 <shortcut|(make-space "-0.2spc")>插入的空白可用<shortcut|(geometry-left)>和<shortcut|(geometry-right)><hlink|改变大小|editing.zh.tmu>。这种缩放的方式实际上适用于更一般的从菜单<menu|Format|Space>插入的或水平或竖直的空白，也可以是一些其它的对象如图片。
+  一些常用的组合快捷键如下表<nbsp><reference|various-useful-shortcuts>所示。特别注意的是由<shortcut|(make-space "1em")>，<shortcut|(make-space "0.2spc")>和 <shortcut|(make-space "-0.2spc")>插入的空白可用<shortcut|(geometry-left)>和<shortcut|(geometry-right)><hlink|改变大小|manu.editing.zh.tmu#sec-man-structured-geometry>。这种缩放的方式实际上适用于更一般的从菜单<menu|Format|Space>插入的或水平或竖直的空白，也可以是一些其它的对象如图片。
 
   <\big-table|<descriptive-table|<tformat|<table|<row|<cell|快捷键>|<cell|动作>>|<row|<cell|<shortcut|(remove-structure-upwards)>>|<cell|除去所包含的对象或环境。>>|<row|<cell|<shortcut|(make 'nbsp)>>|<cell|插入一个不间断的空白。>>|<row|<cell|<shortcut|(make-space "1em")>>|<cell|插入一个quad空白。>>|<row|<cell|<shortcut|(make-space "0.2spc")>>|<cell|插入一个小空白。>>|<row|<cell|<shortcut|(make-space "-0.2spc")>>|<cell|插入一个负空白。>>|<row|<cell|<shortcut|(make-htab "5mm")>>|<cell|插入一个<with|font|roman|“tab”>。>>|<row|<cell|<shortcut|(go-start)>>|<cell|移动到文档头部。>>|<row|<cell|<shortcut|(go-end)>>|<cell|移动到文档尾部。>>|<row|<cell|<shortcut|(make 'line-break)>>|<cell|插入一个换行符。>>|<row|<cell|<shortcut|(make-rigid)>>|<cell|插入一段不能断行（rigid）的文字。>>>>>>
     <label|various-useful-shortcuts>一些有用的键盘快捷键

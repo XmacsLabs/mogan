@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+<TMU|<tuple|1.1.0|2025.2.0-rc1>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -125,7 +125,7 @@
 
   <subsection|ASCII-based or tree-based editing: an intricate choice><label|sec-src-present-intro>
 
-  Most users are used to edit source code using a conventional editor like <name|Emacs>, while presenting the source code in ASCII format. Since all <TeXmacs> documents are stored as <hlink|trees|../format/basics/basics.en.tm>, an interesting but complicated question is which format is most suitable for editing such documents. One option is to represent the tree using an ASCII-based format, such as XML, Scheme, or the native format for storing files on a disk. The other option is to edit the trees as such, making no fundamental distinction between source code and normal documents.
+  Most users are used to edit source code using a conventional editor like <name|Emacs>, while presenting the source code in ASCII format. Since all <TeXmacs> documents are stored as <hlink|trees|manu.texmacsstart.en.tmu#tree>, an interesting but complicated question is which format is most suitable for editing such documents. One option is to represent the tree using an ASCII-based format, such as XML, Scheme, or the native format for storing files on a disk. The other option is to edit the trees as such, making no fundamental distinction between source code and normal documents.
 
   In <TeXmacs> we have chosen to implement the second option. More precisely, any document can be edited in “source mode”, which is merely a mode for rendering the document in a way which makes its tree structure particularly apparent. It may be instructive to take an arbitrary document of yours and to take a look at it in “source mode” by enabling <menu|Document|Source|Edit source tree>.
 
@@ -391,7 +391,7 @@
 
   <section|The style-sheet language><label|sec-style-language>
 
-  In the section about <hlink|writing a simple style package|design/style-example.en.tm> we already gave you a first impression about the style-sheet language of <TeXmacs>. In this section, we will give a more complete survey of the available features. For more detailed descriptions, we refer to the chapter about the <hlink|<TeXmacs> primitives|../format/stylesheet/stylesheet.en.tm>.
+  In the section about <hlink|writing a simple style package|#sec-style-example> we already gave you a first impression about the style-sheet language of <TeXmacs>. In this section, we will give a more complete survey of the available features.
 
   The style-sheet primitives can be obtained from the <menu|Source> menu when you are in source mode. In all other modes, the <menu|Source> menu becomes visible after enabling the <menu|Source macros tool> in the <menu|Tools> menu. Alternatively, you may use the <prefix|A-> and <prefix|executable> keyboard prefixes in source mode and the<nbsp><prefix|inactive> and<nbsp><prefix|executable> prefixes otherwise. Furthermore, we recall that the hybrid <key|\\>-key may be used for creating macro-applications or arguments, depending on the context. Finally, the <shortcut|(structured-insert-right)> and <shortcut|(structured-insert-left)> keys are used for inserting arguments.
 
@@ -417,11 +417,11 @@
     <inactive*|<assign|my-counter|<plus|<value|my-counter>|1>>>
   </tm-fragment>
 
-  Finally, you may associate logical properties to environment variables using the <markup|drd-props> primitive. This is explained in more detail in the section about <hlink|macro primitives|../format/stylesheet/prim-macro.en.tm>.
+  Finally, you may associate logical properties to environment variables using the <markup|drd-props> primitive. This is explained in more detail in the section about <hlink|macro primitives|manu.prim-macro.en.tmu>.
 
   <subsection|Macro expansion><label|sec-style-macro>
 
-  The main interest of the <TeXmacs>' style-sheet language is the possibility to define macros. These come in three flavours: ordinary macros, macros which take an arbitrary number of arguments and external macros, whose expansion is computed by <name|Scheme> or a plug-in. The macro-related primitives are available from the <menu|Source|Macro> menu. Below, we will only describe the ordinary macros. For more details, we refer to the section about <hlink|macro primitives|../format/stylesheet/prim-macro.en.tm>.
+  The main interest of the <TeXmacs>' style-sheet language is the possibility to define macros. These come in three flavours: ordinary macros, macros which take an arbitrary number of arguments and external macros, whose expansion is computed by <name|Scheme> or a plug-in. The macro-related primitives are available from the <menu|Source|Macro> menu. Below, we will only describe the ordinary macros. For more details, we refer to the section about <hlink|macro primitives|manu.prim-macro.en.tmu>.
 
   Ordinary macros are usually defined using
 
@@ -587,7 +587,7 @@
     <inactive*|<assign|hey|<macro|first|second|<style-with|src-compact|none|<if|<equal|<arg|second>|<uninit>>|Hey <arg|first>, you look lonely today...|Hey <arg|first> and <arg|second>, you form a nice couple!>>>>>
   </tm-fragment>
 
-  However, <TeXmacs> is not clever enough to detect which arguments are optional and which arguments are accessible (<abbr|i.e.> which arguments can be edited by the user). Therefore, you will have to manually give this information using the <markup|drd-props> primitive. The <markup|case>, <markup|while> and <markup|for-each> primitives are explained in more detail in the <hlink|corresponding section|../format/stylesheet/prim-control.en.tm> on the <hlink|<TeXmacs> primitives|../format/stylesheet/stylesheet.en.tm>.
+  However, <TeXmacs> is not clever enough to detect which arguments are optional and which arguments are accessible (<abbr|i.e.> which arguments can be edited by the user). Therefore, you will have to manually give this information using the <markup|drd-props> primitive. The <markup|case>, <markup|while> and <markup|for-each> primitives are explained in more detail in the <hlink|corresponding section|manu.prim-control.en.tmu> on the <TeXmacs> primitives.
 
   <subsection|Computational markup><label|sec-style-compute>
 
@@ -597,11 +597,11 @@
     <inactive*|<assign|new-important|<macro|name|<quasi|<style-with|src-compact|none|<style-with|src-compact|none|<assign|<unquote|<arg|name>>|<macro|x|<with|font-series|bold|<arg|x>>>>><style-with|src-compact|none|<assign|<unquote|<merge|<arg|name>|-red>>|<macro|x|<with|font-series|bold|color|red|<arg|x>>>>>>>>>>
   </tm-fragment>
 
-  Here we use the <markup|merge> primitive in order to concatenate two strings. The different computational primitives are described in more detail in the <hlink|corresponding section|../format/stylesheet/prim-functional.en.tm> on the <hlink|<TeXmacs> primitives|../format/stylesheet/stylesheet.en.tm>.
+  Here we use the <markup|merge> primitive in order to concatenate two strings.\ 
 
   <section|Customizing the standard <TeXmacs> styles><label|sec-customize>
 
-  Whenever the standard <TeXmacs> style files are inadequate for a given purpose, it is possible to write your own style files. However, designing your own style files from scratch may be a complex task, so it is usually preferable to customize the existing styles. This requires some understanding of the global architecture of the standard style files and a more precise understanding of the parts you wish to customize. In this section, we will explain the general principles. For more details, we refer to the chapter on the <hlink|principal <TeXmacs> tags|design/style-language.en.tm>.
+  Whenever the standard <TeXmacs> style files are inadequate for a given purpose, it is possible to write your own style files. However, designing your own style files from scratch may be a complex task, so it is usually preferable to customize the existing styles. This requires some understanding of the global architecture of the standard style files and a more precise understanding of the parts you wish to customize. In this section, we will explain the general principles. For more details, we refer to the chapter on the <hlink|principal <TeXmacs> tags|manu.texmacsstart.en.tmu#style-language.en>.
 
   <subsection|Organization of style files and packages><label|sec-customize-disk>
 
@@ -655,7 +655,7 @@
 
   <subsection|Customizing the general layout><label|sec-customize-layout>
 
-  The general layout of a document is mainly modified by setting the appropriate environment variables for <hlink|page layout|../format/environment/env-page.en.tm> and <hlink|paragraph layout|../format/environment/env-par.en.tm>. For instance, by including the following lines in your style file, you can set the page size to <verbatim|letter> and the left and right margins to <verbatim|2in>:
+  The general layout of a document is mainly modified by setting the appropriate environment variables for <hlink|page layout|manu.texmacsstart.en.tmu#Page layout> and <hlink|paragraph layout|manu.texmacsstart.en.tmu#Paragraph layout>. For instance, by including the following lines in your style file, you can set the page size to <verbatim|letter> and the left and right margins to <verbatim|2in>:
 
   <\tm-fragment>
     <\inactive*>
@@ -681,7 +681,7 @@
     </inactive*>
   </tm-fragment>
 
-  We notice that macros which return lengths are considered as <hlink|lengths|../format/basics/lengths.en.tm> themselves. In the case of the <TeX>/<LaTeX> emulation package, we actually <em|require> all lengths to be macros.
+  We notice that macros which return lengths are considered as <hlink|lengths|manu.texmacsstart.en.tmu#lengths> themselves. In the case of the <TeX>/<LaTeX> emulation package, we actually <em|require> all lengths to be macros.
 
   The page headers and footers are usually not determined by global environment variables or macros, since they may change when a new chapter or section is started. Instead, <TeXmacs> provides the call-back macros <markup|header-title>, <markup|header-author>, <markup|header-primary> and <markup|header-secondary>. These macros are called when the document title or author are specified or when a new primary or secondary section is started (primary sections are typically chapters in books, or sections in articles). For instance, the following redefinition makes the principal section name appear on even pages, together with the current page number and a wide underline.
 
@@ -773,7 +773,7 @@
     <inactive*|<new-theorem|experiment|Experiment>>
   </tm-fragment>
 
-  When available in the <TeXmacs> dictionaries, the text “Experiment” will be automatically translated when your document is written in a foreign language. In the section about <hlink|how to define new environments|../../main/styles/env/env-base-dtd.en.tm>, it is also explained how to define other numbered textual environments (besides theorems, remarks and exercises).
+  When available in the <TeXmacs> dictionaries, the text “Experiment” will be automatically translated when your document is written in a foreign language. In the section about <hlink|how to define new environments|manu.texmacsstart.en.tmu#Defining new environments>, it is also explained how to define other numbered textual environments (besides theorems, remarks and exercises).
 
   <paragraph*|Customization of the rendering>
 
@@ -815,7 +815,7 @@
 
   <paragraph*|Customization of the numbering>
 
-  In the sections about <hlink|counters and counter groups|../../main/styles/std/std-counter-dtd.en.tm>, it is explained how to customize the counters of numbered environments for particular purposes. For instance, by redefining <markup|inc-theorem>, you may force theorems to reset the counter of corollaries:
+  In the sections about <hlink|counters and counter groups|manu.texmacsstart.en.tmu#Counters and counter groups>, it is explained how to customize the counters of numbered environments for particular purposes. For instance, by redefining <markup|inc-theorem>, you may force theorems to reset the counter of corollaries:
 
   <\tm-fragment>
     <inactive*|<style-with|src-compact|none|<quasi|<style-with|src-compact|none|<assign|inc-theorem|<macro|<compound|<unquote|<value|inc-theorem>>><reset-corollary>>>>>>>
@@ -865,7 +865,7 @@
     <with|section-nr|2|subsection-nr|3|the-subsection|<macro|<value|section-nr>.<value|subsection-nr>>|subsection-numbered-title|<macro|name|<sectional-normal|<with|font-series|bold|<the-subsection>. ><arg|name>>>|<subsection-numbered-title|Very hairy GNUs>>
   </tm-fragment>
 
-  Notice that the <tmpackage|section-base> package provides several <hlink|useful helper macros|../../main/styles/section/section-base-helper.en.tm> like <markup|sectional-normal>.
+  Notice that the <tmpackage|section-base> package provides several <hlink|useful helper macros|manu.section-base-helper.en.tmu> like <markup|sectional-normal>.
 
   <\remark>
     Sectional titles can either be rendered in a “short” or in the “long” fashion. By default, paragraphs and subparagraphs use the short rendering, for which the body starts immediately at the right of the title:
@@ -905,7 +905,7 @@
 
   <subsection|Customizing the treatment of title information><label|sec-customize-title>
 
-  <TeXmacs> uses the <markup|doc-data> tag in order to specify global data for the document. These data are treated in two stages by the <markup|doc-data> macro. <hlink|First|../../main/styles/header/header-title-global.en.tm>, the document data are separated into several categories, according to whether the data should be rendered as a part of the main title or in footnotes or the abstract. <hlink|Secondly|../../main/styles/header/header-title-customize.en.tm>, the data in each category are rendered using suitable macros.
+  <TeXmacs> uses the <markup|doc-data> tag in order to specify global data for the document. These data are treated in two stages by the <markup|doc-data> macro. <hlink|First|manu.header-title-global.en.tmu>, the document data are separated into several categories, according to whether the data should be rendered as a part of the main title or in footnotes or the abstract. <hlink|Secondly|manu.header-title-global.en.tmu#Customizing the rendering of title fields>, the data in each category are rendered using suitable macros.
 
   Each child of the <markup|doc-data> is a tag with some specific information about the document. Currently implemented tags are <markup|doc-title>, <markup|doc-subtitle>, <markup|doc-author>, <markup|doc-date>, <markup|doc-running-title>, <markup|doc-running-author>, <markup|doc-keywords>, <markup|doc-msc> and <markup|doc-note>. The <markup|doc-author> tag may occur several times. The <markup|author-data> tag is used in order to specify structured data for each of the authors of the document. Each child of the <markup|author-data> tag is a tag with information about the corresponding author. Currently implemented tags with author information are <markup|author-name>, <markup|author-affiliation>, <markup|author-email>, <markup|author-homepage> and <markup|author-note>.
 
@@ -923,7 +923,7 @@
 
   In addition to the rendering macros which are present in the document, the main title (including author information, the date, <abbr|etc.>) is rendered using the <markup|doc-make-title> macro. The author information, as part of the main title, is rendered using <markup|render-doc-author> or <markup|render-doc-authors>, depending on whether the document has one or more authors. Footnotes to the title or to one of the authors are rendered using <markup|doc-title-note> <abbr|resp.> <markup|doc-author-note>. These footnote macros always expect a <markup|document> tag on input, because they may compress it into a horizontal concatenation.
 
-  The first stage of processing the document data is more complex and the reader is invited to take a look at the <hlink|short descriptions|../../main/styles/header/header-title-global.en.tm> of the macros which are involved in this process. It is also good to study the definitions of these macros in the <hlink|package itself|../../../packages/header/title-base.ts>. In order to indicate the way things work, we finish with an example on how the email address and homepage of an author can be rendered in a footnote instead of the main title:
+  The first stage of processing the document data is more complex and the reader is invited to take a look at the <hlink|short descriptions|manu.header-title-global.en.tmu> of the macros which are involved in this process. It is also good to study the definitions of these macros in the package itself. In order to indicate the way things work, we finish with an example on how the email address and homepage of an author can be rendered in a footnote instead of the main title:
 
   <\tm-fragment>
     <\inactive*>
@@ -949,7 +949,7 @@
 
   <subsection|Customizing arbitrary tags><label|sec-note-customize>
 
-  Imagine that you want to change the rendering of a given tag, like <markup|lemma>. As a general rule, <TeXmacs> provides a set of well-chosen macros which can be customized by the user so as to obtain the desired effect. For instance, as we have seen <hlink|above|customize/customize-theorems.en.tm>, you should use modify one of the macros <markup|render-theorem>, <markup|theorem-name> or <markup|theorem-sep> in order to customize the rendering of <markup|lemma> and all other theorem-like environments.
+  Imagine that you want to change the rendering of a given tag, like <markup|lemma>. As a general rule, <TeXmacs> provides a set of well-chosen macros which can be customized by the user so as to obtain the desired effect. For instance, as we have seen <hlink|above|#sec-customize-theorems>, you should use modify one of the macros <markup|render-theorem>, <markup|theorem-name> or <markup|theorem-sep> in order to customize the rendering of <markup|lemma> and all other theorem-like environments.
 
   However, in some cases, it may not be clear which “well-chosen” macro to customize. If we just wanted to change the presentation of lemmas and not of any other theorem-like environments, then we clearly cannot modify <markup|render-theorem>, <markup|theorem-name> or <markup|theorem-sep>. In other cases, the user may not want to invest his time in completely understanding the macro hierarchy of <TeXmacs>, and find out about the existence of <markup|render-theorem>, <markup|theorem-name> and <markup|theorem-sep>.
 
@@ -989,10 +989,10 @@
 
   <subsection|Standard utilities><label|sec-note-utilities>
 
-  In the <hlink|package <tmpackage|std-utils>|../../main/styles/std/std-utils-dtd.en.tm>, the user may find several useful additional macros for writing style files. It mainly contains macros for
+  In the <hlink|package <tmpackage|std-utils>|manu.std-utils-dtd.en.tmu>, the user may find several useful additional macros for writing style files. It mainly contains macros for
 
   <\itemize>
-    <item>Writing block environments which span over the entire paragraph width. Notice that the <tmpackage|title-base> package provides some <hlink|additional macros|../../main/styles/section/section-base-helper.en.tm> for wide section titles.
+    <item>Writing block environments which span over the entire paragraph width. Notice that the <tmpackage|title-base> package provides some <hlink|additional macros|manu.section-base-helper.en.tmu> for wide section titles.
 
     <item>Writing wide block environments which are underlined, overlined or in a frame box.
 
