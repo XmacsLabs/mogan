@@ -39,6 +39,9 @@ jobs:
         with:
           xmake-version: v2.9.3
           actions-cache-folder: '.xmake-cache'
+      - name: Install create-dmg
+        run: |
+          brew install create-dmg
       - name: xmake repo --update
         run: xmake repo --update
       - name: config
@@ -47,6 +50,17 @@ jobs:
         run: xmake build -vD --diagnosis stem
       - name: install
         run: xmake install -vD stem
+      - name: Clean up mounted DMGs
+        run: |
+          # 卸载任何可能挂载的DMG
+          hdiutil detach /Volumes/* -force 2>/dev/null || true
+          diskutil unmount /Volumes/* -force 2>/dev/null || true
+          # 清理临时文件
+          rm -rf /tmp/create-dmg.* 2>/dev/null || true
+          # 清理可能存在的挂载点
+          find /Volumes -maxdepth 1 -type d -name "*" -exec umount {} \; 2>/dev/null || true
+          # 等待资源释放
+          sleep 3
       - name: Generate Installer
         run: |
           xmake install -vD stem_packager

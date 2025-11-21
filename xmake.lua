@@ -64,10 +64,6 @@ add_configfiles("src/System/config.h.xmake", {
 -- support cygwin env.
 set_allowedplats("linux", "macosx", "windows")
 
-if is_plat("windows") then
-    set_runtimes("MT")
-end
-
 if is_plat("linux") then
     set_configvar("OS_GNU_LINUX", true)
 else
@@ -991,6 +987,10 @@ target("stem_packager") do
 
     add_deps("stem")
 
+    -- 重新声明变量以解决作用域问题
+    local stem_project_name = "Mogan STEM"
+    local stem_binary_name = "MoganSTEM"
+
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_configvar("APPCAST", "")
     set_configvar("OSXVERMIN", "")
@@ -1005,6 +1005,8 @@ target("stem_packager") do
     local dmg_name= stem_binary_name .. "-v" .. XMACS_VERSION .. ".dmg"
     if is_arch("arm64") then
         dmg_name= stem_binary_name .. "-v" .. XMACS_VERSION .. "-arm.dmg"
+    elseif is_arch("x86_64") then
+        dmg_name= stem_binary_name .. "-v" .. XMACS_VERSION .. "-x64.dmg"
     end
 
     after_install(function (target, opt)
@@ -1012,30 +1014,117 @@ target("stem_packager") do
         os.cp("$(buildir)/Info.plist", app_dir .. "/Contents")
         os.execv("codesign", {"--force", "--deep", "--sign", "-", app_dir})
 
-        local hdiutil_command= "/usr/bin/sudo /usr/bin/hdiutil create $(buildir)/" .. dmg_name .. " -fs HFS+ -srcfolder " .. app_dir
-        io.write("Execute: ")
-        print(hdiutil_command)
-        print("Remove /usr/bin/sudo if you want to package it by your own")
+        -- 清理可能存在的旧DMG文件
+        local dmg_path = path.join("$(buildir)", dmg_name)
+        if os.isfile(dmg_path) then
+            os.rm(dmg_path)
+        end
 
-        local maxRetries= 5
-        local retries = 0
-        while retries <= maxRetries do
-            try {
-                function ()
-                    os.execv(hdiutil_command)
-                    os.exit(0)
-                end,
-                catch {
-                    function (errors)
-                        retries = retries + 1
-                        io.write("Retrying, attempt ")
-                        print(retries)
-                        if retries > maxRetries then
-                            os.raise("Command failed after " .. maxRetries .. " retries")
-                        end
-                    end
-                }
+        -- 先尝试 create-dmg，使用更安全的参数格式
+        local success = false
+        try {
+            function ()
+                -- 确保目录存在且没有挂载的DMG
+                local build_dir = path.absolute("$(buildir)")
+
+                -- 清理临时文件
+                os.exec("rm -rf /tmp/create-dmg.* 2>/dev/null || true")
+
+                -- 构建create-dmg命令字符串，避免os.execv的路径问题
+                local dmg_path = path.join(build_dir, dmg_name)
+                local app_path = path.absolute(app_dir)
+
+                local cmd = string.format(
+                    'create-dmg --volname "%s" --window-size 600 400 --icon-size 100 --icon "%s" 175 120 --app-drop-link 425 120 --disk-image-size 500 --hdiutil-verbose "%s" "%s"',
+                    stem_project_name,
+                    stem_binary_name .. ".app",
+                    dmg_path,
+                    app_path
+                )
+
+                -- 检查背景图片
+                local background_image = path.join("$(projectdir)", "packages", "macos", "dmg-background.png")
+                if os.isfile(background_image) then
+                    cmd = string.format(
+                        'create-dmg --background "%s" --volname "%s" --window-size 600 400 --icon-size 100 --icon "%s" 175 120 --app-drop-link 425 120 --disk-image-size 500 --hdiutil-verbose "%s" "%s"',
+                        background_image,
+                        stem_project_name,
+                        stem_binary_name .. ".app",
+                        dmg_path,
+                        app_path
+                    )
+                end
+
+                print("Running create-dmg command: " .. cmd)
+                os.exec(cmd)
+                success = true
+            end,
+            catch {
+                function (errors)
+                    print("create-dmg failed: " .. tostring(errors))
+                end
             }
+        }
+
+        -- 如果 create-dmg 失败，使用改进的 hdiutil 方法
+        if not success then
+            print("create-dmg failed, using hdiutil with manual DMG creation")
+
+            -- 等待资源释放
+            os.exec("sleep 3")
+
+            -- 创建临时目录来构建DMG内容
+            local build_dir = path.absolute("$(buildir)")
+            local temp_dmg_dir = path.join(build_dir, "temp_dmg")
+            if os.isdir(temp_dmg_dir) then
+                os.rm(temp_dmg_dir)
+            end
+            os.mkdir(temp_dmg_dir)
+
+            -- 复制应用到临时目录
+            local temp_app_dir = path.join(temp_dmg_dir, stem_binary_name .. ".app")
+            os.cp(app_dir, temp_app_dir)
+
+            -- 创建Applications文件夹链接
+            local applications_link = path.join(temp_dmg_dir, "Applications")
+            os.exec("ln -s /Applications", {cwd = temp_dmg_dir})
+
+            -- 使用hdiutil创建DMG，添加更多参数确保成功
+            local absolute_dmg_path = path.join(build_dir, dmg_name)
+            local hdiutil_cmd = string.format(
+                'hdiutil create -format UDZO -srcfolder "%s" -volname "%s" -fs HFS+ -quiet "%s"',
+                temp_dmg_dir, stem_project_name, absolute_dmg_path
+            )
+
+            -- 重试机制
+            local max_retries = 3
+            for i = 1, max_retries do
+                try {
+                    function ()
+                        os.exec(hdiutil_cmd)
+                        success = true
+                    end,
+                    catch {
+                        function (errors)
+                            print("hdiutil attempt " .. i .. " failed: " .. tostring(errors))
+                            if i < max_retries then
+                                print("Waiting before retry...")
+                                os.exec("sleep " .. (i * 2))
+                            end
+                        end
+                    }
+                }
+                if success then
+                    break
+                end
+            end
+
+            -- 清理临时目录
+            os.rm(temp_dmg_dir)
+
+            if not success then
+                os.raiselevel("Failed to create DMG after " .. max_retries .. " attempts")
+            end
         end
     end)
 end
