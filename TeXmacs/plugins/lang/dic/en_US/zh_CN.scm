@@ -508,6 +508,7 @@
 ("decorate atoms" "")
 ("default padding" "默认填充")
 ("default" "默认")
+("default style for writing books" "书籍默认样式")
 ("definition of" "查看定义:")
 ("definition" "定义")
 ("delete column" "删除此行")
