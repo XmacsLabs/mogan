@@ -87,7 +87,7 @@ jobs:
           key: xmake-build-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake-requires.lock') }}
 
       - name: config
-        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg -a ${{ matrix.arch }} --yes
+        run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
       - name: build
         run: xmake build --yes -vD stem && xmake build --yes -vD --group=tests
       #- name: C++ tests
