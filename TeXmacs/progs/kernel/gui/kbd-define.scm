@@ -170,13 +170,21 @@
       (ctx-find (kbd-get-map key) '())))
 
 (tm-define (kbd-find-prefix prefix)
-  (filter 
-    (lambda (pair)
-      (let ((key (car pair))
-            (val (cdr pair)))
-        (and (string-starts? key prefix)
-             (ctx-resolve (kbd-get-map key) #f))))
-    (ahash-table->list kbd-map-table)))
+  (let ((pairs (filter 
+                 (lambda (pair)
+                   (let ((key (car pair))
+                         (val (cdr pair)))
+                     (and (string-starts? key prefix)
+                          (ctx-resolve (kbd-get-map key) #f))))
+                 (ahash-table->list kbd-map-table))))
+    ; 按键序列长度降序排序（长序列在前）
+    (sort pairs
+          (lambda (x y)
+            (let ((len-x (string-length (car x)))
+                  (len-y (string-length (car y))))
+              (or (> len-x len-y)
+                  (and (= len-x len-y) 
+                       (string<? (car x) (car y)))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yet more subroutines for the definition of keyboard shortcuts
