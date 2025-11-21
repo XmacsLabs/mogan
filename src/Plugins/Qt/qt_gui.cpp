@@ -39,6 +39,7 @@
 #include <QByteArray>
 #include <QClipboard>
 #include <QCoreApplication>
+#include <QFileInfo>
 #include <QFileOpenEvent>
 #include <QImage>
 #include <QLabel>
@@ -264,6 +265,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   QByteArray       buf;
   string           input_format;
   string           image_w_string, image_h_string;
+  string           clipboard_image_suffix= "png";
 
   s= "";
   t= "none";
@@ -296,8 +298,9 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       QImage  image= qvariant_cast<QImage> (md->imageData ());
       qbuf.open (QIODevice::WriteOnly);
       image.save (&qbuf, "PNG");
-      input_format    = "picture";
-      QSize image_size= image.size ();
+      input_format          = "picture";
+      clipboard_image_suffix= "png";
+      QSize image_size      = image.size ();
       qt_pretty_image_size (image_size.width (), image.height (),
                             image_w_string, image_h_string);
     }
@@ -306,13 +309,16 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       if (l.size () == 1) {
         QString filePath= l[0].toLocalFile ();
 #ifdef USE_MUPDF_RENDERER
-        int    ww, hh;
-        string image_data= mupdf_load_and_parse_image (
-            filePath.toStdString ().c_str (), ww, hh, "png", &image_w_string,
-            &image_h_string);
+        int     ww, hh;
+        QString suffix       = QFileInfo (filePath).suffix ().toLower ();
+        string  target_suffix= (suffix == "webp") ? "webp" : "png";
+        string  image_data   = mupdf_load_and_parse_image (
+            filePath.toStdString ().c_str (), ww, hh, target_suffix,
+            &image_w_string, &image_h_string);
         if (N (image_data) > 0) {
           input_format= "picture";
           buf         = QByteArray (image_data.begin (), N (image_data));
+          clipboard_image_suffix= target_suffix;
         }
 #else
         QImage image;
@@ -325,8 +331,9 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
           QBuffer qbuf (&buf);
           qbuf.open (QIODevice::WriteOnly);
           image.save (&qbuf, "PNG");
-          input_format    = "picture";
-          QSize image_size= image.size ();
+          input_format          = "picture";
+          clipboard_image_suffix= "png";
+          QSize image_size      = image.size ();
           qt_pretty_image_size (image_size.width (), image.height (),
                                 image_w_string, image_h_string);
         }
@@ -368,8 +375,8 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   }
   if (input_format == "picture") {
     tree t (IMAGE);
-    t << tuple (tree (RAW_DATA, s), "png") << image_w_string << image_h_string
-      << "" << "";
+    t << tuple (tree (RAW_DATA, s), clipboard_image_suffix) << image_w_string
+      << image_h_string << "" << "";
     s= as_string (call ("convert", t, "texmacs-tree", "texmacs-snippet"));
   }
   t= tuple ("extern", s);
