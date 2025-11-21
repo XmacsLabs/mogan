@@ -43,7 +43,7 @@ cd mogan
 ### xmake 项目配置
 
 ```powershell
-xmake config --yes -vD -m releasedbg --plat=windows --vs_runtime=MT
+xmake config --yes -vD -m releasedbg --plat=windows
 ```
 
 ### 之前构建失败，先清理旧缓存

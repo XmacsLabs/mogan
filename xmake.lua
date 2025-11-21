@@ -64,6 +64,10 @@ add_configfiles("src/System/config.h.xmake", {
 -- support cygwin env.
 set_allowedplats("linux", "macosx", "windows")
 
+if is_plat("windows") then
+    set_runtimes("MT")
+end
+
 if is_plat("linux") then
     set_configvar("OS_GNU_LINUX", true)
 else
