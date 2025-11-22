@@ -57,7 +57,7 @@
     </big-envbox>
   </quote-env>
 
-  类似地，焦点工具栏左部的箭头按钮可允许您跳转到相似标记。在本例中，它们会让你迅速在文档中所有的公式或者方程间浏览。关于<hlink|结构化编辑|manu.editing.zh.tmu>和<hlink|结构化编辑工具|manu.editing.zh.tmu>，还请移步细看。
+  类似地，焦点工具栏左部的箭头按钮可允许您跳转到相似标记。在本例中，它们会让你迅速在文档中所有的公式或者方程间浏览。关于<hlink||manu.editing.zh.tmu#sec-man-structured-editing>和结构化编辑工具中的<hlink|结构化编辑|manu.editing.zh.tmu#sec-man-structured-editing>，还请移步细看。
 
   第二个重要的概念是编辑模式。有五种主要的模式：文本模式，数学模式，程序模式，图形模式和源代码模式。模式切换比焦点的切换要少得多，其工具栏就在焦点工具栏的上方。<menu|Insert>和<menu|Format>菜单都是模式相关的。
 

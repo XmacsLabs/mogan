@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
+<TMU|<tuple|1.1.0|2025.2.0-rc1>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -159,7 +159,7 @@
 
   更进一步，其它语义相关的工具其实已经集成到了某些特性中，如语义搜索和替换或者互联网上的语义搜索。
 
-  点击<menu|Edit|Preferences|Mathematics|Semantic editing>激活语义编辑工具。 在语义编辑模式下，您将使用到针对公式句法结构的结构化编辑特性。比如，<em|语义焦点><label|semantic-focus>通常是<hlink|当前焦点|manu.typing.zh.tmu>的子公式。又如，您只能选中句法上有意义的子公式。
+  点击<menu|Edit|Preferences|Mathematics|Semantic editing>激活语义编辑工具。 在语义编辑模式下，您将使用到针对公式句法结构的结构化编辑特性。比如，<em|语义焦点><label|semantic-focus>通常是<hlink|当前焦点|manu.typing.zh.tmu#sec-man-structure>的子公式。又如，您只能选中句法上有意义的子公式。
 
   语义焦点的意义如下所述：首先，句法上正确的公式显示为绿色，错误的则为红色。这样您就可以在输入公式时迅速发现“typos”。其二，如果您对某个数学操作符或者关系的优先级存在任何疑问，从语义焦点便可以看出缺省优先级。具体地，将您的光标置于操作符的右边，则该操作符所作用的子表达式会高亮显示。在加法（或者更一般的结合算符）这个例子中，所有的被加数都会高亮显示。
 
