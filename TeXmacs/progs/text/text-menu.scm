@@ -462,6 +462,7 @@
 ;; Text menus for inserting block content
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
 (menu-bind text-block-menu
   (if (and (style-has? "header-title-dtd")
            (not (style-has? "header-letter-dtd"))
@@ -523,8 +524,19 @@
 ;; Icons for inserting block markup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(define (chapter-style?)
+  (and (or (style-has? "book-style")
+           (style-has? "generic-style")
+           (style-has? "article-style"))
+       (not (style-has? "beamer-style"))
+       (not (style-has? "poster-style"))
+       (not (style-has? "letter-style"))
+       (not (style-has? "seminar-style"))
+       (not (style-has? "browser-style"))))
+
+
 (menu-bind text-block-icons
-  (if (style-has? "book-style")
+  (if (chapter-style?)
       (=> (balloon (icon "tm_chapter.xpm") "Start a new chapter")
           (link chapter-menu)))
   (if (and (style-has? "section-base-dtd")
