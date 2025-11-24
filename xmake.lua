@@ -1104,6 +1104,26 @@ target("stem_packager") do
         os.exec("rm -rf /tmp/dmg.* 2>/dev/null || true")
 
         -- 尝试 create-dmg，使用更安全的参数格式
+        -- Helper: run a command with retry on failure
+        local function retry_execv(cmd, args, attempts, delay_seconds)
+            attempts = attempts or 5
+            delay_seconds = delay_seconds or 2
+            for i = 1, attempts do
+                local ok, err = pcall(function()
+                    os.execv(cmd, args)
+                end)
+                if ok then
+                    return true
+                end
+                print(string.format("Attempt %d/%d failed: %s", i, attempts, tostring(err)))
+                if i < attempts then
+                    print(string.format("Retrying in %d seconds...", delay_seconds))
+                    os.sleep(delay_seconds * 1000)
+                end
+            end
+            return false
+        end
+
         try {
             function ()
 				print("Creating DMG at: " .. dmg_path)
@@ -1115,29 +1135,43 @@ target("stem_packager") do
 				
                 -- 检查背景图片
                 local background_image = path.join(project_dir, "packages", "macos", "mogan-background.png")
+                local args_with_bg = {
+                    "--background", background_image,
+                    "--volname", stem_project_name,
+                    "--window-pos", "200", "120",
+                    "--window-size", "720", "480",
+                    "--icon-size", "120",
+                    "--icon", stem_binary_name .. ".app", "200", "190",
+                    "--app-drop-link", "540", "190",
+                    dmg_name,
+                    app_path
+                }
+                local args_no_bg = {
+                    "--volname", stem_project_name,
+                    "--window-pos", "200", "120",
+                    "--window-size", "720", "480",
+                    "--icon-size", "120",
+                    "--icon", stem_binary_name .. ".app", "200", "190",
+                    "--app-drop-link", "540", "190",
+                    dmg_name,
+                    app_path
+                }
+
+                local ok
                 if os.isfile(background_image) then
-					os.execv("create-dmg", {
-						"--background", background_image,
-						"--volname", stem_project_name,
-						"--window-pos", "200", "120",
-						"--window-size", "720", "480",
-						"--icon-size", "120",
-						"--icon", stem_binary_name .. ".app", "200", "190",
-						"--app-drop-link", "540", "190",
-						dmg_name,
-						app_path
-					})
-				else
-					os.execv("create-dmg", {
-						"--volname", stem_project_name,
-						"--window-pos", "200", "120",
-						"--window-size", "720", "480",
-						"--icon-size", "120",
-						"--icon", stem_binary_name .. ".app", "200", "190",
-						"--app-drop-link", "540", "190",
-						dmg_name,
-						app_path
-					})
+                    print("Background image found; using themed DMG background")
+                    ok = retry_execv("create-dmg", args_with_bg, 5, 3)
+                    if not ok then
+                        print("create-dmg failed with background; retrying without background...")
+                        ok = retry_execv("create-dmg", args_no_bg, 5, 3)
+                    end
+                else
+                    print("Background image not found; creating DMG without background")
+                    ok = retry_execv("create-dmg", args_no_bg, 5, 3)
+                end
+
+                if not ok then
+                    raise("create-dmg failed after retries")
                 end
                 
                 -- 恢复原目录
