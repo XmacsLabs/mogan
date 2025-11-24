@@ -2409,3 +2409,4 @@
 ("Double the zoom factor for TeXmacs documents" "将TeXmacs文档的显示放大两倍")
 ("Use high resolution icons" "使用高分辨率图标")
 ("Scale of the graphical user interface" "图形界面显示比例")
+("Style for presentations using an overhead projector" "使用投影仪进行演示的风格")
