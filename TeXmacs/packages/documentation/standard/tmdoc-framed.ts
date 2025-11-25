@@ -1,6 +1,6 @@
-<TeXmacs|1.0.7.20>
+<TeXmacs|2.1.4>
 
-<style|source>
+<style|<tuple|source|english>>
 
 <\body>
   <active*|<\src-title>
@@ -32,7 +32,7 @@
 
   <assign|intro-color|pastel yellow>
 
-  <assign|body-color|pastel blue>
+  <assign|body-color|#f5f6f7>
 
   <assign|frame-color|dark grey>
 
@@ -94,7 +94,6 @@
 
 <\initial>
   <\collection>
-    <associate|language|english>
     <associate|par-par-sep|0fn>
     <associate|preamble|true>
     <associate|sfactor|3>
