@@ -29,16 +29,6 @@
       ((eval menu-name)
        (load-local-plugin-doc name)))))
 
-(tm-menu (help-configuration-menu)
-  ("User preferences"
-   (load-local-doc "configuration/conf.userpref"))
-  ("Keyboard configuration"
-   (load-local-doc "configuration/conf.keyconfig"))
-  ("Users of Cyrillic languages"
-   (load-local-doc "configuration/conf.cyrillicuser"))
-  ("Users of oriental languages"
-   (load-local-doc "configuration/conf.eastuser")))
-
 (tm-menu (help-manual-menu)
   ("Getting started"
    (load-local-doc "manual/manu.gettingstarted"))
@@ -46,31 +36,11 @@
    (load-local-doc "manual/manu.typing"))
   ("Mathematical formulas"
    (load-local-doc "manual/manu.formulas"))
-  ("Tabular material"
-   (load-local-doc "manual/manu.tables"))
-  ("Automatic content generation"
-   (load-local-doc "manual/manu.toc"))
-  ("Creating technical pictures"
-   (load-local-doc "manual/manu.tables")) 
-  ("Advanced layout features"
-   (load-local-doc "manual/manu.layout"))
   ("Editing tools"
-   (load-local-doc "manual/manu.editing"))
-  ("Laptop presentations"
-   (load-local-doc "manual/manu.slides"))
-  ("TeXmacs as an interface"
-   (load-local-doc "manual/manu.interface"))
-  ("Writing your own style files"
-   (load-local-doc "manual/manu.styles"))
-  ("Customizing TeXmacs"
-   (load-local-doc "manual/manu.custom"))
-  ("The TeXmacs plug-in system"
-   (load-local-doc "manual/manu.plugin")))
+   (load-local-doc "manual/manu.editing")))
 
 (menu-bind help-menu
   ("Welcome" (mogan-welcome))
-  (-> "Configuration"
-    (link help-configuration-menu))
   (-> "Manual"
     (link help-manual-menu))
   ("Template" (load-local-doc "main/template"))
