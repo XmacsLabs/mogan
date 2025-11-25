@@ -191,8 +191,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   int      buttonWidth   = int (46 * scale);
   int      buttonHeight  = int (32 * scale);
   int      iconBaseSize  = int (12 * scale);
-  int      iconSize      = int (20 * scale);
-  int      macosiconSize = int (32 * scale);
+  int      macosiconSize = int (20 * scale);
 
 #if defined(Q_OS_MAC)
   // 无边框布局（macOS）- 只显示登录按钮
@@ -312,7 +311,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 #if defined(Q_OS_MAC)
   loginButton->setIconSize (QSize (macosiconSize, macosiconSize));
 #else
-  loginButton->setIconSize (QSize (iconSize, iconSize));
+  loginButton->setIconSize (QSize (iconBaseSize, iconBaseSize));
 #endif
 
   // 设置登录图标
