@@ -192,7 +192,7 @@ qt_chooser_widget_rep::set_type (const string& _type) {
   }
   if (_type == "image") {
     mainNameFilter+=
-        " (*.jpg *.jpeg *.jpe *.png *.bmp *.tif *.tiff *.svg *.webp)";
+        " (*.jpg *.jpeg *.jpe *.png *.bmp *.tif *.tiff *.svg *.pdf *.webp)";
     nameFilters << mainNameFilter;
     nameFilters << to_qstring (translate ("JPEG File InterChange Format") *
                                " (*.jpg *.jpeg *.jpe)");

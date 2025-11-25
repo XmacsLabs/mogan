@@ -20,6 +20,8 @@
 #include "tm_url.hpp"
 #include <QImage>
 
+static const double MUPDF_PDF_SCALE= 4.0;
+
 /******************************************************************************
  * Abstract mupdf pictures
  ******************************************************************************/
@@ -203,10 +205,8 @@ mupdf_load_image (url u) {
   if (buffer == NULL) {
     return NULL;
   }
-  string suf= suffix (u);
-  // Set the zoom to 200% in MuPDF render(144 DPI) when convert vector graphics
-  // into pixmap. Test ok in MacOS, with 2x HiDPI enabled(4K screen)
-  fz_matrix ctm= fz_scale (2.0, 2.0);
+  string    suf= suffix (u);
+  fz_matrix ctm= fz_scale (MUPDF_PDF_SCALE, MUPDF_PDF_SCALE);
   if (suf == "svg") {
     fz_xml_doc* xml_doc= NULL;
     fz_xml*     xml    = NULL;
@@ -444,30 +444,82 @@ mupdf_normal_image_size (url image, int& w, int& h, string* out_wcm_pointer,
 bool
 mupdf_pdf_image_size (url image, int& w, int& h, string* out_wcm_pointer,
                       string* out_hcm_pointer) {
-  if (DEBUG_CONVERT) debug_convert << "mupdf_pdf_image_size :" << LF;
-  fz_context* ctx= mupdf_context ();
-  fz_buffer*  buf= mupdf_read_from_url (image);
-  fz_pixmap*  im = NULL;
+  /* 计算 PDF 图片尺寸：优先不渲染整张
+   * pixmap，而是读取页面边界并基于缩放因子计算像素尺寸。 */
+  fz_context* ctx    = mupdf_context ();
+  fz_buffer*  buf    = mupdf_read_from_url (image);
+  fz_pixmap*  im     = NULL;
+  bool        success= false;
   if (buf != NULL) {
-    im= mupdf_load_pdf_image (buf, fz_scale (1.0, 1.0));
+    /* 先尝试轻量级路径：读取页面边界并使用与渲染一致的缩放因子计算像素尺寸。
+      这样在许多情况下无需渲染整页 pixmap（在 HiDPI
+      或大页面上会占用大量内存）。*/
+    double        scale_factor= MUPDF_PDF_SCALE;
+    fz_stream*    stream      = NULL;
+    pdf_document* doc         = NULL;
+    pdf_page*     page        = NULL;
+    fz_rect       bounds;
+    bool          bounds_succeeded= false;
+
+    fz_try (ctx) {
+      stream        = fz_open_buffer (ctx, buf);
+      doc           = pdf_open_document_with_stream (ctx, stream);
+      int page_count= pdf_count_pages (ctx, doc);
+      if (page_count > 0) {
+        page= pdf_load_page (ctx, doc, 0);
+        /* fz_bound_page 返回 PDF 页面在用户坐标系（以点/pt 为单位）中的矩形。
+          此处将页面尺寸与渲染使用的缩放因子相乘以得到像素尺寸。 */
+        bounds          = fz_bound_page (ctx, (fz_page*) page);
+        double w_pts    = bounds.x1 - bounds.x0;
+        double h_pts    = bounds.y1 - bounds.y0;
+        int    px_w     = (int) tm_round (w_pts * scale_factor);
+        int    px_h     = (int) tm_round (h_pts * scale_factor);
+        int    dpi_val  = (int) tm_round (72.0 * scale_factor);
+        bounds_succeeded= true;
+        index_type px (px_w, px_h);
+        index_type dpi (dpi_val, dpi_val);
+        format_picsize_string (px, dpi, w, h, out_wcm_pointer, out_hcm_pointer);
+      }
+    }
+    fz_catch (ctx) {
+      /* 如果解析、读取边界等任一步骤失败，则退回到原来的实现：
+         将第一页渲染为 pixmap 并从 pixmap 获取像素尺寸。 */
+      fz_report_error (ctx);
+      im= mupdf_load_pdf_image (buf, fz_scale (scale_factor, scale_factor));
+    }
+
+    pdf_drop_page (ctx, page);
+    pdf_drop_document (ctx, doc);
+    fz_drop_stream (ctx, stream);
     fz_drop_buffer (ctx, buf);
+    /* 如果通过 page bounds 成功计算到像素尺寸，设置 success=true
+       但不立刻返回（统一在函数末尾返回），这样保持函数风格一致。 */
+    if (bounds_succeeded) {
+      success= true;
+    }
+    /* bounds 未成功时，若 catch 路径渲染得到 pixmap（im != NULL）则
+       仍会在下面分支里使用该 pixmap 计算尺寸；否则进入默认错误处理。 */
   }
-  if (im == NULL) {
-    convert_error << "Cannot read image file '" << image << "'"
-                  << " in mupdf_pdf_image_size" << LF;
-    w= 35;
-    h= 35;
-    return false;
+  if (!success) {
+    if (im == NULL) {
+      /* 无法通过 bounds 或渲染读取到尺寸，返回默认尺寸并表示失败 */
+      convert_error << "Cannot read image file '" << image << "'"
+                    << " in mupdf_pdf_image_size" << LF;
+      w      = 35;
+      h      = 35;
+      success= false;
+    }
+    else {
+      /* 渲染路径成功：从 pixmap 获取尺寸 */
+      index_type px (im->w, im->h);
+      index_type dpi (72, 72);
+      format_picsize_string (px, dpi, w, h, out_wcm_pointer, out_hcm_pointer);
+      fz_drop_pixmap (ctx, im);
+      success= true;
+    }
   }
-  else {
-    index_type px (im->w, im->h);
-    index_type dpi (72, 72);
-    format_picsize_string (px, dpi, w, h, out_wcm_pointer, out_hcm_pointer);
-    fz_drop_pixmap (ctx, im);
-    if (DEBUG_CONVERT)
-      debug_convert << "mupdf_pdf_image_size (pt): " << w << " x " << h << LF;
-  }
-  return true;
+
+  return success;
 }
 
 string
