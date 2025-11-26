@@ -15,29 +15,25 @@
 
 (check-set-mode! 'report-failed)
 
-(define (strip-lambda lst)
+(define (prefix-symbols lst)
   (map (lambda (x)
-         (list (car x)
-               (map (lambda (y)
-                      (list 'lambda (cadr y) (caddr y)))
-                    (cdr x))))
+         (list (car x) (cadr x)))
        lst))
 
 (define (test-kbd-find-prefix)
   (make 'math)
   (kbd-insert "now we are in math mode")
-  (check (strip-lambda (kbd-find-prefix "a "))
-    => (strip-lambda '(("a tab" ((#<lambda ()>) "<alpha>" "")))))
-  (check (strip-lambda (kbd-find-prefix "e "))
-    => (strip-lambda '(
-                       ("e tab tab tab tab" ((#<lambda ()>) "<backepsilon>" ""))
-                       ("e tab tab tab" ((#<lambda ()>) "<epsilon>" ""))
-                       ("e tab tab" ((#<lambda ()>) "<mathe>" ""))
-                       ("e tab" ((#<lambda ()>) "<varepsilon>" "")))))
-  (check (strip-lambda (kbd-find-prefix "e tab tab tab"))
-    => (strip-lambda '(
-                       ("e tab tab tab tab" ((#<lambda ()>) "<backepsilon>" ""))
-                       ("e tab tab tab" ((#<lambda ()>) "<epsilon>" ""))))))
+  (check (prefix-symbols (kbd-find-prefix-tab "a"))
+    => '(("a tab" "<alpha>")))
+  (let* ((results (prefix-symbols (kbd-find-prefix-tab "e"))))
+    (check results
+      => '(("e tab" "<varepsilon>")
+            ("e tab tab" "<mathe>")
+            ("e tab tab tab" "<epsilon>")
+            ("e tab tab tab tab" "<backepsilon>")))
+    (check (list-tail results 2)
+      => '(("e tab tab tab" "<epsilon>")
+            ("e tab tab tab tab" "<backepsilon>")))))
 
 (define (test-math-tabcycle-symbols)
   (make 'math)

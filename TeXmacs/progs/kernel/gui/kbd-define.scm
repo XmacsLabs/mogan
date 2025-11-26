@@ -169,22 +169,33 @@
   (or (ctx-find (kbd-get-map key) conds)
       (ctx-find (kbd-get-map key) '())))
 
-(tm-define (kbd-find-prefix prefix)
-  (let ((pairs (filter 
-                 (lambda (pair)
-                   (let ((key (car pair))
-                         (val (cdr pair)))
-                     (and (string-starts? key prefix)
-                          (ctx-resolve (kbd-get-map key) #f))))
-                 (ahash-table->list kbd-map-table))))
-    ; 按键序列长度降序排序（长序列在前）
-    (sort pairs
+(tm-define (kbd-find-prefix-tab prefix)
+  (let* ((pairs (filter 
+                  (lambda (pair)
+                    (let* ((key (car pair))
+                           (val (cdr pair)))
+                      (and (string? key)
+                           (string-ends? key " tab")
+                           (let* (;; 去掉所有 " tab" 后缀得到基础前缀
+                                  (base (let loop ((s key))
+                                          (if (string-ends? s " tab")
+                                              (loop (substring s 0 (- (string-length s) 4)))
+                                              s)))
+                                  ;; 解析绑定的实际值
+                                  (resolved (ctx-resolve val #f)))
+                             (and (string=? base prefix)
+                                  resolved)))))
+                  (ahash-table->list kbd-map-table)))
+         ;; 将 (key . context-map) 转换为 (key . resolved-value)
+         (resolved-pairs (map (lambda (pair)
+                                (cons (car pair) (ctx-resolve (cdr pair) #f)))
+                              pairs)))
+    ; 按 tab 数量升序排序（少的在前）
+    (sort resolved-pairs
           (lambda (x y)
             (let ((len-x (string-length (car x)))
                   (len-y (string-length (car y))))
-              (or (> len-x len-y)
-                  (and (= len-x len-y) 
-                       (string<? (car x) (car y)))))))))
+              (< len-x len-y))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yet more subroutines for the definition of keyboard shortcuts
