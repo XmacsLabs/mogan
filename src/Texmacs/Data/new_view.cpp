@@ -588,7 +588,7 @@ view_set_new_window (url view_u) {
   }
   url       win_u   = new_window ();
   tm_window win     = concrete_window (win_u);
-  bool      attached= (view->win != NULL);
+  bool      attached= (view->win != nullptr);
   if (attached) {
     switch_to_other_tabpage (view_u);
   }
@@ -603,12 +603,12 @@ view_set_window (url view_u, url win_u, bool focus) {
   url     current_view_u    = get_current_view ();
   tm_view view              = concrete_view (view_u);
   url     view_win_tabpage_u= abstract_window (view->win_tabpage);
-  if (win_u == url_none () || view == NULL || view_win_tabpage_u == win_u) {
+  if (win_u == url_none () || view == nullptr || view_win_tabpage_u == win_u) {
     return false;
   }
   tm_window win     = concrete_window (win_u);
   bool      found   = false;
-  bool      attached= (view->win != NULL);
+  bool      attached= (view->win != nullptr);
   if (attached) {
     found= switch_to_other_tabpage (view_u);
   }
@@ -618,7 +618,10 @@ view_set_window (url view_u, url win_u, bool focus) {
     set_visibility (win->wid, true);
   }
   else {
-    set_visibility (view->win_tabpage->wid, true);
+    // 安全检查：确保 win_tabpage 仍然有效
+    if (view->win_tabpage != nullptr) {
+      set_visibility (view->win_tabpage->wid, true);
+    }
   }
   view->win_tabpage= win;
   if (attached && !found) {
@@ -635,8 +638,28 @@ view_set_window (url view_u, url win_u, bool focus) {
 void
 hack_refresh_window_editors (url win1, url win2, bool revert) {
   // HACK: rusume 各自的 editor，触发标签栏 UI 的刷新
-  editor ed1= concrete_view (window_to_view (win1))->ed;
-  editor ed2= concrete_view (window_to_view (win2))->ed;
+
+  // 安全检查：确保窗口仍然有效
+  tm_window win1_obj= concrete_window (win1);
+  tm_window win2_obj= concrete_window (win2);
+
+  if (win1_obj == nullptr || win2_obj == nullptr) {
+    return;
+  }
+
+  url view1= window_to_view (win1);
+  url view2= window_to_view (win2);
+
+  tm_view vw1= concrete_view (view1);
+  tm_view vw2= concrete_view (view2);
+
+  // 安全检查：确保视图不为空
+  if (vw1 == nullptr || vw2 == nullptr) {
+    return;
+  }
+
+  editor ed1= vw1->ed;
+  editor ed2= vw2->ed;
   if (revert) {
     editor tmp= ed1;
     ed1       = ed2;

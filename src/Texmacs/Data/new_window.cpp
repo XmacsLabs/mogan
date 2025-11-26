@@ -122,7 +122,7 @@ delete_view_from_window (url win) {
 void
 delete_window (url win_u) {
   tm_window win= concrete_window (win_u);
-  if (win == NULL) return;
+  if (win == nullptr) return;
   while (delete_view_from_window (win_u)) {
   }
   win->unmap ();
