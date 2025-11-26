@@ -764,18 +764,23 @@
 (tm-define (tabcycle-symbols comb)
   ;; 根据按键序列获取数学符号Tab循环展示的列表
   ;; 输入:
-  ;;     comb: 按键序列，类型为string，如"b tab"
+  ;;     comb: 按键序列，类型为string，如"< tab tab = tab"
   ;; 处理过程:
-  ;;     1. 裁剪comb获得最基本的按键序列，例如“space b tab” -> "b"
-  ;;     2. 查找该按键序列对应的符号绑定
+  ;;     1. 递归删除末尾所有的 " tab"，得到基本序列
+  ;;        例如: "< tab tab = tab tab" -> "< tab tab ="
+  ;;     2. 查找该基本序列对应的符号绑定
   ;;     3. 如果绑定不存在，返回空列表
-  ;;     4. 如果绑定存在，继续查找所有以该按键序列为前缀的符号绑定
+  ;;     4. 如果绑定存在，继续查找所有以该基本序列为前缀的符号绑定
   ;;     5. 返回找到的所有直接的符号绑定列表，按照键盘组合序列长度排序，
   ;;        例如((symbol-completion "<alpha>"))
   ;; 输出:
   ;;     符号列表，格式为((symbol-completion "符号") ...)
   (if (not (kbd-find-key-binding comb)) '()
-    (let* ((pre (string-replace (string-replace comb " tab" "") "space " ""))
+    (let* ((pre (let loop ((s comb))
+                   (if (string-ends? s " tab")
+                       (loop (substring s 0 (- (string-length s) 4)))
+                       s)))
+          (pre (string-replace pre "space " ""))
           (kbd-res (kbd-find-key-binding pre))
           (kbd-sym (and (pair? kbd-res) (car kbd-res))))
       (if (and kbd-sym (string? kbd-sym)) 
@@ -789,7 +794,12 @@
                         (string? (car x))
                         (string? (cadadr x))
                         (string-ends? (car x) "tab")
-                        (string=? (string-replace (car x) " tab" "") pre)))
+                        (let* ((key (car x))
+                               (key-without-tab (let loop ((s key))
+                                                   (if (string-ends? s " tab")
+                                                       (loop (substring s 0 (- (string-length s) 4)))
+                                                       s))))
+                          (string=? key-without-tab pre))))
                   (kbd-find-prefix pre))
                 (lambda (x y)
                   (and (pair? x) (pair? y)
@@ -827,6 +837,11 @@
   (if (in-math?)
     (highlight-tabcycle-symbols (tabcycle-symbols comb) comb)
     '()))
+
+(tm-define (math-tabcycle-menu-needed? comb)
+  (and (string? comb)
+       (string-contains? comb "tab")
+       (> (length (math-tabcycle-symbols comb)) 1)))
 
 (tm-define (math-variant comb)
   ;; 触发数学符号Tab循环的展示

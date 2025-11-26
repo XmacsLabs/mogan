@@ -180,13 +180,9 @@ edit_interface_rep::try_shortcut (string comb) {
 
 void
 edit_interface_rep::math_complete_try (string comb) {
-  string suffix= "tab";
-  comb         = replace (comb, "\\", "\\\\");
-  // cout << "comb: " << comb << "\n";
-  // cout << "last comb: " << prev_math_comb << "\n";
-  if ((comb != suffix) &&
-      ((starts (prev_math_comb, comb) && ends (prev_math_comb, suffix)) ||
-       (ends (comb, suffix)))) {
+  comb           = replace (comb, "\\", "\\\\");
+  bool need_popup= as_bool (call ("math-tabcycle-menu-needed?", comb));
+  if (need_popup) {
     string wid_expr= (string) "(make-menu-widget " *
                      "`((tile 99 (link (lambda () " *
                      "(math-tabcycle-symbols ,\"" * comb * "\"))))) 0)";
