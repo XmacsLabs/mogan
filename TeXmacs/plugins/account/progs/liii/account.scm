@@ -44,8 +44,8 @@
 ;     ((== key "scope") "user+llm")
 ;     ((== key "port") "1895")
 ;     ((== key "user-info-url") "http://127.0.0.1:8080/api/oauthUser/info")
-;     ((== key "pricing-url") "http://127.0.0.1:8080/pricing-fruit.html")
-;     ((== key "liii-url") "http://127.0.0.1:8080/")
+;     ((== key "pricing-url") "http://127.0.0.1:3000/pricing-fruit.html")
+;     ((== key "liii-url") "http://127.0.0.1:3000/")
 ;     (else "")))
 
 

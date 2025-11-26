@@ -11,6 +11,7 @@
 
 #include <QApplication>
 #include <QComboBox>
+#include <QCryptographicHash>
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QDialog>
@@ -124,7 +125,7 @@ QTMInteractiveInputHelper::commit (int result) {
 
 qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     : qt_window_widget_rep (new QTMWindow (0), "popup", _quit), helper (this),
-      prompt (NULL), full_screen (false) {
+      prompt (NULL), full_screen (false), m_userId ("") {
   type= texmacs_widget;
 
   main_widget= concrete (::glue_widget (true, true, 1, 1));
@@ -1721,11 +1722,28 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
       triggerOAuth2 ();
     }
     else if (loginActionButton->text () == qt_translate ("注册会员")) {
-      // 打开第三方注册链接
+      // 打开会员购买链接
+      qDebug ("打开会员购买链接");
+
       eval ("(use-modules (liii account))");
       string pricingUrl=
           as_string (call ("account-oauth2-config", "pricing-url"));
-      QDesktopServices::openUrl (QUrl (to_qstring (pricingUrl)));
+      string token= as_string (call ("account-load-token"));
+
+      // 构建带参数的URL：key=token的SHA256哈希值，user=用户ID
+      QString q_pricingUrl= to_qstring (pricingUrl);
+      QString q_token     = to_qstring (token);
+
+      // 计算token的SHA256哈希值
+      QByteArray tokenBytes= q_token.toUtf8 ();
+      QByteArray hash=
+          QCryptographicHash::hash (tokenBytes, QCryptographicHash::Sha256);
+      QString keyParam= hash.toHex ();
+
+      // 构建完整URL
+      QString fullUrl= q_pricingUrl + "?key=" + keyParam + "&user=" + m_userId;
+
+      QDesktopServices::openUrl (QUrl (fullUrl));
     }
   });
 }
@@ -1799,9 +1817,9 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
           if (json.contains ("success") && json["success"].toBool ()) {
             QJsonObject userData= json["data"].toObject ();
 
+            m_userId          = userData["id"].toVariant ().toString ();
             QString userName  = userData["nickName"].toString ("三鲤用户");
-            QString avatarText= userData["nickName"].toString ("liii").left (
-                4); // 取昵称前2个字符作为头像文本
+            QString avatarText= userData["nickName"].toString ("liii").left (4);
             QString accountEmail= userData["email"].toString ("liii@lii.pro");
             QString membershipPeriod= getMembershipStatus (userData);
 

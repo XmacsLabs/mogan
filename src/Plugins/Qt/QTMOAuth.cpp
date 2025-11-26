@@ -97,7 +97,7 @@ QTMOAuth::QTMOAuth (QObject* parent) {
   m_tokenCheckTimer= new QTimer (this);
   connect (m_tokenCheckTimer, &QTimer::timeout, this,
            &QTMOAuth::checkTokenStatus);
-  m_tokenCheckTimer->start (600000); // 每10分钟检查一次
+  m_tokenCheckTimer->start (240000); // 每4分钟检查一次
 
   // 加载现有的token信息
   loadExistingToken ();
@@ -272,12 +272,6 @@ QTMOAuth::checkTokenValidity () {
   }
 
   qint64 currentTime= QDateTime::currentSecsSinceEpoch ();
-
-  // 如果token已经过期
-  if (currentTime >= m_tokenExpiryTime) {
-    emit tokenExpired ();
-    return false;
-  }
 
   // 如果token将在5分钟内过期，自动刷新
   if (m_tokenExpiryTime - currentTime <= 300) { // 5分钟

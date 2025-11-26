@@ -98,8 +98,9 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   qt_widget                 int_prompt;
   qt_widget                 int_input;
 
-  bool visibility[12];
-  bool full_screen;
+  bool    visibility[12];
+  bool    full_screen;
+  QString m_userId;
 
 private:
   void    onAddTabRequested ();
