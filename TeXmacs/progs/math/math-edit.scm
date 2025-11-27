@@ -761,6 +761,8 @@
 ;; Tab cycling completion
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(define iteration 0)
+
 (tm-define (tabcycle-symbols comb)
   ;; 根据按键序列获取数学符号Tab循环展示的列表
   ;; 输入:
@@ -776,10 +778,13 @@
   ;; 输出:
   ;;     符号列表，格式为((symbol-completion "符号") ...)
   (if (not (kbd-find-key-binding comb)) '()
-    (let* ((pre (let loop ((s comb))
-                (if (string-ends? s " tab")
-                      (loop (substring s 0 (- (string-length s) 4)))
-                      s)))
+    (let* ((tab-info (let loop ((s comb) (count 0))
+                       (if (string-ends? s " tab")
+                           (loop (substring s 0 (- (string-length s) 4))
+                                 (+ count 1))
+                           (cons s count))))
+           (pre (car tab-info))
+           (tab-iter (cdr tab-info))
            (pre (string-replace pre "space " ""))
            (kbd-res (kbd-find-key-binding pre))
            (kbd-sym (and (pair? kbd-res) (car kbd-res)))
@@ -790,6 +795,7 @@
                      '()))
            ;; 使用新的 kbd-find-prefix-tab 获取所有 tab 切换候选
            (tab-pairs (kbd-find-prefix-tab pre)))
+         (set! iteration tab-iter)
       (let ((others (filter-map (lambda (pair)
                                   (let ((val (cdr pair)))
                                     (if (and (pair? val) (string? (car val)))
@@ -839,8 +845,7 @@
     '()))
 
 (tm-define (math-tabcycle-menu-needed? comb)
-  (and (string? comb)
-       (string-contains? comb "tab")
+  (and (or (string-contains? comb "tab") (> iteration 1))
        (> (length (math-tabcycle-symbols comb)) 1)))
 
 (tm-define (math-variant comb)
