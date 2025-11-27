@@ -31,7 +31,7 @@
     ((== key "port") "1895")
     ((== key "user-info-url") "http://test-www.liiistem.cn/api/oauthUser/info")
     ((== key "pricing-url") "http://test-www.liiistem.cn/pricing-fruit.html")
-    ((== key "liii-url") "http://test-www.liiistem.cn/")
+    ((== key "liii-url") "https://www.liiistem.cn/")
     (else "")))
 
 ;; 本地
