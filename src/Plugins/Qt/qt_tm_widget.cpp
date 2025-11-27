@@ -125,7 +125,8 @@ QTMInteractiveInputHelper::commit (int result) {
 
 qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     : qt_window_widget_rep (new QTMWindow (0), "popup", _quit), helper (this),
-      prompt (NULL), full_screen (false), m_userId ("") {
+      prompt (NULL), full_screen (false), menuToolBarVisibleCache (false),
+      titleBarVisibleCache (false), m_userId ("") {
   type= texmacs_widget;
 
   main_widget= concrete (::glue_widget (true, true, 1, 1));
@@ -722,6 +723,7 @@ qt_tm_widget_rep::update_visibility () {
 #define XOR(exp1, exp2) (((!exp1) && (exp2)) || ((exp1) && (!exp2)))
 
   bool old_mainVisibility  = mainToolBar->isVisible ();
+  bool old_menuVisibility  = menuToolBar->isVisible ();
   bool old_modeVisibility  = modeToolBar->isVisible ();
   bool old_focusVisibility = focusToolBar->isVisible ();
   bool old_userVisibility  = userToolBar->isVisible ();
@@ -731,8 +733,10 @@ qt_tm_widget_rep::update_visibility () {
   bool old_extraVisibility = extraTools->isVisible ();
   bool old_auxVisibility   = auxiliaryWidget->isVisible ();
   bool old_statusVisibility= mainwindow ()->statusBar ()->isVisible ();
+  bool old_titleVisibility = windowAgent->titleBar ()->isVisible ();
 
   bool new_mainVisibility  = visibility[1] && visibility[0];
+  bool new_menuVisibility  = visibility[0];
   bool new_modeVisibility  = visibility[2] && visibility[0];
   bool new_focusVisibility = visibility[3] && visibility[0];
   bool new_userVisibility  = visibility[4] && visibility[0];
@@ -743,9 +747,12 @@ qt_tm_widget_rep::update_visibility () {
   bool new_extraVisibility = visibility[9];
   bool new_tabVisibility   = visibility[10] && visibility[0];
   bool new_auxVisibility   = visibility[11];
+  bool new_titleVisibility = visibility[0];
 
   if (XOR (old_mainVisibility, new_mainVisibility))
     mainToolBar->setVisible (new_mainVisibility);
+  if (XOR (old_menuVisibility, new_menuVisibility))
+    menuToolBar->setVisible (new_menuVisibility);
   if (XOR (old_modeVisibility, new_modeVisibility))
     modeToolBar->setVisible (new_modeVisibility);
   if (XOR (old_focusVisibility, new_focusVisibility))
@@ -762,6 +769,8 @@ qt_tm_widget_rep::update_visibility () {
     extraTools->setVisible (new_extraVisibility);
   if (XOR (old_auxVisibility, new_auxVisibility))
     auxiliaryWidget->setVisible (new_auxVisibility);
+  if (XOR (old_titleVisibility, new_titleVisibility))
+    windowAgent->titleBar ()->setVisible (new_titleVisibility);
   if (XOR (old_statusVisibility, new_statusVisibility))
     mainwindow ()->statusBar ()->setVisible (new_statusVisibility);
 
@@ -1408,6 +1417,13 @@ qt_tm_widget_rep::set_full_screen (bool flag) {
       //      mainwindow()->window()->setContentsMargins(0,0,0,0);
       // win->showFullScreen();
       win->setWindowState (win->windowState () | Qt::WindowFullScreen);
+      menuToolBarVisibleCache= menuToolBar && menuToolBar->isVisible ();
+      if (menuToolBar) menuToolBar->setVisible (false);
+      if (windowAgent) {
+        QWidget* tb         = windowAgent->titleBar ();
+        titleBarVisibleCache= tb && tb->isVisible ();
+        if (tb) tb->setVisible (false);
+      }
     }
     else {
       QPalette pal;
@@ -1422,6 +1438,11 @@ qt_tm_widget_rep::set_full_screen (bool flag) {
 
       visibility[0]= cache;
       update_visibility ();
+      if (menuToolBar) menuToolBar->setVisible (menuToolBarVisibleCache);
+      if (windowAgent) {
+        QWidget* tb= windowAgent->titleBar ();
+        if (tb) tb->setVisible (titleBarVisibleCache);
+      }
 #ifdef UNIFIED_TOOLBAR
       if (use_unified_toolbar) {
         mainwindow ()->centralWidget ()->layout ()->setContentsMargins (0, 1, 0,
