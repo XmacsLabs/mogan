@@ -1066,16 +1066,16 @@ target("stem_packager") do
 				os.cd(build_dir)
 				
                 -- 检查背景图片
-                local background_image = path.join(project_dir, "packages", "macos", "dmg-background.png")
+                local background_image = path.join(project_dir, "packages", "macos", "mogan-background.png")
                 if os.isfile(background_image) then
 					os.execv("create-dmg", {
 						"--background", background_image,
 						"--volname", stem_project_name,
 						"--window-pos", "200", "120",
-						"--window-size", "835", "600",
-						"--icon-size", "128",
-						"--icon", stem_binary_name .. ".app", "250", "295",
-						"--app-drop-link", "590", "295",
+						"--window-size", "720", "480",
+						"--icon-size", "120",
+						"--icon", stem_binary_name .. ".app", "200", "190",
+						"--app-drop-link", "540", "190",
 						dmg_name,
 						app_path
 					})
@@ -1083,10 +1083,10 @@ target("stem_packager") do
 					os.execv("create-dmg", {
 						"--volname", stem_project_name,
 						"--window-pos", "200", "120",
-						"--window-size", "835", "600",
-						"--icon-size", "128",
-						"--icon", stem_binary_name .. ".app", "250", "295",
-						"--app-drop-link", "590", "295",
+						"--window-size", "720", "480",
+						"--icon-size", "120",
+						"--icon", stem_binary_name .. ".app", "200", "190",
+						"--app-drop-link", "540", "190",
 						dmg_name,
 						app_path
 					})
