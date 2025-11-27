@@ -1,227 +1,167 @@
-<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
+<TMU|<tuple|1.1.0|2025.2.0-rc3>>
 
-<style|<tuple|tmdoc|chinese|number-europe>>
+<style|<tuple|tmdoc|chinese|number-europe|preview-ref|smart-ref>>
 
 <\body>
   <tmdoc-title|编辑工具><label|sec-man-editing-tools>
 
-  本章我们讨论<TeXmacs>中的通用编辑方法。除了经典的特性，如剪切和粘贴，搜索和替换等， <TeXmacs>还充分挖掘文档的结构性以提供额外的优秀功能。这些功能的代表是结构化光标移动和结构化变元。我们也在传统的功能如搜索和替换中寻求结构化的美感。例如，当您搜索数学模式中的<math|x>，结果只会匹配同样是数学模式中的<math|x>。
+  在本章中，我们将讨论 Mogan/Liii STEM 中实现的一些通用编辑功能。当然，其中包含其他编辑器中常见的基本操作：“剪切与粘贴”、“搜索与替换”等。但更有趣的是，其中一些功能充分利用了 Mogan/Liii STEM 文档的额外结构。典型的有“结构化编辑功能”包括“结构化光标移动”和“结构化变体”。传统的操作（如“搜索与替换”）也能利用文档结构。例如，当在数学模式中搜索 <math|x> 时，你只会找到同样处于数学模式中的匹配项。
 
   <section|剪切与粘贴><label|sec-man-cut-and-paste>
 
-  使用鼠标左键，您可以选中文本。选中后，点击<menu|Edit|Cut>或者<shortcut|(kbd-cut)>，将会删除选中文本；而点击<menu|Edit|Copy>或者<shortcut|(kbd-copy)>则会留下选中文本。此时，再点击<menu|Edit|Paste>或者<shortcut|(kbd-paste)>，您可以将此前选中的文本粘贴至光标所在位置。注意，您也可以使用鼠标中键快速复制选中区域，只需选中文本，在将光标置于某处，按下鼠标中键，此时此前选中文本被粘贴至此处。
+  你可通过按住鼠标左键来选择文本和公式。要删除选中区域，请使用 <menu|Edit|Cut> 或快捷键 <shortcut|(kbd-cut)>。要复制选中区域，先点击 <menu|Edit|Copy> 或按 <shortcut|(kbd-copy)>。然后你可以在光标位置使用 <menu|Edit|Paste> 或 <shortcut|(kbd-paste)> 多次粘贴。你也可以使用鼠标中键复制选中区域。
 
-  选中文本后，您还可以改变选中区域的属性。比如，使用鼠标左键选中一些黑色文字，点击<render-menu|Format|<rigid|<render-menu|Color|<tabular*|<tformat|<cwith|1|1|1|1|cell-vcorrect|n>|<cwith|1|1|1|1|cell-lsep|1spc>|<cwith|1|1|1|1|cell-rsep|1spc>|<cwith|1|1|1|1|cell-bsep|1spc>|<cwith|1|1|1|1|cell-tsep|1spc>|<cwith|1|1|1|1|cell-width|1.5em>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|1|1|cell-background|red>|<table|<row|<cell|>>>>>>>>，将选中文字变成红色。又如，选中公式后点击<menu|Insert|Fraction>，则此公式将成为新插入分式的分子。
+  你也可以更改选中区域的文本属性。例如，要将黑色文字变成红色，你可以选中它并点击 <render-menu|Format|<rigid|<render-menu|Color|<tabular*|<tformat|<cwith|1|1|1|1|cell-vcorrect|n>|<cwith|1|1|1|1|cell-lsep|1spc>|<cwith|1|1|1|1|cell-rsep|1spc>|<cwith|1|1|1|1|cell-bsep|1spc>|<cwith|1|1|1|1|cell-tsep|1spc>|<cwith|1|1|1|1|cell-width|1.5em>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|1|1|cell-background|red>|<table|<row|<cell|>>>>>>>>。类似地，当你选中一个公式并点击 <menu|Insert|Fraction>，则该公式将成为新建分式的分子。
 
-  与其它应用程序之间通过复制和粘贴机制通信时，文本是以<TeXmacs>的数据格式传输的。这意味直接从外部粘贴有格式的文本至<TeXmacs>，容易导致格式混乱。您可以通过<menu|File|Import>和<menu|File|Export>规避这种风险。默认地，复制和粘贴使用文本缓冲区。使用<menu|Edit|Paste from>和<menu|Edit|Copy to>，您可以指定选中文本的来源和去向。
+  当使用复制粘贴与其它应用交互时，文本会以 Mogan/Liii STEM 数据格式复制与粘贴。你可通过 <menu|Tools|Miscellaneous|Import selections as> 或 <menu|Tools|Miscellaneous|Export selections as> 指定导入与导出的格式。或者，你也可以直接使用 <menu|Edit|Copy to> 和 <menu|Edit|Paste from> 子菜单中的第一组条目来复制或粘贴外部格式。例如，使用 <menu|Edit|Paste from|LaTeX> 可以将一个 <LaTeX> 公式粘贴到 Mogan/Liii STEM 的公式中。
 
-  使用键盘选中文本有一下两种方法：其一是按中<prefix|S->不放，使用<key|left>， <key|right>在文本上移动。其二是使用<shortcut|(kbd-select-enlarge)>固定一个起始点，再移动光标，移动过程中，起始点和光标所在点之间的区域即为选中区域。按下<shortcut|(selection-cancel)>，您可以退出这种选中的状态。中文用户在GNU/Linux环境下使用的输入法切换和<shortcut|(kbd-select-enlarge)>产生冲突，建议自定义其快捷键。
+  默认情况下，复制与粘贴使用“主剪贴板”。你可以通过 <menu|Edit|Copy to> 和 <menu|Edit|Paste from> 菜单中的其他条目指定更多剪贴板，以便同时保存多个可随时粘贴的选择内容。
 
-  注意使用<shortcut|(kbd-select-enlarge)>还可以用于结构化选中。按下<shortcut|(kbd-select-enlarge)>两次，当前光标所在处的单词将被选中。再次按下<shortcut|(kbd-select-enlarge)>，选中的范围将依照结构逐层扩大，比如一开始选中的是单词，下一步可能是段落。最终，将选中全文，此时，再次按下<shortcut|(kbd-select-enlarge)>，选中区域被清空。这里的<shortcut|(kbd-select-enlarge)>，也可以用鼠标左键替代。
+  有两种方式可通过键盘进行选择：按住 <key|Shift> 并使用光标键 <key|left>、<key|right>（等等）移动时，可以边移动光标边选择文本。或者，你可以按 <key|Ctrl Space> 一次固定起始位置。当使用光标键移动时，从起点到当前位置之间的文本会保持被选中。按 <key|Ctrl g> 可清除选择。
 
-  <section|搜索和替换><label|sec-man-search-and-replace>
+  快捷键 <key|Ctrl Space> 也允许你进行 <em|结构化选择>。连续按两次 <key|Ctrl Space> 会选中你当前所在的单词。之后每按一次，将选中包含当前选区的最小结构。最终，当整个文档被选中时，再按一次 <key|Ctrl Space> 将清除选择。
 
-  使用<key|C-s>或者<menu|Edit|Search>开始搜索文本。在搜索中，搜索字符在底端状态栏的左侧显示。你输入的每一个字符都将附加到搜索字符的末尾，文本中匹配的字符以细线红框围绕显示。在搜索过程再次按下<key|C-s>，搜索将继续进行。如果在下文中没有找到匹配项，<TeXmacs>什么也不做，底端的状态栏会显示相关信息，此时再次按下<key|C-s>，搜索将从正文起始处重新进行。按下<key|Backspace>可在搜索文本中撤销上一个字符输入。
+  <section|结构化搜索与替换><label|sec-man-search-and-replace>
 
-  通常情况下，搜索方向为自光标处往下。使用<key|C-r>可以自光标处往上搜索。在搜索中，只匹配相同模式和相同语言下的文本。模式和语言在您开始搜索时有光标所在处决定。这意味着，如果你在数学模式中搜索<math|x>，那么文本中普通的x是不会被匹配到的。当前的局限之处在于，所搜索的文本只能是普通文本而不是数学符号或者更加复杂的结构化文本。
+  关于搜索与替换，请参阅 <hlink|结构化搜索与替换|https://liiistem.cn/docs/guide-structured-search-and-replace.html> 获取详细教程。
 
-  使用<key|C-=>或者<menu|Edit|Replace>可查询并替换文本。开始替换时，在底端先请您输入被替换文本，再输入替换文本。每一次匹配到文本时，底端状态栏询问您选择(y)替换文本(n)不替换文本(a)替换此处及所有匹配处三者之一。和搜索一样，查询-替换命令对模式和语言敏感。
+  <section|撤销与恢复><label|sec-man-undo-and-redo>
 
-  当前的搜索和替换系统还十分基础，仅仅是对普通文本的简单处理。未来，我们计划对结构化文本实现一种更加强大的搜索和替换机制。
+  你可以逐步撤销从启动 Mogan/Liii STEM 以来在文档中做的修改。这可以通过 <menu|Edit|Undo> 或快捷键 <shortcut|(undo 0)> 实现。被撤销的修改可通过 <menu|Edit|Redo> 或 <shortcut|(redo 0)> 恢复。Mogan/Liii STEM 会维护所有编辑的完整“历史树”。因此，在多次撤销与恢复后，可能会出现多条可供恢复的分支；在这种情况下，<menu|Edit|Redo> 会变成一个菜单，你可以选择适合的分支。
 
-  当前，您还可以用以下方式搜索和替换文档中的文本片段：在您的文档中某处或者是其他的窗口中选中你想搜索的文本，点击菜单项<menu|Edit|Copy to|Search>，接下来按<key|C-s>便可用选中的文本搜索。类似地，选中文本，点击菜单项<menu|Edit|Copy to|Replace>，再次选中另一个文本，接下来按<key|C-=>就能以前后两次选中的文本为参数执行替换操作。
-
-  <section|拼写检查><label|sec-man-spell-checking>
-
-  在您的系统上已安装<shell|ispell>的前提下，使用<key|Win+$><space|0.5pt> （Linux）或<key|Cmd+;>（Mac）或者<with|font-family|ss|Edit><math|\<rightarrow\>><with|font-family|ss|Spell>可以检查您的文本中是否有拼写错误。使用前，还请您先检查一下您所用语言的字典是否已经安装。
-
-
-  对全文或者选中文本启用拼写后，您将会在底端收到错词的修正提示，有以下选项供您选择：
-
-  <\description>
-    <item*|a)>接受错词，这样，以后的检查中将忽略该词
-
-    <item*|r)>使用您输入的单词替换该词
-
-    <item*|i)>申明该词其实是正确的，并将该词添加到您的个人词典
-
-    <item*|1-9)>对错词的推荐修正选项
-  </description>
-
-  请注意，<shell|ispell>只管拼写对错，并不检查句子的语法正确与否。
-
-  启动拼写检查后，设定语言是当前光标所在处的语言或者是选中区域的起始处的语言。拼写检查只会检查设定语言的拼写问题。这意味着，如果文档中有多种语言，您需要对每一个部分分别启用拼写检查。
-
-  <section|撤销和恢复><label|sec-man-undo-and-redo>
-
-  <TeXmacs>只在运行时支持撤销和恢复操作。您可以使用菜单项<menu|Edit|Undo>和<menu|Edit|Redo>以及相应快捷键<shortcut|(undo 0)>和<shortcut|(redo 0)>来控制您对文档的改变。
-
-  为了节约内存空间，默认的撤销和恢复操作限于百步之内。在您的配置文件中添加
-
-  <\verbatim>
-    \ \ \ \ (set-maximal-undo-depth 1000)
-  </verbatim>
-
-  这行代码，可以深度改为1000。若是将深度赋值为负值，则任何数量的操作都能被撤销。
+  需要注意的是，只有文档本身的更改会被撤销系统记录。大多数文档的全局属性的修改无法撤销，例如文档样式、页面大小、主要字体等。同样，Mogan/Liii STEM 外部因你操作而触发的变化也无法撤销。例如，在一计算机代数会话中，你可以撤销在 Mogan/Liii STEM 中的编辑，但无法撤销外部计算系统执行的计算。
 
   <section|结构化编辑><label|sec-man-structured-editing>
 
-  作为普适法则，几乎所有的结构化编辑命令是上下文相关的，从文档源代码的角度上讲，结构化编辑的效果由光标所在结构最深处的标记所决定。当您选中某些文本时，焦点会定位于选中结构最深处的标记。在诸如相似标记间导航的结构化操作中，当前的焦点会临时设置为其它某处。当前的焦点由光标所在结构中最深处的青盒子显式指示。
+  通常，大多数结构化编辑操作的行为由 <em|<rigid|当前焦点>> 控制。默认情况下，焦点表示当前环境。当前焦点会由光标周围最内层的青色方框指示。
 
-  比如，结构化插入命令<shortcut|(structured-insert-left)>， <shortcut|(structured-insert-right)>， <shortcut|(structured-insert-up)> 和 <shortcut|(structured-insert-down)> 在表格和树中含义不同。在表格中是插入行与列(见图 <reference|matrix-insert-fig>)。在树中是插入新节点(见图 <reference|tree-insert-fig>)。倘若您的光标在表格中的树中，则从文档的源代码上说，最里面的标记实际上是树，所以使用结构化插入将优先插入节点，而不是行与列。
+  例如，结构化插入命令 <shortcut|(structured-insert-left)>、<shortcut|(structured-insert-right)>、<shortcut|(structured-insert-up)> 和 <shortcut|(structured-insert-down)> 在表格与树结构中具有特殊意义。在表格中，它们允许你插入新行或新列（见图 <reference|matrix-insert-fig>）。在树中，它们对应于插入新节点（见图 <reference|tree-insert-fig>）。如果你在表格中的树结构内，则最内层标签是树，节点插入的行为将优先于新表格行列的插入。更多关于表格与矩阵的讨论见 <hlink|表格进阶编辑|https://liiistem.cn/docs/guide-table.html>。
 
-  在大多数情况下，结构化操作下标记的默认行为已预定义。比如<shortcut|(structured-insert-left)> 或<shortcut|(structured-insert-right)>是在标记的左边或者右边插入一个新的参数。
+  对于大多数编辑操作，都定义了“默认特定行为”。但某些特殊标签可能会覆盖此行为。例如，在结构化插入中，<shortcut|(structured-insert-left)> 与 <shortcut|(structured-insert-right)> 的默认行为是向光标左或右的标签加入一个新参数（若允许）。在表格中，这一行为被覆盖，使其改为插入整列。
 
   <\big-figure>
     <\equation*>
-      <matrix|<tformat|<table|<row|<cell|a>|<cell|b<cursor>>|<cell|c>>|<row|<cell|d>|<cell|e>|<cell|f>>>>><space|5em><matrix|<tformat|<table|<row|<cell|a>|<cell|b>|<cell|<cursor>>|<cell|c>>|<row|<cell|d>|<cell|e>|<cell|>|<cell|f>>>>><space|2em><matrix|<tformat|<table|<row|<cell|a>|<cell|<cursor>>|<cell|b>|<cell|c>>|<row|<cell|d>|<cell|>|<cell|e>|<cell|f>>>>><space|2em><matrix|<tformat|<table|<row|<cell|a>|<cell|b>|<cell|c>>|<row|<cell|>|<cell|<cursor>>|<cell|>>|<row|<cell|d>|<cell|e>|<cell|f>>>>><space|2em><matrix|<tformat|<table|<row|<cell|>|<cell|<cursor>>|<cell|>>|<row|<cell|a>|<cell|b>|<cell|c>>|<row|<cell|d>|<cell|e>|<cell|f>>>>>
+      <matrix|<tformat|<table|<row|<cell|a>|<cell|b<cursor>>|<cell|c>>|<row|<cell|d>|<cell|e>|<cell|f>>>>><space|5em><matrix|<tformat|<table|<row|<cell|a>|<cell|b>|<cell|<cursor>>|<cell|c>>|<row|<cell|d>|<cell|e>|<cell|>|<cell|f>>>>><space|2em><matrix|<tformat|<table|<row|<cell|a>|<cell|<cursor>>|<cell|b>|<cell|c>>|<row|<cell|d>|<cell|>|<cell|e>|<cell|f>>>>><space|2em><matrix|<tformat|<table|<row|<cell|>|<cell|<cursor>>|<cell|>>|<row|<cell|a>|<cell|b>|<cell|c>>|<row|<cell|d>|<cell|e>|<cell|f>>>>>
     </equation*>
   <|big-figure>
-    <label|matrix-insert-fig>假定光标在最左矩阵的<cursor>处。那个右边的四个矩阵按顺序分别对应往左边(<shortcut|(structured-insert-left)>)插入一新列，往右边(<shortcut|(structured-insert-right)> )插入一新列，往下边(<shortcut|(structured-insert-down)>)插入一新行，往上边(<shortcut|(structured-insert-up)>)插入一新行。
+    <label|matrix-insert-fig>假设光标位于最左边矩阵中的 <cursor> 位置。其余四个矩阵分别对应按下 <shortcut|(structured-insert-left)>（插入左侧列）、<shortcut|(structured-insert-right)>（插入右侧列）、<shortcut|(structured-insert-up)>（插入上方行）、<shortcut|(structured-insert-down)>（插入下方行）的结果。
   </big-figure>
 
   <\big-figure|<tree|a|b|c<cursor>|d><space|3em><space|3em><tree|a|b|<cursor>|c|d><space|3em><tree|a|b|c|<cursor>|d><space|3em><tree|a|b|<tree|<cursor>|c>|d><space|3em><tree|a|b|<tree|c|<cursor>>|d>>
-    <label|tree-insert-fig>假定光标位于最左边树的 <cursor> 处。那么右边的四棵树分别对应<shortcut|(structured-insert-left)>，<shortcut|(structured-insert-right)>，<shortcut|(structured-insert-up)>，<shortcut|(structured-insert-down)>后的效果
+    <label|tree-insert-fig>假设光标位于最左边树中的 <cursor> 位置。其余四棵树分别对应按下 <shortcut|(structured-insert-left)>、<shortcut|(structured-insert-right)>、<shortcut|(structured-insert-up)> 与 <shortcut|(structured-insert-down)> 插入新节点的结果。
   </big-figure>
 
-  类似地，在矩阵中，<shortcut|(structured-insert-start)>， <shortcut|(structured-insert-end)>， <shortcut|(structured-insert-top)> 和 <shortcut|(structured-insert-bottom)>可用于插入新的首列，末列，首行，末行。<shortcut|(structured-remove-left)> 和 <shortcut|(structured-remove-right)>可用于结构化后向或前向删除。在矩阵中，这将删除光标前或者后的一列(见图<reference|matrix-remove-fig>)。使用<shortcut|(remove-structure-upwards)>或者<shortcut|(remove-structure-upwards)>可删除光标所在标记外的环境。
+  同样地，对于矩阵，快捷键 <shortcut|(structured-insert-start)>、<shortcut|(structured-insert-end)>、<shortcut|(structured-insert-top)> 与 <shortcut|(structured-insert-bottom)> 可用于插入第一/最后一列或第一/最后一行。快捷键 <shortcut|(structured-remove-left)> 与 <shortcut|(structured-remove-right)> 映射为向后或向前的 <em|结构化删除>。对于矩阵，这会删除光标前后的列（见图 <reference|matrix-remove-fig>）。要移除包围的环境可使用 <shortcut|(remove-structure-upwards)> 或 <shortcut|(remove-structure-upwards)>。
 
   <\big-figure>
     <\equation*>
       <matrix|<tformat|<table|<row|<cell|a>|<cell|b<cursor>>|<cell|c>>|<row|<cell|d>|<cell|e>|<cell|f>>>>><space|5em><matrix|<tformat|<table|<row|<cell|b<cursor>>|<cell|c>>|<row|<cell|e>|<cell|f>>>>><space|2em><matrix|<tformat|<table|<row|<cell|a>|<cell|<cursor>c>>|<row|<cell|d>|<cell|f>>>>><space|2em>b<cursor>
     </equation*>
   <|big-figure>
-    <label|matrix-remove-fig>假定光标在最左矩阵的<cursor>处。中间两个矩阵对应按下<shortcut|(structured-remove-left)>和<shortcut|(structured-remove-right)>后的结果。最右边的矩阵是按下<shortcut|(remove-structure-upwards)>或者<shortcut|(remove-structure-upwards)>后的效果，其作用是用单元格内的内容替换掉整个矩阵结构。
+    <label|matrix-remove-fig>假设光标位于最左边矩阵中的 <cursor> 位置。按下 <shortcut|(structured-remove-left)> 或 <shortcut|(structured-remove-right)> 分别得到后面两个矩阵。按下 <shortcut|(remove-structure-upwards)> 则会将矩阵替换为当前所在单元格的内容，结果即最右侧的 <math|b>。
   </big-figure>
 
   <section|结构化光标移动><label|sec-man-structured-move>
 
-  <TeXmacs>实现了三种主要的结构化光标移动的机制
+  Mogan/Liii STEM 实现了三类主要的 <em|结构化光标移动>：
 
   <\enumerate>
-    <item>整个文档结构的遍历
+    <item>遍历整个文档结构。
 
-    <item>相似标记的遍历
+    <item>遍历与最内层标签相似的环境。
 
-    <item>最深处标记的移动
+    <item>在最内层环境中移动。
   </enumerate>
 
-  大部分结构化光标移动的快捷键支持与<prefix|S->组合适用，以在移动的同时选中文本。
+  大多数结构化光标移动的快捷键可与 <key|Shift> 配合以进行同时选择。
 
-  <paragraph*|结构化遍历文档>
+  <paragraph*|结构化遍历整个文档>
 
-  <shortcut|(kbd-select-if-active traverse-left)>，<shortcut|(kbd-select-if-active traverse-right)>，<shortcut|(kbd-select-if-active traverse-up)>，<shortcut|(kbd-select-if-active traverse-down)>用于结构化遍历整个文档。在普通的文本中，<shortcut|(kbd-select-if-active traverse-left)>和<shortcut|(kbd-select-if-active traverse-right)>用于按词移动， 而<shortcut|(kbd-select-if-active traverse-up)>和<shortcut|(kbd-select-if-active traverse-down)>用于按段落移动。
+  快捷键 <shortcut|(kbd-select-if-active traverse-left)> 与 <shortcut|(kbd-select-if-active traverse-right)> 用于在结构化方式下遍历整个文档。在纯文本中，它们相当于按词移动。
 
-  在其它标记中，<shortcut|(kbd-select-if-active traverse-left)>和<shortcut|(kbd-select-if-active traverse-right)>用于移动到文档中光标可访问的位置，在您持续在文本间按词移动时，则没有这个效果。<shortcut|(kbd-select-if-active traverse-up)>和<shortcut|(kbd-select-if-active traverse-down)>的行为更显上下文相关性，在矩阵中，可用于将某行向上或者向下移动。
+  当存在其他标记时，它们允许你访问文档中所有可到达的光标位置，但在纯文本内部仍以按词移动。
 
-  <paragraph*|结构化遍历相似标记>
+  <paragraph*|遍历相似环境>
 
-  此类光标移动是为了方便在文档中访问与当前最深处的标签相似的标签。<shortcut|(kbd-select-if-active traverse-previous)>和<shortcut|(kbd-select-if-active traverse-next)>对应与上一个和下一个，而<shortcut|(kbd-select-if-active traverse-first)>和<shortcut|(kbd-select-if-active traverse-last)>对应于第一个和最后一个。
+  此类光标移动允许你快速访问文档中所有与当前最内层环境“相似”的其它环境。可以使用 <shortcut|(kbd-select-if-active traverse-previous)> 与 <shortcut|(kbd-select-if-active traverse-next)> 移动到前一个或后一个相似标签，也可以使用 <shortcut|(kbd-select-if-active traverse-first)> 与 <shortcut|(kbd-select-if-active traverse-last)> 跳到第一个或最后一个相似标签。
 
-  比如，当光标处于某节的标题中，用<shortcut|(kbd-select-if-active traverse-previous)>可以跳转到前一节的标题中。用<shortcut|(traverse-previous-section-title)>也可以跳回前一节的标题中。
+  例如，如果你处于一个章节标题中，则可使用 <shortcut|(kbd-select-if-active traverse-previous)> 移动到前一个章节标题。子节与章标题也被视为“相似”。
 
-  <paragraph*|最深处标签的移动>
+  <paragraph*|在当前环境内部移动>
 
-  也可以在最深处的标签内移动而不必退出。<shortcut|(structured-left)>， <shortcut|(structured-right)>， <shortcut|(structured-start)>和<shortcut|(structured-end)>对应于跳转到光标的前一个，后一个，第一个，最后一个参数处。而<shortcut|(structured-exit-left)>或<shortcut|(structured-exit-right)>用于从左边或者右边跳出标签。
+  你可在不离开当前环境的情况下快速移动。快捷键 <shortcut|(structured-left)>、<shortcut|(structured-right)>、<shortcut|(structured-start)> 与 <shortcut|(structured-end)> 用于移动到当前环境的前一个、后一个、首个或最后一个参数。快捷键 <shortcut|(structured-exit-left)> 与 <shortcut|(structured-exit-right)> 可从环境左侧或右侧退出。
 
-  在特定场景下，这些默认行为可能无法生效。比如，在表格或树中，这些快捷键对应于按单元格或者按节点的光标移动。除此之外，垂直方向上则使用<shortcut|(structured-up)>，<shortcut|(structured-down)>，<shortcut|(structured-top)>和<shortcut|(structured-bottom)>移动光标。
+  在特殊环境（如表格或树结构）中，默认行为会被覆盖，使其对应于按单元格或按节点移动。此外，还会将垂直移动映射到 <shortcut|(structured-up)>、<shortcut|(structured-down)>、<shortcut|(structured-top)> 与 <shortcut|(structured-bottom)>。
 
-  <section|结构化变元><label|sec-man-structured-variants>
+  <section|结构化变体><label|sec-man-structured-variants>
 
-  在创建定理，公式或者列表这些环境的时候，我们经常需要在事后更改环境。您可以使用<shortcut|(variant-circulate (focus-tree) #t)>或者<shortcut|(variant-circulate (focus-tree) #f)>循环选择最深处标记的<em|结构化变元>。前者顺序，后者逆序。
+  创建环境（如定理、公式或列表），常常会想在后续修改环境类型。快捷键 <shortcut|(variant-circulate (focus-tree) #t)> 与 <shortcut|(variant-circulate (focus-tree) #f)> 允许你在当前环境的结构化变体中前后循环切换。
 
-  假定您的光标在定理中，那么不断按下<shortcut|(variant-circulate (focus-tree) #t)>会在命题，引理，推论，证明，定理间轮换。而不断按下快捷键<shortcut|(variant-circulate (focus-tree) #f)>则是逆向轮换:定理 <math|\<rightarrow\>> 证明 <math|\<rightarrow\>> 推论 <math|\<rightarrow\>> 引理 <math|\<rightarrow\>> 命题 <math|\<rightarrow\>> 证明。
+  例如，在定理环境中多次按 <shortcut|(variant-circulate (focus-tree) #t)> 将使其依次变成命题、引理、推论、猜想，最终回到定理。按 <shortcut|(variant-circulate (focus-tree) #f)> 则反向循环：定理→猜想→推论→引理→命题→定理。
 
-  在数学公式这个例子中， <shortcut|(variant-circulate (focus-tree) #t)>用于将行内公式 <math|a<rsup|2>+b<rsup|2>=c<rsup|2>> 转化为单行公式：
+  对数学公式而言，快捷键 <shortcut|(variant-circulate (focus-tree) #t)> 会将 <math|a<rsup|2>+b<rsup|2>=c<rsup|2>> 这样的行内公式变成显示公式：
 
   <\equation*>
     a<rsup|2>+b<rsup|2>=c<rsup|2>
   </equation*>
 
-  同时顾及尾随空格(trailing space)和标点符号的处理。
+  并自动处理可能的“尾随空格与标点符号”。
 
-  <TeXmacs>还提供了<shortcut|(numbered-toggle (focus-tree))>快捷键以供您在编号模式和普通模式间切换。此快捷键在定理，注意，表格，公式等环境适用。注意<shortcut|(numbered-toggle (focus-tree))>和<shortcut|(variant-circulate (focus-tree) #t)>的区别，前者显示和隐藏编号，而后者是在一组可用环境如列表项目(圆点，短线，箭头等)间轮换。
+  Mogan/Liii STEM 提供快捷键 <shortcut|(numbered-toggle (focus-tree))> 用于切换编号与非编号环境，如定理、备注、表格、公式等。它也会将无编号的无序列表转换为有序列表，反之亦然，而 <shortcut|(variant-circulate (focus-tree) #t)> 可在多种列表项目样式（圆点、破折号、箭头等）之间切换。
 
-  <section|移动和缩放对象><label|sec-man-structured-geometry>
+  折叠与展开也是在环境间切换的方式之一。例如在如下计算机代数会话中：
 
-  <prefix|structured:geometry>键前缀用于移动和缩放对象。比如说，在表格中的单元格内部，使用<key|structured:geometry right>可使单元格更靠右。在使用<menu|Format|Space>插入的空格中，使用该键可增加空格的宽度。下面是结构化移动和缩放快捷键的通用功能描述:
+  <\session|pari|default>
+    <\unfolded-io|Pari] >
+      factor (x^15 - 1)
+    <|unfolded-io>
+      <with|color|magenta|%1 = <math|<with|color|blue|<matrix|<tformat|<table|<row|<cell|x-1>|<cell|1>>|<row|<cell|x<rsup|2>+x+1>|<cell|1>>|<row|<cell|x<rsup|4>+x<rsup|3>+x<rsup|2>+x+1>|<cell|1>>|<row|<cell|x<rsup|8>-x<rsup|7>+x<rsup|5>-x<rsup|4>+x<rsup|3>-x+1>|<cell|1>>>>>>>>
+    </unfolded-io>
+  </session>
 
-  <\description>
-    <item*|<shortcut|(geometry-left)>>减小对象的水平宽度，或者更向左对齐。
+  你可以点击 “<verbatim|<with|color|dark brown|Pari]>>” 以折叠输出（仅保留输入可见），再点一次以恢复。快捷键 <shortcut|(alternate-toggle (focus-tree))> 也可实现同效果。还有许多其他可折叠环境，可通过 <menu|Insert|Fold> 插入。
 
-    <item*|<shortcut|(geometry-right)>>增加对象的水平宽度，或者更向右对齐。
+  <section|对象定位与调整大小><label|sec-man-structured-geometry>
 
-    <item*|<shortcut|(geometry-down)>>减小/增加对象的竖直高度，或者更向底部对齐。
-
-    <item*|<shortcut|(geometry-up)>>减小/增加对象的竖直高度，或者更向顶部对齐。
-
-    <item*|<shortcut|(geometry-start)>>减小对象的水平位移或者对齐。
-
-    <item*|<shortcut|(geometry-end)>>增加对象的水平位移或者对齐。
-
-    <item*|<shortcut|(geometry-bottom)>>减小对象的垂直位移或者底部对齐。
-
-    <item*|<shortcut|(geometry-top)>>增加对象的垂直位移或者顶部对齐。
-
-    <item*|<shortcut|(geometry-reset)>>将几何性质(大小，位置，对齐)重设为默认值。
-
-    <item*|<shortcut|(geometry-circulate #t)>， <shortcut|(geometry-circulate #f)>>在可用长度单元间循环以指定其几何结构。
-
-    <item*|<shortcut|(geometry-slower)>， <shortcut|(geometry-faster)>>减小或者增加移动或者缩放的步长。
-  </description>
-
-  下面是一些特定标记下的特定说明:
+  使用前缀 <prefix|structured:geometry> 可定位或调整对象大小。例如，在表格的单元格中，你可以使用 <key|structured:geometry right> 将单元内容右移。在通过 <menu|Format|Space> 插入的空格后使用该键，可增加空格宽度。更一般地，以下快捷键可用：
 
   <\description>
-    <item*|空格>空格指的是<menu|Format|Space>中的水平或者竖直空格。若要使用快捷键，必须把光标置于空格标记之后。
+    <item*|<shortcut|(geometry-left)>>减小对象的水平尺寸，或向左对齐。
 
-    <item*|盒修饰器><menu|Format|Transform>菜单中的<markup|move>， <markup|shift>， <markup|resize>和<markup|clipped>标记
+    <item*|<shortcut|(geometry-right)>>增大对象的水平尺寸，或向右对齐。
 
-    <item*|动画>动画的长度可用<shortcut|(geometry-left)>和<shortcut|(geometry-right)>更改。
+    <item*|<shortcut|(geometry-down)>>减小/增大对象的垂直尺寸，或向下对齐。
 
-    <item*|图片>其大小和对齐可供更改。
+    <item*|<shortcut|(geometry-up)>>增大/减小对象的垂直尺寸，或向上对齐。
+
+    <item*|<shortcut|(geometry-start)>>减少对象的水平偏移量，或左对齐。
+
+    <item*|<shortcut|(geometry-end)>>增加对象的水平偏移量，或右对齐。
+
+    <item*|<shortcut|(geometry-bottom)>>减少对象的垂直偏移量，或底部对齐。
+
+    <item*|<shortcut|(geometry-top)>>增加对象的垂直偏移量，或顶部对齐。
+
+    <item*|<shortcut|(geometry-reset)>>恢复对象几何属性（大小、位置、对齐方式）的默认值。
+
+    <item*|<shortcut|(geometry-circulate #t)>, <shortcut|(geometry-circulate #f)>>在可用的几何单位之间循环切换。
+
+    <item*|<shortcut|(geometry-slower)>, <shortcut|(geometry-faster)>>减少或增加调整几何参数的步幅。
   </description>
 
-  <section|版本控制工具><label|sec-man-versioning>
+  上述快捷键适用于以下标签：
 
-  与他人合作撰写文档时，会产生这样的需求，即审阅他人对文档的更改，然后或接受或舍弃或更正。在<menu|Tools|Versioning tool>启用版本控制菜单后，菜单栏中会新增<menu|版本>这一项。下面我们来谈谈这个菜单是如何使版本控制的过程更加方便。
+  <\description>
+    <item*|空格>来自 <menu|Format|Space> 菜单的水平与垂直空格。光标应位于空格标签之后。
 
-  当前流行的版本控制工具有<hlink|<name|Subversion>|http://subversion.tigris.org/>， <hlink|<name|Git>|http://git-scm.com/>， <hlink|<name|Darcs>|http://darcs.net/>， <hlink|<name|GNU Arch>|http://www.gnu.org/software/gnu-arch/>等。<TeXmacs>目前只对<name|Subversion>和<name|Git>提供基础支持，不过要集成其他的版本控制工具也并不困难。
+    <item*|框修饰>来自 <menu|Format|Adjust> 菜单的 <markup|move>、<markup|shift>、<markup|resize>、<markup|extend>、<markup|clipped>、<markup|smashed>、<markup|inflate> 标签。
 
-  <paragraph*|比较两个版本>
+    <item*|动画>可用 <shortcut|(geometry-left)> 与 <shortcut|(geometry-right)> 修改动画时长。
 
-  假定我们有同一个文档的两个版本<shell|old.tm>和<shell|new.tm>。通过以下步骤可以显示旧版本和新版本的差异：首先打开<shell|new.tm>这个文件，然后点击<menu|Version|Compare|With older version>选中<shell|old.tm>打开。此时，缓冲区的命名仍为<shell|new.tm>，更改通过特殊的标记显示在缓冲区中。假定存在差异，那么光标初始定位在第一个差异处。类似地，你还可以先打开旧版本，在点击<menu|Version|Compare|With newer version>和新版本比较。
-
-  通过子菜单<menu|Version|Move>，你可以在文档中的差异间上下移动。相应的快捷键是 <shortcut|(version-previous-difference)>和<shortcut|(version-next-difference)>。如果你已经了解了结构化光标移动，不妨使用更加通用的快捷键，即 <shortcut|(traverse-first)> ， <shortcut|(traverse-last)> ， <shortcut|(traverse-previous)> 和 <shortcut|(traverse-next)>。
-
-  <paragraph*|差异的可视化>
-
-  版本间的差异有三种方式显示：只显示旧版本，只显示新版本，或者两者兼顾。旧版本字体呈深红色的，新版本则为墨绿。
-
-  每一个差异的可视化的显示方式都可以通过 <menu|Version|Show> 或者快捷键<shortcut|(version-show 'version-old)> (旧)， <shortcut|(version-show 'version-new)> (新) and <shortcut|(version-show 'version-both)> (兼)更改。也可以用<shortcut|(variant-circulate (focus-tree) #t)>在这些方式间轮换，此即所谓结构化变元。通过选中文本，可以扩大以上快捷键的作用域，特别地，选中全文，则所有差异的显示方式同步更改。
-
-  <paragraph*|保留特定版本>
-
-  我们经常需要在两个版本之间斟酌推敲，逐步对每一个差异的选择保留其中之一。假定当前光标是在某一个差异之中，那么此时可用子菜单<menu|Version|Retain>或者快捷键 <shortcut|(version-retain 0)>，<shortcut|(version-retain 1)> 和 <shortcut|(version-retain 'current)> 分别保留旧版本，新版本和当前版本。如果当前是新旧版本兼显示，那么按下<shortcut|(version-retain 'current)>会保留新版本。选定版本后，光标会自动跳到下一个差异处，这样我们可以继续进行操作。
-
-  <paragraph*|粒度控制和差异重现>
-
-  子菜单<menu|Version|Grain>用于控制版本间差异的计算。默认地，我们使用最细的粒度<menu|Detailed>。使用<menu|Block>，则版本间的差异将以段落为基础计算。也是就说，在比较中，只要两个版本在段落上有任何差异，就会高亮显示。最粗糙的粒度是<menu|Rough>，只要两个版本间存在差异，全文就会高亮显示。
-
-  粒度选项在使用<menu|Version|File|Compare>时产生作用，但也可以为选中文本更改比较的粒度，只要在选中文本后，再更改<menu|Version|Grain>子菜单即可。特别地，整个缓冲区的比较粒度也可以这样更改。类似地，如果你在一个差异中更改了粒度值，那么差异将以新的粒度重新计算并显示。
-
-  注意您还可以更改文本后，再改变比较粒度。效果将是重新显示选中部分的差异或者是光标处差异。这在特定情境下非常实用。有如下情境，旧版本中有一个引理，而您在新版本中将其改成了定理并在其中做了少量更改。此时，若显示差异，整个定理都将高亮显示。这其实是由<TeXmacs>文档内部的结构决定的。如果要显示其中内容的差异，您只需将旧版本中的引理改成定理即可。
-
-  <paragraph*|使用外部版本控制工具>
-
-  如果你正在编辑的文件所在的目录在某个版本控制系统下，那么<menu|版本>下拉菜单中分隔符以上的部分会被激活。目前<TeXmacs>支持<name|Subversion>和<name|Git>。
-
-  首先，如果当前的缓冲区在版本控制下，那么你可以通过<menu|Version|History>浏览该文件的历史版本。该子菜单的下拉菜单是一系列旧版本的超链接及相关信息，比如何时何人更改。历史版本是只读的，但你可以使用<menu|Version|Compare|With current user version>将它们和当前的版本比较。
-
-  对版本控制下的文本更改后，编辑器中的版本不再和版本库中的版本相对应。此时，点击<menu|Version|Commit>以提交更新。提交之后，系统会显示您已经提交的更改。通过<menu|Version|Register>，您可以把不在版本控制下的文件添加到版本控制系统中。只是注册文件并不会将文件提交到版本库中，您仍然需要点击<menu|Version|Commit>以提交您的更改。
-
-  如果在你编辑某文件时，其对应的版本库中的文件正好被更改，此时，你需要点击<menu|Version|Update>，将两者合并。现在还没有对完成针对冲突的解决方案，不过，不久您就能轻松解决冲突了。
+    <item*|图像>可修改图像大小与对齐。
+  </description>
 </body>
+
 
 <\initial>
   <\collection>
