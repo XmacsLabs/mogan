@@ -60,7 +60,7 @@
         ((in? key (list "Ẁ" "Ŵ")) "W")
         ((in? key (list "Ỳ" "Ý" "Ŷ" "Ỹ" "Ÿ")) "Y")
         ((in? key (list "Ẑ")) "Z")
-	((== (string-length key) 1) key)
+    ((== (string-length key) 1) key)
         (else "")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1231,6 +1231,9 @@
   ("@ - -" "<longmapmulti>")
   ("@ ." "<odot>")
   ("@ . ." "<circ><cdots><circ>")
+  ("@ . var" (math-big-operator "odot"))
+  ("@ + var" (math-big-operator "oplus"))
+  ("@ * var var" (math-big-operator "otimes"))
   ("@ :" "<oover>")
   ("@ x" "<otimes>")
   ("@ x . ." "<otimes><cdots><otimes>")
