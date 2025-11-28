@@ -110,6 +110,10 @@
 
 (define (gnuplot-plot code-path)
   (let ((cmd (fourth (argv))))
+    (unsetenv "DYLD_LIBRARY_PATH")
+    (unsetenv "DYLD_FRAMEWORK_PATH")
+    (unsetenv "DYLD_FALLBACK_LIBRARY_PATH")
+    (unsetenv "DYLD_FALLBACK_FRAMEWORK_PATH")
     (os-call (string-append (goldfish-quote cmd) " " "-c" " " code-path))))
 
 (define (parse-magic-line magic-line)
