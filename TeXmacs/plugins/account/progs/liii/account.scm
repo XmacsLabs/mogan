@@ -18,7 +18,7 @@
 ;     ((== key "port") "1895")
 ;     ((== key "user-info-url") "http://www.liiistem.cn/api/oauthUser/info")
 ;     ((== key "pricing-url") "https://www.liiistem.cn/pricing-fruit.html")
-;     ((== key "liii-url") "https://www.liiistem.cn/")
+;     ((== key "click-return-liii-url") "https://www.liiistem.cn/?from=login_button")
 ;     (else "")))
 
 ;; 测试
@@ -31,7 +31,7 @@
     ((== key "port") "1895")
     ((== key "user-info-url") "http://test-www.liiistem.cn/api/oauthUser/info")
     ((== key "pricing-url") "http://test-www.liiistem.cn/pricing-fruit.html")
-    ((== key "liii-url") "https://www.liiistem.cn/")
+    ((== key "click-return-liii-url") "https://www.liiistem.cn/?from=login_button")
     (else "")))
 
 ;; 本地
@@ -45,7 +45,7 @@
 ;     ((== key "port") "1895")
 ;     ((== key "user-info-url") "http://127.0.0.1:8080/api/oauthUser/info")
 ;     ((== key "pricing-url") "http://127.0.0.1:3000/pricing-fruit.html")
-;     ((== key "liii-url") "http://127.0.0.1:3000/")
+;     ((== key "click-return-liii-url") "http://127.0.0.1:3000/")
 ;     (else "")))
 
 

@@ -1773,7 +1773,8 @@ void
 qt_tm_widget_rep::checkLocalTokenAndLogin () {
   // 检查是否为社区版本，如果是则打开官方网址
   if (is_community_stem ()) {
-    string pricingUrl= as_string (call ("account-oauth2-config", "liii-url"));
+    string pricingUrl=
+        as_string (call ("account-oauth2-config", "click-return-liii-url"));
     QDesktopServices::openUrl (QUrl (to_qstring (pricingUrl)));
     return;
   }
