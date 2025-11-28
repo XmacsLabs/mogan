@@ -3,33 +3,41 @@
 <style|<tuple|tmdoc|number-europe>>
 
 <\body>
-  <tmdoc-title|Writing simple documents><label|sec-man-text>
+  <tmdoc-title|Writing Simple Documents><label|sec-man-text>
 
-  <section|Generalities for typing text><label|sec-man-generalities>
+  <section*|0. \ Conventions Used in This Document>
 
-  The usual English characters and punctuation symbols can easily be obtained on most keyboards.
+  <\itemize>
+    <item><key|I> denotes uppercase I, and <key|i> denotes lowercase i. If there is no plus sign between keys, it means the keys should be pressed in sequence. Otherwise, if a plus sign exists, it indicates simultaneous key press.
 
-  Long words at borders of successive lines are automatically hyphenated. In order to hyphenate foreign languages correctly, you should specify the language of the document in the menu <menu|Document|Language>.
+    <item><key|Tab> refers to variants in the Tab cycle. For example, the input method for <math|\<nabla\>> is <key|V> followed by pressing <key|Tab> twice; the input method for <math|\<Phi\>> is <key|V> followed by pressing <key|Tab> once. However, in this document we do not distinguish the number of <key|Tab> presses; both <math|\<nabla\>> and <math|\<Phi\>> will be represented by the shortcut <key|V Tab>.
+  </itemize>
 
-  At the left hand side of the status bar, you see the document style, the text properties at the current cursor position. Initially, it displays “text roman 10”, which means that you type in text mode using a 10 point roman font and the generic document style. You can change the text properties (font, font size, color, language) in the <menu|Format> menu. You can also change the text properties of the text you have already typed by selecting a region and then using the <menu|Format> menu. Some text properties can also be changed for all the document with the <menu|Document> menu.
+  \;
 
-  At the right hand side of the footer, the character or object (like a change in the text properties) just before the cursor is displayed. We also display all environments which are active at the cursor position. This information should help you to orient yourself in the document.
+  <section|Generalities><label|sec-man-generalities>
 
-  <section|Typing structured text><label|sec-man-structure>
+  Ordinary characters and punctuation marks can be entered directly from the keyboard. Most modern systems also provide shortcuts for accented characters and other special symbols. In Mogan/Liii STEM, <key|Tab> suffixes can be used to input accented characters via Tab cycling. For example, “é” is typed as <key|e><key|-> followed by pressing <key|Tab> twice; “à” is typed as <key|a><key|-> followed by pressing <key|Tab> four times.
 
-  Usually, long documents have a structure: they are organized in chapters, sections and subsections, they contain different types of text, such as regular text, citations, footnotes, theorems, etc. After selecting a <def-index|document style> in <menu|Document|Style>, <TeXmacs> takes care of specific layout issues, such as numbering of sections, pages, theorems, typesetting citations and footnotes in a nice way and so on.
+  Long words are automatically hyphenated at line boundaries. For Chinese text, you must specify the language in <menu|Document|Language> to enable proper line breaking.
 
-  Currently, several standard document styles have been implemented: <tmstyle|generic>, <tmstyle|article>, <tmstyle|book>, <tmstyle|letter>, <tmstyle|exam>, <tmstyle|beamer>, <tmstyle|seminar>, <tmstyle|source>. For instance, the article style can be used for writing articles. Besides, there are styles for common journals and special purposes, such as the <TeXmacs> documentation.
+  On the left of the bottom status bar, you can see the document style and the text properties at the cursor. For example, if the status bar displays “<with|language|english|<with|font|roman|text roman 10><with|font|cyrillic|>>”, it means you are working in text mode, using the <with|font|roman|roman> font with size <with|font|roman|10>. You may change the text properties (font, size, color, language) under the <menu|Format> menu. You may also select text and then change its properties. Global text properties can be changed in the <menu|Document> menu.
 
-  As soon as you have selected a document style, you can organize your text into sections (see <menu|Insert|Section>) and use specific <def-index|environments> (also called <em|tags>). Examples of environments are theorem, proposition, remark and so on (see <menu|Insert|Enunciation>). Other examples are lists of items (see <menu|Insert|Itemize>) or numbered lists (see <menu|Insert|Enumerate>). Further examples of frequently used tags are <markup|strong> (for writing “important” text), <markup|name> (for writing names of persons), etc.
+  On the right of the bottom status bar, properties of the character or object to the left of the cursor are displayed. The environment at the cursor location is also shown. All these pieces of information help you understand the cursor position within the document.
 
-  When you get more acquainted with <TeXmacs>, it is possible to add your own new environments in your own style file. Assume for instance that you often make citations and that you want those to appear in italic, with left and right margins of 1cm. Instead of manually changing the text and paragraph properties each time you make a citation, it is better to create a citation environment. Not only it will be faster to create a new citation when doing so, but it is also possible to systematically change the layout of your citations throughout the document just by changing the definition of the citation environment. The latter situation occurs for instance if you discover <with|font-shape|italic|a posteriori> that you prefer the citations to appear in a smaller font.
+  <section|Entering Structured Text><label|sec-man-structure>
 
-  There are a few general editing principles which make it easy to manipulate structured documents using <TeXmacs>. One major concept is the <em|current focus>, which is best illustrated on an example. Assume that we are in the process of entering a classical theorem:
+  Long documents usually have a clear structure: chapters, sections, and subsections. They contain different types of text, such as plain text, quotations, footnotes, theorems, etc. After choosing a style from <menu|Document|Style>, <TeXmacs> formats your document accordingly—for example, numbering of sections, pages, theorems, and formatting of footnotes and citations.
+
+  Available standard document styles include <tmstyle|generic>, <tmstyle|article>, <tmstyle|book>, <tmstyle|letter>, <tmstyle|exam>, <tmstyle|beamer>, <tmstyle|seminar>, <tmstyle|source>. For example, the article style is suitable for writing papers. Other styles may be used for journal submissions or special purposes, such as the official Mogan/Liii STEM documentation.
+
+  Once you choose a style, you may organize text using sections and specific environments. Examples of environments include theorem, proposition, and lemma (see <menu|Insert|Enunciation>). Ordered and unordered lists may also help organize text. Common content tags include <markup|strong>, <markup|name>, etc., which can modify specific text properties.
+
+  When proficient with Mogan/Liii STEM, you can create your own environments in your style file. For example, if you frequently insert quotations and want them to be italic with 1cm margins on both sides, the best approach is to define a custom quotation environment instead of manually modifying the text every time. This not only speeds up writing but also allows you to change all quotations at once simply by modifying the environment definition. For instance, if you want to make all quotation text smaller, altering the environment is far easier than editing each instance.
+
+  Understanding general editing rules greatly helps with editing structured text in Mogan/Liii STEM. One key concept is the “focus.” Consider the following example. Suppose we are typing this classic theorem:
 
   <\quote-env>
-    The following theorem is due to <name|Euler>:
-
     <\big-envbox>
       <\theorem>
         <small-focus|<math|\<mathe\><rsup|\<mathpi\>*\<mathi\>>=\<um\>1<math-cursor>>>.
@@ -37,13 +45,11 @@
     </big-envbox>
   </quote-env>
 
-  At the position of the cursor, the grey and cyan boxes indicate the active tags: in this case, the cursor is both inside a theorem and a formula. The innermost active tag (the formula <math|\<mathe\><rsup|\<mathpi\>*\<mathi\>>=\<um\>1> in our example) is surrounded by a cyan box and called the <em|current focus>.
+  In this example, the innermost cyan-outlined tag is called the current focus.
 
-  The contents of the <menu|Focus> menu and <em|focus toolbar> (the lowest toolbar) are highly context dependent and determined as a function of the current focus. In our example, the focus toolbar contains a<nbsp>popup menu button <menu|Formula>; when selecting <menu|Equation> in this menu, the text will change into
+  The <menu|Focus> menu and the focus toolbar (the bottom-most toolbar) are highly context-sensitive and depend on the current focus. In this case, the focus toolbar contains a popup menu “Equation.” When you choose <menu|Equation>, the text becomes:
 
   <\quote-env>
-    The following theorem is due to <name|Euler>:
-
     <\big-envbox>
       <\theorem>
         \;
@@ -57,222 +63,73 @@
     </big-envbox>
   </quote-env>
 
-  Similarly, the arrow buttons on the left hand side of the focus toolbar allow you to jump to similar tags. In this case, they will allow you to quickly traverse all formulas and equations in your document. For more information on “<hlink|structured editing operations|../editing/man-structured-editing.en.tm>” we refer to the chapter on <hlink|editing tools|../editing/man-editing-tools.en.tm>.
+  Similarly, the arrow buttons on the left of the focus toolbar allow you to jump between similar tags. In this example, they allow you to browse all formulas or equations in the document. For more details, see <hlink||manu.editing.zh.tmu#sec-man-structured-editing> and <hlink|Structured Editing|manu.editing.zh.tmu#sec-man-structured-editing>.
 
-  A second important concept is the <em|current editing mode>. Currently, there are five major modes: text mode, mathematics mode, program mode, graphics mode and source mode. In principle, the current mode can be determined from the current focus, but the mode is likely to change less often than the focus. The <em|mode dependent toolbar> above the focus toolbar contains several buttons which are useful in the current mode. The contents of the <menu|Insert> and <menu|Format> menus are also mode dependent.
+  Another important concept is the editing mode. There are three modes: text mode, math mode, and command mode. Modes change less frequently than focus changes. Their toolbar is located above the focus toolbar. The <menu|Insert> and <menu|Format> menus also depend on the current mode.
 
-  <section|Content-based tags><label|sec-man-content-tags>
+  <section|Content Tags><label|sec-man-content-tags>
 
-  The simplest examples of structure in a text are content-based tags. In <menu|Insert|Content tags> you see a list of them. Content based tags indicate that a given portion of text is of a particular kind or that it serves a specific purpose. For instance, important text should be marked using the <markup|strong> tag. Its default rendering uses a bold type face, like in this <strong|strong text>. However, strong text might be rendered in a different way according to the document style. For instance, strong text may be rendered in a different color on transparencies for presentations. Here follows a short list of the most common content-based tags and their purpose:
+  Content tags are one of the simplest structures in text. The <menu|Insert|Content tag> menu lists all available content tags. Content tags indicate that certain text has special meaning or serves a special purpose. For example, important text should be tagged with <markup|strong>, which by default renders the text in <strong|bold>. Note that different document styles may render enhanced text differently—for instance, a slide style may use a different color or a slightly transparent effect.
 
-  <big-table|<descriptive-table|<tformat|<table|<row|<cell|Tag>|<cell|Example>|<cell|Purpose>>|<row|<cell|<markup|strong>>|<cell|this is <strong|important>>|<cell|Indicate an important region of text>>|<row|<cell|<markup|em>>|<cell|the <em|real> thing>|<cell|Emphasize a region of text>>|<row|<cell|<markup|dfn>>|<cell|A <dfn|gnu> is a horny beast>|<cell|Definition of some concept>>|<row|<cell|<markup|samp>>|<cell|the <samp|ae> ligature æ>|<cell|A sequence of literal characters>>|<row|<cell|<markup|name>>|<cell|the <name|Linux> system>|<cell|The name of a particular thing>>|<row|<cell|<markup|person>>|<cell|I am <name|Joris>>|<cell|The name of a person>>|<row|<cell|<markup|cite*>>|<cell|Melville's <cite*|Moby Dick>>|<cell|A bibliographic citation>>|<row|<cell|<markup|abbr>>|<cell|I work at the <abbr|C.N.R.S.>>|<cell|An abbreviation>>|<row|<cell|<markup|acronym>>|<cell|the <acronym|HTML> format>|<cell|An acronym>>|<row|<cell|<markup|verbatim>>|<cell|the program said <verbatim|hello>>|<cell|Verbatim text like computer program output>>|<row|<cell|<markup|kbd>>|<cell|Please type <kbd|return>>|<cell|Text which should be entered on a keyboard>>|<row|<cell|<markup|code*>>|<cell|<code*|cout \<less\>\<less\> 1+1;> yields <verbatim|2>>|<cell|Code of a computer program>>|<row|<cell|<markup|var>>|<cell|<verbatim|cp <var|src-file> <var|dest-file>>>|<cell|Variables in a computer program>>>>>|Some of the most common content-based tags.>
+  Below are common content tags and their purposes:
 
-  <section|Lists><label|sec-man-lists>
-
-  Using <menu|Insert|Itemize> you may start an unnumbered list. You may either select a particular tag like <math|\<bullet\>> (bullets), <math|<op|->> (dashes) or <math|<op|\<rightarrow\>>> (arrows) to indicate entries in the list or the default tag. Lists may be <em|nested> inside other tags, like in the following list:
-
-  <\itemize>
-    <item>First item.
-
-    <item>Now comes the sublist:
-
-    <\itemize>
-      <item>A subitem.
-
-      <item>Another one.
-    </itemize>
-
-    <item>A final item.
-  </itemize>
-
-  The default tag is rendered in a different way depending on the level of nesting. At the outermost level, we used the <math|\<bullet\>> tag, at the second level <math|<op|\<circ\>>>, and so on. When you are inside a list, notice that pressing <shortcut|(kbd-return)> automatically starts a new item. If you need items which are several paragraphs long, then you may always use <shortcut|(kbd-shift-return)> in order to start a new paragraph.
-
-  Enumerate environments, which are started using <menu|Insert|Enumerate>, behave in a similar way as itemize, except that the items are numbered. Here follows an example of an enumeration which was started using <menu|Insert|Enumerate|Roman>:
-
-  <\enumerate-Roman>
-    <item>A first item.
-
-    <item>A second one.
-
-    <item>And a last one.
-  </enumerate-Roman>
-
-  The last type of lists are descriptive lists. They are started using <menu|Insert|Description> and allow you to describe a list of concepts:
-
-  <\description>
-    <item*|Gnu>A hairy but gentle beast.
-
-    <item*|Gnat>Only lives in a zoo.
-  </description>
+  <big-table|<descriptive-table|<tformat|<table|<row|<cell|Tag>|<cell|Example>|<cell|Purpose>>|<row|<cell|<markup|strong>>|<cell|<with|font|roman|this is <strong|important>>>|<cell|Boldface to indicate importance>>|<row|<cell|<markup|em>>|<cell|<with|font|roman|the <em|real> thing>>|<cell|Emphasis>>|<row|<cell|<markup|dfn>>|<cell|<with|font|roman|A <dfn|gnu> is a horny beast>>|<cell|Definition of a concept>>|<row|<cell|<markup|samp>>|<cell|<with|font|roman|the <samp|ae> ligature æ>>|<cell|Letter sequences>>|<row|<cell|<markup|name>>|<cell|<with|font|roman|the <name|Linux> system>>|<cell|Names of things>>|<row|<cell|<markup|person>>|<cell|<with|font|roman|I am <name|Joris>>>|<cell|People’s names>>|<row|<cell|<markup|cite*>>|<cell|<with|font|roman|Melville's <cite*|Moby Dick>>>|<cell|Bibliographical reference>>|<row|<cell|<markup|abbr>>|<cell|<with|font|roman|I work at the <abbr|C.N.R.S.>>>|<cell|Abbreviations>>|<row|<cell|<markup|acronym>>|<cell|<with|font|roman|the <acronym|HTML> format>>|<cell|Acronyms>>|<row|<cell|<markup|verbatim>>|<cell|<with|font|roman|the program said <verbatim|hello>>>|<cell|Literal text, e.g., program output>>|<row|<cell|<markup|kbd>>|<cell|<with|font|roman|Please type <kbd|return>>>|<cell|Text to be typed on the keyboard>>|<row|<cell|<markup|code*>>|<cell|<with|font|concrete|<code*|cout \<less\>\<less\> 1+1;> yields <verbatim|2>>>|<cell|Code>>|<row|<cell|<markup|var>>|<cell|<with|font|roman|<verbatim|cp <var|src-file> <var|dest-file>>>>|<cell|Variables in programs>>>>>|Overview of common content tags.>
 
   <section|Environments><label|sec-man-environments>
 
-  In a similar way as content-based tags, environments are used to mark portions of text with a special meaning. However, while <hlink|content-based tags|man-content-tags.en.tm> usually enclose small portions of text, environments often enclose portions that are several paragraphs long. Frequently used environments in mathematics are <markup|theorem> and <markup|proof>, like in the example below:
+  Similar to content tags, environments give a block of text a special meaning. Content tags usually apply to short spans of text, whereas environments often span multiple lines. For example, mathematical writing often uses the <markup|theorem> and <markup|proof> environments:
 
   <\theorem>
-    There exist no positive integers <math|a>, <math|b>, <math|c> and <math|n> with <math|n\<geqslant\>3>, such that <math|a<rsup|n>+b<rsup|n>=c<rsup|n>>.
+    There exist no positive integers <math|a,b,c> and <math|n<around*|(|n\<geqslant\>3|)>> such that <math|a<rsup|n>+b<rsup|n>=c<rsup|n>>.
   </theorem>
 
   <\proof>
-    I do not have room here to write the proof down.
+    The margin is too small to contain my proof.
   </proof>
 
-  You may enter environments using <menu|Insert|Environment>. Other environments with a similar rendering as theorems are <markup|proposition>, <markup|lemma>, <markup|corollary>, <markup|axiom>, <markup|definition>. You may use the <markup|dueto> macro (entered using <key|\\ d u e t o return>) in order to specify the person(s) to which the theorem is due, like in
+  Environments may be inserted via <menu|Insert>. Environments similar to the theorem environment include <markup|proposition>, <markup|lemma>, <markup|corollary>, <markup|axiom>, and <markup|definition>. Other commonly used environments include <markup|remark>, <markup|note>, <markup|example>, <markup|warning>, <markup|exercise>, and <markup|problem>, which are rendered in styles similar to the theorem.
 
-  <\theorem>
-    <dueto|Pythagoras>Under nice circumstances, we have <math|a<rsup|2>+b<rsup|2>=c<rsup|2>>.
-  </theorem>
+  <section|Lists><label|sec-man-lists>
 
-  Other frequently used environments with a similar rendering as theorems, but which do not emphasize the enclosed text, are <markup|remark>, <markup|note>, <markup|example>, <markup|warning>, <markup|exercise> and <markup|problem>. The remaining environments <markup|verbatim>, <markup|code>, <markup|quote>, <markup|quotation> and <markup|verse> can be used in order to enter multiparagraph text or code, quotations or poetry.
+  Unordered lists are inserted through <menu|Insert|Itemize>. You may choose <math|\<bullet\>> (bullet), <math|<op|->> (dash), or <math|<op|\<rightarrow\>>> (arrow) as the item marker. Sub-lists may be nested inside lists, as shown below:
 
-  <section|Layout issues><label|sec-man-layout-issues>
+  <\itemize>
+    <item>The first item.
 
-  As a general rule, <TeXmacs> takes care of the layout of your text. Therefore, although we did not want to forbid this possibility, we do not encourage you to typeset your document visually. For instance, you should not insert spaces or blank lines as substitutes for horizontal and vertical spaces between words and lines; instead, additional space should be inserted explicitly using <menu|Insert|Space>. This will make your text more robust in the sense that you will not have to reconsider the layout when performing some minor changes, which affect line or page breaking, or major changes, such as changing the document style.
+    <item>A sublist follows:
 
-  Several types of explicit spacing commands have been implemented. First of all, you can insert rigid spaces of given widths and heights. Horizontal spaces do not have a height and are either stretchable or not. The length of a stretchable spaces depends on the way a paragraph is hyphenated. Furthermore, it is possible to insert tabular spaces. Vertical spaces may be inserted either at the start or the end of a paragraph: the additional vertical space between two paragraphs is the maximum of the vertical space after the first one and the vertical space before the second one (contrary to <TeX>, this prevents from superfluous space between two consecutive theorems).
+    <\itemize>
+      <item>A sub-item.
 
-  As to the paragraph layout, the user may specify the paragraph style (justified, left ragged, centered or right ragged), the paragraph margins and the left (resp. right) indentation of the first (resp. last) line of a paragraph. The user also controls the spaces between paragraphs and successive lines in paragraphs.
+      <item>Another sub-item.
+    </itemize>
 
-  You can specify the page layout in the <menu|Document|Page> menu. First of all, you can specify the way pages are displayed on the screen: when selecting “paper” as page type in <menu|Document|Page|Type>, you explicitly see the page breaks. By default, the page type is “papyrus”, which avoids page breaking during the preparation of your document. The “automatic” page type assumes that your paper size is exactly the size of your window. The page margins and text width are specified in <menu|Document|Page|Layout>. Often, it is convenient to reduce the page margins for usage on the screen; this can be done in <menu|Document|Page|Screen layout>.
+    <item>The last item.
+  </itemize>
 
-  <section|The font selection system><label|sec-man-fonts>
+  The default markers vary automatically by nesting level: the outermost level uses <math|\<bullet\>>, while the second level uses <math|<op|\<circ\>>>. When the cursor is inside a list, pressing <key|Enter> automatically creates a new item. If an item consists of multiple paragraphs, you may start a new paragraph with <key|shift+Enter>.
 
-  In <TeXmacs>, the global document font can be specified using <menu|Document|Font>. It is also possible to locally use another font using <menu|Format|Font>. Both <menu|Document|Font> and <menu|Format|Font> open the <TeXmacs> font browser. Fonts have three main characteristics:
+  Ordered lists may be inserted through <menu|Insert|Enumerate>. Similar to unordered lists, except the items are numbered. Below is an example using Roman numerals:
 
-  <\description>
-    <item*|Family>Fonts are grouped together into <em|families> with a similar design.
+  <\enumerate-Roman>
+    <item>The first item
 
-    <item*|Shape>Inside the same font family, individual fonts have different <em|shapes>, such as bold, italic, small capitals, etc.
+    <item>The second item
 
-    <item*|Size>The font <em|size> in points.
-  </description>
+    <item>The last item
+  </enumerate-Roman>
 
-  The user may directly specify these three characteristics in the font browser, which also displays some sample text for the selected font.
-
-  The font browser also provides a way to quickly select fonts based on desirable font properties. For instance, by filtering on a “bold weight” and “sans serif”, one may find a bold sans serif font which mixes as well as possible with the main font. <TeXmacs> allows you to filter on the following criteria:
-
-  <\description>
-    <item*|Weight>The font <em|weight> corresponds to the “thickness” of the font:
-
-    <center|<block|<tformat|<table|<row|<cell|<with|font-series|thin|Thin>>|<cell|<with|font-series|light|Light>>|<cell|Medium>|<cell|<with|font-series|bold|Bold>>|<cell|<with|font-series|black|Black>>>>>>>
-
-    <item*|Slant>The font <em|slant> determines the angle of the font:
-
-    <center|<block|<tformat|<table|<row|<cell|<with|font-family|normal|Normal>>|<cell|<with|font-shape|italic|Italic>>|<cell|<with|font-shape|slanted|Oblique>>>>>>>
-
-    <item*|Stretch>This property determines the horizontal width for a fixed vertical height:
-
-    <center|<block|<tformat|<table|<row|<cell|<with|font-shape|condensed|Condensed>>|<cell|<with|font-shape|unextended|Unextended>>|<cell|<with|font-shape|wide|Wide>>>>>>>
-
-    <item*|Case>This property determines how lowercase letters are capitalized:
-
-    <center|<block|<tformat|<table|<row|<cell|<with|font-shape|mixed|Mixed>>|<cell|<with|font-shape|small-caps|Small capitals>>>>>>>
-
-    <item*|Serif>This feature corresponds to the projecting features called “serifs” at the end of strokes:
-
-    <center|<block|<tformat|<table|<row|<cell|<with|font-family|rm|Serif>>|<cell|<with|font-family|ss|Sans Serif>>>>>>>
-
-    <item*|Spacing>This feature corresponds to the horizontal spacing between characters:
-
-    <center|<block|<tformat|<table|<row|<cell|<with|font-family|rm|Proportional>>|<cell|<with|font-family|tt|Monospaced>>>>>>>
-
-    <item*|Device>This property can be used to imitate specific “writing devices”:
-
-    <center|<block|<tformat|<table|<row|<cell|<with|font-family|rm|Print>>|<cell|<with|font-family|tt|Typewriter>>|<cell|<with|font-family|digital|Digital>>|<cell|<with|font-family|pen|Pen>>|<cell|<with|font-family|artpen|Art pen>>|<cell|<with|font-family|chalk|Chalk>>|<cell|<with|font-family|marker|Marker>>>>>>>
-
-    <item*|Category>Various other font features:
-
-    <htab|5mm><block|<tformat|<table|<row|<cell|<with|font-family|ancient|Ancient>>|<cell|<with|font-family|attached|Attached>>|<cell|<with|font-family|calligraphic|Calligraphic>>|<cell|<with|font-family|comic|Comic>>|<cell|<with|font-family|decorative|Decorative>>>|<row|<cell|<with|font-family|distorted|Distorted>>|<cell|<with|font-family|gothic|Gothic>>|<cell|<with|font-family|handwritten|Handwritten>>|<cell|<with|font-family|initials|Initials>>|<cell|<with|font-family|medieval|Medieval>>>|<row|<cell|<with|font-family|miscellaneous|Miscellaneous>>|<cell|<with|font-family|outline|Outline>>|<cell|<with|font-family|retro|Retro>>|<cell|<with|font-family|scifi|Scifi>>|<cell|<with|font-family|title|Title>>>>>><htab|5mm>
-  </description>
-
-  Each of the above properties really constitutes a <em|hint> on how the kind of font which <em|should> be used. If no suitable font can be found on your particular system, then setting these properties may have no effect. Whenever you apply one or more filters, the font browser indicates which fonts match the selected properties. It also indicates the closest match for the current font in use. When pressing the <menu|Ok> button without selecting any particular matching font, then the selected font properties will be inserted as <TeXmacs> markup and used as rendering hints. In that case, the rendering may change when selecting another global document font (for instance).
-
-  It should be noticed that <TeXmacs> comes with a limited number of preinstalled fonts, such as the <with|font|Stix|Stix> fonts and several fonts prefixed by “TeXmacs”. Documents which only use these fonts will be rendered the same on different systems (assuming the same version of <TeXmacs>). When your documents contain other fonts as well, then these fonts may be replaced by closest matches when opening your document under a different operating system.
-
-  <section|Mastering the keyboard><label|sec-man-keyboard>
-
-  We recall that the section on <hlink|general conventions|../start/man-conventions.en.tm> contains explanations on the way keyboard shortcuts are printed in this manual. It may also be useful to take a look at the section on <hlink|keyboard configuration|../config/man-config-keyboard.en.tm>.
-
-  <subsection|General prefix rules><label|sec-man-general-rules>
-
-  Since there are many keyboard shortcuts, it is important to have some ways of classifying them in several categories, in order to make it easier to memorize them. As a general rule, keyboard shortcuts which fall in the same category are identified by a common prefix. The active prefixes heavily depend on the selected “look and feel” in <menu|Edit|Preferences>. In the current look and feel of your <TeXmacs> system,<space|0.4spc>the main common prefixes are as follows:
+  The last type of list is the description list, inserted through <menu|Insert|Description>, used to introduce a sequence of concepts:
 
   <\description>
-    <item*|<prefix|std>>Standard shortcuts, which are similar to shortcuts used by other applications (for the selected look and feel). For instance, <shortcut|(kbd-paste)> can be used for pasting text on your system.
+    <\with|font|roman>
+      <item*|Gnu>A hairy but gentle beast.
 
-    <item*|<prefix|cmd>><TeXmacs> shortcuts, which often rely on the current editing mode. For instance, <key|text s> produces <strong|strong> text in text mode and a square root <math|<sqrt|>> in math mode.
-
-    <item*|<prefix|altcmd>>Compound <TeXmacs> shortcuts. Usually, these shortcuts first indicate the kind of markup to which the command will apply and then specify the specific command. For instance, the <key|executable> prefix is used for inserting executable markup, which is useful for <hlink|writing style files|../../devel/style/style.en.tm>. One example is the shortcut <key|executable +> for the insertion of an addition.
-
-    <item*|<prefix|structured:geometry>>This prefix is used in combination with arrow keys and certain other special keys for <hlink|positioning and resizing objects|../editing/man-structured-geometry.en.tm>
-
-    <item*|<prefix|structured:move>>This prefix is used in combination with arrow keys and some other special keys for <hlink|structured cursor movements|../editing/man-structured-move.en.tm>.
-
-    <item*|<prefix|special>>This prefix is occasionally used in combination with letters and punctuation symbols for creating some additional easy to remind shortcuts.
-
-    <item*|<prefix|symbol>>This prefix can be used in combination with normal letters for the insertion of special symbols. For instance, <key|text:symbol s> yields ß and <key|math:symbol a> yields <math|<op|\<amalg\>>>. The <prefix|symbol> prefix is also used for the insertion of “literal characters”. For instance, <key|symbol \\> will always produce the \\ character, whereas the <key|\\> key is used for entering <hlink|hybrid commands|keyboard/man-hybrid.en.tm>.
+      <item*|Gnat>Lives only in the zoo.
+    </with>
   </description>
-
-  Unfortunately, <prefix|altcmd>-based shortcuts are superseded by system shortcuts on several systems. For instance, accented characters and common special symbols are entered using this prefix under <name|Mac OS>. In that case, you may use the <key*|escape> key as an equivalent for <key|altcmd>. For more information, we refer to the section on <hlink|keyboard configuration|../config/man-config-keyboard.en.tm>.
-
-  <subsection|Keyboard shortcuts for text mode><label|sec-man-text-kbd>
-
-  To write a text in an european language with a keyboard which does have the appropriate special keys, you can use the following shortcuts to create accented characters. Note that they are active regardless of the current language setting.
-
-  <big-table|<descriptive-table|<tformat|<cwith|2|2|2|2|cell-valign|b>|<cwith|1|-1|4|4|cell-rborder|1ln>|<cwith|1|1|3|3|cell-row-span|1>|<cwith|1|1|3|3|cell-col-span|2>|<cwith|1|1|3|3|cell-rborder|1ln>|<cwith|1|1|1|1|cell-row-span|1>|<cwith|1|1|1|1|cell-col-span|2>|<cwith|1|-1|1|-1|cell-halign|c>|<cwith|2|2|6|6|cell-valign|b>|<cwith|1|1|7|7|cell-row-span|1>|<cwith|1|1|7|7|cell-col-span|2>|<cwith|1|1|7|7|cell-rborder|1ln>|<cwith|1|1|5|5|cell-row-span|1>|<cwith|1|1|5|5|cell-col-span|2>|<cwith|1|5|5|7|cell-halign|c>|<cwith|4|4|4|4|cell-rborder|1ln>|<cwith|4|4|3|4|cell-halign|c>|<cwith|1|-1|2|2|cell-halign|l>|<cwith|1|-1|6|6|cell-halign|l>|<cwith|4|4|6|8|cell-halign|c>|<cwith|4|4|6|7|cell-halign|c>|<cwith|4|4|6|6|cell-halign|l>|<cwith|5|5|4|4|cell-rborder|1ln>|<cwith|5|5|1|4|cell-halign|c>|<cwith|5|5|4|4|cell-rborder|1ln>|<cwith|5|5|3|4|cell-halign|c>|<cwith|5|5|2|2|cell-halign|l>|<cwith|5|5|7|8|cell-halign|c>|<cwith|5|5|7|7|cell-halign|c>|<cwith|5|5|7|8|cell-halign|c>|<cwith|5|5|7|7|cell-halign|c>|<cwith|6|6|1|8|cell-halign|c>|<cwith|7|7|4|4|cell-rborder|1ln>|<cwith|7|7|1|4|cell-halign|c>|<cwith|7|7|2|2|cell-halign|l>|<cwith|7|7|4|4|cell-rborder|1ln>|<cwith|7|7|1|4|cell-halign|c>|<cwith|7|7|2|2|cell-halign|l>|<cwith|7|7|4|4|cell-rborder|1ln>|<cwith|7|7|1|4|cell-halign|c>|<cwith|7|7|4|4|cell-rborder|1ln>|<cwith|7|7|3|4|cell-halign|c>|<cwith|7|7|2|2|cell-halign|l>|<cwith|6|6|1|4|cell-halign|c>|<cwith|6|6|2|2|cell-halign|l>|<cwith|6|6|1|4|cell-halign|c>|<cwith|6|6|1|3|cell-halign|c>|<cwith|6|6|2|2|cell-halign|l>|<cwith|6|6|3|4|cell-halign|c>|<cwith|6|6|3|3|cell-halign|c>|<cwith|6|6|3|4|cell-halign|c>|<cwith|6|6|3|3|cell-halign|c>|<cwith|6|6|8|8|cell-rborder|1ln>|<cwith|6|6|5|8|cell-halign|c>|<cwith|6|6|6|6|cell-halign|l>|<cwith|6|6|5|8|cell-halign|c>|<cwith|6|6|5|8|cell-halign|c>|<cwith|6|6|6|6|cell-halign|l>|<cwith|6|6|5|8|cell-halign|c>|<cwith|6|6|5|7|cell-halign|c>|<cwith|6|6|6|6|cell-halign|l>|<cwith|6|6|7|8|cell-halign|c>|<cwith|6|6|7|7|cell-halign|c>|<cwith|6|6|7|8|cell-halign|c>|<cwith|6|6|7|7|cell-halign|c>|<table|<row|<cell|Shortcut>|<cell|>|<cell|Example>|<cell|>|<cell|Shortcut>|<cell|>|<cell|Example>|<cell|>>|<row|<cell|<key|accent:acute>>|<cell|Acute ´>|<cell|<key|accent:acute e>>|<cell|é>|<cell|<key|accent:grave>>|<cell|Grave ‘>|<cell|<key|accent:grave e>>|<cell|è>>|<row|<cell|<key|accent:hat>>|<cell|Hat ˆ>|<cell|<key|accent:hat e>>|<cell|ê>|<cell|<key|accent:umlaut>>|<cell|Umlaut ¨>|<cell|<key|accent:umlaut e>>|<cell|ë>>|<row|<cell|<key|accent:tilde>>|<cell|Tilde ˜>|<cell|<key|accent:tilde a>>|<cell|ã>|<cell|<key|accent:cedilla>>|<cell|Cedilla ¸>|<cell|<key|accent:cedilla c>>|<cell|ç>>|<row|<cell|<key|accent:breve>>|<cell|Breve ˘>|<cell|<key|accent:breve g>>|<cell|ğ>|<cell|<key|accent:check>>|<cell|Check ˇ>|<cell|<key|accent:check s>>|<cell|š>>|<row|<cell|<key|accent:abovering>>|<cell|Above ring ˚>|<cell|<key|accent:abovering a>>|<cell|å>|<cell|<key|accent:abovedot>>|<cell|Above dot ˙>|<cell|<key|accent:abovedot z>>|<cell|ż>>|<row|<cell|<key|accent:doubleacute>>|<cell|Hungarian ˝>|<cell|<key|accent:doubleacute o>>|<cell|ő>|<cell|>|<cell|>|<cell|>|<cell|>>>>>|Typing accented characters.>
-
-  Special characters can also be created in any language context:
-
-  <\big-table>
-    <descriptive-table|<tformat|<cwith|1|1|1|-1|cell-row-span|1>|<cwith|1|1|1|-1|cell-col-span|2>|<cwith|1|1|1|-1|cell-halign|c>|<cwith|1|-1|3|3|cell-lborder|1ln>|<cwith|1|-1|5|5|cell-lborder|1ln>|<cwith|1|-1|7|7|cell-lborder|1ln>|<cwith|1|1|1|1|cell-row-span|1>|<cwith|1|1|1|1|cell-col-span|8>|<cwith|1|-1|2|2|cell-halign|c>|<cwith|1|-1|4|4|cell-halign|c>|<cwith|1|-1|6|6|cell-halign|c>|<cwith|1|-1|8|8|cell-halign|c>|<table|<row|<cell|Shortcuts>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|<key|symbol a>>|<cell|æ>|<cell|<key|symbol A>>|<cell|Æ>|<cell|<key|symbol a e>>|<cell|æ>|<cell|<key|symbol A E>>|<cell|Æ>>|<row|<cell|<key|symbol o>>|<cell|ø>|<cell|<key|symbol O>>|<cell|Ø>|<cell|<key|symbol o e>>|<cell|œ>|<cell|<key|symbol O E>>|<cell|Œ>>|<row|<cell|<key|symbol s>>|<cell|ß>|<cell|<key|symbol S>>|<cell|ẞ>|<cell|>|<cell|>|<cell|>|<cell|>>|<row|<cell|<key|symbol !>>|<cell|¡>|<cell|<key|symbol ?>>|<cell|¿>|<cell|<key|symbol p>>|<cell|§>|<cell|<key|symbol P>>|<cell|£>>>>>
-  </big-table|Typing special characters.>
-
-  When you press the <key|"> key, an appropriate quote will be inserted. The quote character is chosen according to the current language and the surrounding text. If the chosen quoting style is not appropriate, you can change it in <menu|Edit|Preferences|Keyboard|Automatic quotes>. You can also insert raw quotes:
-
-  <big-table|<descriptive-table|<tformat|<cwith|1|-1|3|3|cell-lborder|1ln>|<cwith|1|1|1|-1|cell-row-span|1>|<cwith|1|1|1|-1|cell-col-span|2>|<cwith|1|1|1|-1|cell-halign|c>|<cwith|1|1|1|1|cell-row-span|1>|<cwith|1|1|1|1|cell-col-span|4>|<cwith|1|-1|2|2|cell-halign|c>|<cwith|1|-1|4|4|cell-halign|c>|<table|<row|<cell|Shortcuts>|<cell|>|<cell|>|<cell|>>|<row|<cell|<key|symbol ">>|<cell|">|<cell|<key|, ,>>|<cell|„>>|<row|<cell|<key|\<less\> var>>|<cell|‹>|<cell|<key|\<gtr\> var>>|<cell|›>>|<row|<cell|<key|\<less\> \<less\>>>|<cell|«>|<cell|<key|\<gtr\> \<gtr\>>>|<cell|»>>>>>|Typing raw quotes.>
-
-  “English” quotes are considered ligatures of two successive backticks or apostrophes. They can be created with <key|‘ ‘> and <key|' '> but these are not actual keyboard commands: the result is two characters displayed specially, not a special single character.
-
-  Some shortcuts are available in specific language contexts. You can set the text language for the whole document with <menu|Document|Language> or only locally with <menu|Format|Language> (see <hlink|generalities for typing text|man-generalities.en.tm>).
-
-  <big-table|<descriptive-table|<tformat|<cwith|1|1|1|-1|cell-row-span|1>|<cwith|1|1|1|-1|cell-col-span|2>|<cwith|1|1|1|-1|cell-halign|c>|<cwith|1|-1|3|3|cell-lborder|1ln>|<cwith|1|-1|5|5|cell-lborder|1ln>|<cwith|1|-1|7|7|cell-lborder|1ln>|<cwith|6|11|1|4|cell-bborder|0>|<cwith|6|11|1|4|cell-rborder|0>|<cwith|6|11|3|3|cell-lborder|0>|<cwith|1|1|5|5|cell-row-span|1>|<cwith|1|1|5|5|cell-col-span|4>|<twith|table-lborder|0>|<cwith|1|-1|1|1|cell-lborder|0>|<twith|table-bborder|0>|<cwith|1|1|1|1|cell-lborder|1ln>|<cwith|2|5|1|1|cell-lborder|1ln>|<cwith|5|5|1|4|cell-bborder|1ln>|<cwith|11|11|5|8|cell-bborder|1ln>|<cwith|1|-1|2|2|cell-halign|c>|<cwith|1|-1|4|4|cell-halign|c>|<cwith|1|-1|6|6|cell-halign|c>|<cwith|1|-1|8|8|cell-halign|c>|<table|<row|<cell|Hungarian>|<cell|>|<cell|Spanish>|<cell|>|<cell|Polish>|<cell|>|<cell|>|<cell|>>|<row|<cell|<key|symbol o>>|<cell|<with|language|hungarian|ő>>|<cell|<key|! var>>|<cell|<with|language|spanish|¡>>|<cell|<key|symbol a>>|<cell|<with|language|polish|ą>>|<cell|<key|symbol o>>|<cell|<with|language|polish|ó>>>|<row|<cell|<key|symbol O>>|<cell|<with|language|hungarian|Ő>>|<cell|<key|? var>>|<cell|<with|language|spanish|¿>>|<cell|<key|symbol A>>|<cell|<with|language|polish|Ą>>|<cell|<key|symbol O>>|<cell|<with|language|polish|Ó>>>|<row|<cell|<key|symbol u>>|<cell|<with|language|hungarian|ű>>|<cell|<key|! ‘>>|<cell|<with|language|spanish|¡>>|<cell|<key|symbol c>>|<cell|<with|language|polish|ć>>|<cell|<key|symbol s>>|<cell|<with|language|polish|ś>>>|<row|<cell|<key|symbol U>>|<cell|<with|language|hungarian|Ű>>|<cell|<key|? ‘>>|<cell|<with|language|spanish|¿>>|<cell|<key|symbol C>>|<cell|<with|language|polish|Ć>>|<cell|<key|symbol S>>|<cell|<with|language|polish|Ś>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol e>>|<cell|<with|language|polish|ę>>|<cell|<key|symbol x>>|<cell|<with|language|polish|ź>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol E>>|<cell|<with|language|polish|Ę>>|<cell|<key|symbol X>>|<cell|<with|language|polish|Ź>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol l>>|<cell|<with|language|polish|ł>>|<cell|<key|symbol z>>|<cell|<with|language|polish|ż>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol L>>|<cell|<with|language|polish|Ł>>|<cell|<key|symbol Z>>|<cell|<with|language|polish|Ż>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol n>>|<cell|<with|language|polish|ń>>|<cell|<key|symbol z var>>|<cell|<with|language|polish|ź>>>|<row|<cell|>|<cell|>|<cell|>|<cell|>|<cell|<key|symbol N>>|<cell|<with|language|polish|Ń>>|<cell|<key|symbol Z var>>|<cell|<with|language|polish|Ź>>>>>>|Language-specific text shorthands.>
-
-  Language-specific shortcuts override generic shortcuts; for example, you cannot easily type “ø” in hungarian context.
-
-  <subsection|Hybrid commands and <LaTeX> simulation><label|sec-man-hybrid>
-
-  <TeXmacs> allows you to enter <LaTeX> commands directly from the keyboard as follows. You first hit the <key|\\>-key in order to enter the hybrid <LaTeX>/<TeXmacs> command mode. Next you type the command you wish to execute. As soon as you finished typing your command, the left footer displays something like
-
-  <\verbatim>
-    \ \ \ \ \<less\>return\<gtr\>: action to be undertaken
-  </verbatim>
-
-  When you hit the <shortcut|(kbd-return)>-key at this stage, your command will be executed. For instance, in math-mode, you may create a fraction by typing <key|\\ f r a c return>.
-
-  If the command you have typed is not a (recognized) <LaTeX> command, then we first look whether the command is an existing <TeXmacs> macro, function or environment (provided by the style file). If so, the corresponding macro expansion, function application or environment application is created (with the right number of arguments). Otherwise, it is assumed that your command corresponds to an environment variable and we ask for its value. The <key|\\>-key is always equivalent to one of the commands <key|inactive l>, <key|inactive e>, <key|inactive a>, <key|inactive #> or <key|inactive v>.
-
-  To insert a literal <kbd|\\> (backslash) character, you can use the <key|symbol \\> sequence.
-
-  <subsection|Dynamic objects><label|sec-man-dynamic>
-
-  Certain more complex objects can have several <em|states> during the editing process. Examples of such <em|dynamic objects> are labels and references, because the appearance of the reference depends on a dynamically determined number. Many other examples of dynamic markup can be found in the documentation about <hlink|writing style files|../../devel/style/keyboard/style-kbd.en.tm>.
-
-  When entering a dynamic object like a label using <shortcut|(make-label)>, the default state is <em|inactive>. This inactive state enables you to type the information which is relevant to the dynamic object, such as the name of the label in our case. Certain dynamic objects take an arbitrary number of parameters, and new ones can be inserted using <key|var>.
-
-  <\big-figure>
-    <with|color|blue|<math|\<langle\>>label<math|\|>>pythagoras<with|color|blue|<math|\<rangle\>>>
-  </big-figure|Inactive label>
-
-  When you finished typing the relevant information for your dynamic object, you may type <shortcut|(kbd-return)> in order to <em|activate> the object. An active dynamic object may be deactivated by placing your cursor just behind the object and hitting <key|backspace>.
-
-  <subsection|Various useful keyboard shortcuts><label|sec-man-standard>
-
-  Some assorted shortcuts which are often useful are displayed in table<nbsp><reference|various-useful-shortcuts>. Notice that spaces inserted using <shortcut|(make-space "1em")>, <shortcut|(make-space "0.2spc")> and <shortcut|(make-space "-0.2spc")> can be <hlink|resized <em|a posteriori>|../editing/man-structured-geometry.en.tm> using the shortcuts <shortcut|(geometry-left)> and<nbsp><shortcut|(geometry-right)>. This kind of resizing actually works for more general horizontal and vertical spaces inserted from the menu <menu|Format|Space>, as well as several other objects, such as images.
-
-  <\big-table|<descriptive-table|<tformat|<table|<row|<cell|Shortcut>|<cell|Action>>|<row|<cell|<shortcut|(remove-structure-upwards)>>|<cell|Remove the containing object or environment.>>|<row|<cell|<shortcut|(make 'nbsp)>>|<cell|Insert a non breaking space.>>|<row|<cell|<shortcut|(make-space "1em")>>|<cell|Insert a quad space.>>|<row|<cell|<shortcut|(make-space "0.2spc")>>|<cell|Insert a small space.>>|<row|<cell|<shortcut|(make-space "-0.2spc")>>|<cell|Insert a small negative space.>>|<row|<cell|<shortcut|(kbd-alternate-tab)>>|<cell|Insert a “tab”>>|<row|<cell|<shortcut|(go-start)>>|<cell|Go to the start of the document.>>|<row|<cell|<shortcut|(go-end)>>|<cell|Go to the end of the document.>>|<row|<cell|<shortcut|(make 'line-break)>>|<cell|Insert a line break.>>|<row|<cell|<shortcut|(make-rigid)>>|<cell|Insert a “rigid” piece of text, which cannot be line-broken.>>>>>>
-    <label|various-useful-shortcuts>Various useful keyboard shortcuts
-  </big-table>
 </body>
+
 
 <\initial>
   <\collection>
