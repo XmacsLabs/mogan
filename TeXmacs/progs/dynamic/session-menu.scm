@@ -99,7 +99,7 @@
 (define binary-type "python")
 (define binary-path "")
 (define warning-message "")
-(define binary-list (list "python" "aspell" "conda" "convert" "goldfish" "ghostscript"))
+(define binary-list (list "python" "aspell" "conda" "convert" "goldfish" "ghostscript" "hunspell" "identify" "inkscape" "pandoc" "pdftocairo" "rsvg-convert"))
 
 (define-format windows-executables
   (:name "Executable")
@@ -109,14 +109,14 @@
   (:name "Executable")
   (:suffix ""))
 
+(tm-define (name-to-id name)
+  (cond ((string=? name "python") "python3")
+        ((string=? name "ghostcript") "gs")
+        (else name)))
+
 ; 更新路径信息，并刷新输入框让其显示新的路径信息
 (tm-define (update-path)
-  (let* ((this-opt (cond ((string=? binary-type "python")
-                          (string-append "plugin:binary:" binary-type "3"))
-                         ((string=? binary-type "ghostscript")
-                          (string-append "plugin:binary:" "gs"))
-                         (else
-                          (string-append "plugin:binary:" binary-type))))
+  (let* ((this-opt (string-append "plugin:binary:" (name-to-id binary-type)))
          (this-path (get-preference this-opt)))
     (cond ((string=? this-path "default")
            (set! binary-path ""))
@@ -126,21 +126,15 @@
 
 ; 拼接字符串并传递给set-preference设置自定义路径
 (tm-define (set-binary-path)
-  (let* ((binary-opt (cond ((string=? binary-type "python")
-                            "plugin:binary:python3")
-                           ((string=? binary-type "ghostscript")
-                            "plugin:binary:gs")
-                           (else
-                            (string-append "plugin:binary:" binary-type)))))
-    (set-preference binary-opt binary-path)
-    (display* (string-append binary-opt " " binary-path) "\n")))
+  (let* ((binary-opt (string-append "plugin:binary:" (name-to-id binary-type))))
+    (set-preference binary-opt binary-path)))
 
 ; 验证路径是否符合要求
 (tm-define (find-binary-in-candidates)
   (when (string=? binary-path "")
     #f)
   (let ((url (string->url binary-path))
-        (binary-name (cond ((string=? binary-type "ghostscript") 
+        (binary-name (cond ((string=? binary-type "ghostscript") ;这里不能用(name-to-id)处理，如果使用了，则python插件无法适用于下面的判断逻辑
                             "gs")
                            (else 
                             binary-type))))
@@ -219,15 +213,19 @@
                (lambda (x) (apply make-session x))))
     ("Other" (interactive make-session))
     ("Manual path" (dialogue-window manual-path-widget 
-                     (lambda (args) 
-                       (display* args "\n") 
+                     (lambda (args)  
                        (when (!= args "cancel") ; 仅路径存在并点击确定时开始设置路径
                          (if (not (find-binary-in-candidates)) ; 如果路径不合法，拒绝设置，弹出错误窗口
                            (dialogue-window path-incorrect-widget
-                             (lambda (args) (display* args "\n")) "Warning")
+                             (lambda (args) 
+                               (set! binary-type (car binary-list))) 
+                               "Warning")
                            (begin (set-binary-path) ; 路径合法，设置路径并弹出提示窗口
                              (dialogue-window please-restart-widget 
-                               (lambda (args) (display* args "\n")) "Warning"))))) 
+                               (lambda (args) 
+                                 (set! binary-type (car binary-list))) 
+                                 "Warning"))))
+                       (set! binary-type (car binary-list))) 
                      "Set binary path"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
