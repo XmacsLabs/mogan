@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.2.0-rc2>>
+<TMU|<tuple|1.1.0|2025.2.0-rc6>>
 
 <style|<tuple|tmdoc|number-europe>>
 
@@ -27,7 +27,7 @@
 
   <section|Entering Structured Text><label|sec-man-structure>
 
-  Long documents usually have a clear structure: chapters, sections, and subsections. They contain different types of text, such as plain text, quotations, footnotes, theorems, etc. After choosing a style from <menu|Document|Style>, <TeXmacs> formats your document accordingly—for example, numbering of sections, pages, theorems, and formatting of footnotes and citations.
+  Long documents usually have a clear structure: chapters, sections, and subsections. They contain different types of text, such as plain text, quotations, footnotes, theorems, etc. After choosing a style from <menu|Document|Style>, Mogan/Liii STEM formats your document accordingly—for example, numbering of sections, pages, theorems, and formatting of footnotes and citations.
 
   Available standard document styles include <tmstyle|generic>, <tmstyle|article>, <tmstyle|book>, <tmstyle|letter>, <tmstyle|exam>, <tmstyle|beamer>, <tmstyle|seminar>, <tmstyle|source>. For example, the article style is suitable for writing papers. Other styles may be used for journal submissions or special purposes, such as the official Mogan/Liii STEM documentation.
 
@@ -63,7 +63,7 @@
     </big-envbox>
   </quote-env>
 
-  Similarly, the arrow buttons on the left of the focus toolbar allow you to jump between similar tags. In this example, they allow you to browse all formulas or equations in the document. For more details, see <hlink||manu.editing.zh.tmu#sec-man-structured-editing> and <hlink|Structured Editing|manu.editing.zh.tmu#sec-man-structured-editing>.
+  Similarly, the arrow buttons on the left of the focus toolbar allow you to jump between similar tags. In this example, they allow you to browse all formulas or equations in the document. For more details, see <hlink||manu.editing.zh.tmu#sec-man-structured-editing> and <hlink|Structured Editing|manu.editing.en.tmu#sec-man-structured-editing>.
 
   Another important concept is the editing mode. There are three modes: text mode, math mode, and command mode. Modes change less frequently than focus changes. Their toolbar is located above the focus toolbar. The <menu|Insert> and <menu|Format> menus also depend on the current mode.
 
@@ -129,7 +129,6 @@
     </with>
   </description>
 </body>
-
 
 <\initial>
   <\collection>

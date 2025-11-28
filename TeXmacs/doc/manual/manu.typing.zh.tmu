@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.2.0-rc4>>
+<TMU|<tuple|1.1.0|2025.2.0-rc6>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
@@ -27,7 +27,7 @@
 
   <section|输入结构化文本><label|sec-man-structure>
 
-  长文档往往具有良好的结构：即章、节和子节。其中包含不同类型的文本，比如纯文本，引用，脚注，定理等。选择好<menu|Document|Style>后，<TeXmacs>会依照样式为文本排版，比如节、页、定理的编号，又如引用和脚注的排版等等。
+  长文档往往具有良好的结构：即章、节和子节。其中包含不同类型的文本，比如纯文本，引用，脚注，定理等。选择好<menu|Document|Style>后，Mogan/Liii STEM会依照样式为文本排版，比如节、页、定理的编号，又如引用和脚注的排版等等。
 
   目前可用的标准文档样式有：<tmstyle|generic>， <tmstyle|article>， <tmstyle|book>， <tmstyle|letter>， <tmstyle|exam>， <tmstyle|beamer>， <tmstyle|seminar>， <tmstyle|source>。比如，article样式可用于写文章。另外的样式可用于期刊论文或其它特殊用途，比如Mogan/Liii STEM官方文档。
 
