@@ -99,79 +99,102 @@
 (define binary-type "python")
 (define binary-path "")
 (define warning-message "")
-(define binary-list (list '(verbatim "python") '(verbatim "aspell") '(verbatim "conda") '(verbatim "convert") '(verbatim "goldfish") '(verbatim "ghostscript")))
-(define-format windows-executables 
+(define binary-list (list "python" "aspell" "conda" "convert" "goldfish" "ghostscript"))
+
+(define-format windows-executables
   (:name "Executable")
   (:suffix "exe" "bat"))
+
 (define-format unix-executables
   (:name "Executable")
   (:suffix ""))
 
 ; 更新路径信息，并刷新输入框让其显示新的路径信息
 (tm-define (update-path)
-(let* ((this-opt (cond ((string=? binary-type "python") (string-append "plugin:binary:" binary-type "3"))
-                  ((string=? binary-type "ghostscript") (string-append "plugin:binary:" "gs"))
-                  (else (string-append "plugin:binary:" binary-type))))
-      (this-path (get-preference this-opt)))
-      (cond ((string=? this-path "default") (set! binary-path ""))
-            (else (set! binary-path this-path)))
-            (refresh-now "input-path-widget")))
+  (let* ((this-opt (cond ((string=? binary-type "python")
+                          (string-append "plugin:binary:" binary-type "3"))
+                         ((string=? binary-type "ghostscript")
+                          (string-append "plugin:binary:" "gs"))
+                         (else
+                          (string-append "plugin:binary:" binary-type))))
+         (this-path (get-preference this-opt)))
+    (cond ((string=? this-path "default")
+           (set! binary-path ""))
+          (else
+           (set! binary-path this-path)))
+    (refresh-now "input-path-widget")))
 
 ; 拼接字符串并传递给set-preference设置自定义路径
 (tm-define (set-binary-path)
-  (let* ((binary-opt (cond ((string=? binary-type "python") "plugin:binary:python3")
-                      ((string=? binary-type "ghostscript") "plugin:binary:gs")
-                      (else (string-append "plugin:binary:" binary-type)))))
-  (set-preference binary-opt binary-path)
-  (display* (string-append binary-opt " " binary-path) "\n")
-  ))
+  (let* ((binary-opt (cond ((string=? binary-type "python")
+                            "plugin:binary:python3")
+                           ((string=? binary-type "ghostscript")
+                            "plugin:binary:gs")
+                           (else
+                            (string-append "plugin:binary:" binary-type)))))
+    (set-preference binary-opt binary-path)
+    (display* (string-append binary-opt " " binary-path) "\n")))
 
 ; 验证路径是否符合要求
 (tm-define (find-binary-in-candidates)
+  (when (string=? binary-path "")
+    #f)
   (let ((url (string->url binary-path))
-        (binary-name (cond ((string=? binary-type "ghostscript") "gs")
-                      (else binary-type))))
-        (if (and (url-exists? url)
-              (url-regular? url) 
-              (string-contains? (url->string (url-tail url)) binary-name))
-            (if (access (url->string url) 'X_OK) #t #f)
-            #f)))
+        (binary-name (cond ((string=? binary-type "ghostscript") 
+                            "gs")
+                           (else 
+                            binary-type))))
+    (if (and (url-exists? url)
+             (url-regular? url)
+             (string-contains? (url->string (url-tail url)) binary-name))
+        (if (access (url->string url) 'X_OK) #t #f)
+        #f)))
 
 ; 设置成功弹窗
-(tm-widget (Please-Restart-Widget cmd)
+(tm-widget (please-restart-widget cmd)
   (resize "300px" "150px"
-  (padded
-  (text "Please restart Mogan to apply the changes.")))
-  (bottom-buttons >>("ok" (cmd "ok"))//
-                ("cancel" (cmd "cancel"))))
+    (padded
+      (text "Please restart Mogan to apply the changes.")))
+  (bottom-buttons 
+    >> ("ok" (cmd "ok")) // ("cancel" (cmd "cancel"))))
 
 ; 路径非法弹窗
-(tm-widget (Path-Incorrect-Widget cmd)
+(tm-widget (path-incorrect-widget cmd)
   (resize "300px" "150px"
-  (padded
-  (text "The path you entered is incorrect!")))
-  (bottom-buttons >>("ok" (cmd "ok"))//
-                ("cancel" (cmd "cancel"))))
+    (padded
+      (text "The path you entered is incorrect!")))
+  (bottom-buttons 
+    >> ("ok" (cmd "ok")) // ("cancel" (cmd "cancel"))))
 
 ; 自定义路径设置主弹窗
-(tm-widget (Manual-Path-Widget cmd)
-(resize "500px" "200px" ; 设置窗口大小
-  (padded ; 设置样式为四周留空
-  (invisible (update-path)) ; 更新路径，窗口打开默认是python，所以这里更新的是查找到的python路径
-    (vlist === ; 纵向容器，胶水组件
+(tm-widget (manual-path-widget cmd)
+  (resize "500px" "200px" ; 设置窗口大小
+    (padded ; 设置样式为四周留空
+      (invisible (update-path)) ; 更新路径，窗口打开默认是python，所以这里更新的是查找到的python路径
+      (vlist === ; 纵向容器，胶水组件
         (hlist (text "Select binary: ") ; 横向容器，第一行下拉单选框的名称提示
-          (enum (begin (set! binary-type answer) (update-path)) binary-list "python" "50em")) ; 默认显示python，并设置回调函数，当值被更改，调用update-path更新路径同步在输入框中显示
+          (enum (begin 
+                  (set! binary-type (cadr answer)) 
+                  (update-path)) 
+                (map 
+                  (lambda (x) (list 'verbatim x)) 
+                  binary-list) 
+                (car binary-list) 
+                "50em")) ; 默认显示python，并设置回调函数，当值被更改，调用update-path更新路径同步在输入框中显示
         (refreshable "input-path-widget" ; 将第二行组件设置为可刷新并命名
-        (hlist (text "Select path: ") ; 第二行名称提示
-          (inert (input "path" "string" (list binary-path) "25em"))// ; 只读的输入框，显示的是全局变量binary-path
-          (explicit-buttons ; 按钮，包含了一个文件选择器
-            ("choose file" (choose-file (lambda (selected-url) ; 文件选择器，定义回调函数，当有新路径被选择时，设置全局变量并刷新容器
-                            (set! binary-path (url->system selected-url))
-                            (refresh-now "input-path-widget"))
-              "Choose binary file" (if (os-win32?) "windows-executables" "generic"))))
-          (text warning-message)))))) ; 未完成的组件：路径选择错误，在文本框下显示错误信息。
-(bottom-buttons >>("ok" (cmd "ok"))// ; 点击OK将调用对话框回调
-                ("cancel" (cmd "cancel"))))
+          (hlist (text "Select path: ") ; 第二行名称提示
+            (inert 
+              (input "path" "string" (list binary-path) "25em")) // ; 只读的输入框，显示的是全局变量binary-path
+            (explicit-buttons ; 按钮，包含了一个文件选择器
+              ("choose file" 
+                (choose-file (lambda (selected-url) ; 文件选择器，定义回调函数，当有新路径被选择时，设置全局变量并刷新容器
+                               (set! binary-path (url->system selected-url))
+                               (refresh-now "input-path-widget"))
+                  "Choose binary file" 
+                  (if (os-win32?) "windows-executables" "generic"))))
+            (text warning-message)))))) ; 未完成的组件：路径选择错误，在文本框下显示错误信息。
+  (bottom-buttons 
+    >> ("ok" (cmd "ok")) // ("cancel" (cmd "cancel"))))
 
 (tm-menu (supported-sessions-menu)
   (for (name (session-list))
@@ -195,16 +218,16 @@
                "Start remote session"
                (lambda (x) (apply make-session x))))
     ("Other" (interactive make-session))
-    ("Manual path" (dialogue-window Manual-Path-Widget 
-                    (lambda (args) 
-                      (display* args "\n") 
-                      (when (and (!= binary-path "") (!= args "cancel")) ; 仅路径存在并点击确定时开始设置路径
-                      (if (not (find-binary-in-candidates)) ; 如果路径不合法，拒绝设置，弹出错误窗口
-                        (dialogue-window Path-Incorrect-Widget
-                          (lambda (args) (display* args "\n")) "Warning")
-                        (begin (set-binary-path) ; 路径合法，设置路径并弹出提示窗口
-                        (dialogue-window Please-Restart-Widget 
-                          (lambda (args) (display* args "\n")) "Warning"))))) 
+    ("Manual path" (dialogue-window manual-path-widget 
+                     (lambda (args) 
+                       (display* args "\n") 
+                       (when (!= args "cancel") ; 仅路径存在并点击确定时开始设置路径
+                         (if (not (find-binary-in-candidates)) ; 如果路径不合法，拒绝设置，弹出错误窗口
+                           (dialogue-window path-incorrect-widget
+                             (lambda (args) (display* args "\n")) "Warning")
+                           (begin (set-binary-path) ; 路径合法，设置路径并弹出提示窗口
+                             (dialogue-window please-restart-widget 
+                               (lambda (args) (display* args "\n")) "Warning"))))) 
                      "Set binary path"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
