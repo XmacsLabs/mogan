@@ -58,7 +58,7 @@ destroy_window_id (url win) {
 
 url
 abstract_window (tm_window win) {
-  if (win == NULL) return url_none ();
+  if (win == NULL || !is_valid_window (win)) return url_none ();
   return win->id;
 }
 
@@ -67,6 +67,7 @@ abstract_window (tm_window win) {
  ******************************************************************************/
 
 static hashmap<url, tm_window> tm_window_table (NULL);
+static hashset<tm_window>      valid_windows;
 
 class kill_window_command_rep : public command_rep {
   url* id;
@@ -100,6 +101,7 @@ new_window (bool map_flag, tree geom) {
   command   quit= tm_new<kill_window_command_rep> (id);
   tm_window win = tm_new<tm_window_rep> (texmacs_widget (mask, quit), geom);
   tm_window_table (win->id)= win;
+  valid_windows->insert (win);
   if (map_flag) win->map ();
   *id= abstract_window (win);
   return abstract_window (win);
@@ -127,8 +129,14 @@ delete_window (url win_u) {
   }
   win->unmap ();
   tm_window_table->reset (win->id);
+  valid_windows->remove (win);
   destroy_window_widget (win->win);
   tm_delete (win);
+}
+
+bool
+is_valid_window (tm_window win) {
+  return win != NULL && valid_windows->contains (win);
 }
 
 tm_window

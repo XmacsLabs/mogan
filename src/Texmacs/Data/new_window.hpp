@@ -39,5 +39,6 @@ typedef tm_window_rep* tm_window;
 tm_window              concrete_window ();
 tm_window              concrete_window (url win);
 url                    abstract_window (tm_window win);
+bool                   is_valid_window (tm_window win);
 
 #endif // defined NEW_WINDOW_H

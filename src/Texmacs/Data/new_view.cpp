@@ -183,7 +183,14 @@ url
 view_to_window_of_tabpage (url u) {
   tm_view vw= concrete_view (u);
   if (vw == NULL) return url_none ();
-  return abstract_window (vw->win_tabpage);
+  if (vw->win_tabpage == NULL) return url_none ();
+
+  // Try to get the window URL, but catch any potential memory access issues
+  try {
+    return abstract_window (vw->win_tabpage);
+  } catch (...) {
+    return url_none ();
+  }
 }
 
 editor
