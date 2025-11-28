@@ -769,7 +769,7 @@
   ;;     comb: 按键序列，类型为string，如"< tab tab = tab"
   ;; 处理过程:
   ;;     1. 递归删除末尾所有的 " tab"，得到基本序列
-  ;;        例如: "< tab tab = tab tab" -> "< tab tab ="
+  ;;        例如: "< tab tab = tab tab" -> "< tab tab ="，继续删除得到 "< tab tab"，最后得到 "<"
   ;;     2. 查找该基本序列对应的符号绑定
   ;;     3. 如果绑定不存在，返回空列表
   ;;     4. 如果绑定存在，继续查找所有以该基本序列为前缀的符号绑定
@@ -777,40 +777,37 @@
   ;;        例如((symbol-completion "<alpha>"))
   ;; 输出:
   ;;     符号列表，格式为((symbol-completion "符号") ...)
-  (if (not (kbd-find-key-binding comb)) '()
-    (let* ((tab-info (let loop ((s comb) (count 0))
-                       (if (string-ends? s " tab")
-                           (loop (substring s 0 (- (string-length s) 4))
-                                 (+ count 1))
-                           (cons s count))))
-           (pre (car tab-info))
-           (tab-iter (cdr tab-info))
-           (pre (string-replace pre "space " ""))
-           (kbd-res (kbd-find-key-binding pre))
-           (kbd-sym (and (pair? kbd-res) (car kbd-res)))
-           ;; primary-sym 是当前已输入的符号 (pre 的绑定)
-           (primary-sym kbd-sym)
-           (base (if (string? primary-sym)
-                     `((symbol-completion ,primary-sym))
-                     '()))
-           ;; 使用新的 kbd-find-prefix-tab 获取所有 tab 切换候选
-           (tab-pairs (kbd-find-prefix-tab pre)))
-         (set! iteration tab-iter)
-      (let ((others (filter-map (lambda (pair)
-                                  (let ((val (cdr pair)))
-                                    (if (and (pair? val) (string? (car val)))
-                                        `(symbol-completion ,(car val))
-                                        #f)))
-                                tab-pairs)))
-        (if (string? primary-sym)
-            (let ((filtered (filter (lambda (entry)
-                                      (or (not (pair? entry))
-                                          (not (= (length entry) 2))
-                                          (not (string? (cadr entry)))
-                                          (not (string=? (cadr entry) primary-sym))))
-                                    others)))
-              (append base filtered))
-            '())))))
+  (let* ((tab-info (let loop ((s comb) (count 0))
+						(if (string-ends? s " tab")
+								(loop (substring s 0 (- (string-length s) 4))
+											(+ count 1))
+								(cons s count))))
+					(pre (car tab-info))
+					(tab-iter (cdr tab-info))
+					(pre (string-replace pre "space " ""))
+					(kbd-res (kbd-find-key-binding pre))
+					(kbd-sym (and (pair? kbd-res) (car kbd-res)))
+					;; primary-sym 是当前已输入的符号 (pre 的绑定)
+					(primary-sym kbd-sym))
+    (set! iteration tab-iter)
+    (if (not (string? primary-sym))
+			'()
+			(let* ((base `((symbol-completion ,primary-sym)))
+					;; 使用新的 kbd-find-prefix-tab 获取所有 tab 切换候选
+					(tab-pairs (kbd-find-prefix-tab pre))
+					(others (filter-map (lambda (pair)
+						(let ((val (cdr pair)))
+							(if (and (pair? val) (string? (car val)))
+									`(symbol-completion ,(car val))
+									#f)))
+					tab-pairs))
+					(filtered (filter (lambda (entry)
+						(or (not (pair? entry))
+								(not (= (length entry) 2))
+								(not (string? (cadr entry)))
+								(not (string=? (cadr entry) primary-sym))))
+					others)))
+				(append base filtered)))))
 
 (define (highlight-tabcycle-symbols lst comb)
   ;; 高亮显示Tab循环符号列表中符合按键序列的符号
@@ -818,21 +815,23 @@
   ;;     lst: 符号列表，格式为((symbol-completion "符号") ...)
   ;;     comb: 按键序列，类型为string，如"b tab"
   ;; 输出:
-  ;;     如果 comb 合法(为string)，返回符号列表，
-  ;;        格式为((symbol-completion "符号") (symbol-completion* "符号") ...)，
-  ;;        其中 symbol-completion* 表示高亮显示的符号，参见 make-menu-symbol 中的定义
-  ;;     如果 comb 不合法(为string)，返回空列表
-  (let ((bind (let* ((comb1 (string-replace comb "space " ""))
-                     (res (kbd-find-key-binding comb1)))
-                (and res (car res)))))
-    (if (string? bind)
-      (map (lambda (x) (if (and bind
-                                (pair? x)
-                                (eq? (car x) 'symbol-completion)
-                                (string=? (cadr x) bind))
-                          (list 'symbol-completion* bind) x))
-           lst)
-      '())))
+  ;;     符号列表，格式为((symbol-completion "符号") (symbol-completion* "符号") ...)，
+  ;;     其中 symbol-completion* 表示高亮显示的符号
+  ;; 处理逻辑:
+  ;;     使用 iteration 变量（在 tabcycle-symbols 中已设置）来计算应该高亮的索引
+  ;;     索引 = iteration mod 列表长度
+  ;;     iteration=0: 高亮第一个, iteration=1: 高亮第二个, ...循环
+  (let ((len (length lst)))
+    (if (= len 0)
+			'()
+			(let ((highlight-idx (modulo iteration len)))
+				(map-in-order
+					(lambda (i entry)
+						(if (= i highlight-idx)
+								(list 'symbol-completion* (cadr entry))
+								entry))
+					(iota len)
+					lst)))))
 
 (tm-define (math-tabcycle-symbols comb)
   ;; 根据按键序列获取数学符号Tab循环展示的列表
@@ -845,7 +844,7 @@
     '()))
 
 (tm-define (math-tabcycle-menu-needed? comb)
-  (and (or (string-contains? comb "tab") (> iteration 1))
+  (and (or (string-contains? comb "tab") (>= iteration 1))
        (> (length (math-tabcycle-symbols comb)) 1)))
 
 (tm-define (math-variant comb)

@@ -38,17 +38,22 @@
 (define (test-math-tabcycle-symbols)
   (make 'math)
   (kbd-insert "now we are in math mode")
-  ;; 注意 symbol* 高亮的位置也是随着 tab 的次数变化的
+  ;; 注意 symbol* 高亮的位置也是随着 tab 的次数变化的，现在支持循环
   (check (math-tabcycle-symbols "a") => '((symbol-completion* "a") (symbol-completion "<alpha>")))
   (check (math-tabcycle-symbols "a tab")
     => '((symbol-completion "a") (symbol-completion* "<alpha>")))
-  (check (math-tabcycle-symbols "a tab tab") => '())
+  ;; 两个元素的循环：tab tab 回到第一个元素
+  (check (math-tabcycle-symbols "a tab tab")
+    => '((symbol-completion* "a") (symbol-completion "<alpha>")))
   (check (math-tabcycle-symbols "= >")
     => '((symbol-completion* "<Rightarrow>") (symbol-completion "<Downarrow>") (symbol-completion "<Uparrow>") (symbol-completion "<Rrightarrow>")))
   (check (math-tabcycle-symbols "= > tab")
     => '((symbol-completion "<Rightarrow>") (symbol-completion* "<Downarrow>") (symbol-completion "<Uparrow>") (symbol-completion "<Rrightarrow>")))
   (check (math-tabcycle-symbols "= > tab tab")
     => '((symbol-completion "<Rightarrow>") (symbol-completion "<Downarrow>") (symbol-completion* "<Uparrow>") (symbol-completion "<Rrightarrow>")))
+  ;; 测试循环：4个元素，tab 4次后回到第一个
+  (check (math-tabcycle-symbols "= > tab tab tab tab")
+    => '((symbol-completion* "<Rightarrow>") (symbol-completion "<Downarrow>") (symbol-completion "<Uparrow>") (symbol-completion "<Rrightarrow>")))
 )
 
 (tm-define (test_201_11)
