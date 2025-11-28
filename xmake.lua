@@ -937,14 +937,72 @@ target("stem") do
     end
 
     on_run(function (target)
-        name = target:name()
+        local name = target:name()
+        -- path to the binary: for Windows we use the install dir's bin/, otherwise the build artifact
+        local binary
         if is_plat("windows") then
-            os.execv(target:installdir().."/bin/" .. target:filename(), {"-d"})
-        elseif is_plat("linux", "macosx") then
-            print("Launching " .. target:targetfile())
-            os.execv(target:targetfile(), {"-d"}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
+            binary = path.join(target:installdir(), "bin", target:filename())
         else
-            print("Unsupported plat $(plat)")
+            binary = target:targetfile()
+        end
+
+        -- Default program parameters (kept to preserve old behaviour)
+        local params = {"-d"}
+
+        -- Allow overriding debug-run behavior by setting DEBUG or XMAKE_DEBUGGER env var.
+        -- If set, we will launch an interactive debugger (gdb on linux, lldb on macos) instead
+        local run_debugger = os.getenv("DEBUG") or os.getenv("XMAKE_DEBUGGER")
+        if run_debugger and run_debugger ~= "" then
+            -- If not compiled in debug mode, warn user that symbols may be missing
+            if not is_mode("debug") then
+                cprint("${color.warning}Warning: running under debugger but build mode is not debug. Symbols may be missing.${text.reset}")
+            end
+
+            if is_plat("linux") then
+                if os.exists("/usr/bin/gdb") or os.exists("/bin/gdb") or os.exec("which gdb >/dev/null 2>&1 || true") == 0 then
+                    print("Launching gdb for: " .. binary)
+                    os.execv("gdb", {"--args", binary, table.unpack(params)})
+                else
+                    print("gdb not found; running binary directly.")
+                    os.execv(binary, params, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
+                end
+            elseif is_plat("macosx") then
+                if os.exists("/usr/bin/lldb") or os.exec("which lldb >/dev/null 2>&1 || true") == 0 then
+                    print("Launching lldb for: " .. binary)
+                    os.execv("lldb", {"--", binary, table.unpack(params)}, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
+                else
+                    print("lldb not found; running binary directly.")
+                    os.execv(binary, params, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
+                end
+            elseif is_plat("windows") then
+                -- On Windows, prefer to launch cdb / windbg if present; fallback to running directly
+                local windbg = os.exec("which windbg >/dev/null 2>&1 || true")
+                if windbg == 0 then
+                    print("Launching windbg for: " .. binary)
+                    os.execv("windbg", {binary})
+                else
+                    local cdb = os.exec("which cdb >/dev/null 2>&1 || true")
+                    if cdb == 0 then
+                        print("Launching cdb for: " .. binary)
+                        os.execv("cdb", {binary})
+                    else
+                        print("No suitable debugger found on PATH; running binary directly.")
+                        os.execv(binary, params)
+                    end
+                end
+            else
+                print("Unsupported platform: " .. tostring(os.host()))
+            end
+        else
+            -- Normal run: pass TEXMACS_PATH env var on POSIX platforms
+            if is_plat("linux", "macosx") then
+                print("Launching " .. binary)
+                os.execv(binary, params, {envs={TEXMACS_PATH= path.join(os.projectdir(), "TeXmacs")}})
+            elseif is_plat("windows") then
+                os.execv(binary, params)
+            else
+                print("Unsupported platform: " .. tostring(os.host()))
+            end
         end
     end)
 
