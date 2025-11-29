@@ -105,10 +105,6 @@
   (:name "Executable")
   (:suffix "exe" "bat"))
 
-(define-format unix-executables
-  (:name "Executable")
-  (:suffix ""))
-
 (tm-define (name-to-id name)
   (cond ((string=? name "python") "python3")
         ((string=? name "ghostcript") "gs")
