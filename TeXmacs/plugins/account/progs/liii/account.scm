@@ -11,7 +11,7 @@
 ;; 生产
 ; (tm-define (account-oauth2-config key)
 ;   (cond
-;     ((== key "authorization-url") "http://www.liiistem.cn:8080/oauth2/authorize")
+;     ((== key "authorization-url") "http://www.liiistem.cn/oauth2-login.html")
 ;     ((== key "access-token-url") "http://www.liiistem.cn:8080/oauth2/token")
 ;     ((== key "client-identifier") "public-client")
 ;     ((== key "scope") "user+llm")
@@ -24,7 +24,7 @@
 ;; 测试
 (tm-define (account-oauth2-config key)
   (cond
-    ((== key "authorization-url") "http://test-www.liiistem.cn:8080/oauth2/authorize")
+    ((== key "authorization-url") "http://test-www.liiistem.cn/oauth2-login.html")
     ((== key "access-token-url") "http://test-www.liiistem.cn:8080/oauth2/token")
     ((== key "client-identifier") "public-client")
     ((== key "scope") "user+llm")
@@ -37,7 +37,7 @@
 ;; 本地
 ; (tm-define (account-oauth2-config key)
 ;   (cond
-;     ((== key "authorization-url") "http://127.0.0.1:8080/oauth2/authorize")
+;     ((== key "authorization-url") "http://127.0.0.1:3000/oauth2-login")
 ;     ((== key "access-token-url") "http://127.0.0.1:8080/oauth2/token")
 ;     ((== key "client-identifier") "public-client")
 ;     ((== key "client-secret") "secret")
@@ -45,7 +45,7 @@
 ;     ((== key "port") "1895")
 ;     ((== key "user-info-url") "http://127.0.0.1:8080/api/oauthUser/info")
 ;     ((== key "pricing-url") "http://127.0.0.1:3000/pricing-fruit.html")
-;     ((== key "click-return-liii-url") "http://127.0.0.1:3000/")
+;     ((== key "click-return-liii-url") "http://127.0.0.1:3000/?from=login_button")
 ;     (else "")))
 
 
