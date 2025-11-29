@@ -42,6 +42,7 @@ public:
   void show_auxiliary_widget (bool flag);
   void show_bottom_tools (int which, bool flag);
   bool visible_header ();
+  bool auxiliary_widget_visible ();
   bool visible_icon_bar (int which);
   bool visible_side_tools (int which);
   bool visible_bottom_tools (int which);

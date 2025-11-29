@@ -127,6 +127,13 @@ function main()
                 }
             },
             {
+                -- 查询辅助组件可见性
+                scm_name = "auxiliary-widget-visible?",
+                cpp_name = "auxiliary_widget_visible",
+                ret_type = "bool",
+                arg_list = {}
+            },
+            {
                 -- 设定辅助组件内容
                 scm_name = "set-auxiliary-widget",
                 cpp_name = "auxiliary_widget",

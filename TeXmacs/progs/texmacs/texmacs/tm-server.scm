@@ -233,15 +233,17 @@
     (tgt-buffer (view->buffer tgt-view)) ;or current-buffer?
   )
     (cond
+      ((and (auxiliary-widget-visible?) (not (buffer-embedded? tgt-buffer)))
+       (show-message "Please close the auxiliary window first" "Notification"))
       ((buffer-embedded? tgt-buffer)
        (alt-windows-delete (alt-window-search tgt-buffer)))
       ((buffer-modified? tgt-buffer)
        ; if the buffer is modified and has not been saved,
        ; pop up a dialog prompting the user to confirm closing
        (confirm-close-dialog "The document has not been saved. Really close it?"
-         (lambda () 
+         (lambda ()
            (kill-tabpage tgt-win tgt-view))
-         (lambda () 
+         (lambda ()
            (kill-tabpage tgt-win tgt-view))
          tgt-buffer))
       (else
@@ -249,6 +251,8 @@
 
 (tm-define (safely-kill-tabpage-by-url tgt-win tgt-view tgt-buffer)
   (cond
+    ((and (auxiliary-widget-visible?) (not (buffer-embedded? tgt-buffer)))
+     (show-message "Please close the auxiliary window first" "Notification"))
     ((buffer-embedded? tgt-buffer)
      (alt-windows-delete (alt-window-search tgt-buffer)))
     ((buffer-modified? tgt-buffer)

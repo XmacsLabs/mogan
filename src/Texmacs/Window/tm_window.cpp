@@ -514,6 +514,11 @@ tm_window_rep::get_header_flag () {
 }
 
 bool
+tm_window_rep::get_auxiliary_widget_flag () {
+  return get_auxiliary_widget_visibility (wid);
+}
+
+bool
 tm_window_rep::get_icon_bar_flag (int which) {
   if (which == 0) return get_main_icons_visibility (wid);
   else if (which == 1) return get_mode_icons_visibility (wid);

@@ -1619,6 +1619,7 @@
 ("plans for the future" "未来计划")
 ("please wait" "请稍后")
 ("please" "")
+("Please close the auxiliary window first" "请先关闭辅助窗口")
 ("Please restart Mogan to apply the changes." "请重启Moagn以应用更改。")
 ("plot" "描画图形")
 ("plug-ins" "插件")
