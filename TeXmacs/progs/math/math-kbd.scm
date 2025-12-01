@@ -271,8 +271,8 @@
   ("onehalf" (math-insert '(frac "1" "2")))
   ("threequarters" (math-insert '(frac "3" "4")))
 
-  ("space var" "<space>")
-  ("space var var" "<nospace>")
+  ("space var" "*")
+  ("space var var" "<space>")
   ("space var var var" (math-insert '(application-space "1em")))
   ("space var var var var" (math-insert '(application-space "2em")))
   (", var" "<comma>")
