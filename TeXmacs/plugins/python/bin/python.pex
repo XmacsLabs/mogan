@@ -184,7 +184,7 @@ def convert_dataframe_to_scheme_str(obj):
     result = "(document (tabular (tformat (cwith \\\"1\\\" \\\"1\\\" \\\"1\\\" \\\"-1\\\" \\\"cell-bborder\\\" \\\"1ln\\\") (table "
     row_index = row_head + f"{cell_head}\\\"\\\" )"
     for column in obj.columns:
-        column_str = repr(str(column))
+        column_str = str(column)
         column_str = column_str.replace('\\', '\\\\')
         if ' ' in column_str:
             column_str = column_str.replace(' ', '\\ ')
@@ -195,7 +195,7 @@ def convert_dataframe_to_scheme_str(obj):
     for row in obj.itertuples():
         row_str = row_head + f"{cell_head}\\\"{row.Index}\\\")"#(row (cell \"row.Index\")
         for i, column in enumerate(columns_list, 1):
-            value = repr(str(row[i]))
+            value = str(row[i])
             value = value.replace('\\', '\\\\') 
             if ' ' in value:
                 value = value.replace(' ', '\\ ')
