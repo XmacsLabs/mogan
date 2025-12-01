@@ -16,6 +16,11 @@ set_project(stem_project_name)
 set_languages("c++17")
 set_encodings("utf-8")
 
+add_requires("s7", {system=false})
+add_requires("tbox", {system=false})
+add_requires("cpr", {system=false})
+includes("xmake/goldfish.lua")
+
 option("mupdf")
     set_default(true)
     set_description("Enable MuPDF library")
@@ -201,11 +206,7 @@ end
 
 local LIBICONV_VERSION = "1.17"
 
--- package: s7
-add_requires("s7", {system=false})
-add_requires("tbox", {system=false})
 add_requires("lolly", {system=false})
-add_requires("cpr", {system=false})
 -- QWK is built locally from 3rdparty/qwindowkitty, no external package needed
 if is_plat ("windows") then
     add_requires("libiconv "..LIBICONV_VERSION, {system=false})
@@ -238,17 +239,6 @@ if has_config("mupdf") then
 end
 
 set_configvar("USE_FREETYPE", 1)
-
-target ("goldfish") do
-    set_languages("c++17")
-    set_targetdir("$(projectdir)/TeXmacs/plugins/goldfish/bin/")
-    add_files ("$(projectdir)/TeXmacs/plugins/goldfish/src/goldfish.cpp")
-    add_packages("s7")
-    add_packages("tbox")
-    add_packages("argh")
-    on_install(function (target)
-    end)
-end
 
 function build_glue_on_config()
     on_config(function (target)
