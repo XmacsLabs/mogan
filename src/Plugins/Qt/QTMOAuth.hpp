@@ -45,9 +45,11 @@ signals:
 
 private:
   void    loadExistingToken ();
-  void    clearInvalidTokens ();
   QString generateCodeVerifier ();
   QString generateCodeChallenge (const QString& verifier);
+
+public:
+  void clearInvalidTokens ();
 
   QRestAccessManager*           network= nullptr;
   QOAuth2AuthorizationCodeFlow  oauth2;

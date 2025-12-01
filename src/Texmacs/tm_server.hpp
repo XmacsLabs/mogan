@@ -52,6 +52,8 @@ public:
   void   shell (string s);
   void   login ();
 
+  QTMOAuth* getAccount () const { return m_account; }
+
 private:
   QTMOAuth* m_account= nullptr;
 };

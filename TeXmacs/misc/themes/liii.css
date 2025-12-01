@@ -622,7 +622,8 @@ QWidget#login-membership-container {
 }
 
 /* 登录和注册按钮样式 */
-QPushButton#login-action-button {
+QPushButton#login-action-button,
+QPushButton#renew-button {
   font-size: 16px;
   background: #007AFF;
   color: #ffffff;
@@ -634,12 +635,14 @@ QPushButton#login-action-button {
 }
 
 /* 登录和注册按钮悬停样式 */
-QPushButton#login-action-button:hover {
+QPushButton#login-action-button:hover,
+QPushButton#renew-button:hover {
   background: #0063d1;
 }
 
 /* 登录和注册按钮按下样式 */
-QPushButton#login-action-button:pressed {
+QPushButton#login-action-button:pressed,
+QPushButton#renew-button:pressed {
   background: #0056CC;
 }
 

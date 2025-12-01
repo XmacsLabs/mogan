@@ -56,6 +56,7 @@
 #include "qt_menu.hpp"
 #include "qt_simple_widget.hpp"
 #include "qt_window_widget.hpp"
+#include "tm_server.hpp"
 #include "tm_sys_utils.hpp"
 #include "tm_url.hpp"
 
@@ -306,6 +307,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
   // 登录按钮 - 作为最左边的自定义按钮
   loginButton= new QWK::LoginButton (windowBar);
+
   loginButton->setFlat (true);
   loginButton->setFocusPolicy (Qt::NoFocus);
   loginButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -1678,44 +1680,71 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
   infoLayout->setContentsMargins (0, 0, 0, 0);
   infoLayout->setSpacing (4);
 
+  // 登出按钮 - 登录成功后显示（使用图标）
+  logoutButton= new QPushButton ();
+  logoutButton->setObjectName ("logout-button");
+  logoutButton->setIcon (QIcon (":/window-bar/logout.svg"));
+  logoutButton->setToolTip (qt_translate ("Logout"));
+  logoutButton->setFlat (true); // 设置为扁平按钮，看起来更像图标
+  // 移除按钮背景色，使其看起来像纯图标
+  logoutButton->setStyleSheet (
+      "QPushButton { background: transparent; border: none; }");
+  logoutButton->setVisible (false); // 初始状态：用户未登录，登出按钮不可见
+
+  // 第一行：名称和登出按钮
+  auto nameRowContainer= new QWidget ();
+  auto nameRowLayout   = new QHBoxLayout (nameRowContainer);
+  nameRowLayout->setContentsMargins (0, 0, 0, 0);
+  nameRowLayout->setSpacing (8);
+
   // 会员名称标签 - 后续通过API设置
-  nameLabel= new QLabel (qt_translate ("未登录"));
+  nameLabel= new QLabel (qt_translate ("Not logged in"));
   nameLabel->setObjectName ("login-name-label");
 
   // 账户ID标签 - 后续通过API设置
-  accountIdLabel= new QLabel (qt_translate ("请登录查看账户信息"));
+  accountIdLabel= new QLabel (
+      qt_translate ("Please login to view your account information."));
   accountIdLabel->setObjectName ("login-account-label");
 
-  infoLayout->addWidget (nameLabel);
+  nameRowLayout->addWidget (nameLabel);
+  nameRowLayout->addStretch ();
+
+  infoLayout->addWidget (nameRowContainer);
   infoLayout->addWidget (accountIdLabel);
 
   topLayout->addWidget (avatarContainer);
   topLayout->addWidget (infoContainer);
   topLayout->addStretch ();
+  topLayout->addWidget (logoutButton);
 
   // 底部区域：会员期限
   auto bottomSection= new QWidget ();
   bottomSection->setObjectName ("login-bottom-section");
   auto bottomLayout   = new QVBoxLayout (bottomSection);
-  auto membershipTitle= new QLabel (qt_translate ("会员状态"));
+  auto membershipTitle= new QLabel (qt_translate ("Membership status"));
   membershipTitle->setObjectName ("login-membership-title");
 
   // 会员期限标签 - 后续通过API设置
-  membershipPeriodLabel= new QLabel (qt_translate ("非会员"));
+  membershipPeriodLabel= new QLabel (qt_translate ("Non-member"));
   membershipPeriodLabel->setObjectName ("login-membership-period");
 
   // 动作按钮 - 根据用户状态显示登录或注册
-  loginActionButton= new QPushButton (qt_translate ("登录"));
+  loginActionButton= new QPushButton (qt_translate ("Login"));
   loginActionButton->setObjectName ("login-action-button");
+
+  // 续费按钮 - 登录成功后显示
+  renewButton= new QPushButton (qt_translate ("Renew"));
+  renewButton->setObjectName ("renew-button");
+  renewButton->setVisible (false);
 
   bottomLayout->addWidget (membershipTitle);
   bottomLayout->addWidget (membershipPeriodLabel);
   bottomLayout->addWidget (loginActionButton);
+  bottomLayout->addWidget (renewButton);
 
   // 添加区域到主布局
   mainLayout->addWidget (topSection);
   mainLayout->addWidget (bottomSection);
-  mainLayout->addStretch ();
 
   // 设置对话框内容
   loginDialog->setContentWidget (contentWidget);
@@ -1737,12 +1766,12 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
 
   // 连接按钮信号 - 根据文本动态处理
   QObject::connect (loginActionButton, &QPushButton::clicked, [this] () {
-    if (loginActionButton->text () == qt_translate ("登录")) {
+    if (loginActionButton->text () == qt_translate ("Login")) {
       qDebug ("Login button clicked - triggering OAuth2 flow");
       // 触发OAuth2登录流程
       triggerOAuth2 ();
     }
-    else if (loginActionButton->text () == qt_translate ("注册会员")) {
+    else if (loginActionButton->text () == qt_translate ("Subscribe")) {
       // 打开会员购买链接
       qDebug ("打开会员购买链接");
 
@@ -1767,6 +1796,18 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
       QDesktopServices::openUrl (QUrl (fullUrl));
     }
   });
+
+  // 连接登出按钮信号
+  QObject::connect (logoutButton, &QPushButton::clicked, [this] () {
+    qDebug ("Logout button clicked");
+    logout ();
+  });
+
+  // 连接续费按钮信号
+  QObject::connect (renewButton, &QPushButton::clicked, [this] () {
+    qDebug ("Renew button clicked");
+    openRenewalPage ();
+  });
 }
 
 void
@@ -1790,7 +1831,6 @@ qt_tm_widget_rep::checkLocalTokenAndLogin () {
     fetchUserInfo (q_token);
   }
   else {
-    // 有问题，把token文件删除了，这里没生效！
     // 没有token，显示登录对话框（用户需要手动点击登录按钮）
     QPoint buttonBottomCenter= loginButton->mapToGlobal (
         QPoint (loginButton->width () / 2, loginButton->height ()));
@@ -1812,7 +1852,6 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
   // 把 "Bearer " 和 token合并成 auth_str
   QString q_auth_str= "Bearer " + clean_token;
   string  auth_str  = from_qstring (q_auth_str);
-  // qDebug ("Authorization:%s", q_auth_str.toUtf8().constData());
 
   // 创建请求
   QNetworkRequest request;
@@ -1840,7 +1879,7 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
             QJsonObject userData= json["data"].toObject ();
 
             m_userId          = userData["id"].toVariant ().toString ();
-            QString userName  = userData["nickName"].toString ("三鲤用户");
+            QString userName  = userData["nickName"].toString ("liii");
             QString avatarText= userData["nickName"].toString ("liii").left (4);
             QString accountEmail= userData["email"].toString ("liii@lii.pro");
             QString membershipPeriod= getMembershipStatus (userData);
@@ -1856,9 +1895,10 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
           }
           else {
             // API返回错误
-            updateDialogContent (qt_translate ("未登录"), "liii",
-                                 qt_translate ("登录有误，请重新登陆"),
-                                 qt_translate ("非会员"));
+            updateDialogContent (
+                qt_translate ("Not logged in"), "liii",
+                qt_translate ("Login error, please log in again."),
+                qt_translate ("Non-member"));
           }
         }
         else {
@@ -1867,15 +1907,17 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
               reply->attribute (QNetworkRequest::HttpStatusCodeAttribute);
           if (statusCode.isValid () && statusCode.toInt () == 401) {
             // 更新UI显示token失效信息
-            updateDialogContent (qt_translate ("未登录"), "liii",
-                                 qt_translate ("登录已过期，请重新登录"),
-                                 qt_translate ("非会员"));
+            updateDialogContent (
+                qt_translate ("Not logged in"), "liii",
+                qt_translate ("Login error, please log in again."),
+                qt_translate ("Non-member"));
           }
           else {
             // 其他网络错误
-            updateDialogContent (qt_translate ("未登录"), "liii",
-                                 qt_translate ("网络错误，请重试"),
-                                 qt_translate ("非会员"));
+            updateDialogContent (
+                qt_translate ("Not logged in"), "liii",
+                qt_translate ("Login error, please log in again."),
+                qt_translate ("Non-member"));
           }
 
           QPoint buttonBottomCenter= loginButton->mapToGlobal (
@@ -1906,14 +1948,22 @@ qt_tm_widget_rep::getMembershipStatus (const QJsonObject& userData) {
   QString vipExpireTime= userData["vipExpireTime"].toString ("");
 
   if (vipLevelId > 0 && !vipExpireTime.isEmpty ()) {
-    // 解析VIP过期时间，格式："2038-09-26T06:38:45.419+00:00"
     QDateTime expireTime= QDateTime::fromString (vipExpireTime, Qt::ISODate);
     if (expireTime.isValid ()) {
-      return qt_translate ("会员至") + expireTime.toString ("yyyy-MM-dd");
+      QString   dateStr    = expireTime.toString ("yyyy-MM-dd");
+      QDateTime currentTime= QDateTime::currentDateTime ();
+      if (expireTime > currentTime) {
+        return qt_translate ("Subscribing") + ", " + dateStr +
+               qt_translate (" expired");
+      }
+      else {
+        return qt_translate ("Expired") + ", " + dateStr +
+               qt_translate (" expired");
+      }
     }
   }
 
-  return qt_translate ("非会员");
+  return qt_translate ("Non-member");
 }
 
 void
@@ -1936,17 +1986,86 @@ qt_tm_widget_rep::updateDialogContent (const QString& name,
   }
 
   // 根据用户状态更新按钮
-  bool isLoggedIn= (name != qt_translate ("未登录"));
-  bool isMember  = (membershipPeriod != qt_translate ("非会员"));
+  bool isLoggedIn= (name != qt_translate ("Not logged in"));
+  bool isMember  = (membershipPeriod != qt_translate ("Non-member"));
   if (!isLoggedIn) {
-    loginActionButton->setText (qt_translate ("登录"));
+    loginActionButton->setText (qt_translate ("Login"));
     loginActionButton->setVisible (true);
+    logoutButton->setVisible (false);
+    renewButton->setVisible (false);
+    // 当renewButton隐藏时，设置size policy为Ignored，使其不占用布局空间
+    renewButton->setSizePolicy (QSizePolicy::Ignored, QSizePolicy::Ignored);
   }
   else if (!isMember) {
-    loginActionButton->setText (qt_translate ("注册会员"));
+    loginActionButton->setText (qt_translate ("Subscribe"));
     loginActionButton->setVisible (true);
+    logoutButton->setVisible (true);
+    renewButton->setVisible (false);
+    // 当renewButton隐藏时，设置size policy为Ignored，使其不占用布局空间
+    renewButton->setSizePolicy (QSizePolicy::Ignored, QSizePolicy::Ignored);
   }
   else {
     loginActionButton->setVisible (false);
+    logoutButton->setVisible (true);
+    renewButton->setVisible (true);
+    // 当renewButton显示时，恢复默认的size policy
+    renewButton->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
+
+    // 根据会员状态设置续费按钮文本
+    if (membershipPeriod.startsWith (qt_translate ("Subscribing"))) {
+      renewButton->setText (qt_translate ("Member appreciation"));
+    }
+    else if (membershipPeriod.startsWith (qt_translate ("Expired"))) {
+      renewButton->setText (qt_translate ("Member renewal"));
+    }
+    else {
+      renewButton->setText (qt_translate ("Renew"));
+    }
   }
+}
+
+void
+qt_tm_widget_rep::logout () {
+  // 没有token，直接清除UI状态
+  updateDialogContent (
+      qt_translate ("Not logged in"), "liii",
+      qt_translate ("Please login to view your account information."),
+      qt_translate ("Non-member"));
+  // 关闭登录对话框
+  if (m_loginDialog && m_loginDialog->isVisible ()) {
+    m_loginDialog->hide ();
+  }
+
+  // 通过tm_server获取QTMOAuth实例并调用clearInvalidTokens
+  if (is_server_started ()) {
+    tm_server_rep* server=
+        dynamic_cast<tm_server_rep*> (get_server ().operator->());
+    if (server && server->getAccount ()) {
+      server->getAccount ()->clearInvalidTokens ();
+    }
+  }
+}
+
+void
+qt_tm_widget_rep::openRenewalPage () {
+  // 获取当前token
+  eval ("(use-modules (liii account))");
+  string  token  = as_string (call ("account-load-token"));
+  QString q_token= to_qstring (token);
+
+  // 获取定价页面URL
+  string  pricingUrl= as_string (call ("account-oauth2-config", "pricing-url"));
+  QString q_pricingUrl= to_qstring (pricingUrl);
+
+  // 计算token的SHA256哈希值作为key参数
+  QByteArray tokenBytes= q_token.toUtf8 ();
+  QByteArray hash=
+      QCryptographicHash::hash (tokenBytes, QCryptographicHash::Sha256);
+  QString keyParam= hash.toHex ();
+
+  // 构建完整URL
+  QString fullUrl= q_pricingUrl + "?key=" + keyParam + "&user=" + m_userId;
+
+  // 打开浏览器跳转到续费页面
+  QDesktopServices::openUrl (QUrl (fullUrl));
 }

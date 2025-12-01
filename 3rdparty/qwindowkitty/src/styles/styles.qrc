@@ -18,5 +18,6 @@
         <file>window-bar/pin-fill-white.svg</file>
         <file>app/stem.png</file>
         <file>window-bar/login.svg</file>
+        <file>window-bar/logout.svg</file>
     </qresource>
 </RCC>
