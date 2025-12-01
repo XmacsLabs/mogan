@@ -761,8 +761,6 @@
 ;; Tab cycling completion
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define iteration 0)
-
 (tm-define (tabcycle-symbols comb)
   ;; 根据按键序列获取数学符号Tab循环展示的列表
   ;; 输入:
@@ -795,7 +793,6 @@
                      '()))
            ;; 使用新的 kbd-find-prefix-tab 获取所有 tab 切换候选
            (tab-pairs (kbd-find-prefix-tab pre)))
-         (set! iteration tab-iter)
       (let ((others (filter-map (lambda (pair)
                                   (let ((val (cdr pair)))
                                     (if (and (pair? val) (string? (car val)))
@@ -844,9 +841,39 @@
     (highlight-tabcycle-symbols (tabcycle-symbols comb) comb)
     '()))
 
+;; 全局栈，用于管理Tab循环状态
+(define tab-cycle-stack '())
+
+;; 获取基本序列（去除末尾的所有 " tab"）
+(define (get-base-sequence comb)
+  (let loop ((s comb))
+    (if (string-ends? s " tab")
+        (loop (substring s 0 (- (string-length s) 4)))
+        s)))
+
+;; 判断是否需要清空栈（新基本序列）
+(define (should-clear-stack? comb)
+  (let ((base (get-base-sequence comb)))
+    (or (null? tab-cycle-stack)
+        (not (string=? base (get-base-sequence (car tab-cycle-stack)))))))
+
+;; 管理栈：如果需要清空则清空，如果不在栈中则入栈
+(define (manage-tab-stack comb)
+  (let ((should-clear? (should-clear-stack? comb))
+        (already-in-stack? (member comb tab-cycle-stack)))
+    (when should-clear?
+      (set! tab-cycle-stack '()))
+    (when (not already-in-stack?)
+      (set! tab-cycle-stack (cons comb tab-cycle-stack)))))
+
 (tm-define (math-tabcycle-menu-needed? comb)
-  (and (or (string-contains? comb "tab") (> iteration 1))
-       (> (length (math-tabcycle-symbols comb)) 1)))
+  ;; 管理栈状态
+  (manage-tab-stack comb)
+
+  (let* ((size (length (math-tabcycle-symbols comb)))
+         (stack-depth (length tab-cycle-stack)))
+    (and (or (string-contains? comb "tab") (> stack-depth 1))
+         (> size 1))))
 
 (tm-define (math-variant comb)
   ;; 触发数学符号Tab循环的展示
