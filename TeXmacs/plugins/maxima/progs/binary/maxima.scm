@@ -27,8 +27,7 @@
 
 (tm-define (find-binary-maxima)
   (:synopsis "Find the url to the maxima binary, return (url-none) if not found")
-  (find-binary (maxima-binary-candidates)
-    (if (or (os-win32?) (os-mingw?)) "maxima.bat" "maxima")))
+  (find-binary (maxima-binary-candidates) "maxima"))
 
 (tm-define (has-binary-maxima?)
   (not (url-none? (find-binary-maxima))))

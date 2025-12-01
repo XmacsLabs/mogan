@@ -99,7 +99,9 @@
 (define binary-type "python")
 (define binary-path "")
 (define warning-message "")
-(define binary-list (list "python" "aspell" "conda" "convert" "goldfish" "ghostscript" "hunspell" "identify" "inkscape" "pandoc" "pdftocairo" "rsvg-convert"))
+(define binary-list
+  (list "python" "aspell" "conda" "convert" "goldfish" "ghostscript" "hunspell"
+        "identify" "inkscape" "pandoc" "pdftocairo" "rsvg-convert" "maxima"))
 
 (define-format windows-executables
   (:name "Executable")
