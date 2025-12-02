@@ -1,0 +1,30 @@
+<TMU|<tuple|1.1.0|2025.2.1-rc1>>
+
+<style|<tuple|tmdoc|chinese|number-europe>>
+
+<\body>
+  <math|>进入数学模式（<key|Shift + 4>）
+
+  在一个单行公式内，输入<key|x> <key|Space> <key|Tab> <key|y>，同时在另一个单行公式内输入<key|x> <key|*> <key|Tab> <key|y><math|*>，两个单行公式输出的效果应该一样
+
+  <\equation*>
+    x*y
+  </equation*>
+
+  <\equation*>
+    x*y
+  </equation*>
+
+  输入<key|@> <key|+> <key|Tab> 查看是否是<math|<big|oplus>>
+
+  输入<key|@> <key|*> <key|Tab> <key|Tab> 查看是否是<math|<big|otimes>>
+
+  输入<key|@> <key|.> <key|Tab> 查看是否是<math|<big|odot>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
