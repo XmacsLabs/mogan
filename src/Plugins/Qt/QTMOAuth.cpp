@@ -29,6 +29,9 @@
 #include <QtCore/qrandom.h>
 #include <QtCore/qurlquery.h>
 
+#include <QtNetwork/qhostaddress.h>
+#include <QtNetwork/qtcpserver.h>
+
 QTMOAuth::QTMOAuth (QObject* parent) {
   // 加载 OAuth2 配置
   eval ("(use-modules (liii account))");
@@ -42,11 +45,52 @@ QTMOAuth::QTMOAuth (QObject* parent) {
   // c_string clientSecret (
   //     as_string (call ("account-oauth2-config", "client-secret")));
   c_string scope (as_string (call ("account-oauth2-config", "scope")));
-  c_string portStr (as_string (call ("account-oauth2-config", "port")));
+  c_string portListStr (
+      as_string (call ("account-oauth2-config", "port-list")));
 
-  int port= QString ((char*) portStr).toInt ();
-  m_reply = new QOAuthHttpServerReplyHandler (
-      QHostAddress (QString::fromUtf8 ("127.0.0.1")), port, this);
+  // 解析端口列表字符串，格式如
+  // "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895"
+  QString    portListQStr= QString ((char*) portListStr).trimmed ();
+  QList<int> portList;
+
+  if (!portListQStr.isEmpty ()) {
+    QStringList portStrs= portListQStr.split (',', Qt::SkipEmptyParts);
+    for (const QString& portStr : portStrs) {
+      bool ok;
+      int  port= portStr.toInt (&ok);
+      if (ok && port > 0 && port <= 65535) {
+        portList.append (port);
+      }
+    }
+  }
+
+  // 如果解析失败，使用默认端口
+  if (portList.isEmpty ()) {
+    portList.append (6029);
+  }
+
+  // 找到第一个未被占用的端口
+  m_port= -1;
+  for (int port : portList) {
+    QTcpServer testServer;
+    if (testServer.listen (QHostAddress::LocalHost, port)) {
+      m_port= port;
+      testServer.close ();
+      break;
+    }
+  }
+
+  // 如果所有端口都被占用，使用第一个端口
+  if (m_port == -1) {
+    m_port= portList.first ();
+    debug_boot << "All ports occupied, using:" << m_port << "\n";
+  }
+  else {
+    debug_boot << "Using available port:" << m_port << "\n";
+  }
+
+  m_reply= new QOAuthHttpServerReplyHandler (
+      QHostAddress (QString::fromUtf8 ("127.0.0.1")), m_port, this);
   m_reply->setCallbackPath ("/callback");
 
   // 生成PKCE参数
@@ -60,7 +104,7 @@ QTMOAuth::QTMOAuth (QObject* parent) {
       "<style>body{font-family:Arial;background:#f2f2f2;margin:0;padding:20px}"
       "h2{color:#000;margin:0}</style>"
       "</head><body>"
-      "<h2>登录成功！您可以关闭此页面并返回应用。</h2>"
+      "<h2>亲爱的三鲤用户，恭喜登录成功！您可以关闭此页面并返回应用。</h2>"
       "<script>window.setTimeout(function(){window.close()},3000);</script>"
       "</body></html>";
   m_reply->setCallbackText (customHtml);
@@ -89,7 +133,8 @@ QTMOAuth::QTMOAuth (QObject* parent) {
                handleAuthorizationCode (code);
              }
              else {
-               qDebug () << "No authorization code found in callback";
+               //  debug_boot << "No authorization code found in callback" <<
+               //  "\n";
              }
            });
 
@@ -111,7 +156,8 @@ QTMOAuth::login () {
     QUrlQuery query;
     query.addQueryItem ("response_type", "code");
     query.addQueryItem ("client_id", oauth2.clientIdentifier ());
-    query.addQueryItem ("redirect_uri", "http://127.0.0.1:1895/callback");
+    query.addQueryItem ("redirect_uri",
+                        QString ("http://127.0.0.1:%1/callback").arg (m_port));
     query.addQueryItem ("scope", oauth2.scope ());
     query.addQueryItem ("code_challenge", m_codeChallenge);
     query.addQueryItem ("code_challenge_method", "S256");
@@ -129,7 +175,8 @@ QTMOAuth::handleAuthorizationCode (const QString& code) {
   QUrlQuery query;
   query.addQueryItem ("grant_type", "authorization_code");
   query.addQueryItem ("code", code);
-  query.addQueryItem ("redirect_uri", "http://127.0.0.1:1895/callback");
+  query.addQueryItem ("redirect_uri",
+                      QString ("http://127.0.0.1:%1/callback").arg (m_port));
   query.addQueryItem ("client_id", oauth2.clientIdentifier ());
   query.addQueryItem ("code_verifier", m_codeVerifier);
 
@@ -169,15 +216,16 @@ QTMOAuth::handleAuthorizationCode (const QString& code) {
         call ("account-save-token-expiry",
               from_qstring (QString::number (m_tokenExpiryTime)));
 
-        qDebug () << "Token exchange successful";
+        debug_boot << "Token exchange successful" << "\n";
         emit tokenRefreshed ();
       }
       else {
-        qDebug () << "Token exchange failed: Invalid response";
+        // debug_boot << "Token exchange failed: Invalid response" << "\n";
       }
     }
     else {
-      qDebug () << "Token exchange failed:" << reply->errorString ();
+      // debug_boot << "Token exchange failed:" << reply->errorString () <<
+      // "\n";
     }
 
     reply->deleteLater ();
@@ -232,10 +280,11 @@ QTMOAuth::refreshToken () {
         if (!newRefreshToken.isEmpty ()) {
           m_refreshToken= newRefreshToken;
           call ("account-save-refresh-token", from_qstring (newRefreshToken));
-          qDebug () << "Token refreshed successfully";
+          debug_boot << "Token refreshed successfully" << "\n";
         }
         else {
-          qDebug () << "No new refresh token received, keeping existing one";
+          debug_boot << "No new refresh token received, keeping existing one"
+                     << "\n";
         }
 
         // 计算并保存新的过期时间
@@ -252,9 +301,8 @@ QTMOAuth::refreshToken () {
       }
     }
     else {
-      qDebug () << "ERROR: Network error during refresh:"
-                << reply->errorString ();
-      qDebug () << "Error code:" << reply->error ();
+      // debug_boot << "ERROR: Network error during refresh:" <<
+      // reply->errorString () << "\n";
       emit tokenRefreshFailed (reply->errorString ());
       // 清除无效的token信息
       clearInvalidTokens ();

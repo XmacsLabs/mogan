@@ -2100,6 +2100,7 @@
 ("subparagraph" "小段落")
 ("subscript" "下标")
 ("subscript below" "底标")
+("Subscribe" "注册会员")
 ("Subscribing" "订阅中")
 ("subsection" "小节")
 ("subsub" "小项")
