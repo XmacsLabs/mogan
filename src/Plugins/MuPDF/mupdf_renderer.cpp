@@ -321,6 +321,21 @@ mupdf_renderer_rep::set_transformation (frame fr) {
 
   proc->op_q (mupdf_context (), proc);
   transform_matrix= fz_make_matrix (ux[0], ux[1], uy[0], uy[1], o[0], o[1]);
+
+  // Adjust for rotation direction inversion while keeping the center fixed
+  // Center C = e + 0.5a + 0.5c, f + 0.5b + 0.5d
+  // New matrix has b'=-b, c'=-c
+  // e' = e + c
+  // f' = f + b
+
+  float new_e= transform_matrix.e + transform_matrix.c;
+  float new_f= transform_matrix.f + transform_matrix.b;
+
+  transform_matrix.b= -transform_matrix.b;
+  transform_matrix.c= -transform_matrix.c;
+  transform_matrix.e= new_e;
+  transform_matrix.f= new_f;
+
   proc->op_cm (mupdf_context (), proc, transform_matrix.a, transform_matrix.b,
                transform_matrix.c, transform_matrix.d, transform_matrix.e,
                transform_matrix.f);
@@ -861,8 +876,14 @@ mupdf_renderer_rep::draw_picture (picture p, SI x, SI y, int alpha) {
   int w= p->get_width (), h= p->get_height ();
   int ox= p->get_origin_x (), oy= p->get_origin_y ();
   end_text ();
-  image (mupdf_context (), proc, pict->im, alpha, w, 0, 0, h,
-         to_x (x - ox * pixel), to_y (y - oy * pixel));
+  double tx= to_x (x - ox * pixel);
+  double ty= to_y (y - oy * pixel);
+  if (transform_active) {
+    fz_point trans= fz_transform_point_xy (tx, ty, transform_matrix);
+    tx            = trans.x;
+    ty            = trans.y;
+  }
+  image (mupdf_context (), proc, pict->im, alpha, w, 0, 0, h, tx, ty);
 }
 
 void
@@ -895,8 +916,15 @@ mupdf_renderer_rep::draw_scalable (scalable im, SI x, SI y, int alpha) {
     SI        w= r->x2 - r->x1, h= r->y2 - r->y1;
     int       ox= r->x1, oy= r->y1;
     end_text ();
+    double tx= to_x (x - ox);
+    double ty= to_y (y - oy);
+    if (transform_active) {
+      fz_point trans= fz_transform_point_xy (tx, ty, transform_matrix);
+      tx            = trans.x;
+      ty            = trans.y;
+    }
     image (ctx, proc, im2, alpha, ((double) w) / pixel, 0, 0,
-           ((double) h) / pixel, to_x (x - ox), to_y (y - oy));
+           ((double) h) / pixel, tx, ty);
   }
 }
 
