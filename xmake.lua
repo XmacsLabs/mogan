@@ -1107,7 +1107,7 @@ target("stem_packager") do
         -- Helper: run a command with retry on failure
         -- xmake sandbox disables pcall; use try/catch wrapper
         local function retry_execv(cmd, args, attempts, delay_seconds)
-            attempts = attempts or 5
+            attempts = attempts or 10
             delay_seconds = delay_seconds or 2
             local last_err = nil
             for i = 1, attempts do
@@ -1171,14 +1171,14 @@ target("stem_packager") do
                 local ok
                 if os.isfile(background_image) then
                     print("Background image found; using themed DMG background")
-                    ok = retry_execv("create-dmg", args_with_bg, 5, 3)
+                    ok = retry_execv("create-dmg", args_with_bg, 10, 3)
                     if not ok then
                         print("create-dmg failed with background; retrying without background...")
-                        ok = retry_execv("create-dmg", args_no_bg, 5, 3)
+                        ok = retry_execv("create-dmg", args_no_bg, 10, 3)
                     end
                 else
                     print("Background image not found; creating DMG without background")
-                    ok = retry_execv("create-dmg", args_no_bg, 5, 3)
+                    ok = retry_execv("create-dmg", args_no_bg, 10, 3)
                 end
 
                 if not ok then
