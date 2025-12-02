@@ -1105,17 +1105,28 @@ target("stem_packager") do
 
         -- 尝试 create-dmg，使用更安全的参数格式
         -- Helper: run a command with retry on failure
+        -- xmake sandbox disables pcall; use try/catch wrapper
         local function retry_execv(cmd, args, attempts, delay_seconds)
             attempts = attempts or 5
             delay_seconds = delay_seconds or 2
+            local last_err = nil
             for i = 1, attempts do
-                local ok, err = pcall(function()
-                    os.execv(cmd, args)
-                end)
+                local ok = true
+                try {
+                    function ()
+                        os.execv(cmd, args)
+                    end,
+                    catch {
+                        function (errors)
+                            ok = false
+                            last_err = errors
+                        end
+                    }
+                }
                 if ok then
                     return true
                 end
-                print(string.format("Attempt %d/%d failed: %s", i, attempts, tostring(err)))
+                print(string.format("Attempt %d/%d failed: %s", i, attempts, tostring(last_err)))
                 if i < attempts then
                     print(string.format("Retrying in %d seconds...", delay_seconds))
                     os.sleep(delay_seconds * 1000)
@@ -1180,6 +1191,8 @@ target("stem_packager") do
             catch {
                 function (errors)
                     print("create-dmg failed: " .. tostring(errors))
+                    -- Propagate failure to CI pipeline
+                    raise(errors)
                 end
             }
         }
