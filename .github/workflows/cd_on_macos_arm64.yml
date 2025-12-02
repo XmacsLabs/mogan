@@ -5,6 +5,10 @@ on:
   push:
     tags:
       - '*'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'xmake.lua'
 
 permissions:
   contents: write
