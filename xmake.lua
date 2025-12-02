@@ -35,7 +35,7 @@ option("is_community")
     set_description("Adjust community or commercial version")
 option_end()
 
-set_config("is_community", true)
+set_config("is_community", is_community)
 
 -- Generate build/config.h from template
 add_configfiles("src/System/config.h.xmake", {
