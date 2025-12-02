@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.2.0-rc3>>
+<TMU|<tuple|1.1.0|2025.2.1-rc1>>
 
 <style|<tuple|tmdoc|chinese|doc>>
 
@@ -38,7 +38,7 @@
   </enumerate-numeric>
 
   <with|framed-color|pastel magenta|ornament-border|0ln|ornament-color|pastel yellow|<\ornamented>
-    You are using <strong|v<Xmacs-version>>. The current latest stable version is <strong|v<include|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/latest_version.tm>>. Visit the official website <hlink|https://mogan.app|https://mogan.app?from=app> to download the latest stable version.
+    You are using <strong|v<Xmacs-version>>. The current latest stable version is <strong|v<include|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/latest_version.tm>>. Visit the official website <hlink|https://mogan.app|https://mogan.app/en/?from=app> to download the latest stable version.
   </ornamented>>
 
   <section*|Example Documents: What can I do with Mogan STEM?>
@@ -49,53 +49,53 @@
     <item*|Papers>
 
     <\itemize>
-      <item><hlink|Attention Is All You Need, the original transformer paper foundational for large models|https://liiistem.cn/library/thesis-lecturenotes-books/attention-is-all-you-need.html?from=app>
+      <item><hlink|Attention Is All You Need, the original transformer paper foundational for large models|https://liiistem.com/library/thesis-lecturenotes-books/attention-is-all-you-need.html?from=app>
     </itemize>
 
     <item*|Slides>
 
     <\itemize>
-      <item><hlink|Southern University of Science and Technology PPT Template in Beamer Style|https://liiistem.cn/library/beamer/beamer-sust.html?from=app>
+      <item><hlink|Southern University of Science and Technology PPT Template in Beamer Style|https://liiistem.com/library/beamer/beamer-sust.html?from=app>
     </itemize>
 
     <item*|Notes and Courseware>
 
     <\itemize>
-      <item><hlink|University of Wisconsin-Madison STAT850 Course Notes|https://liiistem.cn/library/notes/STAT850.html?from=app>
+      <item><hlink|University of Wisconsin-Madison STAT850 Course Notes|https://liiistem.com/library/notes/STAT850.html?from=app>
     </itemize>
 
     <item*|Programming and Plotting>
 
     <\itemize>
-      <item><hlink|Gnuplot Plotting|https://liiistem.cn/library/programming-plotting/gnuplot-cartesion.html?from=app>
+      <item><hlink|Gnuplot Plotting|https://liiistem.com/library/programming-plotting/gnuplot-cartesion.html?from=app>
     </itemize>
 
-    <item*|Liii STEM Official Library> For more documents and learning resources, please visit our <hlink|Official Library|https://liiistem.cn/library.html?from=app>
+    <item*|Liii STEM Official Library> For more documents and learning resources, please visit our <hlink|Official Library|https://liiistem.com/library.html?from=app>
   </description>
 
   <section*|Quick Start: I want to get started with Mogan quickly!>
 
   <\itemize>
-    <item><hlink|Quick Start Guide: Basic Concepts and Rapid Paper Typesetting|https://liiistem.cn/docs/guide-quick-start.html?from=app>
+    <item><hlink|Quick Start Guide: Basic Concepts and Rapid Paper Typesetting|https://liiistem.com/docs/guide-quick-start.html?from=app>
 
-    <item><hlink|Keyboard Shortcuts CheatSheet|https://liiistem.cn/docs/guide-keyboard-shortcuts.html?from=app>
+    <item><hlink|Keyboard Shortcuts CheatSheet|https://liiistem.com/docs/guide-keyboard-shortcuts.html?from=app>
 
-    <item><hlink|Editing Mathematical Content|https://liiistem.cn/docs/guide-equation.html?from=app>
+    <item><hlink|Editing Mathematical Content|https://liiistem.com/docs/guide-equation.html?from=app>
 
-    <item><hlink|Inserting Definitions, Theorems, etc.|https://liiistem.cn/docs/guide-enunciation.html?from=app>
+    <item><hlink|Inserting Definitions, Theorems, etc.|https://liiistem.com/docs/guide-enunciation.html?from=app>
   </itemize>
 
   <section*|In-Depth Learning: I want a complete, fundamental understanding of Mogan's features! (More detailed documentation coming soon)>
 
   <\itemize>
-    <item><hlink|Liii STEM Official Documentation|https://liiistem.cn/docs/welcome.html?from=app>
+    <item><hlink|Liii STEM Official Documentation|https://liiistem.com/docs/welcome.html?from=app>
 
     <item>Native <TeXmacs> Tutorials (Operations are largely similar to Mogan and can be used as a reference)
 
     <\itemize>
       <item>Video: <hlink|《A Quick tour of <TeXmacs>》|https://www.bilibili.com/video/BV1bo4y1D7wN/> (Five minutes)
 
-      <item>Online Documentation: <hlink|《Getting started with <TeXmacs>》|http://git.tmml.wiki/texmacs/doc/raw/branch/master/about/welcome/start.en.tm> (Thirty minutes)
+      <item>Online Documentation: <hlink|《Getting started with <TeXmacs>》|../../manual/getting started with texmacs.tmu> (Thirty minutes)
 
       <item>Book: <hlink|《The Jolly Writer》|https://www.scypress.com/book_info.html>, the shortcut to systematically learning GNU <TeXmacs>!
     </itemize>
@@ -140,7 +140,7 @@
       <\itemize>
         <item>Contribute to encyclopedia entries (Mogan, Mathematics, Computer Science, etc.)
 
-        <item>Participate in writing the official Liii/Mogan STEM documentation: <hlink|https://h02wf0jq8yp.feishu.cn/wiki/ThUOwHgfziP7OaktRQQcHRKJnoe|https://h02wf0jq8yp.feishu.cn/wiki/ThUOwHgfziP7OaktRQQcHRKJnoe>
+        <item>Participate in writing the official Liii/Mogan STEM documentation: <hlink|https://h02wf0jq8yp.feishu.cn/wiki/ThUOwHgfziP7OaktRQQcHRKJnoe|https://discord.gg/Q7xARnAf8t>
       </itemize>
     </itemize>
   </itemize>
