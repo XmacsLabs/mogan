@@ -108,6 +108,10 @@ QWK--WindowBar>QAbstractButton#close-button:pressed {
   border-radius: 0;
 }
 
+QWK--WindowBar>QAbstractButton#login-button {
+    qproperty-iconNormal: url(":/window-bar/login-white.svg");
+}
+
 /****************************************************************************
 * 工具栏样式
 ****************************************************************************/
@@ -531,6 +535,127 @@ QDialog QPushButton:disabled {
   background: #4c4c4c;
   color: #a0a0a0;
   border: 1px solid #4c4c4c;
+}
+
+/****************************************************************************
+* 登录对话框样式
+****************************************************************************/
+
+/* 登录对话框内容容器样式 */
+QWidget#login-dialog-content {
+  background: #2c2c2c;
+  border: 1px solid #4c4c4c;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 300px;
+  max-width: 350px;
+}
+
+/* 登录头像标签样式 */
+QLabel#login-avatar-label {
+  background: #007AFF;
+  color: #ffffff;
+  font-size: 12px;
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 50px;
+  max-height: 50px;
+  margin-bottom: 8px;
+  border-radius: 25px;
+  padding: 0;
+}
+
+/* 登录用户名标签样式 */
+QLabel#login-name-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  background: transparent;
+  min-width: 120px;
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+
+/* 登录账户邮箱标签样式 */
+QLabel#login-account-label {
+  font-size: 12px;
+  color: #cccccc;
+  background: transparent;
+  min-width: 120px;
+}
+
+/* 登录对话框底部区域样式 */
+QWidget#login-bottom-section {
+  background: #3a3a3a;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+/* 会员状态标题标签样式 */
+QLabel#login-membership-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  background: transparent;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* 会员期限标签样式 */
+QLabel#login-membership-period {
+  font-size: 12px;
+  color: #cccccc;
+  background: transparent;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* 会员状态容器样式 */
+QWidget#login-membership-container {
+  padding: 6px 0;
+}
+
+/* 登录和注册按钮样式 */
+QPushButton#login-action-button,
+QPushButton#renew-button {
+  font-size: 16px;
+  background: #007AFF;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 18px 16px;
+  font-weight: bold;
+  margin: 12px 2px;
+}
+
+/* 登录和注册按钮悬停样式 */
+QPushButton#login-action-button:hover,
+QPushButton#renew-button:hover {
+  background: #0063d1;
+}
+
+/* 登录和注册按钮按下样式 */
+QPushButton#login-action-button:pressed,
+QPushButton#renew-button:pressed {
+  background: #0056CC;
+}
+
+/* 登录对话框内输入框样式 */
+QWidget#login-dialog-content QLineEdit {
+  background: #202020;
+  color: #ffffff;
+  border: 1px solid #4c4c4c;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+/* 登录对话框内输入框聚焦样式 */
+QWidget#login-dialog-content QLineEdit:focus {
+  border-color: #007AFF;
+}
+
+QPushButton#logout-button {
+    qproperty-icon: url(":/window-bar/logout-white.svg");
 }
 
 /****************************************************************************
