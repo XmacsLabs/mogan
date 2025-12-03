@@ -154,6 +154,20 @@
   (if (not (or (in-text?) (in-math?))) (link texmacs-insert-menu)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Insert LLM session
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Placeholder when the LLM plugin does not exist
+(menu-bind insert-llm-menu
+  (assuming (not (connection-defined? "llm"))
+    ((balloon (icon "tm_ai.xpm") "AI")
+     (open-url "https://liiistem.cn?from=ai_button"))))
+
+(menu-bind llm-login-menu
+  ((balloon (icon "tm_ai.xpm") "Sign in to use AI features")
+   (login)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; The main Insert icons
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -181,8 +195,9 @@
           (=> (balloon (icon "tm_switch.xpm") "Switching and folding")
               (link insert-fold-menu))))
   (if (and (style-has? "session-dtd") (detailed-menus?) (in-text?))
-      (=> (balloon (icon "tm_shell.xpm")
-		   "Start an interactive session")
-	  (link insert-session-menu))
-      ((balloon (icon "tm_ai.xpm") "AI")
-       (open-url "https://liiistem.cn?from=ai_button"))))
+      (=> (balloon (icon "tm_shell.xpm") "Start an interactive session")
+	        (link insert-session-menu)))
+  (if (or (community-stem?) (logged-in?))
+      (link insert-llm-menu))
+  (if (and (not (logged-in?)) (not (community-stem?)))
+      (link llm-login-menu)))

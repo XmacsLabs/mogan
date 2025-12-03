@@ -136,6 +136,11 @@ function main()
                     "url"
                 }
             },
+            {
+                scm_name = "community-stem?",
+                cpp_name = "is_community_stem",
+                ret_type = "bool"
+            },
         }
     }
 end
