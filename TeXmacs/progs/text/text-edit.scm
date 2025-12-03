@@ -464,6 +464,9 @@
         (list "A, B, C, ..." '(macro "x" (number (arg "x") "Alpha")))
         (list "i, ii, iii, ..." '(macro "x" (number (arg "x") "roman")))
         (list "I, II, III, ..." '(macro "x" (number (arg "x") "Roman")))
+        (list "①, ②, ③, ..." '(macro "x" (number (arg "x") "circle")))
+        (list "一, 二, 三, ..." '(macro "x" (number (arg "x") "hanzi")))
+        (list "(1), (2), (3), ..." '(macro "x" (number (arg "x") "paren")))
         :other))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -1570,6 +1570,7 @@ edit_env_rep::exec_number (tree t) {
   if (s2 == "Alpha") return Alpha_nr (nr);
   if (s2 == "circle") return utf8_to_cork (to_circle (nr));
   if (s2 == "hanzi") return utf8_to_cork (to_hanzi (nr));
+  if (s2 == "paren") return "(" * as_string (nr) * ")";
   if (s2 == "fnsymbol")
     return tree (WITH, MODE, "math", tree (RIGID, fnsymbol_nr (nr)));
   return tree (ERROR, "bad number");
