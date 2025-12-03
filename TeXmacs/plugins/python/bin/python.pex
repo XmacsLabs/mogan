@@ -276,7 +276,7 @@ sys.stdout = os.fdopen(sys.stdout.fileno(), "w")
 ###############################################################################
 flush_verbatim(
     f"""Python { platform.python_version() } [{ sys.executable }]
-Python plugin for TeXmacs.
+Python plugin for Mogan STEM.
 Please see the documentation in Help -> Plugins -> Python
 """
 )
