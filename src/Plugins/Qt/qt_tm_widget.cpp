@@ -1771,7 +1771,7 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
       // 触发OAuth2登录流程
       triggerOAuth2 ();
     }
-    else if (loginActionButton->text () == qt_translate ("Subscribe")) {
+    else if (loginActionButton->text () == qt_translate ("Subscribe Now")) {
       // 打开会员购买链接
       qDebug ("打开会员购买链接");
 
@@ -1997,7 +1997,7 @@ qt_tm_widget_rep::updateDialogContent (const QString& name,
     renewButton->setSizePolicy (QSizePolicy::Ignored, QSizePolicy::Ignored);
   }
   else if (!isMember) {
-    loginActionButton->setText (qt_translate ("Subscribe"));
+    loginActionButton->setText (qt_translate ("Subscribe Now"));
     loginActionButton->setVisible (true);
     logoutButton->setVisible (true);
     renewButton->setVisible (false);
@@ -2013,10 +2013,10 @@ qt_tm_widget_rep::updateDialogContent (const QString& name,
 
     // 根据会员状态设置续费按钮文本
     if (membershipPeriod.startsWith (qt_translate ("Subscribing"))) {
-      renewButton->setText (qt_translate ("Member appreciation"));
+      renewButton->setText (qt_translate ("Renew Early").append (" ♥️"));
     }
     else if (membershipPeriod.startsWith (qt_translate ("Expired"))) {
-      renewButton->setText (qt_translate ("Member renewal"));
+      renewButton->setText (qt_translate ("Renew Now"));
     }
     else {
       renewButton->setText (qt_translate ("Renew"));
