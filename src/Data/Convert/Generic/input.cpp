@@ -318,7 +318,9 @@ texmacs_input_rep::markdown_flush (bool force) {
 void
 texmacs_input_rep::html_flush (bool force) {
   if (force || ends (buf, "</P>")) {
-    write (compound ("html-text", generic_to_tree (buf, "html-snippet")));
+    if (N (buf) > 0) {
+      write (compound ("html-text", generic_to_tree (buf, "html-snippet")));
+    }
     buf= "";
   }
 }
