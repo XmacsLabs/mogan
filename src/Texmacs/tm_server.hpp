@@ -51,6 +51,7 @@ public:
   void   restart ();
   void   shell (string s);
   void   login ();
+  bool   is_logged_in ();
 
   QTMOAuth* getAccount () const { return m_account; }
 

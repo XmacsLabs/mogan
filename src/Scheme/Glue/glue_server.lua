@@ -381,6 +381,11 @@ function main()
                 scm_name = "login",
                 cpp_name = "login",
                 ret_type = "void"
+            },
+            {
+                scm_name = "logged-in?",
+                cpp_name = "is_logged_in",
+                ret_type = "bool"
             }
         }
     }

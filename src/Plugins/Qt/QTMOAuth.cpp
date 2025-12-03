@@ -168,6 +168,11 @@ QTMOAuth::login () {
   }
 }
 
+bool
+QTMOAuth::isLoggedIn () {
+  return m_isLoggedIn;
+}
+
 void
 QTMOAuth::handleAuthorizationCode (const QString& code) {
   // 手动交换授权码为访问令牌
@@ -206,6 +211,9 @@ QTMOAuth::handleAuthorizationCode (const QString& code) {
         // 保存token信息
         eval ("(use-modules (liii account))");
         call ("account-save-token", from_qstring (accessToken));
+
+        // 设置登录状态
+        m_isLoggedIn= true;
 
         if (!refreshToken.isEmpty ()) {
           m_refreshToken= refreshToken;
@@ -316,6 +324,7 @@ QTMOAuth::refreshToken () {
 bool
 QTMOAuth::checkTokenValidity () {
   if (oauth2.token ().isEmpty ()) {
+    m_isLoggedIn= false;
     return false;
   }
 
@@ -326,6 +335,7 @@ QTMOAuth::checkTokenValidity () {
     refreshToken ();
   }
 
+  m_isLoggedIn= true;
   return true;
 }
 
@@ -360,6 +370,8 @@ QTMOAuth::loadExistingToken () {
   if (!expiryTimeStr.isEmpty ()) {
     m_tokenExpiryTime= expiryTimeStr.toLongLong ();
   }
+
+  checkTokenStatus ();
 }
 
 void
@@ -371,6 +383,7 @@ QTMOAuth::clearInvalidTokens () {
   oauth2.setToken ("");
   m_refreshToken.clear ();
   m_tokenExpiryTime= 0;
+  m_isLoggedIn     = false;
 }
 
 QString

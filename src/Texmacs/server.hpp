@@ -115,6 +115,7 @@ public:
   virtual void   restart ()                               = 0;
   virtual void   shell (string s)                         = 0;
   virtual void   login ()                                 = 0;
+  virtual bool   is_logged_in ()                          = 0;
 };
 
 class server {

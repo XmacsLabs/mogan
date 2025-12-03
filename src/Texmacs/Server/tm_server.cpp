@@ -346,6 +346,11 @@ tm_server_rep::login () {
   m_account->login ();
 }
 
+bool
+tm_server_rep::is_logged_in () {
+  return m_account->isLoggedIn ();
+}
+
 /******************************************************************************
  * System commands
  ******************************************************************************/

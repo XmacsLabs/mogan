@@ -30,6 +30,7 @@ class QTMOAuth : public QObject {
 public:
   QTMOAuth (QObject* parent= nullptr);
   void login ();
+  bool isLoggedIn ();
   void refreshToken ();
   bool checkTokenValidity ();
   void handleAuthorizationCode (const QString& code);
@@ -47,6 +48,8 @@ private:
   void    loadExistingToken ();
   QString generateCodeVerifier ();
   QString generateCodeChallenge (const QString& verifier);
+
+  bool m_isLoggedIn= false;
 
 public:
   void clearInvalidTokens ();
