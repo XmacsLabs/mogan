@@ -1050,30 +1050,31 @@ target("stem_packager") do
     add_deps("stem")
 
     -- 重新声明变量以解决作用域问题
-    local stem_project_name = "Mogan STEM"
-    local stem_binary_name = "MoganSTEM"
+    local stem_project_name_local = stem_project_name
+    local stem_binary_name_local = stem_binary_name
+	local stem_dmg_bg_name_local = stem_dmg_bg_image
 
     set_configvar("XMACS_VERSION", XMACS_VERSION)
     set_configvar("APPCAST", "")
     set_configvar("OSXVERMIN", "")
-    set_configvar("STEM_NAME", stem_binary_name)
+    set_configvar("STEM_NAME", stem_binary_name_local)
     add_configfiles("$(projectdir)/packages/macos/Info.plist.in", {
         filename = "Info.plist",
         pattern = "@(.-)@",
     })
 
-    set_installdir(path.join("$(buildir)", "macosx/$(arch)/$(mode)/" .. stem_binary_name .. ".app/Contents/Resources/"))
+    set_installdir(path.join("$(buildir)", "macosx/$(arch)/$(mode)/" .. stem_binary_name_local .. ".app/Contents/Resources/"))
 
-    local dmg_name= stem_binary_name .. "-v" .. XMACS_VERSION .. ".dmg"
+    local dmg_name= stem_binary_name_local .. "-v" .. XMACS_VERSION .. ".dmg"
     if is_arch("arm64") then
-        dmg_name= stem_binary_name .. "-v" .. XMACS_VERSION .. "-arm.dmg"
+        dmg_name= stem_binary_name_local .. "-v" .. XMACS_VERSION .. "-arm.dmg"
     elseif is_arch("x86_64") then
-        dmg_name= stem_binary_name .. "-v" .. XMACS_VERSION .. "-x64.dmg"
+        dmg_name= stem_binary_name_local .. "-v" .. XMACS_VERSION .. "-x64.dmg"
     end
 	
 	-- print("DMG name will be: " .. dmg_name)
 	-- print("Build dir is: " .. path.absolute("$(buildir)"))
-	-- print("App dir is: " .. path.absolute(path.join("$(buildir)", "macosx/$(arch)/$(mode)/" .. stem_binary_name .. ".app")))
+	-- print("App dir is: " .. path.absolute(path.join("$(buildir)", "macosx/$(arch)/$(mode)/" .. stem_binary_name_local .. ".app")))
 
     after_install(function (target, opt)
         local app_dir = target:installdir() .. "/../../"
@@ -1145,24 +1146,24 @@ target("stem_packager") do
 				os.cd(build_dir)
 				
                 -- 检查背景图片
-                local background_image = path.join(project_dir, "packages", "macos", "mogan-background.png")
+                local background_image = path.join(project_dir, "packages", "macos", stem_dmg_bg_name_local)
                 local args_with_bg = {
                     "--background", background_image,
-                    "--volname", stem_project_name,
+                    "--volname", stem_project_name_local,
                     "--window-pos", "200", "120",
                     "--window-size", "720", "480",
                     "--icon-size", "120",
-                    "--icon", stem_binary_name .. ".app", "200", "190",
+                    "--icon", stem_binary_name_local .. ".app", "200", "190",
                     "--app-drop-link", "540", "190",
                     dmg_name,
                     app_path
                 }
                 local args_no_bg = {
-                    "--volname", stem_project_name,
+                    "--volname", stem_project_name_local,
                     "--window-pos", "200", "120",
                     "--window-size", "720", "480",
                     "--icon-size", "120",
-                    "--icon", stem_binary_name .. ".app", "200", "190",
+                    "--icon", stem_binary_name_local .. ".app", "200", "190",
                     "--app-drop-link", "540", "190",
                     dmg_name,
                     app_path

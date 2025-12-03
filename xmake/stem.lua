@@ -14,6 +14,7 @@ stem_homepage = "https://mogan.app"
 
 stem_binary_name = "MoganSTEM"
 stem_binary_linux = "moganstem"
+stem_dmg_bg_image = "mogan-background.png"
 stem_binary_macos = stem_binary_name
 stem_binary_windows = stem_binary_name .. ".exe"
 
