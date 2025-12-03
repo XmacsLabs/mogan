@@ -98,7 +98,7 @@ For the commercial version with built-in AI features, please visit the [Liii STE
 - Core development, plugins, translations, and community-driven testing and documentation
 
 ### 🔗 Contact
-- Mogan Discord Channel: https://discord.com/invite/M5Gg8yAsTx
+- Mogan Discord Channel: https://discord.gg/Q7xARnAf8t
 - Community lead email: yansong@liii.pro
 - Liii STEM: contact via the [official website](https://liiistem.cn)
 
