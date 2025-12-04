@@ -29,15 +29,9 @@ jobs:
           wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSansCJK-Regular.ttc
           wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSerifCJK-Bold.ttc
           wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSerifCJK-Regular.ttc
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: 6.5.3
-          target: 'desktop'
-          cache: 'true'
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v2.9.3
+          xmake-version: v3.0.4
           actions-cache-folder: '.xmake-cache'
       - name: Install create-dmg
         run: |
