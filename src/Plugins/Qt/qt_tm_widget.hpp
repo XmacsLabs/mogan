@@ -86,7 +86,6 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   QLabel*                 membershipPeriodLabel;
   QPushButton*            loginActionButton;
   QPushButton*            logoutButton;
-  QPushButton*            renewButton;
 
 #ifdef Q_OS_MAC
   QToolBar* dumbToolBar;
@@ -113,8 +112,8 @@ private:
   void    fetchUserInfo (const QString& token);
   void    triggerOAuth2 ();
   QString getMembershipStatus (const QJsonObject& userData);
-  void    updateDialogContent (const QString& name, const QString& avatarText,
-                               const QString& accountId,
+  void    updateDialogContent (bool isLoggedIn, const QString& name,
+                               const QString& avatarText, const QString& accountId,
                                const QString& membershipPeriod);
   void    logout ();
   void    openRenewalPage ();
