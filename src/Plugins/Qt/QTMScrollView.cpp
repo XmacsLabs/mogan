@@ -208,13 +208,14 @@ QTMScrollView::viewportEvent (QEvent* e) {
 #endif
   case QEvent::MouseMove:
   case QEvent::ContextMenu:
-  case QEvent::Wheel:
   case QEvent::Drop:
   case QEvent::DragEnter:
   case QEvent::DragMove:
   case QEvent::DragLeave:
     //      return QFrame::event(e);
     return false; // let the viewport widget handle the event
+  case QEvent::Wheel:
+    return QFrame::event (e);
   case QEvent::LayoutRequest:
 #if QT_VERSION >= 0x040600
 #ifndef QT_NO_GESTURES
