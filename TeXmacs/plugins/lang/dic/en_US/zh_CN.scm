@@ -1627,7 +1627,7 @@
 ("please" "")
 ("Please close the auxiliary window first" "请先关闭辅助窗口")
 ("Please login to view your account information." "请登录查看账户信息")
-("Please restart Mogan to apply the changes." "请重启Moagn以应用更改。")
+("Please restart Mogan to apply the changes." "请重启Mogan以应用更改。")
 ("plot" "描画图形")
 ("plug-ins" "插件")
 ("plugin" "插件")
