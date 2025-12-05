@@ -31,7 +31,7 @@ jobs:
           wget https://github.com/XmacsLabs/mogan/releases/download/v1.2.9.7/NotoSerifCJK-Regular.ttc
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
-          xmake-version: v3.0.4
+          xmake-version: v2.9.3
           actions-cache-folder: '.xmake-cache'
       - name: Install create-dmg
         run: |
