@@ -28,11 +28,11 @@
 
   <assign|script-border-color|grey>
 
-  <assign|script-background-color|pastel yellow>
+  <assign|script-background-color|#3498DB19>
 
   <assign|script-language-color|white>
 
-  <assign|script-language-background-color|#8080A0>
+  <assign|script-language-background-color|#36b4e5>
 
   <assign|script-status-color|red>
 
