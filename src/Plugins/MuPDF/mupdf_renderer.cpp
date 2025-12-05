@@ -278,10 +278,8 @@ mupdf_renderer_rep::begin_text () {
     prev_text_x= to_x (0);
     prev_text_y= to_y (0);
     if (transform_active) {
-      fz_point after_trans=
-          fz_transform_point_xy (prev_text_x, prev_text_y, transform_matrix);
-      proc->op_Tm (mupdf_context (), proc, 1, 0, 0, 1, after_trans.x,
-                   after_trans.y);
+      proc->op_Tm (mupdf_context (), proc, 1, 0, 0, 1, prev_text_x,
+                   prev_text_y);
     }
     else {
       proc->op_Tm (mupdf_context (), proc, 1, 0, 0, 1, prev_text_x,
@@ -322,24 +320,26 @@ mupdf_renderer_rep::set_transformation (frame fr) {
   proc->op_q (mupdf_context (), proc);
   transform_matrix= fz_make_matrix (ux[0], ux[1], uy[0], uy[1], o[0], o[1]);
 
-  // Adjust for rotation direction inversion while keeping the center fixed
-  // Center C = e + 0.5a + 0.5c, f + 0.5b + 0.5d
-  // New matrix has b'=-b, c'=-c
-  // e' = e + c
-  // f' = f + b
+  // 调整 Qt（Y 轴向下）和 PDF（Y 轴向上）之间的 Y 轴反转
+  // 我们需要应用：M' = S * M * S⁻¹，其中 S 是 Y 轴反转矩阵
+  // S = [1 0 0; 0 -1 0; 0 0 1] 且 S⁻¹ = S（因为 S * S = I）
 
-  float new_e= transform_matrix.e + transform_matrix.c;
-  float new_f= transform_matrix.f + transform_matrix.b;
+  // 创建 Y 轴反转矩阵
+  fz_matrix S= fz_make_matrix (1, 0, 0, -1, 0, 0);
 
-  transform_matrix.b= -transform_matrix.b;
-  transform_matrix.c= -transform_matrix.c;
-  transform_matrix.e= new_e;
-  transform_matrix.f= new_f;
+  // 计算调整后的矩阵：M' = S * M * S
+  // 因为对于 Y 轴反转，S = S⁻¹
+  fz_matrix M     = transform_matrix;
+  fz_matrix MS    = fz_concat (M, S);  // M * S
+  transform_matrix= fz_concat (S, MS); // S * (M * S)
 
   proc->op_cm (mupdf_context (), proc, transform_matrix.a, transform_matrix.b,
                transform_matrix.c, transform_matrix.d, transform_matrix.e,
                transform_matrix.f);
-  transform_matrix= fz_invert_matrix (transform_matrix);
+
+  // 存储调整后的矩阵 M'（而不是其逆矩阵）
+  // transform_matrix 现在包含 M' = S * M * S
+  // 我们将直接使用它进行坐标变换
   transform_active= true;
 }
 
