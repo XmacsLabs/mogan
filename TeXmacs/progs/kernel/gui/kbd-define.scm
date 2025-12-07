@@ -14,6 +14,8 @@
 (texmacs-module (kernel gui kbd-define)
   (:use (kernel texmacs tm-define)))
 
+(import (liii hash-table))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Lazy keyboard bindings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -169,19 +171,20 @@
   (or (ctx-find (kbd-get-map key) conds)
       (ctx-find (kbd-get-map key) '())))
 
-(tm-define (kbd-find-prefix-tab prefix)
+(tm-define (kbd-base-sequence comb)
+  (let loop ((s comb))
+    (if (string-ends? s " tab")
+        (loop (substring s 0 (- (string-length s) 4)))
+        s)))
+
+(tm-define (kbd-find-prefix-tab-inner prefix)
   (let* ((pairs (filter 
                   (lambda (pair)
                     (let* ((key (car pair))
                            (val (cdr pair)))
                       (and (string? key)
                            (string-ends? key " tab")
-                           (let* (;; 去掉所有 " tab" 后缀得到基础前缀
-                                  (base (let loop ((s key))
-                                          (if (string-ends? s " tab")
-                                              (loop (substring s 0 (- (string-length s) 4)))
-                                              s)))
-                                  ;; 解析绑定的实际值
+                           (let* ((base (kbd-base-sequence key))
                                   (resolved (ctx-resolve val #f)))
                              (and (string=? base prefix)
                                   resolved)))))
@@ -196,6 +199,18 @@
             (let ((len-x (string-length (car x)))
                   (len-y (string-length (car y))))
               (< len-x len-y))))))
+
+(define kbd-find-prefix-tab-cache (make-hash-table))
+
+(tm-define (kbd-find-prefix-tab prefix)
+  (let ((cached (hash-table-ref/default kbd-find-prefix-tab-cache prefix #f)))
+    (if cached
+        cached
+        (let ((result (kbd-find-prefix-tab-inner prefix)))
+          (hash-table-set! kbd-find-prefix-tab-cache prefix result)
+          result))))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Yet more subroutines for the definition of keyboard shortcuts

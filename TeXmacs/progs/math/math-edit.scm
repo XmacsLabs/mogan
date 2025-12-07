@@ -844,18 +844,10 @@
 ;; 全局栈，用于管理Tab循环状态
 (define tab-cycle-stack '())
 
-;; 获取基本序列（去除末尾的所有 " tab"）
-(define (get-base-sequence comb)
-  (let loop ((s comb))
-    (if (string-ends? s " tab")
-        (loop (substring s 0 (- (string-length s) 4)))
-        s)))
-
-;; 判断是否需要清空栈（新基本序列）
 (define (should-clear-stack? comb)
-  (let ((base (get-base-sequence comb)))
+  (let ((base (kbd-base-sequence comb)))
     (or (null? tab-cycle-stack)
-        (not (string=? base (get-base-sequence (car tab-cycle-stack)))))))
+        (not (string=? base (kbd-base-sequence (car tab-cycle-stack)))))))
 
 ;; 管理栈：如果需要清空则清空，如果不在栈中则入栈
 (define (manage-tab-stack comb)
