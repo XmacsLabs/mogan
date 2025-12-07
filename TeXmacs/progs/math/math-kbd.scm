@@ -1736,7 +1736,7 @@
   ("D var" "<Delta>")
   ("D var var" "<mathD>")
   ("D var var var" "<daleth>")
-  ("D var var var var" "<mathLaplace>")
+  ("D var var var var" "<nabla>")
   ("E var" "<Epsilon>")
   ("E var var" "<exists>")
   ("E var var var" "<Exists>")

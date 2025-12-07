@@ -1,8 +1,18 @@
-<TMU|<tuple|1.1.0|2025.2.1-rc1>>
+<TMU|<tuple|1.1.0|2025.2.1-rc3>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
 <\body>
+  进入数学模式（<key|Shift + 4>）
+
+  在单行公式内，输入<key|D> <key|Tab> <key|Tab> <key|Tab> <key|Tab>，输出的应该是
+
+  <\equation*>
+    \<nabla\>
+  </equation*>
+
+  \;
+
   <math|>进入数学模式（<key|Shift + 4>）
 
   在一个单行公式内，输入<key|x> <key|Space> <key|Tab> <key|y>，同时在另一个单行公式内输入<key|x> <key|*> <key|Tab> <key|y><math|*>，两个单行公式输出的效果应该一样
