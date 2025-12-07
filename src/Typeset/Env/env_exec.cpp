@@ -1932,6 +1932,7 @@ edit_env_rep::exec_find_accessible (tree t) {
 tree
 edit_env_rep::exec_set_binding (tree t) {
   tree keys, value;
+  bool refined= false;
   if (N (t) == 1) {
     keys= read ("the-tags");
     if (!is_tuple (keys)) {
@@ -1948,6 +1949,7 @@ edit_env_rep::exec_set_binding (tree t) {
     value= exec (t[0]);
     assign (string ("the-tags"), tree (TUPLE));
     assign (string ("the-label"), copy (value));
+    refined= true;
   }
   else if (N (t) >= 2) {
     tree key= exec (t[0]);
@@ -1958,6 +1960,14 @@ edit_env_rep::exec_set_binding (tree t) {
     }
     keys = tuple (key);
     value= exec (t[1]);
+    if (is_func (t[1], VALUE, 1) && t[1][0] == THE_LABEL) {
+      tree old_tags= read ("the-tags");
+      if (is_tuple (old_tags)) {
+        tree new_tags= old_tags * tuple (key);
+        assign (string ("the-tags"), new_tags);
+        refined= true;
+      }
+    }
   }
   else {
     // cout << "t= " << t << "\n";
@@ -1969,6 +1979,10 @@ edit_env_rep::exec_set_binding (tree t) {
     string key      = keys[i]->label;
     tree   old_value= local_ref[key];
     string part     = as_string (read ("current-part"));
+    // if refined but new value is not atomic, skip (only for 1-arg set-binding)
+    if (N (t) == 1 && !is_atomic (value) && is_func (old_value, TUPLE) &&
+        N (old_value) >= 1 && is_atomic (old_value[0]))
+      continue;
     if (is_func (old_value, TUPLE) && (N (old_value) >= 2))
       local_ref (key)= tuple (copy (value), old_value[1]);
     else local_ref (key)= tuple (copy (value), "?");
@@ -1980,7 +1994,7 @@ edit_env_rep::exec_set_binding (tree t) {
       local_ref (key) << extra;
     }
     touched (key)= true;
-    if (complete && is_tuple (old_value) && N (old_value) >= 1) {
+    if (complete && !refined && is_tuple (old_value) && N (old_value) >= 1) {
       string old_s= tree_as_string (old_value[0]);
       string new_s= tree_as_string (value);
       if (new_s != old_s && !starts (key, "auto-")) {

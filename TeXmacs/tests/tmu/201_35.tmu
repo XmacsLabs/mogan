@@ -1,0 +1,56 @@
+<TMU|<tuple|1.1.0|2025.2.0-rc6>>
+
+<style|<tuple|generic|number-europe|smart-ref>>
+
+<\body>
+  <\align>
+    <tformat|<table|<row|<cell|f<around*|(|x|)>\<leq\>>|<cell|<around*|\<\|\|\>|g<around*|(|x|)>-h<around*|(|x|)>|\<\|\|\>><label|l1a><eq-number><label|l1b>>>|<row|<cell|\<leq\>>|<cell|<around*|\<\|\|\>|g<around*|(|x|)>-z<around*|(|x|)>|\<\|\|\>>+<around*|\<\|\|\>|z<around*|(|x|)>-h<around*|(|x|)>|\<\|\|\>><label|l2a><eq-number><label|l2b><with|math-display|false|<with|math-display|true|>>>>>>
+  </align>
+
+  \;
+
+  <\equation>
+    f<around*|(|x|)>=f<around*|(|x+T|)><label|l3>
+  </equation>
+
+  <with|font-series|bold|reference>:
+
+  <\itemize>
+    <item>in align, line1 label before eq-number: <reference|l1a>, label after eq-number: <reference|l1b>
+
+    <item>in align, line2 label before eq-number: <reference|l2a>, label after eq-number: <reference|l2b>
+
+    <item>in equation, line3 label: <reference|l3>
+  </itemize>
+
+  \;
+
+  <with|font-series|bold|smart-ref>:
+
+  <\itemize>
+    <item>in align line1 label before eq-number:<smart-ref|l1a>, label after eq-number: <smart-ref|l1b>
+
+    <item>in align line2 label before eq-number:<smart-ref|l2a>, label after eq-number: <smart-ref|l2b>
+
+    <item>in equation, line3 label: <smart-ref|l3>
+  </itemize>
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|l1a|<tuple|1|1>>
+    <associate|l1b|<tuple|1|1>>
+    <associate|l2a|<tuple|2|1>>
+    <associate|l2b|<tuple|2|1>>
+    <associate|l3|<tuple|3|1>>
+  </collection>
+</references>
