@@ -10,13 +10,13 @@
  ******************************************************************************/
 
 #include <QApplication>
-#include <QGuiApplication>
 #include <QComboBox>
 #include <QCryptographicHash>
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QDialog>
 #include <QDockWidget>
+#include <QGuiApplication>
 #include <QIcon>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -1119,7 +1119,7 @@ qt_tm_widget_rep::install_main_menu () {
   // 设置与 menuToolBar 匹配的固定高度
   // 使用 devicePixelRatio() 获取正确的屏幕缩放比
   QScreen* screen= QGuiApplication::primaryScreen ();
-  double   scale= screen ? screen->devicePixelRatio () : 1.0;  // 正确的屏幕缩放比
+  double scale= screen ? screen->devicePixelRatio () : 1.0; // 正确的屏幕缩放比
 
   int h= (int) floor (36 * scale + 0.5);
 #ifdef Q_OS_MAC
