@@ -1127,7 +1127,7 @@ qt_tm_widget_rep::install_main_menu () {
   double scale= dpi / 96.0;
   cout << "scale (DPI-based): " << scale << " (dpi: " << dpi << ")" << LF;
 
-  int h= (int) floor (36 * scale + 0.5);
+  int h= (int) floor (72 * scale + 0.5);
 #else
   double scale= screen ? screen->devicePixelRatio () : 1.0; // 正确的屏幕缩放比
   cout << "scale (DPI-based): " << scale << LF;
