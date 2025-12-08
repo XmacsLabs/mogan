@@ -1118,18 +1118,20 @@ qt_tm_widget_rep::install_main_menu () {
   QList<QAction*>* src= main_menu_widget->get_qactionlist ();
   if (!src) return;
   QMenuBar* dest= new QMenuBar ();
+  QScreen* screen = QGuiApplication::primaryScreen ();
 #ifdef Q_OS_WIN
   // 设置与 menuToolBar 匹配的固定高度
   // 使用 devicePixelRatio() 获取正确的屏幕缩放比
   // 获取屏幕DPI缩放比例
-  QScreen* screen = QGuiApplication::primaryScreen ();
   double dpi = screen ? screen->logicalDotsPerInch () : 96.0;
   double scale = dpi / 96.0;
   cout << "scale (DPI-based): " << scale << " (dpi: " << dpi << ")" << LF;
 
   int h= (int) floor (36 * scale + 0.5);
 #else
-  h= (int) floor (30 * scale + 0.5);
+  double scale= screen ? screen->devicePixelRatio () : 1.0; // 正确的屏幕缩放比
+  cout << "scale (DPI-based): " << scale << LF;
+  int h= (int) floor (108 * scale + 0.5);
 #endif
   dest->setFixedHeight (h);
 
