@@ -1125,13 +1125,11 @@ qt_tm_widget_rep::install_main_menu () {
   // 获取屏幕DPI缩放比例
   double dpi  = screen ? screen->logicalDotsPerInch () : 96.0;
   double scale= dpi / 96.0;
-  cout << "scale (DPI-based): " << scale << " (dpi: " << dpi << ")" << LF;
 
   int h= (int) floor (72 * scale + 0.5);
 #else
   double scale= screen ? screen->devicePixelRatio () : 1.0; // 正确的屏幕缩放比
-  cout << "scale (DPI-based): " << scale << LF;
-  int h= (int) floor (108 * scale + 0.5);
+  int    h    = (int) floor (108 * scale + 0.5);
 #endif
   dest->setFixedHeight (h);
 
@@ -1158,11 +1156,6 @@ qt_tm_widget_rep::install_main_menu () {
     }
   }
 
-  // 添加日志：dest 的 size 和 sizeHint
-  qDebug () << "[install_main_menu] dest QMenuBar size:" << dest->size ();
-  qDebug () << "[install_main_menu] dest QMenuBar sizeHint:"
-            << dest->sizeHint ();
-
   // 移除旧 menuBar
   QList<QWidget*> widgets= menuToolBar->findChildren<QWidget*> ();
   for (QWidget* w : widgets) {
@@ -1181,27 +1174,8 @@ qt_tm_widget_rep::install_main_menu () {
     menuToolBar->layout ()->setSpacing (4);
   }
 
-  // 添加日志：menuToolBar 的 size 和 sizeHint
-  qDebug () << "[install_main_menu] menuToolBar size:" << menuToolBar->size ();
-  qDebug () << "[install_main_menu] menuToolBar sizeHint:"
-            << menuToolBar->sizeHint ();
-
   // 添加新的 menuBar 到 menuToolBar
   menuToolBar->addWidget (dest);
-
-  // 添加日志：添加 widget 后 menuToolBar 的 size 和 sizeHint
-  qDebug () << "[install_main_menu] After adding dest to menuToolBar - "
-               "menuToolBar size:"
-            << menuToolBar->size ();
-  qDebug () << "[install_main_menu] After adding dest to menuToolBar - "
-               "menuToolBar sizeHint:"
-            << menuToolBar->sizeHint ();
-  qDebug ()
-      << "[install_main_menu] After adding dest to menuToolBar - dest size:"
-      << dest->size ();
-  qDebug ()
-      << "[install_main_menu] After adding dest to menuToolBar - dest sizeHint:"
-      << dest->sizeHint ();
 }
 
 void
