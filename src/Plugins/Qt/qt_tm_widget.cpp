@@ -1110,6 +1110,9 @@ qt_tm_widget_rep::query (slot s, int type_id) {
 
 void
 qt_tm_widget_rep::install_main_menu () {
+  // 方案5：添加调试信息
+  qDebug () << "install_main_menu(): called";
+
   if (main_menu_widget == waiting_main_menu_widget) return;
   main_menu_widget    = waiting_main_menu_widget;
   QList<QAction*>* src= main_menu_widget->get_qactionlist ();
@@ -1118,7 +1121,14 @@ qt_tm_widget_rep::install_main_menu () {
   // 设置与 menuToolBar 匹配的固定高度
   double scale= retina_scale;
   int h= (int) floor (36 * scale + 0.5);
-  dest->setFixedHeight (h);
+#ifdef Q_OS_MAC
+  h= (int) floor (30 * scale + 0.5);
+#endif
+  dest->setFixedHeight (60);
+
+  // 方案5：添加调试信息
+  qDebug () << "install_main_menu(): QMenuBar created, height:" << h
+            << "retina_scale:" << retina_scale;
 
   if (tm_style_sheet == "") dest->setStyle (qtmstyle ());
   if (!use_native_menubar) {
@@ -1151,8 +1161,30 @@ qt_tm_widget_rep::install_main_menu () {
   if (!menuToolBar->isVisible ()) {
     menuToolBar->setVisible (true);
   }
+
+  // 方案3：确保 menuToolBar 的布局属性
+  // 确保 menuToolBar 有正确的布局策略
+  menuToolBar->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Fixed);
+  // 确保内容可以正确显示
+  if (menuToolBar->layout ()) {
+    menuToolBar->layout ()->setContentsMargins (2, 0, 2, 0);
+    menuToolBar->layout ()->setSpacing (4);
+  }
+
+  // 方案5：添加调试信息
+  qDebug () << "install_main_menu(): menuToolBar visible:" << menuToolBar->isVisible ()
+            << "height:" << menuToolBar->height ()
+            << "minHeight:" << menuToolBar->minimumHeight ()
+            << "maxHeight:" << menuToolBar->maximumHeight ();
+  qDebug () << "install_main_menu(): QMenuBar size:" << dest->size ()
+            << "sizeHint:" << dest->sizeHint ();
+
   // 添加新的 menuBar 到 menuToolBar
   menuToolBar->addWidget (dest);
+
+  // 方案5：添加调试信息 - 添加后的状态
+  qDebug () << "install_main_menu(): after addWidget, menuToolBar children count:"
+            << menuToolBar->findChildren<QWidget*> ().count ();
 }
 
 void
