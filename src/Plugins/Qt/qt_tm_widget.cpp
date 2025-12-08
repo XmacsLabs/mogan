@@ -1422,6 +1422,20 @@ qt_tm_widget_rep::set_full_screen (bool flag) {
         titleBarVisibleCache= tb && tb->isVisible ();
         if (tb) tb->setVisible (false);
       }
+      bool is_slide_style= false;
+      try {
+        is_slide_style= as_bool (call ("in-presentation?"));
+      } catch (...) {
+        is_slide_style= false;
+      }
+      bool           is_presentation_mode= !visibility[0];
+      QTMScrollView* scrollView          = scrollarea ();
+      if (scrollView && is_presentation_mode && is_slide_style) {
+        QWidget* viewport= scrollView->viewport ();
+        if (viewport) {
+          viewport->setBackgroundRole (QPalette::Shadow);
+        }
+      }
     }
     else {
       QPalette pal;
@@ -1440,6 +1454,19 @@ qt_tm_widget_rep::set_full_screen (bool flag) {
       if (windowAgent) {
         QWidget* tb= windowAgent->titleBar ();
         if (tb) tb->setVisible (titleBarVisibleCache);
+      }
+      bool is_slide_style= false;
+      try {
+        is_slide_style= as_bool (call ("in-presentation?"));
+      } catch (...) {
+        is_slide_style= false;
+      }
+      QTMScrollView* scrollView= scrollarea ();
+      if (scrollView && is_slide_style) {
+        QWidget* viewport= scrollView->viewport ();
+        if (viewport) {
+          viewport->setBackgroundRole (QPalette::Mid);
+        }
       }
 #ifdef UNIFIED_TOOLBAR
       if (use_unified_toolbar) {
