@@ -1771,7 +1771,7 @@
   ("S var var var" (math-big-operator "sum"))
   ("T var" "<Tau>")
   ("T var var" "<top>")
-  ("T var var var" "<bot>")
+  ("T var var var" "<perp>")
   ("T var var var var" "<leftthreetimes>")
   ("T var var var var var" "<rightthreetimes>")
   ("T var var var var var var" "<lefttimesthree>")
