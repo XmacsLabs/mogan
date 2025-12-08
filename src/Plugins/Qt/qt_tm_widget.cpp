@@ -484,6 +484,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   modeToolBar->setObjectName ("modeToolBar");
   focusToolBar->setObjectName ("focusToolBar");
   userToolBar->setObjectName ("userToolBar");
+  menuToolBar->setObjectName ("menuToolBar");
   bottomTools->setObjectName ("bottomTools");
   extraTools->setObjectName ("extraTools");
   sideTools->setObjectName ("sideTools");
