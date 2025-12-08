@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include <QApplication>
+#include <QGuiApplication>
 #include <QComboBox>
 #include <QCryptographicHash>
 #include <QDateTime>
@@ -1119,16 +1120,19 @@ qt_tm_widget_rep::install_main_menu () {
   if (!src) return;
   QMenuBar* dest= new QMenuBar ();
   // 设置与 menuToolBar 匹配的固定高度
-  double scale= retina_scale;
+  // 使用 devicePixelRatio() 获取正确的屏幕缩放比
+  QScreen* screen= QGuiApplication::primaryScreen ();
+  double   scale= screen ? screen->devicePixelRatio () : 1.0;  // 正确的屏幕缩放比
+
   int h= (int) floor (36 * scale + 0.5);
 #ifdef Q_OS_MAC
   h= (int) floor (30 * scale + 0.5);
 #endif
-  dest->setFixedHeight (60);
+  dest->setFixedHeight (h);
 
   // 方案5：添加调试信息
-  qDebug () << "install_main_menu(): QMenuBar created, height:" << h
-            << "retina_scale:" << retina_scale;
+  qDebug () << "install_main_menu(): QMenuBar created, devicePixelRatio:" << scale
+            << "calculated height:" << h;
 
   if (tm_style_sheet == "") dest->setStyle (qtmstyle ());
   if (!use_native_menubar) {
