@@ -26,6 +26,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QObject>
 #include <QResource>
 #include <QScreen>
 #include <QWindow>
@@ -1117,6 +1118,7 @@ qt_tm_widget_rep::install_main_menu () {
   QList<QAction*>* src= main_menu_widget->get_qactionlist ();
   if (!src) return;
   QMenuBar* dest= new QMenuBar ();
+#ifdef Q_OS_WIN
   // 设置与 menuToolBar 匹配的固定高度
   // 使用 devicePixelRatio() 获取正确的屏幕缩放比
   // 获取屏幕DPI缩放比例
@@ -1126,7 +1128,7 @@ qt_tm_widget_rep::install_main_menu () {
   cout << "scale (DPI-based): " << scale << " (dpi: " << dpi << ")" << LF;
 
   int h= (int) floor (36 * scale + 0.5);
-#ifdef Q_OS_MAC
+#else
   h= (int) floor (30 * scale + 0.5);
 #endif
   dest->setFixedHeight (h);
