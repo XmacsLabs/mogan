@@ -129,7 +129,7 @@
              (load-text (string-append "Load " (string-downcase name) " file"))
              (import-text `(concat "Import " ,name))
              (text (if flag? import-text name))
-             (format (if (== fm "verbatim") "" fm)))
+             (format (if (== fm "verbatim") "text" fm)))
         ((eval text) (choose-file (buffer-importer fm) load-text format))))))
 
 (tm-define (import-top-menu) (import-menu #t))

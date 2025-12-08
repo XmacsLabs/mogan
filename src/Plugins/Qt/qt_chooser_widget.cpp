@@ -180,8 +180,11 @@ qt_chooser_widget_rep::set_type (const string& _type) {
   else if (_type == "action_save_as") {
     mainNameFilter= to_qstring (translate ("STEM files"));
   }
-  else if (_type == "generic") {
+  else if (_type == "text") {
     mainNameFilter= to_qstring (translate ("Plain text files"));
+  }
+  else if (_type == "generic") {
+    mainNameFilter= to_qstring (translate ("All files"));
   }
 
   else {
@@ -207,9 +210,12 @@ qt_chooser_widget_rep::set_type (const string& _type) {
                                " (*.pdf)");
     nameFilters << to_qstring (translate ("WebP Image Format") * " (*.webp)");
   }
-  else if (_type == "generic") {
+  else if (_type == "text") {
     mainNameFilter+= " (*.txt)";
     nameFilters << mainNameFilter;
+    nameFilters << to_qstring (translate ("All Format") * " (*)");
+  }
+  else if (_type == "generic") {
     nameFilters << to_qstring (translate ("All Format") * " (*)");
   }
   else if (_type == "action_open") {
