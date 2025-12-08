@@ -1115,13 +1115,14 @@ qt_tm_widget_rep::install_main_menu () {
   QList<QAction*>* src= main_menu_widget->get_qactionlist ();
   if (!src) return;
   QMenuBar* dest= new QMenuBar ();
+  // 设置与 menuToolBar 匹配的固定高度
+  double scale= retina_scale;
+  int h= (int) floor (36 * scale + 0.5);
+  dest->setFixedHeight (h);
+
   if (tm_style_sheet == "") dest->setStyle (qtmstyle ());
   if (!use_native_menubar) {
     dest->setNativeMenuBar (false);
-    if (tm_style_sheet != "") {
-      int min_h= (int) floor (28 * retina_scale);
-      dest->setMinimumHeight (min_h);
-    }
   }
 
   dest->clear ();
