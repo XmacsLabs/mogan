@@ -2216,6 +2216,7 @@
 ("today" "今天")
 ("toggle cell wrapping mode" "切换单元格换行模式")
 ("toggle the preamble mode for the document" "切换到当前文档的导言模式")
+("toggle the visibility of the window's footer" "切换窗口页脚的可见性")
 ("toggle using current buffer as master file of project" "是否切换当前文档为项目的主文件")
 ("toggle whether we save auxiliary data" "切换是否存储辅助数据")
 ("toggle whether we show keyboard presses" "切换是否显示键盘按键")
