@@ -615,6 +615,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   modeToolBar->setVisible (false);
   focusToolBar->setVisible (false);
   userToolBar->setVisible (false);
+  menuToolBar->setVisible (false);
   sideTools->setVisible (false);
   leftTools->setVisible (false);
   bottomTools->setVisible (false);
@@ -1143,6 +1144,10 @@ qt_tm_widget_rep::install_main_menu () {
   QList<QWidget*> widgets= menuToolBar->findChildren<QWidget*> ();
   for (QWidget* w : widgets) {
     w->setParent (nullptr);
+  }
+  // 确保 menuToolBar 可见
+  if (!menuToolBar->isVisible ()) {
+    menuToolBar->setVisible (true);
   }
   // 添加新的 menuBar 到 menuToolBar
   menuToolBar->addWidget (dest);
