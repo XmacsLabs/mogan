@@ -138,14 +138,6 @@
   (remove-text forwards?))
 
 (tm-define (kbd-remove t forwards?)
-  (:require (tree-in? t '(image)))
-  (and-with p (tree-up t)
-    (when (tree-is? p 'document)
-      (if (= (tree-arity p) 1)
-          (tree-assign! p `(document ""))
-          (tree-remove! p (tree-index t) 1)))))
-
-(tm-define (kbd-remove t forwards?)
   (:require (and (in-source?)
                  (not (in-source-mode?))  ;; 不在源码编辑或者导言区编辑模式
                  (not (with-any-selection?))))
