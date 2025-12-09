@@ -358,7 +358,6 @@
 ("chinese character" "中文字符")
 ("chinese" "中文")
 ("choice" "选择")
-("choose file" "浏览")
 ("Choose binary file" "选择二进制文件")
 ("circle" "圆圈")
 ("citation" "引用")

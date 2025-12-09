@@ -98,7 +98,6 @@
 
 (define binary-type "python")
 (define binary-path "")
-(define warning-message "")
 (define binary-list
   (list "python" "aspell" "conda" "convert" "goldfish" "ghostscript" "hunspell"
         "identify" "inkscape" "pandoc" "pdftocairo" "rsvg-convert" "maxima"))
@@ -144,49 +143,51 @@
 
 ; 设置成功弹窗
 (tm-widget (please-restart-widget cmd)
-  (resize "300px" "150px"
+  (resize "200px" "50px"
     (padded
       (text "Please restart Mogan to apply the changes.")))
   (bottom-buttons 
-    >> ("ok" (cmd "ok")) // ("cancel" (cmd "cancel"))))
+    >> ("ok" (cmd "ok"))))
 
 ; 路径非法弹窗
 (tm-widget (path-incorrect-widget cmd)
-  (resize "300px" "150px"
+  (resize "200px" "50px"
     (padded
       (text "The path you entered is incorrect!")))
   (bottom-buttons 
-    >> ("ok" (cmd "ok")) // ("cancel" (cmd "cancel"))))
+    >> ("ok" (cmd "ok"))))
 
 ; 自定义路径设置主弹窗
 (tm-widget (manual-path-widget cmd)
-  (resize "500px" "200px" ; 设置窗口大小
-    (padded ; 设置样式为四周留空
-      (invisible (update-path)) ; 更新路径，窗口打开默认是python，所以这里更新的是查找到的python路径
-      (vlist === ; 纵向容器，胶水组件
-        (hlist (text "Select binary: ") ; 横向容器，第一行下拉单选框的名称提示
-          (enum (begin 
-                  (set! binary-type (cadr answer)) 
-                  (update-path)) 
-                (map 
-                  (lambda (x) (list 'verbatim x)) 
-                  binary-list) 
-                (car binary-list) 
-                "50em")) ; 默认显示python，并设置回调函数，当值被更改，调用update-path更新路径同步在输入框中显示
-        (refreshable "input-path-widget" ; 将第二行组件设置为可刷新并命名
-          (hlist (text "Select path: ") ; 第二行名称提示
-            (inert 
-              (input "path" "string" (list binary-path) "25em")) // ; 只读的输入框，显示的是全局变量binary-path
-            (explicit-buttons ; 按钮，包含了一个文件选择器
-              ("choose file" 
-                (choose-file (lambda (selected-url) ; 文件选择器，定义回调函数，当有新路径被选择时，设置全局变量并刷新容器
-                               (set! binary-path (url->system selected-url))
-                               (refresh-now "input-path-widget"))
-                  "Choose binary file" 
-                  (if (os-win32?) "windows-executables" "generic"))))
-            (text warning-message)))))) ; 未完成的组件：路径选择错误，在文本框下显示错误信息。
-  (bottom-buttons 
-    >> ("ok" (cmd "ok")) // ("cancel" (cmd "cancel"))))
+  (resize "500px" "150guipx"
+    (padded
+      (invisible (update-path)) ;调用update-path但不渲染内容
+      (hlist
+        (text "Select binary: ")
+        (enum
+          (begin (set! binary-type (cadr answer)) (update-path))
+          (map (lambda (x) (list 'verbatim x)) binary-list)
+          (car binary-list) "50em"))
+      (glue #t #f 0 10)
+      (refreshable "input-path-widget" ;刷新hlist内部的内容
+        (hlist
+          (text "Select path: ")
+          (inert (input "path" "string" (list binary-path) ""))
+          //
+          (resize "44px" "20px" (explicit-buttons
+            (""
+              (choose-file
+                (lambda
+                  (selected-url)
+                  (set! binary-path (url->system selected-url))
+                  (refresh-now "input-path-widget"))
+                "Choose binary file"
+                (if (os-win32?) "windows-executables" "generic")))))
+          ))
+      (glue #t #f 0 10)
+      (hlist
+        (glue #t #f 0 10)
+        (explicit-buttons ("ok" (cmd "ok")) // ("cancel" (cmd "cancel")))))))
 
 (tm-menu (supported-sessions-menu)
   (for (name (session-list))
