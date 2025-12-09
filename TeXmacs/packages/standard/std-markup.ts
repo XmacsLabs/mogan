@@ -34,9 +34,9 @@
 
   <assign|Xmacs-version|<macro|<extern|xmacs-version>>>
 
-  <assign|made-by-TeXmacs|<macro|<float|footnote||<with|font-size|0.84|par-mode|justify|par-left|0cm|par-right|0cm|<active*|<move|<image|local:$TEXMACS_PATH/misc/images/tm_gnu3.ps||1fn||>|0fn|-0.2fn>><space|2spc><localize|This
-  document has been produced using> GNU <TeXmacs> (<localize|see>
-  <with|font-family|tt|https://www.texmacs.org>).<right-flush>>>>>
+  <assign|made-by-TeXmacs|<macro|<float|footnote||<with|font-size|0.84|par-mode|justify|par-left|0cm|par-right|0cm|<localize|This
+  document has been produced using> Mogan STEM (<localize|see>
+  <with|font-family|tt|https://mogan.app>).<right-flush>>>>>
 
   <assign|tm-made|<macro|<with|ornament-color||ornament-shadow-color|<value|color>|ornament-sunny-color|<value|color>|ornament-border|1ln|ornament-shape|rounded|ornament-hpadding|0.5spc|ornament-vpadding|0.5spc|<ornament|<math|\<Backsigma\>>>>>>
 
