@@ -231,7 +231,7 @@
 
   <assign|part-toc|<macro|name|<toc-main-1|<toc-title|part|<arg|name>>>>>
 
-  <assign|chapter-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-main-1|<toc-title|chapter|<arg|name>>>|<toc-main-2|<toc-title|chapter|<arg|name>>>>>>>
+  <assign|chapter-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-main-1|<toc-title|chapter|<arg|name>>>|<toc-main-2|<if|<chapter-numbered>|<chapter-text> <the-chapter><chapter-sep><arg|name>|<arg|name>>>>>>>
 
   <assign|section-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-main-2|<toc-title|section|<arg|name>>>|<toc-normal-1|<toc-title|section|<arg|name>>>>>>>
 

@@ -118,6 +118,8 @@
 
   <assign|chapter-numbered-title|<macro|title|<style-with|src-compact|none|<chapter-title|\<#7B2C\>
   <the-chapter> <chapter-text> <vspace|1fn><new-line><arg|title>>>>>
+  
+  <assign|chapter-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-main-1|<toc-title|chapter|<arg|name>>>|<toc-main-2|<if|<chapter-numbered>|\<#7B2C\> <the-chapter> <chapter-text><chapter-sep><arg|name>|<arg|name>>>>>>>
 
   \;
 
