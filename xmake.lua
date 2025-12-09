@@ -13,6 +13,7 @@ includes("xmake/vars.lua")
 includes("xmake/stem.lua")
 
 set_project(stem_project_name)
+set_policy("run.autobuild", false)
 set_languages("c++17")
 set_encodings("utf-8")
 
