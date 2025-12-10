@@ -46,6 +46,12 @@ jobs:
             ${{github.workspace}}/build/.build_cache
             /Users/runner/.xmake
           key: xmake-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake-requires.lock') }}
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.8.3
+          target: 'desktop'
+          cache: 'true'
 
       - name: Set Qt Environment Variables
         run: |
