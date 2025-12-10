@@ -32,9 +32,9 @@ jobs:
   macosbuild:
     strategy:
       matrix:
-        os: [macos-13]
+        os: [macos-14]
         arch: [x86_64]
-    runs-on: macos-13
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     if: always()
     steps:
