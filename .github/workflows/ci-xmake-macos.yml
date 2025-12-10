@@ -32,7 +32,7 @@ jobs:
   macosbuild:
     strategy:
       matrix:
-        os: [macos-14]
+        os: [macos-14-large]
         arch: [x86_64]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
@@ -47,7 +47,7 @@ jobs:
           path: |
             ${{github.workspace}}/build/.build_cache
             /Users/runner/.xmake
-          key: xmake-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake-requires.lock') }}
+          key: xmake-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake/vars.lua') }}
           
       - name: set XMAKE_GLOBALDIR
         run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
@@ -65,14 +65,14 @@ jobs:
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: xrepo-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake-requires.lock') }}
+          key: xrepo-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake/vars.lua') }}
 
       - name: cache xmake
         uses: actions/cache@v3
         with:
           path: |
             ${{ runner.workspace }}/build/.build_cache
-          key: xmake-build-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake-requires.lock') }}
+          key: xmake-build-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake/vars.lua') }}
 
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
