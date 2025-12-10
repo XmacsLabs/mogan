@@ -1,0 +1,20 @@
+<TMU|<tuple|1.1.0|2025.2.2-rc2>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  VAR
+
+  var
+
+  Var
+
+  vAR
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

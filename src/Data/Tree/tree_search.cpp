@@ -259,7 +259,8 @@ search_string (range_set& sel, string s, tree what, path p) {
   string source= (case_insensitive_match_flag) ? locase_all (s) : s;
 
   if (is_atomic (what)) {
-    string w= what->label;
+    string w=
+        (case_insensitive_match_flag) ? locase_all (what->label) : what->label;
     if (is_empty (w)) {
       return;
     }
