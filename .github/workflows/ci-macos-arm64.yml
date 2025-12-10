@@ -52,6 +52,7 @@ jobs:
           version: 6.8.3
           target: 'desktop'
           cache: 'true'
+          modules: 'qtnetworkauth'
 
       - name: Set Qt Environment Variables
         run: |
