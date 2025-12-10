@@ -41,7 +41,7 @@ jobs:
       - name: config
         run: xmake config -m release -a ${{ matrix.arch }} -vD --yes
       - name: build
-        run: xmake build -vD --diagnosis stem
+        run: xmake build -vD stem
       - name: install
         run: xmake install -vD stem
       - name: Clean up mounted DMGs
