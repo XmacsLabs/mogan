@@ -32,6 +32,8 @@
 
   <assign|sectional-short-style|<macro|true>>
 
+  <assign|in-appendix|false>
+
   <drd-props|sectional-short-style|macro-parameter|boolean>
 
   <drd-props|sectional-sep|macro-parameter|regular>
@@ -187,7 +189,7 @@
 
   \;
 
-  <assign|chapter-clean|<macro|<reset-section><section-clean>>>
+  <assign|chapter-clean|<macro|<assign|in-appendix|false><reset-section><section-clean>>>
 
   <assign|section-clean|<macro|<reset-subsection><subsection-clean>>>
 
@@ -207,7 +209,7 @@
 
   <assign|display-appendix|<macro|nr|<style-with|src-compact|none|<if|<sectional-short-style>|<display-section|<number|<arg|nr>|Alpha>>|<display-chapter|<number|<arg|nr>|Alpha>>>>>>
 
-  <assign|appendix-clean|<macro|<style-with|src-compact|none|<if|<sectional-short-style>|<style-with|src-compact|none|<reset-subsection><section-clean><assign|section-prefix|<value|appendix-prefix>>>|<style-with|src-compact|none|<reset-section><chapter-clean><assign|chapter-prefix|<value|appendix-prefix>>>>>>>
+  <assign|appendix-clean|<macro|<style-with|src-compact|none|<if|<sectional-short-style>|<style-with|src-compact|none|<reset-subsection><section-clean><assign|section-prefix|<value|appendix-prefix>>>|<style-with|src-compact|none|<reset-section><chapter-clean><assign|in-appendix|true><assign|chapter-prefix|<value|appendix-prefix>>>>>>>
 
   <assign|appendix-title|<macro|title|<style-with|src-compact|none|<if|<sectional-short-style>|<section-title|<arg|title>>|<chapter-title|<arg|title>>>>>>
 
@@ -233,11 +235,11 @@
 
   <assign|chapter-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-main-1|<toc-title|chapter|<arg|name>>>|<toc-main-2|<if|<chapter-numbered>|<chapter-text> <the-chapter><chapter-sep><arg|name>|<arg|name>>>>>>>
 
-  <assign|section-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-main-2|<toc-title|section|<arg|name>>>|<toc-normal-1|<toc-title|section|<arg|name>>>>>>>
+  <assign|section-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-main-2|<toc-title|section|<arg|name>>>|<if|<value|in-appendix>||<toc-normal-2|<toc-title|section|<arg|name>>>>>>>>
 
-  <assign|subsection-toc|<macro|name|<toc-normal-2|<toc-title|subsection|<arg|name>>>>>
+  <assign|subsection-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-normal-2|<toc-title|subsection|<arg|name>>>|<if|<value|in-appendix>||<toc-normal-3|<toc-title|subsection|<arg|name>>>>>>>>
 
-  <assign|subsubsection-toc|<macro|name|<toc-normal-3|<toc-title|subsubsection|<arg|name>>>>>
+  <assign|subsubsection-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-normal-3|<toc-title|subsubsection|<arg|name>>>|>>>>
 
   <assign|paragraph-toc|<macro|name|<toc-small-1|<toc-title|paragraph|<arg|name>>>>>
 
