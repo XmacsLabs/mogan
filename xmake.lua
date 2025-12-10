@@ -458,6 +458,9 @@ target("QWKCore")
     -- Set install headers
     add_headerfiles("$(buildir)/include/QWKCore/**.h", {prefixdir = "QWKCore"})
     add_headerfiles("$(buildir)/include/QWKCore/private/**.h", {prefixdir = "QWKCore/private"})
+
+    on_install(function (target)
+    end)
 target_end()
 
 target("QWKWidgets")
@@ -545,6 +548,9 @@ target("QWKWidgets")
 
     -- Set install headers
     add_headerfiles("$(buildir)/include/QWKWidgets/**.h", {prefixdir = "QWKWidgets"})
+
+    on_install(function (target)
+    end)
 target_end()
 
 target("libmogan") do
