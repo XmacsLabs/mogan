@@ -56,13 +56,13 @@ jobs:
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: qt683-${{ runner.os }}-${{ runner.arch }}-xrepo-${{ hashFiles('xmake-requires.lock') }}
+          key: qt683-${{ runner.os }}-${{ runner.arch }}-xrepo-${{ hashFiles('xmake/vars.lua') }}
       - name: cache xmake
         uses: actions/cache@v4
         with:
           path: |
             ${{ github.workspace }}/build/.build_cache
-          key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('xmake-requires.lock') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('xmake/vars.lua') }}
       - name: config
         run: xmake config --policies=build.ccache --yes -vD -m releasedbg --plat=windows
       - name: build

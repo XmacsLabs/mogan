@@ -45,7 +45,7 @@ jobs:
           path: |
             ${{github.workspace}}/build/.build_cache
             /Users/runner/.xmake
-          key: xmake-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake-requires.lock') }}
+          key: xmake-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake/vars.lua') }}
 
       - name: Set Qt Environment Variables
         run: |
@@ -71,14 +71,14 @@ jobs:
         with:
           path: |
             ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: xrepo-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake-requires.lock') }}
+          key: xrepo-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake/vars.lua') }}
 
       - name: cache xmake
         uses: actions/cache@v3
         with:
           path: |
             ${{ runner.workspace }}/build/.build_cache
-          key: xmake-build-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake-requires.lock') }}
+          key: xmake-build-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('xmake/vars.lua') }}
 
       - name: config
         run: xmake config --policies=build.ccache -o ${{ runner.workspace }}/build -m releasedbg --yes
