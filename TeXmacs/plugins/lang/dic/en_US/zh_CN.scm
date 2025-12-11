@@ -10,6 +10,7 @@
 ("Clipboard image format:" "剪贴板图片格式：")
 ("Conservative conversion options" "保守的转换选项")
 ("Correction" "纠正")
+("Default document style" "默认文档样式")
 ("Delete::keyboard" "Delete")
 ("Documents in separate windows" "单个文档独立窗口")
 ("End::keyboard" "End")
