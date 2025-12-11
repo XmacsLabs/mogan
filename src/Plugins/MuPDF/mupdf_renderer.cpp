@@ -277,6 +277,7 @@ mupdf_renderer_rep::begin_text () {
     proc->op_BT (mupdf_context (), proc);
     prev_text_x= to_x (0);
     prev_text_y= to_y (0);
+    cfn        = "";
     if (transform_active) {
       proc->op_Tm (mupdf_context (), proc, 1, 0, 0, 1, prev_text_x,
                    prev_text_y);
@@ -684,6 +685,9 @@ mupdf_renderer_rep::clear (SI x1, SI y1, SI x2, SI y2) {
   SI yy1= to_y (min (y1, y2));
   SI xx2= to_x (max (x1, x2));
   SI yy2= to_y (max (y1, y2));
+  if (xx1 >= xx2 || yy1 >= yy2) {
+    return;
+  }
   // debug_convert << "clear" << xx1 << " " << yy1 << " " << xx2 << " " << yy2
   // << LF;
   proc->op_q (mupdf_context (), proc);
