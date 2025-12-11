@@ -988,6 +988,7 @@
 ("insert a note or a floating object" "插入注释或浮动对象")
 ("insert a numerical operation" "")
 ("insert a picture" "插入图片")
+("insert a prominent piece of text" "插入一个外观块")
 ("insert a root" "插入平方根")
 ("insert a script" "插入上下标")
 ("insert a square root" "插入平方根")
