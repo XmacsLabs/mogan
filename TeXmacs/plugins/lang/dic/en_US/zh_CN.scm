@@ -1238,6 +1238,7 @@
 ("link to URL" "URL链接")
 ("link" "链接")
 ("linking tool" "链接菜单")
+("list of abbreviations" "符号和缩略语说明")
 ("list of figures" "图形目录")
 ("list of tables" "表格目录")
 ("list" "")

@@ -1,0 +1,19 @@
+<TMU|<tuple|1.1.0|2025.2.2-rc3>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <\hide-preamble>
+    \;
+  </hide-preamble>
+
+  <list-of-abbreviations|<tformat|<table|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|DMAsPPT>|<cell|聚苯基不对称三嗪双模型化合物（水解实验模型化合物）>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>|<row|<cell|<math|E<rsub|a>>>|<cell|化学反应的活化能(ActivationEnergy)>>>>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+    <associate|preamble|false>
+  </collection>
+</initial>

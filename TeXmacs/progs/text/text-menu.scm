@@ -114,6 +114,7 @@
       ("Part" (make-section 'part)))
   ("Chapter" (make-section 'chapter))
   ("Appendix" (make-section 'appendix))
+  ("List of abbreviations" (make-unnamed-section 'list-of-abbreviations))
   ("Prologue" (make-unnamed-section 'prologue))
   ("Epilogue" (make-unnamed-section 'epilogue)))
 
