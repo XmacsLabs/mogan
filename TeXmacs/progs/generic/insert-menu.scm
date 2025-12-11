@@ -29,7 +29,7 @@
   ---
   (when (not (selection-active?))
     (if (detailed-menus?)
-        ("Include" (choose-file make-include "Include file" ""))))
+        ("Include" (choose-file make-include "Include file" "action_include"))))
   (when (not (selection-active-non-small?))
     ("Link to URL" (make 'slink))
     ("Hyperlink" (make 'hlink))

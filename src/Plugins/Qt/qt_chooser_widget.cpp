@@ -180,6 +180,9 @@ qt_chooser_widget_rep::set_type (const string& _type) {
   else if (_type == "action_save_as") {
     mainNameFilter= to_qstring (translate ("STEM files"));
   }
+  else if (_type == "action_include") {
+    mainNameFilter= to_qstring (translate ("STEM files for include"));
+  }
   else if (_type == "text") {
     mainNameFilter= to_qstring (translate ("Plain text files"));
   }
@@ -245,6 +248,12 @@ qt_chooser_widget_rep::set_type (const string& _type) {
   else if (_type == "action_save_as") {
     mainNameFilter+= " (*.tmu)";
     nameFilters << mainNameFilter;
+    nameFilters << to_qstring (translate ("TM files") * " (*.tm)");
+  }
+  else if (_type == "action_include") {
+    mainNameFilter+= " (*.tmu *.tm)";
+    nameFilters << mainNameFilter;
+    nameFilters << to_qstring (translate ("TMU files") * " (*.tmu)");
     nameFilters << to_qstring (translate ("TM files") * " (*.tm)");
   }
   else {
