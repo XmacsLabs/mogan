@@ -1961,8 +1961,9 @@ edit_env_rep::exec_set_binding (tree t) {
     keys = tuple (key);
     value= exec (t[1]);
     if (is_func (t[1], VALUE, 1) && t[1][0] == THE_LABEL) {
-      tree old_tags= read ("the-tags");
-      if (is_tuple (old_tags)) {
+      tree defer_tag= read ("defer-tags");
+      tree old_tags = read ("the-tags");
+      if (is_tuple (old_tags) && is_atomic (defer_tag) && defer_tag == "row") {
         tree new_tags= old_tags * tuple (key);
         assign (string ("the-tags"), new_tags);
         refined= true;
@@ -1979,10 +1980,6 @@ edit_env_rep::exec_set_binding (tree t) {
     string key      = keys[i]->label;
     tree   old_value= local_ref[key];
     string part     = as_string (read ("current-part"));
-    // if refined but new value is not atomic, skip (only for 1-arg set-binding)
-    if (N (t) == 1 && !is_atomic (value) && is_func (old_value, TUPLE) &&
-        N (old_value) >= 1 && is_atomic (old_value[0]))
-      continue;
     if (is_func (old_value, TUPLE) && (N (old_value) >= 2))
       local_ref (key)= tuple (copy (value), old_value[1]);
     else local_ref (key)= tuple (copy (value), "?");

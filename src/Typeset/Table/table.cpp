@@ -113,7 +113,8 @@ table_rep::typeset_row (int i, tree fm, tree t, path ip) {
   T[i]   = tm_new_array<cell> (nr_cols);
   STACK_NEW_ARRAY (subformat, tree, nr_cols);
   extract_format (fm, subformat, nr_cols);
-  tree old_tags= env->local_begin ("the-tags", tree (TUPLE));
+  tree old_defer= env->local_begin ("defer-tags", string ("row"));
+  tree old_tags = env->local_begin ("the-tags", tree (TUPLE));
   for (j= 0; j < nr_cols; j++) {
     cell& C= T[i][j];
     C      = cell (env);
@@ -127,6 +128,7 @@ table_rep::typeset_row (int i, tree fm, tree t, path ip) {
     if (hyphen == "y") C->row_span= 1;
   }
   env->local_end ("the-tags", old_tags);
+  env->local_end ("defer-tags", old_defer);
   STACK_DELETE_ARRAY (subformat);
 }
 

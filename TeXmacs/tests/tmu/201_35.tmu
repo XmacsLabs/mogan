@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2025.2.0-rc6>>
+<TMU|<tuple|1.1.0|2025.2.2>>
 
 <style|<tuple|generic|number-europe|smart-ref>>
 
@@ -13,6 +13,10 @@
     f<around*|(|x|)>=f<around*|(|x+T|)><label|l3>
   </equation>
 
+  <\equation>
+    sin<around*|(|x|)>=cos<around*|(|<frac|\<pi\>|2>-x|)><label|l4>
+  </equation>
+
   <with|font-series|bold|reference>:
 
   <\itemize>
@@ -21,6 +25,8 @@
     <item>in align, line2 label before eq-number: <reference|l2a>, label after eq-number: <reference|l2b>
 
     <item>in equation, line3 label: <reference|l3>
+
+    <item>in equation, line4 label: <reference|l4>
   </itemize>
 
   \;
@@ -33,6 +39,8 @@
     <item>in align line2 label before eq-number:<smart-ref|l2a>, label after eq-number: <smart-ref|l2b>
 
     <item>in equation, line3 label: <smart-ref|l3>
+
+    <item>in equation, line4 label: <smart-ref|l4>
   </itemize>
 
   \;
@@ -52,5 +60,6 @@
     <associate|l2a|<tuple|2|1>>
     <associate|l2b|<tuple|2|1>>
     <associate|l3|<tuple|3|1>>
+    <associate|l4|<tuple|4|?>>
   </collection>
 </references>
