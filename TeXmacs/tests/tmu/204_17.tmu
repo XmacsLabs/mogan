@@ -1,0 +1,63 @@
+<TMU|<tuple|1.1.0|2025.2.2>>
+
+<style|<tuple|generic|chinese|number-europe|modern-program>>
+
+<\body>
+  <\specified-algorithm|An algorithm with caption>
+    <algo-require|<math|n\<geq\>0>>
+
+    <algo-ensure|<math|y=x<rsup|n>>>
+
+    <algo-state|<math|y\<leftarrow\>1>>o
+
+    <algo-state|<math|X\<leftarrow\>x>>
+
+    <algo-state|<math|N\<leftarrow\>n>>
+
+    <\algo-while|<math|N\<neq\>0>>
+      <\algo-if-else-if|<math|N> is even>
+        <algo-state|<math|X\<leftarrow\>X\<times\>X>>
+
+        <algo-state|<math|N\<leftarrow\><frac|N|2>> <algo-comment|This is a comment>>
+      <|algo-if-else-if|<math|N> is odd>
+        <algo-state|<math|y\<leftarrow\>y\<times\>X>>
+
+        <algo-state|<math|N\<leftarrow\>N-1>>
+      </algo-if-else-if>
+    </algo-while>
+  </specified-algorithm>
+
+  <\algorithm>
+    An algorithm with caption
+
+    <algo-require|<math|n\<geq\>0>>
+
+    <algo-ensure|<math|y=x<rsup|n>>>
+
+    <algo-state|<math|y\<leftarrow\>1>>
+
+    <algo-state|<math|X\<leftarrow\>x>>
+
+    <algo-state|<math|N\<leftarrow\>n>>
+
+    <\algo-while|<math|N\<neq\>0>>
+      <\algo-if-else-if|<math|N> is even>
+        <algo-state|<math|X\<leftarrow\>X\<times\>X>>
+
+        <algo-state|<math|N\<leftarrow\><frac|N|2>> <algo-comment|This is a comment>>
+      <|algo-if-else-if|<math|N> is odd>
+        <algo-state|<math|y\<leftarrow\>y\<times\>X>>
+
+        <algo-state|<math|N\<leftarrow\>N-1>>
+      </algo-if-else-if>
+    </algo-while>
+  </algorithm>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+    <associate|preamble|false>
+  </collection>
+</initial>

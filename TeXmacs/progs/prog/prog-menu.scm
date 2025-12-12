@@ -103,7 +103,7 @@
     (link dynamic-icons)))
 
 (menu-bind code-menu
-  ("Algorithm" (make 'algorithm))
+  ("Algorithm" (make 'specified-algorithm))
   ("Pseudo code" (make 'render-code))
   ---
   ("Indent" (make 'indent))

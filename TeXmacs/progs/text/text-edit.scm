@@ -23,7 +23,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (style-category p)
-  (:require (in? p (list "centered-program" "framed-program")))
+  (:require (in? p (list "modern-program" "centered-program" "framed-program")))
   :program-theme)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

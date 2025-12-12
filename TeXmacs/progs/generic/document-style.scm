@@ -198,6 +198,7 @@
   ("ring-session"         "Ring binder notebook style")
   ("large-formulas"       "Do not break up large formulas")
 
+  ("modern-program"       "Modern programs")
   ("centered-program"     "Centered programs")
   ("framed-program"       "Framed programs")
   ("compact-list"         "Compact lists")
@@ -309,6 +310,7 @@
   ("ring-session"       "Ring binder notebook style")
   ("large-formulas"     "Do not break up large fractions and matrices")
 
+  ("modern-program"     "Use a modern style for algorithms")
   ("centered-program"   "Use a centered rendering style for algorithms")
   ("framed-program"     "Display algorithms inside frames and center")
   ("cite-author-year"   "Mimick 'natbib' package from LaTeX")

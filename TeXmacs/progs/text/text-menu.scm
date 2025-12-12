@@ -988,7 +988,7 @@
 
 (tm-define (standard-options l)
   (:require (in? l (algorithm-tag-list)))
-  (list "centered-program" "framed-program"))
+  (list "modern-program" "centered-program" "framed-program"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Focus menus for floating objects
