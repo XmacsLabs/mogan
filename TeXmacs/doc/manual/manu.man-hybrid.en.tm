@@ -1,6 +1,6 @@
-<TeXmacs|1.0.2.9>
+<TeXmacs|2.1.4>
 
-<style|tmdoc>
+<style|<tuple|tmudoc|english|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|Hybrid commands and <LaTeX> simulation>
@@ -15,9 +15,9 @@
     \ \ \ \ \<less\>return\<gtr\>: action to be undertaken
   </verbatim>
 
-  When you hit the <shortcut|(kbd-return)>-key at this stage, your command will be
-  executed. For instance, in math-mode, you may create a fraction by typing
-  <key|\\ f r a c return>.
+  When you hit the <shortcut|(kbd-return)>-key at this stage, your command
+  will be executed. For instance, in math-mode, you may create a fraction by
+  typing <key|\\ f r a c return>.
 
   If the command you have typed is not a (recognized) <LaTeX> command, then
   we first look whether the command is an existing <TeXmacs> macro, function
@@ -31,7 +31,7 @@
   To insert a literal <kbd|\\> (backslash) character, you can use the
   <key|symbol \\> sequence.
 
-  <tmdoc-copyright|1998--2002|Joris van der Hoeven>
+  <tmdoc-copyright|1998\U2002|Joris van der Hoeven>
 
   <tmdoc-license|Permission is granted to copy, distribute and/or modify this
   document under the terms of the GNU Free Documentation License, Version 1.1
@@ -41,20 +41,5 @@
   Documentation License".>
 </body>
 
-<\initial>
-  <\collection>
-    <associate|page-even|30mm>
-    <associate|page-reduce-bot|15mm>
-    <associate|page-reduce-right|25mm>
-    <associate|page-reduce-left|25mm>
-    <associate|sfactor|4>
-    <associate|page-top|30mm>
-    <associate|page-type|a4>
-    <associate|page-right|30mm>
-    <associate|par-width|150mm>
-    <associate|page-odd|30mm>
-    <associate|page-bot|30mm>
-    <associate|language|english>
-    <associate|page-reduce-top|15mm>
-  </collection>
-</initial>
+<initial|<\collection>
+</collection>>

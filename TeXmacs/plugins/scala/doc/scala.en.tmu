@@ -1,6 +1,6 @@
-<TMU|<tuple|1.1.0|2025.1.4-rc2>>
+<TMU|<tuple|1.1.0|2025.2.2>>
 
-<style|<tuple|tmdoc|british|scala>>
+<style|<tuple|tmudoc|british|scala>>
 
 <\body>
   <\hide-preamble>
@@ -13,13 +13,9 @@
 
   <paragraph|<value|code-Name> style package>
 
-  Click <menu|Document|Style|Add package|Code|<value|code-name>> or click
-  <menu|<icon|tm_add.svg>|Code|<value|code-name>> on the focus toolbar to add
-  the <value|code-Name> style package.
+  Click <menu|Document|Style|Add package|Code|<value|code-name>> or click <menu|<icon|tm_add.svg>|Code|<value|code-name>> on the focus toolbar to add the <value|code-Name> style package.
 
-  In the <code-Name> style package, <markup|<value|code-name>> is provided
-  for inline snippets and <markup|<value|code-name>-code> is provided for
-  <code-Name> code blocks.
+  In the <code-Name> style package, <markup|<value|code-name>> is provided for inline snippets and <markup|<value|code-name>-code> is provided for <code-Name> code blocks.
 
   <paragraph|<value|code-Name> syntax>
 
@@ -49,12 +45,7 @@
 
   <tmdoc-copyright|2024|Darcy Shen>
 
-  <tmdoc-license|Permission is granted to copy, distribute and/or modify this
-  document under the terms of the GNU Free Documentation License, Version 1.1
-  or any later version published by the Free Software Foundation; with no
-  Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
-  Texts. A copy of the license is included in the section entitled "GNU Free
-  Documentation License".>
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
 </body>
 
 <\initial>

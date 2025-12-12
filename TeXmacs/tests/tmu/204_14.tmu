@@ -1,10 +1,10 @@
-<TMU|<tuple|1.1.0|2025.2.1>>
+<TMU|<tuple|1.1.0|2025.2.2-rc2>>
 
 <style|<tuple|generic|number-europe>>
 
 <\body>
   <\table-of-contents|toc>
-    <vspace*|1fn><with|font-series|bold|math-font-series|bold|第 1 章<space|2spc>这是章> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+    <vspace*|1fn><with|font-series|bold|math-font-series|bold|Chapter 1<space|2spc>这是章> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
 
     1.1<space|2spc>这是节 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2>
 
@@ -12,7 +12,11 @@
 
     <with|par-left|2tab|1.1.1.1<space|2spc>这是子节 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4>>
 
-    <vspace*|1fn><with|font-series|bold|math-font-series|bold|附录 A<space|2spc>这是附录> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5><vspace|0.5fn>
+    <vspace*|1fn><with|font-series|bold|math-font-series|bold|Appendix A<space|2spc>这是附录> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5><vspace|0.5fn>
+
+    A.1<space|2spc> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6>
+
+    <with|par-left|1tab|A.1.1<space|2spc> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7>>
   </table-of-contents>
 
   <chapter|这是章>
@@ -24,6 +28,10 @@
   <subsubsection|这是子节>
 
   <appendix|这是附录>
+
+  <section|>
+
+  <subsection|>
 </body>
 
 <\initial>
@@ -37,17 +45,19 @@
 <\references>
   <\collection>
     <associate|auto-1|<tuple|1|1>>
-    <associate|auto-2|<tuple|1.1|1>>
-    <associate|auto-3|<tuple|1.1.1|1>>
-    <associate|auto-4|<tuple|1.1.1.1|1>>
+    <associate|auto-2|<tuple|1.1.1|1>>
+    <associate|auto-3|<tuple|1.1.1.1|1>>
+    <associate|auto-4|<tuple|A|1>>
     <associate|auto-5|<tuple|A|1>>
+    <associate|auto-6|<tuple|A.1.1|1>>
+    <associate|auto-7|<tuple|A.1.1|1>>
   </collection>
 </references>
 
 <\auxiliary>
   <\collection>
     <\associate|toc>
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>这是章> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Chapter 1<space|2spc>这是章> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-1><vspace|0.5fn>
 
       1.1<space|2spc>这是节 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-2>
 
@@ -56,6 +66,10 @@
       <with|par-left|<quote|2tab>|1.1.1.1<space|2spc>这是子节 <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-4>>
 
       <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|Appendix A<space|2spc>这是附录> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-5><vspace|0.5fn>
+
+      A.1<space|2spc> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-6>
+
+      <with|par-left|<quote|1tab>|A.1.1<space|2spc> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>> <no-break><pageref|auto-7>>
     </associate>
   </collection>
 </auxiliary>

@@ -1,6 +1,6 @@
-<TeXmacs|2.1.2>
+<TeXmacs|2.1.4>
 
-<style|<tuple|tmdoc|automate|french|old-lengths>>
+<style|<tuple|tmudoc|automate|french|old-lengths>>
 
 <\body>
   <block-assign|<implied-scm|t>|<implied-scm|(focus-tree)>>

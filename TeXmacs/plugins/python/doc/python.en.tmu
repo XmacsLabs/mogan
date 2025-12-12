@@ -1,6 +1,6 @@
-<TMU|<tuple|1.1.0|2025.2.0-rc6>>
+<TMU|<tuple|1.1.0|2025.2.2>>
 
-<style|<tuple|tmdoc|old-spacing|old-dots|old-lengths|chinese|python>>
+<style|<tuple|tmudoc|old-spacing|old-dots|old-lengths|chinese|python>>
 
 <\body>
   <tmdoc-title|Python Plugin>

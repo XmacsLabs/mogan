@@ -1,6 +1,6 @@
-<TMU|<tuple|1.1.0|2025.2.0-alpha2>>
+<TMU|<tuple|1.1.0|2025.2.2>>
 
-<style|<tuple|tmdoc|no-page-numbers|british|gnuplot|reduced-margins>>
+<style|<tuple|tmudoc|no-page-numbers|british|gnuplot|reduced-margins>>
 
 <\body>
   <tmdoc-title|The <name|Gnuplot> plug-in>

@@ -1,6 +1,6 @@
-<TMU|<tuple|1.1.0|2025.1.4>>
+<TMU|<tuple|1.1.0|2025.2.2>>
 
-<style|<tuple|tmdoc|english|old-spacing|old-dots|old-lengths>>
+<style|<tuple|tmudoc|english|old-spacing|old-dots|old-lengths>>
 
 <\body>
   <tmdoc-title|Writing a simple style package>

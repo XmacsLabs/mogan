@@ -1,6 +1,6 @@
-<TeXmacs|2.1.2>
+<TeXmacs|2.1.4>
 
-<style|<tuple|tmdoc|no-page-numbers|british|cite-sort>>
+<style|<tuple|tmudoc|no-page-numbers|british|cite-sort>>
 
 <\body>
   <tmdoc-title|The cite-sort package>

@@ -1,6 +1,6 @@
-<TMU|<tuple|1.1.0|2025.1.3-rc2>>
+<TMU|<tuple|1.1.0|2025.2.2>>
 
-<style|<tuple|tmdoc|chinese|number-europe>>
+<style|<tuple|tmudoc|chinese|number-europe>>
 
 <\body>
   <tmdoc-title|The <TeXmacs> plug-in system><label|sec-plugins>
