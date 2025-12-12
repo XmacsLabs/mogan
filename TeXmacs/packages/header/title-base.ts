@@ -274,15 +274,13 @@
   </active*>
 
   <assign|render-abstract|<\macro|body>
-    <\padded-normal|2fn|1fn>
-      <\with|par-left|15mm|par-right|15mm>
-        <\small>
-          <sectional-centered-bold|<abstract-text>><vspace|0.5fn>
+    <style-with|src-compact|none|<if|<sectional-short-style>|<section-toc|<abstract-text>>|<chapter-toc|<abstract-text>>>>
 
-          <arg|body>
-        </small>
-      </with>
-    </padded-normal>
+    <\padded-center>
+      <sectional-normal-bold|<very-large|<abstract-text>><vspace|1fn>>
+    </padded-center>
+
+    <arg|body>
   </macro>>
 
   <assign|render-classify|<macro|scheme|text|<style-with|src-compact|none|<no-indent><theorem-name|<arg|scheme><localize|:>

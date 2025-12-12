@@ -359,6 +359,8 @@
   </macro>>
 
   <assign|list-of-abbreviations|<\macro|body>
+    <style-with|src-compact|none|<if|<sectional-short-style>|<section-toc|<list-of-abbreviations-text>>|<chapter-toc|<list-of-abbreviations-text>>>>
+
     <padded-center|<sectional-normal-bold|<very-large|<list-of-abbreviations-text>><vspace|1fn>>>
 
     <tabular|<tformat|<twith|table-min-cols|2>|<twith|table-max-cols|2>|<twith|table-hyphen|y>|<cwith|1|-1|1|-1|cell-valign|c>|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|2|2|cell-hmode|exact>|<cwith|1|-1|1|1|cell-bsep|0.25fn>|<cwith|1|-1|1|1|cell-tsep|0.25fn>|<cwith|1|-1|1|1|cell-width|6em>|<cwith|1|-1|2|2|cell-width|34em>|<arg|body>>|>
