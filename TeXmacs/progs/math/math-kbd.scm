@@ -1703,6 +1703,7 @@
   ("l var var var" "<ell>")
   ("m var" "<mu>")
   ("n var" "<nu>")
+  ("n var var" "<nabla>")
   ("o var" "<omicron>")
   ("p var" "<pi>")
   ("p var var" "<mathpi>")

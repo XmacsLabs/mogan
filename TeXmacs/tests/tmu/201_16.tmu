@@ -1,8 +1,18 @@
-<TMU|<tuple|1.1.0|2025.2.1-rc3>>
+<TMU|<tuple|1.1.0|2025.2.2>>
 
 <style|<tuple|tmdoc|chinese|number-europe>>
 
 <\body>
+  进入数学模式（<key|Shift + 4>）
+
+  在单行公式内，输入<key|n> <key|Tab> <key|Tab> \ ，输出的应该是
+
+  <\equation*>
+    \<nabla\>
+  </equation*>
+
+  \;
+
   进入数学模式（<key|Shift + 4>）
 
   在单行公式内，输入<key|D> <key|Tab> <key|Tab> <key|Tab> <key|Tab>，输出的应该是
