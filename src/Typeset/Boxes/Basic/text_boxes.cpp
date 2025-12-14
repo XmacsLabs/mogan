@@ -14,6 +14,7 @@
 #include "boxes.hpp"
 #include "cork.hpp"
 #include "font.hpp"
+#include "tm_debug.hpp"
 
 /******************************************************************************
  * Text boxes
@@ -89,6 +90,8 @@ struct text_box_rep : public box_rep {
   SI     get_leaf_offset (string search);
   box    left_auto_spacing (SI size);
   box    right_auto_spacing (SI size);
+  box    left_contract_kerning (double factor);
+  box    right_contract_kerning (double factor);
 };
 
 /******************************************************************************
@@ -136,6 +139,33 @@ text_box_rep::adjust_kerning (int mode, double factor) {
   }
   if ((mode & START_OF_LINE) != 0) nxk->left-= pad;
   if ((mode & END_OF_LINE) != 0) nxk->right-= pad;
+  return tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+}
+
+box
+text_box_rep::right_contract_kerning (double factor) {
+  SI       pad= (SI) tm_round (factor * fn->wfn);
+  xkerning nxk (0, 0, 0);
+  if (!is_nil_or_zero (xk)) {
+    nxk->left   = xk->left;
+    nxk->right  = xk->right;
+    nxk->padding= xk->padding;
+  }
+  nxk->right-= pad;
+  box result= tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+  return result;
+}
+
+box
+text_box_rep::left_contract_kerning (double factor) {
+  SI       pad= (SI) tm_round (factor * fn->wfn);
+  xkerning nxk (0, 0, 0);
+  if (!is_nil_or_zero (xk)) {
+    nxk->left   = xk->left;
+    nxk->right  = xk->right;
+    nxk->padding= xk->padding;
+  }
+  nxk->left-= pad;
   return tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
 }
 

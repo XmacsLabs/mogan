@@ -17,6 +17,7 @@
 #include "analyze.hpp"
 #include "array.hpp"
 #include "converter.hpp"
+#include "tm_debug.hpp"
 
 #include <lolly/data/unicode.hpp>
 
@@ -127,6 +128,33 @@ lazy_paragraph_rep::lazy_paragraph_rep (edit_env env2, path ip)
 
   init_decs= env->read (ATOM_DECORATIONS);
 
+  array<string> left_annotation_puncts= array<string> ();
+  left_annotation_puncts << string ("『") << string ("「") << string ("（")
+                         << string ("【") << string ("《") << string ("〈");
+  for (string punct : left_annotation_puncts) {
+    // 左侧有调整空间的符号和左侧夹注符号，是同一个数据集
+    cjk_left_annotation_puncts->insert (utf8_to_cork (punct));
+  }
+  cjk_left_annotation_puncts->insert ("<#2018>");
+  cjk_left_annotation_puncts->insert ("<#201C>");
+
+  array<string> right_annotation_puncts= array<string> ();
+  right_annotation_puncts << string ("』") << string ("」") << string ("）")
+                          << string ("】") << string ("》") << string ("〉");
+  for (string punct : right_annotation_puncts) {
+    cjk_right_annotation_puncts->insert (utf8_to_cork (punct));
+  }
+  cjk_right_annotation_puncts->insert ("<#2019>");
+  cjk_right_annotation_puncts->insert ("<#201D>");
+
+  array<string> right_adjustable_puncts= array<string> ();
+  right_adjustable_puncts << string ("。") << string ("，") << string ("：")
+                          << string ("；") << string ("！") << string ("？")
+                          << string ("、");
+  for (string punct : right_adjustable_puncts) {
+    cjk_right_adjustable_puncts->insert (utf8_to_cork (punct));
+  }
+
   array<string> puncts= array<string> ();
   puncts << string ("。") << string ("，") << string ("：") << string ("；")
          << string ("！") << string ("？") << string ("、") << string ("～")
@@ -134,11 +162,13 @@ lazy_paragraph_rep::lazy_paragraph_rep (edit_env env2, path ip)
          << string ("》") << string ("〉");
   puncts << string ("『") << string ("「") << string ("（") << string ("【")
          << string ("《") << string ("〈");
-  puncts << string ("“") << string ("”");
+
   for (string punct : puncts) {
     cjk_puncts->insert (utf8_to_cork (punct));
   }
-  cjk_puncts->insert ("`");
+  cjk_puncts->insert ("<#201C>");
+  cjk_puncts->insert ("<#201D>");
+  cjk_puncts->insert ("<#2018>");
   cjk_puncts->insert ("<#2019>");
 }
 
@@ -172,6 +202,34 @@ static bool
 is_cjk_language (language lan) {
   return lan->lan_name == "chinese" || lan->lan_name == "korean" ||
          lan->lan_name == "japanese" || lan->lan_name == "taiwanese";
+}
+
+bool
+lazy_paragraph_rep::is_cjk_puncts (line_item item) {
+  if (!is_text (item)) return false;
+  string text= item->b->get_leaf_string ();
+  return cjk_puncts->contains (text);
+}
+
+bool
+lazy_paragraph_rep::is_cjk_left_annotation_puncts (line_item item) {
+  if (!is_text (item)) return false;
+  string text= item->b->get_leaf_string ();
+  return cjk_left_annotation_puncts->contains (text);
+}
+
+bool
+lazy_paragraph_rep::is_cjk_right_annotation_puncts (line_item item) {
+  if (!is_text (item)) return false;
+  string text= item->b->get_leaf_string ();
+  return cjk_right_annotation_puncts->contains (text);
+}
+
+bool
+lazy_paragraph_rep::is_cjk_right_adjustable_puncts (line_item item) {
+  if (!is_text (item)) return false;
+  string text= item->b->get_leaf_string ();
+  return cjk_right_adjustable_puncts->contains (text);
 }
 
 void
@@ -219,6 +277,10 @@ lazy_paragraph_rep::line_print (line_item item) {
     // cout << "line item: " << item << LF;
     items_box << is_not_skip (item);
     items_cjk_text << is_cjk_text (item);
+    items_cjk_puncts << is_cjk_puncts (item);
+    items_cjk_left_annotation_puncts << is_cjk_left_annotation_puncts (item);
+    items_cjk_right_annotation_puncts << is_cjk_right_annotation_puncts (item);
+    items_cjk_right_adjustable_puncts << is_cjk_right_adjustable_puncts (item);
   }
   item->b->x0= cur_w->def;
   item->b->y0= 0;
@@ -283,6 +345,78 @@ lazy_paragraph_rep::protrude (bool lf, bool rf) {
       box pro= items[i]->adjust_kerning (mode, 0.0);
       cur_w+= pro->w () - items[i]->w ();
       items[i]= pro;
+    }
+  }
+}
+
+// 辅助函数：执行kerning收缩并更新宽度和items数组
+void
+lazy_paragraph_rep::contract_kerning (int index, double factor, bool is_left) {
+  box b         = items[index];
+  SI  old_width = b->w ();
+  box nb        = is_left ? b->left_contract_kerning (factor)
+                          : b->right_contract_kerning (factor);
+  SI  new_width = nb->w ();
+  SI  width_diff= new_width - old_width;
+  cur_w+= width_diff;
+  items[index]= nb;
+}
+
+void
+lazy_paragraph_rep::adjust_consecutive_puncts () {
+  int items_N= N (items);
+  ASSERT (N (items) == N (items_cjk_puncts) &&
+              N (items) == N (items_cjk_left_annotation_puncts) &&
+              N (items) == N (items_cjk_right_annotation_puncts) &&
+              N (items) == N (items_cjk_right_adjustable_puncts) &&
+              N (items) == N (items_left) && N (items) == N (items_right) &&
+              N (items) == N (items_cjk_text),
+          "length of items must match")
+
+  bool no_cjk_puncts_flag= true;
+  for (int i= cur_start; i < items_N; i++) {
+    if (items_cjk_puncts[i]) {
+      no_cjk_puncts_flag= false;
+      break;
+    }
+  }
+  if (no_cjk_puncts_flag) return;
+
+  int first, last;
+  find_first_last_text (first, last);
+
+  for (int i= cur_start; i < items_N; i++) {
+    if (items_cjk_puncts[i]) {
+      // 先处理右侧有调整空间（非右夹注）的符号，或者右夹注符号
+      if (i != last &&
+          (items_cjk_right_adjustable_puncts[i] ||
+           items_cjk_right_annotation_puncts[i]) &&
+          items_right[i] != -1 && items_cjk_puncts[items_right[i]]) {
+        // 处理右侧有调整空间的符号
+        if (items_cjk_right_adjustable_puncts[i] &&
+            (items_cjk_right_annotation_puncts[items_right[i]] ||
+             items_cjk_left_annotation_puncts[items_right[i]])) {
+          double factor=
+              items_cjk_right_annotation_puncts[items_right[i]] ? 0.5 : 0.25;
+          contract_kerning (i, factor, false);
+        }
+        // 处理右夹注符号
+        if (items_cjk_right_annotation_puncts[i] &&
+            items_cjk_puncts[items_right[i]]) {
+          double factor=
+              items_cjk_left_annotation_puncts[items_right[i]] ? 0.25 : 0.5;
+          contract_kerning (i, factor, false);
+        }
+      }
+      // 处理左夹注符号
+      else if (i != first && items_cjk_left_annotation_puncts[i] &&
+               items_left[i] != -1 && items_cjk_puncts[items_left[i]]) {
+        double factor= (items_cjk_right_annotation_puncts[items_left[i]] ||
+                        items_cjk_right_adjustable_puncts[items_left[i]])
+                           ? 0.25
+                           : 0.5;
+        contract_kerning (i, factor, true);
+      }
     }
   }
 }
@@ -570,6 +704,7 @@ lazy_paragraph_rep::make_unit (string mode, SI the_width, bool break_flag) {
 
   if (is_cjk_language (env->lan)) {
     cjk_auto_spacing ();
+    adjust_consecutive_puncts ();
   }
 
   // stretching case
@@ -734,15 +869,19 @@ lazy_paragraph_rep::handle_decorations () {
 
 void
 lazy_paragraph_rep::line_start () {
-  items         = array<box> ();
-  items_sp      = array<SI> ();
-  items_box     = array<bool> ();
-  items_cjk_text= array<bool> ();
-  items_left    = array<int> ();
-  items_right   = array<int> ();
-  spcs          = array<space> ();
-  fl            = array<lazy> ();
-  notes         = array<line_item> ();
+  items                            = array<box> ();
+  items_sp                         = array<SI> ();
+  items_box                        = array<bool> ();
+  items_cjk_text                   = array<bool> ();
+  items_cjk_puncts                 = array<bool> ();
+  items_cjk_left_annotation_puncts = array<bool> ();
+  items_cjk_right_annotation_puncts= array<bool> ();
+  items_cjk_right_adjustable_puncts= array<bool> ();
+  items_left                       = array<int> ();
+  items_right                      = array<int> ();
+  spcs                             = array<space> ();
+  fl                               = array<lazy> ();
+  notes                            = array<line_item> ();
 
   cur_r    = 0;
   cur_start= 0;

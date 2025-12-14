@@ -169,6 +169,16 @@ box_rep::right_auto_spacing (SI size) {
 };
 
 box
+box_rep::left_contract_kerning (double factor) {
+  return this;
+};
+
+box
+box_rep::right_contract_kerning (double factor) {
+  return this;
+};
+
+box
 box_rep::expand_glyphs (int mode, double factor) {
   (void) mode;
   (void) factor;

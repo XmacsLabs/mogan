@@ -34,13 +34,29 @@ protected:
   array<int>  items_left;  // the index of the previous non-empty text box item
   array<int>  items_right; // the index of the next non-empty text box item
   array<bool> items_box;   // is non-empty text box item: true / false
-  array<bool> items_cjk_text; // is non-empty text box item: true / false
-  hashset<string>  cjk_puncts;
-  array<space>     spcs;      // the spacing between the boxes of items
-  array<lazy>      fl;        // floating insertions
-  array<line_item> notes;     // line notes
-  array<tab>       tabs;      // tabulations
-  array<tree>      decs;      // decorations of the boxes on lines
+  array<bool> items_cjk_text;   // is non-empty text box item: true / false
+  array<bool> items_cjk_puncts; // is non-empty text box item: true / false
+  array<bool> items_cjk_left_annotation_puncts;  // CJK left annotation
+                                                 // punctuation marks array
+  array<bool> items_cjk_right_annotation_puncts; // CJK right annotation
+                                                 // punctuation marks array
+  array<bool> items_cjk_right_adjustable_puncts; // CJK right adjustable
+                                                 // punctuation marks array
+
+  hashset<string> cjk_puncts; // CJK punctuation set
+  hashset<string>
+      cjk_left_annotation_puncts; // CJK left annotation punctuation set
+  hashset<string>
+      cjk_left_adjustable_puncts; // CJK left adjustable punctuation set
+  hashset<string>
+      cjk_right_annotation_puncts; // CJK right annotation punctuation set
+  hashset<string>
+      cjk_right_adjustable_puncts; // CJK right adjustable punctuation set
+  array<space>     spcs;           // the spacing between the boxes of items
+  array<lazy>      fl;             // floating insertions
+  array<line_item> notes;          // line notes
+  array<tab>       tabs;           // tabulations
+  array<tree>      decs;           // decorations of the boxes on lines
   SI               cur_r;     // the current right offset of the last line unit
   space            cur_w;     // the current width of the line unit
   int              cur_start; // index of the start of the line unit
@@ -72,6 +88,10 @@ protected:
   array<SI> swell;       // swell properties for lines with large height
   tree      init_decs;   // initial decorations
 
+  bool is_cjk_puncts (line_item item);
+  bool is_cjk_left_annotation_puncts (line_item item);
+  bool is_cjk_right_annotation_puncts (line_item item);
+  bool is_cjk_right_adjustable_puncts (line_item item);
   void line_print (line_item item);
   void line_print (line_item item, path start, path end);
   void line_print (path start, path end);
@@ -79,6 +99,8 @@ protected:
   void       find_first_last_text (int& first, int& last);
   void       protrude (bool lf, bool rf);
   void       cjk_auto_spacing ();
+  void       contract_kerning (int index, double factor, bool is_left);
+  void       adjust_consecutive_puncts ();
   array<box> adjusted (double factor, int first, int last);
   void       increase_kerning (SI dw, SI the_width);
   void       decrease_kerning (SI dw, SI the_width);
