@@ -1548,6 +1548,7 @@
 ("other projects" "")
 ("other style" "其它样式")
 ("other" "其它")
+("other size" "自定义尺寸")
 ("outlined roman" "")
 ("output options" "输出选项")
 ("over" "")

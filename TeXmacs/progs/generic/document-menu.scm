@@ -601,7 +601,7 @@
   (-> "Beamer"
       (link document-beamer-page-size-menu))
   ---
-  ("Other" (interactive init-page-size)))
+  ("Other size" (interactive init-page-size)))
 
 (tm-menu (document-page-size-menu)
   (:require (style-has? "beamer-style"))
@@ -1146,10 +1146,12 @@
         ---
         (link document-columns-menu)
         ---
-	    (link page-rendering-menu)
+        (link page-rendering-menu)
         ---
         (link page-layout-menu))
-    (=> (balloon (eval (upcase-first (get-init "page-type")))
+    (=> (balloon (eval (if (string=? (locase-all (get-init "page-type")) "user")
+                           (string-append (get-init "page-width") " x " (get-init "page-height"))
+                           (upcase-first (get-init "page-type"))))
                  "Paper size")
         (link document-page-size-menu))
     (=> (balloon (eval (current-language-name)) "Document language")
