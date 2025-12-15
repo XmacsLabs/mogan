@@ -316,7 +316,6 @@ mupdf_renderer_rep::set_transformation (frame fr) {
   point o = tr (point (0.0, 0.0));
   point ux= tr (point (1.0, 0.0)) - o;
   point uy= tr (point (0.0, 1.0)) - o;
-  // cout << "Set transformation " << o << ", " << ux << ", " << uy << "\n";
 
   proc->op_q (mupdf_context (), proc);
   transform_matrix= fz_make_matrix (ux[0], ux[1], uy[0], uy[1], o[0], o[1]);
@@ -342,13 +341,14 @@ mupdf_renderer_rep::set_transformation (frame fr) {
   // transform_matrix 现在包含 M' = S * M * S
   // 我们将直接使用它进行坐标变换
   transform_active= true;
+  rectangle nclip = fr[oclip];
+  clip (nclip->x1, nclip->y1, nclip->x2, nclip->y2);
 }
 
 void
 mupdf_renderer_rep::reset_transformation () {
-  end_text ();
-  cfn= "";
   proc->op_Q (mupdf_context (), proc);
+  unclip ();
   transform_active= false;
 }
 
@@ -362,10 +362,11 @@ mupdf_renderer_rep::set_clipping (SI x1, SI y1, SI x2, SI y2, bool restore) {
 
   end_text ();
 
-  outer_round (x1, y1, x2, y2);
   if (restore) {
     cfn= "";
   }
+  if (transform_active) return;
+
   if (clip_proc != proc) {
     if (clip_proc != NULL) clip_proc->op_Q (mupdf_context (), clip_proc);
     clip_proc  = proc;
@@ -378,6 +379,7 @@ mupdf_renderer_rep::set_clipping (SI x1, SI y1, SI x2, SI y2, bool restore) {
     clip_active= true;
   }
 
+  outer_round (x1, y1, x2, y2);
   proc->op_q (mupdf_context (), proc);
   SI xx1= to_x (min (x1, x2));
   SI yy1= to_y (min (y1, y2));
