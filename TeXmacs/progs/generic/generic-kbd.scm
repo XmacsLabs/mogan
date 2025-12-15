@@ -179,6 +179,7 @@
   ("C-?" (make 'reference))
   ("C-? var" (make 'eqref))
   ("C-? var var" (make 'pageref))
+  ("C-A-v" (interactive-paste-special))
 
   ("extra e" (edit-focus-macro))
   ("extra r" (edit-previous-macro))
@@ -641,7 +642,8 @@
   ("A-q" (make 'symbol))
 
   ("C-O" (toggle-source-mode))
-  ("C-P" (toggle-preamble-mode)))
+  ("C-P" (toggle-preamble-mode))
+  ("M-A-v" (interactive-paste-special)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Windows keymap

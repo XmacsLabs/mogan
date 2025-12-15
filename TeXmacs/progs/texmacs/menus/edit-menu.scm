@@ -13,7 +13,8 @@
 
 (texmacs-module (texmacs menus edit-menu)
   (:use (utils library cursor)
-	(utils edit selections)))
+	(utils edit selections)
+  (generic paste-widget)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Dynamic menus
@@ -59,6 +60,7 @@
 	("Cut" (kbd-cut)))
   ("Paste" (kbd-paste))
   ("Smart paste" (kbd-magic-paste))
+  ("Paste special" (interactive-paste-special))
   (if (detailed-menus?)
       ("Clear" (kbd-cancel)))
   ---
@@ -79,11 +81,7 @@
         (-> "Cut to"
             (link clipboard-cut-export-menu)
             ---
-            ("Other" (interactive clipboard-cut))))
-      (-> "Paste from"
-          (link clipboard-paste-import-menu)
-          ---
-          ("Other" (interactive clipboard-paste))))
+            ("Other" (interactive clipboard-cut)))))
   ---
   ("Search recent documents" (interactive docgrep-in-recent))
   ---
