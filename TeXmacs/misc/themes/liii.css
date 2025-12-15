@@ -246,22 +246,24 @@ QFileDialog QListView::item:selected {
 ****************************************************************************/
 QScrollBar:vertical,
 QScrollBar:horizontal {
-  background: #ffffff;
+  background: #ffffff;       
   margin: 0px;
+  border: none;
 }
 
 QScrollBar:vertical {
-  width: 12px;
+  width: 14px;               
 }
 
 QScrollBar:horizontal {
-  height: 12px;
+  height: 14px;
 }
 
 QScrollBar::handle:vertical,
 QScrollBar::handle:horizontal {
-  background: #e0e0e0;
-  border-radius: 5px;
+  background: #c1c1c1;       
+  border-radius: 7px;        
+  border: 3px solid #ffffff; 
 }
 
 QScrollBar::handle:vertical {
@@ -274,7 +276,12 @@ QScrollBar::handle:horizontal {
 
 QScrollBar::handle:vertical:hover,
 QScrollBar::handle:horizontal:hover {
-  background: #c6c6c6;
+  background: #a8a8a8;       
+}
+
+QScrollBar::handle:vertical:pressed,
+QScrollBar::handle:horizontal:pressed {
+  background: #787878;       
 }
 
 QScrollBar::add-line,
@@ -283,6 +290,8 @@ QScrollBar::add-page,
 QScrollBar::sub-page {
   background: none;
   border: none;
+  height: 0px;
+  width: 0px;
 }
 
 /****************************************************************************
