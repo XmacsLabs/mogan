@@ -116,14 +116,15 @@
 
   \;
 
-  <assign|chapter-numbered-title|<macro|title|<style-with|src-compact|none|<chapter-title|\<#7B2C\>
-  <the-chapter> <chapter-text> <vspace|1fn><new-line><arg|title>>>>>
+  <assign|ordinal-text|\<#7B2C\>>
+
+  <assign|chapter-numbered-title|<macro|title|<style-with|src-compact|none|<chapter-title|<ordinal-text> <the-chapter> <chapter-text> <vspace|1fn><new-line><arg|title>>>>>
   
-  <assign|chapter-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-main-1|<toc-title|chapter|<arg|name>>>|<toc-main-2|<if|<chapter-numbered>|\<#7B2C\> <the-chapter> <chapter-text><chapter-sep><arg|name>|<arg|name>>>>>>>
+  <assign|chapter-toc|<macro|name|<style-with|src-compact|none|<if|<sectional-short-style>|<toc-main-1|<toc-title|chapter|<arg|name>>>|<toc-main-2|<if|<chapter-numbered>|<ordinal-text> <the-chapter> <chapter-text><chapter-sep><arg|name>|<arg|name>>>>>>>
 
   \;
 
-  <assign|part-numbered-title|<macro|name|<part-title-sub|<htab|0fn>\<#7B2C\>
+  <assign|part-numbered-title|<macro|name|<part-title-sub|<htab|0fn><ordinal-text>
   <the-part> <part-text><htab|0fn><vspace|0.1pag><new-line><htab|0fn><arg|name><htab|0fn>>>>
 </body>
 
