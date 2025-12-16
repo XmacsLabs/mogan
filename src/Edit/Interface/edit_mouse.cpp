@@ -568,6 +568,7 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
     update_mouse_loci ();
 
   bool hovering_hlink= false;
+  bool hovering_image= false;
   if (!is_nil (mouse_ids) && type == "move") {
     notify_change (THE_FREEZE);
     // NOTE: this notification is needed to prevent the window to scroll to
@@ -581,7 +582,24 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
       hovering_hlink= true;
     }
   }
+  if (type == "move") {
+    // 检测鼠标是否在图片上
+    path current_path= path_up (tree_path (path (), x, y, 0));
+    tree current_tree= subtree (et, current_path);
+    // 检查当前元素是否是图片
+    if (is_func (current_tree, IMAGE)) {
+      path      p= reverse (obtain_ip (current_tree));
+      selection sel=
+          search_selection (p * start (current_tree), p * end (current_tree));
+      rectangle selr= least_upper_bound (sel->rs);
+      if (last_x >= selr->x1 && last_y >= selr->y1 && last_x <= selr->x2 &&
+          last_y <= selr->y2) {
+        hovering_image= true;
+      }
+    }
+  }
   if (hovering_hlink) set_cursor_style ("pointing_hand");
+  else if (hovering_image) set_cursor_style ("pointing_hand");
   else set_cursor_style ("normal");
 
   if (type == "move") mouse_message ("move", x, y);
