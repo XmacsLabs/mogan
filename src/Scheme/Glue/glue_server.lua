@@ -127,6 +127,15 @@ function main()
                 }
             },
             {
+                -- 设置辅助组件标题
+                scm_name = "set-auxiliary-widget-title",
+                cpp_name = "set_auxiliary_widget_title",
+                ret_type = "void",
+                arg_list = {
+                    "string" -- 标题
+                }
+            },
+            {
                 -- 查询辅助组件可见性
                 scm_name = "auxiliary-widget-visible?",
                 cpp_name = "auxiliary_widget_visible",

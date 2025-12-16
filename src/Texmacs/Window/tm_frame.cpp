@@ -181,6 +181,18 @@ tm_frame_rep::show_auxiliary_widget (bool flag) {
   concrete_window ()->set_auxiliary_widget_flag (flag);
 }
 
+void
+tm_frame_rep::set_auxiliary_widget_title (string title) {
+  if (!has_current_view ()) return;
+  url current_view= get_current_view ();
+  if (is_tmfs_view_type (as_string (current_view), "aux")) {
+    url vw= get_most_recent_view ();
+    concrete_view (vw)->win->set_auxiliary_widget_new_title (title);
+    return;
+  }
+  concrete_window ()->set_auxiliary_widget_new_title (title);
+}
+
 bool
 tm_frame_rep::auxiliary_widget_visible () {
   if (!has_current_view ()) return false;

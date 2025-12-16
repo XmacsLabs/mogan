@@ -943,7 +943,11 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     check_type<string> (val, s);
     auxiliaryWidget->setWindowTitle (to_qstring (open_box<string> (val)));
   } break;
-
+  case SLOT_AUXILIARY_WIDGET_TITLE: {
+    check_type<string> (val, s);
+    string title= open_box<string> (val);
+    auxiliaryWidget->setWindowTitle (to_qstring (title));
+  } break;
   case SLOT_LEFT_FOOTER: {
     check_type<string> (val, s);
     string msg= open_box<string> (val);

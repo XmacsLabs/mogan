@@ -1140,4 +1140,7 @@
 "show-meminfo"
 "edit-special"
 "http-status-code"
+"show-auxiliary-widget"
+"set-auxiliary-widget-title"
+"set-auxiliary-widget"
 ))

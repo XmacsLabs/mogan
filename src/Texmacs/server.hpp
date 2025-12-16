@@ -70,6 +70,7 @@ public:
   virtual void auxiliary_widget (widget w, string name)= 0;
   virtual void bottom_tools (int which, string menu)   = 0;
 
+  virtual void   set_auxiliary_widget_title (string title)   = 0;
   virtual void   set_window_zoom_factor (double zoom)        = 0;
   virtual double get_window_zoom_factor ()                   = 0;
   virtual void   set_scrollbars (int sb)                     = 0;

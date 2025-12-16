@@ -503,6 +503,11 @@ tm_window_rep::set_auxiliary_widget_flag (bool flag) {
 }
 
 void
+tm_window_rep::set_auxiliary_widget_new_title (string title) {
+  set_auxiliary_widget_headline (wid, title);
+}
+
+void
 tm_window_rep::set_bottom_tools_flag (int which, bool flag) {
   if (which == 0) set_bottom_tools_visibility (wid, flag);
   else if (which == 1) set_extra_tools_visibility (wid, flag);
