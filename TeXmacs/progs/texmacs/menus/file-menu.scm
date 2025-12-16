@@ -122,7 +122,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-menu (import-menu flag?)
-  (with l (filter (lambda (x) (not (in? x (image-formats))))
+  (with l (filter (lambda (x)
+                    (and (not (in? x (image-formats)))
+                         (or (with-developer-tool?)
+                             (and (not (string=? x "mgs"))
+                                  (not (string=? x "stm"))))))
                   (converters-to-special "texmacs-file" "-file" #f))
     (for (fm l)
       (let* ((name (format-get-name fm))
@@ -137,7 +141,12 @@
 
 (tm-menu (export-menu flag?)
   (with l (converters-from-special "texmacs-file" "-file" #f)
-    (with l2 (filter (lambda (x) (not (string=? x "tmu"))) l)
+    (with l2 (filter (lambda (x)
+                       (and (not (string=? x "tmu"))
+                            (or (with-developer-tool?)
+                                (and (not (string=? x "mgs"))
+                                     (not (string=? x "stm"))))))
+                     l)
       (for (fm l2)
         (let* ((name (format-get-name fm))
                (save-text (string-append "Save " (string-downcase name) " file"))

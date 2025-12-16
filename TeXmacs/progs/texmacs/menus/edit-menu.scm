@@ -21,7 +21,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-menu (clipboard-extern-menu cvs fun)
-  (with l (cvs "texmacs-snippet" "-snippet" #t)
+  (with l (filter (lambda (x) (or (with-developer-tool?)
+                                  (and (not (string=? x "mgs"))
+                                       (not (string=? x "stm")))))
+                  (cvs "texmacs-snippet" "-snippet" #t))
     (for (fm l)
       (with name (format-get-name fm)
         ((eval name) (fun fm "primary"))))))
