@@ -2522,7 +2522,8 @@ static charp style_rename[]= {"thelabel",
                               "newexercise",
                               "new-exercise",
                               "newfigure",
-                              "new-figure",
+                              "new-figure"
+                              "new-table",
 
                               "theprefix",
                               "the-prefix",

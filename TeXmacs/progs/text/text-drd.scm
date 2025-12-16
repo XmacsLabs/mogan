@@ -18,7 +18,7 @@
 ;; General groups
 
 (define-group variant-tag
-  (section-tag) (list-tag) (figure-tag)
+  (section-tag) (list-tag) (figure-tag) (table-tag)
   (enunciation-tag) (prominent-tag) (alignment-tag) (compression-tag)
   (frame-tag) (frame-titled-tag)
   (textual-tag) (code-tag)
@@ -26,7 +26,7 @@
   (balloon-tag))
 
 (define-group similar-tag
-  (section-tag) (list-tag) (figure-tag)
+  (section-tag) (list-tag) (figure-tag) (table-tag)
   (enunciation-tag) (prominent-tag) (alignment-tag) (compression-tag)
   (frame-tag) (frame-titled-tag)
   (textual-tag) (code-tag) (equation-tag)
@@ -36,7 +36,7 @@
 (define-group numbered-tag
   (section-tag)
   (theorem-tag) (definition-tag) (remark-tag) (exercise-tag) (solution-tag)
-  (figure-tag) (equation-tag))
+  (figure-tag) (table-tag) (equation-tag))
 
 (define-group mini-flow-tag
   (frame-tag) (frame-titled-tag)
@@ -48,10 +48,10 @@
   (auto-titled-tag) (render-titled-tag))
 
 (define-group auto-titled-tag
-  (enunciation-tag) proof (figure-tag))
+  (enunciation-tag) proof (figure-tag) (table-tag))
 
 (define-group render-titled-tag
-  (render-enunciation-tag) render-proof (render-figure-tag))
+  (render-enunciation-tag) render-proof (render-figure-tag) (render-table-tag))
 
 ;; Sections
 
@@ -189,14 +189,26 @@
 (define-group figure-tag
   (small-figure-tag) (big-figure-tag))
 
+(define-group table-tag
+  (small-table-tag) (big-table-tag))
+
 (define-group small-figure-tag
-  small-figure small-table)
+  small-figure)
 
 (define-group big-figure-tag
-  big-figure big-table)
+  big-figure)
+
+(define-group small-table-tag
+  small-table)
+
+(define-group big-table-tag
+  big-table)
 
 (define-group render-figure-tag
   render-small-figure render-big-figure)
+
+(define-group render-table-tag
+  render-small-table render-big-table)
 
 ;; Figures and tables
 

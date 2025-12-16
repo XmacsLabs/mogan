@@ -137,6 +137,14 @@
     <style-with|src-compact|none|<render-big-figure|<unquote|<arg|env>>|<compound|<unquote|<merge|<arg|env>|-text>>>|<arg|body>|<arg|caption>>>
   </macro>>>>>>
 
+  <assign|new-table|<macro|env|name|<quasi|<style-with|src-compact|none|<add-to-counter-group|<unquote|<arg|env>>|figure-env><assign|<unquote|<merge|<arg|env>|-text>>|<macro|<localize|<unquote|<arg|name>>>>><assign|<unquote|<merge|small-|<arg|env>>>|<macro|body|caption|<style-with|src-compact|none|<compound|<unquote|<merge|next-|<arg|env>>>><style-with|src-compact|none|<render-small-table|<unquote|<arg|env>>|<style-with|src-compact|none|<compound|<unquote|<merge|<arg|env>|-text>>>
+  <compound|<unquote|<merge|the-|<arg|env>>>>>|<arg|body>|<surround|<set-binding|<compound|<unquote|<merge|the-|<arg|env>>>>>||<arg|caption>>>>>>><assign|<unquote|<merge|small-|<arg|env>|*>>|<macro|body|caption|<style-with|src-compact|none|<render-small-table|<unquote|<arg|env>>|<compound|<unquote|<merge|<arg|env>|-text>>>|<arg|body>|<arg|caption>>>>><assign|<unquote|<merge|big-|<arg|env>>>|<\macro|body|caption>
+    <surround|<compound|<unquote|<merge|next-|<arg|env>>>>||<style-with|src-compact|none|<render-big-table|<unquote|<arg|env>>|<style-with|src-compact|none|<compound|<unquote|<merge|<arg|env>|-text>>>
+    <compound|<unquote|<merge|the-|<arg|env>>>>>|<arg|body>|<surround|<set-binding|<compound|<unquote|<merge|the-|<arg|env>>>>>||<arg|caption>>>>>
+  </macro>><assign|<unquote|<merge|big-|<arg|env>|*>>|<\macro|body|caption>
+    <style-with|src-compact|none|<render-big-table|<unquote|<arg|env>>|<compound|<unquote|<merge|<arg|env>|-text>>>|<arg|body>|<arg|caption>>>
+  </macro>>>>>>
+
   \;
 </body>
 

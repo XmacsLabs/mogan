@@ -1,4 +1,4 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1.4>
 
 <style|source>
 
@@ -98,6 +98,16 @@
     </cell>>>>>>
   </macro>>
 
+  <assign|render-small-table|<macro|type|name|fig|cap|<tabular*|<tformat|<cwith|1|-1|1|-1|cell-lsep|0spc>|<cwith|1|-1|1|-1|cell-rsep|0spc>|<cwith|2|2|1|1|cell-height|0.5fn>|<twith|table-valign|B>|<cwith|3|3|1|1|cell-hyphen|t>|<twith|table-width|1par>|<twith|table-hmode|min>|<table|<row|<cell|<resize|<arg|fig>|<minus|1l|2fn>||<plus|1r|2fn>|>>>|<row|<cell|>>|<row|<\cell>
+    <render-caption|<arg|type>|<arg|name>|<arg|cap>>
+  </cell>>>>>>>
+
+  <assign|render-big-table|<\macro|type|name|fig|cap>
+    <padded-normal|1fn|1fn|<tabular*|<tformat|<twith|table-width|<value|figure-width>>|<cwith|3|3|1|1|cell-hyphen|t>|<cwith|1|-1|1|-1|cell-lsep|<value|figure-left-padding>>|<cwith|1|-1|1|-1|cell-rsep|<value|figure-right-padding>>|<cwith|2|2|1|1|cell-height|<value|figure-caption-sep>>|<cwith|3|3|1|1|cell-lsep|<value|caption-left-padding>>|<cwith|3|3|1|1|cell-rsep|<value|caption-right-padding>>|<table|<row|<cell|<arg|fig>>>|<row|<cell|>>|<row|<\cell>
+      <render-caption|<arg|type>|<arg|name>|<arg|cap>>
+    </cell>>>>>>
+  </macro>>
+
   <assign|figure-list-prefix|figure>
 
   <assign|with-figure-list|<macro|lof|body|<with|figure-list-prefix|<arg|lof>|<arg|body>>>>
@@ -108,7 +118,7 @@
 
   <new-figure|figure|Figure>
 
-  <new-figure|table|Table>
+  <new-table|table|Table>
 
   <\active*>
     <\src-comment>

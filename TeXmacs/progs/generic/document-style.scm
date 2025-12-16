@@ -211,7 +211,8 @@
   ("number-europe"        "European numbering style")
   ("number-us"            "US numbering style")
   ("number-long-article"  "Prefix by section number")
-  ("captions-above"       "Captions above")
+  ("figure-captions-above" "Captions above")
+  ("table-captions-above" "Captions above")
 
   ("normal-spacing"       "Default spacing")
   ("old-spacing"          "Old style spacing")
@@ -326,7 +327,8 @@
   ("number-europe"      "Individual counters for theorems, propositions, etc.")
   ("number-long-article" "Prefix numbered environments by section number")
   ("number-us"          "Shared counter for theorems, propositions, etc.")
-  ("captions-above"     "Place captions above figures and tables")
+  ("figure-captions-above" "Place captions above figures")
+  ("table-captions-above" "Place captions above tables")
 
   ("doc"                "Rich collection of markup for writing documentation")
 

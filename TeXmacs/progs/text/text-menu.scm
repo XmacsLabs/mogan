@@ -1046,9 +1046,12 @@
       (link position-balloon-menu)))
 
 (tm-define (standard-options l)
-  (:require (in? l (numbered-unnumbered-append
-                     (append (small-figure-tag-list) (big-figure-tag-list)))))
-  (list "captions-above"))
+  (:require (in? l (numbered-unnumbered-append '(small-figure big-figure))))
+  (list "figure-captions-above"))
+
+(tm-define (standard-options l)
+  (:require (in? l (numbered-unnumbered-append '(small-table big-table))))
+  (list "table-captions-above"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Detached notes

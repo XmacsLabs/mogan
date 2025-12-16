@@ -749,6 +749,12 @@
         ((tree-in? t (numbered-unnumbered-append (big-figure-tag-list)))
          (tree-set! t `(render-big-figure "" "" ,(tree-ref t 0)
                                                 ,(tree-ref t 1))))
+        ((tree-in? t (numbered-unnumbered-append (small-table-tag-list)))
+         (tree-set! t `(render-small-table "" "" ,(tree-ref t 0)
+                                                  ,(tree-ref t 1))))
+        ((tree-in? t (numbered-unnumbered-append (big-table-tag-list)))
+         (tree-set! t `(render-big-table "" "" ,(tree-ref t 0)
+                                                ,(tree-ref t 1))))
         ((tree-is? t 'render-theorem)
          (tree-set! t `(theorem ,(tree-ref t 1))))
         ((tree-is? t 'render-remark)
@@ -762,7 +768,11 @@
         ((tree-is? t 'render-small-figure)
          (tree-set! t `(small-figure ,(tree-ref t 2) ,(tree-ref t 3))))
         ((tree-is? t 'render-big-figure)
-         (tree-set! t `(big-figure ,(tree-ref t 2) ,(tree-ref t 3))))))
+         (tree-set! t `(big-figure ,(tree-ref t 2) ,(tree-ref t 3))))
+        ((tree-is? t 'render-small-table)
+         (tree-set! t `(small-table ,(tree-ref t 2) ,(tree-ref t 3))))
+        ((tree-is? t 'render-big-table)
+         (tree-set! t `(big-table ,(tree-ref t 2) ,(tree-ref t 3))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Framed environments
@@ -914,6 +924,9 @@
 
 (tm-define (figure-context? t)
   (tree-in? t (figure-tag-list)))
+
+(tm-define (table-context? t)
+  (tree-in? t (table-tag-list)))
 
 (tm-define (float-or-footnote-context? t)
   (tree-in? t '(float wide-float footnote wide-footnote)))
