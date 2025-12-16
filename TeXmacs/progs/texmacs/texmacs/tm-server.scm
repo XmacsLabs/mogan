@@ -129,7 +129,7 @@
   ("bitmap effects" "on" notify-tool)
   ("new style page breaking" "on" notify-new-page-breaking)
   ("open console on errors" "on" noop)
-  ("open console on warnings" "on" noop)
+  ("open console on warnings" "off" noop)
   ("gui:line-input:autocommit" "on" noop)
   ("use native menubar" (get-default-native-menubar) noop)
   ("use unified toolbar" (get-default-unified-toolbar) noop)
