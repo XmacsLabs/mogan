@@ -83,9 +83,9 @@
 
   <paragraph*|遍历相似环境>
 
-  此类光标移动允许你快速访问文档中所有与当前最内层环境“相似”的其它环境。可以使用 <shortcut|(kbd-select-if-active traverse-previous)> 与 <shortcut|(kbd-select-if-active traverse-next)> 移动到前一个或后一个相似标签，也可以使用 <shortcut|(kbd-select-if-active traverse-first)> 与 <shortcut|(kbd-select-if-active traverse-last)> 跳到第一个或最后一个相似标签。
+  此类光标移动允许你快速访问文档中所有与当前最内层环境“相似”的其它环境。可以使用 <shortcut|(traverse-previous)> 与 <shortcut|(traverse-next)> 移动到前一个或后一个相似标签，也可以使用 <shortcut|(kbd-select-if-active traverse-first)> 与 <shortcut|(kbd-select-if-active traverse-last)> 跳到第一个或最后一个相似标签。
 
-  例如，如果你处于一个章节标题中，则可使用 <shortcut|(kbd-select-if-active traverse-previous)> 移动到前一个章节标题。子节与章标题也被视为“相似”。
+  例如，如果你处于一个章节标题中，则可使用 <shortcut|(traverse-previous)> 移动到前一个章节标题。子节与章标题也被视为“相似”。
 
   <paragraph*|在当前环境内部移动>
 

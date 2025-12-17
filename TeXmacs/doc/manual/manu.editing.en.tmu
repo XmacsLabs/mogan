@@ -83,9 +83,9 @@
 
   <paragraph*|Traversal of environments that are similar to the innermost tag>
 
-  This type of cursor movement allows you to quickly visit all other environments in the document that are <em|similar> to the innermost environment. The <shortcut|(kbd-select-if-active traverse-previous)> and <shortcut|(kbd-select-if-active traverse-next)> keys allow you move to the previous or next similar tags, whereas <shortcut|(kbd-select-if-active traverse-first)> and <shortcut|(kbd-select-if-active traverse-last)> directly jump to the first or last similar tags.
+  This type of cursor movement allows you to quickly visit all other environments in the document that are <em|similar> to the innermost environment. The <shortcut|(traverse-previous)> and <shortcut|(traverse-next)> keys allow you move to the previous or next similar tags, whereas <shortcut|(kbd-select-if-active traverse-first)> and <shortcut|(kbd-select-if-active traverse-last)> directly jump to the first or last similar tags.
 
-  For instance, if you are inside a section title, then you may move to the previous sectional title using <shortcut|(kbd-select-if-active traverse-previous)>. Subsection and chapter titles are in particular understood to be “similar” to section titles.
+  For instance, if you are inside a section title, then you may move to the previous sectional title using <shortcut|(traverse-previous)>. Subsection and chapter titles are in particular understood to be “similar” to section titles.
 
   <paragraph*|Movements inside the innermost environment>
 

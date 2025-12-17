@@ -243,12 +243,12 @@
                    ($tmdoc-icon "tm_similar_first.xpm"))
         "Jump to the first " (focus-doc-similar t) ".")
       ($describe-item
-          ($inline ($shortcut (kbd-select-if-active traverse-previous)) ", "
+          ($inline ($shortcut (traverse-previous)) ", "
                    ($menu "Focus" "Previous similar") ", "
                    ($tmdoc-icon "tm_similar_previous.xpm"))
         "Jump to the previous " (focus-doc-similar t) ".")
       ($describe-item
-          ($inline ($shortcut (kbd-select-if-active traverse-next)) ", "
+          ($inline ($shortcut (traverse-next)) ", "
                    ($menu "Focus" "Next similar") ", "
                    ($tmdoc-icon "tm_similar_next.xpm"))
         "Jump to the next " (focus-doc-similar t) ".")

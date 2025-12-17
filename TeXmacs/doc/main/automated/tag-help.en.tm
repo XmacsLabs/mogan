@@ -222,11 +222,11 @@
         <icon|tm_similar_first.svg>>Jump to the first tag similar to
         <markup|<output-string|<implied-scm|tag>>>.
 
-        <item*|<shortcut|(kbd-select-if-active traverse-previous)>,
+        <item*|<shortcut|(traverse-previous)>,
         <menu|Focus|Previous similar>, <icon|tm_similar_previous.svg>>Jump to
         the previous tag similar to <markup|<output-string|<implied-scm|tag>>>.
 
-        <item*|<shortcut|(kbd-select-if-active traverse-next)>,
+        <item*|<shortcut|(traverse-next)>,
         <menu|Focus|Next similar>, <icon|tm_similar_next.svg>>Jump to the
         next tag similar to <markup|<output-string|<implied-scm|tag>>>.
 
