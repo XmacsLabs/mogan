@@ -27,7 +27,7 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   layout= new QHBoxLayout (this);
   layout->setContentsMargins (0, 0, 0, 0);
   layout->setSizeConstraint (QLayout::SetMinimumSize);
-  layout->setSpacing (10);
+  layout->setSpacing (1);
   setLayout (layout);
   // 阴影效果
   QGraphicsDropShadowEffect* effect= new QGraphicsDropShadowEffect (this);
@@ -35,12 +35,44 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   effect->setOffset (0, 4);
   effect->setColor (QColor (0, 0, 0, 120));
   this->setGraphicsEffect (effect);
-  QPushButton* left  = new QPushButton ("Left Align");
-  QPushButton* center= new QPushButton ("Center");
-  QPushButton* right = new QPushButton ("Right Align");
-  QPushButton* ocr   = new QPushButton ("OCR");
+
+  QScreen*     Screen= QGuiApplication::primaryScreen ();
+  const double Dpi   = Screen ? Screen->logicalDotsPerInch () : 96.0;
+  const double Scale = Dpi / 96.0;
+#if defined(Q_OS_MAC)
+  const int IconSize= int (50 * Scale);
+#else
+  const int IconSize= int (40 * Scale);
+#endif
+
+  QString btn_style=
+      "QPushButton { background-color: transparent; border: none; } "
+      "QPushButton:hover { background-color: rgba(128, 128, 128, 0.3); border: "
+      "none; } QPushButton:pressed { background-color: rgba(128, 128, 128, "
+      "0.5); border: none; }";
+
+  QPushButton* left= new QPushButton ();
+  left->setObjectName ("Left Align");
+  left->setIcon (QIcon (":/window-bar/left-align.svg"));
+  left->setIconSize (QSize (IconSize, IconSize));
+  left->setStyleSheet (btn_style);
+  QPushButton* middle= new QPushButton ();
+  middle->setObjectName ("Middle Align");
+  middle->setIcon (QIcon (":/window-bar/middle-align.svg"));
+  middle->setIconSize (QSize (IconSize, IconSize));
+  middle->setStyleSheet (btn_style);
+  QPushButton* right= new QPushButton ();
+  right->setObjectName ("Right Align");
+  right->setIcon (QIcon (":/window-bar/right-align.svg"));
+  right->setIconSize (QSize (IconSize, IconSize));
+  right->setStyleSheet (btn_style);
+  QPushButton* ocr= new QPushButton ();
+  ocr->setObjectName ("OCR");
+  ocr->setIcon (QIcon (":/window-bar/ocr.svg"));
+  ocr->setIconSize (QSize (IconSize, IconSize));
+  ocr->setStyleSheet (btn_style);
   layout->addWidget (left);
-  layout->addWidget (center);
+  layout->addWidget (middle);
   layout->addWidget (right);
   layout->addWidget (ocr);
 }

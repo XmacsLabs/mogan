@@ -21,5 +21,9 @@
         <file>window-bar/login-white.svg</file>
         <file>window-bar/logout.svg</file>
         <file>window-bar/logout-white.svg</file>
+        <file>window-bar/left-align.svg</file>
+        <file>window-bar/middle-align.svg</file>
+        <file>window-bar/right-align.svg</file>
+        <file>window-bar/ocr.svg</file>
     </qresource>
 </RCC>
