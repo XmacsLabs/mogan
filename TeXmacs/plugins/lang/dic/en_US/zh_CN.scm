@@ -408,6 +408,7 @@
 ("comment" "批注")
 ("Comment editor" "批注编辑器")
 ("common formats" "常见格式")
+("commutative diagram" "交换图")
 ("compact vertical space" "紧凑垂直间距")
 ("compact" "紧凑")
 ("compactification" "紧化")
