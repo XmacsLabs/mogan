@@ -461,7 +461,7 @@
     (let* ((txt (if (or (not shortcut) (== shortcut ""))
                     text
                     (if (string? text)
-                        (string-append text " " shortcut "")
+                        (string-append text " (" shortcut ")")
                         text)))
            (ftxt (translate txt)))
       (widget-text ftxt style (color "black") #t)))
