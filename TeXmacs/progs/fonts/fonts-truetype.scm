@@ -103,7 +103,7 @@
     ((simsun ss $a $b $s $d) (unicode simhei $s $d))
     ((simsun tt $a $b $s $d) (unicode simfang $s $d))
     ((simsun sv $a italic $s $d) (unicode simkai $s $d))
-    ((simsun $v bold $b $s $d) (unicode simhei $s $d))
+    ((simsun $v bold $b $s $d) (unicode simsun $s $d))
     ((simsun $v $a $b $s $d) (unicode simsun $s $d))
     ((simyou $v $a $b $s $d) (unicode simyou $s $d))
     ((ttf-japanese rm $a $b $s $d) (unicode ttf-japanese-mincho $s $d))
