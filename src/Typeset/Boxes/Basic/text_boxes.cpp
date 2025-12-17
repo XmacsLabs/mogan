@@ -479,10 +479,12 @@ get_number (string s, int& pos) {
 
 static string
 get_delimiter (string s, font fn, SI height) {
-  int ns= N (s);
-  ASSERT (ns >= 2 && s[0] == '<' && s[ns - 1] == '>',
-          "invalid rubber character");
-  if (is_digit (s[ns - 2])) {
+  int s_N= N (s);
+  if (!(s_N >= 2 && s[0] == '<' && s[s_N - 1] == '>')) {
+    // Return empty string for invalid rubber character
+    return "";
+  }
+  if (is_digit (s[s_N - 2])) {
     int pos;
     int plus= get_number (s, pos);
     if (pos > 0) {
@@ -548,9 +550,12 @@ get_delimiter (string s, font fn, SI height) {
 
 static string
 get_wide (string s, font fn, SI width) {
-  ASSERT (N (s) >= 2 && s[0] == '<' && s[N (s) - 1] == '>',
-          "invalid rubber character");
-  string radical= s (0, N (s) - 1) * "-";
+  int s_N= N (s);
+  if (!(s_N >= 2 && s[0] == '<' && s[s_N - 1] == '>')) {
+    // Return empty string for invalid rubber character
+    return "";
+  }
+  string radical= s (0, s_N - 1) * "-";
   string first  = radical * "0>";
   metric ex;
   fn->get_extents (first, ex);
@@ -578,9 +583,12 @@ get_wide (string s, font fn, SI width) {
 
 static string
 get_wide_stix (string s, font fn, SI width) {
-  ASSERT (N (s) >= 2 && s[0] == '<' && s[N (s) - 1] == '>',
-          "invalid rubber character");
-  string radical= s (0, N (s) - 1) * "-";
+  int s_N= N (s);
+  if (!(s_N >= 2 && s[0] == '<' && s[s_N - 1] == '>')) {
+    // Return empty string for invalid rubber character
+    return "";
+  }
+  string radical= s (0, s_N - 1) * "-";
   metric ex;
   int    n= 0;
   while (true) {
@@ -649,9 +657,12 @@ delimiter_box (path ip, string s, font fn, pencil pen, SI bot, SI top, SI mid,
 
 box
 big_operator_box (path ip, string s, font fn, pencil pen, int n) {
-  ASSERT (N (s) >= 2 && s[0] == '<' && s[N (s) - 1] == '>',
-          "invalid rubber character");
-  string r= s (0, N (s) - 1) * "-" * as_string (n) * ">";
+  int s_N= N (s);
+  if (!(s_N >= 2 && s[0] == '<' && s[s_N - 1] == '>')) {
+    // Return empty box for invalid rubber character
+    return empty_box (ip, 0, 0, 0, 0);
+  }
+  string r= s (0, s_N - 1) * "-" * as_string (n) * ">";
   metric ex;
   fn->get_extents (r, ex);
   SI  y  = fn->yfrac - ((ex->y1 + ex->y2) >> 1);

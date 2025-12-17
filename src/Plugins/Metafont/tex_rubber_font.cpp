@@ -160,17 +160,21 @@ tex_rubber_font_rep::get_partial_extents (int c, metric& ex) {
 
 void
 tex_rubber_font_rep::get_extents (string s, metric& ex) {
-  ASSERT ((N (s) >= 2) && (s[0] == '<') && (s[N (s) - 1] == '>'),
-          "invalid rubber character");
+  int s_N= N (s);
+  if (!((s_N >= 2) && (s[0] == '<') && (s[s_N - 1] == '>'))) {
+    // Return empty extents for invalid rubber character
+    ex->x1= ex->y1= ex->x2= ex->y2= ex->x3= ex->y3= ex->x4= ex->y4= 0;
+    return;
+  }
 
   // determining base character and serial number
   int i;
-  for (i= N (s) - 1; i > 0; i--)
+  for (i= s_N - 1; i > 0; i--)
     if (s[i] == '-') break;
   if (i > 0 && s[i - 1] == '-') i--;
   string r    = s (0, i) * ">";
   QN     pre_c= ext->dict[r];
-  int    n    = max (as_int (s (i + 1, N (s) - 1)), 0);
+  int    n    = max (as_int (s (i + 1, s_N - 1)), 0);
   if ((pre_c < tfm->bc) || (pre_c > tfm->ec)) {
     ex->x1= ex->y1= ex->x2= ex->y2= ex->x3= ex->y3= ex->x4= ex->y4= 0;
     return;
