@@ -17,6 +17,7 @@
 #include "qt_window_widget.hpp"
 
 #include "QTMCompletionPopup.hpp"
+#include "QTMImagePopup.hpp"
 #include "QTMMathCompletionPopup.hpp"
 #include "QTMMenuHelper.hpp"
 #include "QTMStyle.hpp"
@@ -741,5 +742,48 @@ qt_simple_widget_rep::scroll_math_completion_popup_by (SI x, SI y) {
     coord2 p= from_qpoint (qp);
     mathCompletionPopUp->scrollBy (p.x1, p.x2);
     mathCompletionPopUp->updatePosition ();
+  }
+}
+
+/******************************************************************************
+ * Image popup support
+ ******************************************************************************/
+
+void
+qt_simple_widget_rep::ensure_image_popup () {
+  if (!imagePopUp && canvas ()) {
+    imagePopUp= new QTMImagePopup (canvas (), this);
+    if (is_empty (tm_style_sheet)) {
+      imagePopUp->setStyle (qtmstyle ());
+    }
+  }
+}
+
+void
+qt_simple_widget_rep::show_image_popup (rectangle selr, double magf,
+                                        int scroll_x, int scroll_y,
+                                        int canvas_x) {
+  ensure_image_popup ();
+  imagePopUp->showImagePopup (selr, magf, scroll_x, scroll_y, canvas_x);
+}
+
+void
+qt_simple_widget_rep::set_image_popup (widget w) {
+  ensure_image_popup ();
+  qt_widget qwid   = concrete (w);
+  QWidget*  qwidget= qwid->as_qwidget ();
+  if (!qwidget) {
+    return;
+  }
+  imagePopUp->setWidget (qwidget);
+}
+
+void
+qt_simple_widget_rep::hide_image_popup () {
+  if (imagePopUp) {
+    imagePopUp->hide ();
+    imagePopUp->setParent (nullptr);
+    imagePopUp->deleteLater ();
+    imagePopUp= nullptr;
   }
 }
