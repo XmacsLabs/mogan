@@ -1,0 +1,126 @@
+<TMU|<tuple|1.1.0|2025.1.4-rc3>>
+
+<style|<tuple|amsart|smart-ref|preview-ref>>
+
+<\body>
+  <\hide-preamble>
+    <assign|N|<macro|\<bbb-N\>>>
+
+    <assign|Z|<macro|\<bbb-Z\>>>
+
+    <assign|Q|<macro|\<bbb-Q\>>>
+
+    <assign|F|<macro|\<bbb-F\>>>
+
+    <assign|K|<macro|\<bbb-K\>>>
+
+    <assign|Sp|<macro|<math-up|Sp>>>
+
+    <assign|SL|<macro|<math-up|SL>>>
+
+    <assign|GL|<macro|<math-up|GL>>>
+
+    <assign|AGL|<macro|<math-up|AGL>>>
+
+    <assign|SO|<macro|<math-up|SO>>>
+
+    <assign|GO|<macro|<math-up|GO>>>
+
+    <assign|rank|<macro|<math-up|rank>>>
+
+    <assign|Ind|<macro|<math-up|Ind>>>
+
+    <assign|Res|<macro|<math-up|Res>>>
+
+    <assign|End|<macro|<math-up|End>>>
+
+    <assign|Hom|<macro|<math-up|Hom>>>
+
+    <assign|Aut|<macro|<math-up|Aut>>>
+
+    <assign|Inn|<macro|<math-up|Inn>>>
+
+    <assign|Fit|<macro|<math-up|Fit>>>
+
+    <assign|Mat|<macro|<math-up|Mat>>>
+
+    <assign|GML|<macro|<with|math-font-family|rm|\<Gamma\>L>>>
+
+    <assign|GU|<macro|<math-up|GU>>>
+
+    <assign|GSp|<macro|<math-up|GSp>>>
+
+    <assign|Ker|<macro|<math-up|Ker>>>
+
+    <assign|Sym|<macro|<math-up|Sym>>>
+
+    <assign|Alt|<macro|<math-up|Alt>>>
+
+    <assign|chr|<macro|<math-up|char>>>
+
+    <assign|sgn|<macro|<math-up|sgn>>>
+
+    <assign|Gal|<macro|<math-up|Gal>>>
+
+    <assign|stab|<macro|<math-up|stab>>>
+
+    <assign|D|<macro|<math-up|d>>>
+
+    <assign|g|<macro|\<frak-g\>>>
+
+    <assign|diag|<macro|<math-up|diag>>>
+
+    <assign|B|<macro|\<cal-B\>>>
+
+    <assign|smr|<macro|<math-up|semiwr>>>
+
+    <assign|Tr|<macro|<math-up|Tr>>>
+
+    <assign|legendre|<macro|1|2|<genfrac|(|)|||<arg|1>|<arg|2>>>>
+
+    <new-theorem|prob|Problem>
+
+    <new-theorem|probx|Problem>
+
+    <assign|theprobx|<macro|<number|<probx-nr>|Alpha>>>
+
+    <new-theorem|manualprobinner|Problem>
+
+    <assign|manualprob|<macro|1|body|<\surround|<assign|themanualprobinner|<macro|<arg|1>>><manualprobinner>|<endmanualprobinner>>
+      <arg|body>
+    </surround>>>
+
+    <new-theorem|thm*|Theorem>
+
+    <new-theorem|maar|Definition>
+
+    <new-theorem|mot*|Motivation>
+
+    <new-theorem|acknow*|Acknowledgements>
+
+    <assign|cmt|<macro|1|<with|font-series|bold|color|darkblue|<arg|1>>>>
+  </hide-preamble>
+
+  sss
+</body>
+
+<\initial>
+  <\collection>
+    <associate|info-flag|detailed>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|bib>
+
+    </associate>
+    <\associate|toc>
+    </associate>
+  </collection>
+</auxiliary>

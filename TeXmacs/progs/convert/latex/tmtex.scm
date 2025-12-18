@@ -2160,7 +2160,9 @@
 
 (define (tmtex-std-env s l)
   (if (== s "quote-env") (set! s "quote"))
-  (list (list '!begin s) (tmtex (car l))))
+  (if (null? l)
+      (list (list '!begin s) '())
+      (list (list '!begin s) (tmtex (car l)))))
 
 (define (tmtex-footnote s l)
   `(footnote ,(tmtex (car l))))
