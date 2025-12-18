@@ -50,7 +50,7 @@
   ("emacs" "Emacs")
   ("gnome" "Gnome")
   ("kde" "KDE")
-  ("macos" "Mac OS")
+  ("macos" "macOS")
   ("windows" "Windows"))
 
 (for (l supported-languages)
@@ -85,7 +85,9 @@
   (aligned
     (item (text "Look and feel:")
       (enum (set-pretty-preference* "look and feel" answer)
-            '("Default" "Emacs" "Gnome" "KDE" "Mac OS" "Windows")
+            (cond ((os-win32?) '("Default" "Emacs" "Windows"))
+                  ((os-macos?) '("Default" "Emacs"  "macOS" ))
+                  (else '("Default" "Emacs" "Gnome" "KDE")))
             (get-pretty-preference "look and feel")
             "18em"))
     (item (text "User interface language:")
