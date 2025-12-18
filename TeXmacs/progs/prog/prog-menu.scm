@@ -114,33 +114,21 @@
       ("Verbatim" (make 'verbatim))
       ("C++" (make 'cpp))
       ("Scheme" (make 'scm))
-      ("Shell" (make 'shell)))
+      ("Shell" (make 'shell))
+      ("Goldfish" (make* 'goldfish-lang "goldfish"))
+      ("Scala" (make* 'scala "scala"))
+      ("Python" (make* 'python "python")))
   (-> "Block of code"
       ("Verbatim" (make 'verbatim-code))
       ("C++" (make 'cpp-code))
       ("Scheme" (make 'scm-code))
-      ("Shell" (make 'shell-code)))
-  (-> "Listing" 
+      ("Shell" (make 'shell-code))
+      ("Goldfish" (make* 'goldfish-code "goldfish"))
+      ("Scala" (make* 'scala-code "scala"))
+      ("Python" (make* 'python-code "python")))
+  (-> "Listing"
       ("Verbatim" (make 'listing))
       ("C++" (make 'cpp-listing))
       ("Scheme" (make 'scm-listing))
-      ("Shell" (make 'shell-listing)))
-  ---
-  (-> "Goldfish"
-      (when (style-has? "goldfish-lang")
-        ("Inline code" (make 'goldfish-lang))
-        ("Block of code" (make 'goldfish-code)))
-      (when (not (style-has? "goldfish-lang"))
-        ("Activate" (add-style-package "goldfish"))))
-  (-> "Scala"
-      (when (style-has? "scala")
-        ("Inline code" (make 'scala))
-        ("Block of code" (make 'scala-code)))
-      (when (not (style-has? "scala"))
-        ("Activate" (add-style-package "scala"))))
-  (-> "Python"
-      (when (style-has? "python")
-        ("Inline code" (make 'python))
-        ("Block of code" (make 'python-code)))
-      (when (not (style-has? "python"))
-        ("Activate" (add-style-package "python")))))
+      ("Shell" (make 'shell-listing))))
+
