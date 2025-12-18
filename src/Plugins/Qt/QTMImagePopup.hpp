@@ -31,6 +31,7 @@ protected:
   int                        cached_scroll_y; // 页面滚动位置y
   int                        cached_canvas_x;
   double                     cached_magf; // 缩放因子
+  tree                       current_tree;
 
 public:
   QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner);
@@ -41,6 +42,7 @@ public:
   void setWidget (QWidget* w);
   void updatePosition ();
   void scrollBy (int x, int y);
+  void setImageTree (tree t);
 
 protected:
   void cleanLayout ();

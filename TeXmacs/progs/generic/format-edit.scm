@@ -167,6 +167,14 @@
                 (and-with w** (tree-innermost 'with #t)
                   (tree-select w**))))))))
 
+(tm-define (set-image-alignment t align)
+  (if (and (tree-is? t 'with) 
+           (tree-is? (tree-ref t 0) 'string)
+           (string=? (tree->string (tree-ref t 0)) "par-mode")
+           (>= (tree-arity t) 3))
+    (tree-set! t 1 align)
+    (debug-message "std-warning" "Invalid tree structure for set-image-alignment")))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Inserting and toggling with-like tags
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

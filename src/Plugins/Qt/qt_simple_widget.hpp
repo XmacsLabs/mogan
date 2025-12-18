@@ -115,8 +115,8 @@ public:
 
   ////////////////////// Image popup support
   void ensure_image_popup ();
-  void show_image_popup (rectangle selr, double magf, int scroll_x,
-                         int scroll_y, int canvas_x);
+  void show_image_popup (tree current_tree, rectangle selr, double magf,
+                         int scroll_x, int scroll_y, int canvas_x);
   void set_image_popup (widget w);
   void hide_image_popup ();
   void scroll_image_popup_by ();

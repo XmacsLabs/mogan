@@ -75,6 +75,12 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   layout->addWidget (middle);
   layout->addWidget (right);
   layout->addWidget (ocr);
+  connect (left, &QPushButton::clicked, this,
+           [=] () { call ("set-image-alignment", current_tree, "left"); });
+  connect (middle, &QPushButton::clicked, this,
+           [=] () { call ("set-image-alignment", current_tree, "center"); });
+  connect (right, &QPushButton::clicked, this,
+           [=] () { call ("set-image-alignment", current_tree, "right"); });
 }
 
 QTMImagePopup::~QTMImagePopup () {}
@@ -90,6 +96,11 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
   move (topLeft);
   raise ();
   show ();
+}
+
+void
+QTMImagePopup::setImageTree (tree t) {
+  if (t) this->current_tree= t;
 }
 
 void
@@ -173,10 +184,6 @@ QTMImagePopup::paintEvent (QPaintEvent* event) {
   painter.setBrush (QColor (255, 255, 255, 255));
   QRectF bgRect= this->rect ();
   painter.drawRoundedRect (bgRect, 6, 6);
-  // 绘制黑色边框
-  QPen pen (Qt::black, 1.5);
-  painter.setPen (pen);
-  painter.setBrush (Qt::NoBrush);
   QRectF rect= this->rect ();
   rect.adjust (0.75, 0.75, -0.75, -0.75); // 居中描边
   painter.drawRoundedRect (rect, 6, 6);   // 圆角
