@@ -100,7 +100,7 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
 
 void
 QTMImagePopup::setImageTree (tree t) {
-  if (t) this->current_tree= t;
+  this->current_tree= t;
 }
 
 void
