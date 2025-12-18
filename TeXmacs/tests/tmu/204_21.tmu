@@ -1,0 +1,80 @@
+<TMU|<tuple|1.1.0|2025.2.2>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  1. 标题
+
+  <marked|<doc-data|<doc-title|204_19：标宽表格整体高亮导致崩溃>|<doc-author|<author-data|<author-name|这是一个测试样例>>>>>
+
+  2. 标宽无框表格
+
+  <\marked>
+    <\wide-tabular>
+      <tformat|<table|<row|<\cell>
+        这是一个多行文本
+
+        行2
+      </cell>>>>
+    </wide-tabular>
+  </marked>
+
+  3. 标宽有框表格
+
+  <marked|<\wide-block>
+    <tformat|<table|<row|<\cell>
+      列1
+    </cell>|<\cell>
+      列2
+    </cell>>|<row|<\cell>
+      这是一个多行多列表格
+    </cell>|<\cell>
+      \;
+    </cell>>>>
+  </wide-block>>
+
+  4. 普通有框表格
+
+  <marked|<block|<tformat|<table|<row|<cell|列1>|<cell|列2>>|<row|<cell|这是一个多行多列表格>|<cell|>>>>>>
+
+  5. 多行文本
+
+  <\marked>
+    我是自然段1
+
+    自然段2
+  </marked>
+
+  6. 代码
+
+  <marked|<\cpp>
+    int main() {
+
+    \ \ \ \ printf("Hello World!\\n");
+
+    }
+  </cpp>>
+
+  7. 列表
+
+  <marked|<\enumerate-numeric>
+    <item>列表项1
+
+    <item>列表项2
+  </enumerate-numeric>>
+
+  8. 定理
+
+  <marked|<\theorem>
+    我是一个定理
+
+    定理内容
+  </theorem>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

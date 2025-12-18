@@ -67,6 +67,7 @@ cell_rep::typeset (tree fm, tree t, path iq) {
       tree old7= env->local_begin (PAR_WIDTH, len);
 
       lz= make_lazy (env, t, iq);
+      env->write (ATOM_DECORATIONS, DATOMS);
 
       env->local_end (PAR_WIDTH, old7);
       // env->local_end (PAR_COLUMNS, old6);
