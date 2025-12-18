@@ -16,7 +16,9 @@
         (text text-structure)
         (generic document-menu)
         (prog prog-menu)
-        (generic document-style)))
+        (generic document-style)
+        (various comment-edit)
+        (various comment-widgets)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; The Format menu in text mode
@@ -218,6 +220,9 @@
       (when (not (selection-active-non-small?))
         ("Marginal note" (make-marginal-note))))
     ("Balloon" (make-balloon))
+    ---
+    ("Folded comment" (make-folded-comment "comment"))
+    ("Unfolded comment" (make-unfolded-comment "comment"))
     ---
     (when (in-main-flow?)
       ("Floating object" (make-insertion "float"))

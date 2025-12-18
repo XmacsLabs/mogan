@@ -13,7 +13,8 @@
 
 (texmacs-module (various comment-widgets)
   (:use (various comment-edit)
-        (utils library cursor)))
+        (utils library cursor)
+        (generic document-style)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Editing a simple comment in a separate widget
@@ -85,8 +86,7 @@
 
 (tm-define (make-folded-comment type)
   (:applicable (not (inside-comment?)))
-  (make-comment 'folded-comment type (list 1))
-  (open-comment-editor))
+  (make-comment 'folded-comment type (list 1) open-comment-editor))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Open comments editor

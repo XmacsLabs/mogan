@@ -15,6 +15,7 @@
   (:use (utils library tree)
         (utils library cursor)
         (generic document-edit)
+        (generic document-style)
         (link ref-edit)
         (various comment-drd)))
 
@@ -200,13 +201,22 @@
 (tm-define (inside-comment?)
   (tree-innermost nest?))
   
-(tm-define (make-comment lab type pos)
-  (let* ((id (create-unique-id))
-         (mirror-id (create-unique-id))
-         (by (utf8->cork (get-user-name)))
-         (date (number->string (current-time))))
-    (insert-go-to `(,lab ,id ,mirror-id ,type ,by ,date "" "") pos)
-    (notify-comments-editor)))
+(tm-define (make-comment lab type pos . opt-after)
+  (let ((after-create (if (null? opt-after) (lambda () (noop)) (car opt-after))))
+    (if (has-style-package? "comment")
+        (let* ((id (create-unique-id))
+               (mirror-id (create-unique-id))
+               (by (utf8->cork (get-user-name)))
+               (date (number->string (current-time)))
+               (tree `(,lab ,id ,mirror-id ,type ,by ,date "" "")))
+          (insert-go-to tree pos)
+          (notify-comments-editor)
+          (after-create))
+        (begin
+          (add-style-package "comment")
+          (delayed
+            (:idle 1)
+            (make-comment lab type pos after-create))))))
 
 (tm-define (make-unfolded-comment type)
   (with lab (if (inside-comment?) 'nested-comment 'unfolded-comment)

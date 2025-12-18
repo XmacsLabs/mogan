@@ -21,9 +21,6 @@
 
 (menu-bind comment-menu
   (:require (in-comment?))
-  ("New folded comment" (make-folded-comment "comment"))
-  ("New unfolded comment" (make-unfolded-comment "comment"))
-  ---
   ((shortcut "Edit comment" "C-return") (open-comment-editor))
   ("Edit comments" (open-comments-editor))
   ---
