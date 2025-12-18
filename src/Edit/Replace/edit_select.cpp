@@ -698,6 +698,11 @@ edit_select_rep::selection_paste (string key) {
     else fm= selection_import * "-snippet";
     tree doc= generic_to_tree (s, fm);
     if (is_func (doc, DOCUMENT, 1)) doc= doc[0]; // temporary fix
+    if (is_func (doc, IMAGE)) {
+      tree with (WITH);
+      with << tree ("par-mode") << tree ("center") << doc;
+      doc= with;
+    }
     if (mode == "math" && is_compound (doc, "math", 1)) doc= doc[0];
     insert_tree (doc);
   }
