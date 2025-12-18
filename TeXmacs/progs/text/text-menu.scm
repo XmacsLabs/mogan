@@ -109,15 +109,6 @@
 ;; Sections
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(menu-bind chapter-menu
-  (if (style-has? "book-style")
-      ("Part" (make-section 'part)))
-  ("Chapter" (make-section 'chapter))
-  ("Appendix" (make-section 'appendix))
-  ("List of abbreviations" (make-unnamed-section 'list-of-abbreviations))
-  ("Prologue" (make-unnamed-section 'prologue))
-  ("Epilogue" (make-unnamed-section 'epilogue)))
-
 (menu-bind section-menu
   ("Section" (make-section 'section))
   ("Subsection" (make-section 'subsection))
@@ -125,6 +116,27 @@
   ---
   ("Paragraph::section" (make-section 'paragraph))
   ("Subparagraph" (make-section 'subparagraph)))
+
+
+(menu-bind chapter-menu
+  (when (not (inside? 'doc-data))
+        ("Insert title" (make-doc-data)))
+  (when (and (not (inside? 'doc-data)) (not (inside? 'abstract-data)))
+        ("Abstract" (make-abstract-data)))
+  ("Chapter" (make-section 'chapter))
+  ---
+  ("Section" (make-section 'section))
+  ("Subsection" (make-section 'subsection))
+  ("Subsubsection" (make-section 'subsubsection))
+  ---
+  ("Paragraph::section" (make-section 'paragraph))
+  ("Subparagraph" (make-section 'subparagraph))
+  ---
+  ("Appendix" (make-section 'appendix))
+  ("Prologue" (make-unnamed-section 'prologue))
+  ("Epilogue" (make-unnamed-section 'epilogue))
+  ("List of abbreviations" (make-unnamed-section 'list-of-abbreviations)))
+  
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enunciations, quotations and programs
@@ -465,20 +477,11 @@
 
 
 (menu-bind text-block-menu
-  (if (and (style-has? "header-title-dtd")
-           (not (style-has? "header-letter-dtd"))
-           (not (style-has? "header-exam-dtd"))
-           (not (in-poster?)))
-      (-> "Title" (link title-menu)))
   (if (style-has? "header-letter-dtd")
       (-> "Header" (link letter-header-menu)))
   (if (style-has? "header-exam-dtd")
       (-> "Header" (link exam-header-menu)))
-  
-  (-> "Chapter" (link chapter-menu))
-  (if (and (style-has? "section-base-dtd")
-           (not (style-has? "header-exam-dtd")))
-      (-> "Section" (link section-menu)))
+  (-> "Chapter::menu" (link chapter-menu))
   (if (or (style-has? "env-theorem-dtd")
           (style-has? "header-exam-dtd"))
       (-> "Enunciation" (link enunciation-menu)))
@@ -537,14 +540,14 @@
 
 
 (menu-bind text-block-icons
-  (if (chapter-style?)
-      (=> (balloon (icon "tm_chapter.xpm") "Start a new chapter")
-          (link chapter-menu)))
+  ; (if (chapter-style?)
+  ;     (=> (balloon (icon "tm_chapter.xpm") "Start a new chapter")
+  ;         (link chapter-menu)))
   (if (and (style-has? "section-base-dtd")
            (not (style-has? "header-exam-dtd"))
            (not (in-poster?)))
       (=> (balloon (icon "tm_section.xpm") "Start a new section")
-          (link section-menu)))
+          (link chapter-menu)))
   (if (in-poster?)
       (=> (balloon (icon "tm_block.xpm") "Insert a section block")
           (link poster-block-menu)))

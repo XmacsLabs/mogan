@@ -351,6 +351,7 @@
 ("change the border of the table" "改变表格边框")
 ("changes" "改变")
 ("chapter" "章")
+("chapter::menu" "章节")
 ("character count" "字符数")
 ("character encoding" "字符编码")
 ("check exported Pdf files for correctness" "检查导出的PDF文件的正确性")
