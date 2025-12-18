@@ -3,7 +3,7 @@ import requests
 
 access_token = os.getenv("Comment_TOKEN")
 pull_id = os.getenv("GITEE_PULL_ID")
-repo = "XmacsLabs/mogan"  
+repo = "LiiiLabs/mogan"  
 headers = {"Content-Type": "application/json;charset=UTF-8"}
 api_base = f"https://gitee.com/api/v5/repos/{repo}/pulls/{pull_id}"
 
