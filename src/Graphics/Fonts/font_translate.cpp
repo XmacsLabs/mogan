@@ -308,7 +308,8 @@ closest_font (string family, string variant, string series, string shape,
 
   // Apply fake bold for CJK fonts when bold series was requested
   // but the font doesn't support real bold (series changed from "bold")
-  if (orig_series == "bold" && (series != "bold" || occurs ("-poorbf", series))) {
+  if (orig_series == "bold" &&
+      (series != "bold" || occurs ("-poorbf", series))) {
     string res_name= fn->res_name;
     string lname   = locase_all (res_name);
     if (occurs ("simsun", lname)) {
