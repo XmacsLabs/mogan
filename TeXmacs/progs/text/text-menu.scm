@@ -219,7 +219,6 @@
       ("Footnote" (make 'footnote))
       (when (not (selection-active-non-small?))
         ("Marginal note" (make-marginal-note))))
-    ("Balloon" (make-balloon))
     ---
     ("Folded comment" (make-folded-comment "comment"))
     ("Unfolded comment" (make-unfolded-comment "comment"))
