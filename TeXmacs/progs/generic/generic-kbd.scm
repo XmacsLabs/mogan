@@ -304,7 +304,7 @@
   ;;("emacs h ..." (help ...))
   ;;("emacs l" (recenter-window))
   ;;("emacs o" (open-line))
-  ;;("emacs t" (transpose-chars))
+  ("emacs t" (new-document))
   ;;("emacs u" (universal-argument))
   ;;("emacs z" (suspend-texmacs))
   ;;("emacs \\" (toggle-input-method))
