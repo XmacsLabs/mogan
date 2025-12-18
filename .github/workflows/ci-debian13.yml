@@ -1,4 +1,4 @@
-name: Build on Debian bookworm
+name: Build on Debian 13
 on:
   push:
     branches: [main]
