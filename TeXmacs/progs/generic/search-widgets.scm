@@ -18,7 +18,17 @@
 (define search-replace-text "")
 
 (tm-define (update-search-pos-text)
-  (define SELECTION-PAIR-SIZE 2)  
+  (define SELECTION-PAIR-SIZE 2)
+
+  (define (find-current-index search-results cursor-path)
+    (let loop ((remaining search-results) (index 0))
+      (cond
+        ((or (null? remaining) (null? (cdr remaining)))
+         index)
+        ((path-less-eq? (car remaining) cursor-path)
+         (loop (cddr remaining) (+ index 1)))
+        (else index))))
+
   (let* ((search-results (get-alt-selection "alternate"))
          (result-count (quotient (length search-results) SELECTION-PAIR-SIZE))
          (cursor-path (cursor-path)))
@@ -26,18 +36,13 @@
       ((= result-count 0)
        (set-auxiliary-widget-title (translate search-replace-text)))
       (else
-       (let ((current-index
-              (let loop ((remaining search-results) (index 0))
-                (cond
-                  ((or (null? remaining) (null? (cdr remaining)))
-                   index)
-                  ((path-less-eq? (car remaining) cursor-path)
-                   (loop (cddr remaining) (+ index 1)))
-                  (else index)))))
+       (let ((current-index (find-current-index search-results cursor-path)))
          (set-auxiliary-widget-title
           (string-append (translate search-replace-text) "(" (number->string current-index)
                          "/"
                          (number->string result-count) ")")))))))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Basic search and replace buffers management
