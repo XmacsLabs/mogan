@@ -103,6 +103,6 @@ For the commercial version with built-in AI features, please visit the [Liii STE
 - Liii STEM: contact via the [official website](https://liiistem.cn)
 
 ### 📚 Development Guides
-- [Windows Development guide](./devel/Develop_on_Windows_ZH.md)
-- [macOS Development guide](./devel/Develop_on_macOS_ZH.md)
-- [Linux Development guide](./devel/Develop_on_Linux_ZH.md)
+- [Windows Development guide](./devel/Develop_on_Windows.md)
+- [macOS Development guide](./devel/Develop_on_macOS.md)
+- [Linux Development guide](./devel/Develop_on_Linux.md)
