@@ -15,6 +15,30 @@
   (:use (generic generic-edit)
         (utils library cursor)))
 
+(define search-replace-text "")
+
+(tm-define (update-search-pos-text)
+  (define SELECTION-PAIR-SIZE 2)  
+  (let* ((search-results (get-alt-selection "alternate"))
+         (result-count (quotient (length search-results) SELECTION-PAIR-SIZE))
+         (cursor-path (cursor-path)))
+    (cond
+      ((= result-count 0)
+       (set-auxiliary-widget-title (translate search-replace-text)))
+      (else
+       (let ((current-index
+              (let loop ((remaining search-results) (index 0))
+                (cond
+                  ((or (null? remaining) (null? (cdr remaining)))
+                   index)
+                  ((path-less-eq? (car remaining) cursor-path)
+                   (loop (cddr remaining) (+ index 1)))
+                  (else index)))))
+         (set-auxiliary-widget-title
+          (string-append (translate search-replace-text) "(" (number->string current-index)
+                         "/"
+                         (number->string result-count) ")")))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Basic search and replace buffers management
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -153,6 +177,7 @@
           (begin
             (selection-cancel)
             (cancel-alt-selection "alternate")
+            (update-search-pos-text)
             (go-to** (get-search-reference #t)))
           (let* ((t (buffer-tree))
                  (sels* (tree-perform-search t what (tree->path t) limit))
@@ -165,6 +190,7 @@
 		  ((null? sels)
 		   (selection-cancel)
 		   (cancel-alt-selection "alternate")
+       (update-search-pos-text)
 		   (go-to** (get-search-reference #t))
 		   (set! ok? #f))
 		  (else
@@ -219,6 +245,7 @@
            (selection-set-range-set sel)
            (go-to* (car sel))
            (when strict? (set-search-reference (car sel)))
+           (update-search-pos-text)
            #t))))
 
 (define (extreme-search-result last?)
@@ -228,7 +255,8 @@
          (begin
            (selection-set-range-set sel)
            (go-to* (car sel))
-           (set-search-reference (car sel))))))
+           (set-search-reference (car sel))
+           (update-search-pos-text)))))
 
 (tm-define (search-next-match forward?)
   (with-buffer (master-buffer)
@@ -970,6 +998,7 @@
 
 (tm-define (interactive-search)
   (:interactive #t)
+  (set! search-replace-text "search")
   (set-boolean-preference "search-and-replace" #f)
   (if (and (get-boolean-preference "toolbar search")
            (not (buffer-aux? (current-buffer))))
@@ -978,6 +1007,7 @@
 
 (tm-define (interactive-replace)
   (:interactive #t)
+  (set! search-replace-text "search and replace")
   (set-boolean-preference "search-and-replace" #t)
   (if (and (get-boolean-preference "toolbar replace")
            (not (buffer-aux? (current-buffer))))
