@@ -39,17 +39,14 @@ public:
 
   void showImagePopup (rectangle selr, double magf, int scroll_x, int scroll_y,
                        int canvas_x);
-  void setWidget (QWidget* w);
   void updatePosition ();
   void scrollBy (int x, int y);
   void setImageTree (tree t);
 
 protected:
-  void cleanLayout ();
   void cachePosition (rectangle selr, double magf, int scroll_x, int scroll_y,
                       int canvas_x);
   void getCachedPosition (int& x, int& y);
-  void installEventFilterRecursively (QWidget* widget, QObject* filterObj);
 
 protected:
   void paintEvent (QPaintEvent* event);

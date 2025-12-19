@@ -769,17 +769,6 @@ qt_simple_widget_rep::show_image_popup (tree current_tree, rectangle selr,
 }
 
 void
-qt_simple_widget_rep::set_image_popup (widget w) {
-  ensure_image_popup ();
-  qt_widget qwid   = concrete (w);
-  QWidget*  qwidget= qwid->as_qwidget ();
-  if (!qwidget) {
-    return;
-  }
-  imagePopUp->setWidget (qwidget);
-}
-
-void
 qt_simple_widget_rep::hide_image_popup () {
   if (imagePopUp) {
     imagePopUp->hide ();
