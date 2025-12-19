@@ -135,7 +135,7 @@
   ("Subparagraph" (make-section 'subparagraph))
   ---
   ("Appendix" (make-section 'appendix))
-  ("Prologue" (make-unnamed-section 'prologue))
+  ("Prologue::menu" (make-unnamed-section 'prologue))
   ("Epilogue" (make-unnamed-section 'epilogue))
   ("List of abbreviations" (make-unnamed-section 'list-of-abbreviations)))
   
