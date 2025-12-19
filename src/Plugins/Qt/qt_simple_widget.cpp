@@ -777,3 +777,13 @@ qt_simple_widget_rep::hide_image_popup () {
     imagePopUp= nullptr;
   }
 }
+
+void
+qt_simple_widget_rep::scroll_image_popup_by (SI x, SI y) {
+  if (imagePopUp) {
+    QPoint qp (x, y);
+    coord2 p= from_qpoint (qp);
+    imagePopUp->scrollBy (p.x1, p.x2);
+    imagePopUp->updatePosition ();
+  }
+}

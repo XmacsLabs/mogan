@@ -155,6 +155,7 @@ QTMWidget::scrollContentsBy (int dx, int dy) {
   // 确保补全框也滚动到正确的位置
   tm_widget ()->scroll_completion_popup_by (dx, dy);
   tm_widget ()->scroll_math_completion_popup_by (dx, dy);
+  tm_widget ()->scroll_image_popup_by(dx, dy);
 }
 
 void
