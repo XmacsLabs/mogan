@@ -1065,7 +1065,12 @@
   ("Square root" (make-sqrt))
   ("N-th root" (make-var-sqrt))
   ("Negation" (make-neg))
-  ("Tree" (make-tree))
+  (-> "Tree"
+      ("Tree" (make-tree))
+      ---
+      ("Proof tree" (make-proof-tree))
+      ("Proof tree (right label)" (make 'proof-tree*))
+      ("Proof tree (left label)" (make 'proof-tree**)))
   ---
   (-> "Script"
       ("Left subscript" (make-script #f #f))
@@ -1470,3 +1475,47 @@
   ;;((balloon (icon "tm_reset.xpm") "Reset to default bracket size")
   ;; (geometry-reset))
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Proof tree focus menus
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (focus-can-insert-remove? t)
+  (:require (tree-in? t '(proof-tree proof-tree* proof-tree**)))
+  #t)
+
+(tm-define (focus-tag-name l)
+  (:require (in? l '(proof-tree proof-tree* proof-tree**)))
+  (cond ((== l 'proof-tree) "No label")
+        ((== l 'proof-tree*) "Right label")
+        ((== l 'proof-tree**) "Left label")))
+
+;; Custom variant menu for proof-tree
+;; Note: t is already the proof-tree when :require matches
+(tm-menu (focus-variant-menu t)
+  (:require (tree-in? t '(proof-tree proof-tree* proof-tree**)))
+  ((check "No label" "v" (tree-is? t 'proof-tree))
+   (variant-set t 'proof-tree))
+  ((check "Right label" "v" (tree-is? t 'proof-tree*))
+   (variant-set t 'proof-tree*))
+  ((check "Left label" "v" (tree-is? t 'proof-tree**))
+   (variant-set t 'proof-tree**)))
+
+(tm-menu (focus-insert-menu t)
+  (:require (tree-in? t '(proof-tree proof-tree* proof-tree**)))
+  ("Insert premise before" (structured-insert-left))
+  ("Insert premise after" (structured-insert-right))
+  ---
+  ("Insert sub-proof above" (structured-insert-up))
+  ("Remove premise" (structured-remove-right)))
+
+(tm-menu (focus-insert-icons t)
+  (:require (tree-in? t '(proof-tree proof-tree* proof-tree**)))
+  ((balloon (icon "tm_insert_left.xpm") "Insert premise before")
+   (structured-insert-left))
+  ((balloon (icon "tm_insert_right.xpm") "Insert premise after")
+   (structured-insert-right))
+  ((balloon (icon "tm_insert_up.xpm") "Insert sub-proof above")
+   (structured-insert-up))
+  ((balloon (icon "tm_delete_right.xpm") "Remove premise")
+   (structured-remove-right)))

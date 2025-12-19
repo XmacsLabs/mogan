@@ -754,6 +754,171 @@ tree_box (path ip, array<box> bs, font fn, pencil pen) {
   return tm_new<tree_box_rep> (ip, bs, fn, pen);
 }
 
+/******************************************************************************
+ * Proof tree boxes (natural deduction trees)
+ ******************************************************************************/
+
+struct proof_tree_box_rep : public composite_box_rep {
+  font   fn;
+  pencil pen;
+  SI     border;
+  bool   has_label;
+  bool   label_left;
+  proof_tree_box_rep (path ip, array<box> bs, font fn, pencil pen,
+                      bool has_label, bool label_left);
+  operator tree () { return "proof-tree box"; }
+  box adjust_kerning (int mode, double factor);
+  box expand_glyphs (int mode, double factor);
+  int find_child (SI x, SI y, SI delta, bool force);
+};
+
+proof_tree_box_rep::proof_tree_box_rep (path ip, array<box> bs, font fn2,
+                                        pencil pen2, bool has_label2,
+                                        bool label_left2)
+    : composite_box_rep (ip), fn (fn2), pen (pen2), has_label (has_label2),
+      label_left (label_left2) {
+  // For labeled: bs[0] is label, bs[1] is conclusion, bs[2..n-1] are premises
+  // For unlabeled: bs[0] is conclusion, bs[1..n-1] are premises
+  SI sep     = fn->sep;
+  SI hsep    = 2 * fn->spc->def;
+  SI vsep    = 2 * fn->spc->def;
+  SI line_w  = fn->wline;
+  SI label_sp= fn->spc->def; // space between line and label
+
+  int i, n= N (bs);
+  int conc_idx   = has_label ? 1 : 0;
+  int prem_start = has_label ? 2 : 1;
+
+  // Calculate premises total width and baseline alignment info
+  SI prem_w  = 0;
+  SI max_y2  = MIN_SI; // max ascent (height above baseline)
+  SI min_y1  = MAX_SI; // min descent (depth below baseline, negative value)
+  for (i= prem_start; i < n; i++)
+    prem_w+= bs[i]->w ();
+  for (i= prem_start; i < n; i++) {
+    max_y2= max (max_y2, bs[i]->y2);
+    min_y1= min (min_y1, bs[i]->y1);
+  }
+  if (n > prem_start) prem_w+= (n - prem_start - 1) * hsep;
+
+  // Calculate conclusion dimensions
+  SI conc_w= bs[conc_idx]->w ();
+
+  // Calculate label width if present
+  SI label_w= has_label ? bs[0]->w () : 0;
+
+  // Calculate total width for the inference line
+  SI line_margin  = fn->spc->def;
+  SI line_w_total = max (prem_w, conc_w) + 2 * line_margin;
+  SI content_w    = max (line_w_total, max (prem_w, conc_w));
+  SI total_w      = content_w;
+
+  // Add space for label if present
+  if (has_label) total_w= content_w + label_sp + label_w;
+
+  // Calculate offset for content (to make room for label on left)
+  SI content_offset= 0;
+  if (has_label && label_left) content_offset= label_w + label_sp;
+
+  // Position premises at the top, centered within total_w (line + label)
+  // This ensures children's "line + label" center aligns with parent's center
+  // Use baseline alignment: all premises share the same baseline y-coordinate
+  SI prem_start_x = (total_w - prem_w) >> 1;
+  SI prem_baseline= max (bs[conc_idx]->y2, fn->y2) + sep + vsep - min_y1;
+
+  for (SI x= prem_start_x, i= prem_start; i < n; i++) {
+    SI x_i= x - bs[i]->x1;
+    SI y_i= prem_baseline; // Align at baseline (y=0 in box coords)
+    insert (bs[i], x_i, y_i);
+    x+= bs[i]->w () + hsep;
+  }
+
+  // Draw the horizontal inference line, centered within total_w
+  SI line_y = max (bs[conc_idx]->y2, fn->y2) + (vsep >> 1);
+  SI line_x1= (total_w - line_w_total) >> 1;
+  SI line_x2= line_x1 + line_w_total;
+  pencil tpen= pen->set_width (line_w);
+  insert (line_box (decorate_middle (ip), line_x1, 0, line_x2, 0, tpen), 0,
+          line_y);
+
+  // Position label if present (relative to the inference line)
+  if (has_label) {
+    SI label_x, label_y;
+    label_y= line_y - ((bs[0]->y1 + bs[0]->y2) >> 1);
+    if (label_left) {
+      // Left label: right edge at line_x1 - label_sp
+      label_x= line_x1 - label_sp - bs[0]->x2;
+    }
+    else {
+      // Right label: left edge at line_x2 + label_sp
+      label_x= line_x2 + label_sp - bs[0]->x1;
+    }
+    insert (bs[0], label_x, label_y);
+  }
+
+  // Position conclusion at the bottom, centered within total_w
+  insert (bs[conc_idx],
+          (total_w >> 1) - ((bs[conc_idx]->x1 + bs[conc_idx]->x2) >> 1),
+          0);
+
+  position ();
+  border= line_y;
+  finalize ();
+}
+
+box
+proof_tree_box_rep::adjust_kerning (int mode, double factor) {
+  (void) mode;
+  int        n   = N (bs);
+  int        skip= has_label ? 1 : 0; // skip line box
+  int        m   = n - skip;
+  array<box> adj (m);
+  for (int i= 0; i < m; i++)
+    adj[i]= bs[i]->adjust_kerning (0, factor);
+  return proof_tree_box (ip, adj, fn, pen, has_label, label_left);
+}
+
+box
+proof_tree_box_rep::expand_glyphs (int mode, double factor) {
+  (void) mode;
+  int        n   = N (bs);
+  int        skip= has_label ? 1 : 0;
+  int        m   = n - skip;
+  array<box> adj (m);
+  for (int i= 0; i < m; i++)
+    adj[i]= bs[i]->expand_glyphs (0, factor);
+  return proof_tree_box (ip, adj, fn, pen, has_label, label_left);
+}
+
+int
+proof_tree_box_rep::find_child (SI x, SI y, SI delta, bool force) {
+  if (outside (x, delta, x1, x2) && (is_accessible (ip) || force)) return -1;
+  int conc_idx= has_label ? 1 : 0;
+  int i       = conc_idx;
+  // Conclusion is below the border, premises above
+  if (y > border) {
+    int prem_start= has_label ? 2 : 1;
+    int j, d= MAX_SI;
+    for (j= prem_start; j < N (bs); j++)
+      if (distance (j, x, y, delta) < d)
+        if (bs[j]->accessible () || force) {
+          d= distance (j, x, y, delta);
+          i= j;
+        }
+  }
+  // Check if clicking on label
+  if (has_label && distance (0, x, y, delta) < distance (i, x, y, delta))
+    if (bs[0]->accessible () || force) i= 0;
+  if (bs[i]->decoration () && (!force)) return -1;
+  return i;
+}
+
+box
+proof_tree_box (path ip, array<box> bs, font fn, pencil pen, bool has_label,
+                bool label_left) {
+  return tm_new<proof_tree_box_rep> (ip, bs, fn, pen, has_label, label_left);
+}
+
 box
 wide_box (path ip, box ref, string s, font fn, pencil pen, bool wf, bool af) {
   return tm_new<wide_box_rep> (ip, ref, s, fn, pen, wf, af);

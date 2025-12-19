@@ -142,6 +142,7 @@
   (cpp-make-var-sqrt make_var_sqrt (void))
   (cpp-make-neg make_neg (void))
   (cpp-make-tree make_tree (void))
+  (cpp-make-proof-tree make_proof_tree (void))
 
   ;; modify tables
   (make-subtable make_subtable (void))

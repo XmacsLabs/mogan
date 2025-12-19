@@ -852,7 +852,12 @@ function main()
                 cpp_name = "make_tree",
                 ret_type = "void"
             },
-            
+            {
+                scm_name = "cpp-make-proof-tree",
+                cpp_name = "make_proof_tree",
+                ret_type = "void"
+            },
+
             -- modify tables
             {
                 scm_name = "make-subtable",

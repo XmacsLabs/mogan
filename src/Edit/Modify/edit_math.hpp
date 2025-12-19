@@ -31,6 +31,7 @@ public:
   void make_wide_under (string wide);
   void make_neg ();
   void make_tree ();
+  void make_proof_tree ();
   void back_around (tree t, path p, bool forward);
   void back_prime (tree t, path p, bool forward);
   void back_in_around (tree t, path p, bool forward);
