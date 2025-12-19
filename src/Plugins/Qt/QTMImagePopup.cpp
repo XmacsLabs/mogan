@@ -104,6 +104,19 @@ QTMImagePopup::setImageTree (tree t) {
 }
 
 void
+QTMImagePopup::scrollBy (int x, int y) {
+  cached_scroll_x-= (int) (x / cached_magf);
+  cached_scroll_y-= (int) (y / cached_magf);
+}
+
+void
+QTMImagePopup::updatePosition () {
+  int pos_x, pos_y;
+  getCachedPosition (pos_x, pos_y);
+  move (pos_x, pos_y);
+}
+
+void
 QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
                               int scroll_y, int canvas_x) {
   cached_image_mid_x= (selr->x1 + selr->x2) / 2;

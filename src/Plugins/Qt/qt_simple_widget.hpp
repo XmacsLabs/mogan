@@ -118,6 +118,7 @@ public:
   void show_image_popup (tree current_tree, rectangle selr, double magf,
                          int scroll_x, int scroll_y, int canvas_x);
   void hide_image_popup ();
+  void scroll_image_popup_by (SI x, SI y);
 
   ////////////////////// backing store management
 
