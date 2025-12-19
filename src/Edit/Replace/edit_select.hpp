@@ -28,6 +28,8 @@ protected:
   path                       focus_p;
   bool                       focus_hold;
   hashmap<string, range_set> alt_sels;
+  int total                  = 0     ;
+  int index                  = 0     ;
 
 protected:
   void get_selection (path& start, path& end);
@@ -106,6 +108,7 @@ public:
 
   void      set_alt_selection (string s, range_set sel);
   range_set get_alt_selection (string s);
+  string    get_alt_selection_index (string s, string action);
   void      cancel_alt_selection (string s);
   void      cancel_alt_selections ();
 };

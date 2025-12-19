@@ -17,30 +17,13 @@
 
 (define search-replace-text "")
 
-(tm-define (update-search-pos-text)
-  (define SELECTION-PAIR-SIZE 2)
 
-  (define (find-current-index search-results cursor-path)
-    (let loop ((remaining search-results) (index 0))
-      (cond
-        ((or (null? remaining) (null? (cdr remaining)))
-         index)
-        ((path-less-eq? (car remaining) cursor-path)
-         (loop (cddr remaining) (+ index 1)))
-        (else index))))
-
-  (let* ((search-results (get-alt-selection "alternate"))
-         (result-count (quotient (length search-results) SELECTION-PAIR-SIZE))
-         (cursor-path (cursor-path)))
-    (cond
-      ((= result-count 0)
-       (set-auxiliary-widget-title (translate search-replace-text)))
-      (else
-       (let ((current-index (find-current-index search-results cursor-path)))
-         (set-auxiliary-widget-title
-          (string-append (translate search-replace-text) "(" (number->string current-index)
-                         "/"
-                         (number->string result-count) ")")))))))
+(tm-define (update-search-pos-text action)
+  (let* ((index-str (get-alt-selection-index "alternate" action)))
+    (if (== index-str "")
+        (set-auxiliary-widget-title (translate search-replace-text))
+        (set-auxiliary-widget-title
+         (string-append (translate search-replace-text) " (" index-str ")")))))
 
 
 
@@ -182,7 +165,7 @@
           (begin
             (selection-cancel)
             (cancel-alt-selection "alternate")
-            (update-search-pos-text)
+            (update-search-pos-text "new")
             (go-to** (get-search-reference #t)))
           (let* ((t (buffer-tree))
                  (sels* (tree-perform-search t what (tree->path t) limit))
@@ -195,14 +178,15 @@
 		  ((null? sels)
 		   (selection-cancel)
 		   (cancel-alt-selection "alternate")
-        (update-search-pos-text)
+        (update-search-pos-text "new")
 		   (go-to** (get-search-reference #t))
 		   (set! ok? #f))
 		  (else
 		   (set-alt-selection "alternate" sels)
 		   (with after? (next-search-result #t #f)
 		     (when (not after?)
-		       (selection-cancel))))))))
+		       (selection-cancel))
+           (update-search-pos-text "new")))))))
     (with-buffer (search-buffer)
       (if ok?
           (init-default "bg-color")
@@ -250,7 +234,7 @@
            (selection-set-range-set sel)
            (go-to* (car sel))
            (when strict? (set-search-reference (car sel)))
-           (update-search-pos-text)
+           (update-search-pos-text (if forward? "next" "previous"))
            #t))))
 
 (define (extreme-search-result last?)
@@ -261,7 +245,7 @@
            (selection-set-range-set sel)
            (go-to* (car sel))
            (set-search-reference (car sel))
-           (update-search-pos-text)))))
+           (update-search-pos-text (if last? "last" "first"))))))
 
 (tm-define (search-next-match forward?)
   (with-buffer (master-buffer)
@@ -401,7 +385,8 @@
       (start-editing)
       (replace-next by)
       (end-editing))
-    (perform-search*)))
+    (perform-search*)
+    (update-search-pos-text "new")))
 
 (tm-define (replace-all)
   (and-with by (or (by-tree) current-replace)
@@ -410,7 +395,8 @@
       (while (replace-next by)
         (perform-search*))
       (end-editing))
-    (perform-search*)))
+    (perform-search*)
+    (update-search-pos-text "new")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customized keyboard shortcuts in search and replace modes

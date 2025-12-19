@@ -552,6 +552,7 @@ public:
 
   virtual void      set_alt_selection (string s, range_set sel)= 0;
   virtual range_set get_alt_selection (string s)               = 0;
+  virtual string    get_alt_selection_index (string s, string action)         = 0;
   virtual void      cancel_alt_selection (string s)            = 0;
   virtual void      cancel_alt_selections ()                   = 0;
 
