@@ -1023,18 +1023,20 @@ edit_select_rep::get_alt_selection (string name) {
 
 string
 edit_select_rep::get_alt_selection_index (string name, string action) {
-  int n = N(alt_sels[name]);
-  int current_total = n / 2;
+  int n            = N (alt_sels[name]);
+  int current_total= n / 2;
   if (current_total == 0) {
-      index = 0; total = 0; return "";
+    index= 0;
+    total= 0;
+    return "";
   }
-  if(action == "new" || total != current_total){       
-    total = current_total;               
-    if (total == 0) return "";      
-    index = 0;
-    const int BINARY_SEARCH_THRESHOLD = 20;  
+  if (action == "new" || total != current_total) {
+    total= current_total;
+    if (total == 0) return "";
+    index                            = 0;
+    const int BINARY_SEARCH_THRESHOLD= 20;
     if (total <= BINARY_SEARCH_THRESHOLD) {
-      for (int i = 0; i + 1 < n; i += 2) {
+      for (int i= 0; i + 1 < n; i+= 2) {
         if (path_less_eq (alt_sels[name][i], tp)) {
           index++;
         }
@@ -1044,36 +1046,33 @@ edit_select_rep::get_alt_selection_index (string name, string action) {
       }
     }
     else {
-      int left = 0, right = total;
+      int left= 0, right= total;
       while (left < right) {
-        int mid = (left + right) / 2;
+        int mid= (left + right) / 2;
         if (path_less_eq (alt_sels[name][2 * mid], tp)) {
-          left = mid + 1;
+          left= mid + 1;
         }
         else {
-          right = mid;
+          right= mid;
         }
       }
-      index = left;  
+      index= left;
     }
   }
-  else if(action == "next"){
+  else if (action == "next") {
     index++;
   }
-  else if(action == "previous"){
+  else if (action == "previous") {
     index--;
   }
-  else if(action == "first"){
-    index = 1;
+  else if (action == "first") {
+    index= 1;
   }
-  else if(action == "last"){
-    index = total;
+  else if (action == "last") {
+    index= total;
   }
-  return as_string(index) * "/" * as_string(total);
-  
+  return as_string (index) * "/" * as_string (total);
 }
-
-
 
 range_set
 current_alt_selection (string name) {
