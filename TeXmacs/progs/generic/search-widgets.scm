@@ -195,7 +195,7 @@
 		  ((null? sels)
 		   (selection-cancel)
 		   (cancel-alt-selection "alternate")
-       (update-search-pos-text)
+        (update-search-pos-text)
 		   (go-to** (get-search-reference #t))
 		   (set! ok? #f))
 		  (else
