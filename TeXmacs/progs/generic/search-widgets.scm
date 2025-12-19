@@ -15,6 +15,18 @@
   (:use (generic generic-edit)
         (utils library cursor)))
 
+(define search-replace-text "")
+
+
+(tm-define (update-search-pos-text action)
+  (let* ((index-str (get-alt-selection-index "alternate" action)))
+    (if (== index-str "")
+        (set-auxiliary-widget-title (translate search-replace-text))
+        (set-auxiliary-widget-title
+         (string-append (translate search-replace-text) " (" index-str ")")))))
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Basic search and replace buffers management
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -153,6 +165,7 @@
           (begin
             (selection-cancel)
             (cancel-alt-selection "alternate")
+            (update-search-pos-text "new")
             (go-to** (get-search-reference #t)))
           (let* ((t (buffer-tree))
                  (sels* (tree-perform-search t what (tree->path t) limit))
@@ -165,13 +178,15 @@
 		  ((null? sels)
 		   (selection-cancel)
 		   (cancel-alt-selection "alternate")
+       (update-search-pos-text "new")
 		   (go-to** (get-search-reference #t))
 		   (set! ok? #f))
 		  (else
 		   (set-alt-selection "alternate" sels)
 		   (with after? (next-search-result #t #f)
 		     (when (not after?)
-		       (selection-cancel))))))))
+		       (selection-cancel))
+           (update-search-pos-text "new")))))))
     (with-buffer (search-buffer)
       (if ok?
           (init-default "bg-color")
@@ -219,6 +234,7 @@
            (selection-set-range-set sel)
            (go-to* (car sel))
            (when strict? (set-search-reference (car sel)))
+           (update-search-pos-text (if forward? "next" "previous"))
            #t))))
 
 (define (extreme-search-result last?)
@@ -228,7 +244,8 @@
          (begin
            (selection-set-range-set sel)
            (go-to* (car sel))
-           (set-search-reference (car sel))))))
+           (set-search-reference (car sel))
+           (update-search-pos-text (if last? "last" "first"))))))
 
 (tm-define (search-next-match forward?)
   (with-buffer (master-buffer)
@@ -368,7 +385,8 @@
       (start-editing)
       (replace-next by)
       (end-editing))
-    (perform-search*)))
+    (perform-search*)
+    (update-search-pos-text "new")))
 
 (tm-define (replace-all)
   (and-with by (or (by-tree) current-replace)
@@ -377,7 +395,8 @@
       (while (replace-next by)
         (perform-search*))
       (end-editing))
-    (perform-search*)))
+    (perform-search*)
+    (update-search-pos-text "new")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customized keyboard shortcuts in search and replace modes
@@ -970,6 +989,7 @@
 
 (tm-define (interactive-search)
   (:interactive #t)
+  (set! search-replace-text "search")
   (set-boolean-preference "search-and-replace" #f)
   (if (and (get-boolean-preference "toolbar search")
            (not (buffer-aux? (current-buffer))))
@@ -978,6 +998,7 @@
 
 (tm-define (interactive-replace)
   (:interactive #t)
+  (set! search-replace-text "search and replace")
   (set-boolean-preference "search-and-replace" #t)
   (if (and (get-boolean-preference "toolbar replace")
            (not (buffer-aux? (current-buffer))))

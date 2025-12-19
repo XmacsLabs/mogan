@@ -1572,6 +1572,15 @@ function main()
                 }
             },
             {
+                scm_name = "get-alt-selection-index",
+                cpp_name = "get_alt_selection_index",
+                ret_type = "string",
+                arg_list = {
+                    "string",
+                    "string"
+                }
+            },
+            {
                 scm_name = "cancel-alt-selection",
                 cpp_name = "cancel_alt_selection",
                 ret_type = "void",
