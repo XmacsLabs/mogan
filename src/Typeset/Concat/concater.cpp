@@ -440,6 +440,15 @@ concater_rep::typeset (tree t, path ip) {
   case TREE:
     typeset_tree (t, ip);
     break;
+  case PROOF_TREE:
+    typeset_proof_tree (t, ip);
+    break;
+  case VAR_PROOF_TREE:
+    typeset_proof_tree (t, ip, true, false);
+    break;
+  case VAR_VAR_PROOF_TREE:
+    typeset_proof_tree (t, ip, true, true);
+    break;
   case SYNTAX:
     typeset_syntax (t, ip);
     break;

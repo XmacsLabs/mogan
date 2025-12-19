@@ -417,6 +417,7 @@ public:
   virtual void make_wide_under (string wide)     = 0;
   virtual void make_neg ()                       = 0;
   virtual void make_tree ()                      = 0;
+  virtual void make_proof_tree ()                = 0;
 
   /* public routines from edit_table */
   virtual void       make_table (int nr_rows= 1, int nr_cols= 1)         = 0;

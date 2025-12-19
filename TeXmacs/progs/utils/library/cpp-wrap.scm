@@ -108,6 +108,7 @@
 (tm-define (make-wide-under s) (cpp-make-wide-under s))
 (tm-define (make-neg) (cpp-make-neg))
 (tm-define (make-tree) (cpp-make-tree))
+(tm-define (make-proof-tree) (cpp-make-proof-tree))
 
 (tm-define (clipboard-copy cb) (cpp-clipboard-copy cb))
 (tm-define (clipboard-cut cb) (cpp-clipboard-cut cb))

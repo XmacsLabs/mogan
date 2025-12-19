@@ -332,6 +332,18 @@ edit_math_rep::make_tree () {
 }
 
 void
+edit_math_rep::make_proof_tree () {
+  if (selection_active_small ())
+    insert_tree (tree (PROOF_TREE, selection_get_cut (), ""), path (1, 0));
+  else {
+    insert_tree (tree (PROOF_TREE, "", ""), path (0, 0));
+    set_message (concat (kbd_shortcut ("(structured-insert-right)"),
+                         ": insert a new premise"),
+                 "proof-tree");
+  }
+}
+
+void
 edit_math_rep::back_in_tree (tree t, path p, bool forward) {
   int i= last_item (p);
   if (i > 0) {
@@ -354,7 +366,9 @@ edit_math_rep::back_in_tree (tree t, path p, bool forward) {
     else go_to_start (path_up (p) * (i + 1));
   }
   else {
-    if (t == tree (TREE, "", "")) {
+    if (t == tree (TREE, "", "") || t == tree (PROOF_TREE, "", "") ||
+        t == tree (VAR_PROOF_TREE, "", "", "") ||
+        t == tree (VAR_VAR_PROOF_TREE, "", "", "")) {
       p= path_up (p);
       assign (p, "");
       correct (path_up (p));
