@@ -178,11 +178,7 @@
 		  ((null? sels)
 		   (selection-cancel)
 		   (cancel-alt-selection "alternate")
-<<<<<<< HEAD
-        (update-search-pos-text "new")
-=======
-       	   (update-search-pos-text)
->>>>>>> 09bb7d5e072384870dfb9fd32762c2e60b2c509c
+       (update-search-pos-text "new")
 		   (go-to** (get-search-reference #t))
 		   (set! ok? #f))
 		  (else
