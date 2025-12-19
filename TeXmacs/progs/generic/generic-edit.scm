@@ -797,16 +797,6 @@
   ;; Return the index of the conclusion
   (if (proof-tree-labeled? t) 1 0))
 
-;; Find the proof-tree when cursor might be in a child
-(define (proof-tree-active t)
-  (with i (tree-down-index t)
-    (if (and (proof-tree-tag? t)
-             (or (not (proof-tree-labeled? t))
-                 (> i 0)))
-        t
-        (if (and (tree-up t) (proof-tree-tag? (tree-up t)))
-            (tree-up t)
-            t))))
 
 ;; Override variant-set for proof-tree to handle structure changes
 (tm-define (variant-set t new-tag)
@@ -834,164 +824,59 @@
   (:require (tree-in? t '(proof-tree proof-tree* proof-tree**)))
   '(proof-tree proof-tree* proof-tree**))
 
-;; Cursor navigation for proof-tree:
-;; - In conclusion: up → first premise, left/right → do nothing (stay)
-;; - In premise: down → conclusion
-;; - In last premise: right → exit proof-tree
-;; - In non-last premise: right → next premise
-;; - In first premise: left → exit backward
-;; - In non-first premise: left → previous premise
+;; Navigation for proof-tree:
+;; - kbd-left/kbd-right: use default behavior (works correctly now)
+;; - kbd-up/kbd-down: jump between conclusion and premises
+;; - structured-left/right: move between premises only
+;; - structured-up/down: same as kbd-up/down
 
 ;; Helper to get cursor position within proof-tree
 (define (proof-tree-cursor-child-index pt)
-  "Get the index of the child containing the cursor within proof-tree pt"
-  (let* ((p (tree->path pt))
-         (c (cursor-path))
-         (plen (length p)))
-    (if (and (>= (length c) (+ plen 1))
-             (== (sublist c 0 plen) p))
-        (list-ref c plen)
-        #f)))
+  (tree-down-index pt))
 
-;; Structured horizontal navigation for proof-tree
-;; Only moves between premises, does not jump to/from conclusion
+;; Structured horizontal navigation: only moves between premises
 (define (proof-tree-navigate-horizontal pt forwards?)
   (let* ((prem-start (proof-tree-premise-start pt))
          (i (proof-tree-cursor-child-index pt))
          (n (tree-arity pt)))
-    (when (and i (>= i prem-start))  ;; Only act when in premises
+    (when (and i (>= i prem-start))
       (cond
-        ;; Moving right from last premise: exit proof-tree
         ((and forwards? (== i (- n 1)))
          (tree-go-to pt :end))
-        ;; Moving right to next premise
         ((and forwards? (< i (- n 1)))
          (tree-go-to pt (+ i 1) :start))
-        ;; Moving left from first premise: do nothing (stay in first premise)
         ((and (not forwards?) (== i prem-start))
          (noop))
-        ;; Moving left to previous premise
         ((and (not forwards?) (> i prem-start))
          (tree-go-to pt (- i 1) :end))))))
 
+;; Simple vertical navigation: jump between conclusion and premises
 (define (proof-tree-navigate-vertical pt to-premises?)
-  ;; Visual layout: premises at TOP, conclusion at BOTTOM
-  ;; Tree structure: (proof-tree conclusion premise1 premise2 ...)
-  ;; to-premises? = #t means go to premises (visual UP)
-  ;; to-premises? = #f means go to conclusion (visual DOWN)
   (let* ((prem-start (proof-tree-premise-start pt))
          (conc-idx (proof-tree-conclusion-idx pt))
          (i (proof-tree-cursor-child-index pt)))
     (when i
       (cond
-        ;; In conclusion, want to go to premises (UP key)
+        ;; In conclusion, go UP to first premise
         ((and to-premises? (== i conc-idx))
          (tree-go-to pt prem-start :start))
-        ;; In premise, want to go to conclusion (DOWN key)
+        ;; In premise, go DOWN to conclusion
         ((and (not to-premises?) (>= i prem-start))
          (tree-go-to pt conc-idx :start))
-        ;; In label, want to go to premises (UP key)
-        ((and to-premises? (proof-tree-labeled? pt) (== i 0))
-         (tree-go-to pt prem-start :start))
-        ;; In label, want to go to conclusion (DOWN key)
-        ((and (not to-premises?) (proof-tree-labeled? pt) (== i 0))
-         (tree-go-to pt conc-idx :start))))))
-
-;; Override kbd-left for proof-tree
-;; Only intercept when crossing field boundary within proof-tree
-(tm-define (kbd-left)
-  (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    (let* ((old-idx (proof-tree-cursor-child-index pt))
-           (prem-start (proof-tree-premise-start pt))
-           (conc-idx (proof-tree-conclusion-idx pt))
-           (old-path (cursor-path)))
-      ;; Try default movement
-      (go-left)
-      ;; Check where we ended up
-      (let ((new-idx (proof-tree-cursor-child-index pt)))
-        (cond
-          ;; Stayed in same field - keep the movement
-          ((and old-idx new-idx (== old-idx new-idx))
-           (noop))
-          ;; Left proof-tree entirely - that's fine, keep it
-          ((not new-idx)
-           (noop))
-          ;; Crossed from conclusion to a premise - not allowed, exit left instead
-          ;; Must restore cursor first to avoid double-movement
-          ((and old-idx (== old-idx conc-idx) new-idx (>= new-idx prem-start))
-           (go-to old-path)
-           (tree-go-to pt :start))
-          ;; Crossed from first premise to conclusion - not allowed, exit left instead
-          ;; Must restore cursor first to avoid double-movement
-          ((and old-idx (== old-idx prem-start) new-idx (== new-idx conc-idx))
-           (go-to old-path)
-           (tree-go-to pt :start))
-          ;; Crossed from one premise to another premise - that's fine for left movement
-          ;; (moving left from premise N should go to premise N-1)
-          ((and old-idx (> old-idx prem-start) new-idx (>= new-idx prem-start) (< new-idx old-idx))
-           (noop))  ;; Keep the movement
-          ;; Crossed from premise to conclusion - not allowed, go to previous premise instead
-          ;; Must restore cursor first to avoid double-movement
-          ((and old-idx (> old-idx prem-start) new-idx (== new-idx conc-idx))
-           (go-to old-path)
-           (tree-go-to pt (- old-idx 1) :end))
-          ;; Any other unexpected crossing - keep the movement
-          (else (noop)))))))
-
-;; Override kbd-right for proof-tree
-;; Only intercept when crossing field boundary within proof-tree
-(tm-define (kbd-right)
-  (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    (let* ((old-idx (proof-tree-cursor-child-index pt))
-           (prem-start (proof-tree-premise-start pt))
-           (conc-idx (proof-tree-conclusion-idx pt))
-           (n (tree-arity pt))
-           (old-path (cursor-path)))
-      ;; Try default movement
-      (go-right)
-      ;; Check where we ended up
-      (let ((new-idx (proof-tree-cursor-child-index pt)))
-        (cond
-          ;; Stayed in same field - keep the movement
-          ((and old-idx new-idx (== old-idx new-idx))
-           (noop))
-          ;; Left proof-tree entirely - that's fine, keep it
-          ((not new-idx)
-           (noop))
-          ;; Crossed from conclusion to a premise - not allowed, exit right instead
-          ;; Must restore cursor first to avoid double-movement
-          ((and old-idx (== old-idx conc-idx) new-idx (>= new-idx prem-start))
-           (go-to old-path)
-           (tree-go-to pt :end))
-          ;; Crossed from last premise to conclusion - not allowed, exit right instead
-          ;; Must restore cursor first to avoid double-movement
-          ((and old-idx (== old-idx (- n 1)) new-idx (== new-idx conc-idx))
-           (go-to old-path)
-           (tree-go-to pt :end))
-          ;; Crossed from one premise to another premise - that's fine for right movement
-          ;; (moving right from premise N should go to premise N+1)
-          ((and old-idx (>= old-idx prem-start) (< old-idx (- n 1)) new-idx (> new-idx old-idx) (>= new-idx prem-start))
-           (noop))  ;; Keep the movement
-          ;; Crossed from premise to conclusion - not allowed, go to next premise instead
-          ;; Must restore cursor first to avoid double-movement
-          ((and old-idx (>= old-idx prem-start) (< old-idx (- n 1)) new-idx (== new-idx conc-idx))
-           (go-to old-path)
-           (tree-go-to pt (+ old-idx 1) :start))
-          ;; Any other unexpected crossing - keep the movement
-          (else (noop)))))))
+        ;; In label, go to premises (UP) or conclusion (DOWN)
+        ((and (proof-tree-labeled? pt) (== i 0))
+         (if to-premises?
+             (tree-go-to pt prem-start :start)
+             (tree-go-to pt conc-idx :start)))))))
 
 (tm-define (kbd-up)
   (:require (inside-proof-tree?))
   (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    ;; UP key = go to premises (which are at top visually)
     (proof-tree-navigate-vertical pt #t)))
 
 (tm-define (kbd-down)
   (:require (inside-proof-tree?))
   (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    ;; DOWN key = go to conclusion (which is at bottom visually)
     (proof-tree-navigate-vertical pt #f)))
 
 ;; Override structured-left/right/up/down to find proof-tree ancestor
