@@ -764,6 +764,7 @@ struct proof_tree_box_rep : public composite_box_rep {
   SI     border;
   bool   has_label;
   bool   label_left;
+  int    n_children;  // Store original child count before adding decorations
   proof_tree_box_rep (path ip, array<box> bs, font fn, pencil pen,
                       bool has_label, bool label_left);
   operator tree () { return "proof-tree box"; }
@@ -776,9 +777,14 @@ proof_tree_box_rep::proof_tree_box_rep (path ip, array<box> bs, font fn2,
                                         pencil pen2, bool has_label2,
                                         bool label_left2)
     : composite_box_rep (ip), fn (fn2), pen (pen2), has_label (has_label2),
-      label_left (label_left2) {
+      label_left (label_left2), n_children (N (bs)) {
   // For labeled: bs[0] is label, bs[1] is conclusion, bs[2..n-1] are premises
   // For unlabeled: bs[0] is conclusion, bs[1..n-1] are premises
+  // n_children stores original count before adding decoration line box
+  //
+  // IMPORTANT: Insert boxes in ORIGINAL ORDER (0, 1, 2, ..., n-1) first,
+  // then add line box LAST. This ensures internal bs array indices match
+  // original indices for find_child to work correctly.
   SI sep     = fn->sep;
   SI hsep    = 2 * fn->spc->def;
   SI vsep    = 2 * fn->spc->def;
@@ -818,59 +824,59 @@ proof_tree_box_rep::proof_tree_box_rep (path ip, array<box> bs, font fn2,
   // Total width is max of premises, conclusion, and "line + label" unit
   SI total_w = max (line_label_w, max (prem_w, conc_w));
 
-  // Position premises at the top, centered within total_w
-  // Use baseline alignment: all premises share the same baseline y-coordinate
+  // Calculate all positions first
   SI prem_start_x = (total_w - prem_w) >> 1;
   SI prem_baseline= max (bs[conc_idx]->y2, fn->y2) + sep + vsep - min_y1;
 
-  for (SI x= prem_start_x, i= prem_start; i < n; i++) {
-    SI x_i= x - bs[i]->x1;
-    SI y_i= prem_baseline; // Align at baseline (y=0 in box coords)
-    insert (bs[i], x_i, y_i);
-    x+= bs[i]->w () + hsep;
-  }
-
-  // Draw the horizontal inference line
-  // "Line + label" unit is centered within total_w
+  // Calculate line position
   SI line_label_start = (total_w - line_label_w) >> 1;
   SI line_y = max (bs[conc_idx]->y2, fn->y2) + (vsep >> 1);
   SI line_x1, line_x2;
   if (has_label && label_left) {
-    // Left label: [label][space][line]
     line_x1 = line_label_start + label_w + label_sp;
     line_x2 = line_x1 + line_w_total;
   }
   else {
-    // No label or right label: [line][space][label]
     line_x1 = line_label_start;
     line_x2 = line_x1 + line_w_total;
   }
+
+  // Store positions for each child box
+  array<SI> pos_x (n);
+  array<SI> pos_y (n);
+
+  // Calculate label position (index 0 for labeled)
+  if (has_label) {
+    pos_y[0] = line_y - ((bs[0]->y1 + bs[0]->y2) >> 1);
+    if (label_left) {
+      pos_x[0] = line_label_start - bs[0]->x1;
+    }
+    else {
+      pos_x[0] = line_x2 + label_sp - bs[0]->x1;
+    }
+  }
+
+  // Calculate conclusion position
+  SI line_center = (line_x1 + line_x2) >> 1;
+  pos_x[conc_idx] = line_center - ((bs[conc_idx]->x1 + bs[conc_idx]->x2) >> 1);
+  pos_y[conc_idx] = 0;
+
+  // Calculate premise positions
+  for (SI x= prem_start_x, i= prem_start; i < n; i++) {
+    pos_x[i] = x - bs[i]->x1;
+    pos_y[i] = prem_baseline;
+    x += bs[i]->w () + hsep;
+  }
+
+  // Now insert boxes in ORIGINAL ORDER (0, 1, 2, ..., n-1)
+  for (i= 0; i < n; i++) {
+    insert (bs[i], pos_x[i], pos_y[i]);
+  }
+
+  // Insert line box LAST (so it doesn't interfere with child indices)
   pencil tpen = pen->set_width (line_w);
   insert (line_box (decorate_middle (ip), line_x1, 0, line_x2, 0, tpen), 0,
           line_y);
-
-  // Position label if present
-  if (has_label) {
-    SI label_x, label_y;
-    // Label vertical center aligned with the line
-    label_y = line_y - ((bs[0]->y1 + bs[0]->y2) >> 1);
-
-    if (label_left) {
-      // Left label: starts at line_label_start
-      label_x = line_label_start - bs[0]->x1;
-    }
-    else {
-      // Right label: starts after line + space
-      label_x = line_x2 + label_sp - bs[0]->x1;
-    }
-    insert (bs[0], label_x, label_y);
-  }
-
-  // Position conclusion at the bottom, centered under the LINE only
-  SI line_center = (line_x1 + line_x2) >> 1;
-  insert (bs[conc_idx],
-          line_center - ((bs[conc_idx]->x1 + bs[conc_idx]->x2) >> 1),
-          0);
 
   position ();
   border= line_y;
@@ -880,11 +886,9 @@ proof_tree_box_rep::proof_tree_box_rep (path ip, array<box> bs, font fn2,
 box
 proof_tree_box_rep::adjust_kerning (int mode, double factor) {
   (void) mode;
-  int        n   = N (bs);
-  int        skip= has_label ? 1 : 0; // skip line box
-  int        m   = n - skip;
-  array<box> adj (m);
-  for (int i= 0; i < m; i++)
+  // Use n_children to exclude the decoration line box
+  array<box> adj (n_children);
+  for (int i= 0; i < n_children; i++)
     adj[i]= bs[i]->adjust_kerning (0, factor);
   return proof_tree_box (ip, adj, fn, pen, has_label, label_left);
 }
@@ -892,11 +896,9 @@ proof_tree_box_rep::adjust_kerning (int mode, double factor) {
 box
 proof_tree_box_rep::expand_glyphs (int mode, double factor) {
   (void) mode;
-  int        n   = N (bs);
-  int        skip= has_label ? 1 : 0;
-  int        m   = n - skip;
-  array<box> adj (m);
-  for (int i= 0; i < m; i++)
+  // Use n_children to exclude the decoration line box
+  array<box> adj (n_children);
+  for (int i= 0; i < n_children; i++)
     adj[i]= bs[i]->expand_glyphs (0, factor);
   return proof_tree_box (ip, adj, fn, pen, has_label, label_left);
 }
@@ -910,7 +912,8 @@ proof_tree_box_rep::find_child (SI x, SI y, SI delta, bool force) {
   if (y > border) {
     int prem_start= has_label ? 2 : 1;
     int j, d= MAX_SI;
-    for (j= prem_start; j < N (bs); j++)
+    // Use n_children (not N(bs)) to exclude decoration line box
+    for (j= prem_start; j < n_children; j++)
       if (distance (j, x, y, delta) < d)
         if (bs[j]->accessible () || force) {
           d= distance (j, x, y, delta);
