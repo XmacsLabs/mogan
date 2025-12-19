@@ -410,6 +410,6 @@
 
 <\initial>
   <\collection>
-    <associate|preamble|true>
+    <associate|preamble|false>
   </collection>
 </initial>
