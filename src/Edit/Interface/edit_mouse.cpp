@@ -604,6 +604,9 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
         hovering_image= false;
       }
     }
+    else {
+      hovering_image= false;
+    }
   }
   if (hovering_hlink) set_cursor_style ("pointing_hand");
   else if (hovering_image) {
