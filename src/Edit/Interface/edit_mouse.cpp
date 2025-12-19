@@ -581,27 +581,22 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
       hovering_hlink= true;
     }
   }
-  static bool      hovering_image= false;
-  static path      current_path;
-  static tree      current_tree;
-  static path      p;
-  static selection sel;
-  static rectangle selr;
+  bool             hovering_image= false;
+  static path      current_path  = path ();
+  static rectangle selr          = rectangle ();
   if (type == "move") {
     // 检测鼠标是否在图片上
-    current_path= path_up (tree_path (path (), x, y, 0));
-    current_tree= subtree (et, current_path);
+    current_path     = path_up (tree_path (path (), x, y, 0));
+    tree current_tree= subtree (et, current_path);
     // 检查当前元素是否是图片
     if (is_func (current_tree, IMAGE)) {
-      p   = reverse (obtain_ip (current_tree));
-      sel = search_selection (p * start (current_tree), p * end (current_tree));
+      path      p= reverse (obtain_ip (current_tree));
+      selection sel=
+          search_selection (p * start (current_tree), p * end (current_tree));
       selr= least_upper_bound (sel->rs);
       if (last_x >= selr->x1 && last_y >= selr->y1 && last_x <= selr->x2 &&
           last_y <= selr->y2 * 0.95) {
         hovering_image= true;
-      }
-      else {
-        hovering_image= false;
       }
     }
   }

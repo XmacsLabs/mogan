@@ -104,37 +104,6 @@ QTMImagePopup::setImageTree (tree t) {
 }
 
 void
-QTMImagePopup::setWidget (QWidget* w) {
-  cleanLayout ();
-  this->setUpdatesEnabled (false);
-
-  w->setParent (this);
-  layout->addWidget (w);
-  installEventFilterRecursively (w, this);
-
-  w->show ();
-  this->adjustSize ();
-
-  this->setUpdatesEnabled (true);
-}
-
-void
-QTMImagePopup::cleanLayout () {
-  // 清空Layout中已有的内容
-  QLayoutItem* item;
-  while ((item= layout->takeAt (0)) != nullptr) {
-    if (item->widget ()) {
-      item->widget ()->setParent (nullptr);
-    }
-    delete item;
-  }
-  // 如果布局为空，隐藏窗口
-  if (layout->count () == 0) {
-    this->hide ();
-  }
-}
-
-void
 QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
                               int scroll_y, int canvas_x) {
   cached_image_mid_x= (selr->x1 + selr->x2) / 2;
@@ -153,25 +122,6 @@ QTMImagePopup::getCachedPosition (int& x, int& y) {
      (this->width () / 2);
   y= -((cached_image_mid_y - 5000 - cached_scroll_y) * cached_magf) / 256 -
      this->height () * 1.2;
-}
-
-void
-QTMImagePopup::installEventFilterRecursively (QWidget* widget,
-                                              QObject* filterObj) {
-  // 给组件和子组件递归装上事件过滤器
-  if (!widget) return;
-
-  // 安装事件过滤器到当前组件
-  widget->installEventFilter (filterObj);
-
-  // 递归安装事件过滤器到所有子组件
-  const QObjectList& children= widget->children ();
-  for (QObject* child : children) {
-    QWidget* childWidget= qobject_cast<QWidget*> (child);
-    if (childWidget) {
-      installEventFilterRecursively (childWidget, filterObj);
-    }
-  }
 }
 
 void
