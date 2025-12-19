@@ -807,21 +807,18 @@ proof_tree_box_rep::proof_tree_box_rep (path ip, array<box> bs, font fn2,
   // Calculate label width if present
   SI label_w= has_label ? bs[0]->w () : 0;
 
-  // Calculate total width for the inference line
+  // Calculate inference line width
   SI line_margin  = fn->spc->def;
   SI line_w_total = max (prem_w, conc_w) + 2 * line_margin;
-  SI content_w    = max (line_w_total, max (prem_w, conc_w));
-  SI total_w      = content_w;
 
-  // Add space for label if present
-  if (has_label) total_w= content_w + label_sp + label_w;
+  // Calculate "line + label" unit width (treated as a whole)
+  SI line_label_w = line_w_total;
+  if (has_label) line_label_w = line_w_total + label_sp + label_w;
 
-  // Calculate offset for content (to make room for label on left)
-  SI content_offset= 0;
-  if (has_label && label_left) content_offset= label_w + label_sp;
+  // Total width is max of premises, conclusion, and "line + label" unit
+  SI total_w = max (line_label_w, max (prem_w, conc_w));
 
-  // Position premises at the top, centered within total_w (line + label)
-  // This ensures children's "line + label" center aligns with parent's center
+  // Position premises at the top, centered within total_w
   // Use baseline alignment: all premises share the same baseline y-coordinate
   SI prem_start_x = (total_w - prem_w) >> 1;
   SI prem_baseline= max (bs[conc_idx]->y2, fn->y2) + sep + vsep - min_y1;
@@ -833,32 +830,46 @@ proof_tree_box_rep::proof_tree_box_rep (path ip, array<box> bs, font fn2,
     x+= bs[i]->w () + hsep;
   }
 
-  // Draw the horizontal inference line, centered within total_w
+  // Draw the horizontal inference line
+  // "Line + label" unit is centered within total_w
+  SI line_label_start = (total_w - line_label_w) >> 1;
   SI line_y = max (bs[conc_idx]->y2, fn->y2) + (vsep >> 1);
-  SI line_x1= (total_w - line_w_total) >> 1;
-  SI line_x2= line_x1 + line_w_total;
-  pencil tpen= pen->set_width (line_w);
+  SI line_x1, line_x2;
+  if (has_label && label_left) {
+    // Left label: [label][space][line]
+    line_x1 = line_label_start + label_w + label_sp;
+    line_x2 = line_x1 + line_w_total;
+  }
+  else {
+    // No label or right label: [line][space][label]
+    line_x1 = line_label_start;
+    line_x2 = line_x1 + line_w_total;
+  }
+  pencil tpen = pen->set_width (line_w);
   insert (line_box (decorate_middle (ip), line_x1, 0, line_x2, 0, tpen), 0,
           line_y);
 
-  // Position label if present (relative to the inference line)
+  // Position label if present
   if (has_label) {
     SI label_x, label_y;
-    label_y= line_y - ((bs[0]->y1 + bs[0]->y2) >> 1);
+    // Label vertical center aligned with the line
+    label_y = line_y - ((bs[0]->y1 + bs[0]->y2) >> 1);
+
     if (label_left) {
-      // Left label: right edge at line_x1 - label_sp
-      label_x= line_x1 - label_sp - bs[0]->x2;
+      // Left label: starts at line_label_start
+      label_x = line_label_start - bs[0]->x1;
     }
     else {
-      // Right label: left edge at line_x2 + label_sp
-      label_x= line_x2 + label_sp - bs[0]->x1;
+      // Right label: starts after line + space
+      label_x = line_x2 + label_sp - bs[0]->x1;
     }
     insert (bs[0], label_x, label_y);
   }
 
-  // Position conclusion at the bottom, centered within total_w
+  // Position conclusion at the bottom, centered under the LINE only
+  SI line_center = (line_x1 + line_x2) >> 1;
   insert (bs[conc_idx],
-          (total_w >> 1) - ((bs[conc_idx]->x1 + bs[conc_idx]->x2) >> 1),
+          line_center - ((bs[conc_idx]->x1 + bs[conc_idx]->x2) >> 1),
           0);
 
   position ();
