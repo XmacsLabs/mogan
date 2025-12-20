@@ -581,6 +581,11 @@ latex_parser::parse_backslash (string s, int& i, int change) {
     lf= 'N';
     return tree (TUPLE, "\\\n");
   }
+  if (s[i] == '\\') {
+    // Latex "\\" means line break
+    i++;
+    return tree (TUPLE, "\\\\");
+  }
   if (!is_tex_alpha (s[i])) {
     i++;
     if (s[i - 1] == '(') return parse_command (s, i, "\\begin-math", change);
@@ -2040,8 +2045,10 @@ parse_latex (string s, bool change, bool as_pic) {
   ltx.lf   = 'M';
   ltx.pic  = as_pic;
   string s1= s;
-  r        = ltx.parse (s1, change ? 2 : 0);
-  r        = accented_to_Cork (r);
+  cout << s << LF;
+  r= ltx.parse (s1, change ? 2 : 0);
+  r= accented_to_Cork (r);
+  cout << r << LF;
   if (lan == "") return r;
   return compound ("!language", r, lan);
 }
