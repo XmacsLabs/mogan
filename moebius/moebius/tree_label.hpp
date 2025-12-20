@@ -108,7 +108,7 @@ enum tree_label : int {
   NEG,
   TREE,
   PROOF_TREE,
-  VAR_PROOF_TREE,    // proof-tree* (label on right)
+  VAR_PROOF_TREE,     // proof-tree* (label on right)
   VAR_VAR_PROOF_TREE, // proof-tree** (label on left)
   SYNTAX,
 
