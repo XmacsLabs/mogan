@@ -850,7 +850,42 @@
         ((and (not forwards?) (> i prem-start))
          (tree-go-to pt (- i 1) :end))))))
 
-;; Simple vertical navigation: jump between conclusion and premises
+;; Helper: find the innermost proof-tree within a tree (for drilling down)
+(define (find-innermost-proof-tree-conclusion t)
+  ;; If t is a proof-tree, go to its conclusion and recurse
+  ;; Otherwise return #f
+  (cond
+    ((proof-tree-tag? t)
+     (let* ((conc-idx (proof-tree-conclusion-idx t))
+            (conc (tree-ref t conc-idx)))
+       ;; Check if conclusion itself contains a proof-tree
+       (or (find-innermost-proof-tree-conclusion conc)
+           ;; Otherwise return this conclusion path
+           (begin (tree-go-to t conc-idx :start) #t))))
+    ((and (tree? t) (> (tree-arity t) 0))
+     ;; Search children for proof-tree
+     (let loop ((i 0))
+       (if (>= i (tree-arity t))
+           #f
+           (or (find-innermost-proof-tree-conclusion (tree-ref t i))
+               (loop (+ i 1))))))
+    (else #f)))
+
+;; Helper: find parent proof-tree that contains current pt as a premise
+(define (find-parent-proof-tree pt)
+  ;; Go up the tree to find a proof-tree ancestor where pt is a premise
+  (and-with parent (tree-up pt)
+    (if (proof-tree-tag? parent)
+        (let* ((prem-start (proof-tree-premise-start parent))
+               (idx (tree-index pt)))
+          (if (and idx (>= idx prem-start))
+              parent  ;; pt is a premise of parent
+              #f))    ;; pt is conclusion or label, not a premise
+        (find-parent-proof-tree parent))))
+
+;; Enhanced vertical navigation:
+;; UP in conclusion -> go to closest premise, drill into nested proof-tree conclusions
+;; DOWN in conclusion -> if we're a premise of parent, go to parent's conclusion
 (define (proof-tree-navigate-vertical pt to-premises?)
   (let* ((prem-start (proof-tree-premise-start pt))
          (conc-idx (proof-tree-conclusion-idx pt))
@@ -859,25 +894,31 @@
       (cond
         ;; In conclusion, go UP to first premise
         ((and to-premises? (== i conc-idx))
-         (tree-go-to pt prem-start :start))
+         (let ((prem (tree-ref pt prem-start)))
+           ;; If premise is/contains a proof-tree, drill into its conclusion
+           (if (not (find-innermost-proof-tree-conclusion prem))
+               ;; No nested proof-tree, just go to the premise
+               (tree-go-to pt prem-start :start))))
         ;; In premise, go DOWN to conclusion
         ((and (not to-premises?) (>= i prem-start))
          (tree-go-to pt conc-idx :start))
+        ;; In conclusion, go DOWN to parent's conclusion (if we're a premise)
+        ((and (not to-premises?) (== i conc-idx))
+         (and-with parent-pt (find-parent-proof-tree pt)
+           (let ((parent-conc-idx (proof-tree-conclusion-idx parent-pt)))
+             (tree-go-to parent-pt parent-conc-idx :start))))
         ;; In label, go to premises (UP) or conclusion (DOWN)
         ((and (proof-tree-labeled? pt) (== i 0))
          (if to-premises?
              (tree-go-to pt prem-start :start)
              (tree-go-to pt conc-idx :start)))))))
 
-(tm-define (kbd-up)
-  (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    (proof-tree-navigate-vertical pt #t)))
-
-(tm-define (kbd-down)
-  (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    (proof-tree-navigate-vertical pt #f)))
+;; Override kbd-vertical for proof-tree nodes
+;; This is called when traversing up from focus-tree
+(tm-define (kbd-vertical t downwards?)
+  (:require (proof-tree-tag? t))
+  ;; downwards? means DOWN key, so to-premises? = (not downwards?)
+  (proof-tree-navigate-vertical t (not downwards?)))
 
 ;; Override structured-left/right/up/down to find proof-tree ancestor
 (tm-define (structured-left)
@@ -890,17 +931,11 @@
   (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
     (proof-tree-navigate-horizontal pt #t)))
 
-(tm-define (structured-up)
-  (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    ;; UP visually = go to premises (which are at top)
-    (proof-tree-navigate-vertical pt #t)))
-
-(tm-define (structured-down)
-  (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    ;; DOWN visually = go to conclusion (which is at bottom)
-    (proof-tree-navigate-vertical pt #f)))
+;; Override structured-vertical for proof-tree nodes
+(tm-define (structured-vertical t downwards?)
+  (:require (proof-tree-tag? t))
+  ;; downwards? means DOWN, so to-premises? = (not downwards?)
+  (proof-tree-navigate-vertical t (not downwards?)))
 
 ;; Insert/remove helpers for proof-tree
 (define (proof-tree-insert-horizontal pt forwards?)
