@@ -102,4 +102,7 @@ For the commercial version with built-in AI features, please visit the [Liii STE
 - Community lead email: yansong@liii.pro
 - Liii STEM: contact via the [official website](https://liiistem.cn)
 
-
+### 📚 Development Guides
+- [Windows Development guide](./devel/Develop_on_Windows.md)
+- [macOS Development guide](./devel/Develop_on_macOS.md)
+- [Linux Development guide](./devel/Develop_on_Linux.md)
