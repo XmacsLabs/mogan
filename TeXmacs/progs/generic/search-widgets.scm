@@ -182,7 +182,7 @@
 		   (set-alt-selection "alternate" sels)
 		   (set! too-many-matches? #t)
 		   (next-search-result #t #f)
-       (update-search-pos-text "new"))
+       	   (update-search-pos-text "new"))
 		  ((null? sels)
 		   (selection-cancel)
 		   (cancel-alt-selection "alternate")
