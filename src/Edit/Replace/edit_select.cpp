@@ -1025,7 +1025,7 @@ string
 edit_select_rep::get_alt_selection_index (string name, string action) {
   int n            = N (alt_sels[name]);
   int current_total= n / 2;
-  if (current_total == 0) {
+  if (current_total == 0 || !selection_active_any ()) {
     index= 0;
     total= 0;
     return "";

@@ -17,9 +17,16 @@
 
 (define search-replace-text "")
 
+(define isreplace? #f)
+
 
 (tm-define (update-search-pos-text action)
-  (let* ((index-str (get-alt-selection-index "alternate" action)))
+  (let* ((index-str (if isreplace?
+                        (begin
+                          (let ((idx (get-alt-selection-index "alternate" "new")))
+                            (set! isreplace? #f) 
+                            idx))
+                        (get-alt-selection-index "alternate" action))))
     (if (== index-str "")
         (set-auxiliary-widget-title (translate search-replace-text))
         (set-auxiliary-widget-title
@@ -174,7 +181,8 @@
 	    (cond ((>= (length sels*) limit)
 		   (set-alt-selection "alternate" sels)
 		   (set! too-many-matches? #t)
-		   (next-search-result #t #f))
+		   (next-search-result #t #f)
+       (update-search-pos-text "new"))
 		  ((null? sels)
 		   (selection-cancel)
 		   (cancel-alt-selection "alternate")
@@ -386,7 +394,7 @@
       (replace-next by)
       (end-editing))
     (perform-search*)
-    (update-search-pos-text "new")))
+    (set! isreplace? #t)))
 
 (tm-define (replace-all)
   (and-with by (or (by-tree) current-replace)
@@ -396,7 +404,7 @@
         (perform-search*))
       (end-editing))
     (perform-search*)
-    (update-search-pos-text "new")))
+    (set! isreplace? #t)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customized keyboard shortcuts in search and replace modes
