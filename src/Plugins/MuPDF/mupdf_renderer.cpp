@@ -278,14 +278,7 @@ mupdf_renderer_rep::begin_text () {
     prev_text_x= to_x (0);
     prev_text_y= to_y (0);
     cfn        = "";
-    if (transform_active) {
-      proc->op_Tm (mupdf_context (), proc, 1, 0, 0, 1, prev_text_x,
-                   prev_text_y);
-    }
-    else {
-      proc->op_Tm (mupdf_context (), proc, 1, 0, 0, 1, prev_text_x,
-                   prev_text_y);
-    }
+    proc->op_Tm (mupdf_context (), proc, 1, 0, 0, 1, prev_text_x, prev_text_y);
   }
 }
 
@@ -318,7 +311,8 @@ mupdf_renderer_rep::set_transformation (frame fr) {
   point uy= tr (point (0.0, 1.0)) - o;
 
   proc->op_q (mupdf_context (), proc);
-  transform_matrix= fz_make_matrix (ux[0], ux[1], uy[0], uy[1], o[0], o[1]);
+  fz_matrix transform_matrix=
+      fz_make_matrix (ux[0], ux[1], uy[0], uy[1], o[0], o[1]);
 
   // 调整 Qt（Y 轴向下）和 PDF（Y 轴向上）之间的 Y 轴反转
   // 我们需要应用：M' = S * M * S⁻¹，其中 S 是 Y 轴反转矩阵
@@ -884,11 +878,6 @@ mupdf_renderer_rep::draw_picture (picture p, SI x, SI y, int alpha) {
   end_text ();
   double tx= to_x (x - ox * pixel);
   double ty= to_y (y - oy * pixel);
-  if (transform_active) {
-    fz_point trans= fz_transform_point_xy (tx, ty, transform_matrix);
-    tx            = trans.x;
-    ty            = trans.y;
-  }
   image (mupdf_context (), proc, pict->im, alpha, w, 0, 0, h, tx, ty);
 }
 
@@ -924,11 +913,6 @@ mupdf_renderer_rep::draw_scalable (scalable im, SI x, SI y, int alpha) {
     end_text ();
     double tx= to_x (x - ox);
     double ty= to_y (y - oy);
-    if (transform_active) {
-      fz_point trans= fz_transform_point_xy (tx, ty, transform_matrix);
-      tx            = trans.x;
-      ty            = trans.y;
-    }
     image (ctx, proc, im2, alpha, ((double) w) / pixel, 0, 0,
            ((double) h) / pixel, tx, ty);
   }
