@@ -571,7 +571,7 @@
   ($quote `(verbatim ($unquote ($inline ,@l)))))
 
 (tm-define-macro ($link dest . l)
-  ($quote `(hlink ($unquote ($inline ,@l)) ($unquote ($textual ,dest)))))
+  ($quote `(hlink ($unquote ($inline ,@l)) ($unquote ($textual (utf8->cork ,dest))))))
 
 (tm-define-macro ($color col . l)
   ($quote `(with "color" ,col ($unquote ($inline ,@l)))))
