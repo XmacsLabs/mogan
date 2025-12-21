@@ -789,11 +789,9 @@
 (tm-define (get-proof-tree-label-pos with-t)
   ;; Get the current label position from the with tag
   ;; Returns "none", "right", or "left"
-  ;; Empty string "" is treated as "none" for consistency
   (if (and (>= (tree-arity with-t) 5)
            (tm-equal? (tree-ref with-t 2) "tree-label-pos"))
-      (let ((pos (tm->string (tree-ref with-t 3))))
-        (if (== pos "") "none" pos))
+      (tm->string (tree-ref with-t 3))
       "none"))
 
 ;; Check if t is a tree in proof-tree mode
@@ -841,7 +839,7 @@
 
 (tm-define (proof-tree-set-variant with-t new-pos)
   ;; Set the proof-tree variant by modifying with tag and tree structure
-  ;; All proof-trees have tree-label-pos (either "", "left", or "right")
+  ;; All proof-trees have tree-label-pos (either "none", "left", or "right")
   ;; Tree is always at index 4 in the with tag
   (let* ((current-pos (get-proof-tree-label-pos with-t))
          (tree-t (tree-ref with-t 4)))
@@ -851,10 +849,10 @@
         ((and (== current-pos "none") (!= new-pos "none"))
          (tree-insert! tree-t 0 '(""))
          (tree-set (tree-ref with-t 3) new-pos))
-        ;; From labeled to no label: remove label child, set position to ""
+        ;; From labeled to no label: remove label child, set position to "none"
         ((and (!= current-pos "none") (== new-pos "none"))
          (tree-remove! tree-t 0 1)
-         (tree-set (tree-ref with-t 3) ""))
+         (tree-set (tree-ref with-t 3) "none"))
         ;; Change label side (left <-> right): just change the value
         ((and (!= current-pos "none") (!= new-pos "none"))
          (tree-set (tree-ref with-t 3) new-pos))))))
@@ -1019,18 +1017,18 @@
   (let* ((prem-start (proof-tree-premise-start pt))
          (i (proof-tree-cursor-child-index pt)))
     ;; Insert sub-proof: wrap current premise in a new proof-tree
-    ;; Must explicitly set tree-label-pos to "" to override any inherited value from parent
+    ;; Must explicitly set tree-label-pos to "none" to override any inherited value from parent
     (when (and i (>= i prem-start))
       (let* ((child-t (tree-ref pt i))
              (content (tree->stree child-t)))
         (if downwards?
             ;; Insert down: add empty conclusion below, current stays as premise
             (begin
-              (tree-set! child-t `(with "tree-mode" "proof" "tree-label-pos" "" (tree "" ,content)))
+              (tree-set! child-t `(with "tree-mode" "proof" "tree-label-pos" "none" (tree "" ,content)))
               (tree-go-to child-t 4 0 0))
             ;; Insert up: wrap current as conclusion of new sub-tree with empty premise above
             (begin
-              (tree-set! child-t `(with "tree-mode" "proof" "tree-label-pos" "" (tree ,content "")))
+              (tree-set! child-t `(with "tree-mode" "proof" "tree-label-pos" "none" (tree ,content "")))
               (tree-go-to child-t 4 1 0)))))))
 
 ;; Override structured-insert/remove for proof-tree

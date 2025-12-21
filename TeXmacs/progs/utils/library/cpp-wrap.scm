@@ -110,7 +110,7 @@
 (tm-define (make-tree) (cpp-make-tree))
 
 (tm-define (make-proof-tree)
-  (insert-go-to '(with "tree-mode" "proof" "tree-label-pos" "" (tree "" "")) '(4 0 0)))
+  (insert-go-to '(with "tree-mode" "proof" "tree-label-pos" "none" (tree "" "")) '(4 0 0)))
 
 (tm-define (make-proof-tree*)
   (insert-go-to '(with "tree-mode" "proof" "tree-label-pos" "right" (tree "" "" "")) '(4 0 0)))
