@@ -1,0 +1,39 @@
+<TMU|<tuple|1.1.0|2025.2.3-beta3>>
+
+<style|<tuple|generic|chinese|number-europe|preview-ref>>
+
+<\body>
+  <section|未加粗的情况下，修复前部分文字右侧光标倾斜>
+
+  典以真
+
+  （上面三个字符右侧光标都会倾斜）
+
+  <section|加粗的情况下，修复前部分文字右侧光标倾斜>
+
+  经<with|font-series|bold|典>的
+
+  经<with|font-series|bold|常>的
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|2|?>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>加粗的情况下，部分文字右侧光标倾斜的问题><datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-1><vspace|0.5fn>
+    </associate>
+  </collection>
+</auxiliary>

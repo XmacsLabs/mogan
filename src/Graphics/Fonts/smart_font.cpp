@@ -1604,25 +1604,25 @@ smart_font_rep::get_left_slope (string s) {
 
 double
 smart_font_rep::get_right_slope (string s) {
-  int i= 0, n= N (s), nr;
-  if (n == 0) return fn[0]->get_right_slope (s);
-  string r= s;
-  while (i < n)
-    advance (s, i, r, nr);
-  nr= max (nr, 0);
+  int i= 0, s_N= N (s), nr;
+  if (s_N == 0) return fn[0]->get_right_slope (s);
 
+  string r= s;
+  while (i < s_N)
+    advance (s, i, r, nr);
+  nr          = max (nr, 0);
   double slope= fn[nr]->get_right_slope (r);
 
   // 修复：对于数学符号和 CJK 字符的光标倾斜问题
   // 如果不是明确的斜体模式，且斜率很小，则强制垂直
-  if (math_kind == 0 && abs (slope) < 0.15) {
+  if (math_kind == 0 && abs (slope) < 0.20) {
+    // CJK 字符的 Unicode 范围
+    bool is_cjk_char= lolly::data::is_cjk_unified_ideographs (r);
+
     // 检查是否是数学符号或 CJK 字符被映射到 CJK 字体的情况
-    string uc  = strict_cork_to_utf8 (s);
+    string uc  = strict_cork_to_utf8 (r);
     int    pos = 0;
     int    code= decode_from_utf8 (uc, pos);
-
-    // CJK 字符的 Unicode 范围
-    bool is_cjk_char= lolly::data::is_cjk_unified_ideographs (code);
 
     // 常见数学符号的 Unicode 范围
     bool is_math_symbol=
@@ -1630,11 +1630,12 @@ smart_font_rep::get_right_slope (string s) {
         starts (s, "<sqrt>") || starts (s, "<sum>") || starts (s, "<int>") ||
         starts (s, "<pm>") || starts (s, "<times>") || starts (s, "<div>");
 
+    // cout << "SmartFont: 强制垂直光标 -> 字符='" << s
+    //      << "', CJK=" << is_cjk_char << ", Math=" << is_math_symbol <<
+    //      "\n";
+
     // 对于 CJK 字符和数学符号，强制垂直光标
     if (is_cjk_char || is_math_symbol) {
-      // cout << "SmartFont: 强制垂直光标 -> 字符='" << s
-      //      << "', CJK=" << is_cjk_char << ", Math=" << is_math_symbol <<
-      //      "\n";
       return 0.0; // 强制垂直光标
     }
   }
