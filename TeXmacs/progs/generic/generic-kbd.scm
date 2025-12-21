@@ -86,8 +86,6 @@
   ("structured:cmd backspace" (remove-structure-upwards))
   ("structured:cmd up" (kbd-select-if-active traverse-up))
   ("structured:cmd down" (kbd-select-if-active traverse-down))
-  ("structured:cmd home" (kbd-select-if-active traverse-first))
-  ("structured:cmd end" (kbd-select-if-active traverse-last))
   ("structured:cmd pageup" (traverse-previous))
   ("structured:cmd pagedown" (traverse-next))
   ("structured:cmd section" (traverse-previous-section-title))
@@ -95,8 +93,6 @@
   ("structured:cmd S-right" (kbd-select traverse-right))
   ("structured:cmd S-up" (kbd-select traverse-up))
   ("structured:cmd S-down" (kbd-select traverse-down))
-  ("structured:cmd S-home" (kbd-select traverse-first))
-  ("structured:cmd S-end" (kbd-select traverse-last))
   ("structured:cmd S-pageup" (kbd-select traverse-previous))
   ("structured:cmd S-pagedown" (kbd-select traverse-next))
   ("structured:cmd space" (kbd-select-enlarge))
@@ -478,12 +474,7 @@
   ("C-O" (toggle-source-mode))
 
   ("structured:cmd left" (kbd-select-if-active traverse-left))
-  ("structured:cmd right" (kbd-select-if-active traverse-right))
-
-  ("M-A-C-home" (traverse-first))
-  ("M-A-C-end" (traverse-last))
-  ("M-A-C-S-home" (kbd-select traverse-first))
-  ("M-A-C-S-end" (kbd-select traverse-last)))
+  ("structured:cmd right" (kbd-select-if-active traverse-right)))
 
 (kbd-map
   (:profile gnome)
@@ -546,12 +537,7 @@
   ("C-O" (toggle-source-mode))
 
   ("structured:cmd left" (kbd-select-if-active traverse-left))
-  ("structured:cmd right" (kbd-select-if-active traverse-right))
-
-  ("M-A-C-home" (traverse-first))
-  ("M-A-C-end" (traverse-last))
-  ("M-A-C-S-home" (kbd-select traverse-first))
-  ("M-A-C-S-end" (kbd-select traverse-last)))
+  ("structured:cmd right" (kbd-select-if-active traverse-right)))
   
 (kbd-map
   (:profile kde)
@@ -765,11 +751,6 @@
   ("structured:cmd left" (kbd-select-if-active traverse-left))
   ("structured:cmd right" (kbd-select-if-active traverse-right))
 
-  ("M-A-C-home" (traverse-first))
-  ("M-A-C-end" (traverse-last))
-  ("M-A-C-S-home" (kbd-select traverse-first))
-  ("M-A-C-S-end" (kbd-select traverse-last))
-  
   ("C-O" (toggle-source-mode))
   ("C-P" (toggle-preamble-mode)))
 
