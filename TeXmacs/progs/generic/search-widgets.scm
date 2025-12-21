@@ -174,15 +174,12 @@
 	    (cond ((>= (length sels*) limit)
 		   (set-alt-selection "alternate" sels)
 		   (set! too-many-matches? #t)
-		   (next-search-result #t #f))
+		   (next-search-result #t #f)
+       (update-search-pos-text "new"))
 		  ((null? sels)
 		   (selection-cancel)
 		   (cancel-alt-selection "alternate")
-<<<<<<< HEAD
         (update-search-pos-text "new")
-=======
-       	   (update-search-pos-text)
->>>>>>> 09bb7d5e072384870dfb9fd32762c2e60b2c509c
 		   (go-to** (get-search-reference #t))
 		   (set! ok? #f))
 		  (else
@@ -389,8 +386,7 @@
       (start-editing)
       (replace-next by)
       (end-editing))
-    (perform-search*)
-    (update-search-pos-text "new")))
+    (perform-search*)))
 
 (tm-define (replace-all)
   (and-with by (or (by-tree) current-replace)
@@ -399,8 +395,7 @@
       (while (replace-next by)
         (perform-search*))
       (end-editing))
-    (perform-search*)
-    (update-search-pos-text "new")))
+    (perform-search*)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customized keyboard shortcuts in search and replace modes
