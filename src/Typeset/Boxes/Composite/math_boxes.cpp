@@ -802,19 +802,44 @@ proof_tree_box_rep::proof_tree_box_rep (path ip, array<box> bs, font fn2,
   int conc_idx  = has_label ? 1 : 0;
   int prem_start= has_label ? 2 : 1;
 
-  // Calculate premises total width and baseline alignment info
-  // For proof-tree premises, use their line width (x2-x1) which is centered on
-  // 0
-  SI prem_w= 0;
+  // Calculate premises layout info
+  // For proper spacing with alignment, we need left/right extents from
+  // alignment point This prevents overlap when child proof-trees have labels
+  // extending beyond their lines
   SI max_y2= MIN_SI;
   SI min_y1= MAX_SI;
-  for (i= prem_start; i < n; i++)
-    prem_w+= bs[i]->w ();
+
+  // Calculate align offsets (line center or geometric center) for all premises
+  array<SI> align_offsets (n);
+  array<SI> left_extents (n);  // distance from box x1 to alignment point
+  array<SI> right_extents (n); // distance from alignment point to box x2
   for (i= prem_start; i < n; i++) {
-    max_y2= max (max_y2, bs[i]->y2);
-    min_y1= min (min_y1, bs[i]->y1);
+    SI offset= bs[i]->get_leaf_offset ("line_center");
+    if (offset == bs[i]->w ()) {
+      // Default return - not a proof-tree, use geometric center
+      offset= (bs[i]->x1 + bs[i]->x2) >> 1;
+    }
+    align_offsets[i]= offset;
+    left_extents[i] = offset;
+    right_extents[i]= bs[i]->w () - offset;
+    max_y2          = max (max_y2, bs[i]->y2);
+    min_y1          = min (min_y1, bs[i]->y1);
   }
-  if (n > prem_start) prem_w+= (n - prem_start - 1) * hsep;
+
+  // Calculate total premises width based on proper spacing:
+  // Total = left_ext[first] + sum(right_ext[i] + hsep + left_ext[i+1]) +
+  // right_ext[last]
+  SI prem_w= 0;
+  for (i= prem_start; i < n; i++) {
+    if (i == prem_start) {
+      prem_w+= left_extents[i]; // First premise: count left extent
+    }
+    prem_w+= right_extents[i]; // Count right extent
+    if (i < n - 1) {
+      prem_w+= hsep;                // Add spacing between premises
+      prem_w+= left_extents[i + 1]; // Next premise's left extent
+    }
+  }
 
   // Calculate conclusion dimensions
   SI conc_w= bs[conc_idx]->w ();
@@ -839,22 +864,22 @@ proof_tree_box_rep::proof_tree_box_rep (path ip, array<box> bs, font fn2,
   array<SI> pos_x (n);
   array<SI> pos_y (n);
 
-  // Position premises centered on line, spaced by their centers
-  // For proof-tree children, use their line_center as alignment point
-  // For other boxes, use the geometric center (x1+x2)/2
-  SI prem_half= prem_w >> 1;
-  for (SI x= -prem_half, i= prem_start; i < n; i++) {
-    SI half_w= bs[i]->w () >> 1;
-    // Try to get line_center offset for proof-tree children
-    // Default get_leaf_offset returns w(), so if != w(), it's a valid offset
-    SI align_offset= bs[i]->get_leaf_offset ("line_center");
-    if (align_offset == bs[i]->w ()) {
-      // Default return - not a proof-tree, use geometric center
-      align_offset= (bs[i]->x1 + bs[i]->x2) >> 1;
+  // Position premises centered on line, aligned by their line centers
+  // Use pre-calculated align_offsets and extents for proper spacing
+  if (n > prem_start) {
+    SI prem_half= prem_w >> 1;
+    // align_x tracks where the current premise's alignment point should be
+    SI align_x= -prem_half + left_extents[prem_start];
+    for (i= prem_start; i < n; i++) {
+      // Position box so its alignment point is at align_x
+      pos_x[i]= align_x - align_offsets[i];
+      pos_y[i]= prem_baseline;
+      // Advance to next alignment point: current right extent + hsep + next
+      // left extent
+      if (i < n - 1) {
+        align_x+= right_extents[i] + hsep + left_extents[i + 1];
+      }
     }
-    pos_x[i]= x + half_w - align_offset;
-    pos_y[i]= prem_baseline;
-    x+= bs[i]->w () + hsep;
   }
 
   // Position conclusion centered on line (0 point)

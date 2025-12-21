@@ -338,13 +338,6 @@
   (or (tree-in? t '(tree))
       (table-markup-context? t)))
 
-(tm-define (structured-vertical? t)
-  (:require (tree-in? t '(proof-tree proof-tree* proof-tree**)))
-  #t)
-
-(tm-define (structured-horizontal? t)
-  (:require (tree-in? t '(proof-tree proof-tree* proof-tree**)))
-  #t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Focus predicates
@@ -777,17 +770,54 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Proof tree editing
+;; Note: proof-tree is now a macro that wraps tree with tree-mode=proof
+;; The structure is: (with tree-mode proof (tree conclusion premise1 premise2 ...))
+;; For labeled: (with tree-mode proof tree-label-pos right (tree label conclusion premise1 ...))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(tm-define (proof-tree-tag? t)
-  (tree-in? t '(proof-tree proof-tree* proof-tree**)))
+;; Find the enclosing 'with' tag that sets tree-mode=proof
+(tm-define (find-proof-tree-with t)
+  (cond
+    ((not (tree? t)) #f)
+    ((and (tree-is? t 'with)
+          (>= (tree-arity t) 3)
+          (tm-equal? (tree-ref t 0) "tree-mode")
+          (tm-equal? (tree-ref t 1) "proof"))
+     t)
+    (else (find-proof-tree-with (tree-up t)))))
 
+(tm-define (get-proof-tree-label-pos with-t)
+  ;; Get the current label position from the with tag
+  ;; Returns "none", "right", or "left"
+  ;; Empty string "" is treated as "none" for consistency
+  (if (and (>= (tree-arity with-t) 5)
+           (tm-equal? (tree-ref with-t 2) "tree-label-pos"))
+      (let ((pos (tm->string (tree-ref with-t 3))))
+        (if (== pos "") "none" pos))
+      "none"))
+
+;; Check if t is a tree in proof-tree mode
+(tm-define (proof-tree-tag? t)
+  (and (tree-is? t 'tree)
+       (find-proof-tree-with t)))
+
+;; Check if the proof-tree has a label
 (define (proof-tree-labeled? t)
-  (tree-in? t '(proof-tree* proof-tree**)))
+  (and (proof-tree-tag? t)
+       (and-with with-t (find-proof-tree-with t)
+         (let ((pos (get-proof-tree-label-pos with-t)))
+           (or (== pos "left") (== pos "right"))))))
+
+;; Check if label is on the left
+(define (proof-tree-label-left? t)
+  (and-with with-t (find-proof-tree-with t)
+    (== (get-proof-tree-label-pos with-t) "left")))
 
 ;; Predicate: are we inside a proof-tree?
+;; Uses get-env-tree to check cursor's environment
 (define (inside-proof-tree?)
-  (and (tree-innermost '(proof-tree proof-tree* proof-tree**)) #t))
+  (and (tree-innermost 'tree)
+       (tm-equal? (get-env-tree "tree-mode") "proof")))
 
 (define (proof-tree-premise-start t)
   ;; Return the index of the first premise
@@ -797,32 +827,54 @@
   ;; Return the index of the conclusion
   (if (proof-tree-labeled? t) 1 0))
 
-
-;; Override variant-set for proof-tree to handle structure changes
-(tm-define (variant-set t new-tag)
-  (:require (tree-in? t '(proof-tree proof-tree* proof-tree**)))
-  (with-focus-after t
-    (let* ((old-lab (tree-label t))
-           (old-labeled? (in? old-lab '(proof-tree* proof-tree**)))
-           (new-labeled? (in? new-tag '(proof-tree* proof-tree**)))
-           (idx (or (tree-down-index t) 0)))
+(define (proof-tree-cycle-label-pos current forward?)
+  ;; Return the next label position in the cycle
+  (let ((order (if forward?
+                   '("none" "right" "left")
+                   '("none" "left" "right"))))
+    (let loop ((l order))
       (cond
-        ;; Adding label: insert empty label at position 0
-        ((and (not old-labeled?) new-labeled?)
-         (tree-insert! t 0 '(""))
-         (tree-assign-node! t new-tag))
-        ;; Removing label: remove label at position 0
-        ((and old-labeled? (not new-labeled?))
-         (tree-remove! t 0 1)
-         (tree-assign-node! t new-tag))
-        ;; Just changing between proof-tree* and proof-tree**, or no change
-        (else
-         (tree-assign-node! t new-tag))))))
+        ((null? l) "none")
+        ((null? (cdr l)) (car order))
+        ((== (car l) current) (cadr l))
+        (else (loop (cdr l)))))))
 
-;; Define variants for proof-tree
-(tm-define (focus-variants-of t)
-  (:require (tree-in? t '(proof-tree proof-tree* proof-tree**)))
-  '(proof-tree proof-tree* proof-tree**))
+(tm-define (proof-tree-set-variant with-t new-pos)
+  ;; Set the proof-tree variant by modifying with tag and tree structure
+  ;; All proof-trees have tree-label-pos (either "", "left", or "right")
+  ;; Tree is always at index 4 in the with tag
+  (let* ((current-pos (get-proof-tree-label-pos with-t))
+         (tree-t (tree-ref with-t 4)))
+    (when (tree-is? tree-t 'tree)
+      (cond
+        ;; From no label to labeled: add label child to tree, set position value
+        ((and (== current-pos "none") (!= new-pos "none"))
+         (tree-insert! tree-t 0 '(""))
+         (tree-set (tree-ref with-t 3) new-pos))
+        ;; From labeled to no label: remove label child, set position to ""
+        ((and (!= current-pos "none") (== new-pos "none"))
+         (tree-remove! tree-t 0 1)
+         (tree-set (tree-ref with-t 3) ""))
+        ;; Change label side (left <-> right): just change the value
+        ((and (!= current-pos "none") (!= new-pos "none"))
+         (tree-set (tree-ref with-t 3) new-pos))))))
+
+;; Helper function to set proof-tree label from the focused tree
+(tm-define (proof-tree-set-label-pos t new-pos)
+  (and-with with-t (find-proof-tree-with t)
+    (proof-tree-set-variant with-t new-pos)))
+
+;; Get current label position from focused tree
+(tm-define (proof-tree-current-label-pos t)
+  (and-with with-t (find-proof-tree-with t)
+    (get-proof-tree-label-pos with-t)))
+
+(tm-define (variant-circulate t forward?)
+  (:require (proof-tree-tag? t))
+  (and-with with-t (find-proof-tree-with t)
+    (let* ((current-pos (get-proof-tree-label-pos with-t))
+           (new-pos (proof-tree-cycle-label-pos current-pos forward?)))
+      (proof-tree-set-variant with-t new-pos))))
 
 ;; Navigation for proof-tree:
 ;; - kbd-left/kbd-right: use default behavior (works correctly now)
@@ -923,12 +975,12 @@
 ;; Override structured-left/right/up/down to find proof-tree ancestor
 (tm-define (structured-left)
   (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
+  (with pt (tree-innermost 'tree)
     (proof-tree-navigate-horizontal pt #f)))
 
 (tm-define (structured-right)
   (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
+  (with pt (tree-innermost 'tree)
     (proof-tree-navigate-horizontal pt #t)))
 
 ;; Override structured-vertical for proof-tree nodes
@@ -967,49 +1019,171 @@
   (let* ((prem-start (proof-tree-premise-start pt))
          (i (proof-tree-cursor-child-index pt)))
     ;; Insert sub-proof: wrap current premise in a new proof-tree
+    ;; Must explicitly set tree-label-pos to "" to override any inherited value from parent
     (when (and i (>= i prem-start))
-      (if downwards?
-          ;; Insert down: add empty conclusion below, current stays as premise
-          ;; This creates a sub-tree where current is premise, "" is conclusion
-          (begin
-            (tree-set! pt i `(proof-tree "" ,(tree-ref pt i)))
-            (tree-go-to pt i 0 0))
-          ;; Insert up: wrap current as conclusion of new sub-tree with empty premise above
-          ;; This creates a sub-tree where current becomes conclusion, "" is new premise
-          (begin
-            (tree-set! pt i `(proof-tree ,(tree-ref pt i) ""))
-            (tree-go-to pt i 1 0))))))
+      (let* ((child-t (tree-ref pt i))
+             (content (tree->stree child-t)))
+        (if downwards?
+            ;; Insert down: add empty conclusion below, current stays as premise
+            (begin
+              (tree-set! child-t `(with "tree-mode" "proof" "tree-label-pos" "" (tree "" ,content)))
+              (tree-go-to child-t 4 0 0))
+            ;; Insert up: wrap current as conclusion of new sub-tree with empty premise above
+            (begin
+              (tree-set! child-t `(with "tree-mode" "proof" "tree-label-pos" "" (tree ,content "")))
+              (tree-go-to child-t 4 1 0)))))))
 
 ;; Override structured-insert/remove for proof-tree
 (tm-define (structured-insert-left)
   (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    (proof-tree-insert-horizontal pt #f)))
+  (with pt (tree-innermost 'tree)
+    (when (proof-tree-tag? pt)
+      (proof-tree-insert-horizontal pt #f))))
 
 (tm-define (structured-insert-right)
   (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    (proof-tree-insert-horizontal pt #t)))
+  (with pt (tree-innermost 'tree)
+    (when (proof-tree-tag? pt)
+      (proof-tree-insert-horizontal pt #t))))
 
 (tm-define (structured-remove-left)
   (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    (proof-tree-remove-horizontal pt #f)))
+  (with pt (tree-innermost 'tree)
+    (when (proof-tree-tag? pt)
+      (proof-tree-remove-horizontal pt #f))))
 
 (tm-define (structured-remove-right)
   (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
-    (proof-tree-remove-horizontal pt #t)))
+  (with pt (tree-innermost 'tree)
+    (when (proof-tree-tag? pt)
+      (proof-tree-remove-horizontal pt #t))))
 
 (tm-define (structured-insert-up)
   (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
+  (with pt (tree-innermost 'tree)
     (proof-tree-insert-vertical pt #f)))
 
 (tm-define (structured-insert-down)
   (:require (inside-proof-tree?))
-  (with pt (tree-innermost '(proof-tree proof-tree* proof-tree**))
+  (with pt (tree-innermost 'tree)
     (proof-tree-insert-vertical pt #t)))
+
+;; Helper: check if all children of proof-tree are empty
+(define (proof-tree-all-empty? pt)
+  (let loop ((i 0))
+    (cond
+      ((>= i (tree-arity pt)) #t)
+      ((not (tree-empty? (tree-ref pt i))) #f)
+      (else (loop (+ i 1))))))
+
+;; Helper: get visual order of indices for proof-tree horizontal navigation
+;; Visual order follows the layout: left-label → premises → right-label
+;; Conclusion is excluded (accessed via up/down navigation)
+(define (proof-tree-visual-order pt)
+  (let* ((labeled? (proof-tree-labeled? pt))
+         (label-left? (and labeled? (proof-tree-label-left? pt)))
+         (prem-start (proof-tree-premise-start pt))
+         (n (tree-arity pt))
+         (premises (let loop ((i prem-start) (acc '()))
+                     (if (>= i n) (reverse acc) (loop (+ i 1) (cons i acc))))))
+    (cond
+      ((not labeled?) premises)                    ;; non-labeled: just premises
+      (label-left? (cons 0 premises))              ;; left-label: label first, then premises
+      (else (append premises (list 0))))))         ;; right-label: premises, then label
+
+;; Helper: move to adjacent field in proof-tree using visual order
+(define (proof-tree-move-to-adjacent-field pt i forwards?)
+  (let* ((order (proof-tree-visual-order pt))
+         (pos (list-find-index order (lambda (x) (== x i)))))
+    (if pos
+        (let* ((new-pos (if forwards? (+ pos 1) (- pos 1)))
+               (new-i (and (>= new-pos 0) (< new-pos (length order))
+                           (list-ref order new-pos))))
+          (cond
+            ((and new-i forwards?)
+             (tree-go-to pt new-i :start))
+            ((and new-i (not forwards?))
+             (tree-go-to pt new-i :end))
+            (else (noop))))
+        (noop))))
+
+;; Helper: check if index is a premise in the proof-tree
+(define (proof-tree-premise? pt i)
+  (let ((prem-start (proof-tree-premise-start pt)))
+    (and i (>= i prem-start))))
+
+;; Helper: count number of premises in proof-tree
+(define (proof-tree-premise-count pt)
+  (let ((prem-start (proof-tree-premise-start pt)))
+    (- (tree-arity pt) prem-start)))
+
+;; Helper: remove a premise from proof-tree and move cursor appropriately
+(define (proof-tree-remove-premise pt i forwards?)
+  (let* ((prem-start (proof-tree-premise-start pt))
+         (n (tree-arity pt)))
+    (tree-remove! pt i 1)
+    ;; Move cursor to adjacent premise
+    (cond
+      (forwards?
+       (if (>= i (tree-arity pt))
+           (tree-go-to pt (- i 1) :end)
+           (tree-go-to pt i :start)))
+      (else
+       (if (> i prem-start)
+           (tree-go-to pt (- i 1) :end)
+           (tree-go-to pt prem-start :start))))))
+
+;; Override kbd-remove for proof-tree fields
+;; When at field boundary: move to adjacent field instead of deleting structure
+;; Visual order: left-label → premises → right-label (conclusion excluded)
+;; Conclusion uses up/down navigation, so delete at its boundaries does nothing
+;; Empty premise with multiple premises: remove the premise
+;; Only delete the entire proof-tree when all fields are empty
+(tm-define (kbd-remove t forwards?)
+  (:require (and (inside-proof-tree?)
+                 (not (selection-active-any?))))
+  (with pt (tree-innermost 'tree)
+    (let* ((i (tree-down-index pt))
+           (child (and i (tree-ref pt i)))
+           (at-start (and child (tree-cursor-at? child :start)))
+           (at-end (and child (tree-cursor-at? child :end)))
+           (child-empty (and child (tree-empty? child)))
+           (is-premise (proof-tree-premise? pt i))
+           (prem-count (proof-tree-premise-count pt)))
+      (cond
+        ;; If all fields are empty and we're trying to delete, remove the whole with structure
+        ((and child-empty (proof-tree-all-empty? pt))
+         (with with-t (find-proof-tree-with pt)
+           (when with-t
+             (tree-cut with-t))))
+        ;; Empty premise with more than one premise: remove this premise
+        ((and child-empty is-premise (> prem-count 1))
+         (proof-tree-remove-premise pt i forwards?))
+        ;; Backspace at start of field: move to previous field in visual order
+        ;; (does nothing if in conclusion, as it's not in visual order)
+        ((and (not forwards?) at-start)
+         (proof-tree-move-to-adjacent-field pt i #f))
+        ;; Delete at end of field: move to next field in visual order
+        ;; (does nothing if in conclusion, as it's not in visual order)
+        ((and forwards? at-end)
+         (proof-tree-move-to-adjacent-field pt i #t))
+        ;; Otherwise, do normal text removal
+        (else (remove-text forwards?))))))
+
+;; Override remove-structure-upwards for proof-tree
+;; When inside a proof-tree, remove the entire with structure, not just the tree tag
+(tm-define (remove-structure-upwards)
+  (:require (inside-proof-tree?))
+  (with pt (tree-innermost 'tree)
+    (with with-t (find-proof-tree-with pt)
+      (if with-t
+          ;; Replace the with structure with the conclusion content
+          (let* ((conc-idx (proof-tree-conclusion-idx pt))
+                 (conclusion (tree-ref pt conc-idx)))
+            (tree-set! with-t (tree-copy conclusion))
+            (tree-go-to with-t :end))
+          ;; Fallback to default behavior
+          (former)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Extra editing functions

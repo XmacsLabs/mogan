@@ -363,14 +363,6 @@ edit_interface_rep::compute_compound_footer (tree t, path p) {
   case TREE:
     if (l == 0) return concat (up, "root ");
     else return concat (up, "branch(" * as_string (l) * ") ");
-  case PROOF_TREE:
-    if (l == 0) return concat (up, "conclusion ");
-    else return concat (up, "premise(" * as_string (l) * ") ");
-  case VAR_PROOF_TREE:
-  case VAR_VAR_PROOF_TREE:
-    if (l == 0) return concat (up, "label ");
-    else if (l == 1) return concat (up, "conclusion ");
-    else return concat (up, "premise(" * as_string (l - 1) * ") ");
   case TFORMAT:
     return up;
   case TABLE:

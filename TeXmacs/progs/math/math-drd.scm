@@ -16,10 +16,7 @@
 
 (define-group variant-tag
   (fraction-tag) (vertical-script-tag)
-  (textual-operator-tag) (proof-tree-tag))
-
-(define-group proof-tree-tag
-  proof-tree proof-tree* proof-tree**)
+  (textual-operator-tag))
 
 (define-group fraction-tag
   frac tfrac dfrac frac* cfrac)

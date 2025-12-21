@@ -161,6 +161,25 @@
 
   <assign|cfrac|<macro|x|y|<with|mode|math|<dfrac|<arg|x>|<resize|<arg|y>|||<plus|1r|-1sep>|>>>>>
 
+  <\comment>
+    Proof tree macros: wrap tree primitive with tree-mode=proof
+    - proof-tree: no label
+    - proof-tree*: label on right
+    - proof-tree**: label on left
+  </comment>
+
+  <assign|proof-tree|<macro|body|<with|tree-mode|proof|<arg|body>>>>
+
+  <assign|proof-tree*|<macro|body|<with|tree-mode|proof|tree-label-pos|right|<arg|body>>>>
+
+  <assign|proof-tree**|<macro|body|<with|tree-mode|proof|tree-label-pos|left|<arg|body>>>>
+
+  <drd-props|proof-tree|arity|1>
+
+  <drd-props|proof-tree*|arity|1>
+
+  <drd-props|proof-tree**|arity|1>
+
   <assign|frac*|<macro|x|y|<move|<lsup|<arg|x>><resize|/|<plus|1l|0.15em>|<plus|1b|0.5em>|<minus|1r|0.15em>|<minus|1t|0.5em>><rsub|<arg|y>>||0.05em>>>
 
   <drd-props|frac*|arity|2|syntax|<macro|x|y|<arg|x>/<arg|y>>>

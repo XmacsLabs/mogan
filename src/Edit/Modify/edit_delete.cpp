@@ -233,9 +233,6 @@ edit_text_rep::remove_text_sub (bool forward) {
       back_in_wide (u, p, forward);
       return;
     case TREE:
-    case PROOF_TREE:
-    case VAR_PROOF_TREE:
-    case VAR_VAR_PROOF_TREE:
       back_in_tree (u, p, forward);
       return;
     case TFORMAT:
