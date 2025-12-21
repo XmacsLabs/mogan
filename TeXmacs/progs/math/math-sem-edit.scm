@@ -435,6 +435,8 @@
 (wrap-inserter make-neg)
 (wrap-inserter make-tree)
 (wrap-inserter make-proof-tree)
+(wrap-inserter make-proof-tree*)
+(wrap-inserter make-proof-tree**)
 (wrap-inserter make-long-arrow)
 (wrap-inserter make-long-arrow*)
 

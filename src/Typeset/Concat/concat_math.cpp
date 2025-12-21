@@ -612,28 +612,36 @@ concater_rep::typeset_tree (tree t, path ip) {
     typeset_error (t, ip);
     return;
   }
-  int        i, n= N (t);
-  array<box> bs (n);
-  for (i= 0; i < n; i++)
-    bs[i]= typeset_as_concat (env, t[i], descend (ip, i));
-  print (tree_box (ip, bs, env->fn, env->pen));
-}
 
-void
-concater_rep::typeset_proof_tree (tree t, path ip, bool has_label,
-                                  bool label_left) {
-  int min_children= has_label ? 3 : 2;
-  if (N (t) < min_children) {
-    typeset_error (t, ip);
-    return;
+  // Check tree-mode environment variable
+  string mode= as_string (env->read (TREE_MODE));
+
+  if (mode == "proof") {
+    // Proof tree mode: check for label position
+    string label_pos = as_string (env->read (TREE_LABEL_POS));
+    bool   has_label = (label_pos == "left" || label_pos == "right");
+    bool   label_left= (label_pos == "left");
+
+    int min_children= has_label ? 3 : 2;
+    if (N (t) < min_children) {
+      typeset_error (t, ip);
+      return;
+    }
+
+    int        i, n= N (t);
+    array<box> bs (n);
+    for (i= 0; i < n; i++)
+      bs[i]= typeset_as_concat (env, t[i], descend (ip, i));
+    print (proof_tree_box (ip, bs, env->fn, env->pen, has_label, label_left));
   }
-  int        i, n= N (t);
-  array<box> bs (n);
-  // For labeled: t[0] is label, t[1] is conclusion, t[2..n-1] are premises
-  // For unlabeled: t[0] is conclusion, t[1..n-1] are premises
-  for (i= 0; i < n; i++)
-    bs[i]= typeset_as_concat (env, t[i], descend (ip, i));
-  print (proof_tree_box (ip, bs, env->fn, env->pen, has_label, label_left));
+  else {
+    // Normal tree mode (default)
+    int        i, n= N (t);
+    array<box> bs (n);
+    for (i= 0; i < n; i++)
+      bs[i]= typeset_as_concat (env, t[i], descend (ip, i));
+    print (tree_box (ip, bs, env->fn, env->pen));
+  }
 }
 
 void
