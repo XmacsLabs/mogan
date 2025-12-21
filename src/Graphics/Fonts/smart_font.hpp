@@ -132,14 +132,26 @@ struct smart_font_rep : font_rep {
   glyph  get_glyph (string s);
   int    index_glyph (string s, font_metric& fnm, font_glyphs& fng);
   double get_left_slope (string s);
+
+  /**
+   * 获取字符串右侧的斜率。
+   *
+   * 此函数返回给定字符串右侧的倾斜角度，用于光标显示。
+   * 针对非斜体模式下的CJK字符和数学符号，若斜率小于0.20则强制垂直。
+   * 同时考虑字体粗体(series)属性，对粗体字体进行特殊处理。
+   *
+   * @param s 输入字符串
+   * @return 右侧斜率值，0.0表示垂直
+   */
   double get_right_slope (string s);
-  SI     get_left_correction (string s);
-  SI     get_right_correction (string s);
-  SI     get_lsub_correction (string s);
-  SI     get_lsup_correction (string s);
-  SI     get_rsub_correction (string s);
-  SI     get_rsup_correction (string s);
-  SI     get_wide_correction (string s, int mode);
+
+  SI get_left_correction (string s);
+  SI get_right_correction (string s);
+  SI get_lsub_correction (string s);
+  SI get_lsup_correction (string s);
+  SI get_rsub_correction (string s);
+  SI get_rsup_correction (string s);
+  SI get_wide_correction (string s, int mode);
 };
 
 #endif
