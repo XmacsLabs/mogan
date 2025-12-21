@@ -14,6 +14,7 @@
 #include "converter.hpp"
 #include "data_cache.hpp"
 #include "font.hpp"
+#include "qtestcase.h"
 #include "smart_font.hpp"
 #include "sys_utils.hpp"
 #include "tm_sys_utils.hpp"
@@ -33,6 +34,7 @@ private slots:
   void test_resolve ();
   void test_resolve_first_attempt ();
   void test_resolve_chinese_puncts ();
+  void test_get_right_slope ();
 };
 
 void
@@ -82,6 +84,17 @@ TestSmartFont::test_resolve_chinese_puncts () {
     int fn_index= fn_rep->resolve (puncts[1], "cjk=Noto CJK SC", 1);
     QCOMPARE (fn_index, 2);
   }
+}
+
+void
+TestSmartFont::test_get_right_slope () {
+  font fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
+  smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
+  QCOMPARE (fn_rep->get_right_slope (utf8_to_cork ("典")), 0.0);
+
+  fn    = smart_font ("sys-chinese", "rm", "bold", "right", 10, 600);
+  fn_rep= (smart_font_rep*) fn.rep;
+  QCOMPARE (fn_rep->get_right_slope (utf8_to_cork ("典")), 0.0);
 }
 
 QTEST_MAIN (TestSmartFont)
