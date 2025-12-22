@@ -124,14 +124,14 @@ QTMImagePopup::updatePosition () {
   move (pos_x, pos_y);
 }
 
-void 
+void
 QTMImagePopup::autoSize () {
-  QScreen* Screen = QGuiApplication::primaryScreen();
-  const double Dpi = Screen ? Screen->logicalDotsPerInch() : 96.0;
-  const double Scale = Dpi / 96.0;
-  const int baseWidth = 200;
-  const int baseHeight = 50;
-  double totalScale = Scale * cached_magf * 3.3;
+  QScreen*     Screen    = QGuiApplication::primaryScreen ();
+  const double Dpi       = Screen ? Screen->logicalDotsPerInch () : 96.0;
+  const double Scale     = Dpi / 96.0;
+  const int    baseWidth = 200;
+  const int    baseHeight= 50;
+  double       totalScale= Scale * cached_magf * 3.3;
 #if defined(Q_OS_MAC)
   const int IconSize= int (50 * Scale);
 #else
@@ -141,7 +141,7 @@ QTMImagePopup::autoSize () {
   middleBtn->setIconSize (QSize (IconSize, IconSize));
   rightBtn->setIconSize (QSize (IconSize, IconSize));
   ocrBtn->setIconSize (QSize (IconSize, IconSize));
-  setFixedSize(int(baseWidth * totalScale), int(baseHeight * totalScale));
+  setFixedSize (int (baseWidth * totalScale), int (baseHeight * totalScale));
 }
 
 void
