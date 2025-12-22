@@ -87,6 +87,10 @@ void
 QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
                                int scroll_y, int canvas_x) {
   cachePosition (selr, magf, scroll_x, scroll_y, canvas_x);
+  if (cached_magf <= 0.16) {
+    setFixedSize (0, 0);
+    return;
+  }
   autoSize ();
   int x, y;
   getCachedPosition (x, y);
