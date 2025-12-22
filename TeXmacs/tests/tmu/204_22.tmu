@@ -1,0 +1,74 @@
+<TMU|<tuple|1.1.0|2025.2.2>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <cite|li_efficitnt_2024><cite|li_solving_2023><cite|Li_accelerating_2022><cite|dong_generalizing_2024><cite|li_removing_2024><cite|li_bayes_2024><cite|yu_eapcr_2024>
+
+  <\bibliography|bib|tm-plain|mybib>
+    <\bib-list|7>
+      <bibitem*|1><label|bib-dong_generalizing_2024>Zeyu Dong, Yimin Zhu, Yansong Li, Kevin Mahon, and Yu Sun. <newblock>Generalizing end-to-end autonomous driving in real-world environments using zero-shot LLMs. <newblock>In <with|font-shape|italic|8th Annual Conference on Robot Learning>. 2024.<newblock>
+
+      <bibitem*|2><label|bib-li_bayes_2024>Yansong Li, Zeyu Dong, and Shuo Han. <newblock>Bayes-Optimal, Robust, and Distributionally Robust Policies for Uncertain MDPs. <newblock>10 2024.<newblock>
+
+      <bibitem*|3><label|bib-li_removing_2024>Yansong Li, Zeyu Dong, and Shuo Han. <newblock>Removing Redundant Partner Policies May Be Unnecessary for Ad Hoc Teamwork. <newblock>10 2024.<newblock>
+
+      <bibitem*|4><label|bib-Li_accelerating_2022>Yansong Li and Shuo Han. <newblock>Accelerating model-free policy optimization using model-based gradient: A composite optimization perspective. <newblock>In Roya Firoozi, Negar Mehr, Esen Yel, Rika Antonova, Jeannette Bohg, Mac Schwager, and Mykel<nbsp>J.<nbsp>Kochenderfer, editors, <with|font-shape|italic|Learning for Dynamics and Control Conference, L4DC 2022, 23-24 June 2022, Stanford University, Stanford, CA, USA>, volume 168 of <with|font-shape|italic|Proceedings of Machine Learning Research>, pages 304-315. PMLR, 2022.<newblock>
+
+      <bibitem*|5><label|bib-li_solving_2023>Yansong Li and Shuo Han. <newblock>Solving strongly convex and smooth stackelberg games without modeling the follower. <newblock>In <with|font-shape|italic|American Control Conference, ACC 2023, San Diego, CA, USA, May 31 - June 2, 2023>, pages 2332-2337. IEEE, 2023.<newblock>
+
+      <bibitem*|6><label|bib-li_efficitnt_2024>Yansong Li and Shuo Han. <newblock>Efficient collaboration with unknown agents: ignoring similar agents without checking similarity. <newblock>In Mehdi Dastani, Jaime<nbsp>Simão Sichman, Natasha Alechina, and Virginia Dignum, editors, <with|font-shape|italic|Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems, AAMAS 2024, Auckland, New Zealand, May 6-10, 2024>, pages 2363-2365. International Foundation for Autonomous Agents and Multiagent Systems / ACM, 2024.<newblock>
+
+      <bibitem*|7><label|bib-yu_eapcr_2024>Zhuohang Yu, Ling An, Yansong Li, Yu Wu, Zeyu Dong, Zhangdi Liu, Le Gao, Zhenyu Zhang, and Chichun Zhou. <newblock>Eapcr: a universal feature extractor for scientific data without explicit feature relation patterns. <newblock>2024.<newblock>
+    </bib-list>
+  </bibliography>
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|bib-no-translate|true>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|?|1>>
+    <associate|auto-2|<tuple|1|?>>
+    <associate|auto-3|<tuple|1|?>>
+    <associate|auto-4|<tuple|1.1|?>>
+    <associate|bib-Li_accelerating_2022|<tuple|4|1>>
+    <associate|bib-dong_generalizing_2024|<tuple|1|1>>
+    <associate|bib-li_bayes_2024|<tuple|2|1>>
+    <associate|bib-li_efficitnt_2024|<tuple|6|1>>
+    <associate|bib-li_removing_2024|<tuple|3|1>>
+    <associate|bib-li_solving_2023|<tuple|5|1>>
+    <associate|bib-yu_eapcr_2024|<tuple|7|1>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|bib>
+      li_efficitnt_2024
+
+      li_solving_2023
+
+      Li_accelerating_2022
+
+      dong_generalizing_2024
+
+      li_removing_2024
+
+      li_bayes_2024
+
+      yu_eapcr_2024
+    </associate>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|参考文献><datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-1><vspace|0.5fn>
+    </associate>
+  </collection>
+</auxiliary>

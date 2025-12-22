@@ -373,6 +373,10 @@
                           hlink locus ornament)))
   #t)
 
+(tm-define (focus-has-preferences? t)
+  (:require (tree-in? t '(bibliography bibliography* thebibliography)))
+  #t)
+
 (tm-define (focus-has-parameters? t)
   (focus-has-preferences? t))
 
@@ -848,6 +852,10 @@
 (tm-define (standard-parameters l)
   (:require (in? l '("reference" "pageref" "eqref" "smart-ref" "label" "tag")))
   (list))
+
+(tm-define (standard-parameters l)
+  (:require (in? l '("bibliography" "bibliography*" "thebibliography")))
+  (list "bib-no-translate"))
 
 (tm-define (search-parameters l)
   (:require (in? (if (string? l) l (symbol->string l))
