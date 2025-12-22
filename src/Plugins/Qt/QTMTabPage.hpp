@@ -24,6 +24,7 @@
 #include <QWKWidgets/widgetwindowagent.h>
 #include <basic.hpp>
 #include <scheme.hpp>
+#include <QTMAuxiliaryWidget.hpp>
 
 /*! QTMTabPage is used to build a widget for tab page.
  */
@@ -34,7 +35,7 @@ class QTMTabPage : public QToolButton {
 
 public:
   const url m_viewUrl;
-
+  QTMAuxiliaryWidget* m_auxiliaryWidget = nullptr;
 public:
   explicit QTMTabPage (url p_url, QAction* p_title, QAction* p_closeBtn,
                        bool p_isActive);
@@ -89,6 +90,7 @@ class QTMTabPageContainer : public QWidget {
   QToolButton*       m_addTabButton;
 
 public:
+  QTMTabPage* currentTabPage();  //获取当前选中的标签页
   QTMTabPage* dummyTabPage;
   explicit QTMTabPageContainer (QWidget* p_parent);
   ~QTMTabPageContainer ();

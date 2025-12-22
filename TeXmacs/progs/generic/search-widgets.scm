@@ -75,10 +75,10 @@ action : string
 (define search-window #f)
 
 (tm-define (search-buffer)
-  (string->url "tmfs://aux/search"))
+  (string->url (string-append "tmfs://aux/search/" (url->string (url-tail(current-view-url))))))
 
 (tm-define (replace-buffer)
-  (string->url "tmfs://aux/replace"))
+  (string->url (string-append "tmfs://aux/replace" (url->string (url-tail(current-view-url))))))
 
 (tm-define (master-buffer)
   (and (buffer-exists? (search-buffer))

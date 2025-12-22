@@ -1257,6 +1257,13 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
   case SLOT_AUXILIARY_WIDGET:
     check_type_void (index, s);
     {
+      // QTMTabPage* currentTab = tabPageContainer->currentTabPage();
+      // if(auxiliaryWidget) delete auxiliaryWidget;
+      // if(!currentTab->m_auxiliaryWidget) 
+      //   currentTab->m_auxiliaryWidget = new QTMAuxiliaryWidget ("auxiliary widget", 0);
+      // auxiliaryWidget = currentTab->m_auxiliaryWidget;
+      // auxiliaryWidget->setWindowFlags(Qt::WindowStaysOnTopHint);
+
       auxiliary_widget    = concrete (w);
       QWidget* new_qwidget= auxiliary_widget->as_qwidget ();
       QWidget* old_qwidget= auxiliaryWidget->widget ();
