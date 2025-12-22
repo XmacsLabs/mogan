@@ -97,7 +97,6 @@ protected:
   list<string>      focus_ids;
   int               cur_sb, cur_wb;
   SI                cur_wx, cur_wy;
-  rectangles        keys_rects;
 
 public:
   edit_interface_rep ();
@@ -141,7 +140,6 @@ public:
   void draw_cursor (renderer ren);
   void draw_selection (renderer ren, rectangle r);
   void draw_graphics (renderer ren);
-  void draw_keys (renderer ren);
   void draw_pre (renderer win, renderer ren, rectangle r);
   void draw_post (renderer win, renderer ren, rectangle r);
   void draw_with_shadow (renderer win, rectangle r);

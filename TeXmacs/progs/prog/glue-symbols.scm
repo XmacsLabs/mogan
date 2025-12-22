@@ -82,8 +82,6 @@
 "bench-print"
 "bench-print-all"
 "system-wait"
-"get-show-kbd"
-"set-show-kbd"
 "set-latex-command"
 "set-bibtex-command"
 "number-latex-errors"

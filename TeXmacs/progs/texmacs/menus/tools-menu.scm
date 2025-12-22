@@ -37,8 +37,7 @@
   (-> "Macros"
       (link source-macros-menu))
   (-> "Keyboard"
-      ("Edit keyboard shortcuts" (open-shortcuts-editor "" ""))
-      ("Show key presses" (toggle-show-kbd)))
+      ("Edit keyboard shortcuts" (open-shortcuts-editor "" "")))
   (-> "Speech"
       ("Off" (reset-preference "speech"))
       ---

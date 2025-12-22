@@ -178,19 +178,6 @@ function main()
                 }
             },
             {
-                scm_name = "get-show-kbd",
-                cpp_name = "get_show_kbd",
-                ret_type = "bool"
-            },
-            {
-                scm_name = "set-show-kbd",
-                cpp_name = "set_show_kbd",
-                ret_type = "void",
-                arg_list = {
-                    "bool"
-                }
-            },
-            {
                 scm_name = "math-symbol-group",
                 cpp_name = "math_symbol_group",
                 ret_type = "string",

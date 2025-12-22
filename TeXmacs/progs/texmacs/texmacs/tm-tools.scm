@@ -151,11 +151,6 @@
   (let ((new (if (== (get-env "save-aux") "true") "false" "true")))
     (init-env "save-aux" new)))
 
-(tm-define (toggle-show-kbd)
-  (:synopsis "Toggle whether we show keyboard presses")
-  (:check-mark "v" get-show-kbd)
-  (set-show-kbd (not (get-show-kbd))))
-
 (tm-define (clear-font-cache)
   (:synopsis "Clear font cache under TEXMACS_HOME_PATH and local cache path.")
   (system-remove (url-append (get-tm-cache-path) (string->url "font_cache.scm")))
