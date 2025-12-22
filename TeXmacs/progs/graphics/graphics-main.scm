@@ -830,12 +830,52 @@
 ;; Graphics edit mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+#|
+graphics-mode
+获取当前绘图编辑模式。
+
+语法
+----
+(graphics-mode)
+
+返回值
+----
+list
+表示绘图模式的符号列表。有两种可能的格式：
+1. (edit 模式) 格式：当 gr-mode 是单个模式时
+   - 例如：'(edit point)     - 点编辑模式
+   - 例如：'(edit move)      - 移动模式
+   - 例如：'(edit none)      - 无特定模式
+
+2. (模式1 模式2 ...) 格式：当 gr-mode 是复合模式时
+   - 例如：'(group-edit edit-props)    - 组编辑模式下的属性编辑
+   - 例如：'(hand-edit penscript)      - 手绘编辑模式下的笔迹编辑
+   - 例如：'(group-edit rotate)        - 组编辑模式下的旋转操作
+
+常见的绘图模式符号：
+- 基本模式：point, move, zoom, rotate, magnify, create
+- 组编辑：group-edit
+- 手绘编辑：hand-edit
+- 属性编辑：edit-props, edit-color, edit-opacity
+- 笔迹相关：penscript, penwidth, pencolor
+
+注意
+----
+- 存在绘图模式的容错处理，支持处理 <tuple|模式1|模式2># 这样的 concat 结构
+|#
 (tm-define (graphics-mode)
   (with m (tree->stree (get-env-tree "gr-mode"))
     (cond ((string? m)
            `(edit ,(string->symbol m)))
           ((== m '(uninit))
            `(edit none))
+          ((and (pair? m) (== (car m) 'concat))
+           ;; Handle concat structure, find tuple element
+           (with tuple-elem (list-find (cdr m)
+                                (lambda (x) (and (pair? x) (== (car x) 'tuple))))
+              (if tuple-elem
+                 (map string->symbol (cdr tuple-elem))
+                 '(edit none))))
           ((pair? m)
            (map string->symbol (cdr m))))))
 

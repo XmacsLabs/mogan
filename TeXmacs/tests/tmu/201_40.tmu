@@ -1,0 +1,46 @@
+<TMU|<tuple|1.1.0|2025.2.3-beta3>>
+
+<style|<tuple|generic|number-europe>>
+
+<\body>
+  test1:
+
+  <\render-code>
+    gr-mode\|\<less\>tuple\|group-edit\|edit-props\<gtr\>#\|
+  </render-code>
+
+  <with|gr-mode|<tuple|group-edit|edit-props>#|gr-frame|<tuple|scale|1.00002cm|<tuple|0.5gw|0.44gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-grid|<tuple|cartesian|<point|0|0>|2>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|cartesian|<point|0|0>|1>|gr-snap|<tuple|control point|grid point|curve-curve intersection|text border point|text border>|gr-fill-color|light grey|gr-grid-old|<tuple|cartesian|<point|0|0>|2>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-auto-crop|false|<graphics||<with|fill-color|light grey|<point|0.2|0.6000000000000001>>|<with|fill-color|light grey|<cline|<point|-0.4|1.2>|<point|-0.8000000000000003|1.2>|<point|-0.8000000000000003|0.8000000000000002>|<point|-0.40000000000000024|0.8000000000000002>>>|<line|<point|0.7999999999999999|0.4000000000000001>|<point|0.0|0.4000000000000001>>|<line|<point|-0.4|0.8000000000000002>|<point|0.8000000000000003|0.8000000000000002>|<point|0.8000000000000003|2.220446049250313e-16>|<point|0.4000000000000002|2.220446049250313e-16>|<point|0.4000000000000002|0.8000000000000002>>|<line|<point|-0.4|1.2>|<point|-0.40000000000000024|0.4000000000000001>|<point|0.0|0.4000000000000001>|<point|0.0|1.2>|<point|-0.40000000000000024|1.2>>>>
+
+  \;
+
+  \;
+
+  test1:
+
+  <\render-code>
+    gr-mode\|#\<less\>tuple\|group-edit\|edit-props\<gtr\>\|
+  </render-code>
+
+  <with|gr-mode|#<tuple|group-edit|edit-props>|gr-frame|<tuple|scale|1.00002cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-grid|<tuple|cartesian|<point|0|0>|2>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|cartesian|<point|0|0>|1>|gr-snap|<tuple|control point|grid point|curve-curve intersection|text border point|text border>|gr-fill-color|light grey|gr-grid-old|<tuple|cartesian|<point|0|0>|2>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-auto-crop|false|<graphics||<with|fill-color|light grey|<point|0.2|0.6000000000000001>>|<with|fill-color|light grey|<cline|<point|-0.4|1.2>|<point|-0.8000000000000003|1.2>|<point|-0.8000000000000003|0.8000000000000002>|<point|-0.40000000000000024|0.8000000000000002>>>|<line|<point|0.7999999999999999|0.4000000000000001>|<point|0.0|0.4000000000000001>>|<line|<point|-0.4|0.8000000000000002>|<point|0.8000000000000003|0.8000000000000002>|<point|0.8000000000000003|2.220446049250313e-16>|<point|0.4000000000000002|2.220446049250313e-16>|<point|0.4000000000000002|0.8000000000000002>>|<line|<point|-0.4|1.2>|<point|-0.40000000000000024|0.4000000000000001>|<point|0.0|0.4000000000000001>|<point|0.0|1.2>|<point|-0.40000000000000024|1.2>>>>
+
+  \;
+
+  \;
+
+  test3:
+
+  <\render-code>
+    gr-mode\|\<less\>tuple\|group-edit\|edit-props\<gtr\>\|
+  </render-code>
+
+  \;
+
+  <with|gr-mode|#<tuple|group-edit|edit-props>|gr-frame|<tuple|scale|1.00002cm|<tuple|0.5gw|0.5gh>>|gr-geometry|<tuple|geometry|1par|0.6par>|gr-grid|<tuple|cartesian|<point|0|0>|2>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|cartesian|<point|0|0>|1>|gr-snap|<tuple|control point|grid point|curve-curve intersection|text border point|text border>|gr-fill-color|light grey|gr-grid-old|<tuple|cartesian|<point|0|0>|2>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|1>|gr-auto-crop|false|<graphics||<with|fill-color|light grey|<point|0.2|0.6000000000000001>>|<with|fill-color|light grey|<cline|<point|-0.4|1.2>|<point|-0.8000000000000003|1.2>|<point|-0.8000000000000003|0.8000000000000002>|<point|-0.40000000000000024|0.8000000000000002>>>|<line|<point|0.7999999999999999|0.4000000000000001>|<point|0.0|0.4000000000000001>>|<line|<point|-0.4|0.8000000000000002>|<point|0.8000000000000003|0.8000000000000002>|<point|0.8000000000000003|2.220446049250313e-16>|<point|0.4000000000000002|2.220446049250313e-16>|<point|0.4000000000000002|0.8000000000000002>>|<line|<point|-0.4|1.2>|<point|-0.40000000000000024|0.4000000000000001>|<point|0.0|0.4000000000000001>|<point|0.0|1.2>|<point|-0.40000000000000024|1.2>>>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
