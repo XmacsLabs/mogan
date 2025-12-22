@@ -39,39 +39,25 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   effect->setOffset (0, 4);
   effect->setColor (QColor (0, 0, 0, 120));
   this->setGraphicsEffect (effect);
-
-  QScreen*     Screen= QGuiApplication::primaryScreen ();
-  const double Dpi   = Screen ? Screen->logicalDotsPerInch () : 96.0;
-  const double Scale = Dpi / 96.0;
-#if defined(Q_OS_MAC)
-  const int IconSize= int (50 * Scale);
-#else
-  const int IconSize= int (40 * Scale);
-#endif
-
   leftBtn= new QToolButton ();
   leftBtn->setObjectName ("image-align-button");
   leftBtn->setProperty ("icon-name", "left");
   leftBtn->setIcon (QIcon (":/window-bar/left-align.svg"));
-  leftBtn->setIconSize (QSize (IconSize, IconSize));
   leftBtn->setCheckable (true);
   middleBtn= new QToolButton ();
   middleBtn->setObjectName ("image-align-button");
   middleBtn->setProperty ("icon-name", "center");
   middleBtn->setIcon (QIcon (":/window-bar/middle-align.svg"));
-  middleBtn->setIconSize (QSize (IconSize, IconSize));
   middleBtn->setCheckable (true);
   rightBtn= new QToolButton ();
   rightBtn->setObjectName ("image-align-button");
   rightBtn->setProperty ("icon-name", "right");
   rightBtn->setIcon (QIcon (":/window-bar/right-align.svg"));
-  rightBtn->setIconSize (QSize (IconSize, IconSize));
   rightBtn->setCheckable (true);
   ocrBtn= new QToolButton ();
   ocrBtn->setObjectName ("image-align-button");
   ocrBtn->setProperty ("icon-name", "ocr");
   ocrBtn->setIcon (QIcon (":/window-bar/ocr.svg"));
-  ocrBtn->setIconSize (QSize (IconSize, IconSize));
   QButtonGroup* alignGroup= new QButtonGroup (this);
   alignGroup->addButton (leftBtn);
   alignGroup->addButton (middleBtn);
@@ -101,7 +87,7 @@ void
 QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
                                int scroll_y, int canvas_x) {
   cachePosition (selr, magf, scroll_x, scroll_y, canvas_x);
-  this->adjustSize ();
+  autoSize ();
   int x, y;
   getCachedPosition (x, y);
   QPoint topLeft (x, y);
@@ -136,6 +122,26 @@ QTMImagePopup::updatePosition () {
   int pos_x, pos_y;
   getCachedPosition (pos_x, pos_y);
   move (pos_x, pos_y);
+}
+
+void 
+QTMImagePopup::autoSize () {
+  QScreen* Screen = QGuiApplication::primaryScreen();
+  const double Dpi = Screen ? Screen->logicalDotsPerInch() : 96.0;
+  const double Scale = Dpi / 96.0;
+  const int baseWidth = 200;
+  const int baseHeight = 50;
+  double totalScale = Scale * cached_magf * 3.3;
+#if defined(Q_OS_MAC)
+  const int IconSize= int (50 * Scale);
+#else
+  const int IconSize= int (40 * totalScale);
+#endif
+  leftBtn->setIconSize (QSize (IconSize, IconSize));
+  middleBtn->setIconSize (QSize (IconSize, IconSize));
+  rightBtn->setIconSize (QSize (IconSize, IconSize));
+  ocrBtn->setIconSize (QSize (IconSize, IconSize));
+  setFixedSize(int(baseWidth * totalScale), int(baseHeight * totalScale));
 }
 
 void
