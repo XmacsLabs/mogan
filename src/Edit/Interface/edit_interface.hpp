@@ -141,7 +141,6 @@ public:
   void draw_cursor (renderer ren);
   void draw_selection (renderer ren, rectangle r);
   void draw_graphics (renderer ren);
-  void draw_keys (renderer ren);
   void draw_pre (renderer win, renderer ren, rectangle r);
   void draw_post (renderer win, renderer ren, rectangle r);
   void draw_with_shadow (renderer win, rectangle r);
