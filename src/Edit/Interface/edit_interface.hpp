@@ -97,7 +97,6 @@ protected:
   list<string>      focus_ids;
   int               cur_sb, cur_wb;
   SI                cur_wx, cur_wy;
-  rectangles        keys_rects;
 
 public:
   edit_interface_rep ();
