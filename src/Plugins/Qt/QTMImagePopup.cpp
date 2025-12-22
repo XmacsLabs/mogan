@@ -77,15 +77,17 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   alignGroup->addButton (middleBtn);
   alignGroup->addButton (rightBtn);
   alignGroup->setExclusive (true);
-  connect (alignGroup, QOverload<QAbstractButton*>::of (&QButtonGroup::buttonClicked),
-           this, [=] (QAbstractButton* button) {
+  connect (alignGroup,
+           QOverload<QAbstractButton*>::of (&QButtonGroup::buttonClicked), this,
+           [=] (QAbstractButton* button) {
              if (button == leftBtn)
-              call ("set-image-alignment", current_tree, "left");
+               call ("set-image-alignment", current_tree, "left");
              else if (button == middleBtn)
-              call ("set-image-alignment", current_tree, "center");
+               call ("set-image-alignment", current_tree, "center");
              else if (button == rightBtn)
-              call ("set-image-alignment", current_tree, "right");
-            current_align = as_string (call ("get-image-alignment", current_tree));
+               call ("set-image-alignment", current_tree, "right");
+             current_align=
+                 as_string (call ("get-image-alignment", current_tree));
            });
   layout->addWidget (leftBtn);
   layout->addWidget (middleBtn);
@@ -105,7 +107,7 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
   QPoint topLeft (x, y);
   move (topLeft);
   raise ();
-  updateButtonStates();
+  updateButtonStates ();
   show ();
 }
 
@@ -114,16 +116,13 @@ QTMImagePopup::setImageTree (tree t) {
   this->current_tree= t;
 }
 
-void 
-QTMImagePopup::updateButtonStates() {
+void
+QTMImagePopup::updateButtonStates () {
   if (current_align == "")
-  current_align = as_string (call ("get-image-alignment", current_tree));
-  if (current_align == "left")
-  leftBtn->setChecked(true);
-  else if (current_align == "center")
-  middleBtn->setChecked(true);
-  else if (current_align == "right")
-  rightBtn->setChecked(true);
+    current_align= as_string (call ("get-image-alignment", current_tree));
+  if (current_align == "left") leftBtn->setChecked (true);
+  else if (current_align == "center") middleBtn->setChecked (true);
+  else if (current_align == "right") rightBtn->setChecked (true);
 }
 
 void
@@ -158,19 +157,4 @@ QTMImagePopup::getCachedPosition (int& x, int& y) {
      (this->width () / 2);
   y= -((cached_image_mid_y - 5000 - cached_scroll_y) * cached_magf) / 256 -
      this->height () * 1.2;
-}
-
-void
-QTMImagePopup::paintEvent (QPaintEvent* event) {
-  // 保持原有绘制
-  // QPainter painter (this);
-  // painter.setRenderHint (QPainter::Antialiasing);
-  // // 绘制白色背景
-  // painter.setPen (Qt::NoPen);
-  // painter.setBrush (QColor (255, 255, 255, 255));
-  // QRectF bgRect= this->rect ();
-  // painter.drawRoundedRect (bgRect, 6, 6);
-  // QRectF rect= this->rect ();
-  // rect.adjust (0.75, 0.75, -0.75, -0.75); // 居中描边
-  // painter.drawRoundedRect (rect, 6, 6);   // 圆角
 }

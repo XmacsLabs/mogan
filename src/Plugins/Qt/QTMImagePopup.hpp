@@ -49,16 +49,12 @@ public:
   void updatePosition ();
   void scrollBy (int x, int y);
   void setImageTree (tree t);
-  void updateButtonStates();
+  void updateButtonStates ();
 
 protected:
   void cachePosition (rectangle selr, double magf, int scroll_x, int scroll_y,
                       int canvas_x);
   void getCachedPosition (int& x, int& y);
-
-protected:
-  void paintEvent (QPaintEvent* event);
-  bool eventFilter ();
 };
 
 #endif // QT_IMAGE_POPUP_HPP
