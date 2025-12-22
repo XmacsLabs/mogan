@@ -2045,10 +2045,8 @@ parse_latex (string s, bool change, bool as_pic) {
   ltx.lf   = 'M';
   ltx.pic  = as_pic;
   string s1= s;
-  cout << s << LF;
-  r= ltx.parse (s1, change ? 2 : 0);
-  r= accented_to_Cork (r);
-  cout << r << LF;
+  r        = ltx.parse (s1, change ? 2 : 0);
+  r        = accented_to_Cork (r);
   if (lan == "") return r;
   return compound ("!language", r, lan);
 }
