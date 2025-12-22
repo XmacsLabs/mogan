@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "QTMImagePopup.hpp"
+#include "qbuttongroup.h"
 #include "server.hpp"
 
 #include <QIcon>
@@ -48,42 +49,48 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   const int IconSize= int (40 * Scale);
 #endif
 
-  leftBtn= new QPushButton ();
+  leftBtn= new QToolButton ();
   leftBtn->setObjectName ("image-align-button");
+  leftBtn->setProperty ("icon-name", "left");
   leftBtn->setIcon (QIcon (":/window-bar/left-align.svg"));
   leftBtn->setIconSize (QSize (IconSize, IconSize));
-  leftBtn->setStyleSheet (btn_style);
-  middleBtn= new QPushButton ();
+  leftBtn->setCheckable (true);
+  middleBtn= new QToolButton ();
   middleBtn->setObjectName ("image-align-button");
+  middleBtn->setProperty ("icon-name", "center");
   middleBtn->setIcon (QIcon (":/window-bar/middle-align.svg"));
   middleBtn->setIconSize (QSize (IconSize, IconSize));
-  middleBtn->setStyleSheet (btn_style);
-  rightBtn= new QPushButton ();
+  middleBtn->setCheckable (true);
+  rightBtn= new QToolButton ();
   rightBtn->setObjectName ("image-align-button");
+  rightBtn->setProperty ("icon-name", "right");
   rightBtn->setIcon (QIcon (":/window-bar/right-align.svg"));
   rightBtn->setIconSize (QSize (IconSize, IconSize));
-  rightBtn->setStyleSheet (btn_style);
-  ocrBtn= new QPushButton ();
+  rightBtn->setCheckable (true);
+  ocrBtn= new QToolButton ();
   ocrBtn->setObjectName ("image-align-button");
+  ocrBtn->setProperty ("icon-name", "ocr");
   ocrBtn->setIcon (QIcon (":/window-bar/ocr.svg"));
   ocrBtn->setIconSize (QSize (IconSize, IconSize));
-  ocrBtn->setStyleSheet (btn_style);
+  QButtonGroup* alignGroup= new QButtonGroup (this);
+  alignGroup->addButton (leftBtn);
+  alignGroup->addButton (middleBtn);
+  alignGroup->addButton (rightBtn);
+  alignGroup->setExclusive (true);
+  connect (alignGroup, QOverload<QAbstractButton*>::of (&QButtonGroup::buttonClicked),
+           this, [=] (QAbstractButton* button) {
+             if (button == leftBtn)
+              call ("set-image-alignment", current_tree, "left");
+             else if (button == middleBtn)
+              call ("set-image-alignment", current_tree, "center");
+             else if (button == rightBtn)
+              call ("set-image-alignment", current_tree, "right");
+            current_align = as_string (call ("get-image-alignment", current_tree));
+           });
   layout->addWidget (leftBtn);
   layout->addWidget (middleBtn);
   layout->addWidget (rightBtn);
   layout->addWidget (ocrBtn);
-  connect (leftBtn, &QPushButton::clicked, this, [=] () {
-    call ("set-image-alignment", current_tree, "left");
-    resetStyleSheet ();
-  });
-  connect (middleBtn, &QPushButton::clicked, this, [=] () {
-    call ("set-image-alignment", current_tree, "center");
-    resetStyleSheet ();
-  });
-  connect (rightBtn, &QPushButton::clicked, this, [=] () {
-    call ("set-image-alignment", current_tree, "right");
-    resetStyleSheet ();
-  });
 }
 
 QTMImagePopup::~QTMImagePopup () {}
@@ -98,34 +105,25 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
   QPoint topLeft (x, y);
   move (topLeft);
   raise ();
-  resetStyleSheet ();
+  updateButtonStates();
   show ();
-}
-
-void
-QTMImagePopup::resetStyleSheet () {
-  leftBtn->setStyleSheet("QPushButton { background-color: transparent;}");
-  middleBtn->setStyleSheet("QPushButton { background-color: transparent;}");
-  rightBtn->setStyleSheet("QPushButton { background-color: transparent;}");
-  object obj   = call ("get-image-alignment", current_tree);
-  current_align= object_to_string (obj);
-  if (current_align == left_str) {
-    leftBtn->setStyleSheet ("QPushButton { background-color: rgba(92, 184, "
-                            "255, 1); border: none; }");
-  }
-  else if (current_align == mid_str) {
-    middleBtn->setStyleSheet ("QPushButton { background-color: rgba(92, 184, "
-                              "255, 1); border: none; }");
-  }
-  else if (current_align == right_str) {
-    rightBtn->setStyleSheet ("QPushButton { background-color: rgba(92, 184, "
-                             "255, 1); border: none; }");
-  }
 }
 
 void
 QTMImagePopup::setImageTree (tree t) {
   this->current_tree= t;
+}
+
+void 
+QTMImagePopup::updateButtonStates() {
+  if (current_align == "")
+  current_align = as_string (call ("get-image-alignment", current_tree));
+  if (current_align == "left")
+  leftBtn->setChecked(true);
+  else if (current_align == "center")
+  middleBtn->setChecked(true);
+  else if (current_align == "right")
+  rightBtn->setChecked(true);
 }
 
 void
@@ -165,14 +163,14 @@ QTMImagePopup::getCachedPosition (int& x, int& y) {
 void
 QTMImagePopup::paintEvent (QPaintEvent* event) {
   // 保持原有绘制
-  QPainter painter (this);
-  painter.setRenderHint (QPainter::Antialiasing);
-  // 绘制白色背景
-  painter.setPen (Qt::NoPen);
-  painter.setBrush (QColor (255, 255, 255, 255));
-  QRectF bgRect= this->rect ();
-  painter.drawRoundedRect (bgRect, 6, 6);
-  QRectF rect= this->rect ();
-  rect.adjust (0.75, 0.75, -0.75, -0.75); // 居中描边
-  painter.drawRoundedRect (rect, 6, 6);   // 圆角
+  // QPainter painter (this);
+  // painter.setRenderHint (QPainter::Antialiasing);
+  // // 绘制白色背景
+  // painter.setPen (Qt::NoPen);
+  // painter.setBrush (QColor (255, 255, 255, 255));
+  // QRectF bgRect= this->rect ();
+  // painter.drawRoundedRect (bgRect, 6, 6);
+  // QRectF rect= this->rect ();
+  // rect.adjust (0.75, 0.75, -0.75, -0.75); // 居中描边
+  // painter.drawRoundedRect (rect, 6, 6);   // 圆角
 }

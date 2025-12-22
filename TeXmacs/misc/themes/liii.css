@@ -670,22 +670,53 @@ QWidget#login-dialog-content QLineEdit:focus {
 * 图片悬浮菜单样式
 ****************************************************************************/
 
+/*图片悬浮菜单窗口样式*/
+QWidget#image_popup {
+  background: #ffffff;
+  border: none;
+  border-radius: 8px;
+}
+
+QToolButton#image-align-button[icon-name="left"] {
+  qproperty-icon: url(":/window-bar/left-align.svg");
+}
+
+QToolButton#image-align-button[icon-name="center"] {
+  qproperty-icon: url(":/window-bar/middle-align.svg");
+}
+
+QToolButton#image-align-button[icon-name="right"] {
+  qproperty-icon: url(":/window-bar/right-align.svg");
+}
+
+QToolButton#image-align-button[icon-name="ocr"] {
+  qproperty-icon: url(":/window-bar/ocr.svg");
+}
+
 /*图片悬浮菜单按钮样式*/
-QPushButton#image-align-button {
+QToolButton#image-align-button {
   background-color: transparent; 
   border: none;
 }
 
 /*图片悬浮菜单按钮悬停样式*/
-QPushButton#image-align-button:hover { 
+QToolButton#image-align-button:hover { 
   background-color: rgba(128, 128, 128, 0.3); 
   border: none; 
 } 
 
 /*图片悬浮菜单按钮按下样式*/
-QPushButton#image-align-button:pressed {
+QToolButton#image-align-button:pressed {
   background-color: rgba(128, 128, 128, 0.5); 
   border: none; 
+}
+
+QToolButton#image-align-button:checked {
+  background: rgb(180, 212, 255); 
+}
+
+QToolButton#image-align-button:checked:hover {
+  background: rgb(180, 212, 255);
 }
 
 /****************************************************************************

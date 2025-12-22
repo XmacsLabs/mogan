@@ -18,7 +18,7 @@
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QPaintEvent>
-#include <QPushButton>
+#include <QToolButton>
 #include <QWidget>
 
 class QTMImagePopup : public QWidget {
@@ -34,10 +34,10 @@ protected:
   double                     cached_magf; // 缩放因子
   tree                       current_tree;
   string                     current_align;
-  QPushButton*               leftBtn;
-  QPushButton*               middleBtn;
-  QPushButton*               rightBtn;
-  QPushButton*               ocrBtn;
+  QToolButton*               leftBtn;
+  QToolButton*               middleBtn;
+  QToolButton*               rightBtn;
+  QToolButton*               ocrBtn;
   QString                    btn_style;
 
 public:
@@ -49,7 +49,7 @@ public:
   void updatePosition ();
   void scrollBy (int x, int y);
   void setImageTree (tree t);
-  void resetStyleSheet ();
+  void updateButtonStates();
 
 protected:
   void cachePosition (rectangle selr, double magf, int scroll_x, int scroll_y,
