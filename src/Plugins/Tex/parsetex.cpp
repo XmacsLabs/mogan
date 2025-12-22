@@ -581,6 +581,11 @@ latex_parser::parse_backslash (string s, int& i, int change) {
     lf= 'N';
     return tree (TUPLE, "\\\n");
   }
+  if (s[i] == '\\') {
+    // Latex "\\" means line break
+    i++;
+    return tree (TUPLE, "\\\\");
+  }
   if (!is_tex_alpha (s[i])) {
     i++;
     if (s[i - 1] == '(') return parse_command (s, i, "\\begin-math", change);
