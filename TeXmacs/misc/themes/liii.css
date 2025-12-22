@@ -147,11 +147,11 @@ QToolButton:pressed {
 }
 
 QToolButton:checked {
-  background: #aeaeae;
+  background: #abeef9;
 }
 
 QToolButton:checked:hover {
-  background: #aeaeae;
+  background: #abeef9;
 }
 
 QToolButton::menu-indicator {
