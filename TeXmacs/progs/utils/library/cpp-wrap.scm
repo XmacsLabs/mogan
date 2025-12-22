@@ -109,6 +109,15 @@
 (tm-define (make-neg) (cpp-make-neg))
 (tm-define (make-tree) (cpp-make-tree))
 
+(tm-define (make-proof-tree)
+  (insert-go-to '(with "tree-mode" "proof" "tree-label-pos" "none" (tree "" "")) '(4 0 0)))
+
+(tm-define (make-proof-tree*)
+  (insert-go-to '(with "tree-mode" "proof" "tree-label-pos" "right" (tree "" "" "")) '(4 0 0)))
+
+(tm-define (make-proof-tree**)
+  (insert-go-to '(with "tree-mode" "proof" "tree-label-pos" "left" (tree "" "" "")) '(4 0 0)))
+
 (tm-define (clipboard-copy cb) (cpp-clipboard-copy cb))
 (tm-define (clipboard-cut cb) (cpp-clipboard-cut cb))
 (tm-define (clipboard-paste cb) (cpp-clipboard-paste cb))
