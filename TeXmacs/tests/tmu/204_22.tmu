@@ -3,7 +3,7 @@
 <style|<tuple|generic|chinese|number-europe>>
 
 <\body>
-  <cite|li_efficitnt_2024><cite|li_solving_2023><cite|Li_accelerating_2022><cite|dong_generalizing_2024><cite|li_removing_2024><cite|li_bayes_2024><cite|yu_eapcr_2024>
+  <cite|li_efficient_2024><cite|li_solving_2023><cite|Li_accelerating_2022><cite|dong_generalizing_2024><cite|li_removing_2024><cite|li_bayes_2024><cite|yu_eapcr_2024>
 
   <\bibliography|bib|tm-plain|mybib>
     <\bib-list|7>
@@ -17,7 +17,7 @@
 
       <bibitem*|5><label|bib-li_solving_2023>Yansong Li and Shuo Han. <newblock>Solving strongly convex and smooth stackelberg games without modeling the follower. <newblock>In <with|font-shape|italic|American Control Conference, ACC 2023, San Diego, CA, USA, May 31 - June 2, 2023>, pages 2332-2337. IEEE, 2023.<newblock>
 
-      <bibitem*|6><label|bib-li_efficitnt_2024>Yansong Li and Shuo Han. <newblock>Efficient collaboration with unknown agents: ignoring similar agents without checking similarity. <newblock>In Mehdi Dastani, Jaime<nbsp>Simão Sichman, Natasha Alechina, and Virginia Dignum, editors, <with|font-shape|italic|Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems, AAMAS 2024, Auckland, New Zealand, May 6-10, 2024>, pages 2363-2365. International Foundation for Autonomous Agents and Multiagent Systems / ACM, 2024.<newblock>
+      <bibitem*|6><label|bib-li_efficient_2024>Yansong Li and Shuo Han. <newblock>Efficient collaboration with unknown agents: ignoring similar agents without checking similarity. <newblock>In Mehdi Dastani, Jaime<nbsp>Simão Sichman, Natasha Alechina, and Virginia Dignum, editors, <with|font-shape|italic|Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems, AAMAS 2024, Auckland, New Zealand, May 6-10, 2024>, pages 2363-2365. International Foundation for Autonomous Agents and Multiagent Systems / ACM, 2024.<newblock>
 
       <bibitem*|7><label|bib-yu_eapcr_2024>Zhuohang Yu, Ling An, Yansong Li, Yu Wu, Zeyu Dong, Zhangdi Liu, Le Gao, Zhenyu Zhang, and Chichun Zhou. <newblock>Eapcr: a universal feature extractor for scientific data without explicit feature relation patterns. <newblock>2024.<newblock>
     </bib-list>

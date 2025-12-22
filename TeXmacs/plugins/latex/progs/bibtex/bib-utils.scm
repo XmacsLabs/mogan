@@ -171,7 +171,7 @@
   `(with "font-shape" "italic" ,x))
 
 (tm-define (bib-translate s)
-  (if (and (get-env "bib-no-translate") (== (get-env "bib-no-translate") "true"))
+  (if (== (get-env "bib-no-translate") "true")
       s
       `(localize ,s)))
 
