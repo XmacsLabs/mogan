@@ -48,29 +48,23 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   const int IconSize= int (40 * Scale);
 #endif
 
-  btn_style=
-      "QPushButton { background-color: transparent; border: none; } "
-      "QPushButton:hover { background-color: rgba(128, 128, 128, 0.3); border: "
-      "none; } QPushButton:pressed { background-color: rgba(128, 128, 128, "
-      "0.5); border: none; }";
-
   leftBtn= new QPushButton ();
-  leftBtn->setObjectName ("Left Align");
+  leftBtn->setObjectName ("image-align-button");
   leftBtn->setIcon (QIcon (":/window-bar/left-align.svg"));
   leftBtn->setIconSize (QSize (IconSize, IconSize));
   leftBtn->setStyleSheet (btn_style);
   middleBtn= new QPushButton ();
-  middleBtn->setObjectName ("Middle Align");
+  middleBtn->setObjectName ("image-align-button");
   middleBtn->setIcon (QIcon (":/window-bar/middle-align.svg"));
   middleBtn->setIconSize (QSize (IconSize, IconSize));
   middleBtn->setStyleSheet (btn_style);
   rightBtn= new QPushButton ();
-  rightBtn->setObjectName ("Right Align");
+  rightBtn->setObjectName ("image-align-button");
   rightBtn->setIcon (QIcon (":/window-bar/right-align.svg"));
   rightBtn->setIconSize (QSize (IconSize, IconSize));
   rightBtn->setStyleSheet (btn_style);
   ocrBtn= new QPushButton ();
-  ocrBtn->setObjectName ("OCR");
+  ocrBtn->setObjectName ("image-align-button");
   ocrBtn->setIcon (QIcon (":/window-bar/ocr.svg"));
   ocrBtn->setIconSize (QSize (IconSize, IconSize));
   ocrBtn->setStyleSheet (btn_style);
@@ -110,9 +104,9 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
 
 void
 QTMImagePopup::resetStyleSheet () {
-  leftBtn->setStyleSheet (btn_style);
-  middleBtn->setStyleSheet (btn_style);
-  rightBtn->setStyleSheet (btn_style);
+  leftBtn->setStyleSheet("QPushButton { background-color: transparent;}");
+  middleBtn->setStyleSheet("QPushButton { background-color: transparent;}");
+  rightBtn->setStyleSheet("QPushButton { background-color: transparent;}");
   object obj   = call ("get-image-alignment", current_tree);
   current_align= object_to_string (obj);
   if (current_align == left_str) {

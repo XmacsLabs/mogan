@@ -666,6 +666,27 @@ QWidget#login-dialog-content QLineEdit:focus {
   border-color: #007AFF;
 }
 
+/****************************************************************************
+* 图片悬浮菜单样式
+****************************************************************************/
+
+/*图片悬浮菜单按钮样式*/
+QPushButton#image-align-button {
+  background-color: transparent; 
+  border: none;
+}
+
+/*图片悬浮菜单按钮悬停样式*/
+QPushButton#image-align-button:hover { 
+  background-color: rgba(128, 128, 128, 0.3); 
+  border: none; 
+} 
+
+/*图片悬浮菜单按钮按下样式*/
+QPushButton#image-align-button:pressed {
+  background-color: rgba(128, 128, 128, 0.5); 
+  border: none; 
+}
 
 /****************************************************************************
 * 分组框样式
