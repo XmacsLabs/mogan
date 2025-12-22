@@ -50,6 +50,7 @@ public:
   void scrollBy (int x, int y);
   void setImageTree (tree t);
   void updateButtonStates ();
+  void autoSize ();
 
 protected:
   void cachePosition (rectangle selr, double magf, int scroll_x, int scroll_y,
