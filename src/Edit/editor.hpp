@@ -660,9 +660,6 @@ extern array<time_t> kbd_last_times;
 extern int           kbd_erase_delay;
 extern int           kbd_hide_delay;
 
-bool get_show_kbd ();
-void set_show_kbd (bool flag);
-
 path          find_left_bracket (path p, const string& lbr, const string& rbr);
 path          find_right_bracket (path p, const string& lbr, const string& rbr);
 array<string> as_completions (hashset<string> h);
