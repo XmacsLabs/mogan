@@ -18,8 +18,8 @@
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QPaintEvent>
-#include <QWidget>
 #include <QPushButton>
+#include <QWidget>
 
 class QTMImagePopup : public QWidget {
 protected:

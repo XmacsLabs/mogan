@@ -17,8 +17,8 @@
 #include <QPen>
 
 const string left_str = "\"left\"";
-const string mid_str = "\"center\"";
-const string right_str = "\"right\"";
+const string mid_str  = "\"center\"";
+const string right_str= "\"right\"";
 
 QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
     : QWidget (parent), owner (owner), layout (nullptr) {
@@ -78,12 +78,18 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   layout->addWidget (middleBtn);
   layout->addWidget (rightBtn);
   layout->addWidget (ocrBtn);
-  connect (leftBtn, &QPushButton::clicked, this,
-           [=] () { call ("set-image-alignment", current_tree, "left"); resetStyleSheet(); });
-  connect (middleBtn, &QPushButton::clicked, this,
-           [=] () { call ("set-image-alignment", current_tree, "center"); resetStyleSheet(); });
-  connect (rightBtn, &QPushButton::clicked, this,
-           [=] () { call ("set-image-alignment", current_tree, "right"); resetStyleSheet(); });
+  connect (leftBtn, &QPushButton::clicked, this, [=] () {
+    call ("set-image-alignment", current_tree, "left");
+    resetStyleSheet ();
+  });
+  connect (middleBtn, &QPushButton::clicked, this, [=] () {
+    call ("set-image-alignment", current_tree, "center");
+    resetStyleSheet ();
+  });
+  connect (rightBtn, &QPushButton::clicked, this, [=] () {
+    call ("set-image-alignment", current_tree, "right");
+    resetStyleSheet ();
+  });
 }
 
 QTMImagePopup::~QTMImagePopup () {}
@@ -102,21 +108,24 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
   show ();
 }
 
-void 
+void
 QTMImagePopup::resetStyleSheet () {
   leftBtn->setStyleSheet (btn_style);
   middleBtn->setStyleSheet (btn_style);
   rightBtn->setStyleSheet (btn_style);
-  object obj = call ("get-image-alignment", current_tree);
-  current_align = object_to_string(obj);
+  object obj   = call ("get-image-alignment", current_tree);
+  current_align= object_to_string (obj);
   if (current_align == left_str) {
-    leftBtn->setStyleSheet ("QPushButton { background-color: rgba(92, 184, 255, 1); border: none; }");
+    leftBtn->setStyleSheet ("QPushButton { background-color: rgba(92, 184, "
+                            "255, 1); border: none; }");
   }
   else if (current_align == mid_str) {
-    middleBtn->setStyleSheet ("QPushButton { background-color: rgba(92, 184, 255, 1); border: none; }");
+    middleBtn->setStyleSheet ("QPushButton { background-color: rgba(92, 184, "
+                              "255, 1); border: none; }");
   }
   else if (current_align == right_str) {
-    rightBtn->setStyleSheet ("QPushButton { background-color: rgba(92, 184, 255, 1); border: none; }");
+    rightBtn->setStyleSheet ("QPushButton { background-color: rgba(92, 184, "
+                             "255, 1); border: none; }");
   }
 }
 
