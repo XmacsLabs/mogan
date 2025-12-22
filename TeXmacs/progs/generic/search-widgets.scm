@@ -17,13 +17,54 @@
 
 (define search-replace-text "")
 
+(define isreplace? #f)
 
+#|
+update-search-pos-text
+更新搜索/替换窗口的位置显示文本。
+
+语法
+----
+(update-search-pos-text action)
+
+参数
+----
+action : string
+表示搜索动作类型的字符串：
+- "new"      : 新搜索
+- "next"     : 下一个匹配项
+- "previous" : 上一个匹配项
+- "first"    : 第一个匹配项
+- "last"     : 最后一个匹配项
+
+返回值
+----
+#<unspecified>
+无显式返回值（返回 #<unspecified>）。
+
+逻辑
+----
+1. 如果 isreplace? 为 #t（刚刚执行了替换操作），使用 "new" 作为 action
+   否则使用传入的 action 参数
+2. 调用 get-alt-selection-index 获取当前选择项的索引字符串（如 "1/5"）
+3. 重置 isreplace? 标志为 #f，确保只影响当前这次调用
+4. 根据索引字符串设置辅助窗口标题：
+   - 如果索引字符串为空，只显示搜索/替换文本
+   - 否则显示 "搜索文本 (索引字符串)" 格式
+
+注意
+----
+此函数用于在搜索/替换操作后更新辅助窗口的标题显示，提供用户友好的位置反馈。
+|#
 (tm-define (update-search-pos-text action)
-  (let* ((index-str (get-alt-selection-index "alternate" action)))
+  (let* ((effective-action (if isreplace? "new" action))
+         (index-str (get-alt-selection-index "alternate" effective-action)))
+    (when isreplace?
+      (set! isreplace? #f))
     (if (== index-str "")
         (set-auxiliary-widget-title (translate search-replace-text))
         (set-auxiliary-widget-title
-         (string-append (translate search-replace-text) " (" index-str ")")))))
+          (string-append (translate search-replace-text) " (" index-str ")")))))
 
 
 
@@ -174,7 +215,8 @@
 	    (cond ((>= (length sels*) limit)
 		   (set-alt-selection "alternate" sels)
 		   (set! too-many-matches? #t)
-		   (next-search-result #t #f))
+		   (next-search-result #t #f)
+       	   (update-search-pos-text "new"))
 		  ((null? sels)
 		   (selection-cancel)
 		   (cancel-alt-selection "alternate")
@@ -386,7 +428,7 @@
       (replace-next by)
       (end-editing))
     (perform-search*)
-    (update-search-pos-text "new")))
+    (set! isreplace? #t)))
 
 (tm-define (replace-all)
   (and-with by (or (by-tree) current-replace)
@@ -396,7 +438,7 @@
         (perform-search*))
       (end-editing))
     (perform-search*)
-    (update-search-pos-text "new")))
+    (set! isreplace? #t)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customized keyboard shortcuts in search and replace modes
