@@ -837,10 +837,11 @@
           ((== m '(uninit))
            `(edit none))
           ((and (pair? m) (== (car m) 'concat))
-           ;; Handle concat structure, take the first element if it's a tuple
-           (with first-elem (cadr m)
-             (if (and (pair? first-elem) (== (car first-elem) 'tuple))
-                 (map string->symbol (cdr first-elem))
+           ;; Handle concat structure, find tuple element
+           (with tuple-elem (list-find (cdr m)
+                                (lambda (x) (and (pair? x) (== (car x) 'tuple))))
+              (if tuple-elem
+                 (map string->symbol (cdr tuple-elem))
                  (map string->symbol (cdr m)))))
           ((pair? m)
            (map string->symbol (cdr m))))))
