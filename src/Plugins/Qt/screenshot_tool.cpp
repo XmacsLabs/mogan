@@ -16,9 +16,10 @@ ScreenshotTool::ScreenshotTool(QWidget *parent)
       currentRegion(None),
       devicePixelRatio(1.0)
 {
-    // 设置窗口属性：无边框、全屏、置顶
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    // 设置窗口属性：无边框、全屏、置顶、不激活应用程序
+    setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_ShowWithoutActivating);
 
     // 获取设备像素比
     QScreen *screen = QGuiApplication::primaryScreen();
@@ -40,8 +41,6 @@ void ScreenshotTool::startCapture()
 {
     // 先显示窗口，确保窗口位置已确定
     showFullScreen();
-    activateWindow();
-    raise();
 
     // 窗口显示后再截图
     QScreen *screen = QGuiApplication::primaryScreen();
