@@ -46,8 +46,11 @@ void mac_fix_paths ();
 
 #ifdef QTTEXMACS
 #include "Qt/QTMApplication.hpp"
+#include "Qt/screenshot_tool.h"
 #include <QCoreApplication>
 #include <QGuiApplication>
+#include <QKeySequence>
+#include "qhotkey/qhotkey.h"
 #endif
 
 #ifdef MACOSX_EXTENSIONS
@@ -239,6 +242,20 @@ main (int argc, char** argv) {
     // it this really necessary? Should be set in the metadata.
     qtmapp->set_window_icon ("/misc/images/stem-512.png");
     init_style_sheet (qtmapp);
+
+    // Setup screenshot tool with global hotkey
+    ScreenshotTool* screenshotTool = new ScreenshotTool(nullptr);
+    if (QHotkey::isPlatformSupported()) {
+      QHotkey* hotkey = new QHotkey(QKeySequence("Ctrl+Shift+J"), true, qtmapp);
+      QObject::connect(hotkey, &QHotkey::activated, qApp, [screenshotTool]() {
+        screenshotTool->startCapture();
+      });
+      QObject::connect(screenshotTool, &ScreenshotTool::aboutToClose, qApp, [screenshotTool]() {
+        screenshotTool->deleteLater();
+      });
+    } else {
+      qWarning("Global hotkeys are not supported on this platform");
+    }
   }
 #endif
 

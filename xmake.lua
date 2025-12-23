@@ -286,6 +286,7 @@ end
 target("libqhotkey") do
   set_kind("static")
   add_rules("qt.static")
+  add_rules("qt.moc")
   add_packages("qt6widgets")
 
   -- 添加平台特定依赖
@@ -293,8 +294,13 @@ target("libqhotkey") do
     add_packages("x11")
   end
 
-  -- 通用源文件
+  -- 添加头文件搜索路径，供依赖此target的模块使用
+  add_includedirs("3rdparty", {public = true})
+
+  -- 通用源文件 - 需要MOC处理的头文件必须作为源文件添加
   add_files("3rdparty/qhotkey/qhotkey.cpp")
+  add_files("3rdparty/qhotkey/qhotkey.h")
+  add_files("3rdparty/qhotkey/qhotkey_p.h")
   add_headerfiles("3rdparty/qhotkey/(qhotkey.h)")
 
   -- 平台特定源文件
@@ -597,6 +603,9 @@ target("libmogan") do
     add_deps("libmoebius")
     add_deps("libqhotkey")
     add_deps("QWKCore", "QWKWidgets")
+
+    -- 添加 3rdparty 头文件搜索路径（用于 qhotkey）
+    add_includedirs("3rdparty", {public = true})
     
     set_policy("check.auto_ignore_flags", false)
     add_rules("qt.static")
@@ -792,7 +801,8 @@ target("libmogan") do
 
     add_files({
         "src/Plugins/Qt/**.cpp",
-        "src/Plugins/Qt/**.hpp"})
+        "src/Plugins/Qt/**.hpp",
+        "src/Plugins/Qt/screenshot_tool.h"})  -- 需要MOC处理
 
     if is_plat("macosx") then
         plugin_macos_srcs = {
@@ -932,6 +942,9 @@ target("stem") do
     add_deps("libmogan")
     if not is_plat("windows") then
         add_syslinks("pthread", "dl", "m")
+    end
+    if is_plat("linux") then
+        add_syslinks("X11")
     end
 
     add_includedirs(moe_includedirs)
