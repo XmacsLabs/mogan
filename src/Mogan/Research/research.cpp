@@ -250,9 +250,6 @@ main (int argc, char** argv) {
       QObject::connect(hotkey, &QHotkey::activated, qApp, [screenshotTool]() {
         screenshotTool->startCapture();
       });
-      QObject::connect(screenshotTool, &ScreenshotTool::aboutToClose, qApp, [screenshotTool]() {
-        screenshotTool->deleteLater();
-      });
     } else {
       qWarning("Global hotkeys are not supported on this platform");
     }
