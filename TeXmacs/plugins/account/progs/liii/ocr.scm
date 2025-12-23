@@ -25,17 +25,17 @@
       (else (get-image t (+ i 1) bool)))))
 
 (tm-define (get-image-tuple t i bool)
-(if bool
-  (let* ((cur-t (tree-ref t i)))
-    (cond 
-      ((not cur-t) #f)
-      ((tree-is? cur-t 'tuple) (get-image-name cur-t 0))
-      (else (get-image-tuple t (+ i 1)))))
-  (let* ((cur-t (tree-ref t i)))
-    (cond 
-      ((not cur-t) #f)
-      ((tree-is? cur-t 'tuple) (get-image-data cur-t 0))
-      (else (get-image-tuple t (+ i 1)))))))
+  (if bool
+    (let* ((cur-t (tree-ref t i)))
+      (cond 
+        ((not cur-t) #f)
+        ((tree-is? cur-t 'tuple) (get-image-name cur-t 0))
+        (else (get-image-tuple t (+ i 1)))))
+    (let* ((cur-t (tree-ref t i)))
+      (cond 
+        ((not cur-t) #f)
+        ((tree-is? cur-t 'tuple) (get-image-data cur-t 0))
+        (else (get-image-tuple t (+ i 1)))))))
 
 (tm-define (get-image-name t i)
   (let* ((cur-t (tree-ref t i)))
