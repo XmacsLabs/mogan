@@ -47,7 +47,7 @@
 (tm-define (insert-tips p)
   (go-to p)
   (go-to-next-node)
-  (insert `(with "par-mode" "center" (document "dddd"))))
+  (insert `(with "par-mode" "center" (document ,(utf8->cork "很抱歉，目前OCR功能仅为会员用户提供。")))))
 
 ; (get-image-extention (get-image t 0 #t)) 获取文件后缀，创建对应临时文件
 ; (get-image t 0 #f) 获取 raw-data
@@ -63,5 +63,5 @@
       (let* ((base64-str (car data-list))
              (binary-data (decode-base64 base64-str)))
         (string-save binary-data temp-name)
-        (display* "Image has saved to" temp-name "\n"))))
+        (display* "Image has saved to " temp-name "\n"))))
   (insert-tips p))
