@@ -605,8 +605,8 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
     set_cursor_style ("pointing_hand");
     path with_path= path_up (current_path);
     tree with_tree= subtree (et, with_path);
-    show_image_popup (with_tree, selr, magf, get_scroll_x (), get_scroll_y (),
-                      get_canvas_x ());
+    show_image_popup (current_path, with_tree, selr, magf, get_scroll_x (),
+                      get_scroll_y (), get_canvas_x ());
   }
   else {
     set_cursor_style ("normal");
