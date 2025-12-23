@@ -11,6 +11,7 @@
 
 #include "QTMImagePopup.hpp"
 #include "qbuttongroup.h"
+#include "scheme.hpp"
 #include "server.hpp"
 
 #include <QIcon>
@@ -62,7 +63,9 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   alignGroup->addButton (leftBtn);
   alignGroup->addButton (middleBtn);
   alignGroup->addButton (rightBtn);
+  alignGroup->addButton (ocrBtn);
   alignGroup->setExclusive (true);
+  eval ("(use-modules (liii ocr))");
   connect (alignGroup,
            QOverload<QAbstractButton*>::of (&QButtonGroup::buttonClicked), this,
            [=] (QAbstractButton* button) {
@@ -72,6 +75,8 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
                call ("set-image-alignment", current_tree, "center");
              else if (button == rightBtn)
                call ("set-image-alignment", current_tree, "right");
+             else if (button == ocrBtn)
+               call ("create-temp-image", current_tree, current_path);
              current_align=
                  as_string (call ("get-image-alignment", current_tree));
            });
@@ -99,6 +104,11 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
   raise ();
   updateButtonStates ();
   show ();
+}
+
+void 
+QTMImagePopup::setImagePath (path p) {
+  this->current_path= p;
 }
 
 void
