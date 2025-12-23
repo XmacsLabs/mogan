@@ -1269,7 +1269,7 @@ qt_tm_widget_rep::write (slot s, blackbox index, widget w) {
       QVBoxLayout* verticalLayout= new QVBoxLayout (container);
       verticalLayout->setSpacing (0);                  // 间距
       verticalLayout->setContentsMargins (0, 0, 0, 0); // 边距
-      verticalLayout->setAlignment (Qt::AlignCenter);  // 居中对齐
+      verticalLayout->setAlignment(Qt::AlignTop | Qt::AlignHCenter);  // 居中对齐
       verticalLayout->addWidget (new_qwidget);
 
       auxiliaryWidget->setWidget (container);
