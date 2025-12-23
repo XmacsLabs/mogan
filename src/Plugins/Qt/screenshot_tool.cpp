@@ -6,7 +6,6 @@
 #include <QKeyEvent>
 #include <QCursor>
 #include <QClipboard>
-#include <QDebug>
 
 ScreenshotTool::ScreenshotTool(QWidget *parent)
     : QWidget(parent),
@@ -48,12 +47,6 @@ void ScreenshotTool::startCapture()
     devicePixelRatio = screen->devicePixelRatio();
     // 截取整个屏幕
     screenPixmap = screen->grabWindow(0);
-
-    // 调试信息
-    qDebug() << "Window geometry:" << geometry();
-    qDebug() << "Screen geometry:" << screen->geometry();
-    qDebug() << "Device pixel ratio:" << devicePixelRatio;
-    qDebug() << "Pixmap size:" << screenPixmap.size();
 }
 
 void ScreenshotTool::paintEvent(QPaintEvent *event)
@@ -73,11 +66,6 @@ void ScreenshotTool::paintEvent(QPaintEvent *event)
         }
 
         if (drawRect.isValid()) {
-            // 调试：输出矩形位置
-            static int debugCount = 0;
-            if (++debugCount % 30 == 0) {  // 每30帧输出一次，避免刷屏
-                qDebug() << "DrawRect:" << drawRect;
-            }
             // 将逻辑坐标转换为物理像素坐标（用于从screenPixmap中提取）
             QRect physicalRect(
                 static_cast<int>(drawRect.x() * devicePixelRatio),
