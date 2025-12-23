@@ -106,7 +106,7 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
   show ();
 }
 
-void 
+void
 QTMImagePopup::setImagePath (path p) {
   this->current_path= p;
 }

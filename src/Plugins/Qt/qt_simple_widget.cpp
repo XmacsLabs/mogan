@@ -760,8 +760,9 @@ qt_simple_widget_rep::ensure_image_popup () {
 }
 
 void
-qt_simple_widget_rep::show_image_popup (path current_path, tree current_tree, rectangle selr,
-                                        double magf, int scroll_x, int scroll_y,
+qt_simple_widget_rep::show_image_popup (path current_path, tree current_tree,
+                                        rectangle selr, double magf,
+                                        int scroll_x, int scroll_y,
                                         int canvas_x) {
   ensure_image_popup ();
   imagePopUp->setImagePath (current_path);
