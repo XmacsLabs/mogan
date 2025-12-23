@@ -247,7 +247,7 @@ main (int argc, char** argv) {
     ScreenshotTool* screenshotTool= new ScreenshotTool (nullptr);
     if (QHotkey::isPlatformSupported ()) {
       QHotkey* hotkey=
-          new QHotkey (QKeySequence ("Ctrl+Shift+J"), true, qtmapp);
+          new QHotkey (QKeySequence ("Ctrl+Shift+X"), true, qtmapp);
       QObject::connect (hotkey, &QHotkey::activated, qApp, [screenshotTool] () {
         screenshotTool->startCapture ();
       });
