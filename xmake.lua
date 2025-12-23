@@ -283,6 +283,30 @@ target("libmoebius") do
     end)
 end
 
+target("libqhotkey") do
+  set_kind("static")
+  add_rules("qt.static")
+  add_packages("qt6widgets")
+
+  -- 添加平台特定依赖
+  if is_plat("linux") then
+    add_packages("x11")
+  end
+
+  -- 通用源文件
+  add_files("3rdparty/qhotkey/qhotkey.cpp")
+  add_headerfiles("3rdparty/qhotkey/(qhotkey.h)")
+
+  -- 平台特定源文件
+  if is_plat("macosx") then
+    add_files("3rdparty/qhotkey/qhotkey_mac.cpp")
+  elseif is_plat("linux") then
+    add_files("3rdparty/qhotkey/qhotkey_x11.cpp")
+  elseif is_plat("windows") then
+    add_files("3rdparty/qhotkey/qhotkey_win.cpp")
+  end
+end
+
 -- Add options for different features
 option("style_agent")
     set_default(false)
@@ -571,6 +595,7 @@ target("libmogan") do
     set_encodings("utf-8")
 
     add_deps("libmoebius")
+    add_deps("libqhotkey")
     add_deps("QWKCore", "QWKWidgets")
     
     set_policy("check.auto_ignore_flags", false)
