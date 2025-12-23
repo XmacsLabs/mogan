@@ -799,10 +799,7 @@ target("libmogan") do
             "src/Plugins/Updater/**.cpp",
             "$(projectdir)/TeXmacs/plugins/goldfish/src/**.cpp"})
 
-    add_files({
-        "src/Plugins/Qt/**.cpp",
-        "src/Plugins/Qt/**.hpp",
-        "src/Plugins/Qt/screenshot_tool.h"})  -- 需要MOC处理
+    add_files("src/Plugins/Qt/**.cpp", "src/Plugins/Qt/**.hpp")
 
     if is_plat("macosx") then
         plugin_macos_srcs = {

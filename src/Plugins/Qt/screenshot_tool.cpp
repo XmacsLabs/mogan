@@ -1,4 +1,4 @@
-#include "screenshot_tool.h"
+#include "screenshot_tool.hpp"
 #include <QPainter>
 #include <QGuiApplication>
 #include <QScreen>

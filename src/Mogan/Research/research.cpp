@@ -46,7 +46,7 @@ void mac_fix_paths ();
 
 #ifdef QTTEXMACS
 #include "Qt/QTMApplication.hpp"
-#include "Qt/screenshot_tool.h"
+#include "Qt/screenshot_tool.hpp"
 #include <QCoreApplication>
 #include <QGuiApplication>
 #include <QKeySequence>
