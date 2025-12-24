@@ -50,6 +50,10 @@
 
   <assign|bibliography-text|<macro|<localize|Bibliography>>>
 
+  <assign|bib-no-translate|true>
+
+  <drd-props|bib-no-translate|macro-parameter|boolean>
+
   <assign|table-of-contents-text|<macro|<localize|Table of contents>>>
 
   <assign|index-text|<macro|<localize|Index>>>

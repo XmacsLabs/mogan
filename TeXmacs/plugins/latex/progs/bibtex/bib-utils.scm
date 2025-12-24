@@ -170,7 +170,10 @@
 (tm-define (bib-emphasize x)
   `(with "font-shape" "italic" ,x))
 
-(tm-define (bib-translate s) `(localize ,s))
+(tm-define (bib-translate s)
+  (if (== (get-env "bib-no-translate") "true")
+      s
+      `(localize ,s)))
 
 (tm-define bib-range-symbol "-")
 
