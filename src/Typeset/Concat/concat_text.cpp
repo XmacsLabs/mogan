@@ -112,7 +112,7 @@ concater_rep::typeset_colored_substring (string s, path ip, int pos,
     color bg_color = named_color (bg_color_str, env->alpha);
 
     // 创建带有文本颜色和背景色的文本框
-    box b = text_box_with_bg (ip, pos, s, env->fn, pencil (text_color), bg_color);
+    box b = text_box_with_bg (ip, pos, s, env->fn, pencil (text_color), bg_color, xkerning ());
     a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
   }
   else {
@@ -153,7 +153,7 @@ concater_rep::typeset_background_substring (string s, path ip, int pos,
   }
 
   // 创建带有背景色的文本框
-  box b = text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color);
+  box b = text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color, xkerning ());
 
   a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
 }
@@ -187,7 +187,7 @@ concater_rep::typeset_background_text_string (tree t, path ip, int pos, int end,
   string full_text = s (pos, end);
 
   // 创建带有背景色的文本框
-  box b = text_box_with_bg (ip, pos, full_text, env->fn, env->pen, named_color (bg_color, env->alpha));
+  box b = text_box_with_bg (ip, pos, full_text, env->fn, env->pen, named_color (bg_color, env->alpha), xkerning ());
 
   // 添加行项目
   a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);

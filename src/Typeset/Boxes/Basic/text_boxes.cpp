@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "Boxes/construct.hpp"
+#include "Boxes/xkerning.hpp"
 #include "analyze.hpp"
 #include "boxes.hpp"
 #include "cork.hpp"
@@ -21,25 +22,6 @@
  * Text boxes
  ******************************************************************************/
 
-struct xkerning_rep : concrete_struct {
-  SI padding;
-  SI left;
-  SI right;
-  xkerning_rep (SI p, SI l, SI r) : padding (p), left (l), right (r) {}
-  ~xkerning_rep () {}
-};
-
-class xkerning {
-  CONCRETE_NULL (xkerning);
-  xkerning (SI p, SI l, SI r) : rep (tm_new<xkerning_rep> (p, l, r)) {};
-};
-
-CONCRETE_NULL_CODE (xkerning);
-
-static bool
-is_nil_or_zero (xkerning xk) {
-  return is_nil (xk) || (xk->left == 0 && xk->right == 0 && xk->padding == 0);
-}
 
 /******************************************************************************
  * Text boxes
@@ -52,9 +34,8 @@ struct text_box_rep : public box_rep {
   pencil   pen;
   xkerning xk;
   color    bg_color;
-  bool     has_bg_color;
 
-  text_box_rep (path ip, int pos, string s, font fn, pencil pen, xkerning xk);
+  text_box_rep (path ip, int pos, string s, font fn, pencil pen, xkerning xk, color bg=black);
   operator tree () { return str; }
   box adjust_kerning (int mode, double factor);
   box expand_glyphs (int mode, double factor);
@@ -102,9 +83,9 @@ struct text_box_rep : public box_rep {
  ******************************************************************************/
 
 text_box_rep::text_box_rep (path ip, int pos2, string s, font fn2, pencil p2,
-                            xkerning xk2)
+                            xkerning xk2, color bg)
     : box_rep (ip), pos (pos2), str (s), fn (fn2), pen (p2), xk (xk2),
-      bg_color (black), has_bg_color (false) {
+      bg_color (bg) {
   metric ex;
   fn->get_extents (str, ex);
   x1= ex->x1;
@@ -143,10 +124,7 @@ text_box_rep::adjust_kerning (int mode, double factor) {
   }
   if ((mode & START_OF_LINE) != 0) nxk->left-= pad;
   if ((mode & END_OF_LINE) != 0) nxk->right-= pad;
-  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
-  // 复制背景色设置
-  rep->bg_color = bg_color;
-  rep->has_bg_color = has_bg_color;
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk, bg_color);
   return (box) rep;
 }
 
@@ -160,10 +138,7 @@ text_box_rep::right_contract_kerning (double factor) {
     nxk->padding= xk->padding;
   }
   nxk->right-= pad;
-  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
-  // 复制背景色设置
-  rep->bg_color = bg_color;
-  rep->has_bg_color = has_bg_color;
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk, bg_color);
   return (box) rep;
 }
 
@@ -177,10 +152,7 @@ text_box_rep::left_contract_kerning (double factor) {
     nxk->padding= xk->padding;
   }
   nxk->left-= pad;
-  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
-  // 复制背景色设置
-  rep->bg_color = bg_color;
-  rep->has_bg_color = has_bg_color;
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk, bg_color);
   return (box) rep;
 }
 
@@ -193,10 +165,7 @@ text_box_rep::right_auto_spacing (SI size) {
     nxk->padding= xk->padding;
   }
   nxk->right= nxk->right + size;
-  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
-  // 复制背景色设置
-  rep->bg_color = bg_color;
-  rep->has_bg_color = has_bg_color;
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk, bg_color);
   return (box) rep;
 }
 
@@ -209,10 +178,7 @@ text_box_rep::left_auto_spacing (SI size) {
     nxk->padding= xk->padding;
   }
   nxk->left= nxk->left + size;
-  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
-  // 复制背景色设置
-  rep->bg_color = bg_color;
-  rep->has_bg_color = has_bg_color;
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk, bg_color);
   return (box) rep;
 }
 
@@ -220,18 +186,17 @@ box
 text_box_rep::expand_glyphs (int mode, double factor) {
   if (N (str) == 0) return this;
   font nfn= fn->magnify (1.0 + factor, 1.0);
-  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, nfn, pen, xk);
-  // 复制背景色设置
-  rep->bg_color = bg_color;
-  rep->has_bg_color = has_bg_color;
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, nfn, pen, xk, bg_color);
   return (box) rep;
 }
 
 void
 text_box_rep::display (renderer ren) {
   if (N (str) > 0) {
-    // 如果有背景色，先绘制背景
-    if (has_bg_color) {
+    // 如果有背景色（非透明），先绘制背景
+    int r, g, b, a;
+    get_rgb_color (bg_color, r, g, b, a);
+    if (a > 0) {
       brush bg_brush (bg_color);
       ren->set_background (bg_brush);
       ren->clear (x1, y1, x2, y2);
@@ -725,13 +690,10 @@ wide_stix_box (path ip, string s, font fn, pencil pen, SI width) {
 
 box
 text_box (path ip, int pos, string s, font fn, pencil pen) {
-  return tm_new<text_box_rep> (ip, pos, s, fn, pen, xkerning ());
+  return tm_new<text_box_rep> (ip, pos, s, fn, pen, xkerning (), rgb_color (0, 0, 0, 0));
 }
 
 box
-text_box_with_bg (path ip, int pos, string s, font fn, pencil pen, color bg) {
-  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, s, fn, pen, xkerning ());
-  rep->bg_color = bg;
-  rep->has_bg_color = true;
-  return (box) rep;
+text_box_with_bg (path ip, int pos, string s, font fn, pencil pen, color bg, xkerning xk) {
+  return tm_new<text_box_rep> (ip, pos, s, fn, pen, xk, bg);
 }
