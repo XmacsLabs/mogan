@@ -246,8 +246,7 @@ main (int argc, char** argv) {
     // Setup screenshot tool with global hotkey
     ScreenshotTool* screenshotTool= new ScreenshotTool (nullptr);
     if (QHotkey::isPlatformSupported ()) {
-      QHotkey* hotkey=
-          new QHotkey (QKeySequence ("Ctrl+Alt+X"), true, qtmapp);
+      QHotkey* hotkey= new QHotkey (QKeySequence ("Ctrl+Alt+X"), true, qtmapp);
       QObject::connect (hotkey, &QHotkey::activated, qApp, [screenshotTool] () {
         screenshotTool->startCapture ();
       });
