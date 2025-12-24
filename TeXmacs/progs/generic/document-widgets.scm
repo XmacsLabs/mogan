@@ -584,9 +584,6 @@
 ;; Document -> Page / Advanced Headers
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (hn-enable? u)
-  (and (initial-defined? u "hn-enable")
-       (== (initial-get u "hn-enable") "true")))
 
 (define (make-header-condition start end parity content)
   (let* ((page-nr (list 'value "page-nr"))
@@ -667,37 +664,27 @@
     (centered
       (refreshable "advanced-header-settings"
         (aligned
-          (item (text "Enable advanced header:")
-            (toggle (begin
-                      (initial-set u "hn-enable" (if answer "true" "false"))
-                      (refresh-now "advanced-header-settings"))
-                    (hn-enable? u)))
           (item (text "Applying from:")
-            (when (hn-enable? u)
-              (input (set! start answer) "string" (list start) "6em")))
+            (input (set! start answer) "string" (list start) "6em"))
           (item (text "Applying to:")
-            (when (hn-enable? u)
-              (input (set! end answer) "string" (list end) "6em")))
+            (input (set! end answer) "string" (list end) "6em"))
           (item (text "Parity:")
-            (when (hn-enable? u)
-              (enum (begin (set! parity answer))
-                    '("odd" "even" "any")
-                    "any"
-                    "10em")))
+            (enum (begin (set! parity answer))
+                  '("odd" "even" "any")
+                  "any"
+                  "10em"))
           (item (text "Content:")
-            (when (hn-enable? u)
-              (resize "350px" "100px"
-                (texmacs-input `(document ,content-tree)
-                               `(style (tuple ,@style "gui-base"))
-                               (string->url "tmfs://aux/advanced-header"))))))))
+            (resize "350px" "100px"
+              (texmacs-input `(document ,content-tree)
+                             `(style (tuple ,@style "gui-base"))
+                             (string->url "tmfs://aux/advanced-header")))))))
     ===
     (explicit-buttons
       (hlist
         >>>
         ("Ok"
-           (when (hn-enable? u)
-             (with content (get-field-contents (string->url "tmfs://aux/advanced-header"))
-               (assign-advanced-header u start end parity content)))
+           (with content (get-field-contents (string->url "tmfs://aux/advanced-header"))
+             (assign-advanced-header u start end parity content))
            (quit))
         // //
         ("Cancel" (quit))))))
@@ -706,9 +693,6 @@
 ;; Document -> Page / Advanced Footers
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define (fn-enable? u)
-  (and (initial-defined? u "fn-enable")
-       (== (initial-get u "fn-enable") "true")))
 
 (define (make-footer-condition start end parity content)
   (let* ((page-nr (list 'value "page-nr"))
@@ -789,37 +773,27 @@
     (centered
       (refreshable "advanced-footer-settings"
         (aligned
-          (item (text "Enable advanced footer:")
-            (toggle (begin
-                      (initial-set u "fn-enable" (if answer "true" "false"))
-                      (refresh-now "advanced-footer-settings"))
-                    (fn-enable? u)))
           (item (text "Applying from:")
-            (when (fn-enable? u)
-              (input (set! start answer) "string" (list start) "6em")))
+            (input (set! start answer) "string" (list start) "6em"))
           (item (text "Applying to:")
-            (when (fn-enable? u)
-              (input (set! end answer) "string" (list end) "6em")))
+            (input (set! end answer) "string" (list end) "6em"))
           (item (text "Parity:")
-            (when (fn-enable? u)
-              (enum (begin (set! parity answer))
-                    '("odd" "even" "any")
-                    "any"
-                    "10em")))
+            (enum (begin (set! parity answer))
+                  '("odd" "even" "any")
+                  "any"
+                  "10em"))
           (item (text "Content:")
-            (when (fn-enable? u)
-              (resize "350px" "100px"
-                (texmacs-input `(document ,content-tree)
-                               `(style (tuple ,@style "gui-base"))
-                               (string->url "tmfs://aux/advanced-footer"))))))))
+            (resize "350px" "100px"
+              (texmacs-input `(document ,content-tree)
+                             `(style (tuple ,@style "gui-base"))
+                             (string->url "tmfs://aux/advanced-footer")))))))
     ===
     (explicit-buttons
       (hlist
         >>>
         ("Ok"
-           (when (fn-enable? u)
-             (with content (get-field-contents (string->url "tmfs://aux/advanced-footer"))
-               (assign-advanced-footer u start end parity content)))
+           (with content (get-field-contents (string->url "tmfs://aux/advanced-footer"))
+             (assign-advanced-footer u start end parity content))
            (quit))
         // //
         ("Cancel" (quit))))))
