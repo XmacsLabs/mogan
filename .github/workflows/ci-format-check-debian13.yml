@@ -41,14 +41,15 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: git add safe directory
-        run: git config --global --add safe.directory '*'
-
       - name: Run clang-format check
         run: |
           shopt -s nullglob globstar
           clang-format-19 --version
-          clang-format-19 --dry-run --Werror tests/**/*.cpp tests/**/*.hpp \
-            src/**/*.cpp src/**/*.hpp \
-            moebius/**/*.cpp moebius/**/*.hpp \
-            3rdparty/lolly/**/*.cpp 3rdparty/lolly/**/*.hpp
+          clang-format-19 --dry-run --Werror tests/**/*.cpp
+          clang-format-19 --dry-run --Werror tests/**/*.hpp
+          clang-format-19 --dry-run --Werror src/**/*.cpp
+          clang-format-19 --dry-run --Werror src/**/*.hpp
+          clang-format-19 --dry-run --Werror moebius/**/*.hpp
+          clang-format-19 --dry-run --Werror moebius/**/*.cpp
+          clang-format-19 --dry-run --Werror 3rdparty/lolly/**/*.hpp
+          clang-format-19 --dry-run --Werror 3rdparty/lolly/**/*.cpp
