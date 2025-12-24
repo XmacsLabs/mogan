@@ -638,11 +638,11 @@
              (merged-pairs (merge-pairs pairs new-cond new-then)))
         (pairs->tree merged-pairs)))
 
-    (cond ((== parity "odd")
+    (cond ((or (== parity "odd") (== parity "odd page"))
            (let ((old-tree (initial-get-tree u "page-odd-header")))
              (initial-set-tree u "page-odd-header"
                (merge-condition-tree (tm->stree old-tree)))))
-          ((== parity "even")
+          ((or (== parity "even") (== parity "even page"))
            (let ((old-tree (initial-get-tree u "page-even-header")))
              (initial-set-tree u "page-even-header"
                (merge-condition-tree (tm->stree old-tree)))))
@@ -670,7 +670,7 @@
             (input (set! end answer) "string" (list end) "6em"))
           (item (text "Parity:")
             (enum (begin (set! parity answer))
-                  '("odd" "even" "any")
+                  '("odd page" "even page" "any")
                   "any"
                   "10em"))
           (item (text "Content:")
@@ -747,11 +747,11 @@
              (merged-pairs (merge-pairs pairs new-cond new-then)))
         (pairs->tree merged-pairs)))
 
-    (cond ((== parity "odd")
+    (cond ((or (== parity "odd") (== parity "odd page"))
            (let ((old-tree (initial-get-tree u "page-odd-footer")))
              (initial-set-tree u "page-odd-footer"
                (merge-condition-tree (tm->stree old-tree)))))
-          ((== parity "even")
+          ((or (== parity "even") (== parity "even page"))
            (let ((old-tree (initial-get-tree u "page-even-footer")))
              (initial-set-tree u "page-even-footer"
                (merge-condition-tree (tm->stree old-tree)))))
@@ -779,7 +779,7 @@
             (input (set! end answer) "string" (list end) "6em"))
           (item (text "Parity:")
             (enum (begin (set! parity answer))
-                  '("odd" "even" "any")
+                  '("odd page" "even page" "any")
                   "any"
                   "10em"))
           (item (text "Content:")
