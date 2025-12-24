@@ -198,17 +198,17 @@ text_box_rep::expand_glyphs (int mode, double factor) {
 
 void
 text_box_rep::display (renderer ren) {
-  if (N (str) > 0) {
-    // 如果有背景色（非透明），先绘制背景
-    int r, g, b, a;
-    get_rgb_color (bg_color, r, g, b, a);
-    if (a > 0) {
-      brush bg_brush (bg_color);
-      ren->set_background (bg_brush);
-      ren->clear (x1, y1, x2, y2);
-    }
+  // 如果有背景色（非透明），先绘制背景
+  int r, g, b, a;
+  get_rgb_color (bg_color, r, g, b, a);
+  if (a > 0) {
+    brush bg_brush (bg_color);
+    ren->set_background (bg_brush);
+    ren->clear (x1, y1, x2, y2);
+  }
 
-    // 绘制文本
+  // 绘制文本（如果有文本）
+  if (N (str) > 0) {
     ren->set_pencil (pen);
     if (is_nil_or_zero (xk)) fn->draw (ren, str, 0, 0);
     else fn->draw (ren, str, xk->left, 0, xk->padding);

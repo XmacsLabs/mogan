@@ -203,16 +203,33 @@ concater_rep::typeset_normal_text_string (tree t, path ip, int pos, int end) {
   string       s      = t->label;
   int          start;
 
+  // 检查是否有背景色设置
+  tree   bg_color_tree = env->read (BG_COLOR);
+  string bg_color_str  = as_string (bg_color_tree);
+  bool   has_background= (bg_color_tree != "" && bg_color_str != "white");
+
   do {
     start           = pos;
     text_property tp= env->lan->advance (t, pos);
     if (pos > end) pos= end;
     if ((pos > start) && (s[start] == ' ')) { // spaces
-      if (start == 0) typeset_substring ("", ip, 0);
-      penalty_min (tp->pen_after);
-      PRINT_SPACE (tp->spc_before);
-      PRINT_SPACE (tp->spc_after);
-      if ((pos == end) || (s[pos] == ' ')) typeset_substring ("", ip, pos);
+      // 如果有背景色，渲染空格字符；否则使用空字符串
+      if (has_background) {
+        // 渲染空格字符
+        penalty_max (tp->pen_before);
+        PRINT_SPACE (tp->spc_before)
+        typeset_substring (" ", ip, start);
+        penalty_min (tp->pen_after);
+        PRINT_SPACE (tp->spc_after)
+      }
+      else {
+        // 没有背景色，使用原来的优化处理
+        if (start == 0) typeset_substring ("", ip, 0);
+        penalty_min (tp->pen_after);
+        PRINT_SPACE (tp->spc_before);
+        PRINT_SPACE (tp->spc_after);
+        if ((pos == end) || (s[pos] == ' ')) typeset_substring ("", ip, pos);
+      }
     }
     else { // strings
       penalty_max (tp->pen_before);

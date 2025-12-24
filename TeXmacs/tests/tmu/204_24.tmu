@@ -5,7 +5,7 @@
 <\body>
   Test 204_24: Text background color (Chinese)
 
-  \;
+  <section|文本>
 
   普通文本，无背景色
 
@@ -32,8 +32,18 @@
   \;
 
   <\with|bg-color|#ffffcc>
-    多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。 背景应该覆盖整个文本块。
+    多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。\ 
+
+    背景应该覆盖整个文本块。
   </with>
+
+  单个空格：<marked| >
+
+  空格在字符左边：<marked| abc>
+
+  空格在字符右边：<marked|abc >
+
+  <section|数学模式>
 
   \;
 
@@ -56,3 +66,10 @@
     <associate|page-screen-margin|false>
   </collection>
 </initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|?>>
+    <associate|auto-2|<tuple|2|?>>
+  </collection>
+</references>
