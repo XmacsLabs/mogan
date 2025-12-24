@@ -57,10 +57,19 @@
         (last parts)
         name)))
 
+(tm-define (get-file-string p)
+  (when (url-exists? p)
+    (string-load p)))
+
 (tm-define (insert-tips p)
   (go-to p)
   (go-to-next-node)
-  (insert `(with "par-mode" "center" (document ,(utf8->cork "很抱歉，目前OCR功能仅为会员用户提供。")))))
+  (let* ((content (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.md")))
+         (latex-code (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.tex")))
+         (parsed-latex (parse-latex latex-code))
+         (texmacs-latex (latex->texmacs parsed-latex)))
+    (insert `(with "par-mode" "center" (document ,(utf8->cork content))))
+    (insert texmacs-latex)))
 
 ; (get-image-extention (get-image t 0 #t)) 获取文件后缀，创建对应临时文件
 ; (get-image t 0 #f) 获取 raw-data
