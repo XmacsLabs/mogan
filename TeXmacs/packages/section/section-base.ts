@@ -50,7 +50,7 @@
 
   <assign|bibliography-text|<macro|<localize|Bibliography>>>
 
-  <assign|bib-no-translate|false>
+  <assign|bib-no-translate|true>
 
   <drd-props|bib-no-translate|macro-parameter|boolean>
 
