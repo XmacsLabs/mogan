@@ -95,12 +95,7 @@ text_box_rep::text_box_rep (path ip, int pos2, string s, font fn2, pencil p2,
     : box_rep (ip), pos (pos2), str (s), fn (fn2), pen (p2), xk (xk2),
       bg_color (bg) {
 
-  // 调试日志：检查字符串内容
-  bool all_spaces = is_all_spaces(s);
-  if (all_spaces) {
-    cout << "DEBUG text_box_rep: string='" << s << "', length=" << N(s)
-         << ", all spaces\n";
-  }
+  bool all_spaces= is_all_spaces (s);
 
   metric ex;
   fn->get_extents (str, ex);
@@ -114,27 +109,15 @@ text_box_rep::text_box_rep (path ip, int pos2, string s, font fn2, pencil p2,
   y4= ex->y4;
 
   // 特殊处理：如果字符串全部由空格组成，手动计算宽度
-  if (all_spaces && N(s) > 0) {
+  if (all_spaces && N (s) > 0) {
     // 获取单个空格的宽度
     metric space_ex;
     fn->get_extents (" ", space_ex);
-    SI single_space_width = space_ex->x2 - space_ex->x1;
+    SI single_space_width= space_ex->x2 - space_ex->x1;
 
     // 计算总宽度
-    SI total_width = single_space_width * N(s);
-    x2 = x1 + total_width;
-
-    cout << "DEBUG text_box_rep: all spaces string, N(s)=" << N(s)
-         << ", single_space_width=" << single_space_width
-         << ", total_width=" << total_width
-         << ", adjusted x2=" << x2 << "\n";
-  }
-
-  // 调试日志：显示尺寸信息
-  if (all_spaces) {
-    cout << "DEBUG text_box_rep: extents - x1=" << x1 << ", x2=" << x2
-         << ", width=" << (x2 - x1) << ", y1=" << y1 << ", y2=" << y2
-         << ", height=" << (y2 - y1) << "\n";
+    SI total_width= single_space_width * N (s);
+    x2            = x1 + total_width;
   }
 
   // 特殊处理：对于全空格字符串，确保有最小高度以便背景色可见
@@ -145,27 +128,25 @@ text_box_rep::text_box_rep (path ip, int pos2, string s, font fn2, pencil p2,
 
     if (m_ex->y1 != m_ex->y2) {
       // 如果"M"有有效的高度，使用它的y1和y2
-      y1 = m_ex->y1;
-      y2 = m_ex->y2;
-      cout << "DEBUG text_box_rep: using 'M' height, y1=" << y1
-           << ", y2=" << y2 << ", height=" << (y2 - y1) << "\n";
-    } else {
+      y1= m_ex->y1;
+      y2= m_ex->y2;
+    }
+    else {
       // 如果"M"的高度也无效，使用字体的上升和下降值
       SI font_ascender = fn->y1;
-      SI font_descender = fn->y2;
+      SI font_descender= fn->y2;
 
       if (font_ascender == 0 && font_descender == 0) {
         // 如果字体没有提供上升/下降值，使用默认比例
-        SI font_height = fn->yx;
-        y1 = -font_height / 4;  // 基线以下1/4高度
-        y2 = font_height * 3 / 4;  // 基线以上3/4高度
-      } else {
-        // 使用字体的实际上升和下降值
-        y1 = font_descender;
-        y2 = font_ascender;
+        SI font_height= fn->yx;
+        y1            = -font_height / 4;    // 基线以下1/4高度
+        y2            = font_height * 3 / 4; // 基线以上3/4高度
       }
-      cout << "DEBUG text_box_rep: using font metrics, y1=" << y1
-           << ", y2=" << y2 << ", height=" << (y2 - y1) << "\n";
+      else {
+        // 使用字体的实际上升和下降值
+        y1= font_descender;
+        y2= font_ascender;
+      }
     }
   }
 
