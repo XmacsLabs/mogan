@@ -35,10 +35,6 @@ jobs:
       - name: Install dependencies
         run: |
           DEBIAN_FRONTEND=noninteractive apt-get update
-          DEBIAN_FRONTEND=noninteractive apt-get install -y wget gnupg
-          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-          echo "deb http://apt.llvm.org/bookworm/ llvm-toolchain-bookworm-19 main" >> /etc/apt/sources.list.d/llvm.list
-          apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y clang-format-19
 
       - uses: actions/checkout@v3
