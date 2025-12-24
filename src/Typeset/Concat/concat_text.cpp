@@ -30,6 +30,7 @@ concater_rep::typeset_substring (string s, path ip, int pos) {
   tree   bg_color_tree= env->read (BG_COLOR);
   string bg_color_str = as_string (bg_color_tree);
 
+
   if (bg_color_tree != "" && bg_color_str != "white") {
     // 有背景色设置，使用 typeset_background_substring
     typeset_background_substring (s, ip, pos, bg_color_str);
@@ -134,6 +135,7 @@ concater_rep::typeset_colored_substring (string s, path ip, int pos,
 void
 concater_rep::typeset_background_substring (string s, path ip, int pos,
                                             string bg_col) {
+
   // 获取背景颜色
   color bg_color;
   if (bg_col == "") {
@@ -189,6 +191,7 @@ concater_rep::typeset_background_text_string (tree t, path ip, int pos, int end,
   // 收集整个文本块
   string full_text= s (pos, end);
 
+
   // 创建带有背景色的文本框
   box b= text_box_with_bg (ip, pos, full_text, env->fn, env->pen,
                            named_color (bg_color, env->alpha), xkerning ());
@@ -207,6 +210,7 @@ concater_rep::typeset_normal_text_string (tree t, path ip, int pos, int end) {
   tree   bg_color_tree = env->read (BG_COLOR);
   string bg_color_str  = as_string (bg_color_tree);
   bool   has_background= (bg_color_tree != "" && bg_color_str != "white");
+
 
   do {
     start           = pos;

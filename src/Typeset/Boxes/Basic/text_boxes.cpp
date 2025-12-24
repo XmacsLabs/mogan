@@ -86,6 +86,7 @@ text_box_rep::text_box_rep (path ip, int pos2, string s, font fn2, pencil p2,
                             xkerning xk2, color bg)
     : box_rep (ip), pos (pos2), str (s), fn (fn2), pen (p2), xk (xk2),
       bg_color (bg) {
+
   metric ex;
   fn->get_extents (str, ex);
   x1= ex->x1;
@@ -96,6 +97,27 @@ text_box_rep::text_box_rep (path ip, int pos2, string s, font fn2, pencil p2,
   y3= ex->y3;
   x4= ex->x4;
   y4= ex->y4;
+
+  // 特殊处理：对于空格字符，确保有最小高度以便背景色可见
+  if (s == " " && y1 == y2) {
+    // 使用字体的默认高度
+    SI font_height = fn->yx;
+    // 对于空格字符，使用与普通字符相同的高度
+    // 获取字体的上升和下降值
+    SI font_ascender = fn->y1;
+    SI font_descender = fn->y2;
+
+    if (font_ascender == 0 && font_descender == 0) {
+      // 如果字体没有提供上升/下降值，使用默认比例
+      y1 = -font_height / 4;  // 基线以下1/4高度
+      y2 = font_height * 3 / 4;  // 基线以上3/4高度
+    } else {
+      // 使用字体的实际上升和下降值
+      y1 = font_descender;
+      y2 = font_ascender;
+    }
+  }
+
   if (!is_nil (xk)) {
     STACK_NEW_ARRAY (xpos, SI, N (str) + 1);
     fn->get_xpositions (str, xpos, xk->padding);
