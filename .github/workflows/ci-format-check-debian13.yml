@@ -42,6 +42,7 @@ jobs:
           fetch-depth: 1
 
       - name: Run clang-format check
+        shell: bash
         run: |
           shopt -s nullglob globstar
           clang-format-19 --version
