@@ -26,15 +26,9 @@ lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
 
 void
 concater_rep::typeset_substring (string s, path ip, int pos) {
-  // 调试输出
-  cout << "typeset_substring: s='" << s
-       << "', lan='" << env->lan->lan_name << "'\n";
-
   // 检查是否有背景色设置
   tree bg_color_tree = env->read (BG_COLOR);
   string bg_color_str = as_string (bg_color_tree);
-  cout << "BG_COLOR in substring: tree='" << bg_color_tree
-       << "', str='" << bg_color_str << "'\n";
 
   if (bg_color_tree != "" && bg_color_str != "white") {
     // 有背景色设置，使用 typeset_background_substring
@@ -49,15 +43,9 @@ concater_rep::typeset_substring (string s, path ip, int pos) {
 
 void
 concater_rep::typeset_math_substring (string s, path ip, int pos, int otype) {
-  // 调试输出
-  cout << "typeset_math_substring: s='" << s
-       << "', lan='" << env->lan->lan_name << "'\n";
-
   // 检查是否有背景色设置
   tree bg_color_tree = env->read (BG_COLOR);
   string bg_color_str = as_string (bg_color_tree);
-  cout << "BG_COLOR in math substring: tree='" << bg_color_tree
-       << "', str='" << bg_color_str << "'\n";
 
   if (bg_color_tree != "" && bg_color_str != "white") {
     // 有背景色设置，使用 typeset_background_substring
@@ -104,16 +92,9 @@ apply_alpha (color c, int alpha) {
 void
 concater_rep::typeset_colored_substring (string s, path ip, int pos,
                                          string col) {
-  // 调试输出
-  cout << "typeset_colored_substring: s='" << s
-       << "', col='" << col
-       << "', lan='" << env->lan->lan_name << "'\n";
-
   // 检查是否有背景色设置
   tree bg_color_tree = env->read (BG_COLOR);
   string bg_color_str = as_string (bg_color_tree);
-  cout << "BG_COLOR: tree='" << bg_color_tree
-       << "', str='" << bg_color_str << "'\n";
 
   if (bg_color_tree != "" && bg_color_str != "white") {
     // 有背景色设置，需要创建带有背景色的彩色文本
@@ -152,43 +133,29 @@ concater_rep::typeset_colored_substring (string s, path ip, int pos,
 void
 concater_rep::typeset_background_substring (string s, path ip, int pos,
                                             string bg_col) {
-  // 调试输出
-  cout << "typeset_background_substring: s='" << s
-       << "', bg_col='" << bg_col
-       << "', lan='" << env->lan->lan_name << "'\n";
-
   // 获取背景颜色
   color bg_color;
   if (bg_col == "") {
-    cout << "bg_col is empty, using pen color\n";
     bg_color= apply_alpha (env->pen->get_color (), env->alpha);
   }
   else if (env->provides (bg_col)) {
     tree t= env->read (bg_col);
-    cout << "env provides bg_col, tree='" << t << "'\n";
     if (t == "") {
-      cout << "tree is empty, using pen color\n";
       bg_color= apply_alpha (env->pen->get_color (), env->alpha);
     }
     else {
       string t_str = as_string (t);
-      cout << "using named_color: '" << t_str << "'\n";
       bg_color= named_color (t_str, env->alpha);
     }
   }
   else {
-    cout << "using named_color directly: '" << bg_col << "'\n";
     bg_color= named_color (bg_col, env->alpha);
   }
-
-  cout << "bg_color created, calling text_box_with_bg\n";
 
   // 创建带有背景色的文本框
   box b = text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color);
 
   a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
-
-  cout << "typeset_background_substring completed\n";
 }
 
 #define PRINT_SPACE(spc_type)                                                  \
