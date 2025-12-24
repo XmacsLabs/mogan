@@ -15,6 +15,7 @@
 #include "cork.hpp"
 #include "font.hpp"
 #include "tm_debug.hpp"
+#include "colors.hpp"
 
 /******************************************************************************
  * Text boxes
@@ -50,6 +51,8 @@ struct text_box_rep : public box_rep {
   font     fn;
   pencil   pen;
   xkerning xk;
+  color    bg_color;
+  bool     has_bg_color;
 
   text_box_rep (path ip, int pos, string s, font fn, pencil pen, xkerning xk);
   operator tree () { return str; }
@@ -100,7 +103,10 @@ struct text_box_rep : public box_rep {
 
 text_box_rep::text_box_rep (path ip, int pos2, string s, font fn2, pencil p2,
                             xkerning xk2)
-    : box_rep (ip), pos (pos2), str (s), fn (fn2), pen (p2), xk (xk2) {
+    : box_rep (ip), pos (pos2), str (s), fn (fn2), pen (p2), xk (xk2),
+      bg_color (black), has_bg_color (false) {
+  cout << "text_box_rep CONSTRUCTOR: s='" << s
+       << "', has_bg_color=" << has_bg_color << " (initial)\n";
   metric ex;
   fn->get_extents (str, ex);
   x1= ex->x1;
@@ -139,7 +145,11 @@ text_box_rep::adjust_kerning (int mode, double factor) {
   }
   if ((mode & START_OF_LINE) != 0) nxk->left-= pad;
   if ((mode & END_OF_LINE) != 0) nxk->right-= pad;
-  return tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+  // 复制背景色设置
+  rep->bg_color = bg_color;
+  rep->has_bg_color = has_bg_color;
+  return (box) rep;
 }
 
 box
@@ -152,8 +162,11 @@ text_box_rep::right_contract_kerning (double factor) {
     nxk->padding= xk->padding;
   }
   nxk->right-= pad;
-  box result= tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
-  return result;
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+  // 复制背景色设置
+  rep->bg_color = bg_color;
+  rep->has_bg_color = has_bg_color;
+  return (box) rep;
 }
 
 box
@@ -166,7 +179,11 @@ text_box_rep::left_contract_kerning (double factor) {
     nxk->padding= xk->padding;
   }
   nxk->left-= pad;
-  return tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+  // 复制背景色设置
+  rep->bg_color = bg_color;
+  rep->has_bg_color = has_bg_color;
+  return (box) rep;
 }
 
 box
@@ -178,7 +195,11 @@ text_box_rep::right_auto_spacing (SI size) {
     nxk->padding= xk->padding;
   }
   nxk->right= nxk->right + size;
-  return tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+  // 复制背景色设置
+  rep->bg_color = bg_color;
+  rep->has_bg_color = has_bg_color;
+  return (box) rep;
 }
 
 box
@@ -190,19 +211,49 @@ text_box_rep::left_auto_spacing (SI size) {
     nxk->padding= xk->padding;
   }
   nxk->left= nxk->left + size;
-  return tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, fn, pen, nxk);
+  // 复制背景色设置
+  rep->bg_color = bg_color;
+  rep->has_bg_color = has_bg_color;
+  return (box) rep;
 }
 
 box
 text_box_rep::expand_glyphs (int mode, double factor) {
   if (N (str) == 0) return this;
   font nfn= fn->magnify (1.0 + factor, 1.0);
-  return tm_new<text_box_rep> (ip, pos, str, nfn, pen, xk);
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, str, nfn, pen, xk);
+  // 复制背景色设置
+  rep->bg_color = bg_color;
+  rep->has_bg_color = has_bg_color;
+  return (box) rep;
 }
 
 void
 text_box_rep::display (renderer ren) {
   if (N (str) > 0) {
+    // 调试输出 - 特别关注下划线字符
+    if (str == "_") {
+      cout << "UNDERSCORE text_box_rep::display: str='_'"
+           << ", has_bg_color=" << has_bg_color
+           << ", x1=" << x1 << ", y1=" << y1
+           << ", x2=" << x2 << ", y2=" << y2 << "\n";
+    }
+
+    // 如果有背景色，先绘制背景
+    if (has_bg_color) {
+      // 对于下划线字符，输出更详细的信息
+      if (str == "_") {
+        cout << "DRAWING BACKGROUND for underscore: x1=" << x1
+             << ", y1=" << y1 << ", x2=" << x2 << ", y2=" << y2
+             << ", width=" << (x2 - x1) << ", height=" << (y2 - y1) << "\n";
+      }
+      brush bg_brush (bg_color);
+      ren->set_background (bg_brush);
+      ren->clear (x1, y1, x2, y2);
+    }
+
+    // 绘制文本
     ren->set_pencil (pen);
     if (is_nil_or_zero (xk)) fn->draw (ren, str, 0, 0);
     else fn->draw (ren, str, xk->left, 0, xk->padding);
@@ -691,4 +742,15 @@ wide_stix_box (path ip, string s, font fn, pencil pen, SI width) {
 box
 text_box (path ip, int pos, string s, font fn, pencil pen) {
   return tm_new<text_box_rep> (ip, pos, s, fn, pen, xkerning ());
+}
+
+box
+text_box_with_bg (path ip, int pos, string s, font fn, pencil pen, color bg) {
+  cout << "text_box_with_bg CREATING: s='" << s << "', bg=" << bg << "\n";
+  text_box_rep* rep = tm_new<text_box_rep> (ip, pos, s, fn, pen, xkerning ());
+  rep->bg_color = bg;
+  rep->has_bg_color = true;
+  cout << "text_box_with_bg CREATED: has_bg_color=" << rep->has_bg_color
+       << ", bg_color=" << rep->bg_color << "\n";
+  return (box) rep;
 }

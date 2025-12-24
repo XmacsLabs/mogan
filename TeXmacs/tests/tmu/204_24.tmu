@@ -1,0 +1,58 @@
+<TMU|<tuple|1.1.0|2025.2.3-beta4>>
+
+<style|<tuple|generic|number-europe|british>>
+
+<\body>
+  Test 204_24: Text background color (Chinese)
+
+  \;
+
+  普通文本，无背景色
+
+  \;
+
+  <with|bg-color|yellow|黄色背景的文本>
+
+  \;
+
+  <with|bg-color|light gray|浅灰色背景的文本>
+
+  \;
+
+  <with|bg-color|#e0e0ff|#e0e0ff 颜色背景的文本>
+
+  \;
+
+  <with|bg-color|#ffcccc|<with|color|red|红色文字配粉色背景>>
+
+  \;
+
+  <with|bg-color|#ccffcc|<with|color|dark green|深绿色文字配浅绿色背景>>
+
+  \;
+
+  <\with|bg-color|#ffffcc>
+    多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。 背景应该覆盖整个文本块。
+  </with>
+
+  \;
+
+  数学公式背景测试：
+
+  <\with|bg-color|light blue>
+    <\equation*>
+      E=mc<rsup|2>
+    </equation*>
+  </with>
+
+  \;
+
+  <with|bg-color|#ffeeee|行内数学 <with|mode|math|<frac|a|b>> 带背景>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

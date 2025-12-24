@@ -14,6 +14,7 @@
 #include "cork.hpp"
 #include "formatter.hpp"
 #include "preferences.hpp"
+#include <moebius/vars.hpp>
 
 using namespace moebius;
 
@@ -25,14 +26,49 @@ lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
 
 void
 concater_rep::typeset_substring (string s, path ip, int pos) {
-  box b= text_box (ip, pos, s, env->fn, env->pen);
-  a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+  // 调试输出
+  cout << "typeset_substring: s='" << s
+       << "', lan='" << env->lan->lan_name << "'\n";
+
+  // 检查是否有背景色设置
+  tree bg_color_tree = env->read (BG_COLOR);
+  string bg_color_str = as_string (bg_color_tree);
+  cout << "BG_COLOR in substring: tree='" << bg_color_tree
+       << "', str='" << bg_color_str << "'\n";
+
+  if (bg_color_tree != "" && bg_color_str != "white") {
+    // 有背景色设置，使用 typeset_background_substring
+    typeset_background_substring (s, ip, pos, bg_color_str);
+  }
+  else {
+    // 没有背景色设置，使用普通文本框
+    box b= text_box (ip, pos, s, env->fn, env->pen);
+    a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+  }
 }
 
 void
 concater_rep::typeset_math_substring (string s, path ip, int pos, int otype) {
-  box b= text_box (ip, pos, s, env->fn, env->pen);
-  a << line_item (STRING_ITEM, otype, b, HYPH_INVALID, env->lan);
+  // 调试输出
+  cout << "typeset_math_substring: s='" << s
+       << "', lan='" << env->lan->lan_name << "'\n";
+
+  // 检查是否有背景色设置
+  tree bg_color_tree = env->read (BG_COLOR);
+  string bg_color_str = as_string (bg_color_tree);
+  cout << "BG_COLOR in math substring: tree='" << bg_color_tree
+       << "', str='" << bg_color_str << "'\n";
+
+  if (bg_color_tree != "" && bg_color_str != "white") {
+    // 有背景色设置，使用 typeset_background_substring
+    // 注意：数学模式可能需要特殊处理，这里先使用相同的方法
+    typeset_background_substring (s, ip, pos, bg_color_str);
+  }
+  else {
+    // 没有背景色设置，使用普通文本框
+    box b= text_box (ip, pos, s, env->fn, env->pen);
+    a << line_item (STRING_ITEM, otype, b, HYPH_INVALID, env->lan);
+  }
 }
 
 void
@@ -68,16 +104,91 @@ apply_alpha (color c, int alpha) {
 void
 concater_rep::typeset_colored_substring (string s, path ip, int pos,
                                          string col) {
-  color c;
-  if (col == "") c= apply_alpha (env->pen->get_color (), env->alpha);
-  else if (env->provides (col)) {
-    tree t= env->read (col);
-    if (t == "") c= apply_alpha (env->pen->get_color (), env->alpha);
-    else c= named_color (as_string (t), env->alpha);
+  // 调试输出
+  cout << "typeset_colored_substring: s='" << s
+       << "', col='" << col
+       << "', lan='" << env->lan->lan_name << "'\n";
+
+  // 检查是否有背景色设置
+  tree bg_color_tree = env->read (BG_COLOR);
+  string bg_color_str = as_string (bg_color_tree);
+  cout << "BG_COLOR: tree='" << bg_color_tree
+       << "', str='" << bg_color_str << "'\n";
+
+  if (bg_color_tree != "" && bg_color_str != "white") {
+    // 有背景色设置，需要创建带有背景色的彩色文本
+    // 首先获取文本颜色
+    color text_color;
+    if (col == "") text_color= apply_alpha (env->pen->get_color (), env->alpha);
+    else if (env->provides (col)) {
+      tree t= env->read (col);
+      if (t == "") text_color= apply_alpha (env->pen->get_color (), env->alpha);
+      else text_color= named_color (as_string (t), env->alpha);
+    }
+    else text_color= named_color (col, env->alpha);
+
+    // 获取背景颜色
+    color bg_color = named_color (bg_color_str, env->alpha);
+
+    // 创建带有文本颜色和背景色的文本框
+    box b = text_box_with_bg (ip, pos, s, env->fn, pencil (text_color), bg_color);
+    a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
   }
-  else c= named_color (col, env->alpha);
-  box b= text_box (ip, pos, s, env->fn, c);
+  else {
+    // 没有背景色设置，使用普通彩色文本框
+    color c;
+    if (col == "") c= apply_alpha (env->pen->get_color (), env->alpha);
+    else if (env->provides (col)) {
+      tree t= env->read (col);
+      if (t == "") c= apply_alpha (env->pen->get_color (), env->alpha);
+      else c= named_color (as_string (t), env->alpha);
+    }
+    else c= named_color (col, env->alpha);
+    box b= text_box (ip, pos, s, env->fn, c);
+    a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+  }
+}
+
+void
+concater_rep::typeset_background_substring (string s, path ip, int pos,
+                                            string bg_col) {
+  // 调试输出
+  cout << "typeset_background_substring: s='" << s
+       << "', bg_col='" << bg_col
+       << "', lan='" << env->lan->lan_name << "'\n";
+
+  // 获取背景颜色
+  color bg_color;
+  if (bg_col == "") {
+    cout << "bg_col is empty, using pen color\n";
+    bg_color= apply_alpha (env->pen->get_color (), env->alpha);
+  }
+  else if (env->provides (bg_col)) {
+    tree t= env->read (bg_col);
+    cout << "env provides bg_col, tree='" << t << "'\n";
+    if (t == "") {
+      cout << "tree is empty, using pen color\n";
+      bg_color= apply_alpha (env->pen->get_color (), env->alpha);
+    }
+    else {
+      string t_str = as_string (t);
+      cout << "using named_color: '" << t_str << "'\n";
+      bg_color= named_color (t_str, env->alpha);
+    }
+  }
+  else {
+    cout << "using named_color directly: '" << bg_col << "'\n";
+    bg_color= named_color (bg_col, env->alpha);
+  }
+
+  cout << "bg_color created, calling text_box_with_bg\n";
+
+  // 创建带有背景色的文本框
+  box b = text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color);
+
   a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+
+  cout << "typeset_background_substring completed\n";
 }
 
 #define PRINT_SPACE(spc_type)                                                  \
@@ -85,6 +196,38 @@ concater_rep::typeset_colored_substring (string s, path ip, int pos,
 
 void
 concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
+  // 检查是否有背景色设置
+  tree bg_color_tree = env->read (BG_COLOR);
+  string bg_color_str = as_string (bg_color_tree);
+  bool has_background = (bg_color_tree != "" && bg_color_str != "white");
+
+  if (has_background) {
+    // 有背景色，处理整个文本块
+    typeset_background_text_string (t, ip, pos, end, bg_color_str);
+  }
+  else {
+    // 没有背景色，使用原来的处理方式
+    typeset_normal_text_string (t, ip, pos, end);
+  }
+}
+
+void
+concater_rep::typeset_background_text_string (tree t, path ip, int pos, int end, string bg_color) {
+  array<space> spc_tab= env->fn->get_normal_spacing (env->spacing_policy);
+  string       s      = t->label;
+
+  // 收集整个文本块
+  string full_text = s (pos, end);
+
+  // 创建带有背景色的文本框
+  box b = text_box_with_bg (ip, pos, full_text, env->fn, env->pen, named_color (bg_color, env->alpha));
+
+  // 添加行项目
+  a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+}
+
+void
+concater_rep::typeset_normal_text_string (tree t, path ip, int pos, int end) {
   array<space> spc_tab= env->fn->get_normal_spacing (env->spacing_policy);
   string       s      = t->label;
   int          start;
