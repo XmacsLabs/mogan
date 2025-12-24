@@ -637,8 +637,6 @@
 ("enable indentation" "允许缩进")
 ("enable page breaking" "启动分页")
 ("enabled" "启用")
-("Enable advanced footer" "启用高级页脚")
-("Enable advanced header" "启用高级页眉")
 ("encl" "")
 ("encoding" "编码")
 ("encryption" "加密")
