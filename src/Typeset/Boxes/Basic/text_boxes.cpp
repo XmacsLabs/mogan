@@ -230,15 +230,8 @@ text_box_rep::expand_glyphs (int mode, double factor) {
 void
 text_box_rep::display (renderer ren) {
   if (N (str) > 0) {
-    // 调试输出 - 特别关注下划线字符
-    if (str == "_") {
-    }
-
     // 如果有背景色，先绘制背景
     if (has_bg_color) {
-      // 对于下划线字符，输出更详细的信息
-      if (str == "_") {
-      }
       brush bg_brush (bg_color);
       ren->set_background (bg_brush);
       ren->clear (x1, y1, x2, y2);
