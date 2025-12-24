@@ -1,0 +1,56 @@
+name: Clang-Format Check on Debian 13
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "!src/Plugins/Macos/**"
+      - "!src/Plugins/Windows/**"
+      - "tests/**"
+      - "moebius/**"
+      - "3rdparty/lolly/**"
+      - ".clang-format"
+      - ".github/workflows/ci-format-check-debian13.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "!src/Plugins/Macos/**"
+      - "!src/Plugins/Windows/**"
+      - "tests/**"
+      - "moebius/**"
+      - "3rdparty/lolly/**"
+      - ".clang-format"
+      - ".github/workflows/ci-format-check-debian13.yml"
+  workflow_dispatch:
+
+jobs:
+  clang-format-check:
+    container: debian:13
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: Install dependencies
+        run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y clang-format-19
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Run clang-format check
+        shell: bash
+        run: |
+          shopt -s nullglob globstar
+          clang-format-19 --version
+          clang-format-19 --dry-run --Werror tests/**/*.cpp
+          clang-format-19 --dry-run --Werror tests/**/*.hpp
+          clang-format-19 --dry-run --Werror src/**/*.cpp
+          clang-format-19 --dry-run --Werror src/**/*.hpp
+          clang-format-19 --dry-run --Werror moebius/**/*.hpp
+          clang-format-19 --dry-run --Werror moebius/**/*.cpp
+          clang-format-19 --dry-run --Werror 3rdparty/lolly/**/*.hpp
+          clang-format-19 --dry-run --Werror 3rdparty/lolly/**/*.cpp
