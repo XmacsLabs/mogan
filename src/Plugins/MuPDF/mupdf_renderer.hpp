@@ -46,8 +46,7 @@ protected:
   static bool           clip_active;
   static pdf_processor* clip_proc;
 
-  bool      transform_active;
-  fz_matrix transform_matrix;
+  bool transform_active;
 
   // geometry
 
