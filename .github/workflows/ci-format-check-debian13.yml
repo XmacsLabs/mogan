@@ -1,0 +1,58 @@
+name: Clang-Format Check on Debian 13
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "!src/Plugins/Macos/**"
+      - "!src/Plugins/Windows/**"
+      - "tests/**"
+      - "moebius/**"
+      - "3rdparty/lolly/**"
+      - ".clang-format"
+      - ".github/workflows/ci-format-check-debian13.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "!src/Plugins/Macos/**"
+      - "!src/Plugins/Windows/**"
+      - "tests/**"
+      - "moebius/**"
+      - "3rdparty/lolly/**"
+      - ".clang-format"
+      - ".github/workflows/ci-format-check-debian13.yml"
+  workflow_dispatch:
+
+jobs:
+  clang-format-check:
+    container: debian:13
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - name: Install dependencies
+        run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y wget gnupg
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+          echo "deb http://apt.llvm.org/bookworm/ llvm-toolchain-bookworm-19 main" >> /etc/apt/sources.list.d/llvm.list
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y clang-format-19
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: git add safe directory
+        run: git config --global --add safe.directory '*'
+
+      - name: Run clang-format check
+        run: |
+          shopt -s nullglob globstar
+          clang-format-19 --version
+          clang-format-19 --dry-run --Werror tests/**/*.cpp tests/**/*.hpp \
+            src/**/*.cpp src/**/*.hpp \
+            moebius/**/*.cpp moebius/**/*.hpp \
+            3rdparty/lolly/**/*.cpp 3rdparty/lolly/**/*.hpp
