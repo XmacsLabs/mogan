@@ -157,7 +157,8 @@ edit_interface_rep::draw_selection (renderer ren, rectangle r) {
   int alt_count= N (alt_selection_rects);
   for (int i= 0; i < alt_count; i++) {
     // 跳过当前选择项，避免颜色混合
-    if (!is_nil (selection_rects) && alt_selection_rects[i] == selection_rects) {
+    if (!is_nil (selection_rects) &&
+        alt_selection_rects[i] == selection_rects) {
       continue;
     }
     color col= get_env_color (MATCH_COLOR);
