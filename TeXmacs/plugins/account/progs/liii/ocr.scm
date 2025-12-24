@@ -14,6 +14,7 @@
 (texmacs-module (liii ocr))
 (import (liii os))
 (import (liii base64))
+(import (liii time))
 
 (define temp-dir (os-temp-dir))
 
@@ -59,10 +60,11 @@
 
 (tm-define (get-file-string p)
   (when (url-exists? p)
-    (string-load p)))
+        (string-load p)))
 
 (tm-define (insert-tips p)
   (go-to p)
+  (go-to-next-node)
   (go-to-next-node)
   (let* ((content (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.md")))
          (latex-code (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.tex")))
@@ -70,6 +72,22 @@
          (texmacs-latex (latex->texmacs parsed-latex)))
     (insert `(with "par-mode" "center" (document ,(utf8->cork content))))
     (insert texmacs-latex)))
+
+(tm-define (image-ocr-to-latex t)
+  (let* ((extention 
+           (get-image-extention (get-image t 0 #t)))
+         (temp-name 
+           (string-append temp-dir "/temp-" (number->string (current-time)) "." extention))
+         (data-list 
+           (get-image t 0 #f)))
+    (when (and (list? data-list) (not (null? data-list)))
+          (let* ((base64-str (car data-list))
+                (binary-data (decode-base64 base64-str)))
+            (string-save binary-data temp-name)
+            (display* "Image has saved to " temp-name "\n"))))
+  (sleep 5)
+  (go-to (cursor-path))
+  (insert `(with "par-mode" "center" (document ,(utf8->cork "很抱歉，目前OCR功能仅为会员用户提供。")))))
 
 ; (get-image-extention (get-image t 0 #t)) 获取文件后缀，创建对应临时文件
 ; (get-image t 0 #f) 获取 raw-data
@@ -82,8 +100,8 @@
          (data-list 
            (get-image t 0 #f)))
     (when (and (list? data-list) (not (null? data-list)))
-      (let* ((base64-str (car data-list))
-             (binary-data (decode-base64 base64-str)))
-        (string-save binary-data temp-name)
-        (display* "Image has saved to " temp-name "\n"))))
+          (let* ((base64-str (car data-list))
+                (binary-data (decode-base64 base64-str)))
+            (string-save binary-data temp-name)
+            (display* "Image has saved to " temp-name "\n"))))
   (insert-tips p))
