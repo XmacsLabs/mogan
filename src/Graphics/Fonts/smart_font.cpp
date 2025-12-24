@@ -1134,6 +1134,18 @@ smart_font_rep::resolve (string c) {
   }
   array<string> a= trimmed_tokenize (family, ",");
 
+  // Special handling for space character - use CMU font instead of ecrm
+  if (c == " ") {
+    // Try to use CMU Serif for space character
+    font cfn= closest_font ("CMU Serif", variant, series, rshape, sz, dpi, 1);
+    if (!is_nil (cfn) && cfn->supports (c)) {
+      tree key= tuple ("space-font", "CMU Serif");
+      int  nr = sm->add_font (key, REWRITE_NONE);
+      initialize_font (nr);
+      return sm->add_char (key, c);
+    }
+  }
+
   // Special handling for emoji characters - bypass font-family restrictions
   string range= get_unicode_range (c);
   if (range == "emoji") {
@@ -1281,6 +1293,9 @@ smart_font_rep::initialize_font (int nr) {
   else if (a[0] == "emoji-font")
     fn[nr]= adjust_subfont (
         closest_font (a[1], "rm", "medium", "right", sz, dpi, 1));
+  else if (a[0] == "space-font")
+    fn[nr]= adjust_subfont (
+        closest_font (a[1], variant, series, rshape, sz, dpi, 1));
   else if (a[0] == "special")
     fn[nr]= smart_font_bis (family, variant, series, "right", sz, hdpi, dpi);
   else if (a[0] == "emu-bracket")

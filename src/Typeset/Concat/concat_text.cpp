@@ -27,7 +27,7 @@ lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
 void
 concater_rep::typeset_substring (string s, path ip, int pos) {
   // 检查是否有背景色设置
-  tree bg_color_tree = env->read (BG_COLOR);
+  tree   bg_color_tree= env->read (BG_COLOR);
   string bg_color_str = as_string (bg_color_tree);
 
   if (bg_color_tree != "" && bg_color_str != "white") {
@@ -44,7 +44,7 @@ concater_rep::typeset_substring (string s, path ip, int pos) {
 void
 concater_rep::typeset_math_substring (string s, path ip, int pos, int otype) {
   // 检查是否有背景色设置
-  tree bg_color_tree = env->read (BG_COLOR);
+  tree   bg_color_tree= env->read (BG_COLOR);
   string bg_color_str = as_string (bg_color_tree);
 
   if (bg_color_tree != "" && bg_color_str != "white") {
@@ -93,7 +93,7 @@ void
 concater_rep::typeset_colored_substring (string s, path ip, int pos,
                                          string col) {
   // 检查是否有背景色设置
-  tree bg_color_tree = env->read (BG_COLOR);
+  tree   bg_color_tree= env->read (BG_COLOR);
   string bg_color_str = as_string (bg_color_tree);
 
   if (bg_color_tree != "" && bg_color_str != "white") {
@@ -109,10 +109,11 @@ concater_rep::typeset_colored_substring (string s, path ip, int pos,
     else text_color= named_color (col, env->alpha);
 
     // 获取背景颜色
-    color bg_color = named_color (bg_color_str, env->alpha);
+    color bg_color= named_color (bg_color_str, env->alpha);
 
     // 创建带有文本颜色和背景色的文本框
-    box b = text_box_with_bg (ip, pos, s, env->fn, pencil (text_color), bg_color, xkerning ());
+    box b= text_box_with_bg (ip, pos, s, env->fn, pencil (text_color), bg_color,
+                             xkerning ());
     a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
   }
   else {
@@ -144,8 +145,8 @@ concater_rep::typeset_background_substring (string s, path ip, int pos,
       bg_color= apply_alpha (env->pen->get_color (), env->alpha);
     }
     else {
-      string t_str = as_string (t);
-      bg_color= named_color (t_str, env->alpha);
+      string t_str= as_string (t);
+      bg_color    = named_color (t_str, env->alpha);
     }
   }
   else {
@@ -153,7 +154,8 @@ concater_rep::typeset_background_substring (string s, path ip, int pos,
   }
 
   // 创建带有背景色的文本框
-  box b = text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color, xkerning ());
+  box b=
+      text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color, xkerning ());
 
   a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
 }
@@ -164,9 +166,9 @@ concater_rep::typeset_background_substring (string s, path ip, int pos,
 void
 concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
   // 检查是否有背景色设置
-  tree bg_color_tree = env->read (BG_COLOR);
-  string bg_color_str = as_string (bg_color_tree);
-  bool has_background = (bg_color_tree != "" && bg_color_str != "white");
+  tree   bg_color_tree = env->read (BG_COLOR);
+  string bg_color_str  = as_string (bg_color_tree);
+  bool   has_background= (bg_color_tree != "" && bg_color_str != "white");
 
   if (has_background) {
     // 有背景色，处理整个文本块
@@ -179,15 +181,17 @@ concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
 }
 
 void
-concater_rep::typeset_background_text_string (tree t, path ip, int pos, int end, string bg_color) {
+concater_rep::typeset_background_text_string (tree t, path ip, int pos, int end,
+                                              string bg_color) {
   array<space> spc_tab= env->fn->get_normal_spacing (env->spacing_policy);
   string       s      = t->label;
 
   // 收集整个文本块
-  string full_text = s (pos, end);
+  string full_text= s (pos, end);
 
   // 创建带有背景色的文本框
-  box b = text_box_with_bg (ip, pos, full_text, env->fn, env->pen, named_color (bg_color, env->alpha), xkerning ());
+  box b= text_box_with_bg (ip, pos, full_text, env->fn, env->pen,
+                           named_color (bg_color, env->alpha), xkerning ());
 
   // 添加行项目
   a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);

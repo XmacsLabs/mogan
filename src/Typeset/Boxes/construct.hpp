@@ -11,12 +11,12 @@
 
 #ifndef CONSTRUCT_H
 #define CONSTRUCT_H
+#include "Boxes/xkerning.hpp"
 #include "array.hpp"
 #include "boxes.hpp"
 #include "command.hpp"
 #include "font.hpp"
 #include "player.hpp"
-#include "Boxes/xkerning.hpp"
 
 class frame;
 
@@ -107,7 +107,8 @@ box polygon_box (path ip, array<SI> x, array<SI> y, brush fill, pencil pen);
 box image_box (path ip, url u, SI w, SI h, int alpha, int px);
 
 box text_box (path ip, int pos, string s, font fn, pencil pen);
-box text_box_with_bg (path ip, int pos, string s, font fn, pencil pen, color bg, xkerning xk);
+box text_box_with_bg (path ip, int pos, string s, font fn, pencil pen, color bg,
+                      xkerning xk);
 box delimiter_box (path ip, string s, font fn, pencil pen, SI y1, SI y2);
 box delimiter_box (path ip, string s, font fn, pencil pen, SI bot, SI top,
                    SI mid, SI real_bot, SI real_top);

@@ -49,7 +49,8 @@ class concater_rep {
   void typeset_colored_substring (string s, path ip, int pos, string col);
   void typeset_background_substring (string s, path ip, int pos, string bg_col);
   void typeset_text_string (tree t, path ip, int start, int end);
-  void typeset_background_text_string (tree t, path ip, int start, int end, string bg_color);
+  void typeset_background_text_string (tree t, path ip, int start, int end,
+                                       string bg_color);
   void typeset_normal_text_string (tree t, path ip, int start, int end);
   void typeset_math_string (tree t, path ip, int start, int end);
   void typeset_prog_string (tree t, path ip, int start, int end);
