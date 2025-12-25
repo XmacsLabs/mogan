@@ -21,19 +21,20 @@
         (various comment-widgets)))
 
 (tm-define (get-marked-color)
-  (let ((color (get-preference "marked-color")))
+  (let ((color (get-preference "my-bg-color")))
     (if (or (== color "") (== color "default"))
         "#ffe47f"
         color)))
 
 (tm-define (pure-text? t)
-  (cond ((tree-is? t 'string) #t)
-        ((tree-is? t 'document)
-         (let loop ((i 0))
-           (cond ((>= i (tree-arity t)) #t)
-                 ((not (tree-is? (tree-ref t i) 'string)) #f)
-                 (else (loop (+ i 1))))))
-        (else #f)))
+  (and (in-text?)
+       (cond ((tree-is? t 'string) #t)
+             ((tree-is? t 'document)
+              (let loop ((i 0))
+                (cond ((>= i (tree-arity t)) #t)
+                      ((not (tree-is? (tree-ref t i) 'string)) #f)
+                      (else (loop (+ i 1))))))
+             (else #f))))
 
 (tm-define (mark-text)
   (if (selection-active-any?)

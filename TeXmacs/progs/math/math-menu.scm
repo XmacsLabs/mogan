@@ -14,6 +14,33 @@
 (texmacs-module (math math-menu)
   (:use (table table-edit)))
 
+(tm-define (get-marked-color)
+  (let ((color (get-preference "my-bg-color")))
+    (if (or (== color "") (== color "default"))
+        "#ffe47f"
+        color)))
+
+(tm-define (pure-text? t)
+  (and (in-text?)
+       (cond ((tree-is? t 'string) #t)
+             ((tree-is? t 'document)
+              (let loop ((i 0))
+                (cond ((>= i (tree-arity t)) #t)
+                      ((not (tree-is? (tree-ref t i) 'string)) #f)
+                      (else (loop (+ i 1))))))
+             (else #f))))
+
+(tm-define (mark-text)
+  (if (selection-active-any?)
+      (let ((stree (tree->stree (selection-tree))))
+        (if (pure-text? (selection-tree))
+            (make-with "bg-color" (get-marked-color))
+            (begin
+              (make 'marked)
+              (when (not (== (get-marked-color) "#ffe47f"))
+                (with-set (focus-tree) "marked-color" (get-marked-color))))))
+      (make-with "bg-color" (get-marked-color))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Inserting mathematical markup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -32,7 +59,7 @@
 (menu-bind math-content-tag-menu
   ("Deleted" (make 'deleted))
   ("Fill out" (make 'fill-out))
-  ("Marked" (make 'marked)))
+  ("Marked" (mark-text)))
 
 (menu-bind math-presentation-tag-menu
   ("Decorated" (make 'decorated))
@@ -1158,7 +1185,7 @@
               (== (get-preference "gui theme") "liii-night")
               (== (get-preference "gui theme") "default"))
           ((balloon (icon "tm_marked.svg") "Marked text")
-           (make 'marked)))
+           (mark-text)))
   (=> (balloon (icon "tm_color.xpm") "Select a foreground color")
       (link color-menu))
   (=> (balloon (icon "tm_math_style.xpm")
