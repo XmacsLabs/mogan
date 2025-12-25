@@ -477,12 +477,9 @@
   <assign|marked-color|#ffe47f>
   <assign|marked-padding|0.1fn>
 
-  <assign|render-marked|<macro|bg|body|<quasi|<style-with|src-compact|none|<datoms|<macro|x|<style-with|src-compact|none|<resize|<tabular|<tformat|<cwith|1|1|1|1|cell-background|<unquote|<arg|bg>>>|<cwith|1|1|1|1|cell-lsep|0fn>|<cwith|1|1|1|1|cell-rsep|0fn>|<cwith|1|1|1|1|cell-bsep|<unquote|<value|marked-padding>>>|<cwith|1|1|1|1|cell-tsep|<unquote|<value|marked-padding>>>|<cwith|1|-1|1|-1|cell-lborder|0ln>|<cwith|1|-1|1|-1|cell-rborder|0ln>|<cwith|1|-1|1|-1|cell-bborder|0ln>|<cwith|1|-1|1|-1|cell-tborder|0ln>|<twith|table-width|>|<twith|table-hmode|auto>|<twith|table-block|no>|<table|<row|<cell|<arg|x>>>>>>|<plus|1l|0fn>|<plus|1b|<unquote|<value|marked-padding>>>|<minus|1r|0fn>|<minus|1t|<unquote|<value|marked-padding>>>>>>|<arg|body>>>>>>
-
-  <assign|marked|<macro|body|<render-marked|<value|marked-color>|<arg|body>>>>
+  <assign|marked|<macro|body|<quasi|<style-with|src-compact|none|<datoms|<macro|x|<style-with|src-compact|none|<tabular|<tformat|<cwith|1|1|1|1|cell-background|<unquote|<value|marked-color>>>|<cwith|1|1|1|1|cell-lsep|<unquote|<value|marked-padding>>>|<cwith|1|1|1|1|cell-rsep|<unquote|<value|marked-padding>>>|<cwith|1|1|1|1|cell-bsep|<unquote|<value|marked-padding>>>|<cwith|1|1|1|1|cell-tsep|<unquote|<value|marked-padding>>>|<cwith|1|-1|1|-1|cell-lborder|0ln>|<cwith|1|-1|1|-1|cell-rborder|0ln>|<cwith|1|-1|1|-1|cell-bborder|0ln>|<cwith|1|-1|1|-1|cell-tborder|0ln>|<twith|table-width|>|<twith|table-valign|B>|<twith|table-hmode|auto>|<twith|table-block|no>|<table|<row|<cell|<arg|x>>>>>>>>|<arg|body>>>>>>
 
   <drd-props|marked|with-like|yes|arity|1|accessible|all>
-  <drd-props|render-marked|arity|2|color|0|accessible|1>
 
   \;
 
