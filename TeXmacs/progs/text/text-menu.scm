@@ -1150,5 +1150,4 @@
 
 (tm-menu (focus-hidden-icons t)
   (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
-                 (in? (tree->string (tree-ref t 0)) (list "color" "bg-color"))))
-  )
+                 (in? (tree->string (tree-ref t 0)) (list "color" "bg-color")))))
