@@ -200,7 +200,22 @@ text_box_rep::display (renderer ren) {
   if (a > 0) {
     brush bg_brush (bg_color);
     ren->set_background (bg_brush);
-    ren->clear (x1, y1, x2, y2);
+    // 非空字符串：使用原有逻辑
+    SI bg_x1 = x1;
+    SI bg_y1 = y1;
+    SI bg_x2 = x2;
+    SI bg_y2 = y2;
+
+    if (N (str) == 0) {
+      // 空字符串：使用空格字符的边界绘制背景
+      metric ex_space;
+      fn->get_extents (" ", ex_space);
+      SI bg_x1 = ex_space->x1;   // 左边界
+      SI bg_y1 = fn->y1;         // 上边界（上伸部，负数）
+      SI bg_x2 = ex_space->x2;   // 右边界
+      SI bg_y2 = fn->y2;         // 下边界（下伸部，正数）
+    }
+    ren->clear (bg_x1, bg_y1, bg_x2, bg_y2);
   }
 
   // 绘制文本（如果有文本）
