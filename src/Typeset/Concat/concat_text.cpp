@@ -193,7 +193,7 @@ concater_rep::typeset_background_text_string (tree t, path ip, int pos, int end,
   array<space> spc_tab= env->fn->get_normal_spacing (env->spacing_policy);
   string       s      = t->label;
   int          start;
-  color        bg_col = named_color (bg_color, env->alpha);
+  color        bg_col= named_color (bg_color, env->alpha);
 
   do {
     start           = pos;
