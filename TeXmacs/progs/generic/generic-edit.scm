@@ -17,7 +17,8 @@
 	(utils edit variants)
         (utils misc tooltip)
         (bibtex bib-complete)
-	(source macro-search)))
+	(source macro-search)
+  (liii ocr)))
 
 (tm-define (generic-context? t) #t) ;; overridden in, e.g., graphics mode
 
@@ -225,7 +226,14 @@
 (tm-define (kbd-cancel)
   (clipboard-clear "primary"))
 
+(tm-define (ocr-paste)
+  (with data 
+    (parse-texmacs-snippet (tree->string (tree-ref (clipboard-get "primary") 1)))
+    (when (tree-is? (tree-ref data 0) 'image)
+          (image-ocr-to-latex data))))
+
 (tm-define (kbd-magic-paste)
+  (ocr-paste)
   (with mode (get-env "mode")
     (cond ((== mode "prog")
            (clipboard-paste-import "code" "primary"))

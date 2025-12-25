@@ -12,7 +12,8 @@
 
 (texmacs-module (generic paste-widget)
   (:use (generic generic-edit)
-        (utils edit selections)))
+        (utils edit selections)
+        (liii ocr)))
 
 
 
@@ -128,11 +129,11 @@
   (dialogue-window clipboard-paste-from-widget
     (lambda (args)
       (when (== args "ok")
-            (if (or (== selected-format "md") (== selected-format "ocr"))
-                (open-url "https://liiistem.cn/")
-                (if (== selected-format "mathml")
-                  (clipboard-paste-import "html" "primary")
-                  (clipboard-paste-import selected-format "primary")))))
+            (cond 
+              ((== selected-format "md") (open-url "https://liiistem.cn/"))
+              ((== selected-format "ocr") (ocr-paste))
+              ((== selected-format "mathml") (clipboard-paste-import "html" "primary"))
+              (else (clipboard-paste-import selected-format "primary")))))
     "Paste Special"))
 
 (tm-define (paste-special-in-math)
