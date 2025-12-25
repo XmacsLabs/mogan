@@ -131,7 +131,7 @@
                     ((equal? 1 (length p)) "")
                     ((equal? 2 (length p)) `(concat ": " ,(list-ref p 1)))
                     (else
-                     `(concat ":" ,(list-ref p 1)
+                     `(concat ": " ,(list-ref p 1)
                               ,bib-range-symbol ,(list-ref p 2)))))))
     (if (and (== vol "") (== num "") (== pag ""))
         year  ;; 只有年份，没有卷期页码
@@ -181,8 +181,8 @@
       ((and has-url has-doi)
        ;; 同时有 URL 和 DOI：引用日期放在 URL 前，DOI 在 URL 后
        (if has-urldate
-           `(concat "[" ,urldate "]. " ,url ". DOI:" ,doi)
-           `(concat ,url ". DOI:" ,doi)))
+           `(concat "[" ,urldate "]. " ,url ". DOI: " ,doi)
+           `(concat ,url ". DOI: " ,doi)))
       (has-url
        ;; 只有 URL
        (if has-urldate
@@ -191,8 +191,8 @@
       (has-doi
        ;; 只有 DOI
        (if has-urldate
-           `(concat "[" ,urldate "]. DOI:" ,doi)
-           `(concat "DOI:" ,doi)))
+           `(concat "[" ,urldate "]. DOI: " ,doi)
+           `(concat "DOI: " ,doi)))
       (else ""))))
 
 ;; 重写图书格式以添加文献类型标识符 [M]
