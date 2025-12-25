@@ -335,7 +335,7 @@
                  (delayed (:idle 250)
                    (parameter-set l col mode)
                    (when (== l "bg-color")
-                     (set-preference "my-bg-color" col))))
+                     (set-preference "marked-color" col))))
     ((check "Default" "*" (parameter-default? l mode))
      (parameter-reset l mode))
     ---

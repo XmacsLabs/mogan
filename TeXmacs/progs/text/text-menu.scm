@@ -21,7 +21,7 @@
         (various comment-widgets)))
 
 (tm-define (get-marked-color)
-  (let ((color (get-preference "my-bg-color")))
+  (let ((color (get-preference "marked-color")))
     (if (or (== color "") (== color "default"))
         "#ffe47f"
         color)))
