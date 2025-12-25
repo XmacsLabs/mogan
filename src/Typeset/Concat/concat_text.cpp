@@ -14,10 +14,33 @@
 #include "cork.hpp"
 #include "formatter.hpp"
 #include "preferences.hpp"
+#include <moebius/vars.hpp>
 
 using namespace moebius;
-
 lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
+
+/******************************************************************************
+ * Background color helper functions
+ ******************************************************************************/
+static inline bool
+has_background_color (edit_env env) {
+  tree   bg_color_tree= env->read (BG_COLOR);
+  string bg_color_str = as_string (bg_color_tree);
+  return (bg_color_tree != "" && bg_color_str != "white");
+}
+
+static inline string
+get_background_color_str (edit_env env) {
+  tree bg_color_tree= env->read (BG_COLOR);
+  return as_string (bg_color_tree);
+}
+
+static inline color
+get_background_color (edit_env env) {
+  // 注意：调用此函数前应确保 has_background_color(env) 为 true
+  string bg_color_str= get_background_color_str (env);
+  return named_color (bg_color_str, env->alpha);
+}
 
 /******************************************************************************
  * Typesetting strings
@@ -25,8 +48,15 @@ lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
 
 void
 concater_rep::typeset_substring (string s, path ip, int pos) {
-  box b= text_box (ip, pos, s, env->fn, env->pen);
-  a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+  if (has_background_color (env)) {
+    // 有背景色设置，使用 typeset_background_substring
+    typeset_background_substring (s, ip, pos, get_background_color_str (env));
+  }
+  else {
+    // 没有背景色设置，使用普通文本框
+    box b= text_box (ip, pos, s, env->fn, env->pen);
+    a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+  }
 }
 
 void
@@ -80,6 +110,36 @@ concater_rep::typeset_colored_substring (string s, path ip, int pos,
   a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
 }
 
+void
+concater_rep::typeset_background_substring (string s, path ip, int pos,
+                                            string bg_col) {
+
+  // 获取背景颜色
+  color bg_color;
+  if (bg_col == "") {
+    bg_color= apply_alpha (env->pen->get_color (), env->alpha);
+  }
+  else if (env->provides (bg_col)) {
+    tree t= env->read (bg_col);
+    if (t == "") {
+      bg_color= apply_alpha (env->pen->get_color (), env->alpha);
+    }
+    else {
+      string t_str= as_string (t);
+      bg_color    = named_color (t_str, env->alpha);
+    }
+  }
+  else {
+    bg_color= named_color (bg_col, env->alpha);
+  }
+
+  // 创建带有背景色的文本框
+  box b=
+      text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color, xkerning ());
+
+  a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+}
+
 #define PRINT_SPACE(spc_type)                                                  \
   if (spc_type != SPC_NONE) print (spc_tab[spc_type]);
 
@@ -93,6 +153,7 @@ concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
     start           = pos;
     text_property tp= env->lan->advance (t, pos);
     if (pos > end) pos= end;
+
     if ((pos > start) && (s[start] == ' ')) { // spaces
       if (start == 0) typeset_substring ("", ip, 0);
       penalty_min (tp->pen_after);

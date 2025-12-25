@@ -1,0 +1,89 @@
+<TMU|<tuple|1.1.0|2025.2.3-beta4>>
+
+<style|<tuple|generic|number-europe|chinese>>
+
+<\body>
+  Test 204_24: Text background color (Chinese)
+
+  <section|文本>
+
+  普通文本，无背景色
+
+  \;
+
+  <with|bg-color|yellow|黄色背景的文本>
+
+  \;
+
+  <with|bg-color|light gray|浅灰色背景的文本>
+
+  \;
+
+  <with|bg-color|#e0e0ff|#e0e0ff 颜色背景的文本>
+
+  \;
+
+  <with|bg-color|#ffcccc|<with|color|red|红色文字配粉色背景>>
+
+  \;
+
+  <with|bg-color|#ccffcc|<with|color|dark green|深绿色文字配浅绿色背景>>
+
+  <\with|bg-color|#ffffcc>
+    多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。 背景应该覆盖整个文本块。我们需要提供更多文字，才能覆盖多行。
+  </with>
+
+  <\with|bg-color|#ffffcc>
+    多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。\ 
+
+    背景应该覆盖整个文本块。
+  </with>
+
+  单个空格：<marked| >
+
+  两个空格：<marked| \ >
+
+  空格在字符左边：<marked| abc>
+
+  空格在字符右边：<marked|abc >\ 
+
+  <section|数学模式>
+
+  \;
+
+  数学公式背景测试：
+
+  <\with|bg-color|light blue>
+    <\equation*>
+      E=mc<rsup|2>
+    </equation*>
+  </with>
+
+  \;
+
+  <with|bg-color|#ffeeee|行内数学 <with|mode|math|<frac|a|b>> 带背景>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|1>>
+    <associate|auto-2|<tuple|2|1>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|1<space|2spc>文本><datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-1><vspace|0.5fn>
+
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|2<space|2spc>数学模式><datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-2><vspace|0.5fn>
+    </associate>
+  </collection>
+</auxiliary>
