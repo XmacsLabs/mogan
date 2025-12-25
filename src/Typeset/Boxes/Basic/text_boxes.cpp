@@ -200,15 +200,15 @@ text_box_rep::display (renderer ren) {
   if (a > 0) {
     brush bg_brush (bg_color);
     ren->set_background (bg_brush);
-    SI bg_x1 = x1;
-    SI bg_x2 = x2;
+    SI     bg_x1= x1;
+    SI     bg_x2= x2;
     metric ex_m;
     fn->get_extents ("M", ex_m);
-    SI bg_y1 = ex_m->y1 - 2 * ren->pixel;  // 向下延伸2个像素
-    SI bg_y2 = ex_m->y2 + 2 * ren->pixel;  // 向上延伸2个像素
+    SI bg_y1= ex_m->y1 - 10 * ren->pixel; // 向下延伸10个像素
+    SI bg_y2= ex_m->y2 + 10 * ren->pixel; // 向上延伸10个像素
 
     // 检查背景宽度是否足够
-    SI bg_width = bg_x2 - bg_x1;
+    SI bg_width= bg_x2 - bg_x1;
     SI m_width = ex_m->x2 - ex_m->x1;
     if (bg_width >= m_width / 4) {
       ren->clear (bg_x1, bg_y1, bg_x2, bg_y2);
