@@ -176,7 +176,8 @@ concater_rep::typeset_background_substring (string s, path ip, int pos,
 void
 concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
   if (has_background_color (env)) {
-    // 有背景色，处理整个文本块
+    // 有背景色，使用改进的 typeset_background_text_string
+    // 它能正确处理分词和换行
     typeset_background_text_string (t, ip, pos, end,
                                     get_background_color_str (env));
   }
@@ -191,16 +192,35 @@ concater_rep::typeset_background_text_string (tree t, path ip, int pos, int end,
                                               string bg_color) {
   array<space> spc_tab= env->fn->get_normal_spacing (env->spacing_policy);
   string       s      = t->label;
+  int          start;
+  color        bg_col = named_color (bg_color, env->alpha);
 
-  // 收集整个文本块
-  string full_text= s (pos, end);
-
-  // 创建带有背景色的文本框
-  box b= text_box_with_bg (ip, pos, full_text, env->fn, env->pen,
-                           named_color (bg_color, env->alpha), xkerning ());
-
-  // 添加行项目
-  a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+  do {
+    start           = pos;
+    text_property tp= env->lan->advance (t, pos);
+    if (pos > end) pos= end;
+    if ((pos > start) && (s[start] == ' ')) { // spaces
+      // 渲染空格字符
+      penalty_max (tp->pen_before);
+      PRINT_SPACE (tp->spc_before)
+      // 创建带有背景色的空格文本框
+      box b= text_box_with_bg (ip, start, " ", env->fn, env->pen, bg_col,
+                               xkerning ());
+      a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+      penalty_min (tp->pen_after);
+      PRINT_SPACE (tp->spc_after)
+    }
+    else { // strings
+      penalty_max (tp->pen_before);
+      PRINT_SPACE (tp->spc_before)
+      // 创建带有背景色的文本文本框
+      box b= text_box_with_bg (ip, start, s (start, pos), env->fn, env->pen,
+                               bg_col, xkerning ());
+      a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+      penalty_min (tp->pen_after);
+      PRINT_SPACE (tp->spc_after)
+    }
+  } while (pos < end);
 }
 
 void
