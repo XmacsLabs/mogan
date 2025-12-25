@@ -17,24 +17,51 @@
 (bib-define-style "gbt7714-2015" "gbt7714-2015")
 
 ;; GBT 7714-2015 特定格式化函数
-;; TODO: 实现正确的中英文作者姓名格式化
-;; TODO: 添加文献类型标识符 [J], [M], [C] 等
-;; TODO: 根据标准调整标点符号和顺序
 
 ;; 检测字符串是否包含中文字符的辅助函数
 (define (contains-chinese? str)
   (if (bib-null? str) #f
-      (let loop ((i 0) (len (string-length str)))
-        (if (>= i len) #f
-            (let ((c (string-ref str i)))
-              (if (or (and (>= (char->integer c) #x4e00)
-                           (<= (char->integer c) #x9fff))
-                      (and (>= (char->integer c) #x3400)
-                           (<= (char->integer c) #x4dbf))
-                      (and (>= (char->integer c) #x20000)
-                           (<= (char->integer c) #x2a6df)))
-                  #t
-                  (loop (+ i 1) len)))))))
+      (let ((s (if (string? str) str "")))
+        (define (substring? pat text)
+          (let ((pat-len (string-length pat))
+                (text-len (string-length text)))
+            (let loop ((i 0))
+              (if (> (+ i pat-len) text-len) #f
+                  (let ((found? (let char-loop ((j 0))
+                                  (if (>= j pat-len) #t
+                                      (if (char=? (string-ref pat j)
+                                                  (string-ref text (+ i j)))
+                                          (char-loop (+ j 1))
+                                          #f)))))
+                    (if found? #t (loop (+ i 1))))))))
+        ;; 检查是否包含中文 Unicode 字符的常见内部表示模式 "<#xxxx>"
+        (or (substring? "<#4" s)  ; 以 "<#4" 开头的可能是中文（U+4E00 开始）
+            (substring? "<#5" s)
+            (substring? "<#6" s)
+            (substring? "<#7" s)
+            (substring? "<#8" s)
+            (substring? "<#9" s)
+            (substring? "<#3" s)  ; CJK 扩展 A (U+3400)
+            (substring? "<#2" s)  ; CJK 扩展 B (U+20000)
+            (substring? "<#F" s)  ; CJK 兼容表意文字 (U+F900)
+            ;; 也检查实际的中文字符（如果已经是普通字符串）
+            (let loop ((i 0) (len (string-length s)))
+              (if (>= i len) #f
+                  (let* ((c (string-ref s i))
+                         (code (char->integer c)))
+                    (if (or (and (>= code #x4e00) (<= code #x9fff))
+                            (and (>= code #x3400) (<= code #x4dbf))
+                            (and (>= code #x20000) (<= code #x2a6df))
+                            (and (>= code #x2a700) (<= code #x2b73f))
+                            (and (>= code #x2b740) (<= code #x2b81f))
+                            (and (>= code #x2b820) (<= code #x2ceaf))
+                            (and (>= code #x2ceb0) (<= code #x2ebef))
+                            (and (>= code #xf900) (<= code #xfaff))
+                            (and (>= code #x2e80) (<= code #x2eff))
+                            (and (>= code #x3000) (<= code #x303f))
+                            (and (>= code #x31c0) (<= code #x31ef)))
+                        #t
+                        (loop (+ i 1) len)))))))))
 
 ;; 文献类型标识符函数
 (tm-define (bib-document-type-identifier x type)
@@ -63,7 +90,7 @@
          (chinese? (or (contains-chinese? first-name-raw) (contains-chinese? last-name-raw)))
          (first-name (if chinese?
                          first-name-raw  ;; 中文名不缩写
-                         (if (bib-null? first-name-raw) "" (bib-abbreviate first-name-raw "." " "))))
+                         (if (bib-null? first-name-raw) "" (bib-abbreviate first-name-raw "" " "))))
          (last-name (if (bib-null? last-name-raw) "" (bib-purify last-name-raw))))
     (if (bib-null? last-name)
         first-name
@@ -122,11 +149,10 @@
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
-     ,(bib-new-list-spc
+     ,(bib-new-list ""
        `(,(bib-new-block (bib-format-author x))
          ,(bib-new-block
            `(concat ,(bib-format-field-Locase x "title")
-                    " "
                     ,(bib-document-type-identifier x "article")))
          ,(bib-new-block
            (if (bib-empty? x "crossref")
@@ -137,7 +163,20 @@
                 `((concat ,(bib-translate "in ")
                           (cite ,(bib-field x "crossref")))
                   ,(bib-format-pages x)))))
-         ,(bib-new-block (bib-format-field x "note"))))))
+         ,(bib-new-block (bib-format-field x "note"))
+         ,(bib-new-block (bib-format-url-doi x))))))
+
+;; 格式化 URL/DOI 信息（GBT 7714-2015 标准）
+(tm-define (bib-format-url-doi x)
+  (:mode bib-gbt7714-2015?)
+  (let* ((url (bib-field x "url"))
+         (doi (bib-field x "doi"))
+         (has-url (not (bib-null? url)))
+         (has-doi (not (bib-null? doi))))
+    (cond
+      (has-url `(concat ,url))
+      (has-doi `(concat "DOI:" ,doi))
+      (else ""))))
 
 ;; 重写图书格式以添加文献类型标识符 [M]
 (tm-define (bib-format-book n x)
@@ -145,7 +184,7 @@
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
-     ,(bib-new-list-spc
+     ,(bib-new-list ""
        `(,(bib-new-block
            (if (bib-empty? x "author")
                (bib-format-editor x)
@@ -153,12 +192,11 @@
          ,(bib-new-block
            (bib-new-sentence
             `((concat ,(bib-format-field x "title")
-                      " "
                       ,(bib-document-type-identifier x "book"))
               ,(bib-format-bvolume x))))
          ,(bib-new-block
            (if (bib-empty? x "crossref")
-               (bib-new-list-spc
+               (bib-new-list ""
                 `(,(bib-new-sentence
                     `(,(bib-format-number-series x)))
                   ,(bib-new-sentence
@@ -173,7 +211,8 @@
                           (cite ,(bib-field x "crossref")))
                   ,(bib-format-field x "edition")
                   ,(bib-format-date x)))))
-         ,(bib-new-block (bib-format-field x "note"))))))
+         ,(bib-new-block (bib-format-field x "note"))
+         ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 根据需要添加其他文献类型标识符：
 ;; [C] 用于会议论文集，[D] 用于学位论文，[R] 用于报告等。
@@ -195,15 +234,14 @@
   `(concat
     ,(bib-format-bibitem n x)
     ,(bib-label (list-ref x 2))
-    ,(bib-new-list-spc
+    ,(bib-new-list ""
       `(,(bib-new-block (bib-format-author x))
         ,(bib-new-block
           `(concat ,(bib-format-field-Locase x "title")
-                   " "
                    ,(bib-document-type-identifier x "inproceedings")))
         ,(bib-new-block
           (if (bib-empty? x "crossref")
-              (bib-new-list-spc
+              (bib-new-list ""
                `(,(bib-new-sentence
                    `(,(bib-format-in-ed-booktitle x)
                      ,(bib-format-bvolume x)
@@ -214,7 +252,7 @@
                        `(,(bib-format-field x "organization")
                          ,(bib-format-field x "publisher")
                          ,(bib-format-date x)))
-                      (bib-new-list-spc
+                      (bib-new-list ""
                        `(,(bib-new-sentence
                            `(,(bib-format-field x "address")
                              ,(bib-format-date x)))
@@ -225,7 +263,8 @@
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-pages x)))))
-        ,(bib-new-block (bib-format-field x "note"))))))
+        ,(bib-new-block (bib-format-field x "note"))
+        ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 检测作者列表是否包含中文作者
 (define (authors-contain-chinese? a)
@@ -233,9 +272,19 @@
       (let loop ((i 1) (n (length a)))
         (if (>= i n) #f
             (let* ((author (list-ref a i))
-                   (last-name (if (>= (length author) 4) (list-ref author 3) ""))
-                   (first-name (if (>= (length author) 2) (list-ref author 1) "")))
-              (if (or (contains-chinese? last-name) (contains-chinese? first-name))
+                   ;; 将作者的所有字符串部分连接成一个字符串，然后检查是否包含中文
+                   (author-str (cond
+                                 ((string? author) author)
+                                 ((list? author)
+                                  (let part-loop ((j 1) (m (length author)) (result ""))
+                                    (if (>= j m) result
+                                        (let ((part (list-ref author j)))
+                                          (part-loop (+ j 1) m
+                                                     (if (string? part)
+                                                         (string-append result part)
+                                                         result))))))
+                                 (else ""))))
+              (if (contains-chinese? author-str)
                   #t
                   (loop (+ i 1) n)))))))
 
@@ -249,32 +298,39 @@
              ;; GBT 7714-2015: 最多显示3个作者
              (max-authors 3)
              (author-count (- n 1))  ;; 减去第0个元素
-             (show-count (min author-count max-authors)))
+             (show-count (min author-count max-authors))
+             ;; 逗号分隔符：中文不加空格，英文加空格
+             (comma-sep (if chinese? "," ", ")))
         (cond
           ((equal? author-count 1)  ;; 只有1个作者
            (bib-format-name (list-ref a 1)))
           (else
            (let* ((first (bib-format-name (list-ref a 1)))
-                  ;; 收集中间作者（第2到第show-count个）
+                  (has-more (> author-count max-authors))
+                  ;; 收集中间作者
+                  ;; 如果有更多作者（>3）：收集第2到第3个作者（共2个中间作者）
+                  ;; 如果没有更多作者（<=3）：收集第2到第author-count-1个作者
                   (middle (let loop ((i 2) (result ""))
-                            (if (or (>= i n) (>= i (+ show-count 1)))  ;; 限制显示数量
+                            (if (or (>= i n)
+                                    (if has-more
+                                        (> i max-authors)      ;; 有更多作者时，收集到第3个（max-authors）
+                                        (>= i author-count)))  ;; 没有更多作者时，收集到倒数第2个
                                 result
                                 (loop (+ i 1)
                                       (if (equal? result "")
                                           (bib-format-name (list-ref a i))
-                                          `(concat ,result ", " ,(bib-format-name (list-ref a i))))))))
-                  (has-more (> author-count show-count))
+                                          `(concat ,result ,comma-sep ,(bib-format-name (list-ref a i))))))))
                   (last-part (if has-more
-                                 (if chinese? "等" "et al.")
+                                 (if chinese? "<#7b49>" "et al") ; Unicode U+7B49 "等"
                                  (if (>= author-count 2)
                                      (bib-format-name (list-ref a (- n 1)))
                                      "")))
-                  ;; 分隔符：中文用逗号，英文用"and"（最后一个作者前）
-                  (separator (if has-more
-                                 ","  ; "等"或"et al."前用逗号
-                                 (if chinese? "," " and "))))  ;; 中文用逗号，英文用"and"
+                  ;; 分隔符：无论是否有更多作者，都使用逗号分隔符
+                  ;; 中文：作者1,作者2,作者3,等
+                  ;; 英文：Author1, Author2, Author3, et al
+                  (separator comma-sep))
              (cond
                ((and (equal? middle "") (equal? last-part "")) first)
                ((equal? middle "") `(concat ,first ,separator ,last-part))
-               ((equal? last-part "") `(concat ,first ", " ,middle))
-               (else `(concat ,first ", " ,middle ,separator ,last-part)))))))))
+               ((equal? last-part "") `(concat ,first ,comma-sep ,middle))
+               (else `(concat ,first ,comma-sep ,middle ,separator ,last-part)))))))))
