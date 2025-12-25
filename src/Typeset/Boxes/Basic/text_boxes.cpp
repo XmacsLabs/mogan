@@ -18,10 +18,10 @@
 #include "font.hpp"
 #include "tm_debug.hpp"
 
-// 辅助函数：判断字符串是否全部由空格组成
 static bool
 is_all_spaces (string s) {
-  for (int i= 0; i < N (s); i++)
+  int s_N= N (s);
+  for (int i= 0; i < s_N; i++)
     if (s[i] != ' ') return false;
   return true;
 }
@@ -94,9 +94,6 @@ text_box_rep::text_box_rep (path ip, int pos2, string s, font fn2, pencil p2,
                             xkerning xk2, color bg)
     : box_rep (ip), pos (pos2), str (s), fn (fn2), pen (p2), xk (xk2),
       bg_color (bg) {
-
-  bool all_spaces= is_all_spaces (s);
-
   metric ex;
   fn->get_extents (str, ex);
   x1= ex->x1;
@@ -109,6 +106,7 @@ text_box_rep::text_box_rep (path ip, int pos2, string s, font fn2, pencil p2,
   y4= ex->y4;
 
   // 特殊处理：如果字符串全部由空格组成，手动计算宽度
+  bool all_spaces= is_all_spaces (s);
   if (all_spaces && N (s) > 0) {
     // 获取单个空格的宽度
     metric space_ex;

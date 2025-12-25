@@ -1,7 +1,8 @@
 /******************************************************************************
  * MODULE     : xkerning.hpp
  * DESCRIPTION: Extended kerning for text boxes
- * COPYRIGHT  : (C) 2025
+ * COPYRIGHT  : (C) 1999  Joris van der Hoeven
+ *                  2025  Mogan STEM authors
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
