@@ -60,16 +60,8 @@ concater_rep::typeset_substring (string s, path ip, int pos) {
 
 void
 concater_rep::typeset_math_substring (string s, path ip, int pos, int otype) {
-  if (has_background_color (env)) {
-    // 有背景色设置，使用 typeset_background_substring
-    // 注意：数学模式可能需要特殊处理，这里先使用相同的方法
-    typeset_background_substring (s, ip, pos, get_background_color_str (env));
-  }
-  else {
-    // 没有背景色设置，使用普通文本框
-    box b= text_box (ip, pos, s, env->fn, env->pen);
-    a << line_item (STRING_ITEM, otype, b, HYPH_INVALID, env->lan);
-  }
+  box b= text_box (ip, pos, s, env->fn, env->pen);
+  a << line_item (STRING_ITEM, otype, b, HYPH_INVALID, env->lan);
 }
 
 void
