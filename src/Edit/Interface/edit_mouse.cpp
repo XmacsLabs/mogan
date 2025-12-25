@@ -582,6 +582,7 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
     }
   }
   bool             hovering_image= false;
+  static path      _path         = tree_path (path (), x, y, 0);
   static path      current_path  = path ();
   static rectangle selr          = rectangle ();
   if (type == "move") {
@@ -605,7 +606,7 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
     set_cursor_style ("pointing_hand");
     path with_path= path_up (current_path);
     tree with_tree= subtree (et, with_path);
-    show_image_popup (current_path, with_tree, selr, magf, get_scroll_x (),
+    show_image_popup (_path, with_tree, selr, magf, get_scroll_x (),
                       get_scroll_y (), get_canvas_x ());
   }
   else {

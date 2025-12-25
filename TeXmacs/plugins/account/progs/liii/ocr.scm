@@ -66,11 +66,14 @@
   (go-to p)
   (go-to-next-node)
   (go-to-next-node)
-  (let* ((content (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.md")))
-         (latex-code (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.tex")))
+  (let* ((content (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.md"))))
+    (insert `(with "par-mode" "center" (document ,(utf8->cork content))))))
+
+
+(tm-define (insert-latex)
+  (let* ((latex-code (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.tex")))
          (parsed-latex (parse-latex latex-code))
          (texmacs-latex (latex->texmacs parsed-latex)))
-    (insert `(with "par-mode" "center" (document ,(utf8->cork content))))
     (insert texmacs-latex)))
 
 (tm-define (image-ocr-to-latex t)
@@ -87,7 +90,8 @@
             (display* "Image has saved to " temp-name "\n"))))
   (sleep 5)
   (go-to (cursor-path))
-  (insert `(with "par-mode" "center" (document ,(utf8->cork "很抱歉，目前OCR功能仅为会员用户提供。")))))
+  (go-to-next-node)
+  (insert-latex))
 
 ; (get-image-extention (get-image t 0 #t)) 获取文件后缀，创建对应临时文件
 ; (get-image t 0 #f) 获取 raw-data
