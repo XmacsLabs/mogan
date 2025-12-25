@@ -747,7 +747,7 @@ url
       ((balloon (icon "tm_search_last.xpm") "Last occurrence")
        (search-extreme-match #t u))
       // // //
-      ((balloon (icon "tm_replace_one.xpm") "Replace one occurrence")   
+      ((balloon (icon "tm_replace_one.xpm") "Replace one occurrence")
         (replace-one u))
       ((balloon (icon "tm_replace_all.xpm") "Replace all further occurrences")
         (replace-all u))
