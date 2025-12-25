@@ -17,8 +17,29 @@
 #include <moebius/vars.hpp>
 
 using namespace moebius;
-
 lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
+
+/******************************************************************************
+ * Background color helper functions
+ ******************************************************************************/
+static inline bool
+has_background_color (edit_env env) {
+  tree   bg_color_tree= env->read (BG_COLOR);
+  string bg_color_str = as_string (bg_color_tree);
+  return (bg_color_tree != "" && bg_color_str != "white");
+}
+
+static inline string
+get_background_color_str (edit_env env) {
+  tree bg_color_tree= env->read (BG_COLOR);
+  return as_string (bg_color_tree);
+}
+
+static inline color
+get_background_color (edit_env env) {
+  string bg_color_str= get_background_color_str (env);
+  return named_color (bg_color_str, env->alpha);
+}
 
 /******************************************************************************
  * Typesetting strings
@@ -26,13 +47,9 @@ lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
 
 void
 concater_rep::typeset_substring (string s, path ip, int pos) {
-  // 检查是否有背景色设置
-  tree   bg_color_tree= env->read (BG_COLOR);
-  string bg_color_str = as_string (bg_color_tree);
-
-  if (bg_color_tree != "" && bg_color_str != "white") {
+  if (has_background_color (env)) {
     // 有背景色设置，使用 typeset_background_substring
-    typeset_background_substring (s, ip, pos, bg_color_str);
+    typeset_background_substring (s, ip, pos, get_background_color_str (env));
   }
   else {
     // 没有背景色设置，使用普通文本框
@@ -43,14 +60,10 @@ concater_rep::typeset_substring (string s, path ip, int pos) {
 
 void
 concater_rep::typeset_math_substring (string s, path ip, int pos, int otype) {
-  // 检查是否有背景色设置
-  tree   bg_color_tree= env->read (BG_COLOR);
-  string bg_color_str = as_string (bg_color_tree);
-
-  if (bg_color_tree != "" && bg_color_str != "white") {
+  if (has_background_color (env)) {
     // 有背景色设置，使用 typeset_background_substring
     // 注意：数学模式可能需要特殊处理，这里先使用相同的方法
-    typeset_background_substring (s, ip, pos, bg_color_str);
+    typeset_background_substring (s, ip, pos, get_background_color_str (env));
   }
   else {
     // 没有背景色设置，使用普通文本框
@@ -92,11 +105,7 @@ apply_alpha (color c, int alpha) {
 void
 concater_rep::typeset_colored_substring (string s, path ip, int pos,
                                          string col) {
-  // 检查是否有背景色设置
-  tree   bg_color_tree= env->read (BG_COLOR);
-  string bg_color_str = as_string (bg_color_tree);
-
-  if (bg_color_tree != "" && bg_color_str != "white") {
+  if (has_background_color (env)) {
     // 有背景色设置，需要创建带有背景色的彩色文本
     // 首先获取文本颜色
     color text_color;
@@ -109,7 +118,7 @@ concater_rep::typeset_colored_substring (string s, path ip, int pos,
     else text_color= named_color (col, env->alpha);
 
     // 获取背景颜色
-    color bg_color= named_color (bg_color_str, env->alpha);
+    color bg_color= get_background_color (env);
 
     // 创建带有文本颜色和背景色的文本框
     box b= text_box_with_bg (ip, pos, s, env->fn, pencil (text_color), bg_color,
@@ -166,14 +175,10 @@ concater_rep::typeset_background_substring (string s, path ip, int pos,
 
 void
 concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
-  // 检查是否有背景色设置
-  tree   bg_color_tree = env->read (BG_COLOR);
-  string bg_color_str  = as_string (bg_color_tree);
-  bool   has_background= (bg_color_tree != "" && bg_color_str != "white");
-
-  if (has_background) {
+  if (has_background_color (env)) {
     // 有背景色，处理整个文本块
-    typeset_background_text_string (t, ip, pos, end, bg_color_str);
+    typeset_background_text_string (t, ip, pos, end,
+                                    get_background_color_str (env));
   }
   else {
     // 没有背景色，使用原来的处理方式
@@ -205,9 +210,7 @@ concater_rep::typeset_normal_text_string (tree t, path ip, int pos, int end) {
   int          start;
 
   // 检查是否有背景色设置
-  tree   bg_color_tree = env->read (BG_COLOR);
-  string bg_color_str  = as_string (bg_color_tree);
-  bool   has_background= (bg_color_tree != "" && bg_color_str != "white");
+  bool has_background= has_background_color (env);
 
   do {
     start           = pos;
