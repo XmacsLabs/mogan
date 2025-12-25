@@ -105,39 +105,16 @@ apply_alpha (color c, int alpha) {
 void
 concater_rep::typeset_colored_substring (string s, path ip, int pos,
                                          string col) {
-  if (has_background_color (env)) {
-    // 有背景色设置，需要创建带有背景色的彩色文本
-    // 首先获取文本颜色
-    color text_color;
-    if (col == "") text_color= apply_alpha (env->pen->get_color (), env->alpha);
-    else if (env->provides (col)) {
-      tree t= env->read (col);
-      if (t == "") text_color= apply_alpha (env->pen->get_color (), env->alpha);
-      else text_color= named_color (as_string (t), env->alpha);
-    }
-    else text_color= named_color (col, env->alpha);
-
-    // 获取背景颜色
-    color bg_color= get_background_color (env);
-
-    // 创建带有文本颜色和背景色的文本框
-    box b= text_box_with_bg (ip, pos, s, env->fn, pencil (text_color), bg_color,
-                             xkerning ());
-    a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+  color c;
+  if (col == "") c= apply_alpha (env->pen->get_color (), env->alpha);
+  else if (env->provides (col)) {
+    tree t= env->read (col);
+    if (t == "") c= apply_alpha (env->pen->get_color (), env->alpha);
+    else c= named_color (as_string (t), env->alpha);
   }
-  else {
-    // 没有背景色设置，使用普通彩色文本框
-    color c;
-    if (col == "") c= apply_alpha (env->pen->get_color (), env->alpha);
-    else if (env->provides (col)) {
-      tree t= env->read (col);
-      if (t == "") c= apply_alpha (env->pen->get_color (), env->alpha);
-      else c= named_color (as_string (t), env->alpha);
-    }
-    else c= named_color (col, env->alpha);
-    box b= text_box (ip, pos, s, env->fn, c);
-    a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
-  }
+  else c= named_color (col, env->alpha);
+  box b= text_box (ip, pos, s, env->fn, c);
+  a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
 }
 
 void
