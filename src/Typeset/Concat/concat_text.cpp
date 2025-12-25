@@ -162,11 +162,8 @@ concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
         // 有背景色：渲染空格字符
         penalty_max (tp->pen_before);
         PRINT_SPACE (tp->spc_before)
-        // 创建带有背景色的空格文本框
-        color bg_col= get_background_color (env);
-        box   b= text_box_with_bg (ip, start, " ", env->fn, env->pen, bg_col,
-                                   xkerning ());
-        a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+        // typeset_substring 已经支持背景色
+        typeset_substring (" ", ip, start);
         penalty_min (tp->pen_after);
         PRINT_SPACE (tp->spc_after)
       }
@@ -182,17 +179,9 @@ concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
     else { // strings
       penalty_max (tp->pen_before);
       PRINT_SPACE (tp->spc_before)
-      if (has_background) {
-        // 有背景色：创建带有背景色的文本文本框
-        color bg_col= get_background_color (env);
-        box   b= text_box_with_bg (ip, start, s (start, pos), env->fn, env->pen,
-                                   bg_col, xkerning ());
-        a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
-      }
-      else {
-        // 没有背景色：使用普通文本框
-        typeset_substring (s (start, pos), ip, start);
-      }
+      // typeset_substring 已经支持背景色，它会检查 has_background_color
+      // 并调用 typeset_background_substring 或创建普通文本框
+      typeset_substring (s (start, pos), ip, start);
       penalty_min (tp->pen_after);
       PRINT_SPACE (tp->spc_after)
     }
