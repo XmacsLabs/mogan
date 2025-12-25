@@ -7,25 +7,17 @@
 
   <section|文本>
 
-  <marked|<with|marked-color|red|普通文本，无背景色>>
+  采用bg-color数学调整背景色。
 
-  \;
+  普通文本，无背景色
 
   <with|bg-color|yellow|黄色背景的文本>
 
-  \;
-
   <with|bg-color|light gray|浅灰色背景的文本>
-
-  \;
 
   <with|bg-color|#e0e0ff|#e0e0ff 颜色背景的文本>
 
-  \;
-
   <with|bg-color|#ffcccc|<with|color|red|红色文字配粉色背景>>
-
-  \;
 
   <with|bg-color|#ccffcc|<with|color|dark green|深绿色文字配浅绿色背景>>
 
@@ -39,17 +31,9 @@
     背景应该覆盖整个文本块。
   </with>
 
-  单个空格：<marked| >
-
-  两个空格：<marked| \ >
-
-  空格在字符左边：<marked| abc>
-
-  空格在字符右边：<marked|abc >\ 
-
   <section|数学模式>
 
-  \;
+  采用marked标记调整背景色，实际上是表格。
 
   数学公式背景测试：
 
@@ -72,6 +56,7 @@
   <\collection>
     <associate|page-medium|paper>
     <associate|page-screen-margin|false>
+    <associate|preamble|false>
   </collection>
 </initial>
 
