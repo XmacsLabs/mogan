@@ -29,37 +29,37 @@
 ;     ((== key "client-identifier") "public-client")
 ;     ((== key "scope") "user+llm")
 ;     ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
-;     ((== key "user-info-url") "http://www.liiistem.cn/api/oauthUser/info")
+;     ((== key "user-info-url") "http://www.liiistem.cn/api/oauthUser/membershipInfo")
 ;     ((== key "pricing-url") "https://www.liiistem.cn/pricing-fruit.html")
 ;     ((== key "click-return-liii-url") "https://www.liiistem.cn/?from=login_button")
 ;     (else "")))
 
 ;; 测试
-(tm-define (account-oauth2-config key)
-  (cond
-    ((== key "authorization-url") "http://test-www.liiistem.cn/oauth2-login.html")
-    ((== key "access-token-url") "http://test-www.liiistem.cn:8080/oauth2/token")
-    ((== key "client-identifier") "public-client")
-    ((== key "scope") "user+llm")
-    ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
-    ((== key "user-info-url") "http://test-www.liiistem.cn/api/oauthUser/info")
-    ((== key "pricing-url") "http://test-www.liiistem.cn/pricing-fruit.html")
-    ((== key "click-return-liii-url") "https://www.liiistem.cn/?from=login_button")
-    (else "")))
-
-;; 本地
 ; (tm-define (account-oauth2-config key)
 ;   (cond
-;     ((== key "authorization-url") "http://127.0.0.1:3000/oauth2-login")
-;     ((== key "access-token-url") "http://127.0.0.1:8080/oauth2/token")
+;     ((== key "authorization-url") "http://test-www.liiistem.cn/oauth2-login.html")
+;     ((== key "access-token-url") "http://test-www.liiistem.cn:8080/oauth2/token")
 ;     ((== key "client-identifier") "public-client")
-;     ((== key "client-secret") "secret")
 ;     ((== key "scope") "user+llm")
 ;     ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
-;     ((== key "user-info-url") "http://127.0.0.1:8080/api/oauthUser/info")
-;     ((== key "pricing-url") "http://127.0.0.1:3000/pricing-fruit.html")
-;     ((== key "click-return-liii-url") "http://127.0.0.1:3000/?from=login_button")
+;     ((== key "user-info-url") "http://test-www.liiistem.cn/api/oauthUser/membershipInfo")
+;     ((== key "pricing-url") "http://test-www.liiistem.cn/pricing-fruit.html")
+;     ((== key "click-return-liii-url") "https://www.liiistem.cn/?from=login_button")
 ;     (else "")))
+
+;; 本地
+(tm-define (account-oauth2-config key)
+  (cond
+    ((== key "authorization-url") "http://127.0.0.1:3000/oauth2-login")
+    ((== key "access-token-url") "http://127.0.0.1:8080/oauth2/token")
+    ((== key "client-identifier") "public-client")
+    ((== key "client-secret") "secret")
+    ((== key "scope") "user+llm")
+    ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
+    ((== key "user-info-url") "http://127.0.0.1:8080/api/oauthUser/membershipInfo")
+    ((== key "pricing-url") "http://127.0.0.1:3000/pricing-fruit.html")
+    ((== key "click-return-liii-url") "http://127.0.0.1:3000/?from=login_button")
+    (else "")))
 
 
 (tm-define (account-save-token-display token)
