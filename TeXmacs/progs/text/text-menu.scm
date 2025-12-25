@@ -44,7 +44,7 @@
             (begin
               (make 'marked)
               (when (not (== (get-marked-color) "#ffe47f"))
-                (with-set (focus-tree) "bg-color" (get-marked-color))))))
+                (with-set (focus-tree) "marked-color" (get-marked-color))))))
       (make-with "bg-color" (get-marked-color))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
