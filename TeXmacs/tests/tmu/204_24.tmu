@@ -45,7 +45,7 @@
 
   空格在字符左边：<marked| abc>
 
-  空格在字符右边：<marked|abc >
+  空格在字符右边：<marked|abc >\ 
 
   <section|数学模式>
 
