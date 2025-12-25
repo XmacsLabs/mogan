@@ -7,7 +7,7 @@
 
   <section|文本>
 
-  普通文本，无背景色
+  <marked|<with|marked-color|red|普通文本，无背景色>>
 
   \;
 
@@ -33,7 +33,7 @@
     多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。 背景应该覆盖整个文本块。我们需要提供更多文字，才能覆盖多行。
   </with>
 
-  <\with|bg-color|#ffffcc>
+  <\with|bg-color|#ffffcc99>
     多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。\ 
 
     背景应该覆盖整个文本块。
@@ -55,13 +55,17 @@
 
   <\with|bg-color|light blue>
     <\equation*>
-      E=mc<rsup|2>
+      <with|marked-color|pastel cyan|<marked|E=mc<rsup|2>>>
     </equation*>
   </with>
 
+  <\equation*>
+    <marked|<big|int>x\<mathd\>x>
+  </equation*>
+
   \;
 
-  <with|bg-color|#ffeeee|行内数学 <with|mode|math|<frac|a|b>> 带背景>
+  <marked|行内数学 <with|mode|math|<frac|a|b>> 带背景>
 </body>
 
 <\initial>
