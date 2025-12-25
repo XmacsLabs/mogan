@@ -282,11 +282,7 @@
 
 (tm-define (tree-with-set t . l)
   (focus-tree-modified t)
-  (let loop ((args l))
-    (cond ((null? args) (noop))
-          ((null? (cdr args)) (noop))
-          (else (with-set t (car args) (cadr args))
-                (loop (cddr args)))))
+  (tree-set! t `(with ,@l ,t))
   (with-simplify t)
   (with-merge t))
 

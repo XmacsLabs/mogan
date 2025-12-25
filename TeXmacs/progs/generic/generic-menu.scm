@@ -247,7 +247,7 @@
               (parameter-local-special-set l val mode))
          (noop))
         ((and (func? mode :local) (tree-is? (focus-tree) (cadr mode)))
-         (tree-with-set (focus-tree) l val))))
+         (with-set (focus-tree) l val))))
 
 (tm-define (parameter-interactive-set l mode)
   (:interactive #t)
