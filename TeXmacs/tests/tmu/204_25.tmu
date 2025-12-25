@@ -1,0 +1,111 @@
+<TMU|<tuple|1.1.0|2025.2.3-beta4>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <\hide-preamble>
+    <assign|render-bibliography|<\macro|name|body>
+      <\chapter*>
+        <arg|name>
+      </chapter*>
+
+      <with|par-first|0fn|par-par-sep|0fn|font-base-size|10|<arg|body>>
+    </macro>>
+
+    <assign|transform-bibitem|<macro|body|[<arg|body>]<space|1.5fn>>>
+  </hide-preamble>
+
+  <cite|li_2024_efficient><cite|li_solving_2023><cite|Li_accelerating_2022><cite|dong_generalizing_2024><cite|STUD20250306006><cite|GGYY202510006><cite|dewdney1984computer><cite|weiser1999computer><cite|weiser1991computer>
+
+  <\bib-list|>
+    <bibitem|1>闵超.马克思1848年法国革命研究与唯物史观的具体化转向[J/OL].马克思主义研究,2025,(01):52-60[2025-12-25].https://link.cnki.net/urlid/11.3591.A.20250306.1018.012.
+
+    <bibitem|2>李磊,刘博聪,盛斌,等.专利出海与企业跨国供应链韧性提升[J].中国工业经济,2025,(10):97-116.DOI:10.19581/j.cnki.ciejournal.2025.10.006.
+
+    <bibitem|3>Dewdney A K. Computer recreations[J]. Scientific American, 1984, 250(6): 19-C14.
+
+    <bibitem|4>Weiser M. The computer for the 21st century[J]. ACM SIGMOBILE mobile computing and \ communications review, 1999, 3(3): 3-11.
+
+    <bibitem|5>Weiser M. The Computer for the 21 st Century[J]. Scientific american, 1991, 265(3): 94-105.
+  </bib-list>
+
+  以上是直接在相关平台复制的符合标准的
+
+  <\bibliography|bib|tm-gbt7714-2015|./204_25>
+    <\bib-list|9>
+      <bibitem*|1><label|bib-GGYY202510006>李磊,刘博聪,盛斌,等. <newblock>专利出海与企业跨国供应链韧性提升 [J/OL]. <newblock>中国工业经济, 2025, (10): 97-116. <newblock>DOI: 10.19581/j.cnki.ciejournal.2025.10.006.<newblock>
+
+      <bibitem*|2><label|bib-STUD20250306006>闵超. <newblock>马克思1848年法国革命研究与唯物史观的具体化转向 [J]. <newblock>马克思主义研究, 2025, (01): 52-60.<newblock>
+
+      <bibitem*|3><label|bib-dewdney1984computer>Dewdney A K. <newblock>Computer recreations [J]. <newblock>Scientific American, 1984, 250(6): 19-C14.<newblock>
+
+      <bibitem*|4><label|bib-dong_generalizing_2024>DONG Z Y, ZHU Y M, LI Y S, et al. <newblock>Generalizing end-to-end autonomous driving in real-world environments using zero-shot LLMs [C/OL]. <newblock>In Proceedings of the 8th Conference on Robot Learning (CoRL 2024). 2024. <newblock>[2025-12-25]. <slink|https://openreview.net/forum?id=s0vHSq5QEv>.<newblock>
+
+      <bibitem*|5><label|bib-Li_accelerating_2022>LI Y S, HAN S. <newblock>Accelerating model-free policy optimization using model-based gradient: a composite optimization perspective [C/OL]. <newblock>In Proceedings of the 4th Learning for Dynamics and Control Conference (L4DC 2022), volume 168 of Proceedings of Machine Learning Research, pages 304-315. Stanford, CA, USA. PMLR. <newblock>[2025-12-25]. <slink|https://proceedings.mlr.press/v168/li22a.html>.<newblock>
+
+      <bibitem*|6><label|bib-li_2024_efficient>LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: ignoring similar agents without checking similarity [C/OL]. <newblock>In Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024), pages 2363-2365. Auckland, New Zealand. International Foundation for Autonomous Agents and Multiagent Systems. <newblock>[2025-12-25]. <slink|https://dl.acm.org/doi/10.5555/3635637.3663161>. DOI: 10.5555/3635637.3663161.<newblock>
+
+      <bibitem*|7><label|bib-li_solving_2023>LI Y S, HAN S. <newblock>Solving strongly convex and smooth Stackelberg games without modeling the follower [C/OL]. <newblock>In Proceedings of the 2023 American Control Conference (ACC 2023), pages 2332-2337. San Diego, CA, USA. IEEE. <newblock>[2025-12-25]. <slink|https://doi.org/10.23919/ACC55779.2023.10156010>. DOI: 10.23919/ACC55779.2023.10156010.<newblock>
+
+      <bibitem*|8><label|bib-weiser1991computer>Weiser M. <newblock>The computer for the 21st century [J]. <newblock>Scientific american, 1991, 265(3): 94-105.<newblock>
+
+      <bibitem*|9><label|bib-weiser1999computer>Weiser M. <newblock>The computer for the 21st century [J]. <newblock>ACM SIGMOBILE mobile computing and communications review, 1999, 3(3): 3-11.<newblock>
+    </bib-list>
+  </bibliography>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|5|1>>
+    <associate|bib-1|<tuple|1|1>>
+    <associate|bib-2|<tuple|2|1>>
+    <associate|bib-3|<tuple|3|1>>
+    <associate|bib-4|<tuple|4|1>>
+    <associate|bib-5|<tuple|5|1>>
+    <associate|bib-GGYY202510006|<tuple|1|1>>
+    <associate|bib-Li_accelerating_2022|<tuple|5|1>>
+    <associate|bib-STUD20250306006|<tuple|2|1>>
+    <associate|bib-dewdney1984computer|<tuple|3|1>>
+    <associate|bib-dong_generalizing_2024|<tuple|4|1>>
+    <associate|bib-li_2024_efficient|<tuple|6|1>>
+    <associate|bib-li_solving_2023|<tuple|7|1>>
+    <associate|bib-weiser1991computer|<tuple|8|1>>
+    <associate|bib-weiser1999computer|<tuple|9|1>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|bib>
+      li_2024_efficient
+
+      li_solving_2023
+
+      Li_accelerating_2022
+
+      dong_generalizing_2024
+
+      STUD20250306006
+
+      GGYY202510006
+
+      dewdney1984computer
+
+      weiser1999computer
+
+      weiser1991computer
+    </associate>
+    <\associate|toc>
+      <vspace*|2fn><\with|font-series|<quote|bold>|math-font-series|<quote|bold>|font-size|<quote|1.19>>
+        参考文献
+      </with><datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-1><vspace|1fn>
+    </associate>
+  </collection>
+</auxiliary>

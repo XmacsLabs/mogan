@@ -547,13 +547,13 @@
   (let* ((name (normalized-bib-name file-name))
          (aux (if (context-has? "bib-prefix") (get-env "bib-prefix") "bib")))
     (if (not (make-return-after))
-        (insert-go-to `(bibliography ,aux "tm-plain" ,name (document ""))
+        (insert-go-to `(bibliography ,aux "tm-gbt7714-2015" ,name (document ""))
                       '(3 0 0)))))
 
 (tm-define (make-database-bib)
   (with aux (if (context-has? "bib-prefix") (get-env "bib-prefix") "bib")
     (if (not (make-return-after))
-        (insert-go-to `(bibliography ,aux "tm-plain" "" (document ""))
+        (insert-go-to `(bibliography ,aux "tm-gbt7714-2015" "" (document ""))
                       '(3 0 0)))))
 
 (tm-define (automatic-section-context? t)
