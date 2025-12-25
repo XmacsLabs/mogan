@@ -119,6 +119,7 @@ private:
                                        const QString& periodLabel,
                                        const QString& periodLabelColor,
                                        const QString& productType);
+  void    showNotLoggedInDialog (const QString& errorMessage);
   void    logout ();
   void    openRenewalPage ();
 

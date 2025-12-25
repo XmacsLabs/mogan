@@ -1918,11 +1918,7 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
       reply, &QNetworkReply::finished, [this, reply, manager, token] () {
         // 定义统一的错误处理逻辑
         auto handleError= [this] () {
-          updateDialogContent (
-              false, qt_translate ("Not logged in"),
-              qt_translate ("Login error, please log in again."),
-              "liii",qt_translate ("Non-member"),
-              "","","");
+          showNotLoggedInDialog (qt_translate ("Login error, please log in again."));
 
           QPoint buttonBottomCenter= loginButton->mapToGlobal (
               QPoint (loginButton->width () / 2, loginButton->height ()));
@@ -2027,18 +2023,27 @@ qt_tm_widget_rep::updateDialogContent (bool isLoggedIn, const QString& username,
   } else {
     loginActionButton->setVisible (true);
     logoutButton->setVisible (true);
-    loginActionButton->setText (qt_translate (productType.toStdString ().c_str ()));
+    // 如果productType=Renew Early,后面加上♥️
+    if (productType == QStringLiteral ("Renew Early")) {
+      loginActionButton->setText (qt_translate (productType.toStdString ().c_str ()) + " ♥️");
+    } else {
+      loginActionButton->setText (qt_translate (productType.toStdString ().c_str ()));
+    }
   }
+}
+
+void
+qt_tm_widget_rep::showNotLoggedInDialog (const QString& errorMessage) {
+  updateDialogContent (
+      false, qt_translate ("Not logged in"), errorMessage,
+      "liii", qt_translate ("Non-member"),
+      "","","");
 }
 
 void
 qt_tm_widget_rep::logout () {
   // 没有token，直接清除UI状态
-  updateDialogContent (
-      false, qt_translate ("Not logged in"), 
-      qt_translate ("Please login to view your account information."),
-      "liii",qt_translate ("Non-member"),
-      "","","");
+  showNotLoggedInDialog (qt_translate ("Please login to view your account information."));
   // 关闭登录对话框
   if (m_loginDialog && m_loginDialog->isVisible ()) {
     m_loginDialog->hide ();
