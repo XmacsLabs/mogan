@@ -348,7 +348,7 @@
   ---
   ("Deleted" (make 'deleted))
   ("Fill out" (make 'fill-out))
-  ("Marked" (make 'marked)))
+  ("Marked" (mark-text)))
 
 (menu-bind presentation-tag-menu
   (if (style-has? "std-markup-dtd")
@@ -623,7 +623,7 @@
       ((balloon (icon "tm_strikethrough.xpm") "Write strike through")
        (make 'strike-through))
       ((balloon (icon "tm_marked.svg") "Marked text")
-       (make 'marked)))
+       (mark-text)))
   (if (or (not (style-has? "std-markup-dtd")) (in-source?))
       ((balloon (icon "tm_italic.xpm") "Write italic text")
        (make-with "font-shape" "italic"))

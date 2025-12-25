@@ -32,7 +32,7 @@
 (menu-bind math-content-tag-menu
   ("Deleted" (make 'deleted))
   ("Fill out" (make 'fill-out))
-  ("Marked" (make 'marked)))
+  ("Marked" (mark-text)))
 
 (menu-bind math-presentation-tag-menu
   ("Decorated" (make 'decorated))
@@ -1158,7 +1158,7 @@
               (== (get-preference "gui theme") "liii-night")
               (== (get-preference "gui theme") "default"))
           ((balloon (icon "tm_marked.svg") "Marked text")
-           (make 'marked)))
+           (mark-text)))
   (=> (balloon (icon "tm_color.xpm") "Select a foreground color")
       (link color-menu))
   (=> (balloon (icon "tm_math_style.xpm")
