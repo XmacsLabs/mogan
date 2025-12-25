@@ -149,10 +149,11 @@
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
-     ,(bib-new-list ""
+     ,(bib-new-list-spc
        `(,(bib-new-block (bib-format-author x))
          ,(bib-new-block
            `(concat ,(bib-format-field-Locase x "title")
+                    " "
                     ,(bib-document-type-identifier x "article")))
          ,(bib-new-block
            (if (bib-empty? x "crossref")
@@ -184,7 +185,7 @@
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
-     ,(bib-new-list ""
+     ,(bib-new-list-spc
        `(,(bib-new-block
            (if (bib-empty? x "author")
                (bib-format-editor x)
@@ -192,11 +193,12 @@
          ,(bib-new-block
            (bib-new-sentence
             `((concat ,(bib-format-field x "title")
+                      " "
                       ,(bib-document-type-identifier x "book"))
               ,(bib-format-bvolume x))))
          ,(bib-new-block
            (if (bib-empty? x "crossref")
-               (bib-new-list ""
+               (bib-new-list-spc
                 `(,(bib-new-sentence
                     `(,(bib-format-number-series x)))
                   ,(bib-new-sentence
@@ -234,14 +236,15 @@
   `(concat
     ,(bib-format-bibitem n x)
     ,(bib-label (list-ref x 2))
-    ,(bib-new-list ""
+    ,(bib-new-list-spc
       `(,(bib-new-block (bib-format-author x))
         ,(bib-new-block
           `(concat ,(bib-format-field-Locase x "title")
+                   " "
                    ,(bib-document-type-identifier x "inproceedings")))
         ,(bib-new-block
           (if (bib-empty? x "crossref")
-              (bib-new-list ""
+              (bib-new-list-spc
                `(,(bib-new-sentence
                    `(,(bib-format-in-ed-booktitle x)
                      ,(bib-format-bvolume x)
@@ -252,7 +255,7 @@
                        `(,(bib-format-field x "organization")
                          ,(bib-format-field x "publisher")
                          ,(bib-format-date x)))
-                      (bib-new-list ""
+                      (bib-new-list-spc
                        `(,(bib-new-sentence
                            `(,(bib-format-field x "address")
                              ,(bib-format-date x)))
