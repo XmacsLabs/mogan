@@ -82,11 +82,28 @@ action : string
 
 (import (liii hashlib))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (search-buffer)、(replace-buffer)
+;; 1. 检查当前缓冲区是否已经是搜索/替换缓冲区
+;; 2. 如果是，直接返回该缓冲区
+;; 3. 如果不是，计算当前文档 URL 的 MD5 哈希以并返回相应tmfs路径
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (tm-define (search-buffer)
-  (string->url (string-append "tmfs://aux/search/" (md5 (url->string(current-view-url))))))
+  (with u (current-buffer)
+    (if (and (url-rooted-tmfs? u)
+             (== (url-head u) (string->url "tmfs://aux/search")))
+        u
+        (string->url
+          (string-append "tmfs://aux/search/" (md5 (url->string (current-view-url))))))))
 
 (tm-define (replace-buffer)
-  (string->url (string-append "tmfs://aux/replace/" (md5 (url->string(current-view-url))))))
+  (with u (current-buffer)
+    (if (and (url-rooted-tmfs? u)
+             (== (url-head u) (string->url "tmfs://aux/replace")))
+        u
+        (string->url
+          (string-append "tmfs://aux/replace/" (md5 (url->string (current-view-url))))))))
 
 (tm-define (master-buffer)
   (and (buffer-exists? (search-buffer))
@@ -466,10 +483,8 @@ action : string
     (set! isreplace? #t)))
 
 (tm-define (replace-all u)
-  (debug-message "std" "1111")
   (and-with by (or (by-tree) current-replace)
     (with-buffer u
-      (debug-message "std" "bugbug")
       (start-editing)
       (while (replace-next by)
         (perform-search*))
