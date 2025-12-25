@@ -37,6 +37,7 @@ get_background_color_str (edit_env env) {
 
 static inline color
 get_background_color (edit_env env) {
+  // 注意：调用此函数前应确保 has_background_color(env) 为 true
   string bg_color_str= get_background_color_str (env);
   return named_color (bg_color_str, env->alpha);
 }
@@ -144,79 +145,33 @@ concater_rep::typeset_background_substring (string s, path ip, int pos,
 
 void
 concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
-  if (has_background_color (env)) {
-    // 有背景色，使用改进的 typeset_background_text_string
-    // 它能正确处理分词和换行
-    typeset_background_text_string (t, ip, pos, end,
-                                    get_background_color_str (env));
-  }
-  else {
-    // 没有背景色，使用原来的处理方式
-    typeset_normal_text_string (t, ip, pos, end);
-  }
-}
-
-void
-concater_rep::typeset_background_text_string (tree t, path ip, int pos, int end,
-                                              string bg_color) {
   array<space> spc_tab= env->fn->get_normal_spacing (env->spacing_policy);
   string       s      = t->label;
   int          start;
-  color        bg_col= named_color (bg_color, env->alpha);
 
   do {
     start           = pos;
     text_property tp= env->lan->advance (t, pos);
     if (pos > end) pos= end;
+
+    // 每次迭代都检查背景色，因为 env 可能在 advance 后变化
+    bool has_background= has_background_color (env);
+
     if ((pos > start) && (s[start] == ' ')) { // spaces
-      // 渲染空格字符
-      penalty_max (tp->pen_before);
-      PRINT_SPACE (tp->spc_before)
-      // 创建带有背景色的空格文本框
-      box b= text_box_with_bg (ip, start, " ", env->fn, env->pen, bg_col,
-                               xkerning ());
-      a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
-      penalty_min (tp->pen_after);
-      PRINT_SPACE (tp->spc_after)
-    }
-    else { // strings
-      penalty_max (tp->pen_before);
-      PRINT_SPACE (tp->spc_before)
-      // 创建带有背景色的文本文本框
-      box b= text_box_with_bg (ip, start, s (start, pos), env->fn, env->pen,
-                               bg_col, xkerning ());
-      a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
-      penalty_min (tp->pen_after);
-      PRINT_SPACE (tp->spc_after)
-    }
-  } while (pos < end);
-}
-
-void
-concater_rep::typeset_normal_text_string (tree t, path ip, int pos, int end) {
-  array<space> spc_tab= env->fn->get_normal_spacing (env->spacing_policy);
-  string       s      = t->label;
-  int          start;
-
-  // 检查是否有背景色设置
-  bool has_background= has_background_color (env);
-
-  do {
-    start           = pos;
-    text_property tp= env->lan->advance (t, pos);
-    if (pos > end) pos= end;
-    if ((pos > start) && (s[start] == ' ')) { // spaces
-      // 如果有背景色，渲染空格字符；否则使用空字符串
       if (has_background) {
-        // 渲染空格字符
+        // 有背景色：渲染空格字符
         penalty_max (tp->pen_before);
         PRINT_SPACE (tp->spc_before)
-        typeset_substring (" ", ip, start);
+        // 创建带有背景色的空格文本框
+        color bg_col= get_background_color (env);
+        box b= text_box_with_bg (ip, start, " ", env->fn, env->pen, bg_col,
+                                 xkerning ());
+        a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
         penalty_min (tp->pen_after);
         PRINT_SPACE (tp->spc_after)
       }
       else {
-        // 没有背景色，使用原来的优化处理
+        // 没有背景色：使用优化处理
         if (start == 0) typeset_substring ("", ip, 0);
         penalty_min (tp->pen_after);
         PRINT_SPACE (tp->spc_before);
@@ -227,7 +182,17 @@ concater_rep::typeset_normal_text_string (tree t, path ip, int pos, int end) {
     else { // strings
       penalty_max (tp->pen_before);
       PRINT_SPACE (tp->spc_before)
-      typeset_substring (s (start, pos), ip, start);
+      if (has_background) {
+        // 有背景色：创建带有背景色的文本文本框
+        color bg_col= get_background_color (env);
+        box b= text_box_with_bg (ip, start, s (start, pos), env->fn, env->pen,
+                                 bg_col, xkerning ());
+        a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
+      }
+      else {
+        // 没有背景色：使用普通文本框
+        typeset_substring (s (start, pos), ip, start);
+      }
       penalty_min (tp->pen_after);
       PRINT_SPACE (tp->spc_after)
     }
