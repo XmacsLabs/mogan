@@ -7,25 +7,17 @@
 
   <section|文本>
 
-  普通文本，无背景色
+  采用bg-color属性调整背景色。
 
-  \;
+  普通文本，无背景色
 
   <with|bg-color|yellow|黄色背景的文本>
 
-  \;
-
   <with|bg-color|light gray|浅灰色背景的文本>
-
-  \;
 
   <with|bg-color|#e0e0ff|#e0e0ff 颜色背景的文本>
 
-  \;
-
   <with|bg-color|#ffcccc|<with|color|red|红色文字配粉色背景>>
-
-  \;
 
   <with|bg-color|#ccffcc|<with|color|dark green|深绿色文字配浅绿色背景>>
 
@@ -33,41 +25,38 @@
     多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。 背景应该覆盖整个文本块。我们需要提供更多文字，才能覆盖多行。
   </with>
 
-  <\with|bg-color|#ffffcc>
+  <\with|bg-color|#ffffcc99>
     多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。\ 
 
     背景应该覆盖整个文本块。
   </with>
 
-  单个空格：<marked| >
-
-  两个空格：<marked| \ >
-
-  空格在字符左边：<marked| abc>
-
-  空格在字符右边：<marked|abc >\ 
-
   <section|数学模式>
 
-  \;
+  采用marked标记调整背景色，实际上是表格。
 
   数学公式背景测试：
 
   <\with|bg-color|light blue>
     <\equation*>
-      E=mc<rsup|2>
+      <with|marked-color|pastel cyan|<marked|E=mc<rsup|2>>>
     </equation*>
   </with>
 
+  <\equation*>
+    <marked|<big|int>x\<mathd\>x>
+  </equation*>
+
   \;
 
-  <with|bg-color|#ffeeee|行内数学 <with|mode|math|<frac|a|b>> 带背景>
+  <marked|行内数学 <with|mode|math|<frac|a|b>> 带背景>
 </body>
 
 <\initial>
   <\collection>
     <associate|page-medium|paper>
     <associate|page-screen-margin|false>
+    <associate|preamble|false>
   </collection>
 </initial>
 

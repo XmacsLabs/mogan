@@ -42,21 +42,37 @@ get_background_color (edit_env env) {
   return named_color (bg_color_str, env->alpha);
 }
 
+static inline color
+apply_alpha (color c, int alpha) {
+  if (alpha == 255) return c;
+  int r, g, b, a;
+  get_rgb_color (c, r, g, b, a);
+  return rgb_color (r, g, b, alpha);
+}
+
+/******************************************************************************
+ * Unified text box builder
+ ******************************************************************************/
+static inline box
+build_text_box (path ip, int pos, string s, edit_env env) {
+  if (has_background_color (env)) {
+    color bg_color= get_background_color (env);
+    return text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color,
+                             xkerning ());
+  }
+  else {
+    return text_box (ip, pos, s, env->fn, env->pen);
+  }
+}
+
 /******************************************************************************
  * Typesetting strings
  ******************************************************************************/
 
 void
 concater_rep::typeset_substring (string s, path ip, int pos) {
-  if (has_background_color (env)) {
-    // 有背景色设置，使用 typeset_background_substring
-    typeset_background_substring (s, ip, pos, get_background_color_str (env));
-  }
-  else {
-    // 没有背景色设置，使用普通文本框
-    box b= text_box (ip, pos, s, env->fn, env->pen);
-    a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
-  }
+  box b= build_text_box (ip, pos, s, env);
+  a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
 }
 
 void
@@ -87,14 +103,6 @@ concater_rep::typeset_math_macro (string s, tree_label m, path ip, int p1,
   marker (descend (ip, p2));
 }
 
-static inline color
-apply_alpha (color c, int alpha) {
-  if (alpha == 255) return c;
-  int r, g, b, a;
-  get_rgb_color (c, r, g, b, a);
-  return rgb_color (r, g, b, alpha);
-}
-
 void
 concater_rep::typeset_colored_substring (string s, path ip, int pos,
                                          string col) {
@@ -107,36 +115,6 @@ concater_rep::typeset_colored_substring (string s, path ip, int pos,
   }
   else c= named_color (col, env->alpha);
   box b= text_box (ip, pos, s, env->fn, c);
-  a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
-}
-
-void
-concater_rep::typeset_background_substring (string s, path ip, int pos,
-                                            string bg_col) {
-
-  // 获取背景颜色
-  color bg_color;
-  if (bg_col == "") {
-    bg_color= apply_alpha (env->pen->get_color (), env->alpha);
-  }
-  else if (env->provides (bg_col)) {
-    tree t= env->read (bg_col);
-    if (t == "") {
-      bg_color= apply_alpha (env->pen->get_color (), env->alpha);
-    }
-    else {
-      string t_str= as_string (t);
-      bg_color    = named_color (t_str, env->alpha);
-    }
-  }
-  else {
-    bg_color= named_color (bg_col, env->alpha);
-  }
-
-  // 创建带有背景色的文本框
-  box b=
-      text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color, xkerning ());
-
   a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
 }
 
