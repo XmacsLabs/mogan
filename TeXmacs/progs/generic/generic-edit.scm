@@ -1320,3 +1320,34 @@
 (tm-define (focus-open-search-tool t)
   (:interactive #t)
   (noop))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Marked text utilities
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (get-marked-color)
+  (let ((color (get-preference "marked-color")))
+    (if (or (== color "") (== color "default"))
+        "#ffe47f"
+        color)))
+
+(tm-define (pure-text? t)
+  (and (in-text?)
+       (cond ((tree-is? t 'string) #t)
+             ((tree-is? t 'document)
+              (let loop ((i 0))
+                (cond ((>= i (tree-arity t)) #t)
+                      ((not (tree-is? (tree-ref t i) 'string)) #f)
+                      (else (loop (+ i 1))))))
+             (else #f))))
+
+(tm-define (mark-text)
+  (if (selection-active-any?)
+      (let ((stree (tree->stree (selection-tree))))
+        (if (pure-text? (selection-tree))
+            (make-with "bg-color" (get-marked-color))
+            (begin
+              (make 'marked)
+              (when (not (== (get-marked-color) "#ffe47f"))
+                (with-set (focus-tree) "marked-color" (get-marked-color))))))
+      (make-with "bg-color" (get-marked-color))))
