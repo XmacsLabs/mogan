@@ -392,9 +392,43 @@ url
            (set! what (tm-ref what 0)))
          what)))
 
-(define (by-tree)
-  (and (buffer-exists? (replace-buffer))
-       (with by (buffer-get-body (replace-buffer))
+
+
+#|
+by-tree
+从替换辅助缓冲区中提取替换内容树。
+
+语法
+----
+(by-tree raux)
+
+参数
+----
+raux : url
+替换辅助缓冲区的URL。
+
+返回值
+----
+tree 或 #f
+- 如果 raux 缓冲区不存在，返回 #f
+- 如果缓冲区存在，返回缓冲区的内容树：
+  - 如果内容体是 (document 1) 类型（包含单个元素的文档），返回其第一个子元素
+  - 否则返回原始内容体
+
+逻辑
+----
+1. 检查 raux 缓冲区是否存在
+2. 如果存在，获取缓冲区的内容体 by
+3. 检查 by 是否是 (document 1) 类型的树：
+   - 如果是，提取第一个子元素 (tm-ref by 0)
+   - 否则保持 by 不变
+4. 返回处理后的内容树
+
+|#
+
+(define (by-tree raux)
+  (and (buffer-exists? raux)
+       (with by (buffer-get-body raux)
          (when (tm-func? by 'document 1)
            (set! by (tm-ref by 0)))
          by)))
@@ -495,8 +529,9 @@ url
                  (search-next-match #t)))))))
 
 (tm-define (replace-one . args)
-  (let ((u (if (null? args) (master-buffer) (car args))))
-    (and-with by (or (by-tree) current-replace)
+  (let ((u    (if (null? args) (master-buffer)  (car args)))
+        (raux (if (null? args) (replace-buffer) (cadr args))))
+    (and-with by (or (by-tree raux) current-replace)
       (with-buffer u
         (start-editing)
         (replace-next by)
@@ -505,8 +540,9 @@ url
       (set! isreplace? #t))))
 
 (tm-define (replace-all . args)
-  (let ((u (if (null? args) (master-buffer) (car args))))
-    (and-with by (or (by-tree) current-replace)
+  (let ((u    (if (null? args) (master-buffer)  (car args)))
+        (raux (if (null? args) (replace-buffer) (cadr args))))
+    (and-with by (or (by-tree raux) current-replace)
       (with-buffer u
         (start-editing)
         (while (replace-next by)
@@ -748,9 +784,9 @@ url
        (search-extreme-match #t u))
       // // //
       ((balloon (icon "tm_replace_one.xpm") "Replace one occurrence")
-       (replace-one u))
+       (replace-one u raux))
       ((balloon (icon "tm_replace_all.xpm") "Replace all further occurrences")
-       (replace-all u))
+       (replace-all u raux))
       >>>
       (=> (balloon (icon "tm_preferences.xpm")
                    "Search and replace preferences")
