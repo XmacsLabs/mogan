@@ -164,8 +164,8 @@ concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
         PRINT_SPACE (tp->spc_before)
         // 创建带有背景色的空格文本框
         color bg_col= get_background_color (env);
-        box b= text_box_with_bg (ip, start, " ", env->fn, env->pen, bg_col,
-                                 xkerning ());
+        box   b= text_box_with_bg (ip, start, " ", env->fn, env->pen, bg_col,
+                                   xkerning ());
         a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
         penalty_min (tp->pen_after);
         PRINT_SPACE (tp->spc_after)
@@ -185,8 +185,8 @@ concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
       if (has_background) {
         // 有背景色：创建带有背景色的文本文本框
         color bg_col= get_background_color (env);
-        box b= text_box_with_bg (ip, start, s (start, pos), env->fn, env->pen,
-                                 bg_col, xkerning ());
+        box   b= text_box_with_bg (ip, start, s (start, pos), env->fn, env->pen,
+                                   bg_col, xkerning ());
         a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
       }
       else {
