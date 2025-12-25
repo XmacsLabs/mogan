@@ -56,7 +56,7 @@
 #include <isocline.h>
 #endif
 
-#define GOLDFISH_VERSION "17.11.22"
+#define GOLDFISH_VERSION "17.11.23"
 
 #define GOLDFISH_PATH_MAXN TB_PATH_MAXN
 
@@ -581,6 +581,87 @@ glue_liii_uuid (s7_scheme* sc) {
   glue_uuid4 (sc);
 }
 
+static s7_pointer f_md5(s7_scheme* sc, s7_pointer args) {
+    const char* searchString = s7_string(s7_car(args));
+    tb_size_t len = tb_strlen(searchString);
+    tb_byte_t ob[16];
+    tb_char_t hex_output[33] = {0};
+    tb_md5_t md5;
+    tb_md5_init(&md5, 0); 
+    if (len > 0) {
+        tb_md5_spak(&md5, (tb_byte_t const*)searchString, len);
+    }
+    tb_md5_exit(&md5, ob, 16);
+    for (tb_size_t i = 0; i < 16; ++i) {
+        tb_snprintf(hex_output + (i << 1), 3, "%02x", ob[i]);
+    }
+    return s7_make_string(sc, hex_output);
+}
+
+inline void 
+glue_md5(s7_scheme* sc) {
+  const char* name = "g_md5";
+  const char* desc = "(g_md5 str) => string";
+  glue_define(sc, name, desc, f_md5, 1, 0);
+}
+
+static s7_pointer f_sha1(s7_scheme* sc, s7_pointer args) {
+    const char* searchString = s7_string(s7_car(args));
+    tb_size_t len = tb_strlen(searchString);
+    tb_byte_t ob[20]; // SHA1 produces 20 bytes
+    tb_char_t hex_output[41] = {0}; // 20 bytes * 2 hex digits per byte + null terminator
+    tb_sha_t sha;
+    tb_sha_init(&sha, 160); // TB_SHA_MODE_SHA1_160 = 160
+    if (len > 0) {
+        tb_sha_spak(&sha, (tb_byte_t const*)searchString, len);
+    }
+    tb_sha_exit(&sha, ob, 20);
+    for (tb_size_t i = 0; i < 20; ++i) {
+        tb_snprintf(hex_output + (i << 1), 3, "%02x", ob[i]);
+    }
+    return s7_make_string(sc, hex_output);
+}
+
+inline void
+glue_sha1(s7_scheme* sc) {
+  const char* name = "g_sha1";
+  const char* desc = "(g_sha1 str) => string";
+  glue_define(sc, name, desc, f_sha1, 1, 0);
+}
+
+static s7_pointer f_sha256(s7_scheme* sc, s7_pointer args) {
+    const char* searchString = s7_string(s7_car(args));
+    tb_size_t len = tb_strlen(searchString);
+    tb_byte_t ob[32]; // SHA256 produces 32 bytes
+    tb_char_t hex_output[65] = {0}; // 32 bytes * 2 hex digits per byte + null terminator
+    tb_sha_t sha;
+    tb_sha_init(&sha, 256); // TB_SHA_MODE_SHA2_256 = 256
+    if (len > 0) {
+        tb_sha_spak(&sha, (tb_byte_t const*)searchString, len);
+    }
+    tb_sha_exit(&sha, ob, 32);
+    for (tb_size_t i = 0; i < 32; ++i) {
+        tb_snprintf(hex_output + (i << 1), 3, "%02x", ob[i]);
+    }
+    return s7_make_string(sc, hex_output);
+}
+
+inline void
+glue_sha256(s7_scheme* sc) {
+  const char* name = "g_sha256";
+  const char* desc = "(g_sha256 str) => string";
+  glue_define(sc, name, desc, f_sha256, 1, 0);
+}
+
+inline void
+glue_liii_hashlib (s7_scheme* sc) {
+  glue_md5 (sc);
+  glue_sha1 (sc);
+  glue_sha256 (sc);
+}
+
+
+
 static s7_pointer
 f_isdir (s7_scheme* sc, s7_pointer args) {
   const char*    dir_c= s7_string (s7_car (args));
@@ -1023,6 +1104,7 @@ glue_for_community_edition (s7_scheme* sc) {
   glue_liii_time (sc);
   glue_liii_datetime (sc);
   glue_liii_uuid (sc);
+  glue_liii_hashlib (sc);
 }
 
 static void
