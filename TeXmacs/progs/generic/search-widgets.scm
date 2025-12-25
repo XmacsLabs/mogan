@@ -748,9 +748,9 @@ url
        (search-extreme-match #t u))
       // // //
       ((balloon (icon "tm_replace_one.xpm") "Replace one occurrence")
-        (replace-one u))
+       (replace-one u))
       ((balloon (icon "tm_replace_all.xpm") "Replace all further occurrences")
-        (replace-all u))
+       (replace-all u))
       >>>
       (=> (balloon (icon "tm_preferences.xpm")
                    "Search and replace preferences")
