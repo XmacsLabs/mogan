@@ -207,13 +207,15 @@ text_box_rep::display (renderer ren) {
     SI bg_y2 = y2;
 
     if (N (str) == 0) {
-      // 空字符串：使用空格字符的边界绘制背景
+      // 空字符串：宽度用空格，高度用M字符
       metric ex_space;
       fn->get_extents (" ", ex_space);
-      SI bg_x1 = ex_space->x1;   // 左边界
-      SI bg_y1 = fn->y1;         // 上边界（上伸部，负数）
-      SI bg_x2 = ex_space->x2;   // 右边界
-      SI bg_y2 = fn->y2;         // 下边界（下伸部，正数）
+      metric ex_m;
+      fn->get_extents ("M", ex_m);
+      bg_x1 = ex_space->x1;   // 左边界（空格）
+      bg_y1 = ex_m->y1;       // 上边界（M字符的上伸部）
+      bg_x2 = ex_space->x2;   // 右边界（空格）
+      bg_y2 = ex_m->y2;       // 下边界（M字符的下伸部）
     }
     ren->clear (bg_x1, bg_y1, bg_x2, bg_y2);
   }
