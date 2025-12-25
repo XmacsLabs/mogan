@@ -35,6 +35,18 @@
                  (else (loop (+ i 1))))))
         (else #f)))
 
+(tm-define (mark-text)
+  (if (selection-active-any?)
+      (let ((stree (tree->stree (selection-tree))))
+        (display* "Selection stree: " stree "\n")
+        (if (pure-text? (selection-tree))
+            (make-with "bg-color" (get-marked-color))
+            (begin
+              (make 'marked)
+              (when (not (== (get-marked-color) "#ffe47f"))
+                (with-set (focus-tree) "marked-color" (get-marked-color))))))
+      (make-with "bg-color" (get-marked-color))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; The Format menu in text mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -363,13 +375,7 @@
   ---
   ("Deleted" (make 'deleted))
   ("Fill out" (make 'fill-out))
-  ("Marked" (if (selection-active-any?)
-                 (let ((stree (tree->stree (selection-tree))))
-                   (display* "Menu Selection stree: " stree "\n")
-                   (if (pure-text? (selection-tree))
-                       (make-with "bg-color" (get-marked-color))
-                       (make 'marked)))
-                 (make-with "bg-color" (get-marked-color)))))
+  ("Marked" (mark-text)))
 
 (menu-bind presentation-tag-menu
   (if (style-has? "std-markup-dtd")
@@ -644,13 +650,7 @@
       ((balloon (icon "tm_strikethrough.xpm") "Write strike through")
        (make 'strike-through))
       ((balloon (icon "tm_marked.svg") "Marked text")
-       (if (selection-active-any?)
-           (let ((stree (tree->stree (selection-tree))))
-             (display* "Selection stree: " stree "\n")
-             (if (pure-text? (selection-tree))
-                 (make-with "bg-color" (get-marked-color))
-                 (make 'marked)))
-           (make-with "bg-color" (get-marked-color)))))
+       (mark-text)))
   (if (or (not (style-has? "std-markup-dtd")) (in-source?))
       ((balloon (icon "tm_italic.xpm") "Write italic text")
        (make-with "font-shape" "italic"))
