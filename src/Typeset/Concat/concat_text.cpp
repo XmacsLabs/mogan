@@ -158,23 +158,12 @@ concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
     bool has_background= has_background_color (env);
 
     if ((pos > start) && (s[start] == ' ')) { // spaces
-      if (has_background) {
-        // 有背景色：渲染空格字符
-        penalty_max (tp->pen_before);
-        PRINT_SPACE (tp->spc_before)
-        // typeset_substring 已经支持背景色
-        typeset_substring (" ", ip, start);
-        penalty_min (tp->pen_after);
-        PRINT_SPACE (tp->spc_after)
-      }
-      else {
-        // 没有背景色：使用优化处理
-        if (start == 0) typeset_substring ("", ip, 0);
-        penalty_min (tp->pen_after);
-        PRINT_SPACE (tp->spc_before);
-        PRINT_SPACE (tp->spc_after);
-        if ((pos == end) || (s[pos] == ' ')) typeset_substring ("", ip, pos);
-      }
+      // 无论是否有背景色，空格都使用优化处理
+      if (start == 0) typeset_substring ("", ip, 0);
+      penalty_min (tp->pen_after);
+      PRINT_SPACE (tp->spc_before);
+      PRINT_SPACE (tp->spc_after);
+      if ((pos == end) || (s[pos] == ' ')) typeset_substring ("", ip, pos);
     }
     else { // strings
       penalty_max (tp->pen_before);
