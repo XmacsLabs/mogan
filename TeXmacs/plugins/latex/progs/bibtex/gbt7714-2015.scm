@@ -79,6 +79,7 @@
       ((equal? type "phdthesis") (if online "[D/OL]" "[D]"))
       ((equal? type "mastersthesis") (if online "[D/OL]" "[D]"))
       ((equal? type "techreport") (if online "[R/OL]" "[R]"))
+      ((equal? type "misc") (if online "[EB/OL]" "[EB]"))
       (else ""))))
 
 (tm-define (bib-format-name x)
@@ -128,7 +129,7 @@
                   ""
                   (cond
                     ((equal? 1 (length p)) "")
-                    ((equal? 2 (length p)) `(concat ":" ,(list-ref p 1)))
+                    ((equal? 2 (length p)) `(concat ": " ,(list-ref p 1)))
                     (else
                      `(concat ":" ,(list-ref p 1)
                               ,bib-range-symbol ,(list-ref p 2)))))))
@@ -136,7 +137,7 @@
         year  ;; 只有年份，没有卷期页码
         (if (bib-null? year)
             `(concat ,vol ,num ,pag)  ;; 没有年份，只有卷期页码
-            `(concat ,year "," ,vol ,num ,pag)))))  ;; 年份,卷(期):页码
+            `(concat ,year ", " ,vol ,num ,pag)))))  ;; 年份,卷(期):页码
 
 (tm-define (bib-format-bibitem n x)
   (:mode bib-gbt7714-2015?)
@@ -172,11 +173,26 @@
   (:mode bib-gbt7714-2015?)
   (let* ((url (bib-field x "url"))
          (doi (bib-field x "doi"))
+         (urldate (bib-field x "urldate"))
          (has-url (not (bib-null? url)))
-         (has-doi (not (bib-null? doi))))
+         (has-doi (not (bib-null? doi)))
+         (has-urldate (not (bib-null? urldate))))
     (cond
-      (has-url `(concat ,url))
-      (has-doi `(concat "DOI:" ,doi))
+      ((and has-url has-doi)
+       ;; 同时有 URL 和 DOI：引用日期放在 URL 前，DOI 在 URL 后
+       (if has-urldate
+           `(concat "[" ,urldate "]. " ,url ". DOI:" ,doi)
+           `(concat ,url ". DOI:" ,doi)))
+      (has-url
+       ;; 只有 URL
+       (if has-urldate
+           `(concat "[" ,urldate "]. " ,url)
+           `(concat ,url)))
+      (has-doi
+       ;; 只有 DOI
+       (if has-urldate
+           `(concat "[" ,urldate "]. DOI:" ,doi)
+           `(concat "DOI:" ,doi)))
       (else ""))))
 
 ;; 重写图书格式以添加文献类型标识符 [M]
