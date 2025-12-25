@@ -57,7 +57,8 @@ static inline box
 build_text_box (path ip, int pos, string s, edit_env env) {
   if (has_background_color (env)) {
     color bg_color= get_background_color (env);
-    return text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color, xkerning ());
+    return text_box_with_bg (ip, pos, s, env->fn, env->pen, bg_color,
+                             xkerning ());
   }
   else {
     return text_box (ip, pos, s, env->fn, env->pen);
@@ -116,7 +117,6 @@ concater_rep::typeset_colored_substring (string s, path ip, int pos,
   box b= text_box (ip, pos, s, env->fn, c);
   a << line_item (STRING_ITEM, OP_TEXT, b, HYPH_INVALID, env->lan);
 }
-
 
 #define PRINT_SPACE(spc_type)                                                  \
   if (spc_type != SPC_NONE) print (spc_tab[spc_type]);
