@@ -5,6 +5,8 @@ var tag = $args[0]
 var tmp = (mktemp -d '/tmp/goldfish-'$tag'-XXX')
 echo $tmp
 
+rmdir $tmp
+
 git clone --branch $tag --single-branch https://gitee.com/XmacsLabs/goldfish $tmp
 
 rm -rf TeXmacs/plugins/goldfish/src/*

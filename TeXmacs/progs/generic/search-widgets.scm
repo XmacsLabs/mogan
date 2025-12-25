@@ -74,11 +74,19 @@ action : string
 
 (define search-window #f)
 
+; (tm-define (search-buffer)
+;   (string->url (string-append "tmfs://aux/search/" (url->string (url-tail(current-view-url))))))
+
+; (tm-define (replace-buffer)
+;   (string->url (string-append "tmfs://aux/replace/" (url->string (url-tail(current-view-url))))))
+
+(import (liii hashlib))
+
 (tm-define (search-buffer)
-  (string->url "tmfs://aux/search"))
+  (string->url (string-append "tmfs://aux/search/" (md5 (url->string(current-view-url))))))
 
 (tm-define (replace-buffer)
-  (string->url "tmfs://aux/replace"))
+  (string->url (string-append "tmfs://aux/replace/" (md5 (url->string(current-view-url))))))
 
 (tm-define (master-buffer)
   (and (buffer-exists? (search-buffer))
@@ -293,8 +301,16 @@ action : string
   (with-buffer (master-buffer)
     (next-search-result forward? #t)))
 
+(tm-define (search-next-match forward? u)
+  (with-buffer u
+    (next-search-result forward? #t)))
+
 (tm-define (search-extreme-match last?)
   (with-buffer (master-buffer)
+    (extreme-search-result last?)))
+
+(tm-define (search-extreme-match last? u)
+  (with-buffer u
     (extreme-search-result last?)))
 
 (tm-define (search-rotate-match)
@@ -430,9 +446,30 @@ action : string
     (perform-search*)
     (set! isreplace? #t)))
 
+(tm-define (replace-one u)
+  (and-with by (or (by-tree) current-replace)
+    (with-buffer u
+      (start-editing)
+      (replace-next by)
+      (end-editing))
+    (perform-search*)
+    (set! isreplace? #t)))
+
 (tm-define (replace-all)
   (and-with by (or (by-tree) current-replace)
     (with-buffer (master-buffer)
+      (start-editing)
+      (while (replace-next by)
+        (perform-search*))
+      (end-editing))
+    (perform-search*)
+    (set! isreplace? #t)))
+
+(tm-define (replace-all u)
+  (debug-message "std" "1111")
+  (and-with by (or (by-tree) current-replace)
+    (with-buffer u
+      (debug-message "std" "bugbug")
       (start-editing)
       (while (replace-next by)
         (perform-search*))
@@ -562,13 +599,13 @@ action : string
     ===
     (hlist
       ((balloon (icon "tm_search_first.xpm") "First occurrence")
-       (search-extreme-match #f))
+       (search-extreme-match #f u))
       ((balloon (icon "tm_search_previous.xpm") "Previous occurrence")
-       (search-next-match #f))
+       (search-next-match #f u))
       ((balloon (icon "tm_search_next.xpm") "Next occurrence")
-       (search-next-match #t))
+       (search-next-match #t u))
       ((balloon (icon "tm_search_last.xpm") "Last occurrence")
-       (search-extreme-match #t))
+       (search-extreme-match #t u))
       >>>
       (=> (balloon (icon "tm_preferences.xpm") "Search preferences")
           (link search-preferences-menu))
@@ -664,18 +701,18 @@ action : string
     === ===
     (hlist
       ((balloon (icon "tm_search_first.xpm") "First occurrence")
-       (search-extreme-match #f))
+       (search-extreme-match #f u))
       ((balloon (icon "tm_search_previous.xpm") "Previous occurrence")
-       (search-next-match #f))
+       (search-next-match #f u))
       ((balloon (icon "tm_search_next.xpm") "Next occurrence")
-       (search-next-match #t))
+       (search-next-match #t u))
       ((balloon (icon "tm_search_last.xpm") "Last occurrence")
-       (search-extreme-match #t))
+       (search-extreme-match #t u))
       // // //
-      ((balloon (icon "tm_replace_one.xpm") "Replace one occurrence")
-       (replace-one))
+      ((balloon (icon "tm_replace_one.xpm") "Replace one occurrence")   
+        (replace-one u))
       ((balloon (icon "tm_replace_all.xpm") "Replace all further occurrences")
-       (replace-all))
+        (replace-all u))
       >>>
       (=> (balloon (icon "tm_preferences.xpm")
                    "Search and replace preferences")
