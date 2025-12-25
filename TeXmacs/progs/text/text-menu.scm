@@ -20,6 +20,21 @@
         (various comment-edit)
         (various comment-widgets)))
 
+(tm-define (get-marked-color)
+  (let ((color (get-preference "marked-color")))
+    (if (or (== color "") (== color "default"))
+        "#ffe47f"
+        color)))
+
+(tm-define (pure-text? t)
+  (cond ((tree-is? t 'string) #t)
+        ((tree-is? t 'document)
+         (let loop ((i 0))
+           (cond ((>= i (tree-arity t)) #t)
+                 ((not (tree-is? (tree-ref t i) 'string)) #f)
+                 (else (loop (+ i 1))))))
+        (else #f)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; The Format menu in text mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -348,7 +363,13 @@
   ---
   ("Deleted" (make 'deleted))
   ("Fill out" (make 'fill-out))
-  ("Marked" (make 'marked)))
+  ("Marked" (if (selection-active-any?)
+                 (let ((stree (tree->stree (selection-tree))))
+                   (display* "Menu Selection stree: " stree "\n")
+                   (if (pure-text? (selection-tree))
+                       (make-with "bg-color" (get-marked-color))
+                       (make 'marked)))
+                 (make-with "bg-color" (get-marked-color)))))
 
 (menu-bind presentation-tag-menu
   (if (style-has? "std-markup-dtd")
@@ -624,11 +645,12 @@
        (make 'strike-through))
       ((balloon (icon "tm_marked.svg") "Marked text")
        (if (selection-active-any?)
-           (if (or (tm-func? (selection-tree) 'concat)
-                   (tm-is? (selection-tree) 'string))
-               (make-with "bg-color" (get-preference "marked-color" "#ffe47f"))
-               (make 'marked))
-           (make-with "bg-color" (get-preference "marked-color" "#ffe47f")))))
+           (let ((stree (tree->stree (selection-tree))))
+             (display* "Selection stree: " stree "\n")
+             (if (pure-text? (selection-tree))
+                 (make-with "bg-color" (get-marked-color))
+                 (make 'marked)))
+           (make-with "bg-color" (get-marked-color)))))
   (if (or (not (style-has? "std-markup-dtd")) (in-source?))
       ((balloon (icon "tm_italic.xpm") "Write italic text")
        (make-with "font-shape" "italic"))
