@@ -154,11 +154,7 @@ concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
     text_property tp= env->lan->advance (t, pos);
     if (pos > end) pos= end;
 
-    // 每次迭代都检查背景色，因为 env 可能在 advance 后变化
-    bool has_background= has_background_color (env);
-
     if ((pos > start) && (s[start] == ' ')) { // spaces
-      // 无论是否有背景色，空格都使用优化处理
       if (start == 0) typeset_substring ("", ip, 0);
       penalty_min (tp->pen_after);
       PRINT_SPACE (tp->spc_before);
@@ -168,8 +164,6 @@ concater_rep::typeset_text_string (tree t, path ip, int pos, int end) {
     else { // strings
       penalty_max (tp->pen_before);
       PRINT_SPACE (tp->spc_before)
-      // typeset_substring 已经支持背景色，它会检查 has_background_color
-      // 并调用 typeset_background_substring 或创建普通文本框
       typeset_substring (s (start, pos), ip, start);
       penalty_min (tp->pen_after);
       PRINT_SPACE (tp->spc_after)
