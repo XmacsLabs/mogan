@@ -74,21 +74,38 @@ action : string
 
 (define search-window #f)
 
-; (tm-define (search-buffer)
-;   (string->url (string-append "tmfs://aux/search/" (url->string (url-tail(current-view-url))))))
-
-; (tm-define (replace-buffer)
-;   (string->url (string-append "tmfs://aux/replace/" (url->string (url-tail(current-view-url))))))
-
 (import (liii hashlib))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (search-buffer)、(replace-buffer)
-;; 1. 检查当前缓冲区是否已经是搜索/替换缓冲区
-;; 2. 如果是，直接返回该缓冲区
-;; 3. 如果不是，计算当前文档 URL 的 MD5 哈希以并返回相应tmfs路径
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+#|
+search-buffer
+获取或创建搜索辅助缓冲区的URL。
+
+语法
+----
+(search-buffer)
+
+参数
+----
+无参数。
+
+返回值
+----
+url
+如果当前缓冲区已经是 tmfs://aux/search 类型的辅助缓冲区，则返回该缓冲区URL；
+否则返回基于当前视图URL MD5哈希的唯一搜索缓冲区URL。
+
+逻辑
+----
+1. 获取当前缓冲区 u
+2. 检查 u 是否是以 tmfs://aux/search 为根URL的辅助缓冲区
+   - 如果是，直接返回 u
+   - 否则，生成新的URL：tmfs://aux/search/<当前视图URL的MD5哈希>
+
+注意
+----
+此函数用于管理搜索辅助缓冲区的生命周期，确保每个主文档视图有唯一的搜索缓冲区。
+|#
 (tm-define (search-buffer)
   (with u (current-buffer)
     (if (and (url-rooted-tmfs? u)
@@ -97,6 +114,35 @@ action : string
         (string->url
           (string-append "tmfs://aux/search/" (md5 (url->string (current-view-url))))))))
 
+#|
+replace-buffer
+获取或创建替换辅助缓冲区的URL。
+
+语法
+----
+(replace-buffer)
+
+参数
+----
+无参数。
+
+返回值
+----
+url
+如果当前缓冲区已经是 tmfs://aux/replace 类型的辅助缓冲区，则返回该缓冲区URL；
+否则返回基于当前视图URL MD5哈希的唯一替换缓冲区URL。
+
+逻辑
+----
+1. 获取当前缓冲区 u
+2. 检查 u 是否是以 tmfs://aux/replace 为根URL的辅助缓冲区
+   - 如果是，直接返回 u
+   - 否则，生成新的URL：tmfs://aux/replace/<当前视图URL的MD5哈希>
+
+注意
+----
+此函数用于管理替换辅助缓冲区的生命周期，确保每个主文档视图有唯一的替换缓冲区。
+|#
 (tm-define (replace-buffer)
   (with u (current-buffer)
     (if (and (url-rooted-tmfs? u)
@@ -314,21 +360,15 @@ action : string
            (set-search-reference (car sel))
            (update-search-pos-text (if last? "last" "first"))))))
 
-(tm-define (search-next-match forward?)
-  (with-buffer (master-buffer)
-    (next-search-result forward? #t)))
+(tm-define (search-next-match forward? . args)
+  (let ((u (if (null? args) (master-buffer) (car args))))
+    (with-buffer u
+      (next-search-result forward? #t))))
 
-(tm-define (search-next-match forward? u)
-  (with-buffer u
-    (next-search-result forward? #t)))
-
-(tm-define (search-extreme-match last?)
-  (with-buffer (master-buffer)
-    (extreme-search-result last?)))
-
-(tm-define (search-extreme-match last? u)
-  (with-buffer u
-    (extreme-search-result last?)))
+(tm-define (search-extreme-match last? . args)
+  (let ((u (if (null? args) (master-buffer) (car args))))
+    (with-buffer u
+      (extreme-search-result last?))))
 
 (tm-define (search-rotate-match)
   (with ok? (search-next-match #t)
@@ -454,43 +494,26 @@ action : string
                       )
                  (search-next-match #t)))))))
 
-(tm-define (replace-one)
-  (and-with by (or (by-tree) current-replace)
-    (with-buffer (master-buffer)
-      (start-editing)
-      (replace-next by)
-      (end-editing))
-    (perform-search*)
-    (set! isreplace? #t)))
+(tm-define (replace-one . args)
+  (let ((u (if (null? args) (master-buffer) (car args))))
+    (and-with by (or (by-tree) current-replace)
+      (with-buffer u
+        (start-editing)
+        (replace-next by)
+        (end-editing))
+      (perform-search*)
+      (set! isreplace? #t))))
 
-(tm-define (replace-one u)
-  (and-with by (or (by-tree) current-replace)
-    (with-buffer u
-      (start-editing)
-      (replace-next by)
-      (end-editing))
-    (perform-search*)
-    (set! isreplace? #t)))
-
-(tm-define (replace-all)
-  (and-with by (or (by-tree) current-replace)
-    (with-buffer (master-buffer)
-      (start-editing)
-      (while (replace-next by)
-        (perform-search*))
-      (end-editing))
-    (perform-search*)
-    (set! isreplace? #t)))
-
-(tm-define (replace-all u)
-  (and-with by (or (by-tree) current-replace)
-    (with-buffer u
-      (start-editing)
-      (while (replace-next by)
-        (perform-search*))
-      (end-editing))
-    (perform-search*)
-    (set! isreplace? #t)))
+(tm-define (replace-all . args)
+  (let ((u (if (null? args) (master-buffer) (car args))))
+    (and-with by (or (by-tree) current-replace)
+      (with-buffer u
+        (start-editing)
+        (while (replace-next by)
+          (perform-search*))
+        (end-editing))
+      (perform-search*)
+      (set! isreplace? #t))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customized keyboard shortcuts in search and replace modes
