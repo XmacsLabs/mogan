@@ -38,7 +38,6 @@
 (tm-define (mark-text)
   (if (selection-active-any?)
       (let ((stree (tree->stree (selection-tree))))
-        (display* "Selection stree: " stree "\n")
         (if (pure-text? (selection-tree))
             (make-with "bg-color" (get-marked-color))
             (begin
