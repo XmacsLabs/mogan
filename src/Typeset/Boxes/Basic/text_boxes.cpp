@@ -18,22 +18,9 @@
 #include "font.hpp"
 #include "tm_debug.hpp"
 
-static bool
-is_all_spaces (string s) {
-  int s_N= N (s);
-  for (int i= 0; i < s_N; i++)
-    if (s[i] != ' ') return false;
-  return true;
-}
-
 /******************************************************************************
  * Text boxes
  ******************************************************************************/
-
-/******************************************************************************
- * Text boxes
- ******************************************************************************/
-
 struct text_box_rep : public box_rep {
   int      pos;
   string   str;
@@ -104,49 +91,6 @@ text_box_rep::text_box_rep (path ip, int pos2, string s, font fn2, pencil p2,
   y3= ex->y3;
   x4= ex->x4;
   y4= ex->y4;
-
-  // 特殊处理：如果字符串全部由空格组成，手动计算宽度
-  bool all_spaces= is_all_spaces (s);
-  if (all_spaces && N (s) > 0) {
-    // 获取单个空格的宽度
-    metric space_ex;
-    fn->get_extents (" ", space_ex);
-    SI single_space_width= space_ex->x2 - space_ex->x1;
-
-    // 计算总宽度
-    SI total_width= single_space_width * N (s);
-    x2            = x1 + total_width;
-  }
-
-  // 特殊处理：对于全空格字符串，确保有最小高度以便背景色可见
-  if (all_spaces && y1 == y2) {
-    // 使用字母"M"的顶部和底部作为参考高度
-    metric m_ex;
-    fn->get_extents ("M", m_ex);
-
-    if (m_ex->y1 != m_ex->y2) {
-      // 如果"M"有有效的高度，使用它的y1和y2
-      y1= m_ex->y1;
-      y2= m_ex->y2;
-    }
-    else {
-      // 如果"M"的高度也无效，使用字体的上升和下降值
-      SI font_ascender = fn->y1;
-      SI font_descender= fn->y2;
-
-      if (font_ascender == 0 && font_descender == 0) {
-        // 如果字体没有提供上升/下降值，使用默认比例
-        SI font_height= fn->yx;
-        y1            = -font_height / 4;    // 基线以下1/4高度
-        y2            = font_height * 3 / 4; // 基线以上3/4高度
-      }
-      else {
-        // 使用字体的实际上升和下降值
-        y1= font_descender;
-        y2= font_ascender;
-      }
-    }
-  }
 
   if (!is_nil (xk)) {
     STACK_NEW_ARRAY (xpos, SI, N (str) + 1);
