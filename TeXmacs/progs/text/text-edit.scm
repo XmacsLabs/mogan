@@ -1065,3 +1065,7 @@
   (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
                  (== (tree->string (tree-ref t 0)) "bg-color")))
   (list (list "bg-color" "Background color")))
+
+(tm-define (customizable-parameters-memo t)
+  (:require (tree-is? t 'with))
+  (customizable-parameters t))
