@@ -232,9 +232,6 @@
          ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
 
-;; 根据需要添加其他文献类型标识符：
-;; [C] 用于会议论文集，[D] 用于学位论文，[R] 用于报告等。
-
 ;; 重写 booktitle 格式化函数（符合 GBT 7714-2015 标准）
 (tm-define (bib-format-in-ed-booktitle x)
   (:mode bib-gbt7714-2015?)
@@ -353,3 +350,15 @@
                ((equal? middle "") `(concat ,first ,separator ,last-part))
                ((equal? last-part "") `(concat ,first ,comma-sep ,middle))
                (else `(concat ,first ,comma-sep ,middle ,separator ,last-part)))))))))
+
+;; 重写 bvolume 格式化函数
+(tm-define (bib-format-bvolume x)
+  (:mode bib-gbt7714-2015?)
+  (let* ((v (bib-field x "volume"))
+	 (s (bib-default-field x "series")))
+    (if (bib-null? v)
+	""
+	(let ((series (if (bib-null? s) ""
+			  `(concat ,(bib-translate " of ") ,s)))
+	      (sep (if (< (bib-text-length v) 3) `(nbsp) " ")))
+	  `(concat ,(bib-translate "volume") ,sep ,v ,series)))))
