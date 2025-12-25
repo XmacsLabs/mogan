@@ -130,7 +130,8 @@ QTMInteractiveInputHelper::commit (int result) {
 qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     : qt_window_widget_rep (new QTMWindow (0), "popup", _quit), helper (this),
       prompt (NULL), full_screen (false), menuToolBarVisibleCache (false),
-      titleBarVisibleCache (false), membershipTitleLabel (nullptr), m_userId ("") {
+      titleBarVisibleCache (false), membershipTitleLabel (nullptr),
+      m_userId ("") {
   type= texmacs_widget;
 
   main_widget= concrete (::glue_widget (true, true, 1, 1));
@@ -1799,7 +1800,7 @@ qt_tm_widget_rep::setupLoginDialog (QWK::LoginDialog* loginDialog) {
   auto bottomSection= new QWidget ();
   bottomSection->setObjectName ("login-bottom-section");
   auto bottomLayout   = new QVBoxLayout (bottomSection);
-  membershipTitleLabel = new QLabel (qt_translate ("Membership info"));
+  membershipTitleLabel= new QLabel (qt_translate ("Membership info"));
   membershipTitleLabel->setObjectName ("login-membership-title");
 
   // 会员期限标签 - 后续通过API设置
@@ -1918,7 +1919,8 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
       reply, &QNetworkReply::finished, [this, reply, manager, token] () {
         // 定义统一的错误处理逻辑
         auto handleError= [this] () {
-          showNotLoggedInDialog (qt_translate ("Login error, please log in again."));
+          showNotLoggedInDialog (
+              qt_translate ("Login error, please log in again."));
 
           QPoint buttonBottomCenter= loginButton->mapToGlobal (
               QPoint (loginButton->width () / 2, loginButton->height ()));
@@ -1938,14 +1940,19 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
             QString userName  = userData["username"].toString ("liii");
             QString avatarText= userData["username"].toString ("liii").left (4);
             QString accountEmail= userData["email"].toString ("liii@lii.pro");
-            QString memberType   = userData["memberType"].toString ("Regular User");
-            QString periodLabel= userData["periodLabel"].toString ("Non-member");
-            QString periodLabelColor= userData["periodLabelColor"].toString ("");
-            QString productType= userData["productType"].toString ("Subscribe Now");
+            QString memberType=
+                userData["memberType"].toString ("Regular User");
+            QString periodLabel=
+                userData["periodLabel"].toString ("Non-member");
+            QString periodLabelColor=
+                userData["periodLabelColor"].toString ("");
+            QString productType=
+                userData["productType"].toString ("Subscribe Now");
 
             // 更新弹窗内容
             updateDialogContent (true, userName, accountEmail, avatarText,
-                                 memberType, periodLabel, periodLabelColor, productType);
+                                 memberType, periodLabel, periodLabelColor,
+                                 productType);
 
             // 显示弹窗
             QPoint buttonBottomCenter= loginButton->mapToGlobal (
@@ -2000,17 +2007,21 @@ qt_tm_widget_rep::updateDialogContent (bool isLoggedIn, const QString& username,
 
   // 更新会员类型标题
   if (membershipTitleLabel) {
-    membershipTitleLabel->setText (qt_translate (memberType.toStdString ().c_str ()));
+    membershipTitleLabel->setText (
+        qt_translate (memberType.toStdString ().c_str ()));
   }
 
   // 更新会员期限标签
   if (membershipPeriodLabel) {
-    membershipPeriodLabel->setText (qt_translate (periodLabel.toStdString ().c_str ()));
+    membershipPeriodLabel->setText (
+        qt_translate (periodLabel.toStdString ().c_str ()));
 
     // 根据periodLabelColor设置文本颜色
     if (!periodLabelColor.isEmpty () && periodLabelColor != "undefined") {
-      membershipPeriodLabel->setStyleSheet (QString ("color: %1;").arg (periodLabelColor));
-    } else {
+      membershipPeriodLabel->setStyleSheet (
+          QString ("color: %1;").arg (periodLabelColor));
+    }
+    else {
       membershipPeriodLabel->setStyleSheet ("");
     }
   }
@@ -2020,30 +2031,33 @@ qt_tm_widget_rep::updateDialogContent (bool isLoggedIn, const QString& username,
     loginActionButton->setVisible (true);
     logoutButton->setVisible (false);
     loginActionButton->setText (qt_translate ("Login"));
-  } else {
+  }
+  else {
     loginActionButton->setVisible (true);
     logoutButton->setVisible (true);
     // 如果productType=Renew Early,后面加上♥️
     if (productType == QStringLiteral ("Renew Early")) {
-      loginActionButton->setText (qt_translate (productType.toStdString ().c_str ()) + " ♥️");
-    } else {
-      loginActionButton->setText (qt_translate (productType.toStdString ().c_str ()));
+      loginActionButton->setText (
+          qt_translate (productType.toStdString ().c_str ()) + " ♥️");
+    }
+    else {
+      loginActionButton->setText (
+          qt_translate (productType.toStdString ().c_str ()));
     }
   }
 }
 
 void
 qt_tm_widget_rep::showNotLoggedInDialog (const QString& errorMessage) {
-  updateDialogContent (
-      false, qt_translate ("Not logged in"), errorMessage,
-      "liii", qt_translate ("Non-member"),
-      "","","");
+  updateDialogContent (false, qt_translate ("Not logged in"), errorMessage,
+                       "liii", qt_translate ("Non-member"), "", "", "");
 }
 
 void
 qt_tm_widget_rep::logout () {
   // 没有token，直接清除UI状态
-  showNotLoggedInDialog (qt_translate ("Please login to view your account information."));
+  showNotLoggedInDialog (
+      qt_translate ("Please login to view your account information."));
   // 关闭登录对话框
   if (m_loginDialog && m_loginDialog->isVisible ()) {
     m_loginDialog->hide ();

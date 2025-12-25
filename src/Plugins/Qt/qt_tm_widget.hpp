@@ -107,21 +107,20 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   QString m_userId;
 
 private:
-  void    onAddTabRequested ();
-  void    setupLoginDialog (QWK::LoginDialog* loginDialog);
-  void    checkLocalTokenAndLogin ();
-  void    fetchUserInfo (const QString& token);
-  void    triggerOAuth2 ();
-  void    updateDialogContent (bool isLoggedIn, const QString& username,
-                                       const QString& email,
-                                       const QString& avatarText,
-                                       const QString& memberType,
-                                       const QString& periodLabel,
-                                       const QString& periodLabelColor,
-                                       const QString& productType);
-  void    showNotLoggedInDialog (const QString& errorMessage);
-  void    logout ();
-  void    openRenewalPage ();
+  void onAddTabRequested ();
+  void setupLoginDialog (QWK::LoginDialog* loginDialog);
+  void checkLocalTokenAndLogin ();
+  void fetchUserInfo (const QString& token);
+  void triggerOAuth2 ();
+  void updateDialogContent (bool isLoggedIn, const QString& username,
+                            const QString& email, const QString& avatarText,
+                            const QString& memberType,
+                            const QString& periodLabel,
+                            const QString& periodLabelColor,
+                            const QString& productType);
+  void showNotLoggedInDialog (const QString& errorMessage);
+  void logout ();
+  void openRenewalPage ();
 
   qt_widget main_widget;
   qt_widget main_menu_widget;
