@@ -1,0 +1,90 @@
+<TMU|<tuple|1.1.0|2025.2.3-beta4>>
+
+<style|<tuple|generic|chinese|number-europe|preview-ref>>
+
+<\body>
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (import (liii hashlib))
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (md5 "")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (md5 "hello")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (md5 "11223344")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (md5 "!@#$%^&*()")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (sha1 "")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (sha1 "hello")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (sha1 "123456")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (sha1 "!@#$%^&*()")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (sha256 "")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (sha256 "hello")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (sha256 "!@#$%^&*()")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
