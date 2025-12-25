@@ -1057,10 +1057,11 @@
   (list (list "marked-color" "Color")))
 
 (tm-define (customizable-parameters t)
-  (:require (and (tree-is? t 'with) (== (tree-arity t) 3)))
-  (let ((param-name (tree->string (tree-ref t 0))))
-    (cond ((== param-name "color")
-           (list (list "color" "Color")))
-          ((== param-name "bg-color")
-           (list (list "bg-color" "Background color")))
-          (else '()))))
+  (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
+                 (== (tree->string (tree-ref t 0)) "color")))
+  (list (list "color" "Color")))
+
+(tm-define (customizable-parameters t)
+  (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
+                 (== (tree->string (tree-ref t 0)) "bg-color")))
+  (list (list "bg-color" "Background color")))
