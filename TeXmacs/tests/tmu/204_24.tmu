@@ -29,7 +29,9 @@
 
   <with|bg-color|#ccffcc|<with|color|dark green|深绿色文字配浅绿色背景>>
 
-  \;
+  <\with|bg-color|#ffffcc>
+    多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。 背景应该覆盖整个文本块。我们需要提供更多文字，才能覆盖多行。
+  </with>
 
   <\with|bg-color|#ffffcc>
     多行文本块带有浅黄色背景。 这是对多行背景色支持的测试。\ 
