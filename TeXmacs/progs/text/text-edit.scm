@@ -1046,26 +1046,3 @@
 (tm-define (focus-label t)
   (:require (or (footnote-context? t) (figure-context? t)))
   (focus-list-search-label (tree-children t)))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Decorated tag
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(tm-define (customizable-parameters t)
-  (:require (tree-is? t 'marked))
-  (list (list "marked-color" "Color")))
-
-(tm-define (customizable-parameters t)
-  (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
-                 (== (tree->string (tree-ref t 0)) "color")))
-  (list (list "color" "Color")))
-
-(tm-define (customizable-parameters t)
-  (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
-                 (== (tree->string (tree-ref t 0)) "bg-color")))
-  (list (list "bg-color" "Background color")))
-
-(tm-define (customizable-parameters-memo t)
-  (:require (tree-is? t 'with))
-  (customizable-parameters t))
