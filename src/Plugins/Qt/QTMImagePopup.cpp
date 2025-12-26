@@ -40,6 +40,7 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   effect->setOffset (0, 4);
   effect->setColor (QColor (0, 0, 0, 120));
   this->setGraphicsEffect (effect);
+
   leftBtn= new QToolButton ();
   leftBtn->setObjectName ("image-align-button");
   leftBtn->setProperty ("icon-name", "left");
@@ -96,6 +97,7 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
     setFixedSize (0, 0);
     return;
   }
+  hide ();
   autoSize ();
   int x, y;
   getCachedPosition (x, y);
@@ -156,6 +158,8 @@ QTMImagePopup::autoSize () {
   rightBtn->setIconSize (QSize (IconSize, IconSize));
   ocrBtn->setIconSize (QSize (IconSize, IconSize));
   setFixedSize (int (baseWidth * totalScale), int (baseHeight * totalScale));
+  updateGeometry ();
+  layout->update ();
 }
 
 void
