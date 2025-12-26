@@ -581,6 +581,224 @@
      // // // // //)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Document -> Page / Advanced Headers
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(define (make-header-condition start end parity content)
+  (let* ((page-nr (list 'value "page-nr"))
+         (range-test `(not (or (less ,page-nr ,start) (greater ,page-nr ,end)))))
+    `(if ,range-test ,content "")))
+
+(define (assign-advanced-header u start end parity content)
+  (let* ((content-tree (if content content ""))
+         (new-if (make-header-condition start end parity content-tree))  ; Scheme list: (if cond then else)
+         (new-cond (cadr new-if))
+         (new-then (caddr new-if)))
+
+    ;; 将条件树解析为 (cond content) 对的列表
+    (define (tree->pairs stree)
+      (cond ((not (tm-func? stree 'if 3))
+             (if (== stree "")  ; 空字符串表示没有内容
+                 '()
+                 (list (cons #t stree))))  ; #t 表示无条件，始终显示
+            (else
+             (cons (cons (cadr stree) (caddr stree))
+                   (tree->pairs (cadddr stree))))))
+
+    ;; 将 (cond content) 对列表转换回条件树
+    (define (pairs->tree pairs)
+      (if (null? pairs)
+          ""
+          (let ((pair (car pairs)))
+            (if (eq? (car pair) #t)
+                (cdr pair)  ; 无条件内容作为最终 else
+                ;; 构建条件链，递归处理剩余对
+                (let ((rest (cdr pairs)))
+                  `(if ,(car pair) ,(cdr pair) ,(pairs->tree rest)))))))
+
+    ;; 合并新条件到对列表中
+    (define (merge-pairs pairs cond then)
+      ;; 查找是否有相同条件并构建新列表
+      (define (process-pairs pairs found new-pairs)
+        (if (null? pairs)
+            (if found
+                (reverse new-pairs)  ; 已替换，返回新列表
+                (cons (cons cond then) (reverse new-pairs))) ; 添加新条件到前面
+            (let ((pair (car pairs)))
+              (if (and (not (eq? (car pair) #t))
+                       (tm-equal? (car pair) cond))
+                  (process-pairs (cdr pairs) #t (cons (cons cond then) new-pairs)) ; 替换
+                  (process-pairs (cdr pairs) found (cons pair new-pairs))))))
+      (process-pairs pairs #f '()))
+
+    ;; 主合并函数
+    (define (merge-condition-tree stree)
+      (let* ((pairs (tree->pairs stree))
+             (merged-pairs (merge-pairs pairs new-cond new-then)))
+        (pairs->tree merged-pairs)))
+
+    (cond ((or (== parity "odd") (== parity "odd page"))
+           (let ((old-tree (initial-get-tree u "page-odd-header")))
+             (initial-set-tree u "page-odd-header"
+               (merge-condition-tree (tm->stree old-tree)))))
+          ((or (== parity "even") (== parity "even page"))
+           (let ((old-tree (initial-get-tree u "page-even-header")))
+             (initial-set-tree u "page-even-header"
+               (merge-condition-tree (tm->stree old-tree)))))
+          (else
+           (let ((old-odd (initial-get-tree u "page-odd-header"))
+                 (old-even (initial-get-tree u "page-even-header")))
+             (initial-set-tree u "page-odd-header"
+               (merge-condition-tree (tm->stree old-odd)))
+             (initial-set-tree u "page-even-header"
+               (merge-condition-tree (tm->stree old-even)))))))
+  (refresh-window))
+
+(tm-widget (page-formatter-advanced-header u style quit)
+  (let* ((current-tree (initial-get-tree u "page-odd-header"))
+         (content-tree (if (tm-func? current-tree 'if 3)
+                          (tm-ref current-tree 2)
+                          current-tree))
+         (start "1") (end (number->string (get-page-count))) (parity "any") (content ""))
+    (centered
+      (refreshable "advanced-header-settings"
+        (aligned
+          (item (text "Applying from:")
+            (input (set! start answer) "string" (list start) "6em"))
+          (item (text "Applying to:")
+            (input (set! end answer) "string" (list end) "6em"))
+          (item (text "Parity:")
+            (enum (begin (set! parity answer))
+                  '("odd page" "even page" "any")
+                  "any"
+                  "10em"))
+          (item (text "Content:")
+            (resize "350px" "100px"
+              (texmacs-input `(document ,content-tree)
+                             `(style (tuple ,@style "gui-base"))
+                             (string->url "tmfs://aux/advanced-header")))))))
+    ===
+    (explicit-buttons
+      (hlist
+        >>>
+        ("Ok"
+           (with content (get-field-contents (string->url "tmfs://aux/advanced-header"))
+             (assign-advanced-header u start end parity content))
+           (quit))
+        // //
+        ("Cancel" (quit))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Document -> Page / Advanced Footers
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(define (make-footer-condition start end parity content)
+  (let* ((page-nr (list 'value "page-nr"))
+         (range-test `(not (or (less ,page-nr ,start) (greater ,page-nr ,end)))))
+    `(if ,range-test ,content "")))
+
+(define (assign-advanced-footer u start end parity content)
+  (let* ((content-tree (if content content ""))
+         (new-if (make-footer-condition start end parity content-tree))  ; Scheme list: (if cond then else)
+         (new-cond (cadr new-if))
+         (new-then (caddr new-if)))
+
+    ;; 将条件树解析为 (cond content) 对的列表
+    (define (tree->pairs stree)
+      (cond ((not (tm-func? stree 'if 3))
+             (if (== stree "")  ; 空字符串表示没有内容
+                 '()
+                 (list (cons #t stree))))  ; #t 表示无条件，始终显示
+            (else
+             (cons (cons (cadr stree) (caddr stree))
+                   (tree->pairs (cadddr stree))))))
+
+    ;; 将 (cond content) 对列表转换回条件树
+    (define (pairs->tree pairs)
+      (if (null? pairs)
+          ""
+          (let ((pair (car pairs)))
+            (if (eq? (car pair) #t)
+                (cdr pair)  ; 无条件内容作为最终 else
+                ;; 构建条件链，递归处理剩余对
+                (let ((rest (cdr pairs)))
+                  `(if ,(car pair) ,(cdr pair) ,(pairs->tree rest)))))))
+
+    ;; 合并新条件到对列表中
+    (define (merge-pairs pairs cond then)
+      ;; 查找是否有相同条件并构建新列表
+      (define (process-pairs pairs found new-pairs)
+        (if (null? pairs)
+            (if found
+                (reverse new-pairs)  ; 已替换，返回新列表
+                (cons (cons cond then) (reverse new-pairs))) ; 添加新条件到前面
+            (let ((pair (car pairs)))
+              (if (and (not (eq? (car pair) #t))
+                       (tm-equal? (car pair) cond))
+                  (process-pairs (cdr pairs) #t (cons (cons cond then) new-pairs)) ; 替换
+                  (process-pairs (cdr pairs) found (cons pair new-pairs))))))
+      (process-pairs pairs #f '()))
+
+    ;; 主合并函数
+    (define (merge-condition-tree stree)
+      (let* ((pairs (tree->pairs stree))
+             (merged-pairs (merge-pairs pairs new-cond new-then)))
+        (pairs->tree merged-pairs)))
+
+    (cond ((or (== parity "odd") (== parity "odd page"))
+           (let ((old-tree (initial-get-tree u "page-odd-footer")))
+             (initial-set-tree u "page-odd-footer"
+               (merge-condition-tree (tm->stree old-tree)))))
+          ((or (== parity "even") (== parity "even page"))
+           (let ((old-tree (initial-get-tree u "page-even-footer")))
+             (initial-set-tree u "page-even-footer"
+               (merge-condition-tree (tm->stree old-tree)))))
+          (else
+           (let ((old-odd (initial-get-tree u "page-odd-footer"))
+                 (old-even (initial-get-tree u "page-even-footer")))
+             (initial-set-tree u "page-odd-footer"
+               (merge-condition-tree (tm->stree old-odd)))
+             (initial-set-tree u "page-even-footer"
+               (merge-condition-tree (tm->stree old-even)))))))
+  (refresh-window))
+
+(tm-widget (page-formatter-advanced-footer u style quit)
+  (let* ((current-tree (initial-get-tree u "page-odd-footer"))
+         (content-tree (if (tm-func? current-tree 'if 3)
+                          (tm-ref current-tree 2)
+                          current-tree))
+         (start "1") (end (number->string (get-page-count))) (parity "any") (content ""))
+    (centered
+      (refreshable "advanced-footer-settings"
+        (aligned
+          (item (text "Applying from:")
+            (input (set! start answer) "string" (list start) "6em"))
+          (item (text "Applying to:")
+            (input (set! end answer) "string" (list end) "6em"))
+          (item (text "Parity:")
+            (enum (begin (set! parity answer))
+                  '("odd page" "even page" "any")
+                  "any"
+                  "10em"))
+          (item (text "Content:")
+            (resize "350px" "100px"
+              (texmacs-input `(document ,content-tree)
+                             `(style (tuple ,@style "gui-base"))
+                             (string->url "tmfs://aux/advanced-footer")))))))
+    ===
+    (explicit-buttons
+      (hlist
+        >>>
+        ("Ok"
+           (with content (get-field-contents (string->url "tmfs://aux/advanced-footer"))
+             (assign-advanced-footer u start end parity content))
+           (quit))
+        // //
+        ("Cancel" (quit))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Document -> Page
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -595,7 +813,13 @@
           (dynamic (page-formatter-margins u quit))))
       (tab (text "Breaking")
         (padded
-          (dynamic (page-formatter-breaking u quit)))))))
+          (dynamic (page-formatter-breaking u quit))))
+      (tab (text "Advanced header")
+        (padded
+          (dynamic (page-formatter-advanced-header u style quit))))
+      (tab (text "Advanced footer")
+        (padded
+          (dynamic (page-formatter-advanced-footer u style quit)))))))
 
 (tm-define (open-document-page-format-window)
   (:interactive #t)
