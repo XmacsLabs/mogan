@@ -157,8 +157,8 @@ QTMImagePopup::autoSize () {
   rightBtn->setIconSize (QSize (IconSize, IconSize));
   ocrBtn->setIconSize (QSize (IconSize, IconSize));
   setFixedSize (int (baseWidth * totalScale), int (baseHeight * totalScale));
-  updateGeometry();
-  layout->update();
+  updateGeometry ();
+  layout->update ();
 }
 
 void
