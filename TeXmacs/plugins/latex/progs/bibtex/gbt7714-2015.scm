@@ -82,6 +82,7 @@
       ((equal? type "misc") (if online "[EB/OL]" "[EB]"))
       (else ""))))
 
+;; 作者姓名格式
 (tm-define (bib-format-name x)
   (:mode bib-gbt7714-2015?)
   ;; 西文作者：姓在前，名缩写（如 "Yu H B"）
@@ -99,6 +100,7 @@
             last-name
             `(concat ,last-name " " ,first-name)))))
 
+;; 编者姓名格式
 (tm-define (bib-format-editor x)
   (:mode bib-gbt7714-2015?)
   ;; 对于 GBT 7714-2015，编者后应跟随 ", 主编" 或 ", 编"
@@ -109,12 +111,14 @@
             `(concat ,(bib-format-names a) ,(bib-translate ", editor"))
             `(concat ,(bib-format-names a) ,(bib-translate ", editors"))))))
 
+;; 日期格式
 (tm-define (bib-format-date x)
   (:mode bib-gbt7714-2015?)
   ;; GBT 7714-2015 仅使用年份，不含月份
   (let* ((y (bib-field x "year")))
     (if (bib-null? y) "" y)))
 
+;; 年份,卷(期):页码格式
 (tm-define (bib-format-vol-num-pages x)
   (:mode bib-gbt7714-2015?)
   ;; GBT 7714-2015 格式：年份,卷(期):页码
@@ -139,36 +143,13 @@
             `(concat ,vol ,num ,pag)  ;; 没有年份，只有卷期页码
             `(concat ,year ", " ,vol ,num ,pag)))))  ;; 年份,卷(期):页码
 
+;; 数字标签格式
 (tm-define (bib-format-bibitem n x)
   (:mode bib-gbt7714-2015?)
   ;; 使用数字标签，如 [1], [2], ...
   `(bibitem* ,(number->string n)))
 
-;; 重写文章格式以添加文献类型标识符 [J]
-(tm-define (bib-format-article n x)
-  (:mode bib-gbt7714-2015?)
-  `(concat
-     ,(bib-format-bibitem n x)
-     ,(bib-label (list-ref x 2))
-     ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
-           `(concat ,(bib-format-field-Locase x "title")
-                    " "
-                    ,(bib-document-type-identifier x "article")))
-         ,(bib-new-block
-           (if (bib-empty? x "crossref")
-               (bib-new-sentence
-                `(,(bib-format-field x "journal")
-                  ,(bib-format-vol-num-pages x)))
-               (bib-new-sentence
-                `((concat ,(bib-translate "in ")
-                          (cite ,(bib-field x "crossref")))
-                  ,(bib-format-pages x)))))
-         ,(bib-new-block (bib-format-field x "note"))
-         ,(bib-new-block (bib-format-url-doi x))))))
-
-;; 格式化 URL/DOI 信息（GBT 7714-2015 标准）
+;; URL/DOI 信息格式
 (tm-define (bib-format-url-doi x)
   (:mode bib-gbt7714-2015?)
   (let* ((url (bib-field x "url"))
@@ -194,6 +175,30 @@
            `(concat "[" ,urldate "]. DOI: " ,doi)
            `(concat "DOI: " ,doi)))
       (else ""))))
+
+;; 重写文章格式以添加文献类型标识符 [J]
+(tm-define (bib-format-article n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-Locase x "title")
+                    " "
+                    ,(bib-document-type-identifier x "article")))
+         ,(bib-new-block
+           (if (bib-empty? x "crossref")
+               (bib-new-sentence
+                `(,(bib-format-field x "journal")
+                  ,(bib-format-vol-num-pages x)))
+               (bib-new-sentence
+                `((concat ,(bib-translate "in ")
+                          (cite ,(bib-field x "crossref")))
+                  ,(bib-format-pages x)))))
+         ,(bib-new-block (bib-format-field x "note"))
+         ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写图书格式以添加文献类型标识符 [M]
 (tm-define (bib-format-book n x)
