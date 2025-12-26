@@ -49,7 +49,6 @@ public:
                        int canvas_x);
   void updatePosition ();
   void scrollBy (int x, int y);
-  void setImagePath (path p);
   void setImageTree (tree t);
   void updateButtonStates ();
   void autoSize ();

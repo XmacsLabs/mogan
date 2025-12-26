@@ -107,11 +107,6 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
 }
 
 void
-QTMImagePopup::setImagePath (path p) {
-  this->current_path= p;
-}
-
-void
 QTMImagePopup::setImageTree (tree t) {
   this->current_tree= t;
 }
