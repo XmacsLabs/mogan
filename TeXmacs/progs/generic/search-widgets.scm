@@ -10,14 +10,25 @@
 ;; in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(import (liii hashlib))
 (texmacs-module (generic search-widgets)
   (:use (generic generic-edit)
         (utils library cursor)))
 
 (define search-replace-text "")
+(define search-replace-window-table (make-ahash-table))
 
 (define isreplace? #f)
+
+;; 返回当前窗口的md5值
+(define (current-view-md5)
+  (md5 (url->string (current-view-url))))
+;；设置当前窗口的辅助窗口状态
+(tm-define (set-search-window-state opened? is-search?)
+  (ahash-set! search-replace-window-table (current-view-md5) (list opened? is-search?)))
+;; 获取当前窗口的辅助窗口状态
+(define (get-search-window-state)
+  (ahash-ref search-replace-window-table (current-view-md5)))
 
 #|
 update-search-pos-text
@@ -68,13 +79,24 @@ action : string
 
 
 
+
+(tm-define (refresh-search-replace)
+  (let ((state (get-search-window-state)))
+    (cond ((not state) 
+           (show-auxiliary-widget #f))   ;; 情况 0：如果状态为空，隐藏辅助窗口
+          ((not (car state)) 
+           (debug-message "std" "11111")
+           (show-auxiliary-widget #f))   ;; 情况 1：如果第一个是#f，隐藏辅助窗口
+          ((cadr state) 
+           (interactive-search))         ;; 情况 2：如果是 (#t #t)，调用搜索
+          (else 
+           (interactive-replace)))))     ;; 情况 3：如果是 (#t #f)，调用替换
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Basic search and replace buffers management
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define search-window #f)
-
-(import (liii hashlib))
 
 
 #|
@@ -379,7 +401,8 @@ url
   (search-show-all)
   (set! search-serial (+ search-serial 1))
   (with-buffer (master-buffer)
-    (cancel-alt-selection "alternate")))
+    (cancel-alt-selection "alternate"))
+  (set-search-window-state #f #f))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Replace occurrences
@@ -732,6 +755,7 @@ tree 或 #f
            (aux (search-buffer))
            (tool (list 'search-tool u st init aux)))
       (buffer-set-master aux u)
+      (set-search-window-state #t #t)
       (set! search-window (current-window))
       (set-search-reference (cursor-path))
       (set-search-filter)
@@ -852,6 +876,7 @@ tree 或 #f
            (tool (list 'replace-tool u st init saux raux)))
       (buffer-set-master saux u)
       (buffer-set-master raux u)
+      (set-search-window-state #t #f)
       (set! search-window (current-window))
       (set-search-reference (cursor-path))
       (set-search-filter)
