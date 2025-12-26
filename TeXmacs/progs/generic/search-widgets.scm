@@ -770,10 +770,6 @@ tree 或 #f
       ((check (balloon (icon "tm_filter.xpm") "Only show paragraphs with hits")
               "v" (search-filter-enabled?))
        (search-toggle-filter))
-      ((balloon (icon "tm_compress_tool.xpm") "Compress into toolbar")
-       (set-boolean-preference "toolbar search" #t)
-       (quit)
-       (toolbar-search-start))
       ((balloon (icon "tm_close_tool.xpm") "Close search tool")
        (quit)))))
 
@@ -821,11 +817,9 @@ tree 或 #f
       (set-search-reference (cursor-path))
       (set-search-filter)
       (set! search-filter-out? #f)
-      (if (side-tools?)
-          (tool-focus :bottom-right tool aux)
-          (auxiliary-widget (search-widget u st init aux)
-                            (search-cancel u)
-                            (translate "Search") aux)))))
+      (auxiliary-widget (search-widget u st init aux)
+                        (search-cancel u)
+                        (translate "Search") aux))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search and replace widget
@@ -879,10 +873,6 @@ tree 或 #f
       ((check (balloon (icon "tm_filter.xpm") "Only show paragraphs with hits")
               "v" (search-filter-enabled?))
        (search-toggle-filter))
-      ((balloon (icon "tm_compress_tool.xpm") "Compress into toolbar")
-       (set-boolean-preference "toolbar replace" #t)
-       (quit)
-       (toolbar-replace-start))
       ((balloon (icon "tm_close_tool.xpm") "Close replace tool")
        (quit)))))
 
@@ -942,11 +932,9 @@ tree 或 #f
       (set-search-reference (cursor-path))
       (set-search-filter)
       (set! search-filter-out? #f)
-      (if (side-tools?)
-          (tool-focus :bottom-right tool saux)
-          (auxiliary-widget (replace-widget u st init saux raux)
-                            (search-cancel u)
-                            (translate "Search and replace") saux raux)))))
+      (auxiliary-widget (replace-widget u st init saux raux)
+                        (search-cancel u)
+                        (translate "Search and replace") saux raux))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search toolbar
