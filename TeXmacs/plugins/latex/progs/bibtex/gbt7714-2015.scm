@@ -18,48 +18,39 @@
 
 ;; GBT 7714-2015 特定格式化函数
 
+;; 子字符串检查函数
+(define (substring? pat text)
+  (let ((pat-len (string-length pat))
+        (text-len (string-length text)))
+    (let outer ((i 0))
+      (cond
+        ((> (+ i pat-len) text-len) #f)
+        (else
+         (let inner ((j 0))
+           (cond
+             ((>= j pat-len) #t)
+             ((char=? (string-ref pat j)
+                      (string-ref text (+ i j)))
+              (inner (+ j 1)))
+             (else (outer (+ i 1))))))))))
+
 ;; 检测字符串是否包含中文字符的辅助函数
 (define (contains-chinese? str)
   (if (bib-null? str) #f
       (let ((s (if (string? str) str "")))
-        (define (substring? pat text)
-          (let ((pat-len (string-length pat))
-                (text-len (string-length text)))
-            (let loop ((i 0))
-              (if (> (+ i pat-len) text-len) #f
-                  (let ((found? (let char-loop ((j 0))
-                                  (if (>= j pat-len) #t
-                                      (if (char=? (string-ref pat j)
-                                                  (string-ref text (+ i j)))
-                                          (char-loop (+ j 1))
-                                          #f)))))
-                    (if found? #t (loop (+ i 1))))))))
-        ;; 检查是否包含中文 Unicode 字符的常见内部表示模式 "<#xxxx>"
-        (or (substring? "<#4" s)  ; 以 "<#4" 开头的可能是中文（U+4E00 开始）
+        ;; 检查是否包含中文 Unicode 字符的内部表示模式
+        (or (substring? "<#4" s)
             (substring? "<#5" s)
             (substring? "<#6" s)
             (substring? "<#7" s)
             (substring? "<#8" s)
             (substring? "<#9" s)
-            (substring? "<#3" s)  ; CJK 扩展 A (U+3400)
-            (substring? "<#2" s)  ; CJK 扩展 B (U+20000)
-            (substring? "<#F" s)  ; CJK 兼容表意文字 (U+F900)
-            ;; 也检查实际的中文字符（如果已经是普通字符串）
+            ;; 检查实际的中文字符（基本中文范围 U+4E00-U+9FFF）
             (let loop ((i 0) (len (string-length s)))
               (if (>= i len) #f
                   (let* ((c (string-ref s i))
                          (code (char->integer c)))
-                    (if (or (and (>= code #x4e00) (<= code #x9fff))
-                            (and (>= code #x3400) (<= code #x4dbf))
-                            (and (>= code #x20000) (<= code #x2a6df))
-                            (and (>= code #x2a700) (<= code #x2b73f))
-                            (and (>= code #x2b740) (<= code #x2b81f))
-                            (and (>= code #x2b820) (<= code #x2ceaf))
-                            (and (>= code #x2ceb0) (<= code #x2ebef))
-                            (and (>= code #xf900) (<= code #xfaff))
-                            (and (>= code #x2e80) (<= code #x2eff))
-                            (and (>= code #x3000) (<= code #x303f))
-                            (and (>= code #x31c0) (<= code #x31ef)))
+                    (if (and (>= code #x4e00) (<= code #x9fff))
                         #t
                         (loop (+ i 1) len)))))))))
 
