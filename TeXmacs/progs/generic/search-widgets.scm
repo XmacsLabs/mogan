@@ -819,7 +819,11 @@ tree 或 #f
       (set! search-filter-out? #f)
       (auxiliary-widget (search-widget u st init aux)
                         (search-cancel u)
-                        (translate "Search") aux))))
+                        (translate "Search") aux)
+      (when (selection-active?)
+        (begin
+          (buffer-set-body aux `(document ,(selection-tree)))
+          (perform-search*))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search and replace widget
@@ -934,7 +938,11 @@ tree 或 #f
       (set! search-filter-out? #f)
       (auxiliary-widget (replace-widget u st init saux raux)
                         (search-cancel u)
-                        (translate "Search and replace") saux raux))))
+                        (translate "Search and replace") saux raux)
+      (when (selection-active?)
+        (begin
+          (buffer-set-body saux `(document ,(selection-tree)))
+          (perform-search*))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search toolbar
