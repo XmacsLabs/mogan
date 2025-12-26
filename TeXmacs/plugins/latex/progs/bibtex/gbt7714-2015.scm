@@ -94,12 +94,12 @@
              (chinese? (authors-contain-chinese? a))
              ;; GBT 7714-2015: 最多显示3个作者
              (max-authors 3)
-             (author-count (- n 1))  ;; 减去第0个元素
+             (author-count (- n 1))
              (show-count (min author-count max-authors))
              ;; 逗号分隔符：中文不加空格，英文加空格
              (comma-sep (if chinese? "," ", ")))
         (cond
-          ((equal? author-count 1)  ;; 只有1个作者
+          ((equal? author-count 1)
            (bib-format-name (list-ref a 1)))
           (else
            (let* ((first (bib-format-name (list-ref a 1)))
@@ -110,8 +110,8 @@
                   (middle (let loop ((i 2) (result ""))
                             (if (or (>= i n)
                                     (if has-more
-                                        (> i max-authors)      ;; 有更多作者时，收集到第3个（max-authors）
-                                        (>= i author-count)))  ;; 没有更多作者时，收集到倒数第2个
+                                        (> i max-authors)
+                                        (>= i author-count)))
                                 result
                                 (loop (+ i 1)
                                       (if (equal? result "")
@@ -219,10 +219,10 @@
                      `(concat ": " ,(list-ref p 1)
                               ,bib-range-symbol ,(list-ref p 2)))))))
     (if (and (== vol "") (== num "") (== pag ""))
-        year  ;; 只有年份，没有卷期页码
+        year
         (if (bib-null? year)
-            `(concat ,vol ,num ,pag)  ;; 没有年份，只有卷期页码
-            `(concat ,year ", " ,vol ,num ,pag)))))  ;; 年份,卷(期):页码
+            `(concat ,vol ,num ,pag)
+            `(concat ,year ", " ,vol ,num ,pag)))))
 
 ;; 数字标签格式
 (tm-define (bib-format-bibitem n x)
