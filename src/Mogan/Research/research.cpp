@@ -64,6 +64,7 @@ extern bool   headless_mode;
 #ifdef QTTEXMACS
 static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
+bool show_startup_login_dialog ();
 #endif
 
 /******************************************************************************
@@ -235,6 +236,14 @@ main (int argc, char** argv) {
   // initialize the Qt application infrastructure
   if (headless_mode) qtmcoreapp= new QTMCoreApplication (argc, argv);
   else qtmapp= new QTMApplication (argc, argv);
+
+  // Show startup login dialog
+  if (!show_startup_login_dialog ()) {
+    // User rejected dialog, clean up and exit
+    if (headless_mode) delete qtmcoreapp;
+    else delete qtmapp;
+    return 1;
+  }
 #endif
   init_texmacs_path (argc, argv);
 #ifdef QTTEXMACS
