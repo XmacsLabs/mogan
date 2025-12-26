@@ -822,8 +822,8 @@ tree 或 #f
                         (translate "Search") aux)
       (when (selection-active?)
         (begin
-          (buffer-set-body aux `(document ,(selection-tree)))
-          (perform-search*))))))
+          (buffer-set-body aux `(document ,(selection-tree)))))
+      (perform-search*))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search and replace widget
@@ -941,8 +941,8 @@ tree 或 #f
                         (translate "Search and replace") saux raux)
       (when (selection-active?)
         (begin
-          (buffer-set-body saux `(document ,(selection-tree)))
-          (perform-search*))))))
+          (buffer-set-body saux `(document ,(selection-tree)))))
+      (perform-search*))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search toolbar
