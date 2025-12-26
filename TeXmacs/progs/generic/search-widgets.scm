@@ -20,15 +20,46 @@
 
 (define isreplace? #f)
 
-;; 返回当前窗口的md5值
-(define (current-view-md5)
-  (md5 (url->string (current-view-url))))
-;；设置当前窗口的辅助窗口状态
+#|
+set-search-window-state
+设置搜索/替换辅助窗口的打开状态和模式。
+
+语法
+----
+(set-search-window-state opened? is-search?)
+
+参数
+----
+opened? : boolean
+窗口是否打开：
+- #t : 窗口打开
+- #f : 窗口关闭
+
+is-search? : boolean
+窗口模式：
+- #t : 搜索模式
+- #f : 替换模式
+
+返回值
+----
+#<unspecified>
+无显式返回值（返回 #<unspecified>）。
+
+逻辑
+----
+将 (opened? is-search?) 状态列表存储到 search-replace-window-table 哈希表中，
+以当前搜索缓冲区 (search-buffer) 为键。
+
+注意
+----
+此函数用于管理搜索/替换辅助窗口的显示状态和模式切换。
+每个文档视图有独立的搜索缓冲区，因此状态与当前文档视图关联。
+|#
 (tm-define (set-search-window-state opened? is-search?)
-  (ahash-set! search-replace-window-table (current-view-md5) (list opened? is-search?)))
+  (ahash-set! search-replace-window-table (search-buffer) (list opened? is-search?)))
 ;; 获取当前窗口的辅助窗口状态
 (define (get-search-window-state)
-  (ahash-ref search-replace-window-table (current-view-md5)))
+  (ahash-ref search-replace-window-table (search-buffer)))
 
 #|
 update-search-pos-text
@@ -80,16 +111,46 @@ action : string
 
 
 
+#|
+refresh-search-replace
+根据存储的状态刷新搜索/替换辅助窗口的显示和模式。
+
+语法
+----
+(refresh-search-replace)
+
+参数
+----
+无参数。
+
+返回值
+----
+#<unspecified>
+无显式返回值（返回 #<unspecified>）。
+
+逻辑
+----
+1. 获取当前搜索缓冲区的窗口状态 (get-search-window-state)
+2. 根据状态执行相应操作：
+   - 状态为空 (#f) : 隐藏辅助窗口 (情况 0)
+   - 状态为 (#f _) : 隐藏辅助窗口 (情况 1)
+   - 状态为 (#t #t) : 调用 interactive-search 显示搜索窗口 (情况 2)
+   - 状态为 (#t #f) : 调用 interactive-replace 显示替换窗口 (情况 3)
+
+注意
+----
+此函数在切换标签页或窗口状态变化时调用，确保辅助窗口与当前文档视图状态一致。
+状态通过 set-search-window-state 存储，每个文档视图有独立的搜索缓冲区。
+|#
 (tm-define (refresh-search-replace)
   (let ((state (get-search-window-state)))
-    (cond ((not state) 
+    (cond ((not state)
            (show-auxiliary-widget #f))   ;; 情况 0：如果状态为空，隐藏辅助窗口
-          ((not (car state)) 
-           (debug-message "std" "11111")
+          ((not (car state))
            (show-auxiliary-widget #f))   ;; 情况 1：如果第一个是#f，隐藏辅助窗口
-          ((cadr state) 
+          ((cadr state)
            (interactive-search))         ;; 情况 2：如果是 (#t #t)，调用搜索
-          (else 
+          (else
            (interactive-replace)))))     ;; 情况 3：如果是 (#t #f)，调用替换
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
