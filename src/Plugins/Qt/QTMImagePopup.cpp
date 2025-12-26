@@ -76,7 +76,7 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
              else if (button == rightBtn)
                call ("set-image-alignment", current_tree, "right");
              else if (button == ocrBtn)
-               call ("create-temp-image", current_tree, current_path);
+               call ("create-temp-image", current_tree);
              current_align=
                  as_string (call ("get-image-alignment", current_tree));
            });
