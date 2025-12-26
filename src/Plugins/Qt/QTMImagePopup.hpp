@@ -32,7 +32,6 @@ protected:
   int                        cached_scroll_y; // 页面滚动位置y
   int                        cached_canvas_x;
   double                     cached_magf; // 缩放因子
-  path                       current_path;
   tree                       current_tree;
   string                     current_align;
   QToolButton*               leftBtn;
@@ -49,7 +48,6 @@ public:
                        int canvas_x);
   void updatePosition ();
   void scrollBy (int x, int y);
-  void setImagePath (path p);
   void setImageTree (tree t);
   void updateButtonStates ();
   void autoSize ();
