@@ -1,4 +1,4 @@
-<TeXmacs|2.1.2>
+<TeXmacs|2.1.4>
 
 <style|<tuple|source|english>>
 
@@ -29,6 +29,8 @@
   </active*>
 
   <assign|color|white>
+
+  <assign|cursor-color|white>
 
   <assign|locus-color|white>
 
