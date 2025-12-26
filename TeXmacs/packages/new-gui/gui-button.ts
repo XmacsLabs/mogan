@@ -30,10 +30,6 @@
     </src-comment>
   </active*>
 
-  <assign|font|<extern|gui-system-font>>
-
-  <assign|font-base-size|8>
-
   <\active*>
     <\src-comment>
       GUI color scheme
