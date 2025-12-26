@@ -311,6 +311,9 @@ target("libqhotkey") do
   elseif is_plat("windows") then
     add_files("3rdparty/qhotkey/qhotkey_win.cpp")
   end
+
+  on_install(function (target)
+  end)
 end
 
 -- Add options for different features

@@ -247,7 +247,7 @@
               (parameter-local-special-set l val mode))
          (noop))
         ((and (func? mode :local) (tree-is? (focus-tree) (cadr mode)))
-         (tree-with-set (focus-tree) l val))))
+         (with-set (focus-tree) l val))))
 
 (tm-define (parameter-interactive-set l mode)
   (:interactive #t)
@@ -331,7 +331,11 @@
 
 (tm-menu (parameter-submenu l mode)
   (:require (== (tree-label-type (string->symbol l)) "color"))
-  (with setter (lambda (col) (delayed (:idle 250) (parameter-set l col mode)))
+  (with setter (lambda (col)
+                 (delayed (:idle 250)
+                   (parameter-set l col mode)
+                   (when (or (== l "bg-color") (== l "marked-color"))
+                     (set-preference "marked-color" col))))
     ((check "Default" "*" (parameter-default? l mode))
      (parameter-reset l mode))
     ---

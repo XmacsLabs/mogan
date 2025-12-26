@@ -348,7 +348,7 @@
   ---
   ("Deleted" (make 'deleted))
   ("Fill out" (make 'fill-out))
-  ("Marked" (make 'marked)))
+  ("Marked" (mark-text)))
 
 (menu-bind presentation-tag-menu
   (if (style-has? "std-markup-dtd")
@@ -623,7 +623,7 @@
       ((balloon (icon "tm_strikethrough.xpm") "Write strike through")
        (make 'strike-through))
       ((balloon (icon "tm_marked.svg") "Marked text")
-       (make 'marked)))
+       (mark-text)))
   (if (or (not (style-has? "std-markup-dtd")) (in-source?))
       ((balloon (icon "tm_italic.xpm") "Write italic text")
        (make-with "font-shape" "italic"))
@@ -1125,3 +1125,29 @@
   (dynamic (former t))
   ((balloon (icon "tm_small_textual.xpm") "Rename section")
    (interactive automatic-section-rename)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Decorated tag
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (customizable-parameters t)
+  (:require (tree-is? t 'marked))
+  (list (list "marked-color" "Color")))
+
+(tm-define (customizable-parameters t)
+  (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
+                 (== (tree->string (tree-ref t 0)) "color")))
+  (list (list "color" "Color")))
+
+(tm-define (customizable-parameters t)
+  (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
+                 (== (tree->string (tree-ref t 0)) "bg-color")))
+  (list (list "bg-color" "Background color")))
+
+(tm-define (customizable-parameters-memo t)
+  (:require (tree-is? t 'with))
+  (customizable-parameters t))
+
+(tm-menu (focus-hidden-icons t)
+  (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
+                 (in? (tree->string (tree-ref t 0)) (list "color" "bg-color")))))
