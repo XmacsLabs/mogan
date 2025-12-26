@@ -852,52 +852,43 @@ bib_field_pages (string p) {
     return res;
   }
 
-  // 按连字符分割字符串，跳过连续的连字符
-  array<string> parts;
-  string        current;
+  array<string> valid_parts;
+  int           part_start    = 0;
+  int           last_non_space= -1;
+  bool          in_part       = false;
 
   for (int i= 0; i < N (p); i++) {
-    if (p[i] == '-') {
-      if (current != "") {
-        parts << current;
-        current= "";
+    char c= p[i];
+
+    if (c == '-') {
+      if (in_part) {
+        string part= p (part_start, last_non_space + 1);
+        valid_parts << part;
+        in_part= false;
       }
-      // 跳过后续的连字符
       while (i + 1 < N (p) && p[i + 1] == '-') {
         i++;
       }
     }
+    else if (c == ' ' || c == '\t') {
+      if (in_part) {
+      }
+      else {
+      }
+    }
     else {
-      current << p[i];
+      if (!in_part) {
+        part_start= i;
+        in_part   = true;
+      }
+      last_non_space= i;
     }
   }
 
-  if (current != "") {
-    parts << current;
-  }
-
-  // 如果没有部分（例如字符串全是连字符），使用整个字符串
-  if (N (parts) == 0) {
-    parts << p;
-  }
-
-  // 修剪每个部分并收集有效部分
-  array<string> valid_parts;
-  for (int i= 0; i < N (parts); i++) {
-    string part= parts[i];
-    // 修剪左侧空格
-    int start= 0;
-    while (start < N (part) && (part[start] == ' ' || part[start] == '\t')) {
-      start++;
-    }
-    // 修剪右侧空格
-    int end= N (part);
-    while (end > start && (part[end - 1] == ' ' || part[end - 1] == '\t')) {
-      end--;
-    }
-    if (end > start) {
-      valid_parts << part (start, end);
-    }
+  // 处理最后一个部分
+  if (in_part && last_non_space >= part_start) {
+    string part= p (part_start, last_non_space + 1);
+    valid_parts << part;
   }
 
   // 如果没有有效部分，返回默认值
@@ -907,12 +898,11 @@ bib_field_pages (string p) {
     return res;
   }
 
-  // 创建结果树并添加有效部分（最多两个，以符合 BibTeX 页码格式）
-  tree res  = compound ("bib-pages");
-  int  count= 0;
-  for (int i= 0; i < N (valid_parts) && count < 2; i++) {
+  // 创建结果树
+  tree res      = compound ("bib-pages");
+  int  max_parts= N (valid_parts) < 2 ? N (valid_parts) : 2;
+  for (int i= 0; i < max_parts; i++) {
     res << valid_parts[i];
-    count++;
   }
 
   return res;
