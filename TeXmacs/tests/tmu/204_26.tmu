@@ -1,0 +1,102 @@
+<TMU|<tuple|1.1.0|2025.2.3-beta4>>
+
+<style|<tuple|generic|chinese|number-europe|preview-ref>>
+
+<\body>
+  \;
+
+  第一页
+
+  \;
+
+  奇数页
+
+  <\enumerate>
+    <item>起始于 1
+
+    <item>结束于 11
+
+    <item>奇偶性 奇数
+
+    <item>内容\ 
+
+    <\enumerate>
+      <item>页眉 北京
+
+      <item>页脚 北京 \<less\> <inactive|<hybrid|page-number>> \<gtr\> 北京
+    </enumerate>
+  </enumerate>
+
+  \;
+
+  偶数页
+
+  <\enumerate>
+    <item>起始于 1
+
+    <item>结束于 11
+
+    <item>奇偶性 偶数
+
+    <item>内容
+
+    <\enumerate>
+      <item>页眉 上海
+
+      <item>页脚 上海 ( <inactive|<hybrid|page-number>> ) 上海
+    </enumerate>
+  </enumerate>
+
+  <new-page>
+
+  第二页
+
+  <new-page>
+
+  第三页
+
+  <new-page>
+
+  第四页
+
+  <new-page>
+
+  第五页
+
+  <new-page>
+
+  第六页
+
+  <new-page>
+
+  第七页
+
+  <new-page>
+
+  第八页
+
+  <new-page>
+
+  第九页
+
+  <new-page>
+
+  第十页
+
+  <new-page>
+
+  第十一页
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-even-footer|<if|<not|<or|<less|<value|page-nr>|1>|<greater|<value|page-nr>|11>>>|上海<htab|5mm>（<page-the-page>）<htab|5mm>上海|<htab|5mm><page-the-page><htab|5mm>>>
+    <associate|page-even-header|<if|<not|<or|<less|<value|page-nr>|1>|<greater|<value|page-nr>|11>>>|<\padded-right-aligned>
+      上海
+    </padded-right-aligned>|>>
+    <associate|page-medium|paper>
+    <associate|page-odd-footer|<if|<not|<or|<less|<value|page-nr>|1>|<greater|<value|page-nr>|11>>>|北京<htab|5mm>\<less\><page-the-page>\<gtr\><htab|5mm>北京|<htab|5mm><page-the-page><htab|5mm>>>
+    <associate|page-odd-header|<if|<not|<or|<less|<value|page-nr>|1>|<greater|<value|page-nr>|11>>>|北京|>>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
