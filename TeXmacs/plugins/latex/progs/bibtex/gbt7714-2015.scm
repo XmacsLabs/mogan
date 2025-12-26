@@ -134,13 +134,27 @@
          (has-doi (not (bib-null? (bib-field x "doi"))))
          (online (or has-url has-doi)))
     (cond
-      ((equal? type "article") (if online "[J/OL]" "[J]"))
-      ((equal? type "book") (if online "[M/OL]" "[M]"))
-      ((equal? type "inproceedings") (if online "[C/OL]" "[C]"))
-      ((equal? type "phdthesis") (if online "[D/OL]" "[D]"))
-      ((equal? type "mastersthesis") (if online "[D/OL]" "[D]"))
-      ((equal? type "techreport") (if online "[R/OL]" "[R]"))
-      ((equal? type "misc") (if online "[EB/OL]" "[EB]"))
+      ((equal? type "article") (if online "[J/OL]" "[J]"))         ;; 期刊
+      ((equal? type "book") (if online "[M/OL]" "[M]"))            ;; 普通图书
+      ((equal? type "inproceedings") (if online "[C/OL]" "[C]"))   ;; 会议录
+      ((equal? type "phdthesis") (if online "[D/OL]" "[D]"))       ;; 学位论文-博士
+      ((equal? type "mastersthesis") (if online "[D/OL]" "[D]"))   ;; 学位论文-硕士
+      ((equal? type "techreport") (if online "[R/OL]" "[R]"))      ;; 报告
+      ((equal? type "misc") (if online "[EB/OL]" "[EB]"))          ;; 电子公告
+      ((equal? type "collection") (if online "[G/OL]" "[G]"))      ;; 汇编
+      ((equal? type "proceedings") (if online "[C/OL]" "[C]"))     ;; 会议录（同inproceedings）
+      ((equal? type "manual") (if online "[S/OL]" "[S]"))          ;; 标准（常用manual表示标准）
+      ((equal? type "standard") (if online "[S/OL]" "[S]"))        ;; 标准
+      ((equal? type "patent") (if online "[P/OL]" "[P]"))          ;; 专利
+      ((equal? type "database") (if online "[DB/OL]" "[DB]"))      ;; 数据库
+      ((equal? type "software") (if online "[CP/OL]" "[CP]"))      ;; 计算机程序
+      ((equal? type "program") (if online "[CP/OL]" "[CP]"))       ;; 计算机程序
+      ((equal? type "electronic") (if online "[EB/OL]" "[EB]"))    ;; 电子公告
+      ((equal? type "archive") (if online "[A/OL]" "[A]"))         ;; 档案
+      ((equal? type "map") (if online "[CM/OL]" "[CM]"))           ;; 舆图
+      ((equal? type "dataset") (if online "[DS/OL]" "[DS]"))       ;; 数据集
+      ((equal? type "newspaper") (if online "[N/OL]" "[N]"))       ;; 报纸
+      ((equal? type "other") (if online "[Z/OL]" "[Z]"))           ;; 其他
       (else ""))))
 
 ;; 作者姓名格式
