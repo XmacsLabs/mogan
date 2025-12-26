@@ -97,6 +97,7 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
     setFixedSize (0, 0);
     return;
   }
+  hide ();
   autoSize ();
   int x, y;
   getCachedPosition (x, y);
