@@ -89,7 +89,7 @@
                 (binary-data (decode-base64 base64-str)))
             (string-save binary-data temp-name)
             (display* "Image has saved to " temp-name "\n"))))
-  (insert-tips))
+  (insert-latex))
 
 ; (get-image-extention (get-image t 0 #t)) 获取文件后缀，创建对应临时文件
 ; (get-image t 0 #f) 获取 raw-data
@@ -106,4 +106,4 @@
                 (binary-data (decode-base64 base64-str)))
             (string-save binary-data temp-name)
             (display* "Image has saved to " temp-name "\n"))))
-  (insert-tips))
+  (insert-latex))
