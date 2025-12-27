@@ -13,8 +13,10 @@
 
 (texmacs-module (text text-kbd)
   (:use (generic generic-kbd)
-	(utils edit auto-close)
-	(text text-edit)))
+        (utils edit auto-close)
+        (text text-edit)
+        (various comment-edit)
+        (various comment-widgets)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Special symbols in text mode
@@ -484,7 +486,6 @@
   ("text p" (make 'samp))
   ("text s" (make 'strong))
   ("text v" (make 'verbatim))
-  ("text ;" (make-item))
   ("text 0" (make-section 'chapter))
   ("text 1" (make-section 'section))
   ("text 2" (make-section 'subsection))

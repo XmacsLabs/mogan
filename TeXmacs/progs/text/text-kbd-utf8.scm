@@ -879,3 +879,8 @@
   (": y u m :" "<#1F60B>")
   (": z a p :" "<#26A1>")
   (": z z z :" "<#1F4A4>"))
+
+(kbd-map
+  (:profile no-macos)
+  ("text :" (make-folded-comment "comment"))
+  ("text ;" (make-unfolded-comment "comment")))
