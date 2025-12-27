@@ -12,6 +12,7 @@
 #ifndef QTMWINDOW_HPP
 #define QTMWINDOW_HPP
 
+#include <QKeyEvent>
 #include <QMainWindow>
 
 #include "qt_tm_widget.hpp"
@@ -40,6 +41,8 @@ class QTMPlainWindow : public QWidget {
 public:
   QTMPlainWindow (QWidget* parent) : QWidget (parent) {
     if (DEBUG_QT) debug_qt << "Creating QTMPlainWindow" << LF;
+    // 设置焦点策略以接收键盘事件
+    setFocusPolicy (Qt::StrongFocus);
   }
   virtual ~QTMPlainWindow () {
     if (DEBUG_QT) debug_qt << "Deleting QTMPlainWindow" << LF;
@@ -52,6 +55,7 @@ protected:
   virtual void closeEvent (QCloseEvent* event);
   virtual void moveEvent (QMoveEvent* event);
   virtual void resizeEvent (QResizeEvent* event);
+  virtual void keyPressEvent (QKeyEvent* event) override;
 };
 
 /*! The underlying QWidget for a qt_tm_widget_rep.

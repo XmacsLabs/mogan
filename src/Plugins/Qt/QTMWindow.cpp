@@ -16,6 +16,8 @@
 #include "tm_window.hpp"
 
 #include <QCloseEvent>
+#include <QKeyEvent>
+#include <QPushButton>
 #include <QSettings>
 
 void
@@ -42,6 +44,61 @@ QTMPlainWindow::resizeEvent (QResizeEvent* event) {
   coord2 sz= from_qsize (frameSize ());
   notify_window_resize (name, sz.x1, sz.x2);
   QWidget::resizeEvent (event);
+}
+
+void
+QTMPlainWindow::keyPressEvent (QKeyEvent* event) {
+  if (DEBUG_QT_WIDGETS)
+    debug_widgets << "QTMPlainWindow key press: " << event->key () << LF;
+
+  if (event->key () == Qt::Key_Escape) {
+    // ESC键：关闭对话框
+    if (DEBUG_QT_WIDGETS) debug_widgets << "ESC pressed, closing window" << LF;
+    event->accept ();
+    close ();
+  }
+  else if (event->key () == Qt::Key_Return || event->key () == Qt::Key_Enter) {
+    // Enter键：尝试找到默认按钮并点击
+    if (DEBUG_QT_WIDGETS)
+      debug_widgets << "Enter pressed, looking for default button" << LF;
+    event->accept ();
+
+    // 查找对话框中的按钮
+    QList<QPushButton*> buttons= findChildren<QPushButton*> ();
+    for (QPushButton* button : buttons) {
+      if (button->isDefault () ||
+          button->text ().contains ("Ok", Qt::CaseInsensitive)) {
+        if (DEBUG_QT_WIDGETS)
+          debug_widgets << "Found button: " << from_qstring (button->text ())
+                        << LF;
+        button->click ();
+        return;
+      }
+    }
+
+    // 如果没有找到默认按钮，尝试点击第一个"Ok"按钮
+    for (QPushButton* button : buttons) {
+      if (button->text ().contains ("Ok", Qt::CaseInsensitive)) {
+        if (DEBUG_QT_WIDGETS)
+          debug_widgets << "Found Ok button: " << from_qstring (button->text ())
+                        << LF;
+        button->click ();
+        return;
+      }
+    }
+
+    // 如果还没有找到，点击第一个按钮
+    if (!buttons.isEmpty ()) {
+      if (DEBUG_QT_WIDGETS)
+        debug_widgets << "Clicking first button: "
+                      << from_qstring (buttons.first ()->text ()) << LF;
+      buttons.first ()->click ();
+    }
+  }
+  else {
+    // 其他按键传递给父类处理
+    QWidget::keyPressEvent (event);
+  }
 }
 
 void
