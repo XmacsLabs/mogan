@@ -12,6 +12,7 @@
 #ifndef QT_IMAGE_POPUP_HPP
 #define QT_IMAGE_POPUP_HPP
 
+#include "qt_renderer.hpp"
 #include "qt_simple_widget.hpp"
 
 #include <QGraphicsDropShadowEffect>
@@ -28,6 +29,7 @@ protected:
   QGraphicsDropShadowEffect* effect;
   int                        cached_image_mid_x;
   int                        cached_image_mid_y;
+  rectangle                  cached_rect;
   int                        cached_scroll_x; // 页面滚动位置x
   int                        cached_scroll_y; // 页面滚动位置y
   int                        cached_canvas_x;
@@ -44,9 +46,9 @@ public:
   QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner);
   ~QTMImagePopup ();
 
-  void showImagePopup (rectangle selr, double magf, int scroll_x, int scroll_y,
-                       int canvas_x);
-  void updatePosition ();
+  void showImagePopup (qt_renderer_rep* ren, rectangle selr, double magf,
+                       int scroll_x, int scroll_y, int canvas_x);
+  void updatePosition (qt_renderer_rep* ren);
   void scrollBy (int x, int y);
   void setImageTree (tree t);
   void updateButtonStates ();
@@ -55,7 +57,7 @@ public:
 protected:
   void cachePosition (rectangle selr, double magf, int scroll_x, int scroll_y,
                       int canvas_x);
-  void getCachedPosition (int& x, int& y);
+  void getCachedPosition (qt_renderer_rep* ren, int& x, int& y);
 };
 
 #endif // QT_IMAGE_POPUP_HPP
