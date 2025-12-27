@@ -715,7 +715,7 @@ tree 或 #f
 
 (tm-widget ((search-widget u style init aux) quit)
   (padded
-    (resize "350px" "200px"
+    (resize "480px" "200px"
       (texmacs-input `(with ,@init ,(search-document))
                      `(style (tuple ,@style)) aux))
     ===
@@ -812,11 +812,11 @@ tree 或 #f
 
 (tm-widget ((replace-widget u style init saux raux) quit)
   (padded
-    (resize "350px" "100px"
+    (resize "480px" "100px"
       (texmacs-input `(with ,@init ,(search-document))
                      `(style (tuple ,@style)) saux))
     === ===
-    (resize "350px" "100px"
+    (resize "480px" "100px"
       (texmacs-input `(with ,@init ,(replace-document))
                      `(style (tuple ,@style)) raux))
     === ===
