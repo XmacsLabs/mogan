@@ -63,21 +63,10 @@
   (show-auxiliary-widget #f)
   (comment-quit-command))
 
-(tm-widget ((comment-editor u packs doc) quit)
-  (with dummy (set! comment-quit-command quit)
-    (padded
-      (resize "600px" "300px"
-        (texmacs-input doc `(style (tuple ,@packs)) u))
-      ===
-      (hlist
-        >>
-        (explicit-buttons
-          ("Done" (comment-editor-done)))))))
-
 ;; 用于auxiliary-widget的comment编辑器widget
 (tm-widget ((comment-aux-widget u packs doc) quit)
   (padded
-    (resize "600px" "300px"
+    (resize "480px" "300px"
       (texmacs-input doc `(style (tuple ,@packs)) u))
     ===
     (hlist

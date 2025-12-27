@@ -554,7 +554,7 @@
       (for (var header-parameters)
         (bold (text (eval (parameter-name var))))
         ===
-        (resize "350px" "100px"
+        (resize "480px" "100px"
             (texmacs-input `(document ,(initial-get-tree u var))
                            `(style (tuple ,@style "gui-base"))
                          (header-buffer var)))
@@ -674,7 +674,7 @@
                   "any"
                   "10em"))
           (item (text "Content:")
-            (resize "350px" "100px"
+            (resize "480px" "100px"
               (texmacs-input `(document ,content-tree)
                              `(style (tuple ,@style "gui-base"))
                              (string->url "tmfs://aux/advanced-header")))))))
@@ -783,7 +783,7 @@
                   "any"
                   "10em"))
           (item (text "Content:")
-            (resize "350px" "100px"
+            (resize "480px" "100px"
               (texmacs-input `(document ,content-tree)
                              `(style (tuple ,@style "gui-base"))
                              (string->url "tmfs://aux/advanced-footer")))))))
