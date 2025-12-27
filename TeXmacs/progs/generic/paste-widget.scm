@@ -33,8 +33,8 @@
         ((== name (translate "Plain text"))    "verbatim")
         ((== name "MathML")                    "mathml")
         ((== name "OCR")                       "ocr")
-        ((== name (translate "Image and OCR")) "iao")
-        ((== name (translate "Only image"))    "oi")
+        ((== name (translate "Image and OCR")) "image_and_ocr")
+        ((== name (translate "Only image"))    "image")
         ((== name "Graphics")                  "graphics")
         ((== name (translate "Code"))          "code")))
 
@@ -46,8 +46,8 @@
         ((== symbol "ocr")      "OCR")
         ((== symbol "graphics") "Graphics")
         ((== symbol "verbatim") (translate "Plain text"))
-        ((== symbol "iao")      (translate "Image and OCR"))
-        ((== symbol "oi")       (translate "Only image"))
+        ((== symbol "image_and_ocr")      (translate "Image and OCR"))
+        ((== symbol "image")       (translate "Only image"))
         ((== symbol "code")     (translate "Code"))))
 
 (define (get-tips fm)
@@ -57,28 +57,21 @@
         ((== fm "verbatim")  "Insert clipboard content as 'plain text'")
         ((== fm "mathml")    "Insert clipboard content as 'MathML'")
         ((== fm "ocr")       "Insert the recognized LaTeX code into the document")
-        ((== fm "iao")       "Insert the image and the recognized LaTeX code into the document")
-        ((== fm "oi")        "Insert only the picture into the document")
+        ((== fm "image_and_ocr")       "Insert the image and the recognized LaTeX code into the document")
+        ((== fm "image")        "Insert only the picture into the document")
         ((== fm "code")      "Insert clipboard content as 'code'")
         ((== fm "graphics")  "Insert clipboard content as 'graphics'")
         (else "Please select...")))
 
 (define (get-clipboard-format)
-  (let* ((data (clipboard-format "primary"))
-         (fm (tree->string (tree-ref data 3))))
-    (if (!= fm "")
-      (convert-symbol-to-format-string fm)
-      (convert-symbol-to-format-string "verbatim"))))
+  (convert-symbol-to-format-string (clipboard-format "primary")))
 
 (define (init-choices l)
-  (let* ((data (clipboard-format "primary"))
-         (fm (tree->string (tree-ref data 3))))
-    (if (!= fm "")
-      (if (== fm "verbatim")
+  (let* ((fm (clipboard-format "primary")))
+    (if (or (== fm "") (== fm "verbatim") (== fm "image"))
         l
         (let* ((name (convert-symbol-to-format-string fm)))
-          (cons name (delete name l))))
-      l)))
+          (cons name (delete name l))))))
 
 (define (shortcut fm)
   (cond ((and (in-math?) (== fm "latex")) "Ctrl+Shift+v")
@@ -96,7 +89,7 @@
   (let* ((selected-format "verbatim")
          (tips1 "Please select...")
          (tips2 "")
-         (tips3 (string-append (translate "shortcut") ":" (translate "none")))
+         (tips3 (string-append (translate "shortcut") ": " (translate "none")))
          (plain-format-list    (list "Markdown" "LaTeX" "HTML" (translate "Plain text")))
          (math-format-list     (list "LaTeX" "MathML"))
          (program-format-list  (list (translate "Code")))
@@ -110,7 +103,7 @@
          (l (init-choices name-list)))
 
     ;; Initialize selection on first display
-    (invisible (set! selected-format (car l)))
+    (invisible (set! selected-format (convert-format-string-to-symbol (car l))))
     (invisible (set! tips1 (translate (get-tips (convert-format-string-to-symbol selected-format)))))
     (invisible (set! tips2 (translate "ENTER to confirm, ESC to cancel")))
     (resize "320px" "270px"
@@ -133,7 +126,7 @@
                   (choice (begin
                             (set! selected-format (convert-format-string-to-symbol (translate answer)))
                             (set! tips1 (translate (get-tips selected-format)))
-                            (set! tips3 (string-append (translate "shortcut") ":" (shortcut selected-format)))
+                            (set! tips3 (string-append (translate "shortcut") ": " (shortcut selected-format)))
                             (refresh-now "format-explanation")
                             (refresh-now "paste-shortcut"))
                           l
@@ -157,8 +150,8 @@
       (when fm
         (cond ((== fm "md")       (markdown-paste))
               ((== fm "ocr")      (ocr-paste))
-              ((== fm "iao")      (ocr-and-image-paste))
-              ((== fm "oi")       (kbd-paste))
+              ((== fm "image_and_ocr")      (ocr-and-image-paste))
+              ((== fm "image")    (kbd-paste))
               ((== fm "mathml")   (clipboard-paste-import "html" "primary"))
               (else               (clipboard-paste-import fm "primary")))))
     "Paste Special"))

@@ -491,12 +491,9 @@ edit_select_rep::selection_get (path& p1, path& p2) {
   */
 }
 
-tree
+string
 edit_select_rep::selection_format (string key) {
-  tree   t;
-  string s;
-  (void) ::get_selection (key, t, s, "default");
-  return t;
+  return detected_format;
 }
 
 path
@@ -575,7 +572,7 @@ tree
 edit_select_rep::selection_raw_get (string key) {
   tree   t;
   string s;
-  (void) ::get_selection (key, t, s, "texmacs");
+  (void) ::get_selection (key, t, s, "texmacs", detected_format);
   return t;
 }
 
@@ -673,7 +670,7 @@ tree
 edit_select_rep::selection_get (string key) {
   tree   t;
   string s;
-  (void) ::get_selection (key, t, s, selection_import);
+  (void) ::get_selection (key, t, s, selection_import, detected_format);
   return t;
 }
 
@@ -681,7 +678,7 @@ void
 edit_select_rep::selection_paste (string key) {
   tree   t;
   string s;
-  (void) ::get_selection (key, t, s, selection_import);
+  (void) ::get_selection (key, t, s, selection_import, detected_format);
   if (inside_active_graphics ()) {
     if (is_tuple (t, "texmacs", 3)) call ("graphics-paste", t[1]);
     return;

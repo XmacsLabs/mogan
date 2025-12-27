@@ -254,7 +254,8 @@ qt_gui_rep::~qt_gui_rep () {
  ******************************************************************************/
 
 bool
-qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
+qt_gui_rep::get_selection (string key, tree& t, string& s, string format,
+                           string& detected_format) {
   QClipboard*      cb  = QApplication::clipboard ();
   QClipboard::Mode mode= QClipboard::Clipboard;
   if (key == "primary" || (key == "mouse" && cb->supportsSelection ()))
@@ -266,7 +267,6 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   string           input_format;
   string           image_w_string, image_h_string;
   string           clipboard_image_suffix= "png";
-  string           detected_format;
 
   s= "";
   t= "none";
@@ -304,6 +304,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       QSize image_size      = image.size ();
       qt_pretty_image_size (image_size.width (), image.height (),
                             image_w_string, image_h_string);
+      detected_format= "image";
     }
     else if (md->hasUrls ()) {
       QList<QUrl> l= md->urls ();
@@ -319,7 +320,6 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
         if (N (image_data) > 0) {
           input_format= "picture";
           buf         = QByteArray (image_data.begin (), N (image_data));
-          input_format= "picture";
           clipboard_image_suffix= target_suffix;
         }
 #else
@@ -338,6 +338,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
           QSize image_size      = image.size ();
           qt_pretty_image_size (image_size.width (), image.height (),
                                 image_w_string, image_h_string);
+          detected_format= "image";
         }
 #endif
       }
@@ -389,7 +390,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       << image_h_string << "" << "";
     s= as_string (call ("convert", t, "texmacs-tree", "texmacs-snippet"));
   }
-  t= tuple ("extern", s, input_format, detected_format);
+  t= tuple ("extern", s);
   return true;
 }
 
@@ -1066,10 +1067,11 @@ set_selection (string key, tree t, string s, string sv, string sh,
 }
 
 bool
-get_selection (string key, tree& t, string& s, string format) {
+get_selection (string key, tree& t, string& s, string format,
+               string& detected_format) {
   // Retrieve the selection 't' with string equivalent 's' from clipboard 'cb'
   // Returns true on success; sets t to (extern s) for external selections
-  return the_gui->get_selection (key, t, s, format);
+  return the_gui->get_selection (key, t, s, format, detected_format);
 }
 
 void
