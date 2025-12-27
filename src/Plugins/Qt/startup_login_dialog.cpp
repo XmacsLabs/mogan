@@ -62,7 +62,7 @@ StartupLoginDialog::setupUi () {
 
   // Create layouts
   featureLayout= new QVBoxLayout ();
-  featureLayout->setSpacing (8);
+  featureLayout->setSpacing (4);
   featureLayout->addWidget (featureLabel1);
   featureLayout->addWidget (featureLabel2);
   featureLayout->addWidget (featureLabel3);
@@ -89,64 +89,65 @@ QString
 StartupLoginDialog::styleSheet () const {
   return QStringLiteral (R"(
         QDialog {
-            background-color: #2b2b2b;
-            border: 1px solid #3c3f41;
-            border-radius: 6px;
+            background-color: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 12px;
         }
         QLabel {
-            color: #bbbbbb;
+            color: #e0e0e0;
             background-color: transparent;
         }
         QLabel#titleLabel {
             color: #ffffff;
             font-size: 28px;
-            font-weight: bold;
-            margin: 30px 0 20px 0;
+            font-weight: 700;
+            margin: 40px 0 16px 0;
         }
         QLabel#subtitleLabel {
-            color: #999999;
+            color: #a0a0a0;
             font-size: 16px;
-            margin: 0 0 40px 0;
+            margin: 0 0 32px 0;
         }
         QLabel#featureLabel {
             color: #cccccc;
-            font-size: 15px;
-            padding-left: 10px;
+            font-size: 14px;
+            padding: 4px 0 4px 20px;
+            margin: 0;
         }
         QPushButton {
             border: none;
-            border-radius: 4px;
-            padding: 10px 20px;
+            border-radius: 8px;
+            padding: 12px 24px;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 600;
             min-width: 120px;
         }
-        QPushButton:hover {
-            background-color: #4c5052;
-        }
-        QPushButton:pressed {
-            background-color: #3c3f41;
-        }
         QPushButton#loginButton {
-            background-color: #4a8bdf;
+            background-color: #007AFF;
             color: white;
             font-size: 16px;
-            padding: 12px 24px;
+            font-weight: 600;
+            padding: 14px 32px;
         }
         QPushButton#loginButton:hover {
-            background-color: #5a9bef;
+            background-color: #0063d1;
         }
         QPushButton#loginButton:pressed {
-            background-color: #3a7bcf;
+            background-color: #0056CC;
         }
         QPushButton#skipButton {
             background-color: transparent;
-            color: #999999;
-            border: 1px solid #555555;
+            color: #a0a0a0;
+            border: 1px solid #444444;
+            font-weight: 500;
         }
         QPushButton#skipButton:hover {
+            background-color: rgba(255, 255, 255, 0.05);
             color: #ffffff;
             border-color: #666666;
+        }
+        QPushButton#skipButton:pressed {
+            background-color: rgba(255, 255, 255, 0.1);
         }
     )");
 }

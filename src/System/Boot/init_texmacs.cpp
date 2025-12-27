@@ -824,7 +824,6 @@ TeXmacs_main (int argc, char** argv) {
 
   if (DEBUG_STD) debug_boot << "Installing internal plug-ins...\n";
   bench_start ("initialize plugins");
-  init_plugins ();
   bench_cumul ("initialize plugins");
   if (DEBUG_STD) debug_boot << "Opening display...\n";
 
