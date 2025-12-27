@@ -179,5 +179,5 @@ QTMImagePopup::getCachedPosition (int& x, int& y) {
   // y坐标
   double image_center_screen_y=
       -((cached_image_mid_y - cached_scroll_y) * cached_magf) / 256.0;
-  y= (int) (image_center_screen_y - (this->height () / 4.0));
+  y= (int) (image_center_screen_y - (this->height () * 1.2));
 }
