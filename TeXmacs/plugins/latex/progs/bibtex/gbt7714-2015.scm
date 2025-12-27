@@ -194,17 +194,6 @@
             last-name
             `(concat ,last-name " " ,first-name)))))
 
-;; 编者姓名格式
-(tm-define (bib-format-editor x)
-  (:mode bib-gbt7714-2015?)
-  ;; 对于 GBT 7714-2015，编者后应跟随 ", 主编" 或 ", 编"
-  (let* ((a (bib-field x "editor")))
-    (if (or (bib-null? a) (nlist? a))
-        ""
-        (if (equal? (length a) 2)
-            `(concat ,(bib-format-names a) ,(bib-translate ", editor"))
-            `(concat ,(bib-format-names a) ,(bib-translate ", editors"))))))
-
 ;; 日期格式
 (tm-define (bib-format-date x)
   (:mode bib-gbt7714-2015?)
@@ -223,9 +212,7 @@
          (e (bib-field x "editor")))
     (if (bib-null? b)
         ""
-        (if (bib-null? e)
-            `(concat ,(bib-translate "in ") ,b)
-            `(concat ,(bib-translate "in ") ,(bib-format-editor x) ", " ,b)))))
+        `(concat ,(bib-translate "in ") ,b))))
 
 ;; 年份,卷(期):页码格式
 (tm-define (bib-format-vol-num-pages x)
@@ -328,9 +315,7 @@
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
        `(,(bib-new-block
-           (if (bib-empty? x "author")
-               (bib-format-editor x)
-               (bib-format-author x)))
+           (bib-format-author x))
          ,(bib-new-block
            (bib-new-sentence
             `((concat ,(bib-format-field x "title")
@@ -392,10 +377,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block
-           (if (bib-empty? x "editor")
-               (bib-format-field x "organization")
-               (bib-format-editor x)))
+       `(,(bib-new-block (bib-format-field x "editor"))
          ,(bib-new-block
            `(concat ,(bib-format-field-Locase x "title")
                     " "
