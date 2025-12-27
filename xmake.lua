@@ -804,6 +804,10 @@ target("libmogan") do
 
     add_files("src/Plugins/Qt/**.cpp", "src/Plugins/Qt/**.hpp")
 
+    -- Add Qt resource file
+    add_rules("qt.qrc")
+    add_files("TeXmacs/misc/images/images.qrc")
+
     if is_plat("macosx") then
         plugin_macos_srcs = {
             "$(projectdir)/src/Plugins/MacOS/HIDRemote.m",

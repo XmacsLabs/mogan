@@ -2,7 +2,7 @@
 /******************************************************************************
  * MODULE     : QTMMathCompletionPopup.cpp
  * DESCRIPTION:
- * COPYRIGHT  : (C) 2025 Mogan STEM authors
+ * COPYRIGHT  : (C) 2025 MoonLL, Yuki Lu
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -24,6 +24,7 @@ const string right_str= "\"right\"";
 
 QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
     : QWidget (parent), owner (owner), layout (nullptr) {
+  Q_INIT_RESOURCE (images);
   setObjectName ("image_popup");
   setWindowFlags (Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
   setAttribute (Qt::WA_ShowWithoutActivating);
@@ -44,22 +45,18 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   leftBtn= new QToolButton ();
   leftBtn->setObjectName ("image-align-button");
   leftBtn->setProperty ("icon-name", "left");
-  leftBtn->setIcon (QIcon (":/window-bar/left-align.svg"));
   leftBtn->setCheckable (true);
   middleBtn= new QToolButton ();
   middleBtn->setObjectName ("image-align-button");
   middleBtn->setProperty ("icon-name", "center");
-  middleBtn->setIcon (QIcon (":/window-bar/middle-align.svg"));
   middleBtn->setCheckable (true);
   rightBtn= new QToolButton ();
   rightBtn->setObjectName ("image-align-button");
   rightBtn->setProperty ("icon-name", "right");
-  rightBtn->setIcon (QIcon (":/window-bar/right-align.svg"));
   rightBtn->setCheckable (true);
   ocrBtn= new QToolButton ();
   ocrBtn->setObjectName ("image-align-button");
   ocrBtn->setProperty ("icon-name", "ocr");
-  ocrBtn->setIcon (QIcon (":/window-bar/ocr.svg"));
   QButtonGroup* alignGroup= new QButtonGroup (this);
   alignGroup->addButton (leftBtn);
   alignGroup->addButton (middleBtn);

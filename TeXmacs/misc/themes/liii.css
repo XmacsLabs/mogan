@@ -678,19 +678,19 @@ QWidget#image_popup {
 }
 
 QToolButton#image-align-button[icon-name="left"] {
-  qproperty-icon: url(":/window-bar/left-align.svg");
+  qproperty-icon: url(":/ocr-button/left-align.svg");
 }
 
 QToolButton#image-align-button[icon-name="center"] {
-  qproperty-icon: url(":/window-bar/middle-align.svg");
+  qproperty-icon: url(":/ocr-button/middle-align.svg");
 }
 
 QToolButton#image-align-button[icon-name="right"] {
-  qproperty-icon: url(":/window-bar/right-align.svg");
+  qproperty-icon: url(":/ocr-button/right-align.svg");
 }
 
 QToolButton#image-align-button[icon-name="ocr"] {
-  qproperty-icon: url(":/window-bar/ocr.svg");
+  qproperty-icon: url(":/ocr-button/ocr.svg");
 }
 
 /*图片悬浮菜单按钮样式*/
