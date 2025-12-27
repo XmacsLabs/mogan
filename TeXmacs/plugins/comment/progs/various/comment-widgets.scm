@@ -26,8 +26,6 @@
 (define comment-window-table (make-ahash-table))
 (define comment-text "comment")
 
-;; 注册comment编辑器widget类型
-(register-auxiliary-widget-type 'comment-editor open-comment-editor-aux)
 
 ;; 设置comment编辑器窗口状态
 (tm-define (set-comment-window-state opened?)
@@ -266,3 +264,6 @@
   (former key time)
   (when (has-comments-editor?)
     (sync-comments-cursor)))
+
+;; 注册comment编辑器widget类型
+(register-auxiliary-widget-type 'comment-editor open-comment-editor-aux)

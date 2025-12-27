@@ -13,6 +13,8 @@
 ;; See menu-define.scm for the grammar of menus
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(import (liii hashlib))
+
 (texmacs-module (kernel gui menu-widget)
   (:use (kernel gui menu-define) (kernel gui kbd-define)))
 
