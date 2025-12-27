@@ -1,6 +1,6 @@
 
 /******************************************************************************
- * MODULE     : QTMMathCompletionPopup.hpp
+ * MODULE     : QTMImagePopup.hpp
  * DESCRIPTION:
  * COPYRIGHT  : (C) 2025 MoonLL, Yuki Lu
  *******************************************************************************

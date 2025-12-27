@@ -1,6 +1,6 @@
 
 /******************************************************************************
- * MODULE     : QTMMathCompletionPopup.cpp
+ * MODULE     : QTMImagePopup.cpp
  * DESCRIPTION:
  * COPYRIGHT  : (C) 2025 MoonLL, Yuki Lu
  *******************************************************************************
@@ -22,6 +22,7 @@ const string left_str = "\"left\"";
 const string mid_str  = "\"center\"";
 const string right_str= "\"right\"";
 
+// 悬浮菜单创建函数
 QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
     : QWidget (parent), owner (owner), layout (nullptr) {
   Q_INIT_RESOURCE (images);
@@ -35,7 +36,7 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   layout->setSizeConstraint (QLayout::SetMinimumSize);
   layout->setSpacing (1);
   setLayout (layout);
-  // 阴影效果
+
   QGraphicsDropShadowEffect* effect= new QGraphicsDropShadowEffect (this);
   effect->setBlurRadius (40);
   effect->setOffset (0, 4);
@@ -86,6 +87,7 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
 
 QTMImagePopup::~QTMImagePopup () {}
 
+// 显示图片悬浮菜单，根据缩放比例决定是否显示
 void
 QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
                                int scroll_y, int canvas_x) {
@@ -132,6 +134,7 @@ QTMImagePopup::updatePosition () {
   move (pos_x, pos_y);
 }
 
+// 根据DPI缩放和图片缩放比例自动调整按钮大小和窗口尺寸
 void
 QTMImagePopup::autoSize () {
   QScreen*     Screen    = QGuiApplication::primaryScreen ();
@@ -141,7 +144,7 @@ QTMImagePopup::autoSize () {
   const int    baseHeight= 50;
   double       totalScale= Scale * cached_magf * 3.3;
 #if defined(Q_OS_MAC)
-  const int IconSize= int (50 * Scale);
+  const int IconSize= int (30 * Scale);
 #else
   const int IconSize= int (40 * totalScale);
 #endif
@@ -154,6 +157,7 @@ QTMImagePopup::autoSize () {
   layout->update ();
 }
 
+// 缓存菜单显示位置
 void
 QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
                               int scroll_y, int canvas_x) {
@@ -165,6 +169,7 @@ QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
   cached_magf       = magf;
 }
 
+// 计算菜单显示位置
 void
 QTMImagePopup::getCachedPosition (int& x, int& y) {
   x= ((cached_image_mid_x - cached_scroll_x - 500) * cached_magf +
