@@ -493,7 +493,7 @@ edit_select_rep::selection_get (path& p1, path& p2) {
 
 tree
 edit_select_rep::selection_format (string key) {
-  tree t;
+  tree   t;
   string s;
   (void) ::get_selection (key, t, s, "default");
   return t;

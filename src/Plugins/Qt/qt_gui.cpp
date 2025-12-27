@@ -318,7 +318,8 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
             &image_w_string, &image_h_string);
         if (N (image_data) > 0) {
           input_format= "picture";
-          buf         = QByteArray (image_data.begin (), N (image_data));      input_format= "picture";
+          buf         = QByteArray (image_data.begin (), N (image_data));
+          input_format= "picture";
           clipboard_image_suffix= target_suffix;
         }
 #else
@@ -351,13 +352,15 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       buf         = md->data ("text/plain;charset=utf8");
       input_format= "verbatim-snippet";
       string raw_text (buf.constData (), buf.size ());
-      detected_format= as_string (call ("format-determine", raw_text, "verbatim"));
+      detected_format=
+          as_string (call ("format-determine", raw_text, "verbatim"));
     }
     else {
       buf         = md->text ().toUtf8 ();
       input_format= "verbatim-snippet";
       string raw_text (buf.constData (), buf.size ());
-      detected_format= as_string (call ("format-determine", raw_text, "verbatim"));
+      detected_format=
+          as_string (call ("format-determine", raw_text, "verbatim"));
     }
   }
   else if (format == "verbatim" &&
