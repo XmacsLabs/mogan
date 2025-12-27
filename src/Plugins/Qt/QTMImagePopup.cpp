@@ -11,6 +11,7 @@
 
 #include "QTMImagePopup.hpp"
 #include "qbuttongroup.h"
+#include "qt_renderer.hpp"
 #include "scheme.hpp"
 #include "server.hpp"
 
@@ -89,8 +90,9 @@ QTMImagePopup::~QTMImagePopup () {}
 
 // 显示图片悬浮菜单，根据缩放比例决定是否显示
 void
-QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
-                               int scroll_y, int canvas_x) {
+QTMImagePopup::showImagePopup (qt_renderer_rep* ren, rectangle selr,
+                               double magf, int scroll_x, int scroll_y,
+                               int canvas_x) {
   cachePosition (selr, magf, scroll_x, scroll_y, canvas_x);
   if (cached_magf <= 0.16) {
     setFixedSize (0, 0);
@@ -98,10 +100,13 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
   }
   hide ();
   autoSize ();
+
   int x, y;
-  getCachedPosition (x, y);
+  getCachedPosition (ren, x, y);
   QPoint topLeft (x, y);
   move (topLeft);
+  cout << "x: " << x << " y: " << y << LF;
+
   raise ();
   updateButtonStates ();
   show ();
@@ -128,9 +133,9 @@ QTMImagePopup::scrollBy (int x, int y) {
 }
 
 void
-QTMImagePopup::updatePosition () {
+QTMImagePopup::updatePosition (qt_renderer_rep* ren) {
   int pos_x, pos_y;
-  getCachedPosition (pos_x, pos_y);
+  getCachedPosition (ren, pos_x, pos_y);
   move (pos_x, pos_y);
 }
 
@@ -163,6 +168,7 @@ QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
                               int scroll_y, int canvas_x) {
   cached_image_mid_x= (selr->x1 + selr->x2) / 2;
   cached_image_mid_y= selr->y2;
+  cached_rect       = selr;
   cached_scroll_x   = scroll_x;
   cached_scroll_y   = scroll_y;
   cached_canvas_x   = canvas_x;
@@ -171,11 +177,14 @@ QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
 
 // 计算菜单显示位置
 void
-QTMImagePopup::getCachedPosition (int& x, int& y) {
-  x= ((cached_image_mid_x - cached_scroll_x - 500) * cached_magf +
-      cached_canvas_x) /
-         256 -
-     (this->width () / 2);
-  y= -((cached_image_mid_y - 5000 - cached_scroll_y) * cached_magf) / 256 -
-     this->height () * 1.2;
+QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
+  double    rx1, rx2, ry1, ry2;
+  rectangle selr= cached_rect;
+  ren->decode (selr->x1, selr->y1, rx1, ry1);
+  ren->decode (selr->x2, selr->y2, rx2, ry2);
+  int x1= (int) ((rx1 + rx2) / 2) * cached_magf;
+  int y1= (int) ((ry2) *cached_magf) - height () * 2;
+  x= x1 / 2 + cached_canvas_x / 256 - (cached_scroll_x * cached_magf) / 256 -
+     width () / 2;
+  y= y1 / 2;
 }
