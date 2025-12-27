@@ -27,7 +27,7 @@ const string right_str= "\"right\"";
 QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
     : QWidget (parent), owner (owner), layout (nullptr), cached_image_mid_x (0),
       cached_image_mid_y (0), cached_scroll_x (0), cached_scroll_y (0),
-      cached_canvas_x (0), cached_canvas_y (0), cached_magf (0.0), 
+      cached_canvas_x (0), cached_canvas_y (0), cached_magf (0.0),
       current_align (""), painted (false), painted_count (0) {
   Q_INIT_RESOURCE (images);
   setObjectName ("image_popup");
@@ -104,7 +104,7 @@ QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
   autoSize ();
   int x, y;
   getCachedPosition (x, y);
-  move(x, y);
+  move (x, y);
   if (painted_count == 2) {
     show ();
     painted= true;
@@ -159,7 +159,7 @@ QTMImagePopup::autoSize () {
   if (cached_magf <= 0.283) {
     cached_width = 169;
     cached_height= 42;
-    IconSize= 25;
+    IconSize     = 25;
     setFixedSize (169, 42);
   }
   else {
@@ -189,6 +189,8 @@ QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
 // 计算菜单显示位置 / 2
 void
 QTMImagePopup::getCachedPosition (int& x, int& y) {
-  x= (cached_image_mid_x * cached_magf) / 256 + cached_canvas_x / 256 - (cached_scroll_x * cached_magf) / 256 - cached_width * 0.5;
-  y= -(cached_image_mid_y * cached_magf / 256 + (cached_canvas_y / 256 + 161) - (cached_scroll_y * cached_magf) / 256 + 160 * cached_magf);
+  x= (cached_image_mid_x * cached_magf) / 256 + cached_canvas_x / 256 -
+     (cached_scroll_x * cached_magf) / 256 - cached_width * 0.5;
+  y= -(cached_image_mid_y * cached_magf / 256 + (cached_canvas_y / 256 + 161) -
+       (cached_scroll_y * cached_magf) / 256 + 160 * cached_magf);
 }

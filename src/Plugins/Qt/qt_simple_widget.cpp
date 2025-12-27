@@ -765,7 +765,8 @@ qt_simple_widget_rep::show_image_popup (tree current_tree, rectangle selr,
                                         int canvas_x, int canas_y) {
   ensure_image_popup ();
   imagePopUp->setImageTree (current_tree);
-  imagePopUp->showImagePopup (selr, magf, scroll_x, scroll_y, canvas_x, canas_y);
+  imagePopUp->showImagePopup (selr, magf, scroll_x, scroll_y, canvas_x,
+                              canas_y);
 }
 
 void
