@@ -232,6 +232,14 @@
     (when (tree-is? (tree-ref data 0) 'image)
           (image-ocr-to-latex data))))
 
+(tm-define (ocr-and-image-paste)
+  (with data 
+    (parse-texmacs-snippet (tree->string (tree-ref (clipboard-get "primary") 1)))
+    (when (tree-is? (tree-ref data 0) 'image)
+          (kbd-paste)
+          (kbd-return)
+          (image-ocr-to-latex data))))
+
 (tm-define (kbd-magic-paste)
   (ocr-paste)
   (with mode (get-env "mode")

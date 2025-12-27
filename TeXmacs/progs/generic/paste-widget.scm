@@ -15,34 +15,38 @@
         (utils edit selections)
         (liii ocr)))
 
-(define plain-format-list (list "LaTeX" "HTML" (translate "Plain text") "Markdown"))
-(define math-format-list (list "LaTeX" "MathML" "OCR"))
-(define program-format-list (list (translate "Code") "OCR"))
+(define plain-format-list    (list "LaTeX" "HTML" (translate "Plain text") "Markdown"))
+(define math-format-list     (list "LaTeX" "MathML"))
+(define program-format-list  (list (translate "Code")))
 (define graphics-format-list (list "graphics"))
+(define image-list           (list "OCR" (translate "Image and OCR") (translate "Only image")))
 
 
 ;; Helper functions (stateless, can remain at module level)
 (define (get-name-list)
-  (cond ((in-math?) math-format-list)
-        ((in-prog?) program-format-list)
-        ((in-graphics?) graphics-format-list)
-        (else plain-format-list)))
+  (cond ((in-math?)            math-format-list)
+        ((in-prog?)            program-format-list)
+        ((in-graphics?)        graphics-format-list)
+        ((is-clipboard-image?) image-list)
+        (else                  plain-format-list)))
 
 (define (get-mode)
-  (cond ((in-math?) "Math mode")
-        ((in-prog?) "Program mode")
+  (cond ((in-math?)     "Math mode")
+        ((in-prog?)     "Program mode")
         ((in-graphics?) "Graphics mode")
-        (else "text mode")))
+        (else           "text mode")))
 
 (define (convert-format-string-to-symbol name)
-  (cond ((== name "Markdown")               "md")
-        ((== name "HTML")                   "html")
-        ((== name "LaTeX")                  "latex")
-        ((== name (translate "Plain text")) "verbatim")
-        ((== name "MathML")                 "mathml")
-        ((== name "OCR")                    "ocr")
-        ((== name "Graphics")               "graphics")
-        ((== name (translate "Code"))       "code")))
+  (cond ((== name "Markdown")                  "md")
+        ((== name "HTML")                      "html")
+        ((== name "LaTeX")                     "latex")
+        ((== name (translate "Plain text"))    "verbatim")
+        ((== name "MathML")                    "mathml")
+        ((== name "OCR")                       "ocr")
+        ((== name (translate "Image and OCR")) "iao")
+        ((== name (translate "Only image"))    "oi")
+        ((== name "Graphics")                  "graphics")
+        ((== name (translate "Code"))          "code")))
 
 (define (get-tips fm)
   (cond ((== fm "md")        "Insert clipboard content as 'Markdown'")
@@ -50,44 +54,60 @@
         ((== fm "latex")     "Insert clipboard content as 'LaTeX'")
         ((== fm "verbatim")  "Insert clipboard content as 'plain text'")
         ((== fm "mathml")    "Insert clipboard content as 'MathML'")
-        ((== fm "ocr")       "Recognize clipboard content as an 'image'")
+        ((== fm "ocr")       "Insert the recognized LaTeX code into the document")
+        ((== fm "iao")       "Insert the image and the recognized LaTeX code into the document")
+        ((== fm "oi")        "Insert only the picture into the document")
         ((== fm "code")      "Insert clipboard content as 'code'")
         ((== fm "graphics")  "Insert clipboard content as 'graphics'")
         (else "Please select...")))
 
+;; (convert-format-string-to-symbol (car (get-name-list)))
 (define (init-choice)
-  (convert-format-string-to-symbol (car (get-name-list))))
+  (with data (parse-texmacs-snippet (tree->string (tree-ref (clipboard-get "primary") 1)))
+    (cond ((is-clipboard-image?) (convert-format-string-to-symbol (car image-list)))
+          (else (convert-format-string-to-symbol (car (get-name-list)))))))
+
+(tm-define (is-clipboard-image?)
+  (with data (parse-texmacs-snippet (tree->string (tree-ref (clipboard-get "primary") 1)))
+    (if (tree-is? (tree-ref data 0) 'image)
+      #t
+      #f)))
 
 (tm-widget (clipboard-paste-from-widget cmd)
   (let* ((selected-format "verbatim")
-         (on-format-change
-           (lambda (name)
-             (set! selected-format (convert-format-string-to-symbol name))
-             (refresh-now "format-explanation"))))
+         (tips "Please select..."))
 
     ;; Initialize selection on first display
     (invisible (set! selected-format (init-choice)))
+    (invisible (set! tips (translate (get-tips selected-format))))
 
     (padded
       (vertical
         (horizontal
           (vertical
             (refreshable "current-mode"
+              (bold (text "Mode"))
               (text (get-mode)))
             (glue #f #t 0 0))
           ///
           (refreshable "format-selection"
             (resize "150px" "150px"
+              (bold (text "As: "))
+              ===
               (scrollable
-                (choice (on-format-change answer)
+                (choice (begin 
+                          (set! selected-format (convert-format-string-to-symbol (translate answer)))
+                          (set! tips (translate (get-tips selected-format)))
+                          (refresh-now "format-explanation"))
                         (get-name-list)
                         (car (get-name-list)))))))
         ===
         (refreshable "format-explanation"
+          (bold (text "Tips"))
           (texmacs-output
             `(with "bg-color" "white"
                "font-base-size" "14"
-               (document ,(translate (get-tips selected-format))))
+               (document ,tips))
             '(style "generic")))))
       (bottom-buttons
         >> ("ok" (cmd selected-format)) // ("cancel" (cmd #f)))))
@@ -95,12 +115,14 @@
 (tm-define (open-clipboard-paste-from-widget)
   (:interactive #t)
   (dialogue-window clipboard-paste-from-widget
-    (lambda (format)
-      (when format
-        (cond ((== format "md")       (open-url "https://liiistem.cn/"))
-              ((== format "ocr")      (ocr-paste))
-              ((== format "mathml")   (clipboard-paste-import "html" "primary"))
-              (else                   (clipboard-paste-import format "primary")))))
+    (lambda (fm)
+      (when fm
+        (cond ((== fm "md")       (open-url "https://liiistem.cn/"))
+              ((== fm "ocr")      (ocr-paste))
+              ((== fm "iao")      (ocr-and-image-paste))
+              ((== fm "oi")       (kbd-paste))
+              ((== fm "mathml")   (clipboard-paste-import "html" "primary"))
+              (else               (clipboard-paste-import format "primary")))))
     "Paste Special"))
 
 (tm-define (interactive-paste-special)
