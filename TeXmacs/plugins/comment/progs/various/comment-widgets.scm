@@ -15,7 +15,8 @@
   (:use (various comment-edit)
         (utils library cursor)
         (generic document-style)
-        (generic generic-edit)))
+        (generic generic-edit)
+        (kernel gui menu-widget)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Editing a simple comment in a separate widget
@@ -25,23 +26,25 @@
 (define comment-window-table (make-ahash-table))
 (define comment-text "comment")
 
+;; 注册comment编辑器widget类型
+(register-auxiliary-widget-type 'comment-editor open-comment-editor-aux)
+
 ;; 设置comment编辑器窗口状态
 (tm-define (set-comment-window-state opened?)
-  (ahash-set! comment-window-table (current-buffer) opened?))
+  (set-auxiliary-widget-state opened? 'comment-editor))
 
 ;; 获取当前窗口的comment编辑器状态
-(define (get-comment-window-state)
-  (ahash-ref comment-window-table (current-buffer)))
+(tm-define (get-comment-window-state)
+  (let ((state (get-auxiliary-widget-state)))
+    (if state
+        (let ((opened? (car state))
+              (widget-type (cadr state)))
+          (and (== widget-type 'comment-editor) opened?))
+        #f)))
 
 ;; 刷新comment编辑器窗口
 (tm-define (refresh-comment-editor)
-  (let ((state (get-comment-window-state)))
-    (cond ((not state)
-           (show-auxiliary-widget #f))   ;; 状态为空，隐藏辅助窗口
-          (state
-           (open-comment-editor-aux))    ;; 状态为#t，打开comment编辑器
-          (else
-           (show-auxiliary-widget #f))))) ;; 状态为#f，隐藏辅助窗口
+  (refresh-auxiliary-widget))
 
 (define (comment-editor-done)
   (and-let* ((popup  (current-buffer))
