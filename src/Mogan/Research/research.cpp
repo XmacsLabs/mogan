@@ -64,7 +64,7 @@ extern bool   headless_mode;
 #ifdef QTTEXMACS
 static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
-bool show_startup_login_dialog ();
+bool                       show_startup_login_dialog ();
 #endif
 
 /******************************************************************************

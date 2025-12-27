@@ -33,16 +33,16 @@
 #endif
 #ifdef QTTEXMACS
 #include "Qt/QTMApplication.hpp"
+#include "Qt/QTMOAuth.hpp"
 #include "Qt/qt_gui.hpp"
 #include "Qt/qt_utilities.hpp"
 #include "Qt/startup_login_dialog.hpp"
-#include "Qt/QTMOAuth.hpp"
 #include "tm_server.hpp"
 #include <QApplication>
 #include <QCoreApplication>
 #include <QDir>
-#include <QMessageBox>
 #include <QEventLoop>
+#include <QMessageBox>
 #include <QTimer>
 #endif
 #include "Metafont/load_tex.hpp"
@@ -66,7 +66,7 @@ extern bool   texmacs_started;
 extern bool   headless_mode;
 
 #ifdef QTTEXMACS
-bool g_startup_login_requested = false;
+bool g_startup_login_requested= false;
 #endif
 
 string extra_init_cmd;
@@ -889,15 +889,15 @@ TeXmacs_main (int argc, char** argv) {
     // Trigger login if requested from startup dialog
     // Use timer to execute after event loop starts
     if (g_startup_login_requested) {
-      QTimer::singleShot(0, []() { 
-        if (is_server_started()) {
-          tm_server_rep* server =
-            dynamic_cast<tm_server_rep*>(get_server().operator->());
-          if (server && server->getAccount()) {
-            server->getAccount()->login();
+      QTimer::singleShot (0, [] () {
+        if (is_server_started ()) {
+          tm_server_rep* server=
+              dynamic_cast<tm_server_rep*> (get_server ().operator->());
+          if (server && server->getAccount ()) {
+            server->getAccount ()->login ();
           }
         }
-        g_startup_login_requested = false;
+        g_startup_login_requested= false;
       });
     }
 #endif
@@ -915,37 +915,38 @@ TeXmacs_main (int argc, char** argv) {
 }
 
 #ifdef QTTEXMACS
-bool show_startup_login_dialog () {
+bool
+show_startup_login_dialog () {
   // Don't show dialog in headless mode
   if (headless_mode) {
     return true;
   }
 
-  // if (install_status != 1 && install_status != 2) {
-  //   // Normal startup, no need to show login dialog
-  //   return true;
-  // }
+  if (install_status != 1 && install_status != 2) {
+    // Normal startup, no need to show login dialog
+    return true;
+  }
 
   // is_community= true,return true;
-  if (is_community_stem()) {
+  if (is_community_stem ()) {
     return true;
   }
 
   QWK::StartupLoginDialog dialog;
-  auto result = dialog.execWithResult();
+  auto                    result= dialog.execWithResult ();
 
   switch (result) {
-    case QWK::StartupLoginDialog::LoginClicked:
-      // Set global flag to trigger login later in TeXmacs_main
-      g_startup_login_requested = true;
-      cout << "TeXmacs] Startup login dialog: Login requested\n";
-      return true;
-    case QWK::StartupLoginDialog::SkipClicked:
-      cout << "TeXmacs] Startup login dialog: Skip clicked\n";
-      return true;
-    case QWK::StartupLoginDialog::DialogRejected:
-      cout << "TeXmacs] Startup login dialog: Dialog rejected\n";
-      return false; // Exit program
+  case QWK::StartupLoginDialog::LoginClicked:
+    // Set global flag to trigger login later in TeXmacs_main
+    g_startup_login_requested= true;
+    cout << "TeXmacs] Startup login dialog: Login requested\n";
+    return true;
+  case QWK::StartupLoginDialog::SkipClicked:
+    cout << "TeXmacs] Startup login dialog: Skip clicked\n";
+    return true;
+  case QWK::StartupLoginDialog::DialogRejected:
+    cout << "TeXmacs] Startup login dialog: Dialog rejected\n";
+    return false; // Exit program
   }
 
   return true;
