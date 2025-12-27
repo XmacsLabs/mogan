@@ -582,8 +582,8 @@ window_set_view (url win_u, url new_u, bool focus) {
   if (focus || get_current_view () == old_u) set_current_view (new_u);
   exec_delayed (scheme_cmd ("(make-cursor-visible '" *
                             scm_quote (as_string (new_u)) * ")"));
-  exec_delayed (scheme_cmd (
-      "(when (defined? 'refresh-auxiliary-widget) (refresh-auxiliary-widget))"));
+  exec_delayed (scheme_cmd ("(when (defined? 'refresh-auxiliary-widget) "
+                            "(refresh-auxiliary-widget))"));
 }
 
 void
