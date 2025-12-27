@@ -40,10 +40,6 @@
           (and (== widget-type 'comment-editor) opened?))
         #f)))
 
-;; 刷新comment编辑器窗口
-(tm-define (refresh-comment-editor)
-  (refresh-auxiliary-widget))
-
 (define (comment-editor-done)
   (and-let* ((popup  (current-buffer))
              (master (buffer-get-master popup))

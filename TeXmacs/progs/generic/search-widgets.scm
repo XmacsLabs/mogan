@@ -19,10 +19,6 @@
 (define search-replace-text "")
 (define isreplace? #f)
 
-;; 注册搜索和替换的widget类型
-(register-auxiliary-widget-type 'search interactive-search)
-(register-auxiliary-widget-type 'replace interactive-replace)
-
 #|
 set-search-window-state
 设置搜索/替换辅助窗口的打开状态和模式。
@@ -60,6 +56,7 @@ is-search? : boolean
 (tm-define (set-search-window-state opened? is-search?)
   (let ((widget-type (if is-search? 'search 'replace)))
     (set-auxiliary-widget-state opened? widget-type)))
+
 ;; 获取当前窗口的辅助窗口状态
 (tm-define (get-search-window-state)
   (let ((state (get-auxiliary-widget-state)))
@@ -1228,3 +1225,6 @@ tree 或 #f
   (set! search-replace-text "search and replace")
   (set-boolean-preference "search-and-replace" #t)
   (open-replace))
+
+(register-auxiliary-widget-type 'search interactive-search)
+(register-auxiliary-widget-type 'replace interactive-replace)
