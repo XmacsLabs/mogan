@@ -144,7 +144,7 @@ QTMImagePopup::autoSize () {
   const int    baseHeight= 50;
   double       totalScale= Scale * cached_magf * 3.3;
 #if defined(Q_OS_MAC)
-  const int IconSize= int (30 * Scale);
+  const int IconSize= int (50 * Scale);
 #else
   const int IconSize= int (40 * totalScale);
 #endif
