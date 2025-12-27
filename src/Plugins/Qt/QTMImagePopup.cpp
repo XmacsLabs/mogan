@@ -92,16 +92,12 @@ void
 QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
                                int scroll_y, int canvas_x) {
   cachePosition (selr, magf, scroll_x, scroll_y, canvas_x);
-  if (cached_magf <= 0.16) {
-    setFixedSize (0, 0);
-    return;
-  }
   hide ();
-  autoSize ();
   int x, y;
   getCachedPosition (x, y);
   QPoint topLeft (x, y);
   move (topLeft);
+  autoSize ();
   raise ();
   updateButtonStates ();
   show ();
@@ -144,7 +140,7 @@ QTMImagePopup::autoSize () {
   const int    baseHeight= 50;
   double       totalScale= Scale * cached_magf * 3.3;
 #if defined(Q_OS_MAC)
-  const int IconSize= int (50 * Scale);
+  const int IconSize= int (80 * totalScale);
 #else
   const int IconSize= int (40 * totalScale);
 #endif
@@ -172,10 +168,16 @@ QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
 // 计算菜单显示位置
 void
 QTMImagePopup::getCachedPosition (int& x, int& y) {
-  x= ((cached_image_mid_x - cached_scroll_x - 500) * cached_magf +
-      cached_canvas_x) /
-         256 -
-     (this->width () / 2);
-  y= -((cached_image_mid_y - 5000 - cached_scroll_y) * cached_magf) / 256 -
-     this->height () * 1.2;
+  // 坐标转换：TeXmacs坐标 → 屏幕坐标
+
+  // x坐标
+  double image_center_screen_x=
+      ((cached_image_mid_x - cached_scroll_x) * cached_magf + cached_canvas_x) /
+      256.0;
+  x= (int) (image_center_screen_x - (this->width () / 2.0));
+
+  // y坐标
+  double image_center_screen_y=
+      -((cached_image_mid_y - cached_scroll_y) * cached_magf) / 256.0;
+  y= (int) (image_center_screen_y - (this->height () / 4.0));
 }
