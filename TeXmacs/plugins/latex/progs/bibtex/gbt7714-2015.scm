@@ -157,6 +157,25 @@
       ((equal? type "other") (if online "[Z/OL]" "[Z]"))           ;; 其他
       (else ""))))
 
+;; 地址:机构格式
+(tm-define (bib-format-address-institution x)
+  (:mode bib-gbt7714-2015?)
+  (let* ((addr (bib-field x "address"))
+         (inst-field (cond
+                       ((not (bib-empty? x "school")) (bib-field x "school"))
+                       ((not (bib-empty? x "organization")) (bib-field x "organization"))
+                       ((not (bib-empty? x "publisher")) (bib-field x "publisher"))
+                       ((not (bib-empty? x "institution")) (bib-field x "institution"))
+                       (else "")))
+         (addr-val (if (bib-empty? x "address") "" addr))
+         (inst-val (if (or (bib-null? inst-field) (equal? inst-field "")) "" inst-field)))
+    (cond
+      ((and (not (equal? addr-val "")) (not (equal? inst-val "")))
+       `(concat ,addr-val ": " ,inst-val))
+      ((not (equal? addr-val "")) addr-val)
+      ((not (equal? inst-val "")) inst-val)
+      (else ""))))
+
 ;; 作者姓名格式
 (tm-define (bib-format-name x)
   (:mode bib-gbt7714-2015?)
@@ -328,8 +347,7 @@
                 `(,(bib-new-sentence
                     `(,(bib-format-number-series x)))
                   ,(bib-new-sentence
-                    `(,(bib-format-field x "publisher")
-                      ,(bib-format-field x "address")
+                    `(,(bib-format-address-institution x)
                       ,(if (bib-empty? x "edition") ""
                            `(concat ,(bib-format-field x "edition")
                                     ,(bib-translate " edition")))
@@ -364,16 +382,8 @@
                      ,(bib-format-pages x)))
                  ,(if (bib-empty? x "address")
                       (bib-new-sentence
-                       `(,(bib-format-field x "organization")
-                         ,(bib-format-field x "publisher")
-                         ,(bib-format-date x)))
-                      (bib-new-list-spc
-                       `(,(bib-new-sentence
-                           `(,(bib-format-field x "address")
-                             ,(bib-format-date x)))
-                         ,(bib-new-sentence
-                           `(,(bib-format-field x "organization")
-                             ,(bib-format-field x "publisher"))))))))
+                       `(,(bib-format-address-institution x)
+                         ,(bib-format-date x))))))
               (bib-new-sentence
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
@@ -397,20 +407,9 @@
                     " "
                     ,(bib-document-type-identifier x "proceedings")))
          ,(bib-new-block
-           (if (bib-empty? x "address")
-               (bib-new-sentence
-                `(,(if (bib-empty? x "editor") ""
-                       (bib-format-field x "organization"))
-                  ,(bib-format-field x "publisher")
-                  ,(bib-format-date x)))
-               (bib-new-list-spc
-                `(,(bib-new-sentence
-                    `(,(bib-format-field x "address")
-                      ,(bib-format-date x)))
-                  ,(bib-new-sentence
-                    `(,(if (bib-empty? x "editor") ""
-                           (bib-format-field x "organization"))
-                      ,(bib-format-field x "publisher")))))))
+           (bib-new-sentence
+            `(,(bib-format-address-institution x)
+              ,(bib-format-date x))))
          ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
 
@@ -423,10 +422,7 @@
      ,(bib-new-list-spc
        `(,(bib-new-block
            (if (bib-empty? x "author")
-               (if (bib-empty? x "organization") ""
-                   (bib-new-sentence
-                    `(,(bib-format-field x "organization")
-                      ,(bib-format-field x "address"))))
+               (bib-new-sentence `(,(bib-format-address-institution x)))
                (bib-format-author x)))
          ,(bib-new-block
            `(concat ,(bib-format-field-Locase x "title")
@@ -434,12 +430,7 @@
                     ,(bib-document-type-identifier x "manual")))
          ,(bib-new-block
            (bib-new-sentence
-            `(,(bib-format-field x "organization")
-              ,(bib-format-field x "address")
-              ,(if (bib-empty? x "edition") ""
-                   `(concat ,(bib-format-field x "edition")
-                            ,(bib-translate " edition")))
-              ,(bib-format-date x))))
+            `(,(bib-format-address-institution x))))
          ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
 
@@ -477,10 +468,8 @@
          ,(bib-new-block
            (bib-new-sentence
             `(,(if (bib-empty? x "type")
-                   (bib-translate "PhD thesis")
                    (bib-format-field-Locase x "type"))
-              ,(bib-format-field x "school")
-              ,(bib-format-field x "address")
+              ,(bib-format-address-institution x)
               ,(bib-format-date x))))
          ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
@@ -500,10 +489,8 @@
          ,(bib-new-block
            (bib-new-sentence
             `(,(if (bib-empty? x "type")
-                   (bib-translate "Master's thesis")
                    (bib-format-field-Locase x "type"))
-              ,(bib-format-field x "school")
-              ,(bib-format-field x "address")
+              ,(bib-format-address-institution x)
               ,(bib-format-date x))))
          ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
@@ -523,8 +510,7 @@
          ,(bib-new-block
            (bib-new-sentence
             `(,(bib-format-tr-number x)
-              ,(bib-format-field x "institution")
-              ,(bib-format-field x "address")
+              ,(bib-format-address-institution x)
               ,(let* ((d (bib-field x "date"))
                       (y (bib-field x "year"))
                       (date-str (if (bib-null? d) y d)))
