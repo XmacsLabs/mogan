@@ -67,8 +67,8 @@
   (convert-symbol-to-format-string (clipboard-format "primary")))
 
 (define (init-choices l)
-  (let* ((fm (get-clipboard-format)))
-    (if (!= fm "verbatim")
+  (let* ((fm (clipboard-format "primary")))
+    (if (or (== fm "") (== fm "verbatim") (== fm "image"))
         l
         (let* ((name (convert-symbol-to-format-string fm)))
           (cons name (delete name l))))))
@@ -103,7 +103,7 @@
          (l (init-choices name-list)))
 
     ;; Initialize selection on first display
-    (invisible (set! selected-format (car l)))
+    (invisible (set! selected-format (convert-format-string-to-symbol (car l))))
     (invisible (set! tips1 (translate (get-tips (convert-format-string-to-symbol selected-format)))))
     (invisible (set! tips2 (translate "ENTER to confirm, ESC to cancel")))
     (resize "320px" "270px"
@@ -147,6 +147,7 @@
   (:interactive #t)
   (dialogue-window clipboard-paste-from-widget
     (lambda (fm)
+      (display* "fm: " fm "\n")
       (when fm
         (cond ((== fm "md")       (markdown-paste))
               ((== fm "ocr")      (ocr-paste))
