@@ -67,8 +67,7 @@
   (clipboard-format "primary"))
 
 (define (init-choices l)
-  (let* ((data (clipboard-format "primary"))
-         (fm (tree->string (tree-ref data 3))))
+  (let* ((fm (get-clipboard-format)))
     (if (!= fm "")
       (if (== fm "verbatim")
         l
