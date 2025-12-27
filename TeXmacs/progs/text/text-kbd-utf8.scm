@@ -14,7 +14,9 @@
 (texmacs-module (text text-kbd-utf8)
   (:use (generic generic-kbd)
 	(utils edit auto-close)
-	(text text-edit)))
+	(text text-edit)
+  (various comment-edit)
+  (various comment-widgets)))
 
 (kbd-map
   (:mode in-text?)
