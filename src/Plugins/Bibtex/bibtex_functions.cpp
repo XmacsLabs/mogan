@@ -229,6 +229,32 @@ bib_add_period (scheme_tree st) {
   tree  t = simplify_correct (scheme_tree_to_tree (st));
   char* ch= bib_last_char (t);
   if (ch == 0) return tree_to_scheme_tree (t);
+  /* If the last non-space character is ')' and the parenthetical
+     content looks like a full date (e.g., contains a hyphen such as
+     "(2025-12-28)"), do not append a period. */
+  if (*ch == ')') {
+    tree node = t;
+    while (!is_atomic (node)) {
+      int pos = N (node) - 1;
+      while ((pos >= 0) && bib_is_bad (node[pos])) pos--;
+      if (pos >= 0) node = node[pos];
+      else break;
+    }
+    if (is_atomic (node)) {
+      string s = node->label;
+      int end = N (s) - 1;
+      while ((end >= 0) && is_space (s[end])) end--;
+      int open = end;
+      while ((open >= 0) && s[open] != '(') open--;
+      if (open >= 0) {
+        bool has_hyphen = false;
+        for (int i = open + 1; i <= end; i++)
+          if (s[i] == '-') { has_hyphen = true; break; }
+        if (has_hyphen) return tree_to_scheme_tree (t);
+      }
+    }
+  }
+
   if (*ch == ',' || *ch == ';') {
     *ch= '.';
     return tree_to_scheme_tree (t);

@@ -318,7 +318,6 @@
                 `((concat ,(bib-translate "in ")
                           (cite ,(bib-field x "crossref")))
                   ,(bib-format-pages x)))))
-         ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写图书格式以添加文献类型标识符 [M]
@@ -354,7 +353,6 @@
                           (cite ,(bib-field x "crossref")))
                   ,(bib-format-field x "edition")
                   ,(bib-format-date x)))))
-         ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写会议论文格式以添加文献类型标识符 [C]
@@ -385,7 +383,6 @@
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-pages x)))))
-        ,(bib-new-block (bib-format-field x "note"))
         ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写会议录格式以添加文献类型标识符 [C]
@@ -407,7 +404,6 @@
            (bib-new-sentence
             `(,(bib-format-address-institution x)
               ,(bib-format-date x))))
-         ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写手册格式以添加文献类型标识符 [S]
@@ -428,7 +424,6 @@
          ,(bib-new-block
            (bib-new-sentence
             `(,(bib-format-address-institution x))))
-         ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写杂项文献格式以添加文献类型标识符 [EB]
@@ -447,7 +442,6 @@
            (bib-new-case-preserved-sentence
             `(,(bib-format-field-preserve-case x "howpublished")
               ,(bib-format-date x))))
-         ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写博士论文格式以添加文献类型标识符 [D]
@@ -468,7 +462,6 @@
                    (bib-format-field-Locase x "type"))
               ,(bib-format-address-institution x)
               ,(bib-format-date x))))
-         ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写硕士论文格式以添加文献类型标识符 [D]
@@ -489,7 +482,6 @@
                    (bib-format-field-Locase x "type"))
               ,(bib-format-address-institution x)
               ,(bib-format-date x))))
-         ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写报告格式以添加文献类型标识符 [R]
@@ -508,5 +500,4 @@
            (bib-new-sentence
             `(,(bib-format-address-institution x)
               ,(bib-format-date x))))
-         ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
