@@ -2465,7 +2465,7 @@
 ("yellow" "黄色")
 ("yes" "是")
 ("you can also obtain" "")
-("You can try using Enter, Esc, keys~" "可以尝试一下enter、esc键~")
+("ENTER to confirm, ESC to cancel" "ENTER键确认，ESC键取消")
 ("you do not have write access for" "没有写权限")
 ("your document is back in its original state" "")
 ("your first interface" "")

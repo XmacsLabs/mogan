@@ -96,6 +96,7 @@
   (let* ((selected-format "verbatim")
          (tips1 "Please select...")
          (tips2 "")
+         (tips3 (string-append (translate "shortcut") ":" (translate "none")))
          (plain-format-list    (list "Markdown" "LaTeX" "HTML" (translate "Plain text")))
          (math-format-list     (list "LaTeX" "MathML"))
          (program-format-list  (list (translate "Code")))
@@ -111,42 +112,41 @@
     ;; Initialize selection on first display
     (invisible (set! selected-format (car l)))
     (invisible (set! tips1 (translate (get-tips (convert-format-string-to-symbol selected-format)))))
-    (invisible (set! tips2 (translate "You can try using Enter, Esc, keys~")))
-    (resize "350px" "250px"
+    (invisible (set! tips2 (translate "ENTER to confirm, ESC to cancel")))
+    (resize "320px" "270px"
       (padded
         (vertical
           (horizontal
             (vertical
-              (refreshable "clipboard-format"
-                  (bold (text "From: "))
-                  (text (get-clipboard-format))
-              (glue #f #t 0 0)
-                  (bold (text "Mode"))
-                  (text (get-mode))
-              (glue #f #t 0 0)
-                  (bold (text "shortcut"))
-                  (text (shortcut selected-format))))
+                (bold (text "From: "))
+                (text (get-clipboard-format))
+                (glue #f #t 0 0)
+                (bold (text "Mode"))
+                (text (get-mode))
+                (glue #f #t 0 0))
             ///
             (refreshable "format-selection"
-              (resize "150px" "150px"
+              (resize "200px" "190px"
                 (bold (text "As: "))
                 ===
                 (scrollable
                   (choice (begin
                             (set! selected-format (convert-format-string-to-symbol (translate answer)))
                             (set! tips1 (translate (get-tips selected-format)))
+                            (set! tips3 (string-append (translate "shortcut") ":" (shortcut selected-format)))
                             (refresh-now "format-explanation")
-                            (refresh-now "clipboard-format"))
+                            (refresh-now "paste-shortcut"))
                           l
                           (car l))))))
           ===
           (refreshable "format-explanation"
             (bold (text "Tips"))
+            (resize "320px" "90px"
             (texmacs-output
               `(with "bg-color" "white"
-                "font-base-size" "14"
-                (document ,tips1 ,tips2))
-              '(style "generic"))))))
+                "font-base-size" "18"
+                (document ,tips1 ,tips3 ,tips2))
+              '(style "generic")))))))
       (bottom-buttons
         >> ("ok" (cmd selected-format)) // ("cancel" (cmd #f)))))
 
