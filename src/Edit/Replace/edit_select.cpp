@@ -13,6 +13,7 @@
 #include "Interface/edit_interface.hpp"
 #include "convert.hpp"
 #include "cork.hpp"
+#include "observer.hpp"
 #include "packrat.hpp"
 #include "preferences.hpp"
 #include "tree_modify.hpp"
@@ -488,6 +489,14 @@ edit_select_rep::selection_get (path& p1, path& p2) {
   p1= sel->start;
   p2= sel->end;
   */
+}
+
+tree
+edit_select_rep::selection_format (string key) {
+  tree   t;
+  string s;
+  (void) ::get_selection (key, t, s, "default");
+  return t;
 }
 
 path

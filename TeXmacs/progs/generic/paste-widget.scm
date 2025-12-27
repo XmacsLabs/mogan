@@ -13,22 +13,12 @@
 (texmacs-module (generic paste-widget)
   (:use (generic generic-edit)
         (utils edit selections)
-        (liii ocr)))
-
-(define plain-format-list    (list "LaTeX" "HTML" (translate "Plain text") "Markdown"))
-(define math-format-list     (list "LaTeX" "MathML"))
-(define program-format-list  (list (translate "Code")))
-(define graphics-format-list (list "graphics"))
-(define image-list           (list "OCR" (translate "Image and OCR") (translate "Only image")))
-
+        (liii ocr)
+        (kernel texmacs tm-convert)))
+(import (only (liii list) delete))
 
 ;; Helper functions (stateless, can remain at module level)
-(define (get-name-list)
-  (cond ((in-math?)            math-format-list)
-        ((in-prog?)            program-format-list)
-        ((in-graphics?)        graphics-format-list)
-        ((is-clipboard-image?) image-list)
-        (else                  plain-format-list)))
+
 
 (define (get-mode)
   (cond ((in-math?)     "Math mode")
@@ -48,6 +38,18 @@
         ((== name "Graphics")                  "graphics")
         ((== name (translate "Code"))          "code")))
 
+(define (convert-symbol-to-format-string symbol)
+  (cond ((== symbol "md")       "Markdown")
+        ((== symbol "html")     "HTML")
+        ((== symbol "latex")    "LaTeX")
+        ((== symbol "mathml")   "MathML")
+        ((== symbol "ocr")      "OCR")
+        ((== symbol "graphics") "Graphics")
+        ((== symbol "verbatim") (translate "Plain text"))
+        ((== symbol "iao")      (translate "Image and OCR"))
+        ((== symbol "oi")       (translate "Only image"))
+        ((== symbol "code")     (translate "Code"))))
+
 (define (get-tips fm)
   (cond ((== fm "md")        "Insert clipboard content as 'Markdown'")
         ((== fm "html")      "Insert clipboard content as 'HTML'")
@@ -61,11 +63,28 @@
         ((== fm "graphics")  "Insert clipboard content as 'graphics'")
         (else "Please select...")))
 
-;; (convert-format-string-to-symbol (car (get-name-list)))
-(define (init-choice)
-  (with data (parse-texmacs-snippet (tree->string (tree-ref (clipboard-get "primary") 1)))
-    (cond ((is-clipboard-image?) (convert-format-string-to-symbol (car image-list)))
-          (else (convert-format-string-to-symbol (car (get-name-list)))))))
+(define (get-clipboard-format)
+  (let* ((data (clipboard-format "primary"))
+         (fm (tree->string (tree-ref data 3))))
+    (if (!= fm "")
+      (convert-symbol-to-format-string fm)
+      (convert-symbol-to-format-string "verbatim"))))
+
+(define (init-choices l)
+  (let* ((data (clipboard-format "primary"))
+         (fm (tree->string (tree-ref data 3))))
+    (if (!= fm "")
+      (if (== fm "verbatim")
+        l
+        (let* ((name (convert-symbol-to-format-string fm)))
+          (cons name (delete name l))))
+      l)))
+
+(define (shortcut fm)
+  (cond ((and (in-math?) (== fm "latex")) "Ctrl+Shift+v")
+        ((== fm "verbatim") "Ctrl+Shift+v")
+        ((is-clipboard-image?) "Ctrl+Shift+v")
+        (else "none")))
 
 (tm-define (is-clipboard-image?)
   (with data (parse-texmacs-snippet (tree->string (tree-ref (clipboard-get "primary") 1)))
@@ -75,40 +94,59 @@
 
 (tm-widget (clipboard-paste-from-widget cmd)
   (let* ((selected-format "verbatim")
-         (tips "Please select..."))
+         (tips1 "Please select...")
+         (tips2 "")
+         (tips3 (string-append (translate "shortcut") ":" (translate "none")))
+         (plain-format-list    (list "Markdown" "LaTeX" "HTML" (translate "Plain text")))
+         (math-format-list     (list "LaTeX" "MathML"))
+         (program-format-list  (list (translate "Code")))
+         (graphics-format-list (list "graphics"))
+         (image-list           (list "OCR" (translate "Image and OCR") (translate "Only image")))
+         (name-list (cond ((in-math?)            math-format-list)
+                          ((in-prog?)            program-format-list)
+                          ((in-graphics?)        graphics-format-list)
+                          ((is-clipboard-image?) image-list)
+                          (else                  plain-format-list)))
+         (l (init-choices name-list)))
 
     ;; Initialize selection on first display
-    (invisible (set! selected-format (init-choice)))
-    (invisible (set! tips (translate (get-tips selected-format))))
-
-    (padded
-      (vertical
-        (horizontal
-          (vertical
-            (refreshable "current-mode"
-              (bold (text "Mode"))
-              (text (get-mode)))
-            (glue #f #t 0 0))
-          ///
-          (refreshable "format-selection"
-            (resize "150px" "150px"
-              (bold (text "As: "))
-              ===
-              (scrollable
-                (choice (begin 
-                          (set! selected-format (convert-format-string-to-symbol (translate answer)))
-                          (set! tips (translate (get-tips selected-format)))
-                          (refresh-now "format-explanation"))
-                        (get-name-list)
-                        (car (get-name-list)))))))
-        ===
-        (refreshable "format-explanation"
-          (bold (text "Tips"))
-          (texmacs-output
-            `(with "bg-color" "white"
-               "font-base-size" "14"
-               (document ,tips))
-            '(style "generic")))))
+    (invisible (set! selected-format (car l)))
+    (invisible (set! tips1 (translate (get-tips (convert-format-string-to-symbol selected-format)))))
+    (invisible (set! tips2 (translate "ENTER to confirm, ESC to cancel")))
+    (resize "320px" "270px"
+      (padded
+        (vertical
+          (horizontal
+            (vertical
+                (bold (text "From: "))
+                (text (get-clipboard-format))
+                (glue #f #t 0 0)
+                (bold (text "Mode"))
+                (text (get-mode))
+                (glue #f #t 0 0))
+            ///
+            (refreshable "format-selection"
+              (resize "200px" "190px"
+                (bold (text "As: "))
+                ===
+                (scrollable
+                  (choice (begin
+                            (set! selected-format (convert-format-string-to-symbol (translate answer)))
+                            (set! tips1 (translate (get-tips selected-format)))
+                            (set! tips3 (string-append (translate "shortcut") ":" (shortcut selected-format)))
+                            (refresh-now "format-explanation")
+                            (refresh-now "paste-shortcut"))
+                          l
+                          (car l))))))
+          ===
+          (refreshable "format-explanation"
+            (bold (text "Tips"))
+            (resize "320px" "90px"
+            (texmacs-output
+              `(with "bg-color" "white"
+                "font-base-size" "18"
+                (document ,tips1 ,tips3 ,tips2))
+              '(style "generic")))))))
       (bottom-buttons
         >> ("ok" (cmd selected-format)) // ("cancel" (cmd #f)))))
 
@@ -117,12 +155,12 @@
   (dialogue-window clipboard-paste-from-widget
     (lambda (fm)
       (when fm
-        (cond ((== fm "md")       (open-url "https://liiistem.cn/"))
+        (cond ((== fm "md")       (markdown-paste))
               ((== fm "ocr")      (ocr-paste))
               ((== fm "iao")      (ocr-and-image-paste))
               ((== fm "oi")       (kbd-paste))
               ((== fm "mathml")   (clipboard-paste-import "html" "primary"))
-              (else               (clipboard-paste-import format "primary")))))
+              (else               (clipboard-paste-import fm "primary")))))
     "Paste Special"))
 
 (tm-define (interactive-paste-special)
