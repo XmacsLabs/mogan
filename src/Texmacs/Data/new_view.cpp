@@ -583,7 +583,7 @@ window_set_view (url win_u, url new_u, bool focus) {
   exec_delayed (scheme_cmd ("(make-cursor-visible '" *
                             scm_quote (as_string (new_u)) * ")"));
   exec_delayed (scheme_cmd (
-      "(when (defined? 'refresh-search-replace) (refresh-search-replace))"));
+      "(when (defined? 'refresh-auxiliary-widget) (refresh-auxiliary-widget))"));
 }
 
 void

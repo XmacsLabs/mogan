@@ -13,12 +13,15 @@
 (import (liii hashlib))
 (texmacs-module (generic search-widgets)
   (:use (generic generic-edit)
-        (utils library cursor)))
+        (utils library cursor)
+        (kernel gui menu-widget)))
 
 (define search-replace-text "")
-(define search-replace-window-table (make-ahash-table))
-
 (define isreplace? #f)
+
+;; 注册搜索和替换的widget类型
+(register-auxiliary-widget-type 'search interactive-search)
+(register-auxiliary-widget-type 'replace interactive-replace)
 
 #|
 set-search-window-state
@@ -47,8 +50,7 @@ is-search? : boolean
 
 逻辑
 ----
-将 (opened? is-search?) 状态列表存储到 search-replace-window-table 哈希表中，
-以当前搜索缓冲区 (search-buffer) 为键。
+将状态转换为widget-type并存储到统一的辅助窗口状态表中。
 
 注意
 ----
@@ -56,10 +58,16 @@ is-search? : boolean
 每个文档视图有独立的搜索缓冲区，因此状态与当前文档视图关联。
 |#
 (tm-define (set-search-window-state opened? is-search?)
-  (ahash-set! search-replace-window-table (search-buffer) (list opened? is-search?)))
+  (let ((widget-type (if is-search? 'search 'replace)))
+    (set-auxiliary-widget-state opened? widget-type)))
 ;; 获取当前窗口的辅助窗口状态
-(define (get-search-window-state)
-  (ahash-ref search-replace-window-table (search-buffer)))
+(tm-define (get-search-window-state)
+  (let ((state (get-auxiliary-widget-state)))
+    (if state
+        (let ((opened? (car state))
+              (widget-type (cadr state)))
+          (list opened? (== widget-type 'search)))
+        #f)))
 
 #|
 update-search-pos-text
@@ -130,12 +138,7 @@ refresh-search-replace
 
 逻辑
 ----
-1. 获取当前搜索缓冲区的窗口状态 (get-search-window-state)
-2. 根据状态执行相应操作：
-   - 状态为空 (#f) : 隐藏辅助窗口 (情况 0)
-   - 状态为 (#f _) : 隐藏辅助窗口 (情况 1)
-   - 状态为 (#t #t) : 调用 interactive-search 显示搜索窗口 (情况 2)
-   - 状态为 (#t #f) : 调用 interactive-replace 显示替换窗口 (情况 3)
+调用统一的辅助窗口刷新函数。
 
 注意
 ----
@@ -143,15 +146,7 @@ refresh-search-replace
 状态通过 set-search-window-state 存储，每个文档视图有独立的搜索缓冲区。
 |#
 (tm-define (refresh-search-replace)
-  (let ((state (get-search-window-state)))
-    (cond ((not state)
-           (show-auxiliary-widget #f))   ;; 情况 0：如果状态为空，隐藏辅助窗口
-          ((not (car state))
-           (show-auxiliary-widget #f))   ;; 情况 1：如果第一个是#f，隐藏辅助窗口
-          ((cadr state)
-           (interactive-search))         ;; 情况 2：如果是 (#t #t)，调用搜索
-          (else
-           (interactive-replace)))))     ;; 情况 3：如果是 (#t #f)，调用替换
+  (refresh-auxiliary-widget))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Basic search and replace buffers management
