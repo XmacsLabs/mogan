@@ -87,7 +87,7 @@
           (texmacs-output
             `(with "bg-color" "white"
                "font-base-size" "14"
-               (document ,(get-tips selected-format)))
+               (document ,(translate (get-tips selected-format))))
             '(style "generic")))))
       (bottom-buttons
         >> ("ok" (cmd selected-format)) // ("cancel" (cmd #f)))))
