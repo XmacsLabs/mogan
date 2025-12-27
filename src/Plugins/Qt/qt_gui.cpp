@@ -266,6 +266,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   string           input_format;
   string           image_w_string, image_h_string;
   string           clipboard_image_suffix= "png";
+  string           detected_format;
 
   s= "";
   t= "none";
@@ -317,7 +318,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
             &image_w_string, &image_h_string);
         if (N (image_data) > 0) {
           input_format= "picture";
-          buf         = QByteArray (image_data.begin (), N (image_data));
+          buf         = QByteArray (image_data.begin (), N (image_data));      input_format= "picture";
           clipboard_image_suffix= target_suffix;
         }
 #else
@@ -343,14 +344,20 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
     else if (md->hasHtml ()) {
       buf         = md->html ().toUtf8 ();
       input_format= "html-snippet";
+      string raw_html (buf.constData (), buf.size ());
+      detected_format= as_string (call ("format-determine", raw_html, "html"));
     }
     else if (md->hasFormat ("text/plain;charset=utf8")) {
       buf         = md->data ("text/plain;charset=utf8");
       input_format= "verbatim-snippet";
+      string raw_text (buf.constData (), buf.size ());
+      detected_format= as_string (call ("format-determine", raw_text, "verbatim"));
     }
     else {
       buf         = md->text ().toUtf8 ();
       input_format= "verbatim-snippet";
+      string raw_text (buf.constData (), buf.size ());
+      detected_format= as_string (call ("format-determine", raw_text, "verbatim"));
     }
   }
   else if (format == "verbatim" &&
@@ -379,7 +386,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       << image_h_string << "" << "";
     s= as_string (call ("convert", t, "texmacs-tree", "texmacs-snippet"));
   }
-  t= tuple ("extern", s);
+  t= tuple ("extern", s, input_format, detected_format);
   return true;
 }
 
