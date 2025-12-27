@@ -147,7 +147,6 @@
   (:interactive #t)
   (dialogue-window clipboard-paste-from-widget
     (lambda (fm)
-      (display* "fm: " fm "\n")
       (when fm
         (cond ((== fm "md")       (markdown-paste))
               ((== fm "ocr")      (ocr-paste))
