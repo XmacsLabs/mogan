@@ -208,11 +208,15 @@
 ;; 日期格式
 (tm-define (bib-format-date x)
   (:mode bib-gbt7714-2015?)
-  ;; GBT 7714-2015 仅使用年份，不含月份
-  (let* ((y (bib-field x "year")))
-    (if (bib-null? y) "" y)))
+  ;; 优先使用 date 字段；若没有则回退到 year；返回空字符串表示没有可用的日期信息
+  (let* ((d (bib-field x "date"))
+         (y (bib-field x "year"))
+         (date-str (if (bib-null? d) y d)))
+    (if (bib-null? date-str)
+        ""
+        `(concat "(" ,date-str ")"))))
 
-;;  书名格式
+;; 书名格式
 (tm-define (bib-format-in-ed-booktitle x)
   (:mode bib-gbt7714-2015?)
   (let* ((b (bib-default-field x "booktitle"))
@@ -265,13 +269,6 @@
 			  `(concat ,(bib-translate " of ") ,s)))
 	      (sep (if (< (bib-text-length v) 3) `(nbsp) " ")))
 	  `(concat ,(bib-translate "volume") ,sep ,v ,series)))))
-
-;; 重写技术报告编号格式
-(tm-define (bib-format-tr-number x)
-  (:mode bib-gbt7714-2015?)
-  ;; GBT 7714-2015 不要求输出 "Technical Report"，只输出报告编号
-  (let* ((n (bib-field x "number")))
-    (if (bib-null? n) "" n)))
 
 ;; URL/DOI 信息格式
 (tm-define (bib-format-url-doi x)
@@ -509,11 +506,7 @@
                     ,(bib-document-type-identifier x "techreport")))
          ,(bib-new-block
            (bib-new-sentence
-            `(,(bib-format-tr-number x)
-              ,(bib-format-address-institution x)
-              ,(let* ((d (bib-field x "date"))
-                      (y (bib-field x "year"))
-                      (date-str (if (bib-null? d) y d)))
-                 (if (bib-null? date-str) "" `(concat "(" ,date-str ")"))))))
+            `(,(bib-format-address-institution x)
+              ,(bib-format-date x))))
          ,(bib-new-block (bib-format-field x "note"))
          ,(bib-new-block (bib-format-url-doi x))))))
