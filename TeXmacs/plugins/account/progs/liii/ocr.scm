@@ -65,6 +65,7 @@
 (tm-define (insert-tips)
   (go-to (cursor-path))
   (go-to-next-node)
+  (kbd-return)
   (let* ((content (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.md"))))
     (insert `(with "par-mode" "center" (document ,(utf8->cork content))))))
 
@@ -72,6 +73,7 @@
 (tm-define (insert-latex)
   (go-to (cursor-path))
   (go-to-next-node)
+  (kbd-return)
   (let* ((latex-code (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.tex")))
          (parsed-latex (parse-latex latex-code))
          (texmacs-latex (latex->texmacs parsed-latex)))
