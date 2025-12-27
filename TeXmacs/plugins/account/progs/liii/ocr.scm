@@ -69,21 +69,20 @@
   (let* ((content (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.md"))))
     (insert `(with "par-mode" "center" (document ,(utf8->cork content))))))
 
-
-(tm-define (insert-latex)
-  (go-to (cursor-path))
-  (go-to-next-node)
-  (kbd-return)
+(tm-define (insert-latex-at-current-path)
   (let* ((latex-code (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.tex")))
          (parsed-latex (parse-latex latex-code))
          (texmacs-latex (latex->texmacs parsed-latex)))
     (insert texmacs-latex)))
 
+(tm-define (insert-latex t)
+  (tree-go-to t :end)
+  (kbd-return)
+  (insert-latex-at-current-path))
+
 (tm-define (image-ocr-to-latex t)
-  (let* ((extention 
-           (get-image-extention (get-image t 0 #t)))
-         (temp-name 
-           (string-append temp-dir "/temp-" (number->string (current-time)) "." extention))
+  (let* ((extention (get-image-extention (get-image t 0 #t)))
+         (temp-name (string-append temp-dir "/temp-" (number->string (current-time)) "." extention))
          (data-list 
            (get-image t 0 #f)))
     (when (and (list? data-list) (not (null? data-list)))
@@ -91,7 +90,7 @@
                 (binary-data (decode-base64 base64-str)))
             (string-save binary-data temp-name)
             (display* "Image has saved to " temp-name "\n"))))
-  (insert-latex))
+  (insert-latex-at-current-path))
 
 ; (get-image-extention (get-image t 0 #t)) 获取文件后缀，创建对应临时文件
 ; (get-image t 0 #f) 获取 raw-data
@@ -108,4 +107,4 @@
                 (binary-data (decode-base64 base64-str)))
             (string-save binary-data temp-name)
             (display* "Image has saved to " temp-name "\n"))))
-  (insert-latex))
+  (insert-latex t))
