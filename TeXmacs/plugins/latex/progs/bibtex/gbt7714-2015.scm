@@ -247,6 +247,13 @@
 	      (sep (if (< (bib-text-length v) 3) `(nbsp) " ")))
 	  `(concat ,(bib-translate "volume") ,sep ,v ,series)))))
 
+;; 重写技术报告编号格式
+(tm-define (bib-format-tr-number x)
+  (:mode bib-gbt7714-2015?)
+  ;; GBT 7714-2015 不要求输出 "Technical Report"，只输出报告编号
+  (let* ((n (bib-field x "number")))
+    (if (bib-null? n) "" n)))
+
 ;; URL/DOI 信息格式
 (tm-define (bib-format-url-doi x)
   (:mode bib-gbt7714-2015?)
@@ -373,3 +380,154 @@
                  ,(bib-format-pages x)))))
         ,(bib-new-block (bib-format-field x "note"))
         ,(bib-new-block (bib-format-url-doi x))))))
+
+;; 重写会议录格式以添加文献类型标识符 [C]
+(tm-define (bib-format-proceedings n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block
+           (if (bib-empty? x "editor")
+               (bib-format-field x "organization")
+               (bib-format-editor x)))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-Locase x "title")
+                    " "
+                    ,(bib-document-type-identifier x "proceedings")))
+         ,(bib-new-block
+           (if (bib-empty? x "address")
+               (bib-new-sentence
+                `(,(if (bib-empty? x "editor") ""
+                       (bib-format-field x "organization"))
+                  ,(bib-format-field x "publisher")
+                  ,(bib-format-date x)))
+               (bib-new-list-spc
+                `(,(bib-new-sentence
+                    `(,(bib-format-field x "address")
+                      ,(bib-format-date x)))
+                  ,(bib-new-sentence
+                    `(,(if (bib-empty? x "editor") ""
+                           (bib-format-field x "organization"))
+                      ,(bib-format-field x "publisher")))))))
+         ,(bib-new-block (bib-format-field x "note"))
+         ,(bib-new-block (bib-format-url-doi x))))))
+
+;; 重写手册格式以添加文献类型标识符 [S]
+(tm-define (bib-format-manual n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block
+           (if (bib-empty? x "author")
+               (if (bib-empty? x "organization") ""
+                   (bib-new-sentence
+                    `(,(bib-format-field x "organization")
+                      ,(bib-format-field x "address"))))
+               (bib-format-author x)))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-Locase x "title")
+                    " "
+                    ,(bib-document-type-identifier x "manual")))
+         ,(bib-new-block
+           (bib-new-sentence
+            `(,(bib-format-field x "organization")
+              ,(bib-format-field x "address")
+              ,(if (bib-empty? x "edition") ""
+                   `(concat ,(bib-format-field x "edition")
+                            ,(bib-translate " edition")))
+              ,(bib-format-date x))))
+         ,(bib-new-block (bib-format-field x "note"))
+         ,(bib-new-block (bib-format-url-doi x))))))
+
+;; 重写杂项文献格式以添加文献类型标识符 [EB]
+(tm-define (bib-format-misc n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-Locase x "title")
+                    " "
+                    ,(bib-document-type-identifier x "misc")))
+         ,(bib-new-case-preserved-block
+           (bib-new-case-preserved-sentence
+            `(,(bib-format-field-preserve-case x "howpublished")
+              ,(bib-format-date x))))
+         ,(bib-new-block (bib-format-field x "note"))
+         ,(bib-new-block (bib-format-url-doi x))))))
+
+;; 重写博士论文格式以添加文献类型标识符 [D]
+(tm-define (bib-format-phdthesis n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-Locase x "title")
+                    " "
+                    ,(bib-document-type-identifier x "phdthesis")))
+         ,(bib-new-block
+           (bib-new-sentence
+            `(,(if (bib-empty? x "type")
+                   (bib-translate "PhD thesis")
+                   (bib-format-field-Locase x "type"))
+              ,(bib-format-field x "school")
+              ,(bib-format-field x "address")
+              ,(bib-format-date x))))
+         ,(bib-new-block (bib-format-field x "note"))
+         ,(bib-new-block (bib-format-url-doi x))))))
+
+;; 重写硕士论文格式以添加文献类型标识符 [D]
+(tm-define (bib-format-mastersthesis n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-Locase x "title")
+                    " "
+                    ,(bib-document-type-identifier x "mastersthesis")))
+         ,(bib-new-block
+           (bib-new-sentence
+            `(,(if (bib-empty? x "type")
+                   (bib-translate "Master's thesis")
+                   (bib-format-field-Locase x "type"))
+              ,(bib-format-field x "school")
+              ,(bib-format-field x "address")
+              ,(bib-format-date x))))
+         ,(bib-new-block (bib-format-field x "note"))
+         ,(bib-new-block (bib-format-url-doi x))))))
+
+;; 重写报告格式以添加文献类型标识符 [R]
+(tm-define (bib-format-techreport n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-Locase x "title")
+                    " "
+                    ,(bib-document-type-identifier x "techreport")))
+         ,(bib-new-block
+           (bib-new-sentence
+            `(,(bib-format-tr-number x)
+              ,(bib-format-field x "institution")
+              ,(bib-format-field x "address")
+              ,(let* ((d (bib-field x "date"))
+                      (y (bib-field x "year"))
+                      (date-str (if (bib-null? d) y d)))
+                 (if (bib-null? date-str) "" `(concat "(" ,date-str ")"))))))
+         ,(bib-new-block (bib-format-field x "note"))
+         ,(bib-new-block (bib-format-url-doi x))))))
