@@ -64,6 +64,7 @@ extern bool   headless_mode;
 #ifdef QTTEXMACS
 static QTMApplication*     qtmapp    = NULL;
 static QTMCoreApplication* qtmcoreapp= NULL;
+bool                       show_startup_login_dialog ();
 #endif
 
 /******************************************************************************
@@ -235,8 +236,19 @@ main (int argc, char** argv) {
   // initialize the Qt application infrastructure
   if (headless_mode) qtmcoreapp= new QTMCoreApplication (argc, argv);
   else qtmapp= new QTMApplication (argc, argv);
-#endif
+
+  // before startup login dialog
   init_texmacs_path (argc, argv);
+  init_texmacs ();
+  init_plugins ();
+  // Show startup login dialog
+  if (!show_startup_login_dialog ()) {
+    // User rejected dialog, clean up and exit
+    if (headless_mode) delete qtmcoreapp;
+    else delete qtmapp;
+    return 1;
+  }
+#endif
 #ifdef QTTEXMACS
   if (!headless_mode) {
     // it this really necessary? Should be set in the metadata.
@@ -261,9 +273,6 @@ main (int argc, char** argv) {
   the_et      = tuple ();
   the_et->data= ip_observer (path ());
   cache_initialize ();
-  bench_start ("initialize texmacs");
-  init_texmacs ();
-  bench_cumul ("initialize texmacs");
   start_scheme (argc, argv, TeXmacs_main);
 #ifdef QTTEXMACS
   if (headless_mode) delete qtmcoreapp;
