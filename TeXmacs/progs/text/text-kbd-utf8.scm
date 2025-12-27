@@ -883,5 +883,5 @@
   (": z z z :" "<#1F4A4>"))
 
 (kbd-map
-  ("text :" (make-folded-comment "comment"))
-  ("text ;" (make-unfolded-comment "comment")))
+  ("text ;" (make-folded-comment "comment"))
+  ("text :" (make-unfolded-comment "comment")))
