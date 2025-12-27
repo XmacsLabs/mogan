@@ -319,7 +319,6 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
         if (N (image_data) > 0) {
           input_format= "picture";
           buf         = QByteArray (image_data.begin (), N (image_data));
-          input_format= "picture";
           clipboard_image_suffix= target_suffix;
         }
 #else
@@ -389,7 +388,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
       << image_h_string << "" << "";
     s= as_string (call ("convert", t, "texmacs-tree", "texmacs-snippet"));
   }
-  t= tuple ("extern", s, input_format, detected_format);
+  t= tuple ("extern", s);
   return true;
 }
 
