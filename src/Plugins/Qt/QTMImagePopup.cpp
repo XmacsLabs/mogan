@@ -92,7 +92,6 @@ void
 QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
                                int scroll_y, int canvas_x) {
   cachePosition (selr, magf, scroll_x, scroll_y, canvas_x);
-  hide ();
   int x, y;
   getCachedPosition (x, y);
   QPoint topLeft (x, y);
