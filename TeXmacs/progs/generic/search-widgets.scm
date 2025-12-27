@@ -116,34 +116,6 @@ action : string
 
 
 
-#|
-refresh-search-replace
-根据存储的状态刷新搜索/替换辅助窗口的显示和模式。
-
-语法
-----
-(refresh-search-replace)
-
-参数
-----
-无参数。
-
-返回值
-----
-#<unspecified>
-无显式返回值（返回 #<unspecified>）。
-
-逻辑
-----
-调用统一的辅助窗口刷新函数。
-
-注意
-----
-此函数在切换标签页或窗口状态变化时调用，确保辅助窗口与当前文档视图状态一致。
-状态通过 set-search-window-state 存储，每个文档视图有独立的搜索缓冲区。
-|#
-(tm-define (refresh-search-replace)
-  (refresh-auxiliary-widget))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Basic search and replace buffers management
