@@ -226,6 +226,14 @@
 (tm-define (kbd-cancel)
   (clipboard-clear "primary"))
 
+(tm-define (markdown-paste)
+  (clipboard-paste-import "verbatim" "primary")
+  (kbd-return)
+  (let* ((latex-code (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/md.tex")))
+         (parsed-latex (parse-latex latex-code))
+         (texmacs-latex (latex->texmacs parsed-latex)))
+    (insert texmacs-latex)))
+
 (tm-define (ocr-paste)
   (with data 
     (parse-texmacs-snippet (tree->string (tree-ref (clipboard-get "primary") 1)))
