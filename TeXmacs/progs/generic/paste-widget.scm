@@ -80,6 +80,12 @@
           (cons name (delete name l))))
       l)))
 
+(define (shortcut fm)
+  (cond ((and (in-math?) (== fm "latex")) "Ctrl+Shift+v")
+        ((== fm "verbatim") "Ctrl+Shift+v")
+        ((is-clipboard-image?) "Ctrl+Shift+v")
+        (else "none")))
+
 (tm-define (is-clipboard-image?)
   (with data (parse-texmacs-snippet (tree->string (tree-ref (clipboard-get "primary") 1)))
     (if (tree-is? (tree-ref data 0) 'image)
@@ -90,7 +96,6 @@
   (let* ((selected-format "verbatim")
          (tips1 "Please select...")
          (tips2 "")
-         (tips3 "")
          (plain-format-list    (list "Markdown" "LaTeX" "HTML" (translate "Plain text")))
          (math-format-list     (list "LaTeX" "MathML"))
          (program-format-list  (list (translate "Code")))
@@ -106,8 +111,7 @@
     ;; Initialize selection on first display
     (invisible (set! selected-format (car l)))
     (invisible (set! tips1 (translate (get-tips (convert-format-string-to-symbol selected-format)))))
-    (invisible (set! tips2 (translate "You can try using Enter, Esc, the Up arrow, and the Down arrow keys~")))
-    (invisible (set! tips3 (translate "(This feature can also be intelligently triggered using the Ctrl Shift V shortcut.)")))
+    (invisible (set! tips2 (translate "You can try using Enter, Esc, keys~")))
     (resize "350px" "250px"
       (padded
         (vertical
@@ -115,22 +119,24 @@
             (vertical
               (refreshable "clipboard-format"
                   (bold (text "From: "))
-                  (text (get-clipboard-format)))
+                  (text (get-clipboard-format))
               (glue #f #t 0 0)
-              (refreshable "current-mode"
                   (bold (text "Mode"))
-                  (text (get-mode)))
-              (glue #f #t 0 0))
+                  (text (get-mode))
+              (glue #f #t 0 0)
+                  (bold (text "shortcut"))
+                  (text (shortcut selected-format))))
             ///
             (refreshable "format-selection"
               (resize "150px" "150px"
                 (bold (text "As: "))
                 ===
                 (scrollable
-                  (choice (bstring-append tips egin 
+                  (choice (begin
                             (set! selected-format (convert-format-string-to-symbol (translate answer)))
-                            (set! tips (translate (get-tips selected-format)))
-                            (refresh-now "format-explanation"))
+                            (set! tips1 (translate (get-tips selected-format)))
+                            (refresh-now "format-explanation")
+                            (refresh-now "clipboard-format"))
                           l
                           (car l))))))
           ===
@@ -139,7 +145,7 @@
             (texmacs-output
               `(with "bg-color" "white"
                 "font-base-size" "14"
-                (document ,tips1 ,tips2 ,tips3))
+                (document ,tips1 ,tips2))
               '(style "generic"))))))
       (bottom-buttons
         >> ("ok" (cmd selected-format)) // ("cancel" (cmd #f)))))
