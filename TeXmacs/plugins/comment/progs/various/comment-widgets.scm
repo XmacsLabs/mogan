@@ -14,13 +14,31 @@
 (texmacs-module (various comment-widgets)
   (:use (various comment-edit)
         (utils library cursor)
-        (generic document-style)))
+        (generic document-style)
+        (generic generic-edit)
+        (kernel gui menu-widget)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Editing a simple comment in a separate widget
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define comment-quit-command ignore)
+(define comment-window-table (make-ahash-table))
+(define comment-text "comment")
+
+
+;; 设置comment编辑器窗口状态
+(tm-define (set-comment-window-state opened?)
+  (set-auxiliary-widget-state opened? 'comment-editor))
+
+;; 获取当前窗口的comment编辑器状态
+(tm-define (get-comment-window-state)
+  (let ((state (get-auxiliary-widget-state)))
+    (if state
+        (let ((opened? (car state))
+              (widget-type (cadr state)))
+          (and (== widget-type 'comment-editor) opened?))
+        #f)))
 
 (define (comment-editor-done)
   (and-let* ((popup  (current-buffer))
@@ -41,6 +59,8 @@
     (mirror-treat-pending))
   (when (defined? 'mirror-synchronize)
     (mirror-synchronize))
+  (set-comment-window-state #f)
+  (show-auxiliary-widget #f)
   (comment-quit-command))
 
 (tm-widget ((comment-editor u packs doc) quit)
@@ -54,13 +74,26 @@
         (explicit-buttons
           ("Done" (comment-editor-done)))))))
 
+;; 用于auxiliary-widget的comment编辑器widget
+(tm-widget ((comment-aux-widget u packs doc) quit)
+  (padded
+    (resize "600px" "300px"
+      (texmacs-input doc `(style (tuple ,@packs)) u))
+    ===
+    (hlist
+      >>
+      (explicit-buttons
+        ("Done" (comment-editor-done))))))
+
+;; Comment编辑器取消函数
+(tm-define ((comment-cancel u) . args)
+  (set-comment-window-state #f))
+
 (define (allow-init? init)
   (and (string? (car init))
        (not (string-starts? (car init) "page-"))))
 
-(tm-define (open-comment-editor)
-  (:applicable (behind-folded-comment?))
-  (:interactive #t)
+(tm-define (open-comment-editor-aux)
   (and-let* ((c (tm->stree (tree-innermost any-comment-context? #t)))
              (b (current-buffer-url))
              (u (string->url "tmfs://aux/edit-comment"))
@@ -71,14 +104,25 @@
              (env (apply append inits))
              (com (mirror-comment c 'carbon-comment))
              (doc `(with ,@env (document (hide-preamble ,pre) ,com))))
-    (dialogue-window (comment-editor u packs doc)
-                     (lambda x (set! comment-quit-command ignore))
-                     "Comment editor" u)
-    (buffer-set-master u b)))
+    (buffer-set-master u b)
+    (auxiliary-widget (comment-aux-widget u packs doc)
+                      (comment-cancel b)
+                      (translate comment-text) u)))
+
+(tm-define (open-comment-editor)
+  (:applicable (behind-folded-comment?))
+  (:interactive #t)
+  (set-comment-window-state #t)
+  (open-comment-editor-aux))
 
 (tm-define (kbd-control-return)
   (:require (behind-folded-comment?))
-  (open-comment-editor))
+  (let ((state (get-comment-window-state)))
+    (if state
+        (begin
+          (set-comment-window-state #f)
+          (show-auxiliary-widget #f))
+        (open-comment-editor))))
 
 (tm-define (kbd-control-return)
   (:require (inside? 'carbon-comment))
@@ -216,3 +260,6 @@
   (former key time)
   (when (has-comments-editor?)
     (sync-comments-cursor)))
+
+;; 注册comment编辑器widget类型
+(register-auxiliary-widget-type 'comment-editor open-comment-editor-aux)

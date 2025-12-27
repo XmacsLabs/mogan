@@ -13,6 +13,8 @@
 ;; See menu-define.scm for the grammar of menus
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(import (liii hashlib))
+
 (texmacs-module (kernel gui menu-widget)
   (:use (kernel gui menu-define) (kernel gui kbd-define)))
 
@@ -1574,6 +1576,45 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auxiliary Widget
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; 全局哈希表，存储辅助窗口状态
+(define auxiliary-widget-table (make-ahash-table))
+
+;; widget-type到action的映射表
+(define widget-type->action (make-ahash-table))
+
+;; 注册widget类型和对应的action函数
+(tm-define (register-auxiliary-widget-type widget-type action-func)
+  (ahash-set! widget-type->action widget-type action-func))
+
+;; 设置辅助窗口状态
+(tm-define (set-auxiliary-widget-state opened? widget-type)
+  (ahash-set! auxiliary-widget-table (current-view-url) (list opened? widget-type)))
+
+;; 获取辅助窗口状态
+(tm-define (get-auxiliary-widget-state)
+  (ahash-ref auxiliary-widget-table (current-view-url)))
+
+;; 关闭辅助窗口
+(tm-define (close-auxiliary-widget)
+  (let ((state (get-auxiliary-widget-state)))
+    (when state
+      (set-auxiliary-widget-state #f (cadr state))
+      (show-auxiliary-widget #f))))
+
+;; 刷新辅助窗口
+(tm-define (refresh-auxiliary-widget)
+  (let ((state (get-auxiliary-widget-state)))
+    (cond ((not state)
+           (show-auxiliary-widget #f))   ;; 状态为空，隐藏辅助窗口
+          ((not (car state))
+           (show-auxiliary-widget #f))   ;; 第一个是#f，隐藏辅助窗口
+          (else
+           (let* ((widget-type (cadr state))
+                  (action (ahash-ref widget-type->action widget-type)))
+             (if action
+                 (action)  ;; 调用对应的action函数
+                 (show-auxiliary-widget #f)))))))  ;; 没有对应的action，隐藏窗口
 
 (tm-define (auxiliary-widget menu-promise cmd name . opts)
   (:interactive #t)
