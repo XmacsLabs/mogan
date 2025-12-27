@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "QTMImagePopup.hpp"
+#include "bitmap_font.hpp"
 #include "qbuttongroup.h"
 #include "scheme.hpp"
 #include "server.hpp"
@@ -24,7 +25,10 @@ const string right_str= "\"right\"";
 
 // 悬浮菜单创建函数
 QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
-    : QWidget (parent), owner (owner), layout (nullptr) {
+    : QWidget (parent), owner (owner), layout (nullptr), cached_image_mid_x (0),
+      cached_image_mid_y (0), cached_scroll_x (0), cached_scroll_y (0),
+      cached_canvas_x (0), cached_canvas_y (0), cached_magf (0.0), 
+      current_align (""), painted (false), painted_count (0) {
   Q_INIT_RESOURCE (images);
   setObjectName ("image_popup");
   setWindowFlags (Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -90,21 +94,24 @@ QTMImagePopup::~QTMImagePopup () {}
 // 显示图片悬浮菜单，根据缩放比例决定是否显示
 void
 QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
-                               int scroll_y, int canvas_x) {
-  cachePosition (selr, magf, scroll_x, scroll_y, canvas_x);
-  if (cached_magf <= 0.16) {
+                               int scroll_y, int canvas_x, int canvas_y) {
+  if (painted) return;
+  cachePosition (selr, magf, scroll_x, scroll_y, canvas_x, canvas_y);
+  if (cached_magf <= 0.1) {
     setFixedSize (0, 0);
     return;
   }
-  hide ();
   autoSize ();
   int x, y;
   getCachedPosition (x, y);
-  QPoint topLeft (x, y);
-  move (topLeft);
-  raise ();
-  updateButtonStates ();
-  show ();
+  move(x, y);
+  if (painted_count == 2) {
+    show ();
+    painted= true;
+  }
+  else {
+    painted_count++;
+  }
 }
 
 void
@@ -142,40 +149,46 @@ QTMImagePopup::autoSize () {
   const double Scale     = Dpi / 96.0;
   const int    baseWidth = 200;
   const int    baseHeight= 50;
-  double       totalScale= Scale * cached_magf * 3.3;
+  double       totalScale= Scale * cached_magf * 3.0;
+  int          IconSize;
 #if defined(Q_OS_MAC)
-  const int IconSize= int (50 * Scale);
+  IconSize= int (50 * totalScale);
 #else
-  const int IconSize= int (40 * totalScale);
+  IconSize= int (40 * totalScale);
 #endif
+  if (cached_magf <= 0.283) {
+    cached_width = 169;
+    cached_height= 42;
+    IconSize= 25;
+    setFixedSize (169, 42);
+  }
+  else {
+    cached_width = baseWidth * totalScale;
+    cached_height= baseHeight * totalScale;
+    this->resize (int (baseWidth * totalScale), int (baseHeight * totalScale));
+  }
   leftBtn->setIconSize (QSize (IconSize, IconSize));
   middleBtn->setIconSize (QSize (IconSize, IconSize));
   rightBtn->setIconSize (QSize (IconSize, IconSize));
   ocrBtn->setIconSize (QSize (IconSize, IconSize));
-  setFixedSize (int (baseWidth * totalScale), int (baseHeight * totalScale));
-  updateGeometry ();
-  layout->update ();
 }
 
 // 缓存菜单显示位置
 void
 QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
-                              int scroll_y, int canvas_x) {
+                              int scroll_y, int canvas_x, int canvas_y) {
   cached_image_mid_x= (selr->x1 + selr->x2) / 2;
   cached_image_mid_y= selr->y2;
   cached_scroll_x   = scroll_x;
   cached_scroll_y   = scroll_y;
   cached_canvas_x   = canvas_x;
+  cached_canvas_y   = canvas_y;
   cached_magf       = magf;
 }
 
-// 计算菜单显示位置
+// 计算菜单显示位置 / 2
 void
 QTMImagePopup::getCachedPosition (int& x, int& y) {
-  x= ((cached_image_mid_x - cached_scroll_x - 500) * cached_magf +
-      cached_canvas_x) /
-         256 -
-     (this->width () / 2);
-  y= -((cached_image_mid_y - 5000 - cached_scroll_y) * cached_magf) / 256 -
-     this->height () * 1.2;
+  x= (cached_image_mid_x * cached_magf) / 256 + cached_canvas_x / 256 - (cached_scroll_x * cached_magf) / 256 - cached_width * 0.5;
+  y= -(cached_image_mid_y * cached_magf / 256 + (cached_canvas_y / 256 + 161) - (cached_scroll_y * cached_magf) / 256 + 160 * cached_magf);
 }
