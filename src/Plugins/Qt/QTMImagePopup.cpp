@@ -1,8 +1,8 @@
 
 /******************************************************************************
- * MODULE     : QTMMathCompletionPopup.cpp
+ * MODULE     : QTMImagePopup.cpp
  * DESCRIPTION:
- * COPYRIGHT  : (C) 2025 Mogan STEM authors
+ * COPYRIGHT  : (C) 2025 MoonLL, Yuki Lu
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -22,8 +22,10 @@ const string left_str = "\"left\"";
 const string mid_str  = "\"center\"";
 const string right_str= "\"right\"";
 
+// 悬浮菜单创建函数
 QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
     : QWidget (parent), owner (owner), layout (nullptr) {
+  Q_INIT_RESOURCE (images);
   setObjectName ("image_popup");
   setWindowFlags (Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
   setAttribute (Qt::WA_ShowWithoutActivating);
@@ -34,7 +36,7 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   layout->setSizeConstraint (QLayout::SetMinimumSize);
   layout->setSpacing (1);
   setLayout (layout);
-  // 阴影效果
+
   QGraphicsDropShadowEffect* effect= new QGraphicsDropShadowEffect (this);
   effect->setBlurRadius (40);
   effect->setOffset (0, 4);
@@ -44,22 +46,18 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   leftBtn= new QToolButton ();
   leftBtn->setObjectName ("image-align-button");
   leftBtn->setProperty ("icon-name", "left");
-  leftBtn->setIcon (QIcon (":/window-bar/left-align.svg"));
   leftBtn->setCheckable (true);
   middleBtn= new QToolButton ();
   middleBtn->setObjectName ("image-align-button");
   middleBtn->setProperty ("icon-name", "center");
-  middleBtn->setIcon (QIcon (":/window-bar/middle-align.svg"));
   middleBtn->setCheckable (true);
   rightBtn= new QToolButton ();
   rightBtn->setObjectName ("image-align-button");
   rightBtn->setProperty ("icon-name", "right");
-  rightBtn->setIcon (QIcon (":/window-bar/right-align.svg"));
   rightBtn->setCheckable (true);
   ocrBtn= new QToolButton ();
   ocrBtn->setObjectName ("image-align-button");
   ocrBtn->setProperty ("icon-name", "ocr");
-  ocrBtn->setIcon (QIcon (":/window-bar/ocr.svg"));
   QButtonGroup* alignGroup= new QButtonGroup (this);
   alignGroup->addButton (leftBtn);
   alignGroup->addButton (middleBtn);
@@ -89,6 +87,7 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
 
 QTMImagePopup::~QTMImagePopup () {}
 
+// 显示图片悬浮菜单，根据缩放比例决定是否显示
 void
 QTMImagePopup::showImagePopup (rectangle selr, double magf, int scroll_x,
                                int scroll_y, int canvas_x) {
@@ -135,6 +134,7 @@ QTMImagePopup::updatePosition () {
   move (pos_x, pos_y);
 }
 
+// 根据DPI缩放和图片缩放比例自动调整按钮大小和窗口尺寸
 void
 QTMImagePopup::autoSize () {
   QScreen*     Screen    = QGuiApplication::primaryScreen ();
@@ -157,6 +157,7 @@ QTMImagePopup::autoSize () {
   layout->update ();
 }
 
+// 缓存菜单显示位置
 void
 QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
                               int scroll_y, int canvas_x) {
@@ -168,6 +169,7 @@ QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
   cached_magf       = magf;
 }
 
+// 计算菜单显示位置
 void
 QTMImagePopup::getCachedPosition (int& x, int& y) {
   x= ((cached_image_mid_x - cached_scroll_x - 500) * cached_magf +
