@@ -1454,7 +1454,7 @@ function main()
             {
                 scm_name = "clipboard-format",
                 cpp_name = "selection_format",
-                ret_type = "tree",
+                ret_type = "string",
                 arg_list = {
                     "string"
                 }

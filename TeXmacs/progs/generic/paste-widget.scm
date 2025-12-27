@@ -64,11 +64,7 @@
         (else "Please select...")))
 
 (define (get-clipboard-format)
-  (let* ((data (clipboard-format "primary"))
-         (fm (tree->string (tree-ref data 3))))
-    (if (!= fm "")
-      (convert-symbol-to-format-string fm)
-      (convert-symbol-to-format-string "verbatim"))))
+  (clipboard-format "primary"))
 
 (define (init-choices l)
   (let* ((data (clipboard-format "primary"))
@@ -96,7 +92,7 @@
   (let* ((selected-format "verbatim")
          (tips1 "Please select...")
          (tips2 "")
-         (tips3 (string-append (translate "shortcut") ":" (translate "none")))
+         (tips3 (string-append (translate "shortcut") ": " (translate "none")))
          (plain-format-list    (list "Markdown" "LaTeX" "HTML" (translate "Plain text")))
          (math-format-list     (list "LaTeX" "MathML"))
          (program-format-list  (list (translate "Code")))
@@ -133,7 +129,7 @@
                   (choice (begin
                             (set! selected-format (convert-format-string-to-symbol (translate answer)))
                             (set! tips1 (translate (get-tips selected-format)))
-                            (set! tips3 (string-append (translate "shortcut") ":" (shortcut selected-format)))
+                            (set! tips3 (string-append (translate "shortcut") ": " (shortcut selected-format)))
                             (refresh-now "format-explanation")
                             (refresh-now "paste-shortcut"))
                           l

@@ -254,7 +254,8 @@ qt_gui_rep::~qt_gui_rep () {
  ******************************************************************************/
 
 bool
-qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
+qt_gui_rep::get_selection (string key, tree& t, string& s, string format,
+                           string& detected_format) {
   QClipboard*      cb  = QApplication::clipboard ();
   QClipboard::Mode mode= QClipboard::Clipboard;
   if (key == "primary" || (key == "mouse" && cb->supportsSelection ()))
@@ -266,7 +267,6 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   string           input_format;
   string           image_w_string, image_h_string;
   string           clipboard_image_suffix= "png";
-  string           detected_format;
 
   s= "";
   t= "none";
@@ -1065,10 +1065,11 @@ set_selection (string key, tree t, string s, string sv, string sh,
 }
 
 bool
-get_selection (string key, tree& t, string& s, string format) {
+get_selection (string key, tree& t, string& s, string format,
+               string& detected_format) {
   // Retrieve the selection 't' with string equivalent 's' from clipboard 'cb'
   // Returns true on success; sets t to (extern s) for external selections
-  return the_gui->get_selection (key, t, s, format);
+  return the_gui->get_selection (key, t, s, format, detected_format);
 }
 
 void
