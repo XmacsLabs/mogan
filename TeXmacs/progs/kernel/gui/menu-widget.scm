@@ -1587,21 +1587,13 @@
 (tm-define (register-auxiliary-widget-type widget-type action-func)
   (ahash-set! widget-type->action widget-type action-func))
 
-;; 获取辅助缓冲区URL
-(define (auxiliary-buffer)
-  (let* ((u (current-buffer-url))
-         (root-url "tmfs://aux/widget"))
-    (if (== (url-root u) root-url)
-        u
-        (url-append root-url (md5 (url->string (current-view-url)))))))
-
 ;; 设置辅助窗口状态
 (tm-define (set-auxiliary-widget-state opened? widget-type)
-  (ahash-set! auxiliary-widget-table (auxiliary-buffer) (list opened? widget-type)))
+  (ahash-set! auxiliary-widget-table (current-view-url) (list opened? widget-type)))
 
 ;; 获取辅助窗口状态
 (tm-define (get-auxiliary-widget-state)
-  (ahash-ref auxiliary-widget-table (auxiliary-buffer)))
+  (ahash-ref auxiliary-widget-table (current-view-url)))
 
 ;; 关闭辅助窗口
 (tm-define (close-auxiliary-widget)
@@ -1618,8 +1610,8 @@
           ((not (car state))
            (show-auxiliary-widget #f))   ;; 第一个是#f，隐藏辅助窗口
           (else
-           (let ((widget-type (cadr state))
-                 (action (ahash-ref widget-type->action widget-type)))
+           (let* ((widget-type (cadr state))
+                  (action (ahash-ref widget-type->action widget-type)))
              (if action
                  (action)  ;; 调用对应的action函数
                  (show-auxiliary-widget #f)))))))  ;; 没有对应的action，隐藏窗口
