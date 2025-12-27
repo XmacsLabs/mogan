@@ -8,55 +8,36 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "startup_login_dialog_p.hpp"
+#include "qt_utilities.hpp"
+#include "startup_login_dialog.hpp"
 #include <QShowEvent>
 #include <QCloseEvent>
 #include <QApplication>
 #include <QStyle>
+#include <QIcon>
+#include <QPixmap>
+#include <QColor>
 
 namespace QWK {
 
-// StartupLoginDialogPrivate implementation
-StartupLoginDialogPrivate::StartupLoginDialogPrivate()
-    : q_ptr(nullptr)
-    , titleLabel(nullptr)
-    , subtitleLabel(nullptr)
-    , featureLabel1(nullptr)
-    , featureLabel2(nullptr)
-    , featureLabel3(nullptr)
-    , featureLabel4(nullptr)
-    , loginButton(nullptr)
-    , skipButton(nullptr)
-    , mainLayout(nullptr)
-    , featureLayout(nullptr)
-    , buttonLayout(nullptr)
-    , result(StartupLoginDialog::DialogRejected)
+// StartupLoginDialog implementation
+void StartupLoginDialog::setupUi()
 {
-}
-
-StartupLoginDialogPrivate::~StartupLoginDialogPrivate()
-{
-}
-
-void StartupLoginDialogPrivate::setupUi(QWidget* parent)
-{
-    Q_Q(StartupLoginDialog);
-
     // Create title label
-    titleLabel = new QLabel(QObject::tr("Welcome to Mogan"), parent);
+    titleLabel = new QLabel(qt_translate("欢迎使用 Liii STEM"), this); // 欢迎使用 Liii STEM
     titleLabel->setAlignment(Qt::AlignCenter);
     titleLabel->setObjectName("titleLabel");
 
     // Create subtitle label
-    subtitleLabel = new QLabel(QObject::tr("Log in to sync settings and access all features"), parent);
+    subtitleLabel = new QLabel(qt_translate("登录即可同步设置并访问所有功能。"), this); // 登录即可同步设置并访问所有功能。
     subtitleLabel->setAlignment(Qt::AlignCenter);
     subtitleLabel->setObjectName("subtitleLabel");
 
     // Create feature labels
-    featureLabel1 = new QLabel(QStringLiteral("✓ Cloud sync your settings"), parent);
-    featureLabel2 = new QLabel(QStringLiteral("✓ Team collaboration features"), parent);
-    featureLabel3 = new QLabel(QStringLiteral("✓ Advanced code analysis"), parent);
-    featureLabel4 = new QLabel(QStringLiteral("✓ Professional template library"), parent);
+    featureLabel1 = new QLabel(qt_translate("1. 注册即送14天会员期限"), this); // 注册即送14天会员期限
+    featureLabel2 = new QLabel(qt_translate("2. 登录即可同步设置并访问所有功能。"), this); // 登录即可同步设置并访问所有功能。
+    featureLabel3 = new QLabel(qt_translate("3. 登录即可与AI进行对话"), this); // 登录即可与AI进行对话
+    featureLabel4 = new QLabel(qt_translate("4. 登录即享Markdown无缝导入"), this); // 登录即享Markdown无缝导入
 
     featureLabel1->setObjectName("featureLabel");
     featureLabel2->setObjectName("featureLabel");
@@ -64,11 +45,11 @@ void StartupLoginDialogPrivate::setupUi(QWidget* parent)
     featureLabel4->setObjectName("featureLabel");
 
     // Create buttons
-    loginButton = new QPushButton(QObject::tr("Log In"), parent);
+    loginButton = new QPushButton(qt_translate("登录"), this); // 登录 Log In
     loginButton->setObjectName("loginButton");
     loginButton->setDefault(true);
 
-    skipButton = new QPushButton(QObject::tr("Skip Login"), parent);
+    skipButton = new QPushButton(qt_translate("跳过登录"), this); // 跳过登录 Skip Login
     skipButton->setObjectName("skipButton");
 
     // Create layouts
@@ -85,7 +66,7 @@ void StartupLoginDialogPrivate::setupUi(QWidget* parent)
     buttonLayout->addWidget(skipButton);
     buttonLayout->addStretch();
 
-    mainLayout = new QVBoxLayout(parent);
+    mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(titleLabel);
     mainLayout->addWidget(subtitleLabel);
     mainLayout->addSpacing(20);
@@ -93,10 +74,10 @@ void StartupLoginDialogPrivate::setupUi(QWidget* parent)
     mainLayout->addStretch();
     mainLayout->addLayout(buttonLayout);
 
-    parent->setLayout(mainLayout);
+    setLayout(mainLayout);
 }
 
-QString StartupLoginDialogPrivate::styleSheet() const
+QString StartupLoginDialog::styleSheet() const
 {
     return QStringLiteral(R"(
         QDialog {
@@ -162,40 +143,51 @@ QString StartupLoginDialogPrivate::styleSheet() const
     )");
 }
 
-// StartupLoginDialog implementation
 StartupLoginDialog::StartupLoginDialog(QWidget* parent)
     : QDialog(parent)
-    , d_ptr(new StartupLoginDialogPrivate())
+    , titleLabel(nullptr)
+    , subtitleLabel(nullptr)
+    , featureLabel1(nullptr)
+    , featureLabel2(nullptr)
+    , featureLabel3(nullptr)
+    , featureLabel4(nullptr)
+    , loginButton(nullptr)
+    , skipButton(nullptr)
+    , mainLayout(nullptr)
+    , featureLayout(nullptr)
+    , buttonLayout(nullptr)
+    , result(DialogRejected)
 {
-    Q_D(StartupLoginDialog);
-    d->q_ptr = this;
 
-    setWindowTitle(QObject::tr("Welcome to Mogan"));
-    setFixedSize(500, 400);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    QPixmap transparentPixmap(16, 16);
+    transparentPixmap.fill(QColor(0, 0, 0, 0));
+    setWindowIcon(QIcon(transparentPixmap));
+    setFixedSize(500, 400);
+    setWindowTitle(QObject::tr(" "));
 
     // Set style sheet
-    setStyleSheet(d->styleSheet());
+    setStyleSheet(styleSheet());
 
     // Setup UI
-    d->setupUi(this);
+    setupUi();
 
     // Connect signals
-    connect(d->loginButton, &QPushButton::clicked, this, [this, d]() {
-        d->result = StartupLoginDialog::LoginClicked;
+    connect(loginButton, &QPushButton::clicked, this, [this]() {
+        result = StartupLoginDialog::LoginClicked;
         emit loginRequested();
         accept();
     });
 
-    connect(d->skipButton, &QPushButton::clicked, this, [this, d]() {
-        d->result = StartupLoginDialog::SkipClicked;
+    connect(skipButton, &QPushButton::clicked, this, [this]() {
+        result = StartupLoginDialog::SkipClicked;
         emit skipRequested();
         accept();
     });
 
     // Connect reject signal (e.g., window close button)
-    connect(this, &QDialog::rejected, this, [this, d]() {
-        d->result = StartupLoginDialog::DialogRejected;
+    connect(this, &QDialog::rejected, this, [this]() {
+        result = StartupLoginDialog::DialogRejected;
     });
 }
 
@@ -205,10 +197,9 @@ StartupLoginDialog::~StartupLoginDialog()
 
 StartupLoginDialog::Result StartupLoginDialog::execWithResult()
 {
-    Q_D(StartupLoginDialog);
-    d->result = DialogRejected;
+    result = DialogRejected;
     if (exec() == QDialog::Accepted) {
-        return d->result;
+        return result;
     }
     return DialogRejected;
 }

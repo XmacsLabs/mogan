@@ -12,14 +12,15 @@
 #define STARTUP_LOGIN_DIALOG_H
 
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QHBoxLayout>
 
 namespace QWK {
 
-class StartupLoginDialogPrivate;
-
 class StartupLoginDialog : public QDialog {
   Q_OBJECT
-  Q_DECLARE_PRIVATE(StartupLoginDialog)
 
 public:
   enum Result {
@@ -41,7 +42,24 @@ protected:
   void showEvent(QShowEvent* event) override;
 
 private:
-  QScopedPointer<StartupLoginDialogPrivate> d_ptr;
+  void setupUi();
+  QString styleSheet() const;
+
+  // UI elements
+  QLabel* titleLabel;
+  QLabel* subtitleLabel;
+  QLabel* featureLabel1;
+  QLabel* featureLabel2;
+  QLabel* featureLabel3;
+  QLabel* featureLabel4;
+  QPushButton* loginButton;
+  QPushButton* skipButton;
+  QVBoxLayout* mainLayout;
+  QVBoxLayout* featureLayout;
+  QHBoxLayout* buttonLayout;
+
+  // Dialog result
+  Result result;
 };
 
 } // namespace QWK
