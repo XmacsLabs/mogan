@@ -74,8 +74,10 @@
   (let* ((data (clipboard-format "primary"))
          (fm (tree->string (tree-ref data 3))))
     (if (!= fm "")
-      (let* ((name (convert-symbol-to-format-string fm)))
-        (cons name (delete name l)))
+      (if (== fm "verbatim")
+        l
+        (let* ((name (convert-symbol-to-format-string fm)))
+          (cons name (delete name l))))
       l)))
 
 (tm-define (is-clipboard-image?)
@@ -86,8 +88,10 @@
 
 (tm-widget (clipboard-paste-from-widget cmd)
   (let* ((selected-format "verbatim")
-         (tips "Please select...")
-         (plain-format-list (list "LaTeX" "HTML" (translate "Plain text") "Markdown"))
+         (tips1 "Please select...")
+         (tips2 "")
+         (tips3 "")
+         (plain-format-list    (list "Markdown" "LaTeX" "HTML" (translate "Plain text")))
          (math-format-list     (list "LaTeX" "MathML"))
          (program-format-list  (list (translate "Code")))
          (graphics-format-list (list "graphics"))
@@ -101,40 +105,42 @@
 
     ;; Initialize selection on first display
     (invisible (set! selected-format (car l)))
-    (invisible (set! tips (translate (get-tips (convert-format-string-to-symbol selected-format)))))
-
-    (padded
-      (vertical
-        (horizontal
-          (vertical
-            (refreshable "clipboard-format"
-                (bold (text "From: "))
-                (text (get-clipboard-format)))
-            (glue #f #t 0 0)
-            (refreshable "current-mode"
-                (bold (text "Mode"))
-                (text (get-mode)))
-            (glue #f #t 0 0))
-          ///
-          (refreshable "format-selection"
-            (resize "150px" "150px"
-              (bold (text "As: "))
-              ===
-              (scrollable
-                (choice (begin 
-                          (set! selected-format (convert-format-string-to-symbol (translate answer)))
-                          (set! tips (translate (get-tips selected-format)))
-                          (refresh-now "format-explanation"))
-                        l
-                        (car l))))))
-        ===
-        (refreshable "format-explanation"
-          (bold (text "Tips"))
-          (texmacs-output
-            `(with "bg-color" "white"
-               "font-base-size" "14"
-               (document ,tips))
-            '(style "generic")))))
+    (invisible (set! tips1 (translate (get-tips (convert-format-string-to-symbol selected-format)))))
+    (invisible (set! tips2 (translate "You can try using Enter, Esc, the Up arrow, and the Down arrow keys~")))
+    (invisible (set! tips3 (translate "(This feature can also be intelligently triggered using the Ctrl Shift V shortcut.)")))
+    (resize "350px" "250px"
+      (padded
+        (vertical
+          (horizontal
+            (vertical
+              (refreshable "clipboard-format"
+                  (bold (text "From: "))
+                  (text (get-clipboard-format)))
+              (glue #f #t 0 0)
+              (refreshable "current-mode"
+                  (bold (text "Mode"))
+                  (text (get-mode)))
+              (glue #f #t 0 0))
+            ///
+            (refreshable "format-selection"
+              (resize "150px" "150px"
+                (bold (text "As: "))
+                ===
+                (scrollable
+                  (choice (bstring-append tips egin 
+                            (set! selected-format (convert-format-string-to-symbol (translate answer)))
+                            (set! tips (translate (get-tips selected-format)))
+                            (refresh-now "format-explanation"))
+                          l
+                          (car l))))))
+          ===
+          (refreshable "format-explanation"
+            (bold (text "Tips"))
+            (texmacs-output
+              `(with "bg-color" "white"
+                "font-base-size" "14"
+                (document ,tips1 ,tips2 ,tips3))
+              '(style "generic"))))))
       (bottom-buttons
         >> ("ok" (cmd selected-format)) // ("cancel" (cmd #f)))))
 
