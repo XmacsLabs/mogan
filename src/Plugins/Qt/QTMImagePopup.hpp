@@ -31,6 +31,9 @@ protected:
   int                        cached_scroll_x; // 页面滚动位置x
   int                        cached_scroll_y; // 页面滚动位置y
   int                        cached_canvas_x;
+  int                        cached_canvas_y;
+  int                        cached_width;
+  int                        cached_height;
   double                     cached_magf; // 缩放因子
   tree                       current_tree;
   string                     current_align;
@@ -39,13 +42,15 @@ protected:
   QToolButton*               rightBtn;
   QToolButton*               ocrBtn;
   QString                    btn_style;
+  bool                       painted;
+  int                        painted_count;
 
 public:
   QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner);
   ~QTMImagePopup ();
 
   void showImagePopup (rectangle selr, double magf, int scroll_x, int scroll_y,
-                       int canvas_x);
+                       int canvas_x, int canvas_y);
   void updatePosition ();
   void scrollBy (int x, int y);
   void setImageTree (tree t);
@@ -54,7 +59,7 @@ public:
 
 protected:
   void cachePosition (rectangle selr, double magf, int scroll_x, int scroll_y,
-                      int canvas_x);
+                      int canvas_x, int canvas_y);
   void getCachedPosition (int& x, int& y);
 };
 
