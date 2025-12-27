@@ -13,8 +13,10 @@
 
 (texmacs-module (text text-kbd-utf8)
   (:use (generic generic-kbd)
-	(utils edit auto-close)
-	(text text-edit)))
+        (utils edit auto-close)
+        (text text-edit)
+        (various comment-edit)
+        (various comment-widgets)))
 
 (kbd-map
   (:mode in-text?)
@@ -879,3 +881,7 @@
   (": y u m :" "<#1F60B>")
   (": z a p :" "<#26A1>")
   (": z z z :" "<#1F4A4>"))
+
+(kbd-map
+  ("text ;" (make-folded-comment "comment"))
+  ("text :" (make-unfolded-comment "comment")))
