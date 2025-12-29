@@ -20,6 +20,7 @@
 #include <QIcon>
 #include <QPainter>
 #include <QPen>
+#include <cmath>
 
 const string left_str = "\"left\"";
 const string mid_str  = "\"center\"";
@@ -212,6 +213,8 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
     scale= screen ? screen->devicePixelRatio () : 1.0; // 正确的屏幕缩放比
   #endif
     cout << "scale (DPI-based): " << scale << LF;
+    scale = std::floor(scale + 0.25);
+    cout << "prefer floor scale (DPI-based): " << scale << LF;
 
 
   x     = x1 / scale + cached_canvas_x / 256 - (cached_scroll_x / 256 * cached_magf) -
