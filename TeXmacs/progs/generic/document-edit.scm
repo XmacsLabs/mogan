@@ -217,8 +217,9 @@
   (:check-mark "*" test-document-language?)
   (when (in? lan supported-languages)
     (let* ((old (get-style-list))
-           (rem (list-difference old supported-languages))
-           (new (append rem (if (== lan "english") (list) (list lan)))))
+           (rem (list-difference old (append supported-languages (list "table-captions-above"))))
+           (nlan (append rem (if (== lan "english") (list) (list lan))))
+           (new (append nlan (if (== lan "chinese") (list "table-captions-above") (list)))))
       (when (!= new old)
         (set-style-list new)))))
 
