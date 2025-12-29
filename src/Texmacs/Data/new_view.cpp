@@ -754,6 +754,8 @@ focus_on_buffer (url name) {
     if (N (vws) > 0) r= vws[0];
   }
   if (is_none (r)) return false;
+  tm_view new_vw= concrete_view (r);
+  send_keyboard_focus (new_vw->ed);
   set_current_view (r);
   return true;
 }
