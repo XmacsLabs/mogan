@@ -22,7 +22,6 @@
 (menu-bind comment-menu
   (:require (in-comment?))
   ((shortcut "Edit comment" "C-return") (open-comment-editor))
-  ("Edit comments" (open-comments-editor))
   ---
   ("First comment" (go-to-comment :first))
   ("Previous comment" (go-to-comment :previous))
