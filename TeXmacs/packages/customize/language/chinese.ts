@@ -44,8 +44,6 @@
 
   <assign|par-spacing|kaiming>
 
-  <use-package|table-captions-above>
-
   <\active*>
     <\src-comment>
       Document in Chinese should indent every paragraph, though some
