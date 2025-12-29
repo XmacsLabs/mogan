@@ -765,7 +765,8 @@ qt_simple_widget_rep::show_image_popup (tree current_tree, rectangle selr,
                                         int canvas_x, int canas_y) {
   ensure_image_popup ();
   imagePopUp->setImageTree (current_tree);
-  imagePopUp->showImagePopup (selr, magf, scroll_x, scroll_y, canvas_x,
+  qt_renderer_rep* ren= the_qt_renderer ();
+  imagePopUp->showImagePopup (ren, selr, magf, scroll_x, scroll_y, canvas_x,
                               canas_y);
 }
 
@@ -785,6 +786,7 @@ qt_simple_widget_rep::scroll_image_popup_by (SI x, SI y) {
     QPoint qp (x, y);
     coord2 p= from_qpoint (qp);
     imagePopUp->scrollBy (p.x1, p.x2);
-    imagePopUp->updatePosition ();
+    qt_renderer_rep* ren= the_qt_renderer ();
+    imagePopUp->updatePosition (ren);
   }
 }
