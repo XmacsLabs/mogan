@@ -25,7 +25,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (beamer-themes)
-  (list "dark" "blackboard" "bluish" "boring-white" "dark-vador"
+  (list "bluish" "dark" "blackboard" "boring-white" "dark-vador"
         "granite" "ice" "manila-paper" "metal" "pale-blue"
         "pine" "reddish" "ridged-paper" "rough-paper" "xperiment"))
 
