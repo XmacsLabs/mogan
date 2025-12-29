@@ -19,10 +19,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (basic-themes)
-  (list "blackboard" "bluish" "boring-white" "dark-vador" "granite"
-        "ice" "manila-paper" "metal" "pale-blue"
-        "pine" "reddish" "ridged-paper" "rough-paper"
-        "xperiment"))
+  (list "dark" "blackboard" "bluish" "boring-white" "dark-vador"
+        "granite" "ice" "manila-paper" "metal" "pale-blue"
+        "pine" "reddish" "ridged-paper" "rough-paper" "xperiment"))
 
 (tm-define (current-basic-theme)
   (with l (get-style-list)
