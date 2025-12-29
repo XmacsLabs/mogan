@@ -51,8 +51,8 @@ public:
   QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner);
   ~QTMImagePopup ();
 
-  void showImagePopup (qt_renderer_rep* ren, rectangle selr, double magf, int scroll_x, int scroll_y,
-                       int canvas_x, int canvas_y);
+  void showImagePopup (qt_renderer_rep* ren, rectangle selr, double magf,
+                       int scroll_x, int scroll_y, int canvas_x, int canvas_y);
   void updatePosition (qt_renderer_rep* ren);
   void scrollBy (int x, int y);
   void setImageTree (tree t);

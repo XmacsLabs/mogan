@@ -95,8 +95,9 @@ QTMImagePopup::~QTMImagePopup () {}
 
 // 显示图片悬浮菜单，根据缩放比例决定是否显示
 void
-QTMImagePopup::showImagePopup (qt_renderer_rep* ren, rectangle selr, double magf, int scroll_x,
-                               int scroll_y, int canvas_x, int canvas_y) {
+QTMImagePopup::showImagePopup (qt_renderer_rep* ren, rectangle selr,
+                               double magf, int scroll_x, int scroll_y,
+                               int canvas_x, int canvas_y) {
   if (painted) return;
   cachePosition (selr, magf, scroll_x, scroll_y, canvas_x, canvas_y);
   if (cached_magf <= 0.1) {
@@ -198,12 +199,14 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
   ren->decode (selr->x2, selr->y2, rx2, ry2);
   int x1= (int) ((rx1 + rx2) / 2) * cached_magf;
   int y1= (int) ((ry2) *cached_magf);
-  x= x1 + cached_canvas_x / 256 - (cached_scroll_x  / 256 * cached_magf) -
+  x     = x1 + cached_canvas_x / 256 - (cached_scroll_x / 256 * cached_magf) -
      cached_width * 0.5;
-  y= y1 - (cached_canvas_y / 256 + 161) + (cached_scroll_y / 256 * cached_magf) - cached_height;
-  
+  y= y1 - (cached_canvas_y / 256 + 161) +
+     (cached_scroll_y / 256 * cached_magf) - cached_height;
+
   // x= (cached_image_mid_x * cached_magf) / 256 + cached_canvas_x / 256 -
   //    (cached_scroll_x * cached_magf) / 256 - cached_width * 0.5;
-  // y= -(cached_image_mid_y * cached_magf / 256 + (cached_canvas_y / 256 + 161) -
+  // y= -(cached_image_mid_y * cached_magf / 256 + (cached_canvas_y / 256 + 161)
+  // -
   //     (cached_scroll_y * cached_magf) / 256 + 160 * cached_magf);
 }
