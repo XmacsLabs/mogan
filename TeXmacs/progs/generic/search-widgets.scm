@@ -788,7 +788,8 @@ tree 或 #f
         (begin
           (buffer-set-body aux `(document ,(selection-tree)))))
       (perform-search*)
-      (buffer-focus (search-buffer)))))
+      (buffer-focus (search-buffer))
+      (go-end))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search and replace widget
@@ -908,7 +909,8 @@ tree 或 #f
         (begin
           (buffer-set-body saux `(document ,(selection-tree)))))
       (perform-search*)
-      (buffer-focus (search-buffer)))))
+      (buffer-focus (search-buffer))
+      (go-end))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Search toolbar
