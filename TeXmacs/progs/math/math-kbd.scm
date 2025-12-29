@@ -2615,7 +2615,7 @@
   ("U U var var var var var var" "<b-up-U>")
   ("V V" "<bbb-V>")
   ("V V var" "<cal-V>")
-  ("V V var var" (math-insert '(with "math-font" "cal*" "U")))
+  ("V V var var" (math-insert '(with "math-font" "cal*" "V")))
   ("V V var var var" "<frak-V>")
   ("V V var var var var" "<b-V>")
   ("V V var var var var var" "<up-V>")
