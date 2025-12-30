@@ -760,14 +760,21 @@ qt_simple_widget_rep::ensure_image_popup () {
 }
 
 void
-qt_simple_widget_rep::show_image_popup (tree current_tree, rectangle selr,
+qt_simple_widget_rep::show_image_popup (tree& et, path current_path, tree current_tree, rectangle selr,
                                         double magf, int scroll_x, int scroll_y,
                                         int canvas_x, int canas_y) {
   ensure_image_popup ();
   imagePopUp->setImageTree (current_tree);
-  qt_renderer_rep* ren= the_qt_renderer ();
-  imagePopUp->showImagePopup (ren, selr, magf, scroll_x, scroll_y, canvas_x,
+  imagePopUp->setCurrentPath (current_path);
+  imagePopUp->setTreeref (et);
+  if (imagePopUp->isDocument()) {
+    qt_renderer_rep* ren= the_qt_renderer ();
+    imagePopUp->showImagePopup (ren, selr, magf, scroll_x, scroll_y, canvas_x,
                               canas_y);
+  }
+  else {
+    return;
+  }
 }
 
 void

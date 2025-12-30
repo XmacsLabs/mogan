@@ -11,11 +11,14 @@
 
 #include "QTMImagePopup.hpp"
 #include "bitmap_font.hpp"
+#include "moebius/tree_label.hpp"
+#include "observer.hpp"
 #include "qbuttongroup.h"
 #include "qt_renderer.hpp"
 #include "scheme.hpp"
 #include "server.hpp"
 #include "tm_ostream.hpp"
+#include "path.hpp"
 
 #include <QIcon>
 #include <QPainter>
@@ -31,7 +34,7 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
     : QWidget (parent), owner (owner), layout (nullptr), cached_image_mid_x (0),
       cached_image_mid_y (0), cached_scroll_x (0), cached_scroll_y (0),
       cached_canvas_x (0), cached_canvas_y (0), cached_magf (0.0),
-      current_align (""), painted (false), painted_count (0) {
+      current_align (""), painted (false), painted_count (0), et (*(new tree ())) {
   Q_INIT_RESOURCE (images);
   setObjectName ("image_popup");
   setWindowFlags (Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -124,6 +127,16 @@ QTMImagePopup::setImageTree (tree t) {
 }
 
 void
+QTMImagePopup::setCurrentPath (path p) {
+  this->current_path= p;
+}
+
+void
+QTMImagePopup::setTreeref (tree& et) {
+  this->et= et;
+}
+
+void
 QTMImagePopup::updateButtonStates () {
   if (current_align == "")
     current_align= as_string (call ("get-image-alignment", current_tree));
@@ -175,6 +188,15 @@ QTMImagePopup::autoSize () {
   middleBtn->setIconSize (QSize (IconSize, IconSize));
   rightBtn->setIconSize (QSize (IconSize, IconSize));
   ocrBtn->setIconSize (QSize (IconSize, IconSize));
+}
+
+bool
+QTMImagePopup::isDocument () {
+  path p= (path_up (current_path));
+  tree t= subtree (et, p);
+  if (is_func (t, moebius::DOCUMENT))
+    return true;
+  return false;
 }
 
 // 缓存菜单显示位置

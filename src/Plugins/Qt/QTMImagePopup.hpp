@@ -12,6 +12,7 @@
 #ifndef QT_IMAGE_POPUP_HPP
 #define QT_IMAGE_POPUP_HPP
 
+#include "lolly/data/lolly_tree.hpp"
 #include "qt_simple_widget.hpp"
 #include "rectangles.hpp"
 
@@ -38,6 +39,7 @@ protected:
   int                        cached_height;
   double                     cached_magf; // 缩放因子
   tree                       current_tree;
+  path                       current_path;
   string                     current_align;
   QToolButton*               leftBtn;
   QToolButton*               middleBtn;
@@ -46,6 +48,7 @@ protected:
   QString                    btn_style;
   bool                       painted;
   int                        painted_count;
+  tree&                      et;
 
 public:
   QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner);
@@ -56,8 +59,11 @@ public:
   void updatePosition (qt_renderer_rep* ren);
   void scrollBy (int x, int y);
   void setImageTree (tree t);
+  void setCurrentPath (path p);
+  void setTreeref (tree& et);
   void updateButtonStates ();
   void autoSize ();
+  bool isDocument ();
 
 protected:
   void cachePosition (rectangle selr, double magf, int scroll_x, int scroll_y,
