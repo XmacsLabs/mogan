@@ -104,7 +104,7 @@
 
     ;; Initialize selection on first display
     (invisible (set! selected-format (convert-format-string-to-symbol (car l))))
-    (invisible (set! tips1 (translate (get-tips (convert-format-string-to-symbol selected-format)))))
+    (invisible (set! tips1 (translate (get-tips selected-format))))
     (invisible (set! tips2 (translate "ENTER to confirm, ESC to cancel")))
     (resize "320px" "270px"
       (padded
