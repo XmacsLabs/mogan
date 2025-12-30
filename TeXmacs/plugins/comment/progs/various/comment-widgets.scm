@@ -25,7 +25,6 @@
 (define comment-quit-command ignore)
 (define comment-window-table (make-ahash-table))
 (define comment-text "comment")
-(define comment-window #f)
 
 ;; 设置comment编辑器窗口状态
 (tm-define (set-comment-window-state opened?)
@@ -61,9 +60,7 @@
     (mirror-synchronize))
   (set-comment-window-state #f)
   (show-auxiliary-widget #f)
-  (comment-quit-command)
-  (when comment-window
-    (buffer-focus (window->buffer comment-window))))
+  (comment-quit-command))
 
 ;; 用于auxiliary-widget的comment编辑器widget
 (tm-widget ((comment-aux-widget u packs doc) quit)
