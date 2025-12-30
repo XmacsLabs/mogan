@@ -115,9 +115,9 @@ public:
 
   ////////////////////// Image popup support
   void ensure_image_popup ();
-  void show_image_popup (tree& et, path current_path, tree current_tree, rectangle selr, double magf,
-                         int scroll_x, int scroll_y, int canvas_x,
-                         int canvas_y);
+  void show_image_popup (tree& et, path current_path, tree current_tree,
+                         rectangle selr, double magf, int scroll_x,
+                         int scroll_y, int canvas_x, int canvas_y);
   void hide_image_popup ();
   void scroll_image_popup_by (SI x, SI y);
 

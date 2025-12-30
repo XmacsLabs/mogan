@@ -13,12 +13,12 @@
 #include "bitmap_font.hpp"
 #include "moebius/tree_label.hpp"
 #include "observer.hpp"
+#include "path.hpp"
 #include "qbuttongroup.h"
 #include "qt_renderer.hpp"
 #include "scheme.hpp"
 #include "server.hpp"
 #include "tm_ostream.hpp"
-#include "path.hpp"
 
 #include <QIcon>
 #include <QPainter>
@@ -34,7 +34,8 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
     : QWidget (parent), owner (owner), layout (nullptr), cached_image_mid_x (0),
       cached_image_mid_y (0), cached_scroll_x (0), cached_scroll_y (0),
       cached_canvas_x (0), cached_canvas_y (0), cached_magf (0.0),
-      current_align (""), painted (false), painted_count (0), et (*(new tree ())) {
+      current_align (""), painted (false), painted_count (0),
+      et (*(new tree ())) {
   Q_INIT_RESOURCE (images);
   setObjectName ("image_popup");
   setWindowFlags (Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -194,8 +195,7 @@ bool
 QTMImagePopup::isDocument () {
   path p= (path_up (current_path));
   tree t= subtree (et, p);
-  if (is_func (t, moebius::DOCUMENT))
-    return true;
+  if (is_func (t, moebius::DOCUMENT)) return true;
   return false;
 }
 
