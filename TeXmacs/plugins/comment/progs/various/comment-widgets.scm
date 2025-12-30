@@ -26,6 +26,7 @@
 (define comment-window-table (make-ahash-table))
 (define comment-text "comment")
 
+
 ;; 设置comment编辑器窗口状态
 (tm-define (set-comment-window-state opened?)
   (set-auxiliary-widget-state opened? 'comment-editor))
