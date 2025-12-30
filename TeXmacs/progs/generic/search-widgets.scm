@@ -428,7 +428,8 @@ url
   (with-buffer (master-buffer)
     (cancel-alt-selection "alternate"))
   (set-search-window-state #f #f)
-  (buffer-focus (window->buffer (car (window-list)))))
+  (when search-window
+    (buffer-focus (window->buffer search-window))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Replace occurrences

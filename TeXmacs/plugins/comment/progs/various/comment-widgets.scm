@@ -25,7 +25,7 @@
 (define comment-quit-command ignore)
 (define comment-window-table (make-ahash-table))
 (define comment-text "comment")
-
+(define comment-window #f)
 
 ;; 设置comment编辑器窗口状态
 (tm-define (set-comment-window-state opened?)
@@ -62,7 +62,8 @@
   (set-comment-window-state #f)
   (show-auxiliary-widget #f)
   (comment-quit-command)
-  (buffer-focus (window->buffer (car (window-list)))))
+  (when comment-window
+    (buffer-focus (window->buffer comment-window))))
 
 ;; 用于auxiliary-widget的comment编辑器widget
 (tm-widget ((comment-aux-widget u packs doc) quit)
@@ -105,7 +106,8 @@
   (:applicable (behind-folded-comment?))
   (:interactive #t)
   (set-comment-window-state #t)
-  (open-comment-editor-aux))
+  (open-comment-editor-aux)
+  (set! comment-window (current-window)))
 
 (tm-define (kbd-control-return)
   (:require (behind-folded-comment?))
