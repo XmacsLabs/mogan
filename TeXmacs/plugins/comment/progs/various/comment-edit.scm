@@ -143,6 +143,24 @@
        (list (tree-label (cursor-tree))
              (tree->path (cursor-tree)))))
 
+(tm-define (at-comment-start?)
+  (with comment (tree-innermost any-comment-context? #t)
+    (and comment
+         (not (tm-in? comment '(mirror-comment carbon-comment)))
+         (let* ((p (cursor-path))
+                (cp (tree->path comment)))
+           (cond
+             ;; 光标在注释的第一个子节点前面（折叠注释的情况）
+             ((and (== (cAr p) 1)
+                   (== (cDr p) cp))
+              #t)
+             ;; 光标在注释的第6个子节点的开始位置（展开注释的情况）
+             ((and (>= (length p) (+ (length cp) 2))
+                   (== (list-ref p (length cp)) 6)
+                   (== (list-ref p (+ (length cp) 1)) 0))
+              #t)
+             (else #f))))))
+
 (tm-define (hidden-child? t i)
   (:require (any-comment-context? t))
   (in? i (list 2 3)))

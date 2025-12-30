@@ -18,6 +18,7 @@
         (utils misc tooltip)
         (bibtex bib-complete)
 	(source macro-search)
+        (various comment-edit)
   (liii ocr)))
 
 (tm-define (generic-context? t) #t) ;; overridden in, e.g., graphics mode
@@ -113,6 +114,11 @@
 (tm-define (kbd-remove t forwards?)
   (and-with p (tree-outer t)
     (kbd-remove p forwards?)))
+
+(tm-define (kbd-remove t forwards?)
+  (:require (at-comment-start?))
+  (let ((comment (tree-innermost any-comment-context? #t)))
+    (tree-cut comment)))
 
 (tm-define (kbd-variant t forwards?)
   (and-with p (tree-outer t)
