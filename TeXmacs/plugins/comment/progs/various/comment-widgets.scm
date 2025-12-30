@@ -103,9 +103,7 @@
 (tm-define (open-comment-editor)
   (:applicable (behind-folded-comment?))
   (:interactive #t)
-  (set-comment-window-state #t)
-  (open-comment-editor-aux)
-  (set! comment-window (current-window)))
+  (set-comment-window-state #t))
 
 (tm-define (kbd-control-return)
   (:require (behind-folded-comment?))
