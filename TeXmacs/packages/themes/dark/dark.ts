@@ -68,6 +68,22 @@
 
   <assign|pre-edit|<macro|body|<with|ornament-color|#707070|ornament-sunny-color|#808080|ornament-shadow-color|#606060|ornament-border|1px|ornament-hpadding|2px|ornament-vpadding|2px|<smash|<ornament|<with|color|white|<arg|body>>>>>>>
 
+  <assign|focus-color|#3A86FF>
+
+  <assign|selection-color|#3A86FF33>
+
+  <assign|scheme-prompt-color|dark green>
+
+  <assign|scheme-input-color|white>
+
+  <assign|generic-error-color|#c00000>
+
+  <assign|generic-prompt-color|brown>
+
+  <assign|generic-input-color|#c0c0ff>
+
+  <assign|defined-color|#4a71a1>
+
   <\active*>
     <\src-comment>
       Preamble
