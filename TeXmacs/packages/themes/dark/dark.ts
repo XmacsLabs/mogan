@@ -68,6 +68,26 @@
 
   <assign|pre-edit|<macro|body|<with|ornament-color|#707070|ornament-sunny-color|#808080|ornament-shadow-color|#606060|ornament-border|1px|ornament-hpadding|2px|ornament-vpadding|2px|<smash|<ornament|<with|color|white|<arg|body>>>>>>>
 
+  <\active*>
+    <\src-comment>
+      Preamble
+    </src-comment>
+  </active*>
+
+  <assign|src-tag-color|#00a5db>
+
+  <assign|src-var|<macro|body|<with|mode|src|color|#90ee90|font-shape|italic|<arg|body>>>>
+
+  <assign|src-arg|<macro|body|<with|mode|src|color|#ffa07a|font-shape|italic|<arg|body>>>>
+
+  <assign|src-regular|<macro|body|<with|color|#e0e0e0|<arg|body>>>>
+
+  <assign|src-tt|<macro|body|<with|mode|src|color|#87ceeb|font-family|tt|<arg|body>>>>
+
+  <assign|src-numeric|<macro|body|<with|mode|src|color|#dda0dd|<arg|body>>>>
+
+  <assign|src-length|<macro|body|<with|mode|src|color|#2aadad|<arg|body>>>>
+
   \;
 </body>
 
