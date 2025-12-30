@@ -61,7 +61,8 @@
     (mirror-synchronize))
   (set-comment-window-state #f)
   (show-auxiliary-widget #f)
-  (comment-quit-command))
+  (comment-quit-command)
+  (buffer-focus (window->buffer (car (window-list)))))
 
 ;; 用于auxiliary-widget的comment编辑器widget
 (tm-widget ((comment-aux-widget u packs doc) quit)

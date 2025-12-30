@@ -427,7 +427,8 @@ url
   (set! search-serial (+ search-serial 1))
   (with-buffer (master-buffer)
     (cancel-alt-selection "alternate"))
-  (set-search-window-state #f #f))
+  (set-search-window-state #f #f)
+  (buffer-focus (window->buffer (car (window-list)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Replace occurrences
