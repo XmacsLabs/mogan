@@ -42,16 +42,18 @@ bool is_in_graphics_mode= false;
 
 bool
 edit_interface_rep::should_show_image_popup (tree t) {
+  int t_N= N (t);
   if (is_nil (t)) return false;
-  cout << t->op << LF;
-  if (is_func (t, WITH) && N (t) >= 2) {
-    for (int i= 0; i < N (t); ++i) {
+  if (is_func (t, WITH) && t_N >= 2) {
+    for (int i= 0; i < t_N; ++i) {
       if (t[i] == "par-mode") {
         return true;
       }
     }
   }
   path p= path_up (obtain_ip (t));
+  // 持续向上遍历至最顶层的编辑树，若过程中出现了非 document
+  // 节点，说明图片被其他节点包裹，返回 false
   while (p != et) {
     t= subtree (et, p);
     if (!is_func (t, DOCUMENT)) {

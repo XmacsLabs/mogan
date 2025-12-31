@@ -51,7 +51,6 @@ public:
   void make_htab (string spc);
   void make_image (string file_name, bool link, string w, string h, string x,
                    string y);
-  bool should_add_par_mode (tree t);
 };
 
 #endif // defined EDIT_TEXT_H
