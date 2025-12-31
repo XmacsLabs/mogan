@@ -30,13 +30,13 @@
   (url-append (get-account-data-dir) filename))
 
 ;; 常量定义
-(define token-filename "token.txt")
-(define refresh-token-filename "refresh_token.txt")
-(define token-expiry-filename "token_expiry.txt")
+(define TOKEN_FILENAME "token.txt")
+(define REFRESH_TOKEN_FILENAME "refresh_token.txt")
+(define TOKEN_EXPIRY_FILENAME "token_expiry.txt")
 
 ;; 所有账户数据文件名列表
-(define account-data-filenames
-  (list token-filename refresh-token-filename token-expiry-filename))
+(define ACCOUNT_DATA_FILENAME_LIST
+  (list TOKEN_FILENAME REFRESH_TOKEN_FILENAME TOKEN_EXPIRY_FILENAME))
 
 ;; 确保数据目录存在的辅助函数
 (define (ensure-data-dir-exists)
@@ -103,27 +103,27 @@
 
 ;; 1.1 token 保存到数据文件
 (tm-define (account-save-token token)
-  (save-account-data token-filename token))
+  (save-account-data TOKEN_FILENAME token))
 
 ;; 1.2 读取token数据文件
 (tm-define (account-load-token)
-  (load-account-data token-filename))
+  (load-account-data TOKEN_FILENAME))
 
 ;; 2.1 refresh_token 保存到数据文件
 (tm-define (account-save-refresh-token refresh-token)
-  (save-account-data refresh-token-filename refresh-token))
+  (save-account-data REFRESH_TOKEN_FILENAME refresh-token))
 
 ;; 2.2读取refresh_token数据文件
 (tm-define (account-load-refresh-token)
-  (load-account-data refresh-token-filename))
+  (load-account-data REFRESH_TOKEN_FILENAME))
 
 ;; 3.1 token过期时间保存到数据文件
 (tm-define (account-save-token-expiry expiry-time)
-  (save-account-data token-expiry-filename expiry-time))
+  (save-account-data TOKEN_EXPIRY_FILENAME expiry-time))
 
 ;; 3.2 读取token过期时间数据文件
 (tm-define (account-load-token-expiry)
-  (load-account-data token-expiry-filename))
+  (load-account-data TOKEN_EXPIRY_FILENAME))
 
 ;; 4 清除所有token数据
 (tm-define (account-clear-tokens)
@@ -133,4 +133,4 @@
      (let ((data-file (get-account-data-file filename)))
        (when (url-exists? data-file)
          (system-remove data-file))))
-   account-data-filenames))
+   ACCOUNT_DATA_FILENAME_LIST))
