@@ -36,6 +36,10 @@
 ;; 替换缓冲区专有快捷键
 (kbd-map
   (:require (inside-replace-buffer?))
-  ("return" (replace-one (window->buffer (car (window-list))) (replace-buffer))); Enter：替换当前匹配项
-  ("std return" (replace-all (window->buffer (car (window-list))) (replace-buffer)))); Ctrl+Enter：替换所有后续匹配项
+  ("return" (replace-one 
+              (window->buffer (auxiliary-buffer->window (replace-buffer))) 
+              (replace-buffer))); Enter：替换当前匹配项
+  ("std return" (replace-all 
+                  (window->buffer (auxiliary-buffer->window (replace-buffer))) 
+                  (replace-buffer)))); Ctrl+Enter：替换所有后续匹配项
 
