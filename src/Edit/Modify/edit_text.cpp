@@ -390,7 +390,14 @@ edit_text_rep::make_image (string file_name, bool link, string w, string h,
     t << tuple (tree (RAW_DATA, s), utf8_to_cork (as_string (tail (image))));
   }
   t << tree (w) << tree (h) << tree (x) << tree (y);
-  tree with (WITH);
-  with << tree ("par-mode") << tree ("center") << t;
-  insert_tree (with);
+  tree st= the_line ();
+  // 获取当前段落tree，若其为空，则插入图片时自动添加居中环境
+  if (N (st) == 0) {
+    tree with (WITH);
+    with << tree ("par-mode") << tree ("center") << t;
+    insert_tree (with);
+    return;
+  }
+  insert_tree (t);
+  return;
 }
