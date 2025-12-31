@@ -1,4 +1,4 @@
-<TeXmacs|1.99.16>
+<TeXmacs|2.1.4>
 
 <style|source>
 
@@ -35,7 +35,7 @@
   <assign|abbreviate-name|<macro|by|<extern|ext-abbreviate-name|<arg|by>>>>
 
   <assign|render-inline-comment|<macro|type|by|body|<surround|<with|color|<comment-color|<arg|type>|<arg|by>>|[<condensed|<name|<abbreviate-name|<arg|by>>>>:
-  >|<with|color|<comment-color|<arg|by>>|]>|<arg|body>>>>
+  >|<with|color|<compound|comment-color|<arg|type>|<arg|by>>|]>|<arg|body>>>>
 
   <assign|render-block-comment|<macro|type|by|body|<surround|<with|color|<comment-color|<arg|type>|<arg|by>>|<condensed|<name|<abbreviate-name|<arg|by>>>>\<rangle\>
   >|<right-flush>|<arg|body>>>>
