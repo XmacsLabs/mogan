@@ -1342,9 +1342,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (get-marked-color)
-  (let ((color (get-preference "marked-color")))
+  (let* ((theme (get-preference "gui theme"))
+         (default-color (if (== theme "liii-night")
+                           "#dc9f4f"  ; 深色主题默认
+                           "#ffe47f"))  ; 浅色主题默认
+         (color (get-preference "marked-color")))
     (if (or (== color "") (== color "default"))
-        "#ffe47f"
+        default-color
         color)))
 
 (tm-define (pure-text? t)

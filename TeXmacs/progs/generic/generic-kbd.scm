@@ -175,7 +175,6 @@
   ("C-?" (make 'reference))
   ("C-? var" (make 'eqref))
   ("C-? var var" (make 'pageref))
-  ("C-A-v" (interactive-paste-special))
 
   ("extra e" (edit-focus-macro))
   ("extra r" (edit-previous-macro))
@@ -788,6 +787,7 @@
   ("std S" (choose-file save-buffer-as "Save TeXmacs file" "action_save_as"))
   ("std u" (toggle-underlined))
   ("std v" (kbd-paste))
+  ("std A-v" (interactive-paste-special))
   ("std V" (kbd-magic-paste))
   ("std w" (close-document))
   ("std W" (close-document*))

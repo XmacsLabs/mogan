@@ -95,6 +95,9 @@
     (init-env "prog-scripts" (get-preference "scripting language")))
   (add-style-package "number-europe")
   (add-style-package "preview-ref")
+  (when (== (get-preference "gui theme") "liii-night")
+    (when (not (has-style-package? "dark"))
+      (add-style-package "dark")))
   (buffer-pretend-saved (current-buffer)))
 
 (tm-define (propose-name-buffer)

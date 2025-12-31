@@ -883,5 +883,11 @@
   (": z z z :" "<#1F4A4>"))
 
 (kbd-map
+  (:profile no-macos)
   ("text ;" (make-folded-comment "comment"))
   ("text :" (make-unfolded-comment "comment")))
+
+(kbd-map
+  (:profile macos)
+  ("std ;" (make-folded-comment "comment"))
+  ("std /" (make-unfolded-comment "comment")))

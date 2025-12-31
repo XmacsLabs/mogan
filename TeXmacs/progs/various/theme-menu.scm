@@ -19,19 +19,37 @@
 ;; Web themes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(tm-define (basic-theme-button-name theme)
+  (let ((translation-key (string-append
+                          (if (== theme "plain") "theme" theme)
+                          "::theme")))
+    (translate translation-key)))
+
+(tm-define (basic-theme-menu-name theme)
+  (let ((translation-key (string-append
+                          (if (== theme "plain") "Plain" theme)
+                          "::theme")))
+    (translate translation-key)))
+
 (tm-define (basic-theme-name theme)
-  (with name (if (== theme "plain") "theme" theme)
-    (let ((s1 (string-replace name "-" " ")))
-      (upcase-first s1))))
+  (basic-theme-button-name theme))
+
+(tm-define (other-basic-themes)
+  (list-difference (basic-themes) (list "dark")))
+
+(menu-bind other-basic-themes-menu
+  (for (theme (other-basic-themes))
+    ((check (eval (basic-theme-menu-name theme)) "v" (has-style-package? theme))
+     (toggle-style-package theme))))
 
 (menu-bind basic-theme-menu
-  ((eval '(verbatim "Plain")) (select-default-basic-theme))
-  ---
-  (for (theme (basic-themes))
-    ((check (eval `(verbatim ,(basic-theme-name theme))) "v" (has-style-package? theme))
-     (add-style-package theme)))
+  ((eval (basic-theme-menu-name "plain")) (select-default-basic-theme))
+  ((check (eval (basic-theme-menu-name "dark")) "v" (has-style-package? "dark"))
+   (toggle-style-package "dark"))
   ---
   ((check "Alternative colors" "v" (has-style-package? "alt-colors"))
    (toggle-style-package "alt-colors"))
   ((check "Framed theorems" "v" (has-style-package? "framed-theorems"))
-   (toggle-style-package "framed-theorems")))
+   (toggle-style-package "framed-theorems"))
+  ---
+  (-> "Other" (link other-basic-themes-menu)))

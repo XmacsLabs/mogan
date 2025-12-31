@@ -140,7 +140,7 @@ search-buffer
 ----
 url
 如果当前缓冲区已经是 tmfs://aux/search 类型的辅助缓冲区，则返回该缓冲区URL；
-否则返回基于当前视图URL MD5哈希的唯一搜索缓冲区URL。
+否则返回基于当前视图URL MD5哈希的唯一搜索缓冲区URL和当前窗口。
 
 逻辑
 ----
@@ -156,10 +156,13 @@ url
 (tm-define (search-buffer)
   (with u (current-buffer)
     (if (and (url-rooted-tmfs? u)
-             (== (url-head u) (string->url "tmfs://aux/search")))
+             (== (url-head(url-head u)) (string->url "tmfs://aux/search")))
         u
         (string->url
-          (string-append "tmfs://aux/search/" (md5 (url->string (current-view-url))))))))
+          (string-append "tmfs://aux/search/" 
+                         (md5 (url->string (current-view-url)))
+                         "/"
+                         (url->string (url-tail (current-window))))))))
 
 #|
 replace-buffer
@@ -177,7 +180,7 @@ replace-buffer
 ----
 url
 如果当前缓冲区已经是 tmfs://aux/replace 类型的辅助缓冲区，则返回该缓冲区URL；
-否则返回基于当前视图URL MD5哈希的唯一替换缓冲区URL。
+否则返回基于当前视图URL MD5哈希的唯一替换缓冲区URL和当前窗口。
 
 逻辑
 ----
@@ -193,10 +196,16 @@ url
 (tm-define (replace-buffer)
   (with u (current-buffer)
     (if (and (url-rooted-tmfs? u)
-             (== (url-head u) (string->url "tmfs://aux/replace")))
+             (== (url-head(url-head u)) (string->url "tmfs://aux/replace")))
         u
         (string->url
-          (string-append "tmfs://aux/replace/" (md5 (url->string (current-view-url))))))))
+          (string-append "tmfs://aux/replace/" 
+                         (md5 (url->string (current-view-url)))
+                         "/"
+                         (url->string (url-tail (current-window))))))))
+
+(tm-define (auxiliary-buffer->window x)
+  (url-append (string->url "tmfs://window") (url-tail x)))
 
 (tm-define (master-buffer)
   (and (buffer-exists? (search-buffer))
@@ -350,7 +359,7 @@ url
     (with-buffer (search-buffer)
       (if ok?
           (init-default "bg-color")
-          (init-env "bg-color" "#fff0f0")))
+          (init-env "bg-color" (if (== (get-preference "gui theme") "liii-night") "#4a2c2c" "#fff0f0"))))
     (when too-many-matches?
       ;;(display* "Extend limit to " (* 2 limit) "\n")
       (delayed
@@ -417,17 +426,20 @@ url
     (with-buffer u
       (extreme-search-result last?))))
 
-(tm-define (search-rotate-match)
-  (with ok? (search-next-match #t)
+(tm-define (search-rotate-match backward?)
+  (with ok? (search-next-match backward?)
     (when (not ok?)
-      (search-extreme-match #f))))
+      (search-extreme-match (not backward?)))))
 
 (tm-define ((search-cancel u) . args)
   (search-show-all)
   (set! search-serial (+ search-serial 1))
   (with-buffer (master-buffer)
     (cancel-alt-selection "alternate"))
-  (set-search-window-state #f #f))
+  (set-search-window-state #f #f)
+  (buffer-focus
+    (window->buffer
+      (auxiliary-buffer->window (search-buffer)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Replace occurrences
@@ -618,7 +630,7 @@ tree 或 #f
       (former t shift?)
       (begin
         (set! search-kbd-intercepted? #t)
-        (search-rotate-match))))
+        (search-rotate-match #t))))
 
 (tm-define (kbd-enter t shift?)
   (:require (inside-replace-buffer?))
@@ -641,12 +653,6 @@ tree 或 #f
   (set! search-kbd-intercepted? #t)
   (search-extreme-match forwards?))
 
-(kbd-map
-  (:require (inside-search-or-replace-buffer?))
-  ("std ?" (make 'select-region))
-  ("std 1" (insert '(wildcard "x")))
-  ("std 2" (insert '(wildcard "y")))
-  ("std 3" (insert '(wildcard "z"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hacks for keyboard events between the moments that
