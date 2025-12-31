@@ -1603,7 +1603,8 @@
       (show-auxiliary-widget #f)
       (let ((actions (ahash-ref widget-type->action (cadr state))))
         (when (and (pair? actions) (pair? (cdr actions)))
-          ((cadr actions)))))))
+          (with close-action (second actions)
+            (close-action)))))))
           
 ;; 刷新辅助窗口
 (tm-define (refresh-auxiliary-widget)
@@ -1616,7 +1617,8 @@
            (let* ((widget-type (cadr state))
                   (action-list (ahash-ref widget-type->action widget-type)))
              (if (and action-list (pair? action-list))
-                 ((car action-list))
+                 (with open-action (car action-list)
+                  (open-action))
                  (show-auxiliary-widget #f))))))) ;; 列表为空或未找到，隐藏窗口
 
 (tm-define (auxiliary-widget menu-promise cmd name . opts)
