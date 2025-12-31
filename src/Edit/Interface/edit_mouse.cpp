@@ -42,11 +42,10 @@ bool is_in_graphics_mode= false;
 
 bool
 edit_interface_rep::should_show_image_popup (tree t) {
-  if (is_nil (t))
-    return false;
+  if (is_nil (t)) return false;
   cout << t->op << LF;
   if (is_func (t, WITH) && N (t) >= 2) {
-    for (int i = 0; i < N(t); ++i) {
+    for (int i= 0; i < N (t); ++i) {
       if (t[i] == "par-mode") {
         return true;
       }
@@ -634,7 +633,8 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
     path path_of_image_parent= path_up (current_path);
     tree tree_of_image_parent= subtree (et, path_of_image_parent);
     if (should_show_image_popup (tree_of_image_parent)) {
-      show_image_popup (tree_of_image_parent, selr, magf, get_scroll_x (), get_scroll_y (), get_canvas_x (), get_canvas_y ());
+      show_image_popup (tree_of_image_parent, selr, magf, get_scroll_x (),
+                        get_scroll_y (), get_canvas_x (), get_canvas_y ());
     }
   }
   else {

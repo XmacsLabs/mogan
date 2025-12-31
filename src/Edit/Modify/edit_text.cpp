@@ -363,7 +363,7 @@ edit_text_rep::make_htab (string spc) {
   insert_tree (tree (HTAB, spc));
 }
 
-bool 
+bool
 edit_text_rep::should_add_par_mode (tree t) {
   path p= path_up (obtain_ip (t));
   tree r= subtree (et, p);
