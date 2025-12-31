@@ -166,8 +166,9 @@ immediate_options (int argc, char** argv) {
 
 int
 main (int argc, char** argv) {
-  lolly::init_tbox ();
-  lolly::system::args a (argc, argv);
+  // 1.系统初始化  
+  lolly::init_tbox (); // 初始化tbox库
+  lolly::system::args a (argc, argv); // 解决Windows平台命令行参数的编码转换问题
 
 #ifdef STACK_SIZE
   struct rlimit limit;
@@ -183,6 +184,7 @@ main (int argc, char** argv) {
   else cerr << "Cannot get stack value\n";
 #endif
 
+  // 2.用户偏好和主题设置
   original_path= get_env ("PATH");
   boot_hacks ();
   windows_delayed_refresh (1000000000);
@@ -223,7 +225,10 @@ main (int argc, char** argv) {
     remove (url ("$TEXMACS_HOME_PATH/fonts/error") * url_wildcard ("*"));
   }
 #endif
+
+// 3.Qt应用初始化
 #ifdef QTTEXMACS
+// DPI缩放策略设置（Qt 5.14+）
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 #if defined(Q_OS_WIN)
   QGuiApplication::setHighDpiScaleFactorRoundingPolicy (
@@ -241,6 +246,7 @@ main (int argc, char** argv) {
   init_texmacs_path (argc, argv);
   init_texmacs ();
   init_plugins ();
+
   // Show startup login dialog
   if (!show_startup_login_dialog ()) {
     // User rejected dialog, clean up and exit
@@ -249,6 +255,8 @@ main (int argc, char** argv) {
     return 1;
   }
 #endif
+
+// 4.GUI配置和Scheme启动
 #ifdef QTTEXMACS
   if (!headless_mode) {
     // it this really necessary? Should be set in the metadata.
@@ -269,10 +277,13 @@ main (int argc, char** argv) {
   }
 #endif
 
+  // 核心数据结构初始化
   // cout << "Bench  ] Started TeXmacs\n";
   the_et      = tuple ();
   the_et->data= ip_observer (path ());
   cache_initialize ();
+
+  // 启动Scheme系统，传递TeXmacs_main作为入口
   start_scheme (argc, argv, TeXmacs_main);
 #ifdef QTTEXMACS
   if (headless_mode) delete qtmcoreapp;

@@ -16,6 +16,8 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QProgressBar>
+#include <QPropertyAnimation>
 
 namespace QWK {
 
@@ -23,23 +25,35 @@ class StartupLoginDialog : public QDialog {
   Q_OBJECT
 
 public:
-  enum Result { LoginClicked, SkipClicked, DialogRejected };
+  enum Result { LoginClicked, SkipClicked, DialogRejected, InitializationComplete };
 
   explicit StartupLoginDialog (QWidget* parent= nullptr);
   ~StartupLoginDialog ();
 
   Result execWithResult ();
+  void setModal (bool modal);
+
+  // New methods for non-blocking initialization
+  void startInitialization ();
+  bool isInitializationComplete () const { return initializationComplete; }
 
 signals:
   void loginRequested ();
   void skipRequested ();
+  void initializationStarted ();
+  void initializationFinished (bool success);
+  void windowReadyForTransition ();
 
 protected:
   void showEvent (QShowEvent* event) override;
+  void closeEvent (QCloseEvent* event) override;
 
 private:
   void    setupUi ();
   QString styleSheet () const;
+  void    initializeProgressUi ();
+  void    startBackgroundInitialization ();
+  void    fadeOutAndClose ();
 
   // UI elements
   QLabel*      titleLabel;
@@ -54,8 +68,21 @@ private:
   QVBoxLayout* featureLayout;
   QHBoxLayout* buttonLayout;
 
+  // Progress UI elements (new)
+  QProgressBar* progressBar;
+  QLabel*       statusLabel;
+  QLabel*       timeEstimationLabel;
+
+  // Animation
+  QPropertyAnimation* fadeAnimation;
+
   // Dialog result
   Result result;
+
+  // Initialization state
+  bool initializationInProgress;
+  bool initializationComplete;
+  bool userChoiceMade;
 };
 
 } // namespace QWK
