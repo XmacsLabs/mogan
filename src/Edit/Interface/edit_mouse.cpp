@@ -13,9 +13,14 @@
 #include "edit_interface.hpp"
 #include "link.hpp"
 #include "message.hpp"
+#include "moebius/tree_label.hpp"
+#include "moebius/vars.hpp"
+#include "observer.hpp"
 #include "observers.hpp"
+#include "path.hpp"
 #include "qapplication.h"
 #include "qnamespace.h"
+#include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
@@ -34,6 +39,29 @@ void disable_double_clicks ();
  ******************************************************************************/
 
 bool is_in_graphics_mode= false;
+
+bool
+edit_interface_rep::should_show_image_popup (tree t) {
+  if (is_nil (t))
+    return false;
+  cout << t->op << LF;
+  if (is_func (t, WITH) && N (t) >= 2) {
+    for (int i = 0; i < N(t); ++i) {
+      if (t[i] == "par-mode") {
+        return true;
+      }
+    }
+  }
+  path p= path_up (obtain_ip (t));
+  while (p != et) {
+    t= subtree (et, p);
+    if (!is_func (t, DOCUMENT)) {
+      return false;
+    }
+    p= path_up (p);
+  }
+  return true;
+}
 
 /******************************************************************************
  * Routines for the mouse
@@ -603,10 +631,11 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
   if (hovering_hlink) set_cursor_style ("pointing_hand");
   else if (hovering_image) {
     set_cursor_style ("pointing_hand");
-    path with_path= path_up (current_path);
-    tree with_tree= subtree (et, with_path);
-    show_image_popup (with_tree, selr, magf, get_scroll_x (), get_scroll_y (),
-                      get_canvas_x (), get_canvas_y ());
+    path path_of_image_parent= path_up (current_path);
+    tree tree_of_image_parent= subtree (et, path_of_image_parent);
+    if (should_show_image_popup (tree_of_image_parent)) {
+      show_image_popup (tree_of_image_parent, selr, magf, get_scroll_x (), get_scroll_y (), get_canvas_x (), get_canvas_y ());
+    }
   }
   else {
     set_cursor_style ("normal");

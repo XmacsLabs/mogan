@@ -13,6 +13,7 @@
 #include "analyze.hpp"
 #include "converter.hpp"
 #include "file.hpp"
+#include "observers.hpp"
 #include "scheme.hpp"
 #include "tm_file.hpp"
 #include "tree_modify.hpp"
@@ -362,6 +363,16 @@ edit_text_rep::make_htab (string spc) {
   insert_tree (tree (HTAB, spc));
 }
 
+bool 
+edit_text_rep::should_add_par_mode (tree t) {
+  path p= path_up (obtain_ip (t));
+  tree r= subtree (et, p);
+  if (is_func (r, DOCUMENT)) {
+    return true;
+  }
+  return false;
+}
+
 void
 edit_text_rep::make_image (string file_name, bool link, string w, string h,
                            string x, string y) {
@@ -390,7 +401,13 @@ edit_text_rep::make_image (string file_name, bool link, string w, string h,
     t << tuple (tree (RAW_DATA, s), utf8_to_cork (as_string (tail (image))));
   }
   t << tree (w) << tree (h) << tree (x) << tree (y);
-  tree with (WITH);
-  with << tree ("par-mode") << tree ("center") << t;
-  insert_tree (with);
+  tree st= the_line ();
+  if (N (st) == 0) {
+    tree with (WITH);
+    with << tree ("par-mode") << tree ("center") << t;
+    insert_tree (with);
+    return;
+  }
+  insert_tree (t);
+  return;
 }

@@ -216,6 +216,7 @@ public:
   void      set_cursor_style (string style_name);
   void      update_mouse_loci ();
   void      update_focus_loci ();
+  bool      should_show_image_popup (tree t);
 
   /* the footer */
   tree compute_text_footer (tree st);
