@@ -318,7 +318,7 @@ edit_interface_rep::key_press (string gkey) {
   url parent_window= concrete_window ()->parent;
   if (parent_window != url_none () && key == "escape") {
     concrete_window (parent_window)->set_auxiliary_widget_flag (false);
-    focus_on_buffer(window_to_buffer(parent_window)); 
+    focus_on_buffer (window_to_buffer (parent_window));
   }
 
   string new_sh= N (sh_s) == 0 ? key : sh_s * " " * key;
