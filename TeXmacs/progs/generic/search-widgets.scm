@@ -726,13 +726,13 @@ tree 或 #f
                      `(style (tuple ,@style)) aux))
     ===
     (hlist
-      ((balloon (icon "tm_search_first.xpm") "First occurrence")
+      ((balloon (icon "tm_search_first.xpm") "First occurrence （Home）")
        (search-extreme-match #f u))
-      ((balloon (icon "tm_search_previous.xpm") "Previous occurrence")
+      ((balloon (icon "tm_search_previous.xpm") "Previous occurrence （PageUp）")
        (search-next-match #f u))
-      ((balloon (icon "tm_search_next.xpm") "Next occurrence")
+      ((balloon (icon "tm_search_next.xpm") "Next occurrence （PageDown）")
        (search-next-match #t u))
-      ((balloon (icon "tm_search_last.xpm") "Last occurrence")
+      ((balloon (icon "tm_search_last.xpm") "Last occurrence （End）")
        (search-extreme-match #t u))
       >>>
       (=> (balloon (icon "tm_preferences.xpm") "Search preferences")
@@ -740,7 +740,7 @@ tree 或 #f
       ((check (balloon (icon "tm_filter.xpm") "Only show paragraphs with hits")
               "v" (search-filter-enabled?))
        (search-toggle-filter))
-      ((balloon (icon "tm_close_tool.xpm") "Close search tool")
+      ((balloon (icon "tm_close_tool.xpm") "Close search tool（Esc）")
        (quit)))))
 
 (tm-tool* (search-tool win u style init aux)
@@ -829,18 +829,18 @@ tree 或 #f
                      `(style (tuple ,@style)) raux))
     === ===
     (hlist
-      ((balloon (icon "tm_search_first.xpm") "First occurrence")
+      ((balloon (icon "tm_search_first.xpm") "First occurrence （Home）")
        (search-extreme-match #f u))
-      ((balloon (icon "tm_search_previous.xpm") "Previous occurrence")
+      ((balloon (icon "tm_search_previous.xpm") "Previous occurrence （PageUp）")
        (search-next-match #f u))
-      ((balloon (icon "tm_search_next.xpm") "Next occurrence")
+      ((balloon (icon "tm_search_next.xpm") "Next occurrence （PageDown）")
        (search-next-match #t u))
-      ((balloon (icon "tm_search_last.xpm") "Last occurrence")
+      ((balloon (icon "tm_search_last.xpm") "Last occurrence （End）")
        (search-extreme-match #t u))
       // // //
-      ((balloon (icon "tm_replace_one.xpm") "Replace one occurrence")
+      ((balloon (icon "tm_replace_one.xpm") "Replace one occurrence （Enter）")
        (replace-one u raux))
-      ((balloon (icon "tm_replace_all.xpm") "Replace all further occurrences")
+      ((balloon (icon "tm_replace_all.xpm") "Replace all further occurrences （Ctrl+Enter）")
        (replace-all u raux))
       >>>
       (=> (balloon (icon "tm_preferences.xpm")
@@ -849,7 +849,7 @@ tree 或 #f
       ((check (balloon (icon "tm_filter.xpm") "Only show paragraphs with hits")
               "v" (search-filter-enabled?))
        (search-toggle-filter))
-      ((balloon (icon "tm_close_tool.xpm") "Close replace tool")
+      ((balloon (icon "tm_close_tool.xpm") "Close replace tool （Esc）")
        (quit)))))
 
 (tm-tool* (replace-tool win u style init saux raux)
