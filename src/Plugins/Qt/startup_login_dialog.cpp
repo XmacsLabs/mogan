@@ -27,27 +27,27 @@ namespace QWK {
 void
 StartupLoginDialog::setupUi () {
   // Create title label
-  titleLabel= new QLabel (qt_translate ("欢迎使用 Liii STEM"),
-                          this); // 欢迎使用 Liii STEM
+  titleLabel= new QLabel (qt_translate ("Welcome to Liii STEM"),
+                          this); // Welcome to Liii STEM
   titleLabel->setAlignment (Qt::AlignCenter);
   titleLabel->setObjectName ("titleLabel");
 
   // Create subtitle label
-  subtitleLabel= new QLabel (qt_translate ("登录即可同步设置并访问所有功能。"),
-                             this); // 登录即可同步设置并访问所有功能。
+  subtitleLabel= new QLabel (qt_translate ("Log in to sync settings and access all features"),
+                             this); // Log in to sync settings and access all features
   subtitleLabel->setAlignment (Qt::AlignCenter);
   subtitleLabel->setObjectName ("subtitleLabel");
 
   // Create feature labels
-  featureLabel1= new QLabel (qt_translate ("1. 注册即送14天会员期限"),
-                             this); // 注册即送14天会员期限
+  featureLabel1= new QLabel ("1. " + qt_translate ("Register now and receive a 14-day membership."),
+                             this); // Register now and receive a 14-day membership.
   featureLabel2=
-      new QLabel (qt_translate ("2. 登录即可同步设置并访问所有功能。"),
-                  this); // 登录即可同步设置并访问所有功能。
-  featureLabel3= new QLabel (qt_translate ("3. 登录即可与AI进行对话"),
-                             this); // 登录即可与AI进行对话
-  featureLabel4= new QLabel (qt_translate ("4. 登录即享Markdown无缝导入"),
-                             this); // 登录即享Markdown无缝导入
+      new QLabel ("2. " + qt_translate ("Log in to sync settings and access all features"),
+                  this); // Log in to sync settings and access all features
+  featureLabel3= new QLabel ("3. " + qt_translate ("Log in to chat with the AI."),
+                             this); // Log in to chat with the AI.
+  featureLabel4= new QLabel ("4. " + qt_translate ("Log in and enjoy seamless Markdown import."),
+                             this); // Log in and enjoy seamless Markdown import.
 
   featureLabel1->setObjectName ("featureLabel");
   featureLabel2->setObjectName ("featureLabel");
@@ -367,6 +367,16 @@ StartupLoginDialog::startBackgroundInitialization() {
                 // Enable buttons and update UI for user choice
                 loginButton->setEnabled(true);
                 skipButton->setEnabled(true);
+
+                // Show feature labels and hide progress UI after initialization
+                // featureLabel1->setVisible(true);
+                // featureLabel2->setVisible(true);
+                // featureLabel3->setVisible(true);
+                // featureLabel4->setVisible(true);
+                progressBar->setVisible(true);
+                statusLabel->setVisible(true);
+                timeEstimationLabel->setVisible(true);
+
                 emit windowReadyForTransition();
               }
             } else {
@@ -378,6 +388,12 @@ StartupLoginDialog::startBackgroundInitialization() {
               // Re-enable buttons for retry (though retry not implemented yet)
               loginButton->setEnabled(true);
               skipButton->setEnabled(true);
+
+              // // Show feature labels even if initialization failed
+              // featureLabel1->setVisible(true);
+              // featureLabel2->setVisible(true);
+              // featureLabel3->setVisible(true);
+              // featureLabel4->setVisible(true);
             }
 
             emit initializationFinished(success);
