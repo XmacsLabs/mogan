@@ -17,7 +17,6 @@
 #include <QDockWidget>
 #include <QKeyEvent>
 #include <QPainter>
-#include <QShortcut>
 
 QTMAuxiliaryWidget::QTMAuxiliaryWidget (const QString& p_title,
                                         QWidget*       p_parent)
@@ -26,14 +25,7 @@ QTMAuxiliaryWidget::QTMAuxiliaryWidget (const QString& p_title,
 
   // 设置焦点策略，使 widget 能够接收键盘事件
   setFocusPolicy (Qt::StrongFocus);
-  // 1. 创建一个快捷键对象，绑定到 ESC 键
-  QShortcut *closeShortcut = new QShortcut(QKeySequence(Qt::Key_Escape), this);
-
-  // 2. 设置上下文：只要焦点在这个窗口内，快捷键都有效
-  closeShortcut->setContext(Qt::WidgetWithChildrenShortcut);
-
-  // 3. 连接信号槽：按下 ESC -> 触发 close()
-  connect(closeShortcut, &QShortcut::activated, this, &QTMAuxiliaryWidget::close);
+  this->setFocusPolicy(Qt::StrongFocus);
 }
 
 QTMAuxiliaryWidget::~QTMAuxiliaryWidget () {}
@@ -52,9 +44,7 @@ QTMAuxiliaryWidget::keyPressEvent (QKeyEvent* event) {
   switch (event->key ()) {
   case Qt::Key_Escape:
     // 隐藏辅助窗口
-    // 这个事件没有被触发
-    exec_delayed (scheme_cmd (
-        "(when (defined? 'close-auxiliary-widget) (close-auxiliary-widget))"));
+    this->close();
     break;
   default:
     QDockWidget::keyPressEvent (event);
