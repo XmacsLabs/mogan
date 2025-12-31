@@ -25,6 +25,42 @@
 (define (get-account-data-dir)
   (url-append (get-texmacs-home-path) "system/account"))
 
+;; 获取账户数据文件路径
+(define (get-account-data-file filename)
+  (url-append (get-account-data-dir) filename))
+
+;; 常量定义
+(define token-filename "token.txt")
+(define refresh-token-filename "refresh_token.txt")
+(define token-expiry-filename "token_expiry.txt")
+
+;; 所有账户数据文件名列表
+(define account-data-filenames
+  (list token-filename refresh-token-filename token-expiry-filename))
+
+;; 确保数据目录存在的辅助函数
+(define (ensure-data-dir-exists)
+  (let ((data-dir (get-account-data-dir)))
+    (if (not (url-exists? data-dir))
+        (system-mkdir data-dir))))
+
+;; 通用：保存账户数据到文件
+(define (save-account-data filename content)
+  (ensure-data-dir-exists)
+  (let ((data-file (get-account-data-file filename)))
+    ;; 如果文件存在则删除后重新创建，确保覆盖内容
+    (when (url-exists? data-file)
+      (system-remove data-file))
+    ;; 保存内容到文件
+    (string-save content data-file)))
+
+;; 通用：从文件读取账户数据
+(define (load-account-data filename)
+  (let ((data-file (get-account-data-file filename)))
+    (if (url-exists? data-file)
+        (string-load data-file)
+        "")))
+
 ;; 生产
 ; (tm-define (account-oauth2-config key)
 ;   (cond
@@ -65,99 +101,36 @@
 ;     ((== key "click-return-liii-url") "http://127.0.0.1:3000/?from=login_button")
 ;     (else "")))
 
-
-(tm-define (account-save-token-display token)
-  (display "OAuth2 Token: ")
-  (display token)
-  (newline))
-
-;; 获取token数据文件路径
-(define (get-token-data-file)
-  (let* ((data-dir (get-account-data-dir))
-         (data-file (url-append data-dir "token.txt")))
-    data-file))
-
-;; 确保数据目录存在的辅助函数
-(define (ensure-data-dir-exists)
-  (let ((data-dir (get-account-data-dir)))
-    (if (not (url-exists? data-dir))
-        (system-mkdir data-dir))))
-
-;; token 保存到数据文件
+;; 1.1 token 保存到数据文件
 (tm-define (account-save-token token)
-  (ensure-data-dir-exists)
-  (let ((data-file (get-token-data-file)))
-    ;; 如果文件存在则删除后重新创建，确保覆盖内容
-    (when (url-exists? data-file)
-      (system-remove data-file))
-    ;; 保存token到文件
-    (string-save token data-file)
-    ))
+  (save-account-data token-filename token))
 
-;; 读取token数据文件
+;; 1.2 读取token数据文件
 (tm-define (account-load-token)
-  (let ((data-file (get-token-data-file)))
-    (if (url-exists? data-file)
-        (string-load data-file)
-        "")))
+  (load-account-data token-filename))
 
-;; 获取refresh_token数据文件路径
-(define (get-refresh-token-data-file)
-  (let* ((data-dir (get-account-data-dir))
-         (data-file (url-append data-dir "refresh_token.txt")))
-    data-file))
-
-;; refresh_token 保存到数据文件
+;; 2.1 refresh_token 保存到数据文件
 (tm-define (account-save-refresh-token refresh-token)
-  (ensure-data-dir-exists)
-  (let ((data-file (get-refresh-token-data-file)))
-    ;; 如果文件存在则删除后重新创建，确保覆盖内容
-    (when (url-exists? data-file)
-      (system-remove data-file))
-    ;; 保存refresh_token到文件
-    (string-save refresh-token data-file)
-    ))
+  (save-account-data refresh-token-filename refresh-token))
 
-;; 读取refresh_token数据文件
+;; 2.2读取refresh_token数据文件
 (tm-define (account-load-refresh-token)
-  (let ((data-file (get-refresh-token-data-file)))
-    (if (url-exists? data-file)
-        (string-load data-file)
-        "")))
+  (load-account-data refresh-token-filename))
 
-;; 获取token过期时间数据文件路径
-(define (get-token-expiry-data-file)
-  (let* ((data-dir (get-account-data-dir))
-         (data-file (url-append data-dir "token_expiry.txt")))
-    data-file))
-
-;; token过期时间保存到数据文件
+;; 3.1 token过期时间保存到数据文件
 (tm-define (account-save-token-expiry expiry-time)
-  (ensure-data-dir-exists)
-  (let ((data-file (get-token-expiry-data-file)))
-    ;; 如果文件存在则删除后重新创建，确保覆盖内容
-    (when (url-exists? data-file)
-      (system-remove data-file))
-    ;; 保存过期时间到文件
-    (string-save expiry-time data-file)
-    ))
+  (save-account-data token-expiry-filename expiry-time))
 
-;; 读取token过期时间数据文件
+;; 3.2 读取token过期时间数据文件
 (tm-define (account-load-token-expiry)
-  (let ((data-file (get-token-expiry-data-file)))
-    (if (url-exists? data-file)
-        (string-load data-file)
-        "")))
+  (load-account-data token-expiry-filename))
 
-;; 清除所有token数据
+;; 4 清除所有token数据
 (tm-define (account-clear-tokens)
   (ensure-data-dir-exists)
-  (let ((token-file (get-token-data-file))
-        (refresh-token-file (get-refresh-token-data-file))
-        (expiry-file (get-token-expiry-data-file)))
-    (when (url-exists? token-file)
-      (system-remove token-file))
-    (when (url-exists? refresh-token-file)
-      (system-remove refresh-token-file))
-    (when (url-exists? expiry-file)
-      (system-remove expiry-file))))
+  (for-each
+   (lambda (filename)
+     (let ((data-file (get-account-data-file filename)))
+       (when (url-exists? data-file)
+         (system-remove data-file))))
+   account-data-filenames))
