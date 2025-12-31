@@ -350,3 +350,12 @@
     (with after? (behind-folded-comment?)
       (when (or (!= before? after?) after?)
         (update-comment-tooltip)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Delete
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (kbd-remove t forwards?)
+  (:require (at-comment-start?))
+  (let ((comment (tree-innermost any-comment-context? #t)))
+    (tree-cut comment)))
