@@ -109,6 +109,7 @@ QTMImagePopup::showImagePopup (qt_renderer_rep* ren, rectangle selr,
   int x, y;
   getCachedPosition (ren, x, y);
   move (x, y);
+  updateButtonStates();
   if (painted_count == 2) {
     show ();
     painted= true;
