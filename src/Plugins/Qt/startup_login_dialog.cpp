@@ -10,6 +10,7 @@
 
 #include "startup_login_dialog.hpp"
 #include "qt_utilities.hpp"
+#include "bootstrap_worker.hpp"
 #include <QApplication>
 #include <QCloseEvent>
 #include <QColor>
@@ -17,6 +18,8 @@
 #include <QPixmap>
 #include <QShowEvent>
 #include <QStyle>
+#include <QTimer>
+#include <QPropertyAnimation>
 
 namespace QWK {
 
@@ -83,6 +86,9 @@ StartupLoginDialog::setupUi () {
   mainLayout->addLayout (buttonLayout);
 
   setLayout (mainLayout);
+
+  // Initialize progress UI (initially hidden)
+  initializeProgressUi();
 }
 
 QString
@@ -149,6 +155,27 @@ StartupLoginDialog::styleSheet () const {
         QPushButton#skipButton:pressed {
             background-color: rgba(255, 255, 255, 0.1);
         }
+        QProgressBar {
+            border: 1px solid #444444;
+            border-radius: 4px;
+            text-align: center;
+            background-color: #2a2a2a;
+            margin: 20px 40px 10px 40px;
+        }
+        QProgressBar::chunk {
+            background-color: #007AFF;
+            border-radius: 3px;
+        }
+        QLabel#statusLabel {
+            color: #cccccc;
+            font-size: 14px;
+            margin: 10px 40px 5px 40px;
+        }
+        QLabel#timeEstimationLabel {
+            color: #a0a0a0;
+            font-size: 12px;
+            margin: 0 40px 20px 40px;
+        }
     )");
 }
 
@@ -157,7 +184,10 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
       featureLabel1 (nullptr), featureLabel2 (nullptr), featureLabel3 (nullptr),
       featureLabel4 (nullptr), loginButton (nullptr), skipButton (nullptr),
       mainLayout (nullptr), featureLayout (nullptr), buttonLayout (nullptr),
-      result (DialogRejected) {
+      progressBar (nullptr), statusLabel (nullptr), timeEstimationLabel (nullptr),
+      fadeAnimation (nullptr), result (DialogRejected),
+      initializationInProgress (false), initializationComplete (false),
+      userChoiceMade (false) {
 
   setWindowFlags (windowFlags () & ~Qt::WindowContextHelpButtonHint);
   QPixmap transparentPixmap (16, 16);
@@ -174,15 +204,35 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
 
   // Connect signals
   connect (loginButton, &QPushButton::clicked, this, [this] () {
-    result= StartupLoginDialog::LoginClicked;
+    result = StartupLoginDialog::LoginClicked;
+    userChoiceMade = true;
     emit loginRequested ();
-    accept ();
+
+    if (initializationComplete) {
+      // Initialization already complete, fade out and close
+      fadeOutAndClose();
+    } else if (!initializationInProgress) {
+      // Initialization not started yet, start it now
+      startInitialization();
+    }
+    // If initialization in progress, just wait for completion
+    // The completion handler will call fadeOutAndClose()
   });
 
   connect (skipButton, &QPushButton::clicked, this, [this] () {
-    result= StartupLoginDialog::SkipClicked;
+    result = StartupLoginDialog::SkipClicked;
+    userChoiceMade = true;
     emit skipRequested ();
-    accept ();
+
+    if (initializationComplete) {
+      // Initialization already complete, fade out and close
+      fadeOutAndClose();
+    } else if (!initializationInProgress) {
+      // Initialization not started yet, start it now
+      startInitialization();
+    }
+    // If initialization in progress, just wait for completion
+    // The completion handler will call fadeOutAndClose()
   });
 
   // Connect reject signal (e.g., window close button)
@@ -207,6 +257,183 @@ StartupLoginDialog::showEvent (QShowEvent* event) {
   // Center the dialog on the screen
   QRect screenGeometry= QApplication::primaryScreen ()->availableGeometry ();
   move (screenGeometry.center () - rect ().center ());
+
+  // Start initialization automatically when dialog is shown
+  if (!initializationInProgress && !initializationComplete) {
+    startInitialization();
+  }
+}
+
+void
+StartupLoginDialog::initializeProgressUi() {
+  // Create progress bar
+  progressBar = new QProgressBar(this);
+  progressBar->setObjectName("progressBar");
+  progressBar->setRange(0, 100);
+  progressBar->setValue(0);
+  progressBar->setTextVisible(true);
+  progressBar->setFormat("%p%");
+  progressBar->setVisible(false); // Hidden initially
+
+  // Create status label
+  statusLabel = new QLabel(qt_translate("准备初始化..."), this);
+  statusLabel->setObjectName("statusLabel");
+  statusLabel->setAlignment(Qt::AlignCenter);
+  statusLabel->setVisible(false);
+
+  // Create time estimation label
+  timeEstimationLabel = new QLabel("", this);
+  timeEstimationLabel->setObjectName("timeEstimationLabel");
+  timeEstimationLabel->setAlignment(Qt::AlignCenter);
+  timeEstimationLabel->setVisible(false);
+
+  // Add progress widgets to main layout (before buttons)
+  mainLayout->insertWidget(mainLayout->count() - 1, progressBar);
+  mainLayout->insertWidget(mainLayout->count() - 1, statusLabel);
+  mainLayout->insertWidget(mainLayout->count() - 1, timeEstimationLabel);
+}
+
+void
+StartupLoginDialog::startInitialization() {
+  if (initializationInProgress || initializationComplete) {
+    return;
+  }
+
+  initializationInProgress = true;
+  initializationComplete = false;
+  userChoiceMade = false;
+
+  // Show progress UI
+  progressBar->setVisible(true);
+  statusLabel->setVisible(true);
+  timeEstimationLabel->setVisible(true);
+
+  // Hide feature labels and adjust spacing
+  featureLabel1->setVisible(false);
+  featureLabel2->setVisible(false);
+  featureLabel3->setVisible(false);
+  featureLabel4->setVisible(false);
+
+  // Update status
+  statusLabel->setText(qt_translate("正在初始化..."));
+
+  // Start background initialization
+  startBackgroundInitialization();
+
+  emit initializationStarted();
+}
+
+void
+StartupLoginDialog::startBackgroundInitialization() {
+  // Create and configure the bootstrap worker
+  BootstrapWorker* worker = new BootstrapWorker(this);
+
+  // Connect worker signals
+  connect(worker, &BootstrapWorker::progressUpdated,
+          this, [this](int step, const QString& message, int percentage) {
+            progressBar->setValue(percentage);
+            statusLabel->setText(message);
+          });
+
+  connect(worker, &BootstrapWorker::timeEstimationUpdated,
+          this, [this](qint64 elapsedMs, qint64 estimatedTotalMs) {
+            if (estimatedTotalMs > 0) {
+              qint64 remainingMs = estimatedTotalMs - elapsedMs;
+              int remainingSec = static_cast<int>(remainingMs / 1000);
+              QString timeText;
+              if (remainingSec > 60) {
+                timeText = qt_translate("剩余时间: %1 分钟").arg((remainingSec + 30) / 60);
+              } else {
+                timeText = qt_translate("剩余时间: %1 秒").arg(qMax(remainingSec, 1));
+              }
+              timeEstimationLabel->setText(timeText);
+            }
+          });
+
+  connect(worker, &BootstrapWorker::initializationComplete,
+          this, [this, worker](bool success) {
+            initializationInProgress = false;
+            initializationComplete = true;
+
+            if (success) {
+              statusLabel->setText(qt_translate("初始化完成"));
+              progressBar->setValue(100);
+              timeEstimationLabel->setText(qt_translate("准备就绪"));
+
+              // If user already made a choice, trigger transition
+              if (userChoiceMade) {
+                fadeOutAndClose();
+              } else {
+                // Enable buttons and update UI for user choice
+                loginButton->setEnabled(true);
+                skipButton->setEnabled(true);
+                emit windowReadyForTransition();
+              }
+            } else {
+              // Initialization failed
+              statusLabel->setText(qt_translate("初始化失败"));
+              progressBar->setValue(0);
+              timeEstimationLabel->setText(qt_translate("请重试"));
+
+              // Re-enable buttons for retry (though retry not implemented yet)
+              loginButton->setEnabled(true);
+              skipButton->setEnabled(true);
+            }
+
+            emit initializationFinished(success);
+            worker->deleteLater();
+          });
+
+  connect(worker, &BootstrapWorker::errorOccurred,
+          this, [this](const QString& error) {
+            statusLabel->setText(qt_translate("错误: %1").arg(error));
+          });
+
+  // Disable buttons during initialization
+  loginButton->setEnabled(false);
+  skipButton->setEnabled(false);
+
+  // Start the worker thread
+  worker->start();
+}
+
+void
+StartupLoginDialog::fadeOutAndClose() {
+  // Create fade-out animation
+  fadeAnimation = new QPropertyAnimation(this, "windowOpacity");
+  fadeAnimation->setDuration(300);
+  fadeAnimation->setStartValue(1.0);
+  fadeAnimation->setEndValue(0.0);
+  fadeAnimation->setEasingCurve(QEasingCurve::OutCubic);
+
+  connect(fadeAnimation, &QPropertyAnimation::finished,
+          this, [this]() {
+            accept(); // Close dialog with acceptance
+          });
+
+  fadeAnimation->start();
+}
+
+void
+StartupLoginDialog::setModal(bool modal) {
+  // Override to ensure dialog stays non-modal for background initialization
+  QDialog::setModal(modal);
+  // Note: The actual modal state is controlled by the caller
+  // We keep this override for compatibility
+}
+
+void
+StartupLoginDialog::closeEvent(QCloseEvent* event) {
+  // Handle window close button (X)
+  if (initializationInProgress) {
+    // Ask for confirmation if initialization is in progress
+    // For now, just prevent closing during initialization
+    event->ignore();
+    return;
+  }
+
+  result = DialogRejected;
+  QDialog::closeEvent(event);
 }
 
 } // namespace QWK
