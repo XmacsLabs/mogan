@@ -43,7 +43,7 @@ QTMAuxiliaryWidget::keyPressEvent (QKeyEvent* event) {
   switch (event->key ()) {
   case Qt::Key_Escape:
     // 隐藏辅助窗口
-    this->close();
+    this->close ();
     break;
   default:
     QDockWidget::keyPressEvent (event);
