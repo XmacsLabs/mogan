@@ -318,6 +318,8 @@ edit_interface_rep::key_press (string gkey) {
   url parent_window= concrete_window ()->parent;
   if (parent_window != url_none () && key == "escape") {
     concrete_window (parent_window)->set_auxiliary_widget_flag (false);
+    exec_delayed (scheme_cmd (
+        "(when (defined? 'close-auxiliary-widget) (close-auxiliary-widget))"));
     focus_on_buffer (window_to_buffer (parent_window));
   }
 

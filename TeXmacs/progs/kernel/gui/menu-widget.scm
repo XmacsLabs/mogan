@@ -1600,7 +1600,11 @@
   (let ((state (get-auxiliary-widget-state)))
     (when state
       (set-auxiliary-widget-state #f (cadr state))
-      (show-auxiliary-widget #f))))
+      (show-auxiliary-widget #f)
+      ((search-cancel 
+        (window->buffer
+          (auxiliary-buffer->window 
+            (search-buffer))))))))
 
 ;; 刷新辅助窗口
 (tm-define (refresh-auxiliary-widget)
