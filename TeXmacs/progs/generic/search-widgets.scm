@@ -426,10 +426,10 @@ url
     (with-buffer u
       (extreme-search-result last?))))
 
-(tm-define (search-rotate-match)
-  (with ok? (search-next-match #t)
+(tm-define (search-rotate-match backward?)
+  (with ok? (search-next-match backward?)
     (when (not ok?)
-      (search-extreme-match #f))))
+      (search-extreme-match (not backward?)))))
 
 (tm-define ((search-cancel u) . args)
   (search-show-all)
@@ -630,7 +630,7 @@ tree 或 #f
       (former t shift?)
       (begin
         (set! search-kbd-intercepted? #t)
-        (search-rotate-match))))
+        (search-rotate-match #t))))
 
 (tm-define (kbd-enter t shift?)
   (:require (inside-replace-buffer?))
@@ -653,12 +653,6 @@ tree 或 #f
   (set! search-kbd-intercepted? #t)
   (search-extreme-match forwards?))
 
-(kbd-map
-  (:require (inside-search-or-replace-buffer?))
-  ("std ?" (make 'select-region))
-  ("std 1" (insert '(wildcard "x")))
-  ("std 2" (insert '(wildcard "y")))
-  ("std 3" (insert '(wildcard "z"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hacks for keyboard events between the moments that
