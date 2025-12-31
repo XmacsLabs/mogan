@@ -937,53 +937,50 @@ show_startup_login_dialog () {
   }
 
   // Create non-modal dialog
-  QWK::StartupLoginDialog* dialog = new QWK::StartupLoginDialog();
-  dialog->setModal(false);
-  dialog->setAttribute(Qt::WA_DeleteOnClose);
+  QWK::StartupLoginDialog* dialog= new QWK::StartupLoginDialog ();
+  dialog->setModal (false);
+  dialog->setAttribute (Qt::WA_DeleteOnClose);
 
   // Local event loop to wait for user decision
   QEventLoop eventLoop;
-  bool userDecisionMade = false;
-  bool continueStartup = true;
+  bool       userDecisionMade= false;
+  bool       continueStartup = true;
 
   // Connect dialog signals
-  QObject::connect(dialog, &QWK::StartupLoginDialog::loginRequested,
-                   [&]() {
-                     g_startup_login_requested = true;
-                     cout << "TeXmacs] Startup login dialog: Login requested\n";
-                     userDecisionMade = true;
-                     continueStartup = true;
-                     eventLoop.quit();
-                   });
+  QObject::connect (dialog, &QWK::StartupLoginDialog::loginRequested, [&] () {
+    g_startup_login_requested= true;
+    cout << "TeXmacs] Startup login dialog: Login requested\n";
+    userDecisionMade= true;
+    continueStartup = true;
+    eventLoop.quit ();
+  });
 
-  QObject::connect(dialog, &QWK::StartupLoginDialog::skipRequested,
-                   [&]() {
-                     cout << "TeXmacs] Startup login dialog: Skip clicked\n";
-                     userDecisionMade = true;
-                     continueStartup = true;
-                     eventLoop.quit();
-                   });
+  QObject::connect (dialog, &QWK::StartupLoginDialog::skipRequested, [&] () {
+    cout << "TeXmacs] Startup login dialog: Skip clicked\n";
+    userDecisionMade= true;
+    continueStartup = true;
+    eventLoop.quit ();
+  });
 
   // Handle dialog rejection (window close)
-  QObject::connect(dialog, &QWK::StartupLoginDialog::rejected,
-                   [&]() {
-                     cout << "TeXmacs] Startup login dialog: Dialog rejected\n";
-                     userDecisionMade = true;
-                     continueStartup = false; // Exit program
-                     eventLoop.quit();
-                   });
+  QObject::connect (dialog, &QWK::StartupLoginDialog::rejected, [&] () {
+    cout << "TeXmacs] Startup login dialog: Dialog rejected\n";
+    userDecisionMade= true;
+    continueStartup = false; // Exit program
+    eventLoop.quit ();
+  });
 
   // Show the dialog (non-blocking)
-  dialog->show();
+  dialog->show ();
 
   // Start background initialization if dialog supports it
-  dialog->startInitialization();
+  dialog->startInitialization ();
 
   // Enter local event loop to wait for user decision
-  eventLoop.exec();
+  eventLoop.exec ();
 
   // Cleanup
-  dialog->deleteLater();
+  dialog->deleteLater ();
 
   return continueStartup;
 }
