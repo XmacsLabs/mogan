@@ -20,10 +20,8 @@
   ("std 2" (insert '(wildcard "y"))) ;插入通配符 y
   ("std 3" (insert '(wildcard "z"))) ;插入通配符 z
   ;; 导航快捷键
-  ("up" (search-next-match #f))      ; 上一个匹配项
-  ("down" (search-next-match #t))    ; 下一个匹配项
-  ("pageup" (search-next-match #f))  ; 上一个匹配项（备用）
-  ("pagedown" (search-next-match #t)); 下一个匹配项（备用）
+  ("pageup" (search-next-match #f))  ; 上一个匹配项
+  ("pagedown" (search-next-match #t)); 下一个匹配项
   ("home" (search-extreme-match #f)) ; 第一个匹配项
   ("end" (search-extreme-match #t))  ; 最后一个匹配项
   ;; 功能键支持

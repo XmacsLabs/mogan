@@ -253,4 +253,4 @@
     (sync-comments-cursor)))
 
 ;; 注册comment编辑器widget类型
-(register-auxiliary-widget-type 'comment-editor open-comment-editor-aux)
+(register-auxiliary-widget-type 'comment-editor (list open-comment-editor-aux))

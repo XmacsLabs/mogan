@@ -1600,8 +1600,12 @@
   (let ((state (get-auxiliary-widget-state)))
     (when state
       (set-auxiliary-widget-state #f (cadr state))
-      (show-auxiliary-widget #f))))
-
+      (show-auxiliary-widget #f)
+      (let ((actions (ahash-ref widget-type->action (cadr state))))
+        (when (and (pair? actions) (pair? (cdr actions)))
+          (with close-action (second actions)
+            (close-action)))))))
+          
 ;; 刷新辅助窗口
 (tm-define (refresh-auxiliary-widget)
   (let ((state (get-auxiliary-widget-state)))
@@ -1611,10 +1615,11 @@
            (show-auxiliary-widget #f))   ;; 第一个是#f，隐藏辅助窗口
           (else
            (let* ((widget-type (cadr state))
-                  (action (ahash-ref widget-type->action widget-type)))
-             (if action
-                 (action)  ;; 调用对应的action函数
-                 (show-auxiliary-widget #f)))))))  ;; 没有对应的action，隐藏窗口
+                  (action-list (ahash-ref widget-type->action widget-type)))
+             (if (and action-list (pair? action-list))
+                 (with open-action (car action-list)
+                  (open-action))
+                 (show-auxiliary-widget #f))))))) ;; 列表为空或未找到，隐藏窗口
 
 (tm-define (auxiliary-widget menu-promise cmd name . opts)
   (:interactive #t)
