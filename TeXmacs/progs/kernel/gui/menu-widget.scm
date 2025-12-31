@@ -1601,11 +1601,10 @@
     (when state
       (set-auxiliary-widget-state #f (cadr state))
       (show-auxiliary-widget #f)
-      ((search-cancel 
-        (window->buffer
-          (auxiliary-buffer->window 
-            (search-buffer))))))))
-
+      (let ((actions (ahash-ref widget-type->action (cadr state))))
+        (when (and (pair? actions) (pair? (cdr actions)))
+          ((cadr actions)))))))
+          
 ;; 刷新辅助窗口
 (tm-define (refresh-auxiliary-widget)
   (let ((state (get-auxiliary-widget-state)))

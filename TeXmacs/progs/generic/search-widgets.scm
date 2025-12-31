@@ -1208,5 +1208,11 @@ tree 或 #f
   (set-boolean-preference "search-and-replace" #t)
   (open-replace))
 
-(register-auxiliary-widget-type 'search interactive-search)
-(register-auxiliary-widget-type 'replace interactive-replace)
+(define (close-search-widget)
+  ((search-cancel 
+    (window->buffer
+      (auxiliary-buffer->window 
+        (search-buffer))))))
+
+(register-auxiliary-widget-type 'search (list interactive-search close-search-widget))
+(register-auxiliary-widget-type 'replace (list interactive-replace close-search-widget))
