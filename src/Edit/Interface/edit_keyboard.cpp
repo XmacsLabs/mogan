@@ -14,6 +14,8 @@
 #include "converter.hpp"
 #include "cork.hpp"
 #include "edit_interface.hpp"
+#include "new_view.hpp"
+#include "new_window.hpp"
 #include "object_l5.hpp"
 #include "preferences.hpp"
 #include "tm_buffer.hpp"
@@ -311,11 +313,12 @@ edit_interface_rep::key_press (string gkey) {
     else key= r;
   }
 
-  // 在辅助窗口中按下 Escape 键时，关闭辅助窗口
+  // 在辅助窗口中的编辑区域按下 Escape 键时，关闭辅助窗口
   // parent_window 非空标志了此窗口为辅助窗口
   url parent_window= concrete_window ()->parent;
   if (parent_window != url_none () && key == "escape") {
     concrete_window (parent_window)->set_auxiliary_widget_flag (false);
+    focus_on_buffer(window_to_buffer(parent_window)); 
   }
 
   string new_sh= N (sh_s) == 0 ? key : sh_s * " " * key;
