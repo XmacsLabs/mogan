@@ -11,13 +11,13 @@
 #ifndef STARTUP_LOGIN_DIALOG_H
 #define STARTUP_LOGIN_DIALOG_H
 
+#include <QPropertyAnimation>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QProgressBar>
-#include <QPropertyAnimation>
 
 namespace QWK {
 
@@ -25,13 +25,18 @@ class StartupLoginDialog : public QDialog {
   Q_OBJECT
 
 public:
-  enum Result { LoginClicked, SkipClicked, DialogRejected, InitializationComplete };
+  enum Result {
+    LoginClicked,
+    SkipClicked,
+    DialogRejected,
+    InitializationComplete
+  };
 
   explicit StartupLoginDialog (QWidget* parent= nullptr);
   ~StartupLoginDialog ();
 
   Result execWithResult ();
-  void setModal (bool modal);
+  void   setModal (bool modal);
 
   // New methods for non-blocking initialization
   void startInitialization ();

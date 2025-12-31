@@ -166,8 +166,8 @@ immediate_options (int argc, char** argv) {
 
 int
 main (int argc, char** argv) {
-  // 1.系统初始化  
-  lolly::init_tbox (); // 初始化tbox库
+  // 1.系统初始化
+  lolly::init_tbox ();                // 初始化tbox库
   lolly::system::args a (argc, argv); // 解决Windows平台命令行参数的编码转换问题
 
 #ifdef STACK_SIZE
