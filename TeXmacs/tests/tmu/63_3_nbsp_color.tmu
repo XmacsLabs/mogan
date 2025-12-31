@@ -1,0 +1,27 @@
+<TMU|<tuple|1.1.0|2025.2.3-rc4>>
+
+<style|<tuple|generic|chinese>>
+
+<\body>
+  没有设置颜色的nbsp，小短横的颜色和背景色一致：
+
+  包含在中括号中的就是nbsp：[<nbsp>]
+
+  此时，将文档主题调整为深色（点击焦点工具栏的第二个按钮），nbsp还是看不到的。
+
+  再将文档主题调整为浅色，nbsp还是看不到的。
+
+  \;
+
+  将nbsp-color设置为红色，效果如下所示：
+
+  [<with|nbsp-color|red|<nbsp>>]
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+    <associate|preamble|false>
+  </collection>
+</initial>

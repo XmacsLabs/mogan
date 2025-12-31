@@ -1135,6 +1135,10 @@
   (list (list "marked-color" "Color")))
 
 (tm-define (customizable-parameters t)
+  (:require (tree-is? t 'nbsp))
+  (list (list "nbsp-color" "Color")))
+
+(tm-define (customizable-parameters t)
   (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
                  (== (tree->string (tree-ref t 0)) "color")))
   (list (list "color" "Color")))
