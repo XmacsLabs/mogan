@@ -1606,6 +1606,20 @@
           ((cadr actions)))))))
           
 ;; 刷新辅助窗口
+; (tm-define (refresh-auxiliary-widget)
+;   (let ((state (get-auxiliary-widget-state)))
+;     (cond ((not state)
+;            (show-auxiliary-widget #f))   ;; 状态为空，隐藏辅助窗口
+;           ((not (car state))
+;            (show-auxiliary-widget #f))   ;; 第一个是#f，隐藏辅助窗口
+;           (else
+;            (let* ((widget-type (cadr state))
+;                   (action (ahash-ref widget-type->action widget-type)))
+;              (if action
+;                  (action)  ;; 调用对应的action函数
+;                  (show-auxiliary-widget #f)))))))  ;; 没有对应的action，隐藏窗口
+
+;; 刷新辅助窗口
 (tm-define (refresh-auxiliary-widget)
   (let ((state (get-auxiliary-widget-state)))
     (cond ((not state)
@@ -1614,10 +1628,10 @@
            (show-auxiliary-widget #f))   ;; 第一个是#f，隐藏辅助窗口
           (else
            (let* ((widget-type (cadr state))
-                  (action (ahash-ref widget-type->action widget-type)))
-             (if action
-                 (action)  ;; 调用对应的action函数
-                 (show-auxiliary-widget #f)))))))  ;; 没有对应的action，隐藏窗口
+                  (action-list (ahash-ref widget-type->action widget-type)))
+             (if (and action-list (pair? action-list))
+                 ((car action-list))
+                 (show-auxiliary-widget #f))))))) ;; 列表为空或未找到，隐藏窗口
 
 (tm-define (auxiliary-widget menu-promise cmd name . opts)
   (:interactive #t)
