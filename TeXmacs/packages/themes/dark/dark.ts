@@ -38,6 +38,8 @@
 
   <assign|bg-color|#404040>
 
+  <assign|canvas-color|#202020>
+
   <assign|nbsp-color|<value|bg-color>>
 
   <assign|gui-bg-color|#404040>
