@@ -1365,9 +1365,9 @@
   (if (selection-active-any?)
       (let ((stree (tree->stree (selection-tree))))
         (if (pure-text? (selection-tree))
-            (make-with "bg-color" (get-marked-color))
+            (make-with "text-bg-color" (get-marked-color))
             (begin
               (make 'marked)
               (when (not (== (get-marked-color) "#ffe47f"))
                 (with-set (focus-tree) "marked-color" (get-marked-color))))))
-      (make-with "bg-color" (get-marked-color))))
+      (make-with "text-bg-color" (get-marked-color))))
