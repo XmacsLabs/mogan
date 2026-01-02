@@ -20,7 +20,7 @@ using namespace moebius;
 lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
 
 /******************************************************************************
- * Background color helper functions
+ * Text Background color helper functions
  ******************************************************************************/
 static inline bool
 has_background_color (edit_env env) {

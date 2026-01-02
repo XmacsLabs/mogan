@@ -334,7 +334,7 @@
   (with setter (lambda (col)
                  (delayed (:idle 250)
                    (parameter-set l col mode)
-                   (when (or (== l "bg-color") (== l "marked-color"))
+                   (when (or (== l "text-bg-color") (== l "marked-color"))
                      (set-preference "marked-color" col))))
     ((check "Default" "*" (parameter-default? l mode))
      (parameter-reset l mode))
