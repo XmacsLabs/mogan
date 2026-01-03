@@ -247,12 +247,14 @@ plugin_list () {
 
 static void
 init_main_paths () {
+  url default_path;
 #if defined(OS_MINGW) || defined(OS_WIN)
-  if (is_none (get_env_path ("TEXMACS_HOME_PATH",
-                             get_env ("APPDATA") * "/" * PREFIX_DIR))) {
+  default_path= get_env ("APPDATA") * "/" * PREFIX_DIR;
 #else
-  if (is_none (get_env_path ("TEXMACS_HOME_PATH", "~/.TeXmacs"))) {
+  default_path= "~/.TeXmacs";
 #endif
+  url home_path= get_env_path ("TEXMACS_HOME_PATH", default_path);
+  if (is_none (home_path)) {
     boot_error << "\n";
     boot_error << "Installation problem: please send a bug report.\n";
     boot_error << "'TEXMACS_HOME_PATH' could not be set to '~/.TeXmacs'.\n";
