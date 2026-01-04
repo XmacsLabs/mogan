@@ -189,11 +189,15 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
       featureLabel4 (nullptr), loginButton (nullptr), skipButton (nullptr),
       mainLayout (nullptr), featureLayout (nullptr), buttonLayout (nullptr),
       progressBar (nullptr), statusLabel (nullptr),
-      timeEstimationLabel (nullptr), fadeAnimation (nullptr),
+      timeEstimationLabel (nullptr),
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+      windowAgent (nullptr), windowBar (nullptr),
+#endif
+      fadeAnimation (nullptr),
       result (DialogRejected), initializationInProgress (false),
       initializationComplete (false), userChoiceMade (false) {
 
-  setWindowFlags (windowFlags () & ~Qt::WindowContextHelpButtonHint);
+  setWindowFlags ((windowFlags () | Qt::FramelessWindowHint) & ~Qt::WindowContextHelpButtonHint);
   QPixmap transparentPixmap (16, 16);
   transparentPixmap.fill (QColor (0, 0, 0, 0));
   setWindowIcon (QIcon (transparentPixmap));
@@ -203,8 +207,30 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
   // Set style sheet
   setStyleSheet (styleSheet ());
 
+  // Setup frameless window management
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+  windowAgent = new QWK::WidgetWindowAgent(this);
+  windowAgent->setup(this);
+  // No title bar for this dialog, make the whole window draggable
+  // We'll set hit test visible for appropriate widgets
+#endif
+
   // Setup UI
   setupUi ();
+
+  // Setup draggable areas for frameless window
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+  if (windowAgent) {
+    // Make title and subtitle labels draggable
+    if (titleLabel) {
+      windowAgent->setHitTestVisible(titleLabel, true);
+    }
+    if (subtitleLabel) {
+      windowAgent->setHitTestVisible(subtitleLabel, true);
+    }
+    // Optionally make other non-interactive areas draggable
+  }
+#endif
 
   // Connect signals
   connect (loginButton, &QPushButton::clicked, this, [this] () {
@@ -246,7 +272,18 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
            [this] () { result= StartupLoginDialog::DialogRejected; });
 }
 
-StartupLoginDialog::~StartupLoginDialog () {}
+StartupLoginDialog::~StartupLoginDialog () {
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+  if (windowBar) {
+    delete windowBar;
+    windowBar = nullptr;
+  }
+  if (windowAgent) {
+    delete windowAgent;
+    windowAgent = nullptr;
+  }
+#endif
+}
 
 StartupLoginDialog::Result
 StartupLoginDialog::execWithResult () {

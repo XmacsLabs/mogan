@@ -19,6 +19,11 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+#include "../QWindowKit/windowbar.hpp"
+#include <QWKWidgets/widgetwindowagent.h>
+#endif
+
 namespace QWK {
 
 class StartupLoginDialog : public QDialog {
@@ -77,6 +82,12 @@ private:
   QProgressBar* progressBar;
   QLabel*       statusLabel;
   QLabel*       timeEstimationLabel;
+
+  // Window management for frameless window
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+  QWK::WidgetWindowAgent* windowAgent;
+  QWK::WindowBar* windowBar;
+#endif
 
   // Animation
   QPropertyAnimation* fadeAnimation;
