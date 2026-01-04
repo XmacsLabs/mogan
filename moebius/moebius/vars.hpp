@@ -56,6 +56,7 @@ extern string MAGNIFICATION;
 extern string COLOR;
 extern string OPACITY;
 extern string BG_COLOR;
+extern string TEXT_BG_COLOR;
 extern string LOCUS_COLOR;
 extern string VISITED_COLOR;
 extern string NO_PATTERNS;

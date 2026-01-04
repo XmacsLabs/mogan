@@ -79,6 +79,7 @@ initialize_default_env () {
   env (COLOR)           = "black";   // the color
   env (OPACITY)         = "100%";    // the opacity
   env (BG_COLOR)        = "white";   // the background color
+  env (TEXT_BG_COLOR)   = "white";   // the text background color
   env (LOCUS_COLOR)     = "global";  // the color of loci
   env (VISITED_COLOR)   = "global";  // the color of visited loci
   env (NO_PATTERNS)     = "false";   // disable background patterns
