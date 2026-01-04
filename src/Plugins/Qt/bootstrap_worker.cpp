@@ -16,6 +16,7 @@
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
 #include "tm_ostream.hpp"
+#include "tm_sys_utils.hpp"
 #include "tm_timer.hpp"
 #include <QDateTime>
 #include <QDebug>
@@ -27,6 +28,10 @@ extern void setup_texmacs ();
 extern void init_upgrade ();
 extern void setup_tex ();
 extern void init_tex ();
+extern void init_main_paths ();
+extern void init_user_dirs ();
+extern void acquire_boot_lock ();
+extern void init_texmacs ();
 
 BootstrapWorker::BootstrapWorker (QObject* parent)
     : QThread (parent), m_stopRequested (false), m_running (false),
@@ -134,15 +139,25 @@ BootstrapWorker::performInitialization () {
 
 bool
 BootstrapWorker::initializeFileSystem () {
-  // TODO: Implement file system checks
-  // This should include:
-  // - Checking TEXMACS_HOME_PATH existence
-  // - Creating necessary directories
-  // - Checking file permissions
+  try {
+    // // Initialize main paths (sets TEXMACS_HOME_PATH)
+    // init_main_paths ();
 
-  // For now, simulate some work
-  QThread::msleep (200);
-  return true;
+    // // Create user directories structure
+    // init_user_dirs ();
+
+    // acquire_boot_lock ();
+
+    // init_texmacs();
+
+    return true;
+  } catch (const std::exception& e) {
+    qWarning () << "BootstrapWorker: File system initialization failed:" << e.what ();
+    return false;
+  } catch (...) {
+    qWarning () << "BootstrapWorker: Unknown error during file system initialization";
+    return false;
+  }
 }
 
 bool

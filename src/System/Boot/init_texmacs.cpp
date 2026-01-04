@@ -245,7 +245,7 @@ plugin_list () {
  * Initialize main paths
  ******************************************************************************/
 
-static void
+void
 init_main_paths () {
   url default_path;
 #if defined(OS_MINGW) || defined(OS_WIN)
@@ -292,7 +292,7 @@ clean_temp_dirs () {
  * Make user directories
  ******************************************************************************/
 
-static void
+void
 init_user_dirs () {
   make_dir ("$TEXMACS_HOME_PATH");
   make_dir ("$TEXMACS_HOME_PATH/bin");
@@ -339,7 +339,7 @@ init_user_dirs () {
  * Boot locks
  ******************************************************************************/
 
-static void
+void
 acquire_boot_lock () {
   // cout << "Acquire lock\n";
   url lock_file= "$TEXMACS_HOME_PATH/system/boot_lock";
@@ -512,25 +512,30 @@ setup_texmacs () {
  * Initialization of TeXmacs
  ******************************************************************************/
 
+ // todo 移到
 void
 init_texmacs () {
-  // cout << "Initialize -- Main paths\n";
-  init_main_paths ();
-  // cout << "Initialize -- User dirs\n";
-  init_user_dirs ();
-  // cout << "Initialize -- Boot lock\n";
+
+    
+  cout << "Initialize -- Main paths\n";
+  // init_main_paths ();
+  cout << "Initialize -- User dirs\n";
+  // init_user_dirs ();  // 被
+
+  cout << "Initialize -- Boot lock\n";
   acquire_boot_lock ();
-  // cout << "Initialize -- Succession status table\n";
+
+  cout << "Initialize -- Succession status table\n";
   init_succession_status_table ();
-  // cout << "Initialize -- Succession standard DRD\n";
+  cout << "Initialize -- Succession standard DRD\n";
   init_std_drd ();
-  // cout << "Initialize -- User preferences\n";
+  cout << "Initialize -- User preferences\n";
   load_user_preferences ();
-  // cout << "Initialize -- Guile\n";
+  cout << "Initialize -- Guile\n";
   init_scheme ();
-  // cout << "Initialize -- Environment variables\n";
+  cout << "Initialize -- Environment variables\n";
   init_env_vars ();
-  // cout << "Initialize -- Miscellaneous\n";
+  cout << "Initialize -- Miscellaneous\n";
   init_misc ();
 }
 
@@ -542,11 +547,11 @@ load_welcome_doc () {
 }
 
 /******************************************************************************
- * Initialization of built-in plug-ins
+ * Load settings and check version
  ******************************************************************************/
 
-void
-init_plugins () {
+static int
+load_settings_and_check_version () {
   url settings_path= "$TEXMACS_HOME_PATH/system/settings.scm";
 
   install_status= 0;
@@ -564,8 +569,23 @@ init_plugins () {
     install_status= 2;
   }
 
+  cout << "TeXmacs] load_settings_and_check_version";
+
+  return install_status;
+}
+
+/******************************************************************************
+ * Initialization of built-in plug-ins
+ ******************************************************************************/
+
+void
+init_plugins () {
+  load_settings_and_check_version ();
+
   setup_tex ();
   init_tex ();
+
+  cout << "TeXmacs] init_plugins";
 }
 
 void
@@ -926,6 +946,7 @@ show_startup_login_dialog () {
     return true;
   }
 
+  // todo1. init_plugins 方法，这个赋值得抽出来
   if (install_status != 1 && install_status != 2) {
     // Normal startup, no need to show login dialog
     return true;

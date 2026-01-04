@@ -366,7 +366,7 @@ StartupLoginDialog::startBackgroundInitialization () {
              initializationComplete  = true;
 
              if (success) {
-               statusLabel->setText (qt_translate ("初始化完成"));
+               statusLabel->setText (qt_translate ("初始化完成，注册即送14天会员期限哦！"));
                progressBar->setValue (100);
                timeEstimationLabel->setText (qt_translate ("准备就绪"));
 
