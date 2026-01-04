@@ -169,12 +169,11 @@ BootstrapTaskExecutor::performFileSystemCheck () {
   try {
     cout << "Step 1 start....\n";
 
-    cout << "performFileSystemCheck -- Main paths\n";
+    // cout << "performFileSystemCheck -- Main paths\n";
     init_main_paths ();
-    cout << "performFileSystemCheck -- User dirs\n";
+    // cout << "performFileSystemCheck -- User dirs\n";
     init_user_dirs ();
 
-    cout << "performFileSystemCheck -- init_texmacs\n";
     init_texmacs ();
     // 引导弹窗中，init_texmacs执行后设置
     g_startup_login_executed= true;

@@ -25,14 +25,14 @@ namespace QWK {
 void
 StartupLoginDialog::setupUi () {
   // 创建标题标签
-  titleLabel= new QLabel (qt_translate ("Welcome to Liii STEM"),
+  titleLabel= new QLabel (qt_translate ("欢迎使用 Liii STEM"),
                           this); // Welcome to Liii STEM
   titleLabel->setAlignment (Qt::AlignCenter);
   titleLabel->setObjectName ("titleLabel");
 
   // 创建副标题标签
   subtitleLabel= new QLabel (
-      qt_translate ("Log in to sync settings and access all features"),
+      qt_translate ("登录即可同步设置并访问所有功能"),
       this); // Log in to sync settings and access all features
   subtitleLabel->setAlignment (Qt::AlignCenter);
   subtitleLabel->setObjectName ("subtitleLabel");
@@ -196,7 +196,8 @@ StartupLoginDialog::styleSheet () const {
             border-radius: 4px;
             text-align: center;
             background-color: #2a2a2a;
-            margin: 20px 40px 10px 40px;
+            margin: 10px 40px 10px 40px;
+            color: #ffffff;
         }
         QProgressBar::chunk {
             background-color: #007AFF;
