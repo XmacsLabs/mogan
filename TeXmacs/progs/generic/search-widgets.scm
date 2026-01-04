@@ -1200,13 +1200,21 @@ tree 或 #f
 
 (tm-define (interactive-search)
   (:interactive #t)
-  (set! search-replace-text "search")
+  (set! search-replace-text (cond 
+                              ((in-math?) "Only search in math mode")
+                              ((in-prog?)  "Only search in Program mode")
+                              ((in-graphics?) "Graphics mode cannot search")
+                              (else "Only search in text mode")))
   (set-boolean-preference "search-and-replace" #f)
   (open-search))
 
 (tm-define (interactive-replace)
   (:interactive #t)
-  (set! search-replace-text "search and replace")
+  (set! search-replace-text (cond 
+                              ((in-math?) "Only search and replace in math mode")
+                              ((in-prog?)  "Only search and replace in Program mode")
+                              ((in-graphics?) "Graphics mode cannot search and replace")
+                              (else "Only search and replace in text mode")))
   (set-boolean-preference "search-and-replace" #t)
   (open-replace))
 
