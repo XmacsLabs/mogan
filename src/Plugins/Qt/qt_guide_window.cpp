@@ -18,28 +18,26 @@
 #include <QPixmap>
 #include <QPropertyAnimation>
 #include <QShowEvent>
-#include <QStyle>
-#include <QTimer>
 
 namespace QWK {
 
 // StartupLoginDialog implementation
 void
 StartupLoginDialog::setupUi () {
-  // Create title label
+  // 创建标题标签
   titleLabel= new QLabel (qt_translate ("Welcome to Liii STEM"),
                           this); // Welcome to Liii STEM
   titleLabel->setAlignment (Qt::AlignCenter);
   titleLabel->setObjectName ("titleLabel");
 
-  // Create subtitle label
+  // 创建副标题标签
   subtitleLabel= new QLabel (
       qt_translate ("Log in to sync settings and access all features"),
       this); // Log in to sync settings and access all features
   subtitleLabel->setAlignment (Qt::AlignCenter);
   subtitleLabel->setObjectName ("subtitleLabel");
 
-  // Create feature labels
+  // 创建功能特性标签
   featureLabel1= new QLabel (
       "1. " + qt_translate ("Register now and receive a 14-day membership."),
       this); // Register now and receive a 14-day membership.
@@ -58,7 +56,7 @@ StartupLoginDialog::setupUi () {
   featureLabel3->setObjectName ("featureLabel");
   featureLabel4->setObjectName ("featureLabel");
 
-  // Create buttons
+  // 创建按钮
   loginButton= new QPushButton (qt_translate ("登录"), this); // 登录 Log In
   loginButton->setObjectName ("loginButton");
   loginButton->setDefault (true);
@@ -67,7 +65,7 @@ StartupLoginDialog::setupUi () {
       new QPushButton (qt_translate ("跳过登录"), this); // 跳过登录 Skip Login
   skipButton->setObjectName ("skipButton");
 
-  // Create layouts
+  // 创建布局
   featureLayout= new QVBoxLayout ();
   featureLayout->setSpacing (4);
   featureLayout->addWidget (featureLabel1);
@@ -91,8 +89,42 @@ StartupLoginDialog::setupUi () {
 
   setLayout (mainLayout);
 
-  // Initialize progress UI (initially hidden)
+  // 初始化进度UI（初始隐藏）
   initializeProgressUi ();
+}
+
+void
+StartupLoginDialog::setupFramelessWindow () {
+#if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+  // 设置无边框窗口管理
+  windowAgent= new QWK::WidgetWindowAgent (this);
+  windowAgent->setup (this);
+
+  // 设置标题和副标题标签为可拖动区域
+  if (windowAgent) {
+    if (titleLabel) {
+      windowAgent->setHitTestVisible (titleLabel, true);
+    }
+    if (subtitleLabel) {
+      windowAgent->setHitTestVisible (subtitleLabel, true);
+    }
+  }
+#endif
+}
+
+void
+StartupLoginDialog::setupSignalConnections () {
+  // 连接登录按钮点击信号
+  connect (loginButton, &QPushButton::clicked, this,
+           &StartupLoginDialog::handleLoginButtonClick);
+
+  // 连接跳过按钮点击信号
+  connect (skipButton, &QPushButton::clicked, this,
+           &StartupLoginDialog::handleSkipButtonClick);
+
+  // 连接对话框拒绝信号（例如窗口关闭按钮）
+  connect (this, &QDialog::rejected, this,
+           [this] () { result= StartupLoginDialog::DialogRejected; });
 }
 
 QString
@@ -191,96 +223,43 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
       progressBar (nullptr), statusLabel (nullptr),
       timeEstimationLabel (nullptr),
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-      windowAgent (nullptr), windowBar (nullptr),
+      windowAgent (nullptr),
 #endif
-      fadeAnimation (nullptr),
-      result (DialogRejected), initializationInProgress (false),
-      initializationComplete (false), userChoiceMade (false) {
+      fadeAnimation (nullptr), result (DialogRejected),
+      initializationInProgress (false), initializationComplete (false),
+      userChoiceMade (false) {
 
-  setWindowFlags ((windowFlags () | Qt::FramelessWindowHint) & ~Qt::WindowContextHelpButtonHint);
+  // 设置无边框窗口标志
+  setWindowFlags ((windowFlags () | Qt::FramelessWindowHint) &
+                  ~Qt::WindowContextHelpButtonHint);
+
+  // 设置透明图标以避免系统显示默认图标
   QPixmap transparentPixmap (16, 16);
   transparentPixmap.fill (QColor (0, 0, 0, 0));
   setWindowIcon (QIcon (transparentPixmap));
+
+  // 固定窗口大小
   setFixedSize (500, 400);
   setWindowTitle (QObject::tr (" "));
 
-  // Set style sheet
+  // 设置样式表
   setStyleSheet (styleSheet ());
 
-  // Setup frameless window management
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-  windowAgent = new QWK::WidgetWindowAgent(this);
-  windowAgent->setup(this);
-  // No title bar for this dialog, make the whole window draggable
-  // We'll set hit test visible for appropriate widgets
-#endif
-
-  // Setup UI
+  // 设置UI
   setupUi ();
 
-  // Setup draggable areas for frameless window
-#if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-  if (windowAgent) {
-    // Make title and subtitle labels draggable
-    if (titleLabel) {
-      windowAgent->setHitTestVisible(titleLabel, true);
-    }
-    if (subtitleLabel) {
-      windowAgent->setHitTestVisible(subtitleLabel, true);
-    }
-    // Optionally make other non-interactive areas draggable
-  }
-#endif
+  // 设置无边框窗口
+  setupFramelessWindow ();
 
-  // Connect signals
-  connect (loginButton, &QPushButton::clicked, this, [this] () {
-    result        = StartupLoginDialog::LoginClicked;
-    userChoiceMade= true;
-    emit loginRequested ();
-
-    if (initializationComplete) {
-      // Initialization already complete, fade out and close
-      fadeOutAndClose ();
-    }
-    else if (!initializationInProgress) {
-      // Initialization not started yet, start it now
-      startInitialization ();
-    }
-    // If initialization in progress, just wait for completion
-    // The completion handler will call fadeOutAndClose()
-  });
-
-  connect (skipButton, &QPushButton::clicked, this, [this] () {
-    result        = StartupLoginDialog::SkipClicked;
-    userChoiceMade= true;
-    emit skipRequested ();
-
-    if (initializationComplete) {
-      // Initialization already complete, fade out and close
-      fadeOutAndClose ();
-    }
-    else if (!initializationInProgress) {
-      // Initialization not started yet, start it now
-      startInitialization ();
-    }
-    // If initialization in progress, just wait for completion
-    // The completion handler will call fadeOutAndClose()
-  });
-
-  // Connect reject signal (e.g., window close button)
-  connect (this, &QDialog::rejected, this,
-           [this] () { result= StartupLoginDialog::DialogRejected; });
+  // 设置信号连接
+  setupSignalConnections ();
 }
 
 StartupLoginDialog::~StartupLoginDialog () {
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-  if (windowBar) {
-    delete windowBar;
-    windowBar = nullptr;
-  }
   if (windowAgent) {
     delete windowAgent;
-    windowAgent = nullptr;
+    windowAgent= nullptr;
   }
 #endif
 }
@@ -297,11 +276,12 @@ StartupLoginDialog::execWithResult () {
 void
 StartupLoginDialog::showEvent (QShowEvent* event) {
   QDialog::showEvent (event);
-  // Center the dialog on the screen
+
+  // 将对话框居中显示在屏幕上
   QRect screenGeometry= QApplication::primaryScreen ()->availableGeometry ();
   move (screenGeometry.center () - rect ().center ());
 
-  // Start initialization automatically when dialog is shown
+  // 当对话框显示时自动开始初始化
   if (!initializationInProgress && !initializationComplete) {
     startInitialization ();
   }
@@ -309,28 +289,28 @@ StartupLoginDialog::showEvent (QShowEvent* event) {
 
 void
 StartupLoginDialog::initializeProgressUi () {
-  // Create progress bar
+  // 创建进度条
   progressBar= new QProgressBar (this);
   progressBar->setObjectName ("progressBar");
   progressBar->setRange (0, 100);
   progressBar->setValue (0);
   progressBar->setTextVisible (true);
   progressBar->setFormat ("%p%");
-  progressBar->setVisible (false); // Hidden initially
+  progressBar->setVisible (false); // 初始隐藏
 
-  // Create status label
+  // 创建状态标签
   statusLabel= new QLabel (qt_translate ("准备初始化..."), this);
   statusLabel->setObjectName ("statusLabel");
   statusLabel->setAlignment (Qt::AlignCenter);
   statusLabel->setVisible (false);
 
-  // Create time estimation label
+  // 创建时间估算标签
   timeEstimationLabel= new QLabel ("", this);
   timeEstimationLabel->setObjectName ("timeEstimationLabel");
   timeEstimationLabel->setAlignment (Qt::AlignCenter);
   timeEstimationLabel->setVisible (false);
 
-  // Add progress widgets to main layout (before buttons)
+  // 将进度部件添加到主布局（在按钮之前）
   mainLayout->insertWidget (mainLayout->count () - 1, progressBar);
   mainLayout->insertWidget (mainLayout->count () - 1, statusLabel);
   mainLayout->insertWidget (mainLayout->count () - 1, timeEstimationLabel);
@@ -338,6 +318,7 @@ StartupLoginDialog::initializeProgressUi () {
 
 void
 StartupLoginDialog::startInitialization () {
+  // 如果初始化已经在进行中或已完成，则直接返回
   if (initializationInProgress || initializationComplete) {
     return;
   }
@@ -346,21 +327,13 @@ StartupLoginDialog::startInitialization () {
   initializationComplete  = false;
   userChoiceMade          = false;
 
-  // Show progress UI
-  progressBar->setVisible (true);
-  statusLabel->setVisible (true);
-  timeEstimationLabel->setVisible (true);
+  // 显示进度UI
+  showProgressUI ();
 
-  // Hide feature labels and adjust spacing
-  featureLabel1->setVisible (false);
-  featureLabel2->setVisible (false);
-  featureLabel3->setVisible (false);
-  featureLabel4->setVisible (false);
-
-  // Update status
+  // 更新状态
   statusLabel->setText (qt_translate ("正在初始化..."));
 
-  // Start background initialization
+  // 开始后台初始化
   startBackgroundInitialization ();
 
   emit initializationStarted ();
@@ -368,109 +341,190 @@ StartupLoginDialog::startInitialization () {
 
 void
 StartupLoginDialog::startBackgroundInitialization () {
-  // Create and configure the bootstrap task executor (single-threaded)
+  // 创建并配置引导任务执行器（单线程）
   BootstrapTaskExecutor* executor= new BootstrapTaskExecutor (this);
 
-  // Connect executor signals
+  // 连接执行器信号到处理函数
   connect (executor, &BootstrapTaskExecutor::progressUpdated, this,
-           [this] (int step, const QString& message, int percentage) {
-             progressBar->setValue (percentage);
-             statusLabel->setText (message);
-           });
+           &StartupLoginDialog::handleProgressUpdate);
 
-  connect (
-      executor, &BootstrapTaskExecutor::timeEstimationUpdated, this,
-      [this] (qint64 elapsedMs, qint64 estimatedTotalMs) {
-        if (estimatedTotalMs > 0) {
-          qint64  remainingMs = estimatedTotalMs - elapsedMs;
-          int     remainingSec= static_cast<int> (remainingMs / 1000);
-          QString timeText;
-          if (remainingSec > 60) {
-            // 分开翻译，避免 %1 被翻译系统错误处理
-            QString prefix = qt_translate ("剩余时间: ");
-            QString suffix = qt_translate ("分钟");
-            timeText = prefix + QString::number ((remainingSec + 30) / 60) + " " + suffix;
-          }
-          else {
-            // 分开翻译，避免 %1 被翻译系统错误处理
-            QString prefix = qt_translate ("剩余时间: ");
-            QString suffix = qt_translate ("秒");
-            timeText = prefix + QString::number (qMax (remainingSec, 1)) + " " + suffix;
-          }
-          timeEstimationLabel->setText (timeText);
-        }
-      });
+  connect (executor, &BootstrapTaskExecutor::timeEstimationUpdated, this,
+           &StartupLoginDialog::handleTimeEstimationUpdate);
 
   connect (executor, &BootstrapTaskExecutor::initializationComplete, this,
-           [this, executor] (bool success) {
-             initializationInProgress= false;
-             initializationComplete  = true;
-
-             if (success) {
-               statusLabel->setText (qt_translate ("初始化完成，注册即送14天会员期限哦！"));
-               progressBar->setValue (100);
-               timeEstimationLabel->setText (qt_translate ("准备就绪"));
-
-               // If user already made a choice, trigger transition
-               if (userChoiceMade) {
-                 fadeOutAndClose ();
-               }
-               else {
-                 // Enable buttons and update UI for user choice
-                 loginButton->setEnabled (true);
-                 skipButton->setEnabled (true);
-
-                 // Show feature labels and hide progress UI after
-                 // initialization featureLabel1->setVisible(true);
-                 // featureLabel2->setVisible(true);
-                 // featureLabel3->setVisible(true);
-                 // featureLabel4->setVisible(true);
-                 progressBar->setVisible (true);
-                 statusLabel->setVisible (true);
-                 timeEstimationLabel->setVisible (true);
-
-                 emit windowReadyForTransition ();
-               }
-             }
-             else {
-               // Initialization failed
-               statusLabel->setText (qt_translate ("初始化失败"));
-               progressBar->setValue (0);
-               timeEstimationLabel->setText (qt_translate ("请重试"));
-
-               // Re-enable buttons for retry (though retry not implemented yet)
-               loginButton->setEnabled (true);
-               skipButton->setEnabled (true);
-
-               // // Show feature labels even if initialization failed
-               // featureLabel1->setVisible(true);
-               // featureLabel2->setVisible(true);
-               // featureLabel3->setVisible(true);
-               // featureLabel4->setVisible(true);
-             }
-
-             emit initializationFinished (success);
-             executor->deleteLater ();
-           });
+           &StartupLoginDialog::handleInitializationComplete);
 
   connect (executor, &BootstrapTaskExecutor::errorOccurred, this,
-           [this] (const QString& error) {
-             // 分开翻译，避免 %1 被翻译系统错误处理
-             QString prefix = qt_translate ("错误: ");
-             statusLabel->setText (prefix + error);
-           });
+           &StartupLoginDialog::handleErrorOccurred);
 
-  // Disable buttons during initialization
-  loginButton->setEnabled (false);
-  skipButton->setEnabled (false);
+  // 初始化期间禁用按钮
+  enableButtons (false);
 
-  // Start the executor in the main thread (not a separate thread)
+  // 在主线程中启动执行器（不是单独的线程）
   executor->start ();
 }
 
 void
+StartupLoginDialog::handleLoginButtonClick () {
+  result        = StartupLoginDialog::LoginClicked;
+  userChoiceMade= true;
+  emit loginRequested ();
+
+  // 根据初始化状态处理
+  if (initializationComplete) {
+    // 初始化已完成，淡出并关闭
+    fadeOutAndClose ();
+  }
+  else if (!initializationInProgress) {
+    // 初始化尚未开始，现在开始
+    startInitialization ();
+  }
+  // 如果初始化正在进行中，只需等待完成
+  // 完成处理程序将调用 fadeOutAndClose()
+}
+
+void
+StartupLoginDialog::handleSkipButtonClick () {
+  result        = StartupLoginDialog::SkipClicked;
+  userChoiceMade= true;
+  emit skipRequested ();
+
+  // 根据初始化状态处理
+  if (initializationComplete) {
+    // 初始化已完成，淡出并关闭
+    fadeOutAndClose ();
+  }
+  else if (!initializationInProgress) {
+    // 初始化尚未开始，现在开始
+    startInitialization ();
+  }
+  // 如果初始化正在进行中，只需等待完成
+  // 完成处理程序将调用 fadeOutAndClose()
+}
+
+void
+StartupLoginDialog::handleProgressUpdate (int step, const QString& message,
+                                          int percentage) {
+  progressBar->setValue (percentage);
+  statusLabel->setText (message);
+}
+
+void
+StartupLoginDialog::handleTimeEstimationUpdate (qint64 elapsedMs,
+                                                qint64 estimatedTotalMs) {
+  if (estimatedTotalMs > 0) {
+    qint64  remainingMs = estimatedTotalMs - elapsedMs;
+    int     remainingSec= static_cast<int> (remainingMs / 1000);
+    QString timeText;
+
+    if (remainingSec > 60) {
+      // 分开翻译，避免 %1 被翻译系统错误处理
+      QString prefix= qt_translate ("剩余时间: ");
+      QString suffix= qt_translate ("分钟");
+      timeText=
+          prefix + QString::number ((remainingSec + 30) / 60) + " " + suffix;
+    }
+    else {
+      // 分开翻译，避免 %1 被翻译系统错误处理
+      QString prefix= qt_translate ("剩余时间: ");
+      QString suffix= qt_translate ("秒");
+      timeText=
+          prefix + QString::number (qMax (remainingSec, 1)) + " " + suffix;
+    }
+    timeEstimationLabel->setText (timeText);
+  }
+}
+
+void
+StartupLoginDialog::handleInitializationComplete (bool success) {
+  initializationInProgress= false;
+  initializationComplete  = true;
+
+  if (success) {
+    // 初始化成功
+    updateProgressUI (100,
+                      qt_translate ("初始化完成，注册即送14天会员期限哦！"),
+                      qt_translate ("准备就绪"));
+
+    // 如果用户已经做出选择，触发过渡
+    if (userChoiceMade) {
+      fadeOutAndClose ();
+    }
+    else {
+      // 启用按钮并更新UI以供用户选择
+      enableButtons (true);
+      emit windowReadyForTransition ();
+    }
+  }
+  else {
+    // 初始化失败
+    updateProgressUI (0, qt_translate ("初始化失败"), qt_translate ("请重试"));
+
+    // 重新启用按钮以便重试（虽然重试功能尚未实现）
+    enableButtons (true);
+  }
+
+  emit initializationFinished (success);
+
+  // 清理执行器
+  QObject* executor= sender ();
+  if (executor) {
+    executor->deleteLater ();
+  }
+}
+
+void
+StartupLoginDialog::handleErrorOccurred (const QString& error) {
+  // 分开翻译，避免 %1 被翻译系统错误处理
+  QString prefix= qt_translate ("错误: ");
+  statusLabel->setText (prefix + error);
+}
+
+void
+StartupLoginDialog::showProgressUI () {
+  // 显示进度UI
+  progressBar->setVisible (true);
+  statusLabel->setVisible (true);
+  timeEstimationLabel->setVisible (true);
+
+  // 隐藏功能标签并调整间距
+  featureLabel1->setVisible (false);
+  featureLabel2->setVisible (false);
+  featureLabel3->setVisible (false);
+  featureLabel4->setVisible (false);
+}
+
+void
+StartupLoginDialog::hideProgressUI () {
+  // 隐藏进度UI
+  progressBar->setVisible (false);
+  statusLabel->setVisible (false);
+  timeEstimationLabel->setVisible (false);
+
+  // 显示功能标签
+  featureLabel1->setVisible (true);
+  featureLabel2->setVisible (true);
+  featureLabel3->setVisible (true);
+  featureLabel4->setVisible (true);
+}
+
+void
+StartupLoginDialog::updateProgressUI (int percentage, const QString& status,
+                                      const QString& timeEstimation) {
+  progressBar->setValue (percentage);
+  statusLabel->setText (status);
+  timeEstimationLabel->setText (timeEstimation);
+}
+
+void
+StartupLoginDialog::enableButtons (bool enabled) {
+  loginButton->setEnabled (enabled);
+  skipButton->setEnabled (enabled);
+}
+
+void
 StartupLoginDialog::fadeOutAndClose () {
-  // Create fade-out animation
+  // 创建淡出动画
   fadeAnimation= new QPropertyAnimation (this, "windowOpacity");
   fadeAnimation->setDuration (300);
   fadeAnimation->setStartValue (1.0);
@@ -478,26 +532,17 @@ StartupLoginDialog::fadeOutAndClose () {
   fadeAnimation->setEasingCurve (QEasingCurve::OutCubic);
 
   connect (fadeAnimation, &QPropertyAnimation::finished, this, [this] () {
-    accept (); // Close dialog with acceptance
+    accept (); // 以接受状态关闭对话框
   });
 
   fadeAnimation->start ();
 }
 
 void
-StartupLoginDialog::setModal (bool modal) {
-  // Override to ensure dialog stays non-modal for background initialization
-  QDialog::setModal (modal);
-  // Note: The actual modal state is controlled by the caller
-  // We keep this override for compatibility
-}
-
-void
 StartupLoginDialog::closeEvent (QCloseEvent* event) {
-  // Handle window close button (X)
+  // 处理窗口关闭按钮（X）
   if (initializationInProgress) {
-    // Ask for confirmation if initialization is in progress
-    // For now, just prevent closing during initialization
+    // 如果初始化正在进行中，阻止关闭
     event->ignore ();
     return;
   }

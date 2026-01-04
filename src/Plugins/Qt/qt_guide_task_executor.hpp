@@ -17,7 +17,8 @@
 
 /**
  * @class BootstrapTaskExecutor
- * @brief Single-threaded task executor for performing Mogan initialization tasks
+ * @brief Single-threaded task executor for performing Mogan initialization
+ * tasks
  *
  * This executor performs initialization tasks in the main thread while
  * keeping the UI responsive through task segmentation. It provides
@@ -36,7 +37,7 @@ public:
     Complete
   };
 
-  explicit BootstrapTaskExecutor (QObject* parent = nullptr);
+  explicit BootstrapTaskExecutor (QObject* parent= nullptr);
   ~BootstrapTaskExecutor ();
 
   /**
@@ -142,22 +143,28 @@ private:
   // Time estimation
   qint64 estimateStepTime (TaskStep step) const;
 
-  // Execution control
-  void startNextStep ();
+  // Helper methods for error handling and state management
+  void handleExecutionStopped ();
+  void completeInitialization ();
+  void handleUnexpectedStep ();
+  void handleStepFailure (const QString& stepMessage);
+  void handleException (const QString& error);
+  void handleUnknownException ();
+  void scheduleNextExecution ();
 
   // State tracking
-  bool m_running;
-  bool m_cancelled;
-  bool m_completed;
-  bool m_success;
-  int m_progress;
-  QString m_errorMessage;
-  QString m_currentStatus;
+  bool     m_running;
+  bool     m_cancelled;
+  bool     m_completed;
+  bool     m_success;
+  int      m_progress;
+  QString  m_errorMessage;
+  QString  m_currentStatus;
   TaskStep m_currentStep;
 
   // Time tracking for progress estimation
-  qint64 m_startTime;
-  qint64 m_stepStartTime;
+  qint64          m_startTime;
+  qint64          m_stepStartTime;
   QVector<qint64> m_stepDurations;
 
   // Timer for segmented execution

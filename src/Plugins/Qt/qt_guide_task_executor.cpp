@@ -10,36 +10,13 @@
 
 #include "qt_guide_task_executor.hpp"
 #include "boot.hpp"
-#include "data_cache.hpp"
-#include "file.hpp"
-#include "preferences.hpp"
-#include "sys_utils.hpp"
-#include "tm_file.hpp"
-#include "tm_ostream.hpp"
-#include "tm_sys_utils.hpp"
-#include "tm_timer.hpp"
-#include "language.hpp"
 #include <QDateTime>
 #include <QDebug>
-#include <QElapsedTimer>
 #include <QThread>
 
-#include <moebius/drd/drd_std.hpp>
-#include <moebius/data/scheme.hpp>
-using moebius::data::block_to_scheme_tree;
-using moebius::data::scheme_tree_to_block;
-using moebius::data::scm_quote;
-using moebius::drd::init_std_drd;
-
 // External declarations from init_texmacs.cpp
-extern int  install_status;
-extern void setup_texmacs ();
-extern void init_upgrade ();
-extern void setup_tex ();
-extern void init_tex ();
 extern void init_main_paths ();
 extern void init_user_dirs ();
-extern void acquire_boot_lock ();
 extern void init_texmacs ();
 extern bool g_startup_login_executed;
 
@@ -50,12 +27,14 @@ BootstrapTaskExecutor::BootstrapTaskExecutor (QObject* parent)
       m_currentStep (TaskStep::NotStarted), m_startTime (0),
       m_stepStartTime (0), m_executionTimer (nullptr) {
 
-  // Initialize step durations with reasonable defaults (in milliseconds)
+  // 初始化步骤持续时间（毫秒）
+  // 这些是默认值，实际执行时会根据实际耗时更新
   m_stepDurations.resize (static_cast<int> (TaskStep::Complete) + 1);
-  m_stepDurations[static_cast<int> (TaskStep::FileSystemCheck)]     = 500;  // 0.5 seconds
-  m_stepDurations[static_cast<int> (TaskStep::ConfigurationLoad)]   = 1000; // 1 second
-  m_stepDurations[static_cast<int> (TaskStep::PluginInitialization)]= 3000; // 3 seconds
-  m_stepDurations[static_cast<int> (TaskStep::SchemeEnvironment)]   = 2000; // 2 seconds
+  m_stepDurations[static_cast<int> (TaskStep::FileSystemCheck)]  = 500; // 0.5秒
+  m_stepDurations[static_cast<int> (TaskStep::ConfigurationLoad)]= 1000; // 1秒
+  m_stepDurations[static_cast<int> (TaskStep::PluginInitialization)]=
+      3000;                                                              // 3秒
+  m_stepDurations[static_cast<int> (TaskStep::SchemeEnvironment)]= 2000; // 2秒
 }
 
 BootstrapTaskExecutor::~BootstrapTaskExecutor () {
@@ -68,24 +47,26 @@ BootstrapTaskExecutor::~BootstrapTaskExecutor () {
 
 void
 BootstrapTaskExecutor::start () {
+  // 如果已经在运行或已完成，则直接返回
   if (m_running || m_completed) {
     return;
   }
 
-  m_running      = true;
-  m_cancelled    = false;
-  m_completed    = false;
-  m_success      = false;
-  m_progress     = 0;
+  // 重置所有状态
+  m_running  = true;
+  m_cancelled= false;
+  m_completed= false;
+  m_success  = false;
+  m_progress = 0;
   m_errorMessage.clear ();
   m_currentStatus.clear ();
   m_currentStep  = TaskStep::FileSystemCheck;
   m_startTime    = QDateTime::currentMSecsSinceEpoch ();
   m_stepStartTime= m_startTime;
 
-  qDebug () << "BootstrapTaskExecutor: Starting Mogan initialization in main thread...";
+  qDebug () << "BootstrapTaskExecutor: 在主线程中启动Mogan初始化...";
 
-  // Create execution timer if not exists
+  // 创建执行计时器（如果不存在）
   if (!m_executionTimer) {
     m_executionTimer= new QTimer (this);
     m_executionTimer->setSingleShot (true);
@@ -93,7 +74,7 @@ BootstrapTaskExecutor::start () {
              &BootstrapTaskExecutor::executeNextSegment);
   }
 
-  // Start execution with a small delay to allow UI to update
+  // 启动执行，使用小延迟以允许UI更新
   QTimer::singleShot (10, this, &BootstrapTaskExecutor::executeNextSegment);
 }
 
@@ -107,122 +88,79 @@ BootstrapTaskExecutor::cancel () {
 
 void
 BootstrapTaskExecutor::executeNextSegment () {
+  // 检查是否已取消或未运行
   if (m_cancelled || !m_running) {
-    m_running  = false;
-    m_completed= true;
-    m_success  = false;
-    if (m_cancelled) {
-      m_errorMessage= "Initialization cancelled by user";
-    }
-    emit initializationComplete (false);
+    handleExecutionStopped ();
     return;
   }
 
   try {
-    // Execute current step
-    bool stepSuccess= false;
-    QString stepMessage;
+    // 执行当前步骤
+    bool     stepSuccess= false;
+    QString  stepMessage;
+    TaskStep nextStep= TaskStep::NotStarted;
 
-    TaskStep currentStepBeforeUpdate= m_currentStep;
-
+    // 根据当前步骤执行相应的任务
     switch (m_currentStep) {
     case TaskStep::FileSystemCheck:
-      stepSuccess = performFileSystemCheck ();
-      stepMessage = "Checking file system...";
-      if (stepSuccess) {
-        // Update progress for current step before moving to next
-        updateProgress (currentStepBeforeUpdate, stepMessage);
-        m_currentStep= TaskStep::ConfigurationLoad;
-      }
+      stepSuccess= performFileSystemCheck ();
+      stepMessage= "检查文件系统...";
+      nextStep   = TaskStep::ConfigurationLoad;
       break;
 
     case TaskStep::ConfigurationLoad:
-      stepSuccess = performConfigurationLoad ();
-      stepMessage = "Loading configuration...";
-      if (stepSuccess) {
-        // Update progress for current step before moving to next
-        updateProgress (currentStepBeforeUpdate, stepMessage);
-        m_currentStep= TaskStep::PluginInitialization;
-      }
+      stepSuccess= performConfigurationLoad ();
+      stepMessage= "加载配置...";
+      nextStep   = TaskStep::PluginInitialization;
       break;
 
     case TaskStep::PluginInitialization:
-      stepSuccess = performPluginInitialization ();
-      stepMessage = "Initializing plugins...";
-      if (stepSuccess) {
-        // Update progress for current step before moving to next
-        updateProgress (currentStepBeforeUpdate, stepMessage);
-        m_currentStep= TaskStep::SchemeEnvironment;
-      }
+      stepSuccess= performPluginInitialization ();
+      stepMessage= "初始化插件...";
+      nextStep   = TaskStep::SchemeEnvironment;
       break;
 
     case TaskStep::SchemeEnvironment:
-      stepSuccess = performSchemeEnvironmentSetup ();
-      stepMessage = "Preparing Scheme environment...";
-      if (stepSuccess) {
-        // Update progress for current step before moving to next
-        updateProgress (currentStepBeforeUpdate, stepMessage);
-        m_currentStep= TaskStep::Complete;
-      }
+      stepSuccess= performSchemeEnvironmentSetup ();
+      stepMessage= "准备Scheme环境...";
+      nextStep   = TaskStep::Complete;
       break;
 
     case TaskStep::Complete:
-      // All steps completed successfully
-      m_running  = false;
-      m_completed= true;
-      m_success  = true;
-      updateProgress (TaskStep::Complete, "Initialization complete");
-      emit initializationComplete (true);
+      // 所有步骤完成
+      completeInitialization ();
       return;
 
     default:
-      // Should not reach here
-      m_errorMessage= QString ("Unexpected step: %1")
-                          .arg (static_cast<int> (m_currentStep));
-      m_running  = false;
-      m_completed= true;
-      m_success  = false;
-      emit errorOccurred (m_errorMessage);
-      emit initializationComplete (false);
+      // 不应该到达这里
+      handleUnexpectedStep ();
       return;
     }
 
-    if (!stepSuccess) {
-      // Step failed
-      m_running  = false;
-      m_completed= true;
-      m_success  = false;
-      m_errorMessage= QString ("Step failed: %1").arg (stepMessage);
-      emit errorOccurred (m_errorMessage);
-      emit initializationComplete (false);
-      return;
-    }
+    // 处理步骤执行结果
+    if (stepSuccess) {
+      // 步骤成功，更新进度并移动到下一步
+      updateProgress (m_currentStep, stepMessage);
+      m_currentStep= nextStep;
 
-    // Schedule next execution segment with a small delay
-    // to keep UI responsive (10ms delay between segments)
-    if (m_executionTimer) {
-      m_executionTimer->start (10);
-    } else {
-      // Fallback: use singleShot
-      QTimer::singleShot (10, this, &BootstrapTaskExecutor::executeNextSegment);
+      // 如果还有下一步，调度下一次执行
+      if (m_currentStep != TaskStep::Complete) {
+        scheduleNextExecution ();
+      }
+      else {
+        // 所有步骤完成
+        completeInitialization ();
+      }
+    }
+    else {
+      // 步骤失败
+      handleStepFailure (stepMessage);
     }
 
   } catch (const std::exception& e) {
-    m_running  = false;
-    m_completed= true;
-    m_success  = false;
-    m_errorMessage= QString ("Exception: %1").arg (e.what ());
-    qWarning () << "BootstrapTaskExecutor: Exception:" << m_errorMessage;
-    emit errorOccurred (m_errorMessage);
-    emit initializationComplete (false);
+    handleException (e.what ());
   } catch (...) {
-    m_running  = false;
-    m_completed= true;
-    m_success  = false;
-    m_errorMessage= "Unknown exception during initialization";
-    qWarning () << "BootstrapTaskExecutor: Unknown exception";
-    emit errorOccurred (m_errorMessage);
-    emit initializationComplete (false);
+    handleUnknownException ();
   }
 }
 
@@ -243,36 +181,43 @@ BootstrapTaskExecutor::performFileSystemCheck () {
 
     return true;
   } catch (const std::exception& e) {
-    qWarning () << "BootstrapTaskExecutor: File system check failed:" << e.what ();
+    qWarning () << "BootstrapTaskExecutor: File system check failed:"
+                << e.what ();
     return false;
   } catch (...) {
-    qWarning () << "BootstrapTaskExecutor: Unknown error during file system check";
+    qWarning ()
+        << "BootstrapTaskExecutor: Unknown error during file system check";
     return false;
   }
 }
 
 bool
 BootstrapTaskExecutor::performConfigurationLoad () {
-  // TODO: Implement actual configuration loading
-  // This should include:
-  // - Loading user preferences
-  // - Setting up environment variables
-  // - Initializing application settings
+  // 占位符方法：配置加载
+  // TODO: 实现实际的配置加载逻辑
+  // 应包括：
+  // - 加载用户偏好设置
+  // - 设置环境变量
+  // - 初始化应用程序设置
 
-  // Small delay to simulate work and allow UI updates
+  // 短暂延迟以允许UI更新
   QThread::msleep (60);
   return true;
 }
 
 bool
 BootstrapTaskExecutor::performPluginInitialization () {
-  // This function performs time-consuming plugin initialization tasks
-  // Note: Core initialization (install_status setup) should be done in main
-  // thread This function focuses on background tasks that can run concurrently
+  // 占位符方法：插件初始化
+  // 注意：核心初始化应在主线程中完成
+  // 此方法专注于可以在后台并发运行的任务
 
   qDebug () << "BootstrapTaskExecutor: Performing plugin initialization...";
 
-  
+  // TODO: 实现实际的插件初始化逻辑
+  // 应包括：
+  // - 加载和初始化插件
+  // - 设置插件依赖关系
+  // - 注册插件服务
 
   qDebug () << "BootstrapTaskExecutor: Plugin initialization complete";
   QThread::msleep (50);
@@ -281,13 +226,14 @@ BootstrapTaskExecutor::performPluginInitialization () {
 
 bool
 BootstrapTaskExecutor::performSchemeEnvironmentSetup () {
-  // TODO: Implement Scheme environment setup
-  // This should include:
-  // - Setting up Scheme load paths
-  // - Initializing Scheme runtime
-  // - Loading core Scheme modules
+  // 占位符方法：Scheme环境设置
+  // TODO: 实现实际的Scheme环境设置逻辑
+  // 应包括：
+  // - 设置Scheme加载路径
+  // - 初始化Scheme运行时
+  // - 加载核心Scheme模块
 
-  // Small delay to simulate work and allow UI updates
+  // 短暂延迟以允许UI更新
   QThread::msleep (40);
   return true;
 }
@@ -338,7 +284,8 @@ BootstrapTaskExecutor::updateTimeEstimation () {
   qint64 elapsed    = currentTime - m_startTime;
 
   // Store actual duration for current step
-  if (m_currentStep > TaskStep::NotStarted && m_currentStep < TaskStep::Complete) {
+  if (m_currentStep > TaskStep::NotStarted &&
+      m_currentStep < TaskStep::Complete) {
     if (m_stepStartTime > 0) {
       qint64 stepDuration= currentTime - m_stepStartTime;
       m_stepDurations[static_cast<int> (m_currentStep)]= stepDuration;
@@ -368,5 +315,84 @@ BootstrapTaskExecutor::estimateStepTime (TaskStep step) const {
   if (index >= 0 && index < m_stepDurations.size ()) {
     return m_stepDurations[index];
   }
-  return 1000; // Default 1 second
+  return 1000; // 默认1秒
+}
+
+// ============================================================================
+// 辅助方法：错误处理和状态管理
+// ============================================================================
+
+void
+BootstrapTaskExecutor::handleExecutionStopped () {
+  m_running  = false;
+  m_completed= true;
+  m_success  = false;
+  if (m_cancelled) {
+    m_errorMessage= "初始化被用户取消";
+  }
+  emit initializationComplete (false);
+}
+
+void
+BootstrapTaskExecutor::completeInitialization () {
+  m_running  = false;
+  m_completed= true;
+  m_success  = true;
+  updateProgress (TaskStep::Complete, "初始化完成");
+  emit initializationComplete (true);
+}
+
+void
+BootstrapTaskExecutor::handleUnexpectedStep () {
+  m_errorMessage=
+      QString ("意外的步骤: %1").arg (static_cast<int> (m_currentStep));
+  m_running  = false;
+  m_completed= true;
+  m_success  = false;
+  emit errorOccurred (m_errorMessage);
+  emit initializationComplete (false);
+}
+
+void
+BootstrapTaskExecutor::handleStepFailure (const QString& stepMessage) {
+  m_running     = false;
+  m_completed   = true;
+  m_success     = false;
+  m_errorMessage= QString ("步骤失败: %1").arg (stepMessage);
+  emit errorOccurred (m_errorMessage);
+  emit initializationComplete (false);
+}
+
+void
+BootstrapTaskExecutor::handleException (const QString& error) {
+  m_running     = false;
+  m_completed   = true;
+  m_success     = false;
+  m_errorMessage= QString ("异常: %1").arg (error);
+  qWarning () << "BootstrapTaskExecutor: 异常:" << m_errorMessage;
+  emit errorOccurred (m_errorMessage);
+  emit initializationComplete (false);
+}
+
+void
+BootstrapTaskExecutor::handleUnknownException () {
+  m_running     = false;
+  m_completed   = true;
+  m_success     = false;
+  m_errorMessage= "初始化过程中发生未知异常";
+  qWarning () << "BootstrapTaskExecutor: 未知异常";
+  emit errorOccurred (m_errorMessage);
+  emit initializationComplete (false);
+}
+
+void
+BootstrapTaskExecutor::scheduleNextExecution () {
+  // 调度下一次执行，保持UI响应性（段之间10ms延迟）
+  if (m_executionTimer) {
+    m_executionTimer->start (10);
+  }
+  else {
+    // 备用方案：使用singleShot
+    QTimer::singleShot (10, this, &BootstrapTaskExecutor::executeNextSegment);
+  }
 }

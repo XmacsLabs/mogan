@@ -35,8 +35,8 @@
 #include "Qt/QTMApplication.hpp"
 #include "Qt/QTMOAuth.hpp"
 #include "Qt/qt_gui.hpp"
-#include "Qt/qt_utilities.hpp"
 #include "Qt/qt_guide_window.hpp"
+#include "Qt/qt_utilities.hpp"
 #include "tm_server.hpp"
 #include <QApplication>
 #include <QCoreApplication>
@@ -67,7 +67,7 @@ extern bool   headless_mode;
 
 #ifdef QTTEXMACS
 bool g_startup_login_requested= false;
-bool g_startup_login_executed= false;
+bool g_startup_login_executed = false;
 #endif
 
 string extra_init_cmd;
@@ -519,7 +519,7 @@ init_texmacs_front () {
   cout << "Initialize front -- Main paths\n";
   init_main_paths ();
   cout << "Initialize front -- User dirs\n";
-  init_user_dirs (); 
+  init_user_dirs ();
   cout << "Initialize front -- Guile\n";
   init_scheme ();
   cout << "Initialize front -- Environment variables\n";
@@ -530,7 +530,7 @@ init_texmacs_front () {
 
 void
 init_texmacs () {
-  if(g_startup_login_executed == true){
+  if (g_startup_login_executed == true) {
     return;
   }
 
@@ -965,7 +965,6 @@ show_startup_login_dialog () {
   if (is_community_stem ()) {
     return true;
   }
-
 
   // Create non-modal dialog
   QWK::StartupLoginDialog* dialog= new QWK::StartupLoginDialog ();

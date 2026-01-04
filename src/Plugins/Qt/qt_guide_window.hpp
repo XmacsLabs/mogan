@@ -20,7 +20,6 @@
 #include <QtWidgets/QVBoxLayout>
 
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-#include "../QWindowKit/windowbar.hpp"
 #include <QWKWidgets/widgetwindowagent.h>
 #endif
 
@@ -41,11 +40,8 @@ public:
   ~StartupLoginDialog ();
 
   Result execWithResult ();
-  void   setModal (bool modal);
-
-  // New methods for non-blocking initialization
-  void startInitialization ();
-  bool isInitializationComplete () const { return initializationComplete; }
+  void   startInitialization ();
+  bool   isInitializationComplete () const { return initializationComplete; }
 
 signals:
   void loginRequested ();
@@ -60,10 +56,29 @@ protected:
 
 private:
   void    setupUi ();
+  void    setupFramelessWindow ();
+  void    setupSignalConnections ();
   QString styleSheet () const;
   void    initializeProgressUi ();
   void    startBackgroundInitialization ();
   void    fadeOutAndClose ();
+
+  // 按钮点击处理
+  void handleLoginButtonClick ();
+  void handleSkipButtonClick ();
+
+  // 初始化任务信号处理
+  void handleProgressUpdate (int step, const QString& message, int percentage);
+  void handleTimeEstimationUpdate (qint64 elapsedMs, qint64 estimatedTotalMs);
+  void handleInitializationComplete (bool success);
+  void handleErrorOccurred (const QString& error);
+
+  // UI状态管理
+  void showProgressUI ();
+  void hideProgressUI ();
+  void updateProgressUI (int percentage, const QString& status,
+                         const QString& timeEstimation);
+  void enableButtons (bool enabled);
 
   // UI elements
   QLabel*      titleLabel;
@@ -78,7 +93,7 @@ private:
   QVBoxLayout* featureLayout;
   QHBoxLayout* buttonLayout;
 
-  // Progress UI elements (new)
+  // Progress UI elements
   QProgressBar* progressBar;
   QLabel*       statusLabel;
   QLabel*       timeEstimationLabel;
@@ -86,7 +101,6 @@ private:
   // Window management for frameless window
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
   QWK::WidgetWindowAgent* windowAgent;
-  QWK::WindowBar* windowBar;
 #endif
 
   // Animation
