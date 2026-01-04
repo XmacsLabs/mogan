@@ -17,7 +17,8 @@
         (utils edit auto-close)
         (math math-drd)
         (generic format-geometry-edit)
-        (convert tools tmconcat)))
+        (convert tools tmconcat)
+        (generic generic-edit)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Some drd properties, which should go into table-drd.scm later on
@@ -883,3 +884,12 @@
           "Math")))
         (noop))
     (noop))
+
+(tm-define (kbd-paste)
+  (:require (in-math?))
+  ;; 在数学模式下粘贴
+  ;; 如果剪贴板中的内容是图像，调用 ocr-paste
+  ;; 否则调用原来的 kbd-paste
+  (if (string-starts? (qt-clipboard-format) "image")
+      (ocr-paste)
+      (clipboard-paste "primary")))

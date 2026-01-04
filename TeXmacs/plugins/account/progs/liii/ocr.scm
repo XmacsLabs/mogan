@@ -70,7 +70,10 @@
     (insert `(with "par-mode" "center" (document ,(utf8->cork content))))))
 
 (tm-define (insert-latex-at-current-path)
-  (let* ((latex-code (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.tex")))
+  (let* ((mode (get-env "mode"))
+         (latex-code (if (== mode "math")
+                         "E=m*c^2"  ;; 数学模式下返回 E=m*c^2 的 LaTeX
+                         (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.tex"))))
          (parsed-latex (parse-latex latex-code))
          (texmacs-latex (latex->texmacs parsed-latex)))
     (insert texmacs-latex)))
