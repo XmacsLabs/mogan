@@ -1,0 +1,149 @@
+<TMU|<tuple|1.1.0|2025.2.3-rc2>>
+
+<style|<tuple|generic|chinese|number-europe>>
+
+<\body>
+  <\hide-preamble>
+    <assign|render-bibliography|<\macro|name|body>
+      <\chapter*>
+        <arg|name>
+      </chapter*>
+
+      <with|par-first|0fn|par-par-sep|0fn|font-base-size|10|<arg|body>>
+    </macro>>
+
+    <assign|transform-bibitem|<macro|body|[<arg|body>]<space|1.5fn>>>
+  </hide-preamble>
+
+  <cite|li_2024_efficient><cite|STUD20250306006><cite|GGYY202510006><cite|dewdney1984computer><cite|weiser1999computer><cite|japandict2004><cite|Kochetkov1993><cite|GB/T3792.4-2009><cite|ISO15836:2009><cite|马欢2011><cite|CALMS1965><cite|国务院新闻办公室2013><cite|萧钰2001>
+
+  <\bib-list|>
+    <bibitem|1>闵超.马克思1848年法国革命研究与唯物史观的具体化转向[J/OL].马克思主义研究,2025,(01):52-60[2025-12-25].https://link.cnki.net/urlid/11.3591.A.20250306.1018.012.
+
+    <bibitem|2>李磊,刘博聪,盛斌,等.专利出海与企业跨国供应链韧性提升[J].中国工业经济,2025,(10):97-116.DOI:10.19581/j.cnki.ciejournal.2025.10.006.
+
+    <bibitem|3>DEWDNEY A K. Computer recreations[J]. Scientific American, 1984, 250(6): 19-C14.
+
+    <bibitem|4>WEISER M. The computer for the 21st century[J]. ACM SIGMOBILE mobile computing and \ communications review, 1999, 3(3): 3-11.
+
+    <bibitem|5>全国信息与文献标准化技术委员会. 文献著录: 第四部分 非书资料: GB/T 3792.4—2009[S]. 北京: 中国标准出版社, 2010: 3.
+
+    <bibitem|6>図書館用語辞典編集委員会. 最新図書館用語大辭典[M]. 東京: 柏書房株式會社, 2004: 154.
+
+    <bibitem|7>Кочетков А. Я. Молибден–медно–эоловое порфировое месторождение Рябиновское[J/OL]. Отечественная геология, 1993(7): 50–58.
+
+    <bibitem*|8>中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. (2013-04-16)<newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content_4442839.htm.<newblock>
+
+    <bibitem*|9>萧钰. <newblock>出版业信息化迈入快车道 [EB/OL]. <newblock>(2001-12-19)<newblock>[2002-04-15]. <slink|http://www.creader.com/news/20011219/200112190019.html>.<newblock>
+
+    <bibitem|10>CALMS R B. <newblock>Infrared spectroscopic studies on solid oxygen [D]. <newblock>Berkeley: University of California, 1965.<newblock>
+
+    <bibitem|11>马欢. <newblock>人类活动影响下海河流域典型区水循环变化分析 [D/OL]. <newblock>北京: 清华大学, 2011: 27 <newblock>[2013-10-14]. <slink|http://www.cnki.net/kcms/detail/detail.aspx?><newblock>
+  </bib-list>
+
+  \;
+
+  以上是直接在相关平台复制的符合标准的
+
+  <\bibliography|bib|tm-gbt7714-2015|./204_25>
+    <\bib-list|13>
+      <bibitem*|1><label|bib-Kochetkov1993>Кочетков А. Я. <newblock>Молибден–медно–эоловое порфировое месторождение рябиновское [J]. <newblock>Отечественная геология, 1993, (7): 50-58.<newblock>
+
+      <bibitem*|2><label|bib-国务院新闻办公室2013>中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. <newblock>(2013-04-16) <newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content<rsub|4>442839.htm.<newblock>
+
+      <bibitem*|3><label|bib-GB/T3792.4-2009>全国信息与文献标准化技术委员会. <newblock>文献著录: 第四部分 非书资料 [S]. <newblock>北京: 中国标准出版社.<newblock>
+
+      <bibitem*|4><label|bib-japandict2004>図書館用語辞典編集委員会. <newblock>最新図書館用語大辭典 [M]. <newblock>東京: 柏書房株式會社, (2004).<newblock>
+
+      <bibitem*|5><label|bib-GGYY202510006>李磊,刘博聪,盛斌,等. <newblock>专利出海与企业跨国供应链韧性提升 [J/OL]. <newblock>中国工业经济, 2025, (10): 97-116. <newblock>DOI: 10.19581/j.cnki.ciejournal.2025.10.006.<newblock>
+
+      <bibitem*|6><label|bib-萧钰2001>萧钰. <newblock>出版业信息化迈入快车道 [EB/OL]. <newblock>(2001-12-19) <newblock>[2002-04-15]. <slink|http://www.creader.com/news/20011219/200112190019.html>.<newblock>
+
+      <bibitem*|7><label|bib-STUD20250306006>闵超. <newblock>马克思1848年法国革命研究与唯物史观的具体化转向 [J]. <newblock>马克思主义研究, 2025, (01): 52-60.<newblock>
+
+      <bibitem*|8><label|bib-马欢2011>马欢. <newblock>人类活动影响下海河流域典型区水循环变化分析 [D/OL]. <newblock>北京: 清华大学, (2011). <newblock>[2013-10-14]. <slink|http://www.cnki.net/kcms/detail/detail.aspx?><newblock>
+
+      <bibitem*|9><label|bib-CALMS1965>Calms R B. <newblock>Infrared spectroscopic studies on solid oxygen [D]. <newblock>Berkeley: University of California, (1965).<newblock>
+
+      <bibitem*|10><label|bib-dewdney1984computer>Dewdney A K. <newblock>Computer recreations [J]. <newblock>Scientific American, 1984, 250(6): 19-C14.<newblock>
+
+      <bibitem*|11><label|bib-ISO15836:2009>Information and documentation – the dublin core metadata element set [EB/OL]. <newblock>[2013-03-24]. http://www.iso.org/iso/home/store/catalogue<rsub|t>c/catalogue<rsub|d>etail.htm?csnumber=52142.<newblock>
+
+      <bibitem*|12><label|bib-li_2024_efficient>LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: ignoring similar agents without checking similarity [C/OL]. <newblock>In Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024), pages 2363-2365. ? <newblock>[2025-12-25]. <slink|https://dl.acm.org/doi/10.5555/3635637.3663161>. DOI: 10.5555/3635637.3663161.<newblock>
+
+      <bibitem*|13><label|bib-weiser1999computer>Weiser M. <newblock>The computer for the 21st century [J]. <newblock>ACM SIGMOBILE mobile computing and communications review, 1999, 3(3): 3-11.<newblock>
+    </bib-list>
+  </bibliography>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|papyrus>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|11|1>>
+    <associate|bib-1|<tuple|1|1>>
+    <associate|bib-10|<tuple|10|?>>
+    <associate|bib-11|<tuple|11|?>>
+    <associate|bib-2|<tuple|2|1>>
+    <associate|bib-3|<tuple|3|1>>
+    <associate|bib-4|<tuple|4|1>>
+    <associate|bib-5|<tuple|5|1>>
+    <associate|bib-6|<tuple|6|1>>
+    <associate|bib-7|<tuple|7|1>>
+    <associate|bib-国务院新闻办公室2013|<tuple|2|?>>
+    <associate|bib-萧钰2001|<tuple|6|?>>
+    <associate|bib-马欢2011|<tuple|8|?>>
+    <associate|bib-CALMS1965|<tuple|9|?>>
+    <associate|bib-GB/T3792.4-2009|<tuple|3|?>>
+    <associate|bib-GGYY202510006|<tuple|5|?>>
+    <associate|bib-ISO15836:2009|<tuple|11|?>>
+    <associate|bib-Kochetkov1993|<tuple|1|?>>
+    <associate|bib-STUD20250306006|<tuple|7|?>>
+    <associate|bib-dewdney1984computer|<tuple|10|?>>
+    <associate|bib-japandict2004|<tuple|4|?>>
+    <associate|bib-li_2024_efficient|<tuple|12|?>>
+    <associate|bib-weiser1999computer|<tuple|13|?>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|bib>
+      li_2024_efficient
+
+      STUD20250306006
+
+      GGYY202510006
+
+      dewdney1984computer
+
+      weiser1999computer
+
+      japandict2004
+
+      Kochetkov1993
+
+      GB/T3792.4-2009
+
+      ISO15836:2009
+
+      马欢2011
+
+      CALMS1965
+
+      国务院新闻办公室2013
+
+      萧钰2001
+    </associate>
+    <\associate|toc>
+      <vspace*|2fn><\with|font-series|<quote|bold>|math-font-series|<quote|bold>|font-size|<quote|1.19>>
+        参考文献
+      </with><datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-1><vspace|1fn>
+    </associate>
+  </collection>
+</auxiliary>

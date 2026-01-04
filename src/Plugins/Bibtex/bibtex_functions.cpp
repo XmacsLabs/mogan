@@ -229,6 +229,32 @@ bib_add_period (scheme_tree st) {
   tree  t = simplify_correct (scheme_tree_to_tree (st));
   char* ch= bib_last_char (t);
   if (ch == 0) return tree_to_scheme_tree (t);
+  /* If the last non-space character is ')' and the parenthetical
+     content looks like a full date (e.g., contains a hyphen such as
+     "(2025-12-28)"), do not append a period. */
+  if (*ch == ')') {
+    tree node = t;
+    while (!is_atomic (node)) {
+      int pos = N (node) - 1;
+      while ((pos >= 0) && bib_is_bad (node[pos])) pos--;
+      if (pos >= 0) node = node[pos];
+      else break;
+    }
+    if (is_atomic (node)) {
+      string s = node->label;
+      int end = N (s) - 1;
+      while ((end >= 0) && is_space (s[end])) end--;
+      int open = end;
+      while ((open >= 0) && s[open] != '(') open--;
+      if (open >= 0) {
+        bool has_hyphen = false;
+        for (int i = open + 1; i <= end; i++)
+          if (s[i] == '-') { has_hyphen = true; break; }
+        if (has_hyphen) return tree_to_scheme_tree (t);
+      }
+    }
+  }
+
   if (*ch == ',' || *ch == ';') {
     *ch= '.';
     return tree_to_scheme_tree (t);
@@ -845,18 +871,66 @@ bib_abbreviate (scheme_tree st, scheme_tree s1, scheme_tree s2) {
 
 tree
 bib_field_pages (string p) {
-  tree res= compound ("bib-pages");
-  ;
-  int p1, p2;
-  int pos= 0;
-  if (read_int (p, pos, p1)) {
-    res << as_string (p1);
-    while (pos < N (p) && !is_digit (p[pos]))
-      pos++;
-    if (read_int (p, pos, p2)) res << as_string (p2);
+  // 处理空字符串
+  if (p == "") {
+    tree res= compound ("bib-pages");
+    res << "0";
     return res;
   }
-  res << "0";
+
+  array<string> valid_parts;
+  int           part_start    = 0;
+  int           last_non_space= -1;
+  bool          in_part       = false;
+
+  for (int i= 0; i < N (p); i++) {
+    char c= p[i];
+
+    if (c == '-') {
+      if (in_part) {
+        string part= p (part_start, last_non_space + 1);
+        valid_parts << part;
+        in_part= false;
+      }
+      while (i + 1 < N (p) && p[i + 1] == '-') {
+        i++;
+      }
+    }
+    else if (c == ' ' || c == '\t') {
+      if (in_part) {
+      }
+      else {
+      }
+    }
+    else {
+      if (!in_part) {
+        part_start= i;
+        in_part   = true;
+      }
+      last_non_space= i;
+    }
+  }
+
+  // 处理最后一个部分
+  if (in_part && last_non_space >= part_start) {
+    string part= p (part_start, last_non_space + 1);
+    valid_parts << part;
+  }
+
+  // 如果没有有效部分，返回默认值
+  if (N (valid_parts) == 0) {
+    tree res= compound ("bib-pages");
+    res << "0";
+    return res;
+  }
+
+  // 创建结果树
+  tree res      = compound ("bib-pages");
+  int  max_parts= N (valid_parts) < 2 ? N (valid_parts) : 2;
+  for (int i= 0; i < max_parts; i++) {
+    res << valid_parts[i];
+  }
+
   return res;
 }
 
