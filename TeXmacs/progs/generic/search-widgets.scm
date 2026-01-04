@@ -454,7 +454,7 @@ down? : boolean
     (with-buffer (search-buffer)
       (if ok?
           (init-default "bg-color")
-          (init-env "bg-color" (if (== (get-preference "gui theme") "liii-night") "#4a2c2c" "#fff0f0"))))
+          (init-env "bg-color" (if (has-style-package? "dark") "#4a2c2c" "#fff0f0"))))
     (when too-many-matches?
       ;;(display* "Extend limit to " (* 2 limit) "\n")
       (delayed

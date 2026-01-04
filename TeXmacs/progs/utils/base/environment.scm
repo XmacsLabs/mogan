@@ -15,7 +15,8 @@
 
 (logic-table env-var-description%
   ("color" "Foreground colour")
-  ("bg-color" "Background colour")
+  ("bg-color" "Page background colour")
+  ("text-bg-color" "Text background colour")
   ("locus-color" "Colour of loci")
   ("visited-color" "Colour of visited loci")
   ("magnification" "Magnification")

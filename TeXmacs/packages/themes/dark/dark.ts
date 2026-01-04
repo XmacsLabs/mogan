@@ -38,6 +38,8 @@
 
   <assign|bg-color|#404040>
 
+  <assign|canvas-color|#202020>
+
   <assign|nbsp-color|<value|bg-color>>
 
   <assign|gui-bg-color|#404040>
@@ -87,8 +89,6 @@
   <assign|defined-color|#4a71a1>
 
   <assign|preview-bg-color|#5a7cc2>
-
-  <assign|canvas-color|#202020>
 
   <\active*>
     <\src-comment>

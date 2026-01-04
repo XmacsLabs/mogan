@@ -1342,9 +1342,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (get-marked-color)
-  (let* ((theme (get-preference "gui theme"))
-         (default-color (if (== theme "liii-night")
-                           "#dc9f4f"  ; 深色主题默认
+  (let* ((default-color (if (has-style-package? "dark")
+                           "#dc9f4f"    ; 深色主题默认
                            "#ffe47f"))  ; 浅色主题默认
          (color (get-preference "marked-color")))
     (if (or (== color "") (== color "default"))
@@ -1365,9 +1364,9 @@
   (if (selection-active-any?)
       (let ((stree (tree->stree (selection-tree))))
         (if (pure-text? (selection-tree))
-            (make-with "bg-color" (get-marked-color))
+            (make-with "text-bg-color" (get-marked-color))
             (begin
               (make 'marked)
               (when (not (== (get-marked-color) "#ffe47f"))
                 (with-set (focus-tree) "marked-color" (get-marked-color))))))
-      (make-with "bg-color" (get-marked-color))))
+      (make-with "text-bg-color" (get-marked-color))))

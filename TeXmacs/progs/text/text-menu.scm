@@ -1145,8 +1145,8 @@
 
 (tm-define (customizable-parameters t)
   (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
-                 (== (tree->string (tree-ref t 0)) "bg-color")))
-  (list (list "bg-color" "Background color")))
+                 (== (tree->string (tree-ref t 0)) "text-bg-color")))
+  (list (list "text-bg-color" "Text background color")))
 
 (tm-define (customizable-parameters-memo t)
   (:require (tree-is? t 'with))
@@ -1154,4 +1154,4 @@
 
 (tm-menu (focus-hidden-icons t)
   (:require (and (tree-is? t 'with) (== (tree-arity t) 3)
-                 (in? (tree->string (tree-ref t 0)) (list "color" "bg-color")))))
+                 (in? (tree->string (tree-ref t 0)) (list "color" "text-bg-color")))))

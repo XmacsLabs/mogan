@@ -20,18 +20,18 @@ using namespace moebius;
 lazy make_lazy_vstream (edit_env env, tree t, path ip, tree channel);
 
 /******************************************************************************
- * Background color helper functions
+ * Text Background color helper functions
  ******************************************************************************/
 static inline bool
 has_background_color (edit_env env) {
-  tree   bg_color_tree= env->read (BG_COLOR);
+  tree   bg_color_tree= env->read (TEXT_BG_COLOR);
   string bg_color_str = as_string (bg_color_tree);
   return (bg_color_tree != "" && bg_color_str != "white");
 }
 
 static inline string
 get_background_color_str (edit_env env) {
-  tree bg_color_tree= env->read (BG_COLOR);
+  tree bg_color_tree= env->read (TEXT_BG_COLOR);
   return as_string (bg_color_tree);
 }
 
