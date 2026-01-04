@@ -257,6 +257,7 @@
   (symbol "<big-int-2>" (math-big-operator "int"))
   (symbol "<big-iint-2>" (math-big-operator "iint"))
   (symbol "<big-iiint-2>" (math-big-operator "iiint"))
+  (symbol "<big-iiiint-2>" (math-big-operator "iiiint"))
   (symbol "<big-idotsint-2>" (math-big-operator "idotsint"))
   (symbol "<big-oint-2>" (math-big-operator "oint"))
   (symbol "<big-oiint-2>" (math-big-operator "oiint"))
