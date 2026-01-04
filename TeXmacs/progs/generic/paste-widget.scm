@@ -143,9 +143,16 @@
       (bottom-buttons
         >> ("ok" (cmd selected-format)) // ("cancel" (cmd #f)))))
 
+(define (paste-as-html)
+  (with source-format (clipboard-format "primary")
+    (if (string=? source-format "html")
+        (kbd-paste)
+        (clipboard-paste-import "html" "primary"))))
+
 (tm-define (open-clipboard-paste-from-widget)
   (:interactive #t)
-  (dialogue-window clipboard-paste-from-widget
+  
+  (define callback
     (lambda (fm)
       (when fm
         (cond ((== fm "md")       (markdown-paste))
@@ -153,8 +160,10 @@
               ((== fm "image_and_ocr")      (ocr-and-image-paste))
               ((== fm "image")    (kbd-paste))
               ((== fm "mathml")   (clipboard-paste-import "html" "primary"))
-              (else               (clipboard-paste-import fm "primary")))))
-    "Paste Special"))
+              ((== fm "html")     (paste-as-html))
+              (else               (clipboard-paste-import fm "primary"))))))
+
+  (dialogue-window clipboard-paste-from-widget callback "Paste Special"))
 
 (tm-define (interactive-paste-special)
   (:interactive #t)
