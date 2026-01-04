@@ -204,6 +204,101 @@ url
                          "/"
                          (url->string (url-tail (current-window))))))))
 
+#|
+convert-search-replace-buffer
+在搜索缓冲区和替换缓冲区的URL之间进行转换。
+
+语法
+----
+(convert-search-replace-buffer u)
+
+参数
+----
+u : url
+输入的缓冲区URL。
+
+返回值
+----
+url 或 #f
+- 如果输入是搜索缓冲区，返回对应的替换缓冲区URL。
+- 如果输入是替换缓冲区，返回对应的搜索缓冲区URL。
+- 否则返回 #f。
+
+逻辑
+----
+检查URL字符串的前缀：
+1. 若为 "tmfs://aux/search/"，将其替换为 "tmfs://aux/replace/"。
+2. 若为 "tmfs://aux/replace/"，将其替换为 "tmfs://aux/search/"。
+3. 保持后续的哈希标识符不变。
+|#
+(tm-define (convert-search-replace-buffer u)
+  (let* ((s (url->string u))
+         (search-pre "tmfs://aux/search/")
+         (replace-pre "tmfs://aux/replace/"))
+    (cond ((string-starts? s search-pre)
+           (string->url (string-append replace-pre (substring s (string-length search-pre)))))
+          ((string-starts? s replace-pre)
+           (string->url (string-append search-pre (substring s (string-length replace-pre)))))
+          (else #f))))
+
+
+#|
+search-replace-up-down
+处理搜索/替换输入框中的键盘上下导航行为。
+
+语法
+----
+(search-replace-up-down down?)
+
+参数
+----
+down? : boolean
+导航方向：
+- #t : 向下移动
+- #f : 向上移动
+
+返回值
+----
+#<unspecified>
+无显式返回值。
+
+逻辑
+----
+1. 检查 "search-and-replace" 偏好设置是否开启。
+2. 如果未开启 (当前打开的是查找窗口)：
+   直接调用标准键盘导航 (kbd-down 或 kbd-up)。
+3. 如果已开启（当前打开的是替换窗口）：
+   - 获取当前焦点文档树。
+   - 如果向下移动 (down? 为 #t)：
+     检查光标是否位于当前输入框最后元素的末尾。
+     - 是：切换焦点到替换框。
+     - 否：执行标准向下移动 (kbd-down)。
+   - 如果向上移动 (down? 为 #f)：
+     检查光标是否位于当前输入框第一个元素的开头。
+     - 是：切换焦点到查找框。
+     - 否：执行标准向上移动 (kbd-up)。
+
+注意
+----
+此函数实现了在搜索框和替换框之间通过上下键无缝切换焦点的功能。
+当用户光标到达输入框边缘时，继续按方向键会将焦点转移到另一个输入框，
+提升了表单填写的流畅度。
+|#
+(tm-define (search-replace-up-down down?)
+  (if (not (get-boolean-preference "search-and-replace"))
+      (if down? (kbd-down) (kbd-up))
+      ;; 当 search-and-replace 为 true 时，检查边界
+      (with doc (focus-tree)
+        (if down?
+            ;; 向下移动：检查是否在底部
+            (if (tree-at-end? (tm-ref doc :last))
+                (buffer-focus (convert-search-replace-buffer (search-buffer)))
+                (kbd-down))     ; 不在底部，执行 kbd-down
+            ;; 向上移动：检查是否在顶部
+            (if (tree-at-start? (tm-ref doc :first))
+                (buffer-focus (convert-search-replace-buffer (replace-buffer)))
+                (kbd-up))))))   ; 不在顶部，执行 kbd-up
+
 (tm-define (auxiliary-buffer->window x)
   (url-append (string->url "tmfs://window") (url-tail x)))
 

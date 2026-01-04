@@ -29,7 +29,9 @@
   ("S-F3" (search-next-match #f))    ; 上一个匹配项（Shift+F3）
   ;; 特殊组合键
   ("std return" (search-rotate-match #f)); Ctrl+Enter：向前循环匹配
-  ("return"(search-rotate-match #t))) ;向后循环匹配
+  ("return"(search-rotate-match #t)) ;向后循环匹配
+  ("up" (search-replace-up-down #f))
+  ("down" (search-replace-up-down #t))) 
 
 ;; 替换缓冲区专有快捷键
 (kbd-map
