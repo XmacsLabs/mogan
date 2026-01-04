@@ -1342,7 +1342,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (get-marked-color)
-  (let* ((default-color (if (has-style-package? "dark-package")
+  (let* ((default-color (if (has-style-package? "dark")
                            "#dc9f4f"    ; 深色主题默认
                            "#ffe47f"))  ; 浅色主题默认
          (color (get-preference "marked-color")))

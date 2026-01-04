@@ -90,8 +90,6 @@
 
   <assign|preview-bg-color|#5a7cc2>
 
-  <assign|canvas-color|#202020>
-
   <\active*>
     <\src-comment>
       Preamble
