@@ -110,13 +110,14 @@ QTMImagePopup::showImagePopup (qt_renderer_rep* ren, rectangle selr,
   getCachedPosition (ren, x, y);
   move (x, y);
   updateButtonStates ();
-  if (painted_count == 2) {
-    show ();
-    painted= true;
-  }
-  else {
-    painted_count++;
-  }
+  show ();
+  // if (painted_count == 2) {
+  //   show ();
+  //   painted= true;
+  // }
+  // else {
+  //   painted_count++;
+  // }
 }
 
 void
@@ -204,20 +205,27 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
 
   QScreen* screen= QGuiApplication::primaryScreen ();
   double   scale = 1.0;
+  double   magf  = 0.0;
 #ifdef Q_OS_WIN
   // 设置与 menuToolBar 匹配的固定高度
   // 使用 devicePixelRatio() 获取正确的屏幕缩放比
   // 获取屏幕DPI缩放比例
   double dpi= screen ? screen->logicalDotsPerInch () : 96.0;
   scale     = dpi / 96.0;
+  magf      = cached_magf;
+#elif Q_OS_MAC
+  // macOS 下使用 backingStorePixelRatio 获取正确的屏幕缩放比
+  scale= screen ? screen->backingStorePixelRatio () : 1.0;
+  magf = 1.0;
 #else
   scale= screen ? screen->devicePixelRatio () : 1.0; // 正确的屏幕缩放比
+  magf = 0.9;
 #endif
   scale= std::floor (scale + 0.25);
   x    = x1 / scale + cached_canvas_x / 256 -
-     (cached_scroll_x / 256 * cached_magf) - cached_width * 0.5;
+     (cached_scroll_x / 512 * cached_magf) - cached_width * 0.5;
   y= y1 / scale - (cached_canvas_y / 256 + 161) +
-     (cached_scroll_y / 256 * cached_magf) - cached_height;
+     (cached_scroll_y / 512 * cached_magf) - cached_height * magf;
 
   // x= (cached_image_mid_x * cached_magf) / 256 + cached_canvas_x / 256 -
   //    (cached_scroll_x * cached_magf) / 256 - cached_width * 0.5;
