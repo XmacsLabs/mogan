@@ -28,7 +28,9 @@
 #endif
 
 #include <QApplication>
+#include <QClipboard>
 #include <QImageReader>
+#include <QMimeData>
 
 #include "colors.hpp"
 
@@ -1405,4 +1407,54 @@ from_key_release_event (const QKeyEvent* event) {
   }
 
   return r;
+}
+
+/******************************************************************************
+ * Clipboard format detection
+ ******************************************************************************/
+
+string
+qt_clipboard_format () {
+  QClipboard*      clipboard= QApplication::clipboard ();
+  const QMimeData* mimeData = clipboard->mimeData ();
+
+  if (!mimeData) {
+    if (DEBUG_QT)
+      debug_qt << "qt_clipboard_format: clipboard is empty or inaccessible\n";
+    return "";
+  }
+
+  // 定义格式优先级（从高到低）
+  // 图像格式优先级最高
+  if (mimeData->hasImage ()) {
+    // 尝试确定具体的图像格式
+    QStringList formats= mimeData->formats ();
+    for (const QString& format : formats) {
+      if (format.startsWith ("image/")) {
+        // 返回具体的图像格式，如 image/jpg, image/png 等
+        return from_qstring (format);
+      }
+    }
+    // 如果没有具体的图像格式信息，返回通用的 image
+    return "image";
+  }
+
+  // 然后是 html
+  if (mimeData->hasHtml ()) {
+    return "html";
+  }
+
+  // 然后是 verbatim（纯文本）
+  if (mimeData->hasText ()) {
+    return "verbatim";
+  }
+
+  // 最后是 url
+  if (mimeData->hasUrls ()) {
+    return "url";
+  }
+
+  // 如果都没有找到，返回空字符串
+  if (DEBUG_QT) debug_qt << "qt_clipboard_format: no supported format found\n";
+  return "";
 }
