@@ -244,7 +244,6 @@
   (if (string-starts? (qt-clipboard-format) "image")
       (ocr-paste)
       (with mode (get-env "mode")
-        (display* "mode: " mode "\n")
         (cond ((== mode "prog")
                (clipboard-paste-import "code" "primary"))
               ((== mode "math")
