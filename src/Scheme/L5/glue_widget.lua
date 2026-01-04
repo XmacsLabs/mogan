@@ -465,6 +465,11 @@ function main()
                     "widget",
                     "bool"
                 }
+            },
+            {
+                scm_name = "qt-clipboard-format",
+                cpp_name = "qt_clipboard_format",
+                ret_type = "string"
             }
         }
     }

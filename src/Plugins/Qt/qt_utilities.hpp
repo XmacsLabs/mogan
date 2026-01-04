@@ -176,4 +176,6 @@ string from_modifiers (Qt::KeyboardModifiers mods);
 string from_key_press_event (const QKeyEvent* event);
 string from_key_release_event (const QKeyEvent* event);
 
+string qt_clipboard_format ();
+
 #endif // QT_UTILITIES_HPP
