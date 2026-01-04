@@ -110,13 +110,14 @@ QTMImagePopup::showImagePopup (qt_renderer_rep* ren, rectangle selr,
   getCachedPosition (ren, x, y);
   move (x, y);
   updateButtonStates ();
-  if (painted_count == 2) {
-    show ();
-    painted= true;
-  }
-  else {
-    painted_count++;
-  }
+  show ();
+  // if (painted_count == 2) {
+  //   show ();
+  //   painted= true;
+  // }
+  // else {
+  //   painted_count++;
+  // }
 }
 
 void
@@ -213,11 +214,12 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
 #else
   scale= screen ? screen->devicePixelRatio () : 1.0; // 正确的屏幕缩放比
 #endif
+  double magf= cached_magf;
   scale= std::floor (scale + 0.25);
   x    = x1 / scale + cached_canvas_x / 256 -
-     (cached_scroll_x / 256 * cached_magf) - cached_width * 0.5;
+     (cached_scroll_x / 512 * cached_magf) - cached_width * 0.5;
   y= y1 / scale - (cached_canvas_y / 256 + 161) +
-     (cached_scroll_y / 256 * cached_magf) - cached_height;
+     (cached_scroll_y / 512 * cached_magf) - cached_height * 0.9;
 
   // x= (cached_image_mid_x * cached_magf) / 256 + cached_canvas_x / 256 -
   //    (cached_scroll_x * cached_magf) / 256 - cached_width * 0.5;
