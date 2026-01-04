@@ -95,6 +95,36 @@ edit_interface_rep::set_left_footer () {
     }
   }
   s= as_tree (call ("footer-hook", object (s)));
+
+  // 设置中间页脚显示页码
+  int current_page_nr = get_current_page_nr ();
+  string current_page = as_string (current_page_nr);
+  // 使用 get_page_count() 获取实际页数，而不是环境变量
+  int total_count = get_page_count ();
+  string total_pages = total_count > 0 ? as_string (total_count) : "?";
+
+
+  // 始终显示页码，即使为空或0也视为第1页
+  string display_page = current_page;
+  if (display_page == "" || display_page == "0") {
+    display_page = "1";
+  }
+
+  // 显示页码：当前页 / 总页数（如果总页数未知，显示 ?）
+  string page_display = display_page;
+  if (total_pages == "" || total_pages == "0") {
+    // 总页数未知，显示 当前页 / ?
+    page_display = display_page * string(" / ?");
+  } else if (total_pages != "1" || display_page != "1") {
+    // 总页数已知且（总页数不为1 或 当前页不为1），显示完整格式
+    page_display = display_page * string(" / ") * total_pages;
+  }
+  // 否则：总页数为"1"且当前页为"1"，只显示"1"
+
+
+  SERVER (set_middle_footer (serialize (tree_translate (
+      tree (page_display), "english", "english"))));
+
   set_left_footer (s);
 }
 

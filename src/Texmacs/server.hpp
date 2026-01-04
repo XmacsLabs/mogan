@@ -87,6 +87,7 @@ public:
   virtual bool visible_footer ()                                    = 0;
   virtual void set_left_footer (string s)                           = 0;
   virtual void set_right_footer (string s)                          = 0;
+  virtual void set_middle_footer (string s)                         = 0;
   virtual void set_message (tree left, tree right, bool temp= false)= 0;
   virtual void recall_message ()                                    = 0;
   virtual void dialogue_start (string name, widget wid)             = 0;

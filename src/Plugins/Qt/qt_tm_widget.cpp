@@ -21,6 +21,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLayoutItem>
+#include <QHBoxLayout>
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QNetworkAccessManager>
@@ -349,13 +350,23 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   // status bar
 
   QStatusBar* bar= new QStatusBar (mw);
-  leftLabel      = new QLabel (qt_translate ("Welcome to TeXmacs"), mw);
-  rightLabel     = new QLabel (qt_translate ("Booting"), mw);
+  leftLabel      = new QLabel (qt_translate ("Welcome to TeXmacs"), bar);
+  middleLabel    = new QLabel ("", bar);
+  rightLabel     = new QLabel (qt_translate ("Booting"), bar);
   leftLabel->setFrameStyle (QFrame::NoFrame);
+  middleLabel->setFrameStyle (QFrame::NoFrame);
   rightLabel->setFrameStyle (QFrame::NoFrame);
   leftLabel->setIndent (8);
+  middleLabel->setAlignment (Qt::AlignCenter);
+
+  // Set alignment for left and right labels
+  leftLabel->setAlignment (Qt::AlignLeft | Qt::AlignVCenter);
+  rightLabel->setAlignment (Qt::AlignRight | Qt::AlignVCenter);
+
+  // Add all three labels with equal stretch factors for equal width distribution
   bar->addWidget (leftLabel, 1);
-  bar->addPermanentWidget (rightLabel);
+  bar->addWidget (middleLabel, 1);
+  bar->addPermanentWidget (rightLabel, 1);
   if (tm_style_sheet == "") bar->setStyle (qtmstyle ());
 
   // NOTE (mg): the following setMinimumWidth command disable automatic
@@ -955,6 +966,12 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     leftLabel->setText (to_qstring (msg));
     leftLabel->update ();
   } break;
+  case SLOT_MIDDLE_FOOTER: {
+    check_type<string> (val, s);
+    string msg= open_box<string> (val);
+    middleLabel->setText (to_qstring (msg));
+    middleLabel->update ();
+  } break;
   case SLOT_RIGHT_FOOTER: {
     check_type<string> (val, s);
     string msg= open_box<string> (val);
@@ -971,6 +988,7 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     if (open_box<bool> (val) == true) {
       prompt= new QTMInteractivePrompt (int_prompt, int_input);
       mainwindow ()->statusBar ()->removeWidget (leftLabel);
+      mainwindow ()->statusBar ()->removeWidget (middleLabel);
       mainwindow ()->statusBar ()->removeWidget (rightLabel);
       mainwindow ()->statusBar ()->addWidget (prompt, 1);
       prompt->start ();
@@ -978,9 +996,11 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     else {
       if (prompt) prompt->end ();
       mainwindow ()->statusBar ()->removeWidget (prompt);
-      mainwindow ()->statusBar ()->addWidget (leftLabel);
-      mainwindow ()->statusBar ()->addPermanentWidget (rightLabel);
+      mainwindow ()->statusBar ()->addWidget (leftLabel, 1);
+      mainwindow ()->statusBar ()->addWidget (middleLabel, 1);
+      mainwindow ()->statusBar ()->addPermanentWidget (rightLabel, 1);
       leftLabel->show ();
+      middleLabel->show ();
       rightLabel->show ();
       prompt->deleteLater ();
       prompt= NULL;
@@ -1570,6 +1590,7 @@ qt_tm_embedded_widget_rep::send (slot s, blackbox val) {
   case SLOT_AUXILIARY_WIDGET:
   case SLOT_LEFT_FOOTER:
   case SLOT_RIGHT_FOOTER:
+  case SLOT_MIDDLE_FOOTER:
   case SLOT_SCROLLBARS_VISIBILITY:
   case SLOT_INTERACTIVE_MODE:
   case SLOT_FILE:
