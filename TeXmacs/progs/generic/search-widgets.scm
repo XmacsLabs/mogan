@@ -1198,13 +1198,13 @@ tree 或 #f
 
 (tm-define (interactive-search)
   (:interactive #t)
-  (set! search-replace-text "search")
+  (set! search-replace-text (if (in-math?) "Search:Math mode" "Search:text mode"))
   (set-boolean-preference "search-and-replace" #f)
   (open-search))
 
 (tm-define (interactive-replace)
   (:interactive #t)
-  (set! search-replace-text "search and replace")
+  (set! search-replace-text (if (in-math?) "search and replace:Math mode" "search and replace:text mode"))
   (set-boolean-preference "search-and-replace" #t)
   (open-replace))
 
