@@ -1342,8 +1342,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (tm-define (get-marked-color)
-  (let* ((theme (get-preference "gui theme"))
-         (default-color (if (== theme "liii-night")
+  (let* ((default-color (if (has-style-package? "dark-package")
                            "#dc9f4f"    ; 深色主题默认
                            "#ffe47f"))  ; 浅色主题默认
          (color (get-preference "marked-color")))
