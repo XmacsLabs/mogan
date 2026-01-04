@@ -36,7 +36,7 @@
 #include "Qt/QTMOAuth.hpp"
 #include "Qt/qt_gui.hpp"
 #include "Qt/qt_utilities.hpp"
-#include "Qt/startup_login_dialog.hpp"
+#include "Qt/qt_guide_window.hpp"
 #include "tm_server.hpp"
 #include <QApplication>
 #include <QCoreApplication>
@@ -67,6 +67,7 @@ extern bool   headless_mode;
 
 #ifdef QTTEXMACS
 bool g_startup_login_requested= false;
+bool g_startup_login_executed= false;
 #endif
 
 string extra_init_cmd;
@@ -362,7 +363,7 @@ release_boot_lock () {
  * Detection of scheme code
  ******************************************************************************/
 
-static void
+void
 init_scheme () {
   url guile_path= url_system ("$TEXMACS_PATH/progs");
   guile_path= guile_path | "$TEXMACS_HOME_PATH/progs" | plugin_path ("progs");
@@ -373,7 +374,7 @@ init_scheme () {
  * Set additional environment variables
  ******************************************************************************/
 
-static void
+void
 init_env_vars () {
   // Handle binary, library and guile paths for plugins
   url bin_path= get_env_path ("PATH") | plugin_path ("bin");
@@ -466,7 +467,7 @@ init_env_vars () {
  * Miscellaneous initializations
  ******************************************************************************/
 
-static void
+void
 init_misc () {
   // Set extra environment variables for Cygwin
 #ifdef OS_CYGWIN
@@ -512,31 +513,39 @@ setup_texmacs () {
  * Initialization of TeXmacs
  ******************************************************************************/
 
- // todo 移到
+// init_texmacs前置方法，抽出来是因为依赖这个前置方法
+void
+init_texmacs_front () {
+  cout << "Initialize front -- Main paths\n";
+  init_main_paths ();
+  cout << "Initialize front -- User dirs\n";
+  init_user_dirs (); 
+  cout << "Initialize front -- Guile\n";
+  init_scheme ();
+  cout << "Initialize front -- Environment variables\n";
+  init_env_vars ();
+  cout << "Initialize front -- Miscellaneous\n";
+  init_misc ();
+}
+
 void
 init_texmacs () {
-
-    
-  cout << "Initialize -- Main paths\n";
-  // init_main_paths ();
-  cout << "Initialize -- User dirs\n";
-  // init_user_dirs ();  // 被
+  if(g_startup_login_executed == true){
+    return;
+  }
 
   cout << "Initialize -- Boot lock\n";
   acquire_boot_lock ();
-
   cout << "Initialize -- Succession status table\n";
   init_succession_status_table ();
   cout << "Initialize -- Succession standard DRD\n";
   init_std_drd ();
   cout << "Initialize -- User preferences\n";
   load_user_preferences ();
-  cout << "Initialize -- Guile\n";
-  init_scheme ();
-  cout << "Initialize -- Environment variables\n";
-  init_env_vars ();
-  cout << "Initialize -- Miscellaneous\n";
-  init_misc ();
+
+  cout << "Initialize -- font_database_load\n";
+  font_database_load ();
+  cout << "Initialize -- font_database_load end\n";
 }
 
 void
@@ -956,6 +965,7 @@ show_startup_login_dialog () {
   if (is_community_stem ()) {
     return true;
   }
+
 
   // Create non-modal dialog
   QWK::StartupLoginDialog* dialog= new QWK::StartupLoginDialog ();

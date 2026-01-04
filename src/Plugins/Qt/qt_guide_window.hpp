@@ -1,7 +1,7 @@
 /******************************************************************************
- * MODULE     : startup_login_dialog.hpp
+ * MODULE     : qt_guide_window.hpp
  * DESCRIPTION: IntelliJ IDEA style startup login dialog
- * COPYRIGHT  : (C) 2025
+ * COPYRIGHT  : (C) 2025 yinyu
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE

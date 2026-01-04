@@ -21,10 +21,14 @@ extern bool headless_mode;
 
 void init_texmacs_path (int& argc, char** argv);
 void init_upgrade ();
+void init_texmacs_front ();
 void init_texmacs ();
 void init_plugins ();
 void setup_texmacs ();
 void release_boot_lock ();
+void init_scheme ();
+void init_env_vars ();
+void init_misc ();
 
 scheme_tree plugin_list ();
 void        TeXmacs_main (int argc, char** argv);

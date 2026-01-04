@@ -1,5 +1,5 @@
 /******************************************************************************
- * MODULE     : startup_login_dialog.cpp
+ * MODULE     : qt_guide_window.cpp
  * DESCRIPTION: IntelliJ IDEA style startup login dialog implementation
  * COPYRIGHT  : (C) 2025
  *******************************************************************************
@@ -8,8 +8,8 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
-#include "startup_login_dialog.hpp"
-#include "bootstrap_worker.hpp"
+#include "qt_guide_window.hpp"
+#include "qt_guide_task_executor.hpp"
 #include "qt_utilities.hpp"
 #include <QApplication>
 #include <QCloseEvent>
@@ -331,37 +331,41 @@ StartupLoginDialog::startInitialization () {
 
 void
 StartupLoginDialog::startBackgroundInitialization () {
-  // Create and configure the bootstrap worker
-  BootstrapWorker* worker= new BootstrapWorker (this);
+  // Create and configure the bootstrap task executor (single-threaded)
+  BootstrapTaskExecutor* executor= new BootstrapTaskExecutor (this);
 
-  // Connect worker signals
-  connect (worker, &BootstrapWorker::progressUpdated, this,
+  // Connect executor signals
+  connect (executor, &BootstrapTaskExecutor::progressUpdated, this,
            [this] (int step, const QString& message, int percentage) {
              progressBar->setValue (percentage);
              statusLabel->setText (message);
            });
 
   connect (
-      worker, &BootstrapWorker::timeEstimationUpdated, this,
+      executor, &BootstrapTaskExecutor::timeEstimationUpdated, this,
       [this] (qint64 elapsedMs, qint64 estimatedTotalMs) {
         if (estimatedTotalMs > 0) {
           qint64  remainingMs = estimatedTotalMs - elapsedMs;
           int     remainingSec= static_cast<int> (remainingMs / 1000);
           QString timeText;
           if (remainingSec > 60) {
-            timeText= qt_translate ("剩余时间: %1 分钟")
-                          .arg ((remainingSec + 30) / 60);
+            // 分开翻译，避免 %1 被翻译系统错误处理
+            QString prefix = qt_translate ("剩余时间: ");
+            QString suffix = qt_translate ("分钟");
+            timeText = prefix + QString::number ((remainingSec + 30) / 60) + " " + suffix;
           }
           else {
-            timeText=
-                qt_translate ("剩余时间: %1 秒").arg (qMax (remainingSec, 1));
+            // 分开翻译，避免 %1 被翻译系统错误处理
+            QString prefix = qt_translate ("剩余时间: ");
+            QString suffix = qt_translate ("秒");
+            timeText = prefix + QString::number (qMax (remainingSec, 1)) + " " + suffix;
           }
           timeEstimationLabel->setText (timeText);
         }
       });
 
-  connect (worker, &BootstrapWorker::initializationComplete, this,
-           [this, worker] (bool success) {
+  connect (executor, &BootstrapTaskExecutor::initializationComplete, this,
+           [this, executor] (bool success) {
              initializationInProgress= false;
              initializationComplete  = true;
 
@@ -409,20 +413,22 @@ StartupLoginDialog::startBackgroundInitialization () {
              }
 
              emit initializationFinished (success);
-             worker->deleteLater ();
+             executor->deleteLater ();
            });
 
-  connect (worker, &BootstrapWorker::errorOccurred, this,
+  connect (executor, &BootstrapTaskExecutor::errorOccurred, this,
            [this] (const QString& error) {
-             statusLabel->setText (qt_translate ("错误: %1").arg (error));
+             // 分开翻译，避免 %1 被翻译系统错误处理
+             QString prefix = qt_translate ("错误: ");
+             statusLabel->setText (prefix + error);
            });
 
   // Disable buttons during initialization
   loginButton->setEnabled (false);
   skipButton->setEnabled (false);
 
-  // Start the worker thread
-  worker->start ();
+  // Start the executor in the main thread (not a separate thread)
+  executor->start ();
 }
 
 void

@@ -247,7 +247,7 @@ string theme= get_user_preference ("gui theme", "default");
 
   // // before startup login dialog
   init_texmacs_path (argc, argv); //TEXMACS_PATH路径
-  init_texmacs ();
+  init_texmacs_front ();
   init_plugins ();
 
   // Show startup login dialog
@@ -257,6 +257,9 @@ string theme= get_user_preference ("gui theme", "default");
     else delete qtmapp;
     return 1;
   }
+
+  //如果show_startup_login_dialog没执行，继续初始化TeXmacs
+  init_texmacs(); 
 
 #endif
 
