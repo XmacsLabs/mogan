@@ -35,8 +35,8 @@
 #include "Qt/QTMApplication.hpp"
 #include "Qt/QTMOAuth.hpp"
 #include "Qt/qt_gui.hpp"
+#include "Qt/qt_guide_window.hpp"
 #include "Qt/qt_utilities.hpp"
-#include "Qt/startup_login_dialog.hpp"
 #include "tm_server.hpp"
 #include <QApplication>
 #include <QCoreApplication>
@@ -67,6 +67,7 @@ extern bool   headless_mode;
 
 #ifdef QTTEXMACS
 bool g_startup_login_requested= false;
+bool g_startup_login_executed = false;
 #endif
 
 string extra_init_cmd;
@@ -245,7 +246,7 @@ plugin_list () {
  * Initialize main paths
  ******************************************************************************/
 
-static void
+void
 init_main_paths () {
   url default_path;
 #if defined(OS_MINGW) || defined(OS_WIN)
@@ -292,7 +293,7 @@ clean_temp_dirs () {
  * Make user directories
  ******************************************************************************/
 
-static void
+void
 init_user_dirs () {
   make_dir ("$TEXMACS_HOME_PATH");
   make_dir ("$TEXMACS_HOME_PATH/bin");
@@ -339,7 +340,7 @@ init_user_dirs () {
  * Boot locks
  ******************************************************************************/
 
-static void
+void
 acquire_boot_lock () {
   // cout << "Acquire lock\n";
   url lock_file= "$TEXMACS_HOME_PATH/system/boot_lock";
@@ -362,7 +363,7 @@ release_boot_lock () {
  * Detection of scheme code
  ******************************************************************************/
 
-static void
+void
 init_scheme () {
   url guile_path= url_system ("$TEXMACS_PATH/progs");
   guile_path= guile_path | "$TEXMACS_HOME_PATH/progs" | plugin_path ("progs");
@@ -373,7 +374,7 @@ init_scheme () {
  * Set additional environment variables
  ******************************************************************************/
 
-static void
+void
 init_env_vars () {
   // Handle binary, library and guile paths for plugins
   url bin_path= get_env_path ("PATH") | plugin_path ("bin");
@@ -466,7 +467,7 @@ init_env_vars () {
  * Miscellaneous initializations
  ******************************************************************************/
 
-static void
+void
 init_misc () {
   // Set extra environment variables for Cygwin
 #ifdef OS_CYGWIN
@@ -512,12 +513,22 @@ setup_texmacs () {
  * Initialization of TeXmacs
  ******************************************************************************/
 
+// init_texmacs前置方法，抽出来是因为依赖这个前置方法
+void
+init_texmacs_front () {
+  init_main_paths ();
+  init_user_dirs ();
+  init_scheme ();
+  init_env_vars ();
+  init_misc ();
+}
+
 void
 init_texmacs () {
-  // cout << "Initialize -- Main paths\n";
-  init_main_paths ();
-  // cout << "Initialize -- User dirs\n";
-  init_user_dirs ();
+  if (g_startup_login_executed == true) {
+    return;
+  }
+
   // cout << "Initialize -- Boot lock\n";
   acquire_boot_lock ();
   // cout << "Initialize -- Succession status table\n";
@@ -526,12 +537,10 @@ init_texmacs () {
   init_std_drd ();
   // cout << "Initialize -- User preferences\n";
   load_user_preferences ();
-  // cout << "Initialize -- Guile\n";
-  init_scheme ();
-  // cout << "Initialize -- Environment variables\n";
-  init_env_vars ();
-  // cout << "Initialize -- Miscellaneous\n";
-  init_misc ();
+
+  // cout << "Initialize -- font_database_load\n";
+  font_database_load ();
+  // cout << "Initialize -- font_database_load end\n";
 }
 
 void
@@ -542,11 +551,11 @@ load_welcome_doc () {
 }
 
 /******************************************************************************
- * Initialization of built-in plug-ins
+ * Load settings and check version
  ******************************************************************************/
 
-void
-init_plugins () {
+int
+load_settings_and_check_version () {
   url settings_path= "$TEXMACS_HOME_PATH/system/settings.scm";
 
   install_status= 0;
@@ -564,6 +573,15 @@ init_plugins () {
     install_status= 2;
   }
 
+  return install_status;
+}
+
+/******************************************************************************
+ * Initialization of built-in plug-ins
+ ******************************************************************************/
+
+void
+init_plugins () {
   setup_tex ();
   init_tex ();
 }
@@ -916,6 +934,8 @@ TeXmacs_main (int argc, char** argv) {
 }
 
 #ifdef QTTEXMACS
+#include <QEventLoop>
+
 bool
 show_startup_login_dialog () {
   // Don't show dialog in headless mode
@@ -933,23 +953,39 @@ show_startup_login_dialog () {
     return true;
   }
 
-  QWK::StartupLoginDialog dialog;
-  auto                    result= dialog.execWithResult ();
+  // Create non-modal dialog
+  QWK::StartupLoginDialog* dialog= new QWK::StartupLoginDialog ();
+  dialog->setModal (false);
+  dialog->setAttribute (Qt::WA_DeleteOnClose);
 
-  switch (result) {
-  case QWK::StartupLoginDialog::LoginClicked:
-    // Set global flag to trigger login later in TeXmacs_main
+  // Local event loop to wait for user decision
+  QEventLoop eventLoop;
+  bool       userDecisionMade= false;
+
+  // Connect dialog signals
+  QObject::connect (dialog, &QWK::StartupLoginDialog::loginRequested, [&] () {
     g_startup_login_requested= true;
-    cout << "TeXmacs] Startup login dialog: Login requested\n";
-    return true;
-  case QWK::StartupLoginDialog::SkipClicked:
-    cout << "TeXmacs] Startup login dialog: Skip clicked\n";
-    return true;
-  case QWK::StartupLoginDialog::DialogRejected:
-    cout << "TeXmacs] Startup login dialog: Dialog rejected\n";
-    return false; // Exit program
-  }
+    userDecisionMade         = true;
+    eventLoop.quit ();
+  });
 
-  return true;
+  QObject::connect (dialog, &QWK::StartupLoginDialog::skipRequested, [&] () {
+    userDecisionMade= true;
+    eventLoop.quit ();
+  });
+
+  // Show the dialog (non-blocking)
+  dialog->show ();
+
+  // Start background initialization if dialog supports it
+  dialog->startInitialization ();
+
+  // Enter local event loop to wait for user decision
+  eventLoop.exec ();
+
+  // Cleanup
+  dialog->deleteLater ();
+
+  return userDecisionMade;
 }
 #endif

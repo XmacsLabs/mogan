@@ -986,7 +986,7 @@ target("stem") do
         end
 
         -- Default program parameters (kept to preserve old behaviour)
-        local params = {"-d"}
+        local params = {"-d", "-debug-bench"}
 
         -- Allow overriding debug-run behavior by setting DEBUG or XMAKE_DEBUGGER env var.
         -- If set, we will launch an interactive debugger (gdb on linux, lldb on macos) instead
