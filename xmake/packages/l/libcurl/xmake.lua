@@ -5,6 +5,9 @@ package("libcurl")
 
     add_urls("https://gitee.com/mirrors/curl.git")
     add_versions("v8.11.1", "curl-8_11_1")
+    set_urls("https://curl.haxx.se/download/curl-$(version).tar.bz2")
+    add_urls("https://github.com/curl/curl/releases/download/curl-$(version).tar.bz2",
+        {version = function (version) return (version:gsub("%.", "_")) .. "/curl-" .. version end})
 
     add_configs("cares",    {description = "Enable c-ares support.", default = false, type = "boolean"})
     add_configs("openssl",  {description = "Enable OpenSSL for SSL/TLS.", default = nil, type = "boolean"})
