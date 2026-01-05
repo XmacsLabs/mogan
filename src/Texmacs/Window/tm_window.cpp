@@ -616,6 +616,11 @@ tm_window_rep::set_right_footer (string s) {
   ::set_right_footer (wid, s);
 }
 
+void
+tm_window_rep::set_middle_footer (string s) {
+  ::set_middle_footer (wid, s);
+}
+
 /******************************************************************************
  * Interactive commands on the footer
  ******************************************************************************/

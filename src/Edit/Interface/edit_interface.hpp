@@ -227,6 +227,8 @@ public:
   void set_left_footer (tree l);
   void append_left_footer (tree& l, string env_var);
   void set_left_footer ();
+  void set_middle_footer (tree m);
+  void set_middle_footer ();
   void set_right_footer (tree r);
   void set_right_footer ();
   void set_footer ();
