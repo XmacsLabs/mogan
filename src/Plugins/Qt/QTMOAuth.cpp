@@ -35,11 +35,7 @@
 QTMOAuth::QTMOAuth (QObject* parent) {
   // 加载 OAuth2 配置
   eval ("(use-modules (liii account))");
-
-  c_string authorizationUrl (
-      as_string (call ("account-oauth2-config", "authorization-url")));
-  c_string accessTokenUrl (
-      as_string (call ("account-oauth2-config", "access-token-url")));
+    
   c_string clientIdentifier (
       as_string (call ("account-oauth2-config", "client-identifier")));
   // c_string clientSecret (
@@ -110,8 +106,6 @@ QTMOAuth::QTMOAuth (QObject* parent) {
   m_reply->setCallbackText (customHtml);
 
   oauth2.setReplyHandler (m_reply);
-  oauth2.setAuthorizationUrl (QUrl ((char*) authorizationUrl));
-  oauth2.setAccessTokenUrl (QUrl ((char*) accessTokenUrl));
   oauth2.setScope ((char*) scope);
   oauth2.setClientIdentifier ((char*) clientIdentifier);
 
@@ -152,7 +146,7 @@ void
 QTMOAuth::login () {
   if (m_reply->isListening ()) {
     // 手动构建授权URL
-    QUrl      authUrl (oauth2.authorizationUrl ());
+    QUrl      authUrl (getAuthorizationUrl ());
     QUrlQuery query;
     query.addQueryItem ("response_type", "code");
     query.addQueryItem ("client_id", oauth2.clientIdentifier ());
@@ -176,7 +170,7 @@ QTMOAuth::isLoggedIn () {
 void
 QTMOAuth::handleAuthorizationCode (const QString& code) {
   // 手动交换授权码为访问令牌
-  QUrl      url (oauth2.accessTokenUrl ());
+  QUrl      url (getAccessTokenUrl ());
   QUrlQuery query;
   query.addQueryItem ("grant_type", "authorization_code");
   query.addQueryItem ("code", code);
@@ -251,7 +245,7 @@ QTMOAuth::refreshToken () {
   }
 
   // 使用refresh_token刷新access_token
-  QUrl      url (oauth2.accessTokenUrl ());
+  QUrl      url (getAccessTokenUrl ());
   QUrlQuery query;
   query.addQueryItem ("grant_type", "refresh_token");
   query.addQueryItem ("refresh_token", m_refreshToken);
@@ -416,4 +410,22 @@ QTMOAuth::generateCodeChallenge (const QString& verifier) {
                                  QByteArray::OmitTrailingEquals);
 
   return base64;
+}
+
+QUrl
+QTMOAuth::getAuthorizationUrl () {
+  eval ("(use-modules (liii account))");
+  c_string authorizationUrl (
+      as_string (call ("account-oauth2-config", "authorization-url")));
+  qDebug() << "getAuthorizationUrl:" << QString ((char*) authorizationUrl);
+  return QUrl ((char*) authorizationUrl);
+}
+
+QUrl
+QTMOAuth::getAccessTokenUrl () {
+  eval ("(use-modules (liii account))");
+  c_string accessTokenUrl (
+      as_string (call ("account-oauth2-config", "access-token-url")));
+  qDebug() << "getAccessTokenUrl:" << QString ((char*) accessTokenUrl);
+  return QUrl ((char*) accessTokenUrl);
 }

@@ -61,31 +61,33 @@
         (string-load data-file)
         "")))
 
-;; 生产
-; (tm-define (account-oauth2-config key)
-;   (cond
-;     ((== key "authorization-url") "http://www.liiistem.cn/oauth2-login.html")
-;     ((== key "access-token-url") "http://www.liiistem.cn:8080/oauth2/token")
-;     ((== key "client-identifier") "public-client")
-;     ((== key "scope") "user+llm")
-;     ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
-;     ((== key "user-info-url") "http://www.liiistem.cn/api/oauthUser/membershipInfo")
-;     ((== key "pricing-url") "https://www.liiistem.cn/pricing-fruit.html")
-;     ((== key "click-return-liii-url") "https://www.liiistem.cn/?from=login_button")
-;     (else "")))
+; (set-preference) 
+(tm-define (current-stem-profile)
+  (with sp (get-preference "stem-profile")
+    (if (string=? sp "default")
+        "production"
+        sp)))
 
-;; 测试
-(tm-define (account-oauth2-config key)
+; 根据当前 profile 获取环境地址
+(define (current-stem-env)
   (cond
-    ((== key "authorization-url") "http://test-www.liiistem.cn/oauth2-login.html")
-    ((== key "access-token-url") "http://test-www.liiistem.cn:8080/oauth2/token")
-    ((== key "client-identifier") "public-client")
-    ((== key "scope") "user+llm")
-    ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
-    ((== key "user-info-url") "http://test-www.liiistem.cn/api/oauthUser/membershipInfo")
-    ((== key "pricing-url") "http://test-www.liiistem.cn/pricing-fruit.html")
-    ((== key "click-return-liii-url") "https://www.liiistem.cn/?from=login_button")
-    (else "")))
+    ((string=? (current-stem-profile) "production") "http://www.liiistem.cn")
+    ((string=? (current-stem-profile) "staging") "http://test-www.liiistem.cn")
+    (else "local")))
+
+;; OAuth2 配置
+(tm-define (account-oauth2-config key)
+  (let ((base-url (current-stem-env)))
+    (cond
+      ((== key "authorization-url") (string-append base-url "/oauth2-login.html"))
+      ((== key "access-token-url") (string-append base-url ":8080/oauth2/token"))
+      ((== key "client-identifier") "public-client")
+      ((== key "scope") "user+llm")
+      ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
+      ((== key "user-info-url") (string-append base-url ":8080/api/oauthUser/membershipInfo"))
+      ((== key "pricing-url") (string-append base-url "/pricing-fruit.html"))
+      ((== key "click-return-liii-url") "http://www.liiistem.cn/?from=login_button")
+      (else ""))))
 
 ;; 本地
 ; (tm-define (account-oauth2-config key)
