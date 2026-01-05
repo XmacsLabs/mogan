@@ -199,12 +199,14 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
   rectangle selr= cached_rect;
   ren->decode (selr->x1, selr->y1, rx1, ry1);
   ren->decode (selr->x2, selr->y2, rx2, ry2);
-  int x1= (int) ((rx1 + rx2) / 2) * cached_magf;
-  int y1= (int) ((ry2) *cached_magf);
+  int    x1= (int) ((rx1 + rx2) / 2) * cached_magf;
+  int    y1= (int) ((ry2) *cached_magf);
+  double scroll_x, scroll_y, canvas_x, canvas_y;
+  ren->decode (cached_scroll_x, cached_scroll_y, scroll_x, scroll_y);
 
   QScreen* screen= QGuiApplication::primaryScreen ();
   double   scale = 1.0;
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
   // 设置与 menuToolBar 匹配的固定高度
   // 使用 devicePixelRatio() 获取正确的屏幕缩放比
   // 获取屏幕DPI缩放比例
@@ -214,14 +216,8 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
   scale= screen ? screen->devicePixelRatio () : 1.0; // 正确的屏幕缩放比
 #endif
   scale= std::floor (scale + 0.25);
-  x    = x1 / scale + cached_canvas_x / 256 -
-     (cached_scroll_x / 256 * cached_magf) - cached_width * 0.5;
-  y= y1 / scale - (cached_canvas_y / 256 + 161) +
-     (cached_scroll_y / 256 * cached_magf) - cached_height;
-
-  // x= (cached_image_mid_x * cached_magf) / 256 + cached_canvas_x / 256 -
-  //    (cached_scroll_x * cached_magf) / 256 - cached_width * 0.5;
-  // y= -(cached_image_mid_y * cached_magf / 256 + (cached_canvas_y / 256 + 161)
-  // -
-  //     (cached_scroll_y * cached_magf) / 256 + 160 * cached_magf);
+  x    = x1 / scale + cached_canvas_x / 256 - scroll_x * cached_magf / scale -
+     cached_width / 2;
+  y= y1 / scale + cached_canvas_y / 256 + 161 - scroll_y * cached_magf / scale -
+     cached_height;
 }
