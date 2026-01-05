@@ -235,7 +235,7 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
                   ~Qt::WindowContextHelpButtonHint);
 
   // 设置窗口图标
-  setWindowIcon (QIcon ("3rdparty/qwindowkitty/src/styles/app/stem.png"));
+  setWindowIcon (QIcon (":/app/stem.png"));
 
   // 固定窗口大小
   setFixedSize (500, 400);
