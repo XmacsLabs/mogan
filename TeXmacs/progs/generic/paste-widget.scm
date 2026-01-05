@@ -106,6 +106,7 @@
     (invisible (set! selected-format (convert-format-string-to-symbol (car l))))
     (invisible (set! tips1 (translate (get-tips selected-format))))
     (invisible (set! tips2 (translate "ENTER to confirm, ESC to cancel")))
+    (invisible (set! tips3 (string-append (translate "shortcut") ": " (shortcut selected-format))))
     (resize "320px" "270px"
       (padded
         (vertical
