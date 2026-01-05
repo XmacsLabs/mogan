@@ -516,15 +516,10 @@ setup_texmacs () {
 // init_texmacs前置方法，抽出来是因为依赖这个前置方法
 void
 init_texmacs_front () {
-  cout << "Initialize front -- Main paths\n";
   init_main_paths ();
-  cout << "Initialize front -- User dirs\n";
   init_user_dirs ();
-  cout << "Initialize front -- Guile\n";
   init_scheme ();
-  cout << "Initialize front -- Environment variables\n";
   init_env_vars ();
-  cout << "Initialize front -- Miscellaneous\n";
   init_misc ();
 }
 
@@ -593,8 +588,6 @@ init_plugins () {
 
   setup_tex ();
   init_tex ();
-
-  cout << "TeXmacs] init_plugins";
 }
 
 void
@@ -946,7 +939,6 @@ TeXmacs_main (int argc, char** argv) {
 
 #ifdef QTTEXMACS
 #include <QEventLoop>
-#include <iostream>
 
 bool
 show_startup_login_dialog () {
@@ -955,7 +947,6 @@ show_startup_login_dialog () {
     return true;
   }
 
-  // todo1. init_plugins 方法，这个赋值得抽出来
   if (install_status != 1 && install_status != 2) {
     // Normal startup, no need to show login dialog
     return true;
@@ -974,29 +965,16 @@ show_startup_login_dialog () {
   // Local event loop to wait for user decision
   QEventLoop eventLoop;
   bool       userDecisionMade= false;
-  bool       continueStartup = true;
 
   // Connect dialog signals
   QObject::connect (dialog, &QWK::StartupLoginDialog::loginRequested, [&] () {
     g_startup_login_requested= true;
-    cout << "TeXmacs] Startup login dialog: Login requested\n";
-    userDecisionMade= true;
-    continueStartup = true;
+    userDecisionMade         = true;
     eventLoop.quit ();
   });
 
   QObject::connect (dialog, &QWK::StartupLoginDialog::skipRequested, [&] () {
-    cout << "TeXmacs] Startup login dialog: Skip clicked\n";
     userDecisionMade= true;
-    continueStartup = true;
-    eventLoop.quit ();
-  });
-
-  // Handle dialog rejection (window close)
-  QObject::connect (dialog, &QWK::StartupLoginDialog::rejected, [&] () {
-    cout << "TeXmacs] Startup login dialog: Dialog rejected\n";
-    userDecisionMade= true;
-    continueStartup = false; // Exit program
     eventLoop.quit ();
   });
 
@@ -1012,6 +990,6 @@ show_startup_login_dialog () {
   // Cleanup
   dialog->deleteLater ();
 
-  return continueStartup;
+  return userDecisionMade;
 }
 #endif

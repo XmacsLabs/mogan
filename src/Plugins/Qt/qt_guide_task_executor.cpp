@@ -41,9 +41,9 @@ BootstrapTaskExecutor::BootstrapTaskExecutor (QObject* parent)
   m_stepDurations.resize (static_cast<int> (TaskStep::Complete) + 1);
   m_stepDurations[static_cast<int> (TaskStep::FileSystemCheck)]  = 500; // 0.5秒
   m_stepDurations[static_cast<int> (TaskStep::ConfigurationLoad)]= 500; // 1秒
-  m_stepDurations[static_cast<int> (TaskStep::PluginInitialization)]=
-      2000;                                                             // 3秒
-  m_stepDurations[static_cast<int> (TaskStep::SchemeEnvironment)]= 500; // 2秒
+  m_stepDurations[static_cast<int> (TaskStep::FontInitialization)]= 2000; // 3秒
+  m_stepDurations[static_cast<int> (TaskStep::StdDrdInitialization)]=
+      500; // 2秒
 }
 
 // Exception handling wrapper implementation
@@ -137,18 +137,18 @@ BootstrapTaskExecutor::executeNextSegment () {
     case TaskStep::ConfigurationLoad:
       stepSuccess= performConfigurationLoad ();
       stepMessage= "加载配置...";
-      nextStep   = TaskStep::PluginInitialization;
+      nextStep   = TaskStep::FontInitialization;
       break;
 
-    case TaskStep::PluginInitialization:
-      stepSuccess= performPluginInitialization ();
-      stepMessage= "初始化插件...";
-      nextStep   = TaskStep::SchemeEnvironment;
+    case TaskStep::FontInitialization:
+      stepSuccess= performFontInitialization ();
+      stepMessage= "初始化字体...";
+      nextStep   = TaskStep::StdDrdInitialization;
       break;
 
-    case TaskStep::SchemeEnvironment:
-      stepSuccess= performSchemeEnvironmentSetup ();
-      stepMessage= "准备Scheme环境...";
+    case TaskStep::StdDrdInitialization:
+      stepSuccess= performStdDrdInitialization ();
+      stepMessage= "初始化标准DRD...";
       nextStep   = TaskStep::Complete;
       break;
 
@@ -218,17 +218,17 @@ BootstrapTaskExecutor::performConfigurationLoad () {
 }
 
 bool
-BootstrapTaskExecutor::performPluginInitialization () {
+BootstrapTaskExecutor::performFontInitialization () {
   return executeWithExceptionHandling (
       [this] () -> bool {
-        font_database_load (); // 加载字体数据库
+        font_database_load (); // 初始化字体数据库
         return true;
       },
-      "Perform plugin initialization load");
+      "Perform font initialization load");
 }
 
 bool
-BootstrapTaskExecutor::performSchemeEnvironmentSetup () {
+BootstrapTaskExecutor::performStdDrdInitialization () {
   return executeWithExceptionHandling (
       [this] () -> bool {
         init_std_drd (); // 初始化标准DRD（文档关系定义）
@@ -236,7 +236,7 @@ BootstrapTaskExecutor::performSchemeEnvironmentSetup () {
             true; // 最后一步设置ture,防止init_texmacs重复执行
         return true;
       },
-      "Perform scheme environment setup");
+      "Perform std drd initialization load");
 }
 
 void
@@ -253,10 +253,10 @@ BootstrapTaskExecutor::updateProgress (TaskStep step, const QString& message) {
   case TaskStep::ConfigurationLoad:
     baseProgress= 30;
     break;
-  case TaskStep::PluginInitialization:
+  case TaskStep::FontInitialization:
     baseProgress= 60;
     break;
-  case TaskStep::SchemeEnvironment:
+  case TaskStep::StdDrdInitialization:
     baseProgress= 85;
     break;
   case TaskStep::Complete:

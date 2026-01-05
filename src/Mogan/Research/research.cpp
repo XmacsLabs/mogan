@@ -244,18 +244,13 @@ main (int argc, char** argv) {
   if (headless_mode) qtmcoreapp= new QTMCoreApplication (argc, argv);
   else qtmapp= new QTMApplication (argc, argv);
 
-  // // before startup login dialog
+  // before startup login dialog
   init_texmacs_path (argc, argv); // TEXMACS_PATH路径
   init_texmacs_front ();
   init_plugins ();
 
   // Show startup login dialog
-  if (!show_startup_login_dialog ()) {
-    // User rejected dialog, clean up and exit
-    if (headless_mode) delete qtmcoreapp;
-    else delete qtmapp;
-    return 1;
-  }
+  show_startup_login_dialog ();
 
   // 如果show_startup_login_dialog没执行，继续初始化TeXmacs
   init_texmacs ();

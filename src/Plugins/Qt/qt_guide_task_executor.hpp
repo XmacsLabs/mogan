@@ -33,8 +33,8 @@ public:
     NotStarted,
     FileSystemCheck,
     ConfigurationLoad,
-    PluginInitialization,
-    SchemeEnvironment,
+    FontInitialization,
+    StdDrdInitialization,
     Complete
   };
 
@@ -134,8 +134,8 @@ private:
   // Individual initialization steps
   bool performFileSystemCheck ();
   bool performConfigurationLoad ();
-  bool performPluginInitialization ();
-  bool performSchemeEnvironmentSetup ();
+  bool performFontInitialization ();
+  bool performStdDrdInitialization ();
 
   // Progress tracking
   void updateProgress (TaskStep step, const QString& message);

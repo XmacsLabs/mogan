@@ -121,10 +121,6 @@ StartupLoginDialog::setupSignalConnections () {
   // 连接跳过按钮点击信号
   connect (skipButton, &QPushButton::clicked, this,
            &StartupLoginDialog::handleSkipButtonClick);
-
-  // 连接对话框拒绝信号（例如窗口关闭按钮）
-  connect (this, &QDialog::rejected, this,
-           [this] () { result= StartupLoginDialog::DialogRejected; });
 }
 
 QString
