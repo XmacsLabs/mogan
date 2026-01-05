@@ -35,7 +35,7 @@
 QTMOAuth::QTMOAuth (QObject* parent) {
   // 加载 OAuth2 配置
   eval ("(use-modules (liii account))");
-    
+
   c_string clientIdentifier (
       as_string (call ("account-oauth2-config", "client-identifier")));
   // c_string clientSecret (
@@ -417,7 +417,7 @@ QTMOAuth::getAuthorizationUrl () {
   eval ("(use-modules (liii account))");
   c_string authorizationUrl (
       as_string (call ("account-oauth2-config", "authorization-url")));
-  qDebug() << "getAuthorizationUrl:" << QString ((char*) authorizationUrl);
+  qDebug () << "getAuthorizationUrl:" << QString ((char*) authorizationUrl);
   return QUrl ((char*) authorizationUrl);
 }
 
@@ -426,6 +426,6 @@ QTMOAuth::getAccessTokenUrl () {
   eval ("(use-modules (liii account))");
   c_string accessTokenUrl (
       as_string (call ("account-oauth2-config", "access-token-url")));
-  qDebug() << "getAccessTokenUrl:" << QString ((char*) accessTokenUrl);
+  qDebug () << "getAccessTokenUrl:" << QString ((char*) accessTokenUrl);
   return QUrl ((char*) accessTokenUrl);
 }
