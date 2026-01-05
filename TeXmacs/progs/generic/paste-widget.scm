@@ -76,7 +76,7 @@
 (define (shortcut fm)
   (cond ((and (in-math?) (== fm "latex")) "Ctrl+Shift+v")
         ((== fm "verbatim") "Ctrl+Shift+v")
-        ((is-clipboard-image?) "Ctrl+Shift+v")
+        ((and (is-clipboard-image?) (== fm "ocr")) "Ctrl+Shift+v")
         (else "none")))
 
 (tm-define (is-clipboard-image?)
