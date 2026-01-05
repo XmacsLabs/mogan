@@ -234,10 +234,8 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
   setWindowFlags ((windowFlags () | Qt::FramelessWindowHint) &
                   ~Qt::WindowContextHelpButtonHint);
 
-  // 设置透明图标以避免系统显示默认图标
-  QPixmap transparentPixmap (16, 16);
-  transparentPixmap.fill (QColor (0, 0, 0, 0));
-  setWindowIcon (QIcon (transparentPixmap));
+  // 设置窗口图标
+  setWindowIcon (QIcon ("3rdparty/qwindowkitty/src/styles/app/stem.png"));
 
   // 固定窗口大小
   setFixedSize (500, 400);
