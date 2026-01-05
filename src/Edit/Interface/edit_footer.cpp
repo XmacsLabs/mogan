@@ -99,6 +99,34 @@ edit_interface_rep::set_left_footer () {
 }
 
 /******************************************************************************
+ * Set middle footer with page number
+ ******************************************************************************/
+
+void
+edit_interface_rep::set_middle_footer (tree m) {
+  SERVER (
+      set_middle_footer (serialize (tree_translate (m, "english", "english"))));
+}
+
+void
+edit_interface_rep::set_middle_footer () {
+  // 使用 get_page_count() 获取实际页数
+  int    total_count= get_page_count ();
+  string total_pages= total_count > 0 ? as_string (total_count) : "?";
+
+  // 使用 get_current_page 获取当前页码
+  int    current_page_num= this->get_current_page ();
+  string current_page=
+      current_page_num > 0 ? as_string (current_page_num) : "?";
+
+  // 显示页码：当前页 / 总页数（如果总页数未知，显示 ?）
+  string page_display= current_page * string (" / ") * total_pages;
+
+  SERVER (set_middle_footer (
+      serialize (tree_translate (tree (page_display), "english", "english"))));
+}
+
+/******************************************************************************
  * Set right footer with information about cursor position
  ******************************************************************************/
 
@@ -521,11 +549,13 @@ edit_interface_rep::set_footer () {
     if (set_latex_footer (st)) return;
     if (set_hybrid_footer (st)) return;
     set_left_footer ();
+    set_middle_footer ();
     set_right_footer ();
   }
   else {
     if (message_l == "") set_left_footer ();
     else set_left_footer (message_l);
+    set_middle_footer ();
     if (message_r == "") set_right_footer ();
     else set_right_footer (message_r);
     message_l= message_r= "";

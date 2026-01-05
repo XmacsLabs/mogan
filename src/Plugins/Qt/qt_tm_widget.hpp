@@ -66,6 +66,7 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
    */
   QLabel*                 rightLabel;
   QLabel*                 leftLabel;
+  QLabel*                 middleLabel;
   QToolBar*               menuToolBar;
   QToolBar*               mainToolBar;
   QToolBar*               modeToolBar;

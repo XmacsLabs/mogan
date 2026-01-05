@@ -305,6 +305,12 @@ tm_frame_rep::set_right_footer (string s) {
 }
 
 void
+tm_frame_rep::set_middle_footer (string s) {
+  if (!has_current_window ()) return;
+  concrete_window ()->set_middle_footer (s);
+}
+
+void
 tm_frame_rep::set_message (tree left, tree right, bool temp) {
   if (!has_current_window ()) return;
   get_current_editor ()->set_message (left, right, temp);

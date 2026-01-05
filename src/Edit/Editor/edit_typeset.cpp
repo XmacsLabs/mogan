@@ -651,6 +651,19 @@ edit_typeset_rep::get_page_count () {
   return N (eb[0]);
 }
 
+int
+edit_typeset_rep::get_current_page () {
+  int total_pages= get_page_count ();
+  if (total_pages <= 0) return 1;
+
+  bool found= false;
+  path bp   = eb->find_box_path (tp, found);
+  if (!found || is_nil (bp) || bp->item != 0 || is_nil (bp->next)) return 1;
+
+  int page_index= bp->next->item;
+  return (page_index >= 0 && page_index < total_pages) ? page_index + 1 : 1;
+}
+
 SI
 edit_typeset_rep::get_page_width (bool deco) {
   (void) get_env_string (PAGE_WIDTH);
