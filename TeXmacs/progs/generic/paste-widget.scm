@@ -154,7 +154,7 @@
       (begin
         (clipboard-paste-import "verbatim" "primary")
         (kbd-return)
-        (let* ((latex-code (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/md.tex")))
+        (let* ((latex-code (string-load (unix->url "$TEXMACS_PATH/plugins/account/data/md.tex")))
                (parsed-latex (parse-latex latex-code))
                (texmacs-latex (latex->texmacs parsed-latex)))
           (insert texmacs-latex)))

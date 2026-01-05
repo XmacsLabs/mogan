@@ -18,14 +18,14 @@
 
 (define temp-dir (os-temp-dir))
 
-(tm-define (get-image t i bool)
+(define (get-image t i bool)
   (let* ((cur-t (tree-ref t i)))
     (cond 
       ((not cur-t) #f)
       ((tree-is? cur-t 'image) (get-image-tuple cur-t 0 bool))
       (else (get-image t (+ i 1) bool)))))
 
-(tm-define (get-image-tuple t i bool)
+(define (get-image-tuple t i bool)
   (if bool
     (let* ((cur-t (tree-ref t i)))
       (cond 
@@ -38,35 +38,31 @@
         ((tree-is? cur-t 'tuple) (get-image-data cur-t 0))
         (else (get-image-tuple t (+ i 1)))))))
 
-(tm-define (get-image-name t i)
+(define (get-image-name t i)
   (let* ((cur-t (tree-ref t i)))
     (cond 
       ((not cur-t) #f)
       ((not (string=? (tree->string cur-t) "")) (tree->string cur-t))
       (else (get-image-name t (+ i 1))))))
 
-(tm-define (get-image-data t i)
+(define (get-image-data t i)
   (let* ((cur-t (tree-ref t i)))
     (cond 
       ((not cur-t) #f)
       ((tree-is? cur-t 'raw-data) (cdr (tree->stree cur-t)))
       (else (get-image-name t (+ i 1))))))
 
-(tm-define (get-image-extention name)
+(define (get-image-extension name)
   (let* ((parts (string-split name #\.)))
     (if (> (length parts) 1)
         (last parts)
         name)))
 
-(tm-define (get-file-string p)
-  (when (url-exists? p)
-        (string-load p)))
-
-(tm-define (insert-tips)
+(define (insert-tips)
   (go-to (cursor-path))
   (go-to-next-node)
   (kbd-return)
-  (let* ((content (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.md"))))
+  (let* ((content (string-load (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.md"))))
     (insert `(with "par-mode" "center" (document ,(utf8->cork content))))))
 
 (define (insert-latex-by-cursor)
@@ -101,7 +97,7 @@ t: tree
 2. 光标在文本模式中，插入图片对应的LaTeX代码片段
 |#
 (tm-define (ocr-to-latex-by-cursor t)
-  (let* ((extention (get-image-extention (get-image t 0 #t)))
+  (let* ((extension (get-image-extension (get-image t 0 #t)))
          (temp-name (string-append temp-dir "/temp-" (number->string (current-time)) "." extention))
          (data-list 
            (get-image t 0 #f)))
