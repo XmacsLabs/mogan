@@ -15,7 +15,8 @@ __pycache__/
 *.sln
 .idea
 .vscode
-.claude
+.claude/*
+!.claude/agents/
 
 # Mac OS
 .DS_Store
