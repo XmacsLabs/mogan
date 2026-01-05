@@ -554,7 +554,7 @@ load_welcome_doc () {
  * Load settings and check version
  ******************************************************************************/
 
-static int
+int
 load_settings_and_check_version () {
   url settings_path= "$TEXMACS_HOME_PATH/system/settings.scm";
 
@@ -573,8 +573,6 @@ load_settings_and_check_version () {
     install_status= 2;
   }
 
-  cout << "TeXmacs] load_settings_and_check_version";
-
   return install_status;
 }
 
@@ -584,8 +582,6 @@ load_settings_and_check_version () {
 
 void
 init_plugins () {
-  load_settings_and_check_version ();
-
   setup_tex ();
   init_tex ();
 }
