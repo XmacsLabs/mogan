@@ -48,6 +48,8 @@ private:
   void    loadExistingToken ();
   QString generateCodeVerifier ();
   QString generateCodeChallenge (const QString& verifier);
+  QUrl    getAuthorizationUrl ();
+  QUrl    getAccessTokenUrl ();
 
   bool m_isLoggedIn= false;
 
