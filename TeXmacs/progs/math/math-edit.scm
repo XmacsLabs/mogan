@@ -758,6 +758,111 @@
                        "correct formula"))
       (math-manually-correct-tree (buffer-tree))))
 
+#|
+lambda-to-symbol
+将按键绑定的 Lambda 过程转换为 UI 可显示的符号名称。
+主要用于在 Tab 键循环补全菜单中显示那些绑定为函数（而非直接字符串）的数学符号。
+
+语法
+----
+(lambda-to-symbol f)
+
+参数
+----
+f : procedure
+    需要分析的目标函数（过程对象）。通常是由 kbd-map 生成的闭包。
+
+返回值
+----
+list | boolean
+- 成功时：返回 `(symbol-completion "符号名")`，例如 `(symbol-completion "<big-int-2>")`。
+- 失败时：返回 #f。
+
+逻辑
+----
+1. 类型检查：确认输入 f 是否为合法的 procedure。
+2. 源码获取：调用 (procedure-source f) 获取源代码。
+3. 结构校验：
+   - 检查源码是否为列表且长度至少为 3 (标准 lambda 结构)。
+   - 提取函数体 (caddr src)。
+   - 检查函数体是否为非空列表，且包含参数。
+   - 检查第一个参数是否为字符串。
+4. 符号解析：
+   - 提取函数名 (func-name) 和参数 (arg)。
+   - 使用 case 结构匹配支持的函数名（目前支持 math-big-operator）。
+   - 根据匹配结果拼接对应的 TeXmacs 内部符号名字符串。
+
+注意
+----
+此函数采用了防御性编程风格，包含多层条件检查 (cond)，
+以防止因读取到非标准结构的 Lambda 源码而导致编辑器崩溃。
+目前主要用于处理 math-big-operator 生成的积分、求和等大运算符。
+|#
+(define (lambda-to-symbol f)
+  (if (not (procedure? f))
+      #f
+      (let ((src (procedure-source f)))
+        (cond
+          ((not (pair? src)) #f)
+          ;; 确保结构至少是 (lambda () body...)
+          ((< (length src) 3) #f)
+          (else
+           (let ((body (caddr src)))
+             (cond
+               ((not (pair? body)) #f)
+               ((null? (cdr body)) #f)
+               ((not (string? (cadr body))) #f)
+               (else
+                (let ((func-name (car body))
+                      (arg (cadr body)))
+                  (case func-name
+                    ;; Case 1: math-big-operator (处理积分、求和等大运算符)
+                    ;; 转换目标: "<big-int-2>" (TeXmacs 内部字体图标名)
+                    ((math-big-operator)
+                     `(symbol-completion 
+                       ,(string-append "<big-" arg "-2>")))
+                    
+                    ;; 预留位置：可以在此添加其他函数的处理逻辑
+                    
+                    (else #f)))))))))))
+
+#|
+function-to-symbol
+Tab 循环补全中处理函数型绑定的入口分发器。
+
+语法
+----
+(function-to-symbol val)
+
+参数
+----
+val : pair
+    键值绑定的内容。通常格式为 (command help-string) 或 (command)。
+    其中 command 可能是字符串，也可能是过程 (procedure)。
+
+返回值
+----
+list | boolean
+- 成功时：返回 `(symbol-completion "符号名")`。
+- 失败时：返回 #f。
+
+逻辑
+----
+1. 检查 val 是否为列表 (pair)。
+2. 检查 val 的第一个元素 (绑定的命令) 是否为过程对象 (procedure)。
+3. 如果上述检查通过，调用 lambda-to-symbol 进行核心的源码解析和符号转换。
+4. 任何步骤失败则直接返回 #f。
+
+注意
+----
+此函数在 tabcycle-symbols 中作为过滤器使用。
+它确保只有当按键绑定是函数时才尝试解析，如果是普通字符串或其他类型则跳过。
+|#
+(define (function-to-symbol val)
+  (and (pair? val)
+       (procedure? (car val))
+       (lambda-to-symbol (car val))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tab cycling completion
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -798,7 +903,7 @@
                                   (let ((val (cdr pair)))
                                     (if (and (pair? val) (string? (car val)))
                                         `(symbol-completion ,(car val))
-                                        #f)))
+                                        (function-to-symbol val))))
                                 tab-pairs)))
         (if (string? primary-sym)
             (let ((filtered (filter (lambda (entry)
