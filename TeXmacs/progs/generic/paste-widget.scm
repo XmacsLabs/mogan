@@ -169,7 +169,7 @@
       (when fm
         (cond ((== fm "md")       (paste-as-markdown))
               ((== fm "ocr")      (ocr-paste))
-              ((== fm "image_and_ocr")      (ocr-and-image-paste))
+              ((== fm "image_and_ocr")      (image-and-ocr-paste))
               ((== fm "image")    (kbd-paste))
               ((== fm "mathml")   (clipboard-paste-import "html" "primary"))
               ((== fm "html")     (paste-as-html))

@@ -69,7 +69,7 @@
   (let* ((content (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.md"))))
     (insert `(with "par-mode" "center" (document ,(utf8->cork content))))))
 
-(tm-define (insert-latex-at-current-path)
+(define (insert-latex-by-cursor)
   (let* ((mode (get-env "mode"))
          (latex-code (if (== mode "math")
                          "E=m*c^2"  ;; 数学模式下返回 E=m*c^2 的 LaTeX
@@ -78,12 +78,29 @@
          (texmacs-latex (latex->texmacs parsed-latex)))
     (insert texmacs-latex)))
 
-(tm-define (insert-latex t)
-  (tree-go-to t :end)
-  (kbd-return)
-  (insert-latex-at-current-path))
+#|
+ocr-to-latex-by-cursor
+将图像识别为LaTeX并在当前光标处插入
 
-(tm-define (image-ocr-to-latex t)
+语法
+----
+(ocr-to-latex-by-cursor t)
+
+参数
+----
+t: tree
+图像的tree表示，且该图像并不在文档中
+
+返回值
+------
+无返回值，有副作用。会在文档中插入LaTeX代码片段。
+
+逻辑
+----
+1. 光标在数学模式中，会直接插入数学公式
+2. 光标在文本模式中，插入图片对应的LaTeX代码片段
+|#
+(tm-define (ocr-to-latex-by-cursor t)
   (let* ((extention (get-image-extention (get-image t 0 #t)))
          (temp-name (string-append temp-dir "/temp-" (number->string (current-time)) "." extention))
          (data-list 
@@ -93,12 +110,39 @@
                 (binary-data (decode-base64 base64-str)))
             (string-save binary-data temp-name)
             (display* "Image has saved to " temp-name "\n"))))
-  (insert-latex-at-current-path))
+  (insert-latex-by-cursor))
 
 ; (get-image-extention (get-image t 0 #t)) 获取文件后缀，创建对应临时文件
 ; (get-image t 0 #f) 获取 raw-data
 
-(tm-define (create-temp-image t)
+(define (insert-latex-by-image t)
+  (tree-go-to t :end)
+  (kbd-return)
+  (insert-latex-by-cursor))
+
+#|
+ocr-to-latex-by-image
+将图像识别为LaTeX并在图像下方插入
+
+语法
+----
+(ocr-to-latex-by-image t)
+
+参数
+----
+t: tree
+图像的tree表示且该图像已经在文档中
+
+返回值
+------
+无返回值，有副作用。会在文档中插入LaTeX代码片段。
+
+逻辑
+----
+1. 光标在数学模式中，会直接插入数学公式
+2. 光标在文本模式中，插入图片对应的LaTeX代码片段
+|#
+(tm-define (ocr-to-latex-by-image t)
   (let* ((extention 
            (get-image-extention (get-image t 0 #t)))
          (temp-name 
@@ -110,4 +154,4 @@
                 (binary-data (decode-base64 base64-str)))
             (string-save binary-data temp-name)
             (display* "Image has saved to " temp-name "\n"))))
-  (insert-latex t))
+  (insert-latex-by-image t))
