@@ -98,7 +98,7 @@ t: tree
 |#
 (tm-define (ocr-to-latex-by-cursor t)
   (let* ((extension (get-image-extension (get-image t 0 #t)))
-         (temp-name (string-append temp-dir "/temp-" (number->string (current-time)) "." extention))
+         (temp-name (string-append temp-dir "/temp-" (number->string (current-time)) "." extension))
          (data-list 
            (get-image t 0 #f)))
     (when (and (list? data-list) (not (null? data-list)))
