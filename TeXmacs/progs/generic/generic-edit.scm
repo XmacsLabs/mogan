@@ -248,7 +248,7 @@ image-and-ocr-paste
 ----
 (image-and-ocr-paste)
 |#
-(tm-define (ocr-and-image-paste)
+(tm-define (image-and-ocr-paste)
   (with data 
     (parse-texmacs-snippet (tree->string (tree-ref (clipboard-get "primary") 1)))
     (when (tree-is? (tree-ref data 0) 'image)
