@@ -154,7 +154,7 @@
       (begin
         (clipboard-paste-import "verbatim" "primary")
         (kbd-return)
-        (let* ((latex-code (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/md.tex")))
+        (let* ((latex-code (string-load (unix->url "$TEXMACS_PATH/plugins/account/data/md.tex")))
                (parsed-latex (parse-latex latex-code))
                (texmacs-latex (latex->texmacs parsed-latex)))
           (insert texmacs-latex)))
@@ -169,7 +169,7 @@
       (when fm
         (cond ((== fm "md")       (paste-as-markdown))
               ((== fm "ocr")      (ocr-paste))
-              ((== fm "image_and_ocr")      (ocr-and-image-paste))
+              ((== fm "image_and_ocr")      (image-and-ocr-paste))
               ((== fm "image")    (kbd-paste))
               ((== fm "mathml")   (clipboard-paste-import "html" "primary"))
               ((== fm "html")     (paste-as-html))
