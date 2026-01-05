@@ -766,6 +766,12 @@
         `(symbol-completion ,(string-append "<big-" (second x) "-2>"))
         #f)))
 
+; (define (extract-body-from-lambda f)
+;   (let ((source (procedure-source f)))
+;     (if (pair? source)
+;         (cddr source)
+;         #f)))
+
 (define (function-to-symbol val)
   (display* "val: " val "\t" (procedure? (car val)) "\n")
 
