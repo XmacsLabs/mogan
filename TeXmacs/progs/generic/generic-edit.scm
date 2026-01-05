@@ -155,6 +155,11 @@
   (remove-text forwards?)
   (kbd-variant (focus-tree) #t))
 
+(tm-define (kbd-remove t forwards?)
+  (:require (at-image-start?))
+  (let ((image (any-image-context?)))
+    (tree-cut image)))
+
 (tm-define (kbd-variant t forwards?)
   (:require (tree-is-buffer? t))
   (if (and (not (complete-try?)) forwards?)
@@ -283,6 +288,20 @@ TODO: 在文本模式中，可以自动识别剪贴板中的内容，并智能�
               ((== mode "math")
                (clipboard-paste-import "latex" "primary"))
               (else (kbd-paste-verbatim))))))
+
+(tm-define (any-image-context?)
+  (tree-innermost 
+   (lambda (t) (tree-is? t 'image)) 
+   #t))
+
+(tm-define (at-image-start?)
+  (with image (any-image-context?)
+    (and image
+         (let* ((p (cursor-path))
+                (ip (tree->path image)))
+           (or (== p ip)
+               (and (== (cDr p) ip)
+                    (<= (cAr p) 1)))))))
 
 (tm-define (notify-activated t) (noop))
 (tm-define (notify-disactivated t) (noop))
