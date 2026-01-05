@@ -3,6 +3,9 @@ package("libcurl")
     set_description("The multiprotocol file transfer library.")
     set_license("MIT")
 
+    set_urls("https://curl.haxx.se/download/curl-$(version).tar.bz2")
+    add_urls("https://github.com/curl/curl/releases/download/curl-$(version).tar.bz2",
+        {version = function (version) return (version:gsub("%.", "_")) .. "/curl-" .. version end})
     add_urls("https://gitee.com/mirrors/curl.git")
     add_versions("v8.11.1", "curl-8_11_1")
 
