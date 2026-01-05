@@ -901,7 +901,6 @@ list | boolean
            (tab-pairs (kbd-find-prefix-tab pre)))
       (let ((others (filter-map (lambda (pair)
                                   (let ((val (cdr pair)))
-                                    (display* "func->symbol: " (function-to-symbol val) "\n")
                                     (if (and (pair? val) (string? (car val)))
                                         `(symbol-completion ,(car val))
                                         (function-to-symbol val))))
