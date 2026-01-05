@@ -115,11 +115,11 @@ edit_interface_rep::set_middle_footer () {
   string total_pages = total_count > 0 ? as_string (total_count) : "?";
 
   // 获取当前页码
-  string current_page = get_env_string (PAGE_NR);
+  int current_page_num = this->get_current_page ();
+  string current_page = current_page_num > 0 ? as_string (current_page_num) : "?";
 
   // 显示页码：当前页 / 总页数（如果总页数未知，显示 ?）
-  string page_display = current_page;
-  page_display = current_page * string(" / ") * total_pages;
+  string page_display = current_page * string(" / ") * total_pages;
 
   SERVER (set_middle_footer (serialize (tree_translate (
       tree (page_display), "english", "english"))));

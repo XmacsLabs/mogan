@@ -1,0 +1,34 @@
+<TMU|<tuple|1.1.0|2025.2.3-rc5>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref|dark>>
+
+<\body>
+  第一页
+
+  <new-page>
+
+  第二页
+
+  <new-page>
+
+  第三页
+
+  <new-page>
+
+  第四页
+
+  <new-page>
+
+  第五页
+
+  <new-page>
+
+  第六页
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
