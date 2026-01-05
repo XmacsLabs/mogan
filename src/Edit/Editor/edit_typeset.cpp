@@ -654,13 +654,13 @@ edit_typeset_rep::get_page_count () {
 int
 edit_typeset_rep::get_current_page () {
   // 使用光标路径和盒子结构确定当前页码
-  int total_pages = get_page_count ();
+  int total_pages= get_page_count ();
   if (total_pages <= 0) {
     return 1;
   }
 
-  bool found = false;
-  path bp = eb->find_box_path (tp, found);
+  bool found= false;
+  path bp   = eb->find_box_path (tp, found);
 
   if (!found) {
     return 1;
@@ -668,7 +668,7 @@ edit_typeset_rep::get_current_page () {
 
   // 检查盒子路径是否以0开头（页面容器）
   if (!is_nil (bp) && bp->item == 0 && !is_nil (bp->next)) {
-    int page_index = bp->next->item;
+    int page_index= bp->next->item;
     if (page_index >= 0 && page_index < total_pages) {
       return page_index + 1;
     }
@@ -1146,4 +1146,3 @@ edit_typeset_rep::typeset_invalidate_players (path p, bool reattach) {
     }
   }
 }
-

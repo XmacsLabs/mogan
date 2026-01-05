@@ -17,11 +17,11 @@
 #include <QDialog>
 #include <QDockWidget>
 #include <QGuiApplication>
+#include <QHBoxLayout>
 #include <QIcon>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLayoutItem>
-#include <QHBoxLayout>
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QNetworkAccessManager>
@@ -363,7 +363,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   leftLabel->setAlignment (Qt::AlignLeft | Qt::AlignVCenter);
   rightLabel->setAlignment (Qt::AlignRight | Qt::AlignVCenter);
 
-  // Add all three labels with equal stretch factors for equal width distribution
+  // Add all three labels with equal stretch factors for equal width
+  // distribution
   bar->addWidget (leftLabel, 1);
   bar->addWidget (middleLabel, 1);
   bar->addPermanentWidget (rightLabel, 1);
