@@ -114,7 +114,7 @@ edit_interface_rep::set_middle_footer () {
   int    total_count= get_page_count ();
   string total_pages= total_count > 0 ? as_string (total_count) : "?";
 
-  // 获取当前页码
+  // 使用 get_current_page 获取当前页码
   int    current_page_num= this->get_current_page ();
   string current_page=
       current_page_num > 0 ? as_string (current_page_num) : "?";
