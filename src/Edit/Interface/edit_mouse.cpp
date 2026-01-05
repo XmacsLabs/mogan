@@ -42,9 +42,12 @@ bool is_in_graphics_mode= false;
 
 bool
 edit_interface_rep::should_show_image_popup (tree t) {
-  int t_N= N (t);
   if (is_nil (t)) return false;
-  if (is_func (t, WITH) && t_N >= 2) {
+
+  int t_N= N (t);
+  if (t_N < 2) return false;
+
+  if (is_func (t, WITH)) {
     for (int i= 0; i < t_N; ++i) {
       if (t[i] == "par-mode") {
         return true;
