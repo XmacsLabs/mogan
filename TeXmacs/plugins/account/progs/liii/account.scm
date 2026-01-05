@@ -69,7 +69,7 @@
         sp)))
 
 ; 根据当前 profile 获取环境地址
-(define (current-stem-env)
+(define (current-stem-site)
   (cond
     ((string=? (current-stem-profile) "production") "http://www.liiistem.cn")
     ((string=? (current-stem-profile) "staging") "http://test-www.liiistem.cn")
@@ -77,7 +77,7 @@
 
 ;; OAuth2 配置
 (tm-define (account-oauth2-config key)
-  (let ((base-url (current-stem-env)))
+  (let ((base-url (current-stem-site)))
     (cond
       ((== key "authorization-url") (string-append base-url "/oauth2-login.html"))
       ((== key "access-token-url") (string-append base-url ":8080/oauth2/token"))
