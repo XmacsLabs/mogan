@@ -31,9 +31,9 @@ StartupLoginDialog::setupUi () {
   titleLabel->setObjectName ("titleLabel");
 
   // 创建副标题标签
-  subtitleLabel= new QLabel (
-      qt_translate ("登录即可同步设置并访问所有功能"),
-      this); // Log in to sync settings and access all features
+  subtitleLabel=
+      new QLabel (qt_translate ("登录即可同步设置并访问所有功能"),
+                  this); // Log in to sync settings and access all features
   subtitleLabel->setAlignment (Qt::AlignCenter);
   subtitleLabel->setObjectName ("subtitleLabel");
 

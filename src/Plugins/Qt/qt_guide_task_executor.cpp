@@ -13,12 +13,21 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QThread>
+#include <functional>
+#include <moebius/drd/drd_std.hpp>
 
 // External declarations from init_texmacs.cpp
+extern void init_texmacs ();
 extern void init_main_paths ();
 extern void init_user_dirs ();
-extern void init_texmacs ();
 extern bool g_startup_login_executed;
+extern void acquire_boot_lock ();
+extern void init_succession_status_table ();
+extern void font_database_load ();
+extern void load_user_preferences ();
+
+// Using declarations for Moebius functions
+using moebius::drd::init_std_drd;
 
 BootstrapTaskExecutor::BootstrapTaskExecutor (QObject* parent)
     : QObject (parent), m_running (false), m_cancelled (false),
@@ -31,10 +40,27 @@ BootstrapTaskExecutor::BootstrapTaskExecutor (QObject* parent)
   // 这些是默认值，实际执行时会根据实际耗时更新
   m_stepDurations.resize (static_cast<int> (TaskStep::Complete) + 1);
   m_stepDurations[static_cast<int> (TaskStep::FileSystemCheck)]  = 500; // 0.5秒
-  m_stepDurations[static_cast<int> (TaskStep::ConfigurationLoad)]= 1000; // 1秒
+  m_stepDurations[static_cast<int> (TaskStep::ConfigurationLoad)]= 500; // 1秒
   m_stepDurations[static_cast<int> (TaskStep::PluginInitialization)]=
-      3000;                                                              // 3秒
-  m_stepDurations[static_cast<int> (TaskStep::SchemeEnvironment)]= 2000; // 2秒
+      2000;                                                             // 3秒
+  m_stepDurations[static_cast<int> (TaskStep::SchemeEnvironment)]= 500; // 2秒
+}
+
+// Exception handling wrapper implementation
+bool
+BootstrapTaskExecutor::executeWithExceptionHandling (
+    const std::function<bool ()>& func, const QString& errorPrefix) {
+  try {
+    return func ();
+  } catch (const std::exception& e) {
+    qWarning () << "BootstrapTaskExecutor: " << errorPrefix
+                << "failed:" << e.what ();
+    return false;
+  } catch (...) {
+    qWarning () << "BootstrapTaskExecutor: Unknown error during "
+                << errorPrefix;
+    return false;
+  }
 }
 
 BootstrapTaskExecutor::~BootstrapTaskExecutor () {
@@ -164,77 +190,53 @@ BootstrapTaskExecutor::executeNextSegment () {
   }
 }
 
+// ===========================================================================
+// 各个初始化步骤的实现
+// init_texmacs包含acquire_boot_lock、init_succession_status_table、
+// load_user_preferences、font_database_load、init_std_drd五个步骤，目前拆开
+// ===========================================================================
+
 bool
 BootstrapTaskExecutor::performFileSystemCheck () {
-  try {
-    cout << "Step 1 start....\n";
-
-    // cout << "performFileSystemCheck -- Main paths\n";
-    init_main_paths ();
-    // cout << "performFileSystemCheck -- User dirs\n";
-    init_user_dirs ();
-
-    init_texmacs ();
-    // 引导弹窗中，init_texmacs执行后设置
-    g_startup_login_executed= true;
-
-    return true;
-  } catch (const std::exception& e) {
-    qWarning () << "BootstrapTaskExecutor: File system check failed:"
-                << e.what ();
-    return false;
-  } catch (...) {
-    qWarning ()
-        << "BootstrapTaskExecutor: Unknown error during file system check";
-    return false;
-  }
+  return executeWithExceptionHandling (
+      [this] () -> bool {
+        acquire_boot_lock ();            // 获取启动锁，防止重复初始化
+        init_succession_status_table (); // 初始化继承状态表
+        return true;
+      },
+      "File system check");
 }
 
 bool
 BootstrapTaskExecutor::performConfigurationLoad () {
-  // 占位符方法：配置加载
-  // TODO: 实现实际的配置加载逻辑
-  // 应包括：
-  // - 加载用户偏好设置
-  // - 设置环境变量
-  // - 初始化应用程序设置
-
-  // 短暂延迟以允许UI更新
-  QThread::msleep (60);
-  return true;
+  return executeWithExceptionHandling (
+      [this] () -> bool {
+        load_user_preferences (); // 加载用户偏好设置
+        return true;
+      },
+      "Perform configuration load");
 }
 
 bool
 BootstrapTaskExecutor::performPluginInitialization () {
-  // 占位符方法：插件初始化
-  // 注意：核心初始化应在主线程中完成
-  // 此方法专注于可以在后台并发运行的任务
-
-  qDebug () << "BootstrapTaskExecutor: Performing plugin initialization...";
-
-  // TODO: 实现实际的插件初始化逻辑
-  // 应包括：
-  // - 加载和初始化插件
-  // - 设置插件依赖关系
-  // - 注册插件服务
-
-  qDebug () << "BootstrapTaskExecutor: Plugin initialization complete";
-  QThread::msleep (50);
-  return true;
+  return executeWithExceptionHandling (
+      [this] () -> bool {
+        font_database_load (); // 加载字体数据库
+        return true;
+      },
+      "Perform plugin initialization load");
 }
 
 bool
 BootstrapTaskExecutor::performSchemeEnvironmentSetup () {
-  // 占位符方法：Scheme环境设置
-  // TODO: 实现实际的Scheme环境设置逻辑
-  // 应包括：
-  // - 设置Scheme加载路径
-  // - 初始化Scheme运行时
-  // - 加载核心Scheme模块
-
-  // 短暂延迟以允许UI更新
-  QThread::msleep (40);
-  return true;
+  return executeWithExceptionHandling (
+      [this] () -> bool {
+        init_std_drd (); // 初始化标准DRD（文档关系定义）
+        g_startup_login_executed=
+            true; // 最后一步设置ture,防止init_texmacs重复执行
+        return true;
+      },
+      "Perform scheme environment setup");
 }
 
 void

@@ -534,18 +534,18 @@ init_texmacs () {
     return;
   }
 
-  cout << "Initialize -- Boot lock\n";
+  // cout << "Initialize -- Boot lock\n";
   acquire_boot_lock ();
-  cout << "Initialize -- Succession status table\n";
+  // cout << "Initialize -- Succession status table\n";
   init_succession_status_table ();
-  cout << "Initialize -- Succession standard DRD\n";
+  // cout << "Initialize -- Succession standard DRD\n";
   init_std_drd ();
-  cout << "Initialize -- User preferences\n";
+  // cout << "Initialize -- User preferences\n";
   load_user_preferences ();
 
-  cout << "Initialize -- font_database_load\n";
+  // cout << "Initialize -- font_database_load\n";
   font_database_load ();
-  cout << "Initialize -- font_database_load end\n";
+  // cout << "Initialize -- font_database_load end\n";
 }
 
 void

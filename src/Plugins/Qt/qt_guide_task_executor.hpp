@@ -14,6 +14,7 @@
 #include <QObject>
 #include <QString>
 #include <QTimer>
+#include <functional>
 
 /**
  * @class BootstrapTaskExecutor
@@ -151,6 +152,10 @@ private:
   void handleException (const QString& error);
   void handleUnknownException ();
   void scheduleNextExecution ();
+
+  // Exception handling wrapper
+  bool executeWithExceptionHandling (const std::function<bool ()>& func,
+                                     const QString&                errorPrefix);
 
   // State tracking
   bool     m_running;
