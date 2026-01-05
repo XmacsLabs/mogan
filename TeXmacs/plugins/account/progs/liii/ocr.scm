@@ -69,7 +69,7 @@
   (let* ((mode (get-env "mode"))
          (latex-code (if (== mode "math")
                          "E=m*c^2"  ;; 数学模式下返回 E=m*c^2 的 LaTeX
-                         (get-file-string (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.tex"))))
+                         (string-load (unix->url "$TEXMACS_PATH/plugins/account/data/ocr.tex"))))
          (parsed-latex (parse-latex latex-code))
          (texmacs-latex (latex->texmacs parsed-latex)))
     (insert texmacs-latex)))
@@ -108,7 +108,7 @@ t: tree
             (display* "Image has saved to " temp-name "\n"))))
   (insert-latex-by-cursor))
 
-; (get-image-extention (get-image t 0 #t)) 获取文件后缀，创建对应临时文件
+; (get-image-extension (get-image t 0 #t)) 获取文件后缀，创建对应临时文件
 ; (get-image t 0 #f) 获取 raw-data
 
 (define (insert-latex-by-image t)
@@ -139,12 +139,9 @@ t: tree
 2. 光标在文本模式中，插入图片对应的LaTeX代码片段
 |#
 (tm-define (ocr-to-latex-by-image t)
-  (let* ((extention 
-           (get-image-extention (get-image t 0 #t)))
-         (temp-name 
-           (string-append temp-dir "/temp-" (number->string (current-time)) "." extention))
-         (data-list 
-           (get-image t 0 #f)))
+  (let* ((extention (get-image-extension (get-image t 0 #t)))
+         (temp-name (string-append temp-dir "/temp-" (number->string (current-time)) "." extention))
+         (data-list (get-image t 0 #f)))
     (when (and (list? data-list) (not (null? data-list)))
           (let* ((base64-str (car data-list))
                 (binary-data (decode-base64 base64-str)))
