@@ -76,7 +76,7 @@
 (define (shortcut fm)
   (cond ((and (in-math?) (== fm "latex")) "Ctrl+Shift+v")
         ((== fm "verbatim") "Ctrl+Shift+v")
-        ((is-clipboard-image?) "Ctrl+Shift+v")
+        ((and (is-clipboard-image?) (== fm "ocr")) "Ctrl+Shift+v")
         (else "none")))
 
 (tm-define (is-clipboard-image?)
@@ -106,6 +106,7 @@
     (invisible (set! selected-format (convert-format-string-to-symbol (car l))))
     (invisible (set! tips1 (translate (get-tips selected-format))))
     (invisible (set! tips2 (translate "ENTER to confirm, ESC to cancel")))
+    (invisible (set! tips3 (string-append (translate "shortcut") ": " (shortcut selected-format))))
     (resize "320px" "270px"
       (padded
         (vertical
