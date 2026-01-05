@@ -69,7 +69,7 @@
         sp)))
 
 ; 根据当前 profile 获取环境地址
-(define (current-stem-site)
+(tm-define (current-stem-site)
   (cond
     ((string=? (current-stem-profile) "production") "http://www.liiistem.cn")
     ((string=? (current-stem-profile) "staging") "http://test-www.liiistem.cn")
