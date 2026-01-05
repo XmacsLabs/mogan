@@ -758,6 +758,20 @@
                        "correct formula"))
       (math-manually-correct-tree (buffer-tree))))
 
+(define (big-insert-to-symbol f)
+  (with x (car (cddr (procedure-source f)))
+    (display* x "\n")
+    (display* (eq? (first x) 'math-big-operator) "\n")
+    (if (eq? (first x) 'math-big-operator)
+        `(symbol-completion ,(string-append "<big-" (second x) "-2>"))
+        #f)))
+
+(define (function-to-symbol val)
+  (display* "val: " val "\t" (procedure? (car val)) "\n")
+
+  (and (pair? val) (procedure? (car val))
+       (big-insert-to-symbol (car val))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tab cycling completion
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -796,9 +810,10 @@
            (tab-pairs (kbd-find-prefix-tab pre)))
       (let ((others (filter-map (lambda (pair)
                                   (let ((val (cdr pair)))
+                                    (display* "func->symbol: " (function-to-symbol val) "\n")
                                     (if (and (pair? val) (string? (car val)))
                                         `(symbol-completion ,(car val))
-                                        #f)))
+                                        (function-to-symbol val))))
                                 tab-pairs)))
         (if (string? primary-sym)
             (let ((filtered (filter (lambda (entry)
