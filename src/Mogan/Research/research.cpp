@@ -245,7 +245,7 @@ main (int argc, char** argv) {
   else qtmapp= new QTMApplication (argc, argv);
 
   // before startup login dialog
-  init_texmacs_path (argc, argv); // TEXMACS_PATH路径
+  init_texmacs_path (argc, argv);
   init_texmacs_front ();
   load_settings_and_check_version ();
   init_plugins ();
