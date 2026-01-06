@@ -111,8 +111,9 @@
   (former))
 
 (tm-menu (texmacs-popup-menu)
+  ("Smart paste" (kbd-magic-paste))
+  ("Paste special" (interactive-paste-special))
   (=> "Copy to" (link clipboard-copy-export-menu))
-  (=> "Paste from" (link clipboard-paste-import-menu))
   ---
   (former))
 
