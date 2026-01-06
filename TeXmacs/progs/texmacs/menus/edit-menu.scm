@@ -84,7 +84,11 @@
         (-> "Cut to"
             (link clipboard-cut-export-menu)
             ---
-            ("Other" (interactive clipboard-cut)))))
+            ("Other" (interactive clipboard-cut))))
+      (-> "Paste from"
+            (link clipboard-paste-import-menu)
+            ---
+            ("Other" (interactive clipboard-cut))))
   ---
   ("Search recent documents" (interactive docgrep-in-recent))
   ---
