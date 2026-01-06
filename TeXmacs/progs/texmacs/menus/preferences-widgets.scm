@@ -21,16 +21,15 @@
 
 (tm-define (set-pretty-preference* which pretty-val)
   (let* ((old (get-pretty-preference which)))
-    (if (== old pretty-val)
-      (set-pretty-preference which pretty-val)
+    (when (!= old pretty-val)
       (let ((msg (translate "Requires restarting Mogan STEM to take full effect. Restart now?")))
-          (user-confirm msg #f
-            (lambda (answ)
-              (when answ
-                (begin
-                  (set-pretty-preference which pretty-val)
-                  (save-all-buffers)
-                  (restart-TeXmacs)))))))))
+        (user-confirm msg #f
+          (lambda (answ)
+            (set-pretty-preference which pretty-val)
+            (when answ
+              (begin
+                (save-all-buffers)
+                (restart-TeXmacs)))))))))
 
 (define (on-buffer-management-changed pretty-val)
   (let ((can-use-tabbar? (== pretty-val "Multiple documents share window")))
