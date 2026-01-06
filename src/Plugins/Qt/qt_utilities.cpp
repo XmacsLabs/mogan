@@ -1468,7 +1468,7 @@ qt_clipboard_text () {
   if (mimeData->hasImage ()) {
     return "";
   }
-  QByteArray       buf;
+  QByteArray buf;
   buf= mimeData->text ().toUtf8 ();
   return string (buf.constData (), buf.size ());
 }
