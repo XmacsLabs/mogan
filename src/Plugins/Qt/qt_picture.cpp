@@ -118,44 +118,11 @@ qt_load_icon (url file_name) {
   url svg= resolve ("$TEXMACS_PIXMAP_PATH" * url_system (base_name * ".svg"));
   url png= resolve ("$TEXMACS_PIXMAP_PATH" * url_system (base_name * ".png"));
 
-  bool is_modern_demo=
-      (get_user_preference ("gui theme", "default") == "liii" ||
-       get_user_preference ("gui theme", "default") == "liii-night" ||
-       get_user_preference ("gui theme", "default") == "default");
-
-  if (is_modern_demo) {
-    if (exists (svg)) {
-#ifdef OS_MINGW
-      return QIcon (qt_load_svg_icon (svg));
-#else
-      if (occurs ("dark", tm_style_sheet)) {
-        return QIcon (qt_load_svg_icon (svg));
-      }
-      else {
-        return QIcon (to_qstring (as_string (svg)));
-      }
-#endif
-    }
-    else if (exists (png)) {
-      return QIcon (as_pixmap (*xpm_image (png)));
-    }
+  if (exists (svg)) {
+    return QIcon (to_qstring (as_string (svg)));
   }
-  else {
-    if (exists (png)) {
-      return QIcon (as_pixmap (*xpm_image (png)));
-    }
-    else if (exists (svg)) {
-#ifdef OS_MINGW
-      return QIcon (qt_load_svg_icon (svg));
-#else
-      if (occurs ("dark", tm_style_sheet)) {
-        return QIcon (qt_load_svg_icon (svg));
-      }
-      else {
-        return QIcon (to_qstring (as_string (svg)));
-      }
-#endif
-    }
+  else if (exists (png)) {
+    return QIcon (as_pixmap (*xpm_image (png)));
   }
 
   return QIcon (as_pixmap (*xpm_image (file_name)));
