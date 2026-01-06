@@ -915,27 +915,76 @@ list | boolean
               (append base filtered))
             '())))))
 
+#|
+highlight-tabcycle-symbols
+高亮显示 Tab 循环菜单中当前选中的符号。
+
+语法
+----
+(highlight-tabcycle-symbols lst comb)
+
+参数
+----
+lst : list
+    候选符号列表。通常格式为 ((symbol-completion "符号名") ...)。
+comb : string
+    当前的按键序列（例如 "< tab"）。
+
+返回值
+----
+list
+- 返回一个新的列表。
+- 如果找到匹配项，该项的标签会被修改为 `symbol-completion*`（用于 UI 高亮渲染）。
+- 列表其余部分保持不变。
+
+逻辑
+----
+1. 预处理 comb 字符串（移除 "space "）。
+2. 查询该按键序列对应的绑定命令。
+3. 解析绑定命令以获取“目标符号名”：
+   - 如果绑定是字符串，直接将其作为目标名。
+   - 如果绑定是过程（procedure），调用 function-to-symbol 尝试解析出符号名。
+4. 遍历 lst，将名称与“目标符号名”一致的项标记为高亮状态。
+
+注意
+----
+此函数已增强对函数型绑定的支持。它不仅能高亮普通的字符串映射符号，
+也能通过反向解析高亮那些绑定到 Scheme 函数（如大运算符）的复杂符号。
+|#
 (define (highlight-tabcycle-symbols lst comb)
   ;; 高亮显示Tab循环符号列表中符合按键序列的符号
-  ;; 输入:
-  ;;     lst: 符号列表，格式为((symbol-completion "符号") ...)
-  ;;     comb: 按键序列，类型为string，如"b tab"
-  ;; 输出:
-  ;;     如果 comb 合法(为string)，返回符号列表，
-  ;;        格式为((symbol-completion "符号") (symbol-completion* "符号") ...)，
-  ;;        其中 symbol-completion* 表示高亮显示的符号，参见 make-menu-symbol 中的定义
-  ;;     如果 comb 不合法(为string)，返回空列表
-  (let ((bind (let* ((comb1 (string-replace comb "space " ""))
-                     (res (kbd-find-key-binding comb1)))
-                (and res (car res)))))
-    (if (string? bind)
-      (map (lambda (x) (if (and bind
-                                (pair? x)
-                                (eq? (car x) 'symbol-completion)
-                                (string=? (cadr x) bind))
-                          (list 'symbol-completion* bind) x))
-           lst)
-      '())))
+  (let* ((comb1 (string-replace comb "space " ""))
+         (res (kbd-find-key-binding comb1)))
+    (if (not res)
+        '() ;; 如果查不到任何绑定，直接返回空
+        (let* ((raw-cmd (car res))
+               ;; 统一解析出字符串类型的符号名 (bind-name)
+               (bind-name
+                (cond
+                  ;; 情况 A: 绑定直接就是字符串 (例如 "<leq>")
+                  ((string? raw-cmd) raw-cmd)
+                  ;; 情况 B: 绑定是函数 (例如 math-big-operator 的闭包)
+                  ((procedure? raw-cmd)
+                   ;; 利用 function-to-symbol 解析
+                   (let ((parsed (function-to-symbol res))) 
+                     ;; function-to-symbol 返回的是 (symbol-completion "名字")
+                     (if (and (pair? parsed)
+                              (eq? (car parsed) 'symbol-completion))
+                         (cadr parsed)
+                         #f)))
+                  
+                  (else #f))))
+          
+          (if (string? bind-name)
+              (map (lambda (x) 
+                     (if (and (pair? x)
+                              (eq? (car x) 'symbol-completion)
+                              ;; 用解析出来的 bind-name 进行比对
+                              (string=? (cadr x) bind-name))
+                         (list 'symbol-completion* bind-name)
+                         x))
+                   lst)
+              '())))))
 
 (tm-define (math-tabcycle-symbols comb)
   ;; 根据按键序列获取数学符号Tab循环展示的列表
