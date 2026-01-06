@@ -48,7 +48,8 @@
         ((== symbol "verbatim") (translate "Plain text"))
         ((== symbol "image_and_ocr")      (translate "Image and OCR"))
         ((== symbol "image")       (translate "Only image"))
-        ((== symbol "code")     (translate "Code"))))
+        ((== symbol "code")     (translate "Code"))
+        (else (translate "Plain text"))))
 
 (define (get-tips fm)
   (cond ((== fm "md")        "Insert clipboard content as 'Markdown'")
@@ -64,10 +65,17 @@
         (else "Please select...")))
 
 (define (get-clipboard-format)
-  (convert-symbol-to-format-string (clipboard-format "primary")))
+  (let* ((fm1 (qt-clipboard-format)))
+    (if (== fm1 "verbatim")
+      (let* ((raw-text (qt-clipboard-text))
+             (fm2 (format-determine raw-text "verbatim")))
+        fm2)
+      (if (string-starts? fm1 "image")
+        "image"
+        fm1))))
 
-(define (init-choices l)
-  (let* ((fm (clipboard-format "primary")))
+(define (init-choices l format)
+  (let* ((fm format))
     (if (or (== fm "") (== fm "verbatim") (== fm "image"))
         l
         (let* ((name (convert-symbol-to-format-string fm)))
@@ -86,7 +94,8 @@
       #f)))
 
 (tm-widget (clipboard-paste-from-widget cmd)
-  (let* ((selected-format "verbatim")
+  (let* ((source-format (get-clipboard-format))
+         (selected-format "verbatim")
          (tips1 "Please select...")
          (tips2 "")
          (tips3 (string-append (translate "shortcut") ": " (translate "none")))
@@ -100,7 +109,7 @@
                           ((in-graphics?)        graphics-format-list)
                           ((is-clipboard-image?) image-list)
                           (else                  plain-format-list)))
-         (l (init-choices name-list)))
+         (l (init-choices name-list source-format)))
 
     ;; Initialize selection on first display
     (invisible (set! selected-format (convert-format-string-to-symbol (car l))))
@@ -113,7 +122,7 @@
           (horizontal
             (vertical
                 (bold (text "From: "))
-                (text (get-clipboard-format))
+                (text (convert-symbol-to-format-string source-format))
                 (glue #f #t 0 0)
                 (bold (text "Mode"))
                 (text (get-mode))

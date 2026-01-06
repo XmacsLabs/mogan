@@ -470,6 +470,11 @@ function main()
                 scm_name = "qt-clipboard-format",
                 cpp_name = "qt_clipboard_format",
                 ret_type = "string"
+            },
+            {
+                scm_name = "qt-clipboard-text",
+                cpp_name = "qt_clipboard_text",
+                ret_type = "string"
             }
         }
     }

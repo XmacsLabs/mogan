@@ -254,8 +254,7 @@ qt_gui_rep::~qt_gui_rep () {
  ******************************************************************************/
 
 bool
-qt_gui_rep::get_selection (string key, tree& t, string& s, string format,
-                           string& detected_format) {
+qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   QClipboard*      cb  = QApplication::clipboard ();
   QClipboard::Mode mode= QClipboard::Clipboard;
   if (key == "primary" || (key == "mouse" && cb->supportsSelection ()))
@@ -267,9 +266,8 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format,
   string           input_format;
   string           image_w_string, image_h_string;
   string           clipboard_image_suffix= "png";
-
-  s= "";
-  t= "none";
+  s                                      = "";
+  t                                      = "none";
   // Knowing when we owns (or not) the content is not clear
   bool owns= (format != "temp" && format != "wrapbuf" && key != "primary") &&
              !(key == "mouse" && cb->supportsSelection ());
@@ -304,7 +302,6 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format,
       QSize image_size      = image.size ();
       qt_pretty_image_size (image_size.width (), image.height (),
                             image_w_string, image_h_string);
-      detected_format= "image";
     }
     else if (md->hasUrls ()) {
       QList<QUrl> l= md->urls ();
@@ -346,22 +343,14 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format,
     else if (md->hasHtml ()) {
       buf         = md->html ().toUtf8 ();
       input_format= "html-snippet";
-      string raw_html (buf.constData (), buf.size ());
-      detected_format= as_string (call ("format-determine", raw_html, "html"));
     }
     else if (md->hasFormat ("text/plain;charset=utf8")) {
       buf         = md->data ("text/plain;charset=utf8");
       input_format= "verbatim-snippet";
-      string raw_text (buf.constData (), buf.size ());
-      detected_format=
-          as_string (call ("format-determine", raw_text, "verbatim"));
     }
     else {
       buf         = md->text ().toUtf8 ();
       input_format= "verbatim-snippet";
-      string raw_text (buf.constData (), buf.size ());
-      detected_format=
-          as_string (call ("format-determine", raw_text, "verbatim"));
     }
   }
   else if (format == "verbatim" &&
@@ -1067,11 +1056,10 @@ set_selection (string key, tree t, string s, string sv, string sh,
 }
 
 bool
-get_selection (string key, tree& t, string& s, string format,
-               string& detected_format) {
+get_selection (string key, tree& t, string& s, string format) {
   // Retrieve the selection 't' with string equivalent 's' from clipboard 'cb'
   // Returns true on success; sets t to (extern s) for external selections
-  return the_gui->get_selection (key, t, s, format, detected_format);
+  return the_gui->get_selection (key, t, s, format);
 }
 
 void

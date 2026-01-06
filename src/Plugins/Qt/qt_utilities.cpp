@@ -1415,6 +1415,7 @@ from_key_release_event (const QKeyEvent* event) {
 
 string
 qt_clipboard_format () {
+  QCoreApplication::processEvents (); // 处理挂起的事件
   QClipboard*      clipboard= QApplication::clipboard ();
   const QMimeData* mimeData = clipboard->mimeData ();
 
@@ -1457,4 +1458,17 @@ qt_clipboard_format () {
   // 如果都没有找到，返回空字符串
   if (DEBUG_QT) debug_qt << "qt_clipboard_format: no supported format found\n";
   return "";
+}
+
+string
+qt_clipboard_text () {
+  QCoreApplication::processEvents (); // 处理挂起的事件
+  QClipboard*      clipboard= QApplication::clipboard ();
+  const QMimeData* mimeData = clipboard->mimeData ();
+  if (mimeData->hasImage ()) {
+    return "";
+  }
+  QByteArray buf;
+  buf= mimeData->text ().toUtf8 ();
+  return string (buf.constData (), buf.size ());
 }
