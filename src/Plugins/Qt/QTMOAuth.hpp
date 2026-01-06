@@ -32,17 +32,10 @@ public:
   void login ();
   bool isLoggedIn ();
   void refreshToken ();
-  bool checkTokenValidity ();
   void handleAuthorizationCode (const QString& code);
 
 private slots:
-  void onTokenGranted ();
   void checkTokenStatus ();
-
-signals:
-  void tokenRefreshed ();
-  void tokenRefreshFailed (const QString& error);
-  void tokenExpired ();
 
 private:
   void    loadExistingToken ();
