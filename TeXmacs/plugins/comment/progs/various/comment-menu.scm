@@ -67,6 +67,9 @@
     (-> "Set color"
         (dynamic (comment-color-menu type by val)))))
 
+(tm-menu (focus-hidden-icons t)
+  (:require (any-comment-context? t)))
+
 (tm-menu (focus-extra-icons t)
   (:require (any-comment-context? t))
   (let* ((type (comment-type t))
