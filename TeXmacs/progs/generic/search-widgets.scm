@@ -532,9 +532,7 @@ down? : boolean
   (with-buffer (master-buffer)
     (cancel-alt-selection "alternate"))
   (set-search-window-state #f #f)
-  (buffer-focus
-    (window->buffer
-      (auxiliary-buffer->window (search-buffer)))))
+  (buffer-focus u))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Replace occurrences
