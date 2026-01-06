@@ -1,9 +1,13 @@
-<TMU|<tuple|1.1.0|2025.2.3-rc5>>
+<TMU|<tuple|1.1.0|2025.2.3-rc7>>
 
-<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref|dark>>
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref>>
 
 <\body>
   第一页
+
+  \;
+
+  <tabular|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|-1|1|1|cell-halign|c>|<table|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>|<row|<cell|A>>>>>
 
   <new-page>
 
@@ -24,11 +28,26 @@
   <new-page>
 
   第六页
+
+  <new-page>
+
+  <new-page>
+
+  <new-page>
+
+  <new-page>
+
+  <new-page>
+
+  <new-page>
+
+  \;
 </body>
 
 <\initial>
   <\collection>
     <associate|page-medium|paper>
     <associate|page-screen-margin|false>
+    <associate|preamble|false>
   </collection>
 </initial>
