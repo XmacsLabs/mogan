@@ -1452,14 +1452,6 @@ function main()
                 }
             },
             {
-                scm_name = "clipboard-format",
-                cpp_name = "selection_format",
-                ret_type = "string",
-                arg_list = {
-                    "string"
-                }
-            },
-            {
                 scm_name = "cpp-clipboard-copy",
                 cpp_name = "selection_copy",
                 ret_type = "void",

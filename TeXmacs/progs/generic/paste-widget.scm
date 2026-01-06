@@ -64,10 +64,10 @@
         (else "Please select...")))
 
 (define (get-clipboard-format)
-  (convert-symbol-to-format-string (clipboard-format "primary")))
+  (convert-symbol-to-format-string (qt-clipboard-format)))
 
 (define (init-choices l)
-  (let* ((fm (clipboard-format "primary")))
+  (let* ((fm (qt-clipboard-format)))
     (if (or (== fm "") (== fm "verbatim") (== fm "image"))
         l
         (let* ((name (convert-symbol-to-format-string fm)))

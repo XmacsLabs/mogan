@@ -71,7 +71,6 @@ public:
   selection compute_selection (range_set sel);
   void      selection_get (selection& sel);
   void      selection_get (path& start, path& end);
-  string    selection_format (string key);
   path      selection_get_start ();
   path      selection_get_end ();
   path      selection_var_get_start ();
