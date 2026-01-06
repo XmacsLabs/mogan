@@ -36,6 +36,7 @@
 #include <QApplication>
 #include <QProcess>
 #include <QStringList>
+#include "Qt/qt_utilities.hpp"
 #endif
 
 server* the_server     = NULL;
@@ -325,6 +326,7 @@ tm_server_rep::restart () {
 
 #ifdef QTTEXMACS
   del_obj_qt_renderer ();
+  qt_clear_icon_cache ();
   array<url>  buffers= get_all_buffers ();
   QStringList args   = QApplication::arguments ();
 

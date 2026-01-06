@@ -29,6 +29,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QIcon>
 #include <QImageReader>
 #include <QMimeData>
 
@@ -1097,6 +1098,8 @@ scale_px (string s) {
 
 void
 init_style_sheet (QApplication* app) {
+  // Clear icon cache before loading new style sheet
+  qt_clear_icon_cache ();
   string ss;
   url    css (tm_style_sheet);
   if (!exists (css)) {
@@ -1142,6 +1145,11 @@ void
 set_standard_style_sheet (QWidget* w) {
   if (current_style_sheet != "")
     w->setStyleSheet (to_qstring (current_style_sheet));
+}
+
+void
+qt_clear_icon_cache () {
+  QIcon::setThemeName ("");
 }
 
 string

@@ -58,6 +58,7 @@ coord2 from_qsize (const QSize& s);
 QFont to_qfont (int style, QFont font);
 void  qt_apply_tm_style (QWidget* qwid, int style);
 void  qt_apply_tm_style (QWidget* qwid, int style, color c);
+void  qt_clear_icon_cache ();
 
 QSize qt_decode_length (string width, string height, const QSize& ref,
                         const QFontMetrics& fm);
