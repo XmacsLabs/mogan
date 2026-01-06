@@ -130,7 +130,8 @@ lazy_paragraph_rep::lazy_paragraph_rep (edit_env env2, path ip)
 
   array<string> left_annotation_puncts= array<string> ();
   left_annotation_puncts << string ("『") << string ("「") << string ("（")
-                         << string ("【") << string ("《") << string ("〈");
+                         << string ("【") << string ("《") << string ("〈")
+                         << string ("“") << string ("‘");
   for (string punct : left_annotation_puncts) {
     // 左侧有调整空间的符号和左侧夹注符号，是同一个数据集
     cjk_left_annotation_puncts->insert (utf8_to_cork (punct));
@@ -140,7 +141,8 @@ lazy_paragraph_rep::lazy_paragraph_rep (edit_env env2, path ip)
 
   array<string> right_annotation_puncts= array<string> ();
   right_annotation_puncts << string ("』") << string ("」") << string ("）")
-                          << string ("】") << string ("》") << string ("〉");
+                          << string ("】") << string ("》") << string ("〉")
+                          << string ("”") << string ("’");
   for (string punct : right_annotation_puncts) {
     cjk_right_annotation_puncts->insert (utf8_to_cork (punct));
   }
@@ -162,6 +164,8 @@ lazy_paragraph_rep::lazy_paragraph_rep (edit_env env2, path ip)
          << string ("》") << string ("〉");
   puncts << string ("『") << string ("「") << string ("（") << string ("【")
          << string ("《") << string ("〈");
+  puncts << string ("“") << string ("”");
+  puncts << string ("‘") << string ("’");
 
   for (string punct : puncts) {
     cjk_puncts->insert (utf8_to_cork (punct));
