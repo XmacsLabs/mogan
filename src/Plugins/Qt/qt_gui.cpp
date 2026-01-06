@@ -266,8 +266,8 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   string           input_format;
   string           image_w_string, image_h_string;
   string           clipboard_image_suffix= "png";
-  s       = "";
-  t       = "none";
+  s                                      = "";
+  t                                      = "none";
   // Knowing when we owns (or not) the content is not clear
   bool owns= (format != "temp" && format != "wrapbuf" && key != "primary") &&
              !(key == "mouse" && cb->supportsSelection ());

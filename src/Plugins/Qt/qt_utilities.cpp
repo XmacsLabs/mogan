@@ -1415,7 +1415,7 @@ from_key_release_event (const QKeyEvent* event) {
 
 string
 qt_clipboard_format () {
-  QCoreApplication::processEvents(); // 处理挂起的事件
+  QCoreApplication::processEvents (); // 处理挂起的事件
   QClipboard*      clipboard= QApplication::clipboard ();
   const QMimeData* mimeData = clipboard->mimeData ();
 
@@ -1460,12 +1460,12 @@ qt_clipboard_format () {
   return "";
 }
 
-string 
+string
 qt_clipboard_text () {
-  QCoreApplication::processEvents(); // 处理挂起的事件
-  QClipboard* clipboard= QApplication::clipboard ();
+  QCoreApplication::processEvents (); // 处理挂起的事件
+  QClipboard*      clipboard= QApplication::clipboard ();
   const QMimeData* mimeData = clipboard->mimeData ();
-  QByteArray buf;
+  QByteArray       buf;
   buf= mimeData->text ().toUtf8 ();
   return string (buf.constData (), buf.size ());
 }
