@@ -1,4 +1,4 @@
-<TeXmacs|1.0.7.20>
+<TeXmacs|2.1.4>
 
 <style|source>
 
@@ -20,9 +20,9 @@
     </src-license>
   </src-title>>
 
-  <assign|page-odd-footer|<htab|5mm><page-number><htab|5mm>>
+  <assign|page-odd-footer|<tabular*|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|1|1|1|cell-width|0.3par>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|0.3par>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|2|2|cell-width|0.4par>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-halign|l>|<cwith|1|1|3|3|cell-halign|r>|<table|<row|<cell|>|<cell|<page-number>>|<cell|>>>>>>
 
-  <assign|page-even-footer|<htab|5mm><page-number><htab|5mm>>
+  <assign|page-even-footer|<tabular*|<tformat|<twith|table-width|1par>|<twith|table-hmode|exact>|<cwith|1|1|1|1|cell-width|0.3par>|<cwith|1|1|1|1|cell-hmode|exact>|<cwith|1|1|3|3|cell-width|0.3par>|<cwith|1|1|3|3|cell-hmode|exact>|<cwith|1|1|2|2|cell-width|0.4par>|<cwith|1|1|2|2|cell-hmode|exact>|<cwith|1|1|1|1|cell-halign|l>|<cwith|1|1|3|3|cell-halign|r>|<table|<row|<cell|>|<cell|<page-number>>|<cell|>>>>>>
 
   \;
 
