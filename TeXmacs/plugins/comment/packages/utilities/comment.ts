@@ -72,7 +72,7 @@
 
   <assign|carbon-comment|<macro|unique-id|mirror-id|type|by|time|src|body|<with|old-locus-color|<value|locus-color>|locus-color|preserve|<style-with|src-compact|none|<locus|<id|<arg|mirror-id>>|<observer|<arg|unique-id>|mirror-notify>|<with|locus-color|<value|old-color>|<surround|<extern|mirror-initialize|<quote-arg|body>>||<arg|body>>>>>>>>
 
-  <assign|preview-blend-base-color|#fffd>
+  <assign|preview-blend-base-color|<or-value|preview-blend-base-color|#fffd>>
 
   <assign|preview-comment|<\macro|unique-id|mirror-id|type|by|time|src|body>
     <\with|preview-bg-color|<blend|<value|preview-blend-base-color>|<comment-color|<arg|type>|<arg|by>>>>
