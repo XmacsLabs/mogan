@@ -67,7 +67,6 @@
 (define (get-clipboard-format)
   (let* ((raw-text (qt-clipboard-text))
          (fm1 (format-determine raw-text "verbatim")))
-    (display* fm1 "\n")
     (if (== fm1 "verbatim")
       (let* ((fm2 (qt-clipboard-format)))
         (if (string-starts? fm2 "image")
@@ -123,7 +122,7 @@
           (horizontal
             (vertical
                 (bold (text "From: "))
-                (text source-format)
+                (text (convert-symbol-to-format-string source-format))
                 (glue #f #t 0 0)
                 (bold (text "Mode"))
                 (text (get-mode))
