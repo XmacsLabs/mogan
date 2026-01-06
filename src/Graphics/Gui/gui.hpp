@@ -78,8 +78,7 @@ bool set_selection (string cb, tree t, string s, string sv, string sh,
 // where 's' contains the string serialization of t according to the format
 // and possibly the variants 'sv' and 'sh' for verbatim and html
 // Returns true on success
-bool get_selection (string cb, tree& t, string& s, string format,
-                    string& raw_text);
+bool get_selection (string cb, tree& t, string& s, string format);
 // Retrieve the selection 't' of a given 'format' from the clipboard 'cb',
 // where 's' is the string serialization of t according to the format
 // Returns true on success; sets t to (extern s) for external selections

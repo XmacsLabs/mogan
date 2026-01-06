@@ -493,11 +493,6 @@ edit_select_rep::selection_get (path& p1, path& p2) {
   */
 }
 
-string
-edit_select_rep::qt_clipboard_text () {
-  return raw_text;
-}
-
 path
 edit_select_rep::selection_get_start () {
   return start (cur_sel);
@@ -574,7 +569,7 @@ tree
 edit_select_rep::selection_raw_get (string key) {
   tree   t;
   string s;
-  (void) ::get_selection (key, t, s, "texmacs", raw_text);
+  (void) ::get_selection (key, t, s, "texmacs");
   return t;
 }
 
@@ -672,7 +667,7 @@ tree
 edit_select_rep::selection_get (string key) {
   tree   t;
   string s;
-  (void) ::get_selection (key, t, s, selection_import, raw_text);
+  (void) ::get_selection (key, t, s, selection_import);
   return t;
 }
 
@@ -680,7 +675,7 @@ void
 edit_select_rep::selection_paste (string key) {
   tree   t;
   string s;
-  (void) ::get_selection (key, t, s, selection_import, raw_text);
+  (void) ::get_selection (key, t, s, selection_import);
   if (inside_active_graphics ()) {
     if (is_tuple (t, "texmacs", 3)) call ("graphics-paste", t[1]);
     return;

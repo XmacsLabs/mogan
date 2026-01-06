@@ -1458,3 +1458,12 @@ qt_clipboard_format () {
   if (DEBUG_QT) debug_qt << "qt_clipboard_format: no supported format found\n";
   return "";
 }
+
+string 
+qt_clipboard_text () {
+  QClipboard* clipboard= QApplication::clipboard ();
+  const QMimeData* mimeData = clipboard->mimeData ();
+  QByteArray buf;
+  buf= mimeData->text ().toUtf8 ();
+  return string (buf.constData (), buf.size ());
+}

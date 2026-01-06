@@ -254,8 +254,7 @@ qt_gui_rep::~qt_gui_rep () {
  ******************************************************************************/
 
 bool
-qt_gui_rep::get_selection (string key, tree& t, string& s, string format,
-                           string& raw_text) {
+qt_gui_rep::get_selection (string key, tree& t, string& s, string format) {
   QClipboard*      cb  = QApplication::clipboard ();
   QClipboard::Mode mode= QClipboard::Clipboard;
   if (key == "primary" || (key == "mouse" && cb->supportsSelection ()))
@@ -267,8 +266,6 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format,
   string           input_format;
   string           image_w_string, image_h_string;
   string           clipboard_image_suffix= "png";
-
-  raw_text= "";
   s       = "";
   t       = "none";
   // Knowing when we owns (or not) the content is not clear
@@ -364,10 +361,7 @@ qt_gui_rep::get_selection (string key, tree& t, string& s, string format,
     if (md->hasFormat ("plain/text")) buf= md->data ("plain/text").data ();
     else buf= md->text ().toUtf8 ();
   }
-  if (!(buf.isEmpty ())) {
-    s << string (buf.constData (), buf.size ());
-    raw_text= string (buf.constData (), buf.size ());
-  };
+  if (!(buf.isEmpty ())) s << string (buf.constData (), buf.size ());
   if (input_format == "html-snippet" && seems_buggy_html_paste (s))
     s= correct_buggy_html_paste (s);
   if (input_format != "picture" && seems_buggy_paste (s))
@@ -1066,7 +1060,7 @@ get_selection (string key, tree& t, string& s, string format,
                string& raw_text) {
   // Retrieve the selection 't' with string equivalent 's' from clipboard 'cb'
   // Returns true on success; sets t to (extern s) for external selections
-  return the_gui->get_selection (key, t, s, format, raw_text);
+  return the_gui->get_selection (key, t, s, format);
 }
 
 void

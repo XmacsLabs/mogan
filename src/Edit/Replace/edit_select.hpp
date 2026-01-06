@@ -25,7 +25,6 @@ protected:
   path                       mid_p;
   string                     selection_import;
   string                     selection_export;
-  string                     raw_text;
   path                       focus_p;
   bool                       focus_hold;
   hashmap<string, range_set> alt_sels;
