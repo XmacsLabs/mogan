@@ -168,7 +168,7 @@ public:
   void event_loop ();
 
   /* interclient communication */
-  virtual bool get_selection (string key, tree& t, string& s, string format);
+  virtual bool get_selection (string key, tree& t, string& s, string format, string& raw_text);
   virtual bool set_selection (string key, tree t, string s, string sv,
                               string sh, string format);
   virtual void clear_selection (string key);

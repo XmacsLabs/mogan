@@ -25,6 +25,7 @@ protected:
   path                       mid_p;
   string                     selection_import;
   string                     selection_export;
+  string                     raw_text;
   path                       focus_p;
   bool                       focus_hold;
   hashmap<string, range_set> alt_sels;
@@ -93,6 +94,7 @@ public:
   void      selection_set_export (string fm);
   string    selection_get_import ();
   string    selection_get_export ();
+  string    qt_clipboard_text ();
 
   tree selection_get ();
   void selection_cut (string key= "primary");

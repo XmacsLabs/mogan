@@ -518,6 +518,7 @@ public:
   virtual selection compute_selection (range_set sel)                      = 0;
   virtual void      selection_get (selection& sel)                         = 0;
   virtual void      selection_get (path& start, path& end)                 = 0;
+  virtual string    qt_clipboard_text ()                                   = 0;
   virtual path      selection_get_start ()                                 = 0;
   virtual path      selection_get_end ()                                   = 0;
   virtual path      selection_var_get_start ()                             = 0;

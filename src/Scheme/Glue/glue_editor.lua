@@ -1468,6 +1468,11 @@ function main()
                 }
             },
             {
+                scm_name = "qt-clipboard-text",
+                cpp_name = "qt_clipboard_text",
+                ret_type = "string"
+            },
+            {
                 scm_name = "clipboard-cut-at",
                 cpp_name = "cut",
                 ret_type = "void",
