@@ -1465,6 +1465,9 @@ qt_clipboard_text () {
   QCoreApplication::processEvents (); // 处理挂起的事件
   QClipboard*      clipboard= QApplication::clipboard ();
   const QMimeData* mimeData = clipboard->mimeData ();
+  if (mimeData->hasImage ()) {
+    return "";
+  }
   QByteArray       buf;
   buf= mimeData->text ().toUtf8 ();
   return string (buf.constData (), buf.size ());
