@@ -1600,6 +1600,7 @@
   (let ((state (get-auxiliary-widget-state)))
     (when state
       (set-auxiliary-widget-state #f (cadr state))
+      (show-auxiliary-widget #f)
       (let ((actions (ahash-ref widget-type->action (cadr state))))
         (when (and (pair? actions) (pair? (cdr actions)))
           (with close-action (second actions)
