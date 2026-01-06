@@ -90,6 +90,8 @@
 
   <assign|preview-bg-color|#5a7cc2>
 
+  <assign|preview-blend-base-color|#333>
+
   <\active*>
     <\src-comment>
       Preamble
