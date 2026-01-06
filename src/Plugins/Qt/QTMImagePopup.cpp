@@ -207,9 +207,6 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
   QScreen* screen= QGuiApplication::primaryScreen ();
   double   scale = 1.0;
 #if defined(Q_OS_WIN)
-  // 设置与 menuToolBar 匹配的固定高度
-  // 使用 devicePixelRatio() 获取正确的屏幕缩放比
-  // 获取屏幕DPI缩放比例
   double dpi= screen ? screen->logicalDotsPerInch () : 96.0;
   scale     = dpi / 96.0;
 #else
@@ -218,6 +215,11 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
   scale= std::floor (scale + 0.25);
   x    = x1 / scale + cached_canvas_x / 256 - scroll_x * cached_magf / scale -
      cached_width / 2;
+#if defined(Q_OS_WIN)
+  y= y1 / scale + cached_canvas_y / 256 + 161 - scroll_y * cached_magf / scale -
+     cached_height * 0.9;
+#else
   y= y1 / scale + cached_canvas_y / 256 + 161 - scroll_y * cached_magf / scale -
      cached_height;
+#endif
 }
