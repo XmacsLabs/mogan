@@ -627,7 +627,7 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
           search_selection (p * start (current_tree), p * end (current_tree));
       selr= least_upper_bound (sel->rs);
       if (last_x >= selr->x1 && last_y >= selr->y1 && last_x <= selr->x2 &&
-          last_y <= selr->y2 * 0.95) {
+          last_y <= selr->y2 * 0.8) {
         hovering_image= true;
       }
     }
