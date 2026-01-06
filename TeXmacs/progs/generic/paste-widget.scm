@@ -154,7 +154,7 @@
         >> ("ok" (cmd selected-format)) // ("cancel" (cmd #f)))))
 
 (define (paste-as-html)
-  (with source-format (get-clipboard-format "primary")
+  (with source-format (qt-clipboard-format)
     (if (string=? source-format "html")
         (kbd-paste)
         (clipboard-paste-import "html" "primary"))))
