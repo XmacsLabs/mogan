@@ -65,14 +65,14 @@
         (else "Please select...")))
 
 (define (get-clipboard-format)
-  (let* ((raw-text (qt-clipboard-text))
-         (fm1 (format-determine raw-text "verbatim")))
+  (let* ((fm1 (qt-clipboard-format)))
     (if (== fm1 "verbatim")
-      (let* ((fm2 (qt-clipboard-format)))
-        (if (string-starts? fm2 "image")
-          "image"
-          fm2))
-      fm1)))
+      (let* ((raw-text (qt-clipboard-text))
+             (fm2 (format-determine raw-text "verbatim")))
+        fm2)
+      (if (string-starts? fm1 "image")
+        "image"
+        fm1))))
 
 (define (init-choices l format)
   (let* ((fm format))
