@@ -112,7 +112,6 @@ QTMOAuth::QTMOAuth (QObject* parent) {
   connect (&oauth2, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, this,
            &QDesktopServices::openUrl);
 
-
   // 连接回调URL捕获信号
   connect (m_reply, &QOAuthHttpServerReplyHandler::callbackReceived, this,
            [this] (const QVariantMap& values) {
@@ -222,7 +221,8 @@ QTMOAuth::handleAuthorizationCode (const QString& code) {
       }
     }
     else {
-      debug_boot << "Token exchange failed:" << from_qstring (reply->errorString ()) << "\n";
+      debug_boot << "Token exchange failed:"
+                 << from_qstring (reply->errorString ()) << "\n";
     }
 
     reply->deleteLater ();
@@ -280,7 +280,8 @@ QTMOAuth::refreshToken () {
           debug_boot << "Token refreshed successfully" << "\n";
         }
         else {
-          debug_boot << "No new refresh token received, keeping existing one" << "\n";
+          debug_boot << "No new refresh token received, keeping existing one"
+                     << "\n";
         }
 
         // 计算并保存新的过期时间
@@ -290,12 +291,15 @@ QTMOAuth::refreshToken () {
       }
       else {
         // 返回内容不存在accessToken，清除无效的token信息
-        debug_boot << "The returned content does not contain an accessToken; clearing invalid token information." << "\n";
+        debug_boot << "The returned content does not contain an accessToken; "
+                      "clearing invalid token information."
+                   << "\n";
         clearInvalidTokens ();
       }
     }
     else {
-      debug_boot << "ERROR: Network error during refresh:" << from_qstring (reply->errorString ()) << "\n";
+      debug_boot << "ERROR: Network error during refresh:"
+                 << from_qstring (reply->errorString ()) << "\n";
     }
 
     reply->deleteLater ();
