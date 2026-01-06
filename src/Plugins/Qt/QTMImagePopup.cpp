@@ -210,7 +210,7 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
   scale= std::floor (scale + 0.25);
   x    = x1 / scale + cached_canvas_x / 256 - scroll_x * cached_magf / scale -
      cached_width / 2;
-#if defined (Q_OS_WIN)
+#if defined(Q_OS_WIN)
   y= y1 / scale + cached_canvas_y / 256 + 161 - scroll_y * cached_magf / scale -
      cached_height * 0.9;
 #else
