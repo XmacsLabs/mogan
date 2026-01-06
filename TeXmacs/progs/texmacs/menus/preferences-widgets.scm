@@ -19,19 +19,57 @@
 ;; Wrapper
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+#|
+set-pretty-preference*
+设置需要重启生效的偏好设置，并在更改前询问用户是否立即重启。
+
+语法
+----
+(set-pretty-preference* which pretty-val)
+
+参数
+----
+which : string
+偏好设置标识符：
+- "look and feel" : 外观和感觉
+- "gui theme"     : GUI主题
+
+pretty-val : string
+要设置的偏好值。
+
+返回值
+----
+#<unspecified>
+无显式返回值（返回 #<unspecified>）。
+
+逻辑
+----
+1. 获取当前偏好设置值 old
+2. 如果新值 pretty-val 与旧值 old 不同：
+   a. 显示确认对话框，询问用户是否立即重启以应用更改
+   b. 无论用户如何响应对话框，都会先设置偏好值 (set-pretty-preference which pretty-val)
+   c. 预期的用户交互有三种情况：
+      - 用户点击"是"（重启）：保存所有缓冲区并重启 TeXmacs
+      - 用户点击"否"（不重启）：只设置偏好值，不重启应用程序
+      - 用户关闭对话框：只设置偏好值，不重启应用程序
+
+注意
+----
+此函数用于处理那些需要重启应用程序才能完全生效的偏好设置更改。
+主要用于外观、主题等全局设置，这些设置通常需要重新加载界面资源。
+无论用户是否选择立即重启，偏好设置都会被更新，但完全生效需要重启应用程序。
+|#
 (tm-define (set-pretty-preference* which pretty-val)
   (let* ((old (get-pretty-preference which)))
-    (if (== old pretty-val)
-      (set-pretty-preference which pretty-val)
+    (when (!= old pretty-val)
       (let ((msg (translate "Requires restarting Mogan STEM to take full effect. Restart now?")))
-          (user-confirm msg #f
-            (lambda (answ)
-              (if answ
-                  (begin
-                    (set-pretty-preference which pretty-val)
-                    (save-all-buffers)
-                    (restart-TeXmacs))
-                  (set-preference which old))))))))
+        (user-confirm msg #f
+          (lambda (answ)
+            (set-pretty-preference which pretty-val)
+            (when answ
+              (begin
+                (save-all-buffers)
+                (restart-TeXmacs)))))))))
 
 (define (on-buffer-management-changed pretty-val)
   (let ((can-use-tabbar? (== pretty-val "Multiple documents share window")))
