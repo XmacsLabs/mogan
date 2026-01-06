@@ -315,7 +315,6 @@ QTMOAuth::checkTokenStatus () {
   }
 
   qint64 currentTime= QDateTime::currentSecsSinceEpoch ();
-  debug_std << "Start check token status, currentTime: " << currentTime << "\n";
 
   // 如果token将在3分钟内过期，自动刷新
   if (m_tokenExpiryTime - currentTime <= 180) { // 3分钟
