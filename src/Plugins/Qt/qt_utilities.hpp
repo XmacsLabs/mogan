@@ -177,5 +177,6 @@ string from_key_press_event (const QKeyEvent* event);
 string from_key_release_event (const QKeyEvent* event);
 
 string qt_clipboard_format ();
+string qt_clipboard_text ();
 
 #endif // QT_UTILITIES_HPP

@@ -1056,8 +1056,7 @@ set_selection (string key, tree t, string s, string sv, string sh,
 }
 
 bool
-get_selection (string key, tree& t, string& s, string format,
-               string& raw_text) {
+get_selection (string key, tree& t, string& s, string format) {
   // Retrieve the selection 't' with string equivalent 's' from clipboard 'cb'
   // Returns true on success; sets t to (extern s) for external selections
   return the_gui->get_selection (key, t, s, format);
