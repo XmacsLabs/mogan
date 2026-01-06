@@ -56,6 +56,12 @@
   (get-comment-color (or (tm->string type) "?")
                      (or (tm->string by) "?")))
 
+(tm-define (ext-comment-bg-color)
+  (:secure #t)
+  (if (has-style-package? "dark")
+      "#333"
+      "#fffd"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Colors
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

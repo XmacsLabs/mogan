@@ -31,14 +31,15 @@
   </active*>
 
   <assign|comment-color|<macro|type|by|<extern|ext-comment-color|<arg|type>|<arg|by>>>>
+  <assign|comment-bg-color|<macro|type|by|<extern|ext-comment-bg-color>>>
 
   <assign|abbreviate-name|<macro|by|<extern|ext-abbreviate-name|<arg|by>>>>
 
   <assign|render-inline-comment|<macro|type|by|body|<surround|<with|color|<comment-color|<arg|type>|<arg|by>>|[<condensed|<name|<abbreviate-name|<arg|by>>>>:
   >|<with|color|<compound|comment-color|<arg|type>|<arg|by>>|]>|<arg|body>>>>
 
-  <assign|render-block-comment|<macro|type|by|body|<surround|<with|color|<comment-color|<arg|type>|<arg|by>>|<condensed|<name|<abbreviate-name|<arg|by>>>>\<rangle\>
-  >|<right-flush>|<arg|body>>>>
+  <assign|render-block-comment|<macro|type|by|body|<surround|<with|color|<comment-color|<arg|type>|<arg|by>>|<name|<abbreviate-name|<arg|by>>>\<rangle\>
+  >||<arg|body>>>>
 
   <assign|render-box-comment|<\macro|type|by|body>
     <with|shadow-elevation|0.75|<\half-bend-in-shadow>
@@ -73,7 +74,7 @@
   <assign|carbon-comment|<macro|unique-id|mirror-id|type|by|time|src|body|<with|old-locus-color|<value|locus-color>|locus-color|preserve|<style-with|src-compact|none|<locus|<id|<arg|mirror-id>>|<observer|<arg|unique-id>|mirror-notify>|<with|locus-color|<value|old-color>|<surround|<extern|mirror-initialize|<quote-arg|body>>||<arg|body>>>>>>>>
 
   <assign|preview-comment|<\macro|unique-id|mirror-id|type|by|time|src|body>
-    <\with|preview-bg-color|<blend|#fffd|<comment-color|<arg|type>|<arg|by>>>>
+    <\with|preview-bg-color|<blend|<comment-bg-color>|<comment-color|<arg|type>|<arg|by>>>>
       <\preview-balloon>
         <render-block-comment|<arg|type>|<arg|by>|<arg|body>>
       </preview-balloon>
