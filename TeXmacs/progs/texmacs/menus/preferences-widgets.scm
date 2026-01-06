@@ -26,12 +26,11 @@
       (let ((msg (translate "Requires restarting Mogan STEM to take full effect. Restart now?")))
           (user-confirm msg #f
             (lambda (answ)
-              (if answ
-                  (begin
-                    (set-pretty-preference which pretty-val)
-                    (save-all-buffers)
-                    (restart-TeXmacs))
-                  (set-preference which old))))))))
+              (when answ
+                (begin
+                  (set-pretty-preference which pretty-val)
+                  (save-all-buffers)
+                  (restart-TeXmacs)))))))))
 
 (define (on-buffer-management-changed pretty-val)
   (let ((can-use-tabbar? (== pretty-val "Multiple documents share window")))
