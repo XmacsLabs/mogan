@@ -493,8 +493,8 @@ edit_select_rep::selection_get (path& p1, path& p2) {
   */
 }
 
-string 
-edit_select_rep:: qt_clipboard_text () {
+string
+edit_select_rep::qt_clipboard_text () {
   return raw_text;
 }
 
