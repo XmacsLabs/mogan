@@ -112,10 +112,6 @@ QTMOAuth::QTMOAuth (QObject* parent) {
   connect (&oauth2, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, this,
            &QDesktopServices::openUrl);
 
-  // 连接token授权成功信号
-  QObject::connect (&oauth2, &QAbstractOAuth::granted, this,
-                    &QTMOAuth::onTokenGranted);
-
   // 连接回调URL捕获信号
   connect (m_reply, &QOAuthHttpServerReplyHandler::callbackReceived, this,
            [this] (const QVariantMap& values) {
@@ -136,7 +132,7 @@ QTMOAuth::QTMOAuth (QObject* parent) {
   m_tokenCheckTimer= new QTimer (this);
   connect (m_tokenCheckTimer, &QTimer::timeout, this,
            &QTMOAuth::checkTokenStatus);
-  m_tokenCheckTimer->start (240000); // 每4分钟检查一次
+  m_tokenCheckTimer->start (90000); // 每一分半检查一次
 
   // 加载现有的token信息
   loadExistingToken ();
@@ -219,15 +215,14 @@ QTMOAuth::handleAuthorizationCode (const QString& code) {
               from_qstring (QString::number (m_tokenExpiryTime)));
 
         debug_boot << "Token exchange successful" << "\n";
-        emit tokenRefreshed ();
       }
       else {
-        // debug_boot << "Token exchange failed: Invalid response" << "\n";
+        debug_boot << "Token exchange failed: Invalid response" << "\n";
       }
     }
     else {
-      // debug_boot << "Token exchange failed:" << reply->errorString () <<
-      // "\n";
+      debug_boot << "Token exchange failed:"
+                 << from_qstring (reply->errorString ()) << "\n";
     }
 
     reply->deleteLater ();
@@ -237,8 +232,8 @@ QTMOAuth::handleAuthorizationCode (const QString& code) {
 
 void
 QTMOAuth::refreshToken () {
+  debug_std << "Start refresh token..." << "\n";
   if (m_refreshToken.isEmpty ()) {
-    emit tokenRefreshFailed ("No refresh token available");
     // 清除无效的token信息
     clearInvalidTokens ();
     return;
@@ -293,21 +288,18 @@ QTMOAuth::refreshToken () {
         m_tokenExpiryTime= QDateTime::currentSecsSinceEpoch () + expiresIn;
         call ("account-save-token-expiry",
               from_qstring (QString::number (m_tokenExpiryTime)));
-
-        emit tokenRefreshed ();
       }
       else {
-        emit tokenRefreshFailed ("Invalid response from server");
-        // 清除无效的token信息
+        // 返回内容不存在accessToken，清除无效的token信息
+        debug_boot << "The returned content does not contain an accessToken; "
+                      "clearing invalid token information."
+                   << "\n";
         clearInvalidTokens ();
       }
     }
     else {
-      // debug_boot << "ERROR: Network error during refresh:" <<
-      // reply->errorString () << "\n";
-      emit tokenRefreshFailed (reply->errorString ());
-      // 清除无效的token信息
-      clearInvalidTokens ();
+      debug_boot << "ERROR: Network error during refresh:"
+                 << from_qstring (reply->errorString ()) << "\n";
     }
 
     reply->deleteLater ();
@@ -315,32 +307,19 @@ QTMOAuth::refreshToken () {
   });
 }
 
-bool
-QTMOAuth::checkTokenValidity () {
+void
+QTMOAuth::checkTokenStatus () {
   if (oauth2.token ().isEmpty ()) {
     m_isLoggedIn= false;
-    return false;
+    return;
   }
 
   qint64 currentTime= QDateTime::currentSecsSinceEpoch ();
 
-  // 如果token将在5分钟内过期，自动刷新
-  if (m_tokenExpiryTime - currentTime <= 300) { // 5分钟
+  // 如果token将在3分钟内过期，自动刷新
+  if (m_tokenExpiryTime - currentTime <= 180) { // 3分钟
     refreshToken ();
   }
-
-  m_isLoggedIn= true;
-  return true;
-}
-
-void
-QTMOAuth::onTokenGranted () {
-  // 处理token等逻辑已经在handleAuthorizationCode
-}
-
-void
-QTMOAuth::checkTokenStatus () {
-  checkTokenValidity ();
 }
 
 void
@@ -417,7 +396,6 @@ QTMOAuth::getAuthorizationUrl () {
   eval ("(use-modules (liii account))");
   c_string authorizationUrl (
       as_string (call ("account-oauth2-config", "authorization-url")));
-  qDebug () << "getAuthorizationUrl:" << QString ((char*) authorizationUrl);
   return QUrl ((char*) authorizationUrl);
 }
 
@@ -426,6 +404,5 @@ QTMOAuth::getAccessTokenUrl () {
   eval ("(use-modules (liii account))");
   c_string accessTokenUrl (
       as_string (call ("account-oauth2-config", "access-token-url")));
-  qDebug () << "getAccessTokenUrl:" << QString ((char*) accessTokenUrl);
   return QUrl ((char*) accessTokenUrl);
 }

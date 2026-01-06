@@ -1940,9 +1940,8 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
   QObject::connect (
       reply, &QNetworkReply::finished, [this, reply, manager, token] () {
         // 定义统一的错误处理逻辑
-        auto handleError= [this] () {
-          showNotLoggedInDialog (
-              qt_translate ("Login error, please log in again."));
+        auto handleError= [this] (const QString& errorMessage) {
+          showNotLoggedInDialog (qt_translate (from_qstring (errorMessage)));
 
           QPoint buttonBottomCenter= loginButton->mapToGlobal (
               QPoint (loginButton->width () / 2, loginButton->height ()));
@@ -1983,12 +1982,12 @@ qt_tm_widget_rep::fetchUserInfo (const QString& token) {
           }
           else {
             // API返回错误
-            handleError ();
+            handleError ("Login error, please log in again.");
           }
         }
         else {
           // 网络错误或HTTP错误
-          handleError ();
+          handleError ("Network error, please log in later.");
         }
 
         // 清理资源
