@@ -67,7 +67,6 @@
 (define (get-clipboard-format)
   (let* ((raw-text (qt-clipboard-text))
          (fm1 (format-determine raw-text "verbatim")))
-    (display* "raw-text: " raw-text "\n")
     (if (== fm1 "verbatim")
       (let* ((fm2 (qt-clipboard-format)))
         (if (string-starts? fm2 "image")
