@@ -294,7 +294,7 @@
       ;; the baseline calculation is relative to the size of the background frame
       ;; poppler puts a background frame in the svg image only if not fully transparent (otherwise no)
       ;; (during svg postprocessing  we'll set the opacity of the background to 0)
-      (fillcolor (if (and needbaseline (== suffix "svg")) "#ffffff02" "#ffffff00")) ; either slightly opaque or fully transparent white
+      (fillcolor (if (and needbaseline (== suffix "svg")) "#ffffff02" "#ffffffff")) ; either slightly opaque or fully transparent white
 
       ;; if selection is an equation array, make table width minimal to avoid wide white frame
       (tm-fragment1 
