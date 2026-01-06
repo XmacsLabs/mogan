@@ -93,7 +93,6 @@ public:
   void      selection_set_export (string fm);
   string    selection_get_import ();
   string    selection_get_export ();
-  string    qt_clipboard_text ();
 
   tree selection_get ();
   void selection_cut (string key= "primary");
