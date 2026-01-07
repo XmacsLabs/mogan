@@ -13,13 +13,16 @@
 #include "bitmap_font.hpp"
 #include "qbuttongroup.h"
 #include "qt_renderer.hpp"
+#include "qt_utilities.hpp"
 #include "scheme.hpp"
 #include "server.hpp"
 #include "tm_ostream.hpp"
 
+#include <QHelpEvent>
 #include <QIcon>
 #include <QPainter>
 #include <QPen>
+#include <QToolTip>
 #include <cmath>
 
 const string left_str = "\"left\"";
@@ -65,6 +68,11 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   ocrBtn= new QToolButton ();
   ocrBtn->setObjectName ("image-align-button");
   ocrBtn->setProperty ("icon-name", "ocr");
+  // 设置tooltip - 由于tooltip会挡住图片，建议用户将鼠标移到按钮上方查看完整提示
+  ocrBtn->setToolTip (
+      qt_translate ("For mathematical formulas, enter math mode and press "
+                    "Ctrl+V for OCR insertion. This image-based recognition is "
+                    "better for mixed text and formulas."));
   QButtonGroup* alignGroup= new QButtonGroup (this);
   alignGroup->addButton (leftBtn);
   alignGroup->addButton (middleBtn);
@@ -90,6 +98,9 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   layout->addWidget (middleBtn);
   layout->addWidget (rightBtn);
   layout->addWidget (ocrBtn);
+
+  // 为OCR按钮安装事件过滤器，以便控制tooltip位置
+  ocrBtn->installEventFilter (this);
 }
 
 QTMImagePopup::~QTMImagePopup () {}
@@ -217,4 +228,22 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
   y= y1 / scale + cached_canvas_y / 256 + 161 - scroll_y * cached_magf / scale -
      cached_height;
 #endif
+}
+
+// 事件过滤器，用于控制OCR按钮的tooltip位置
+bool
+QTMImagePopup::eventFilter (QObject* obj, QEvent* event) {
+  if (obj == ocrBtn && event->type () == QEvent::ToolTip) {
+    QHelpEvent* helpEvent= static_cast<QHelpEvent*> (event);
+    // 获取按钮的全局位置
+    QPoint globalPos= ocrBtn->mapToGlobal (QPoint (0, 0));
+    // 计算tooltip应该显示的位置（按钮上方）
+    QPoint tooltipPos= globalPos - QPoint (0, ocrBtn->height () + 10);
+
+    // 显示tooltip在按钮上方
+    QToolTip::showText (tooltipPos, ocrBtn->toolTip (), ocrBtn);
+    return true; // 事件已处理
+  }
+  // 其他事件传递给基类处理
+  return QWidget::eventFilter (obj, event);
 }

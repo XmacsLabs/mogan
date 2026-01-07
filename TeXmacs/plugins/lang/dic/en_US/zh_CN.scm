@@ -2261,6 +2261,7 @@
 ("Connect to the network to enjoy convenient and fast OCR features!" "连接网络享受方便又快捷的OCR功能！")
 ("You have reached the limit of free uses..." "免费次数已达到上限...")
 ("Buy it! Convenient and fast OCR features!" "快来买！方便又快捷的OCR功能！")
+("For mathematical formulas, enter math mode and press Ctrl+V for OCR insertion. This image-based recognition is better for mixed text and formulas." "对于数学公式，建议进入数学模式后直接Ctrl+V进行OCR插入。此图片上方识别功能更适合文本和数学公式混合的情况。")
 ("An error occurred..." "出错了...")
 ("the primitive TeXmacs constructs" "")
 ("the standard TeXmacs styles" "TeXmacs 的标准样式")
