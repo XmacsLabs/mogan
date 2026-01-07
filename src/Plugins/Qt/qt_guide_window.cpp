@@ -251,12 +251,12 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
 }
 
 StartupLoginDialog::~StartupLoginDialog () {
+  // windowAgent有父对象(this)，Qt会自动删除，不需要手动delete
+  // 否则会导致double free
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-  if (windowAgent) {
-    delete windowAgent;
-    windowAgent= nullptr;
-  }
+  // windowAgent = nullptr; // 不需要，因为对象即将被销毁
 #endif
+  // fadeAnimation有父对象(this)，Qt会自动删除
 }
 
 StartupLoginDialog::Result
