@@ -265,16 +265,19 @@ main (int argc, char** argv) {
     qtmapp->set_window_icon ("/misc/images/stem-512.png");
     init_style_sheet (qtmapp);
 
-    // Setup screenshot tool with global hotkey
-    ScreenshotTool* screenshotTool= new ScreenshotTool (nullptr);
-    if (QHotkey::isPlatformSupported ()) {
-      QHotkey* hotkey= new QHotkey (QKeySequence ("Ctrl+Alt+X"), true, qtmapp);
-      QObject::connect (hotkey, &QHotkey::activated, qApp, [screenshotTool] () {
-        screenshotTool->startCapture ();
-      });
-    }
-    else {
-      qWarning ("Global hotkeys are not supported on this platform");
+    if (!os_macos ()) {
+      // Setup screenshot tool with global hotkey
+      ScreenshotTool* screenshotTool= new ScreenshotTool (nullptr);
+      if (QHotkey::isPlatformSupported ()) {
+        QHotkey* hotkey=
+            new QHotkey (QKeySequence ("Ctrl+Alt+X"), true, qtmapp);
+        QObject::connect (
+            hotkey, &QHotkey::activated, qApp,
+            [screenshotTool] () { screenshotTool->startCapture (); });
+      }
+      else {
+        qWarning ("Global hotkeys are not supported on this platform");
+      }
     }
   }
 #endif

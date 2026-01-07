@@ -175,7 +175,7 @@ QTMImagePopup::autoSize () {
 #else
   IconSize= int (40 * totalScale);
 #endif
-  if (cached_magf <= 0.283) {
+  if (cached_magf <= 0.16) {
     cached_width = 169;
     cached_height= 42;
     IconSize     = 25;
@@ -220,14 +220,27 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
 
   QScreen* screen= QGuiApplication::primaryScreen ();
   double   _scale= 1.0;
+#if defined(Q_OS_WIN)
+  double dpi= screen->logicalDotsPerInch ();
+  _scale    = screen->devicePixelRatio ();
+  if (_scale == 1) _scale= dpi / 96.0;
+  double scale= std::floor (_scale + 0.25);
+  if (_scale == 0.875) {
+    scale = 2;
+    _scale= 1;
+  }
+  else if (_scale == 2) {
+    _scale= 1;
+  }
+  x= x1 / scale + cached_canvas_x / 256 - scroll_x * cached_magf / scale -
+     cached_width / 2;
+  y= y1 / scale + cached_canvas_y / 256 + 161 - scroll_y * cached_magf / scale -
+     cached_height / (_scale * (_scale + 0.25));
+#else
   _scale      = screen ? screen->devicePixelRatio () : 1.0; // 正确的屏幕缩放比
   double scale= std::floor (_scale + 0.25);
   x= x1 / scale + cached_canvas_x / 256 - scroll_x * cached_magf / scale -
      cached_width / 2;
-#if defined(Q_OS_WIN)
-  y= y1 / scale + cached_canvas_y / 256 + 161 - scroll_y * cached_magf / scale -
-     cached_height / _scale;
-#else
   y= y1 / scale + cached_canvas_y / 256 + 161 - scroll_y * cached_magf / scale -
      cached_height;
 #endif
