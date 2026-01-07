@@ -32,7 +32,7 @@
   (with mas (buffer-get-master (current-buffer))
     (if (not mas) (keyboard-focus-on "canvas")
         (begin
-          (buffer-focus* mas)
+          (buffer-focus* mas #f)
           (keyboard-focus-on "canvas")))))
 
 (tm-define (gui-on-select type x y cmd)

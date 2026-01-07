@@ -292,11 +292,11 @@ down? : boolean
         (if down?
             ;; 向下移动：检查是否在底部
             (if (tree-at-end? (tm-ref doc :last))
-                (buffer-focus (convert-search-replace-buffer (search-buffer)))
+                (buffer-focus (convert-search-replace-buffer (search-buffer)) #t)
                 (kbd-down))     ; 不在底部，执行 kbd-down
             ;; 向上移动：检查是否在顶部
             (if (tree-at-start? (tm-ref doc :first))
-                (buffer-focus (convert-search-replace-buffer (replace-buffer)))
+                (buffer-focus (convert-search-replace-buffer (replace-buffer)) #t)
                 (kbd-up))))))   ; 不在顶部，执行 kbd-up
 
 (tm-define (auxiliary-buffer->window x)
@@ -532,7 +532,7 @@ down? : boolean
   (with-buffer (master-buffer)
     (cancel-alt-selection "alternate"))
   (set-search-window-state #f #f)
-  (buffer-focus u))
+  (buffer-focus u #t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Replace occurrences
@@ -887,7 +887,7 @@ tree 或 #f
         (begin
           (buffer-set-body aux `(document ,(selection-tree)))))
       (perform-search*)
-      (buffer-focus (search-buffer))
+      (buffer-focus (search-buffer) #t)
       (go-end))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1010,7 +1010,7 @@ tree 或 #f
         (begin
           (buffer-set-body saux `(document ,(selection-tree)))))
       (perform-search*)
-      (buffer-focus (search-buffer))
+      (buffer-focus (search-buffer) #t)
       (go-end))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

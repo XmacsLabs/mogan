@@ -46,7 +46,7 @@ void       hack_refresh_window_editors (url win1, url win2, bool revert);
 bool       switch_to_other_tabpage (url view_u);
 void       switch_to_buffer (url name);
 void       focus_on_editor (editor ed);
-bool       focus_on_buffer (url name);
+bool       focus_on_buffer (url name, bool isfocus);
 bool       var_focus_on_buffer (url name);
 void       make_cursor_visible (url u);
 url        get_most_recent_view ();

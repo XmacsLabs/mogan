@@ -1513,7 +1513,8 @@ function main()
                 cpp_name = "focus_on_buffer",
                 ret_type = "bool",
                 arg_list = {
-                    "url"
+                    "url",
+                    "bool"
                 }
             },
             {

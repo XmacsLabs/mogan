@@ -97,7 +97,7 @@
     (auxiliary-widget (comment-aux-widget u packs doc)
                       (comment-cancel b)
                       (translate comment-text) u)
-    (buffer-focus "tmfs://aux/edit-comment")
+    (buffer-focus "tmfs://aux/edit-comment" #t)
     (go-end)))
 
 (tm-define (open-comment-editor)

@@ -147,7 +147,7 @@
       (when (side-tools?)
         (with-buffer (spell-master-buffer)
           (update-menus))
-        (buffer-focus* (spell-buffer)))
+        (buffer-focus* (spell-buffer) #f))
       (when toolbar-spell-active?
         ;; FIXME: the following is quite a dirty hack to get the focus right
         (when (qt-gui?)
