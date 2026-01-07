@@ -183,6 +183,9 @@
               ((== fm "image")    (kbd-paste))
               ((== fm "mathml")   (clipboard-paste-import "html" "primary"))
               ((== fm "html")     (paste-as-html))
+              ((and (string=? fm "latex")
+                    (string=? (get-clipboard-format) "image"))
+               (ocr-paste))
               (else               (clipboard-paste-import fm "primary"))))))
 
   (dialogue-window clipboard-paste-from-widget callback "Paste Special"))
