@@ -151,8 +151,9 @@
         (let* ((name (format-get-name fm))
                (save-text (string-append "Save " (string-downcase name) " file"))
                (export-text `(concat "Export as " ,name))
-               (text (if flag? export-text name)))
-          ((eval text) (choose-file (buffer-exporter fm) save-text fm)))))))
+               (text (if flag? export-text name))
+               (format (if (== fm "verbatim") "text" fm)))
+          ((eval text) (choose-file (buffer-exporter fm) save-text format)))))))
 
 (tm-define (export-top-menu) (export-menu #t))
 (tm-define (export-export-menu) (export-menu #f))
