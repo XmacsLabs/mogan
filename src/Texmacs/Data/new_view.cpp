@@ -742,6 +742,24 @@ focus_on_editor (editor ed) {
   // TM_FAILED ("invalid situation");
 }
 
+/**
+ * @brief 聚焦于指定的缓冲区。
+ *
+ * 尝试将当前视图切换到与指定缓冲区名称对应的视图。
+ * 查找视图的优先级逻辑如下：
+ * 1. 检查当前视图是否已经是目标缓冲区。
+ * 2. 查找该缓冲区最近使用的视图（优先查找已激活/显示在窗口中的视图）。
+ * 3. 如果未找到最近视图（即处于非激活状态），则查找任意存在的视图。
+ * 4. 如果仍未找到（例如该缓冲区没有关联任何视图），则尝试获取该缓冲区的第一个可用视图列表中的视图。
+ *
+ * 如果找到目标视图，将其设置为当前视图 (set_current_view)。
+ *
+ * @param name    目标缓冲区的 URL 名称。
+ * @param isfocus 是否将键盘焦点（Keyboard Focus）发送到该视图的编辑器。
+ * 如果为 true，则调用 send_keyboard_focus。
+ * @return bool   如果成功找到并切换到该缓冲区的视图，则返回 true；
+ * 如果该缓冲区没有任何关联视图，则返回 false。
+ */
 bool
 focus_on_buffer (url name, bool isfocus) {
   // Focus on the most recent view on a buffer, preferably active in a window
