@@ -206,15 +206,15 @@ QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
 
   QScreen* screen= QGuiApplication::primaryScreen ();
   double   _scale= 1.0;
-#if defined (Q_OS_WIN)
-  double dpi = screen->logicalDotsPerInch ();
-  _scale = dpi / 96.0;
+#if defined(Q_OS_WIN)
+  double dpi  = screen->logicalDotsPerInch ();
+  _scale      = dpi / 96.0;
   double scale= std::floor (_scale + 0.25);
   if (_scale == 0.875) {
     scale = 2;
-    _scale = 1;
+    _scale= 1;
   }
-  
+
   cout << "_scale: " << _scale << "\n";
   cout << "scale: " << scale << "\n";
   x= x1 / scale + cached_canvas_x / 256 - scroll_x * cached_magf / scale -
