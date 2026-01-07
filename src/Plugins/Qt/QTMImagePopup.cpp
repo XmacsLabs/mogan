@@ -70,9 +70,11 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   ocrBtn->setProperty ("icon-name", "ocr");
   // 设置tooltip - 由于tooltip会挡住图片，建议用户将鼠标移到按钮右侧查看完整提示
 #if defined(Q_OS_MAC)
-  ocrBtn->setToolTip (qt_translate ("Enter math mode and press Command+v for math OCR"));
+  ocrBtn->setToolTip (
+      qt_translate ("Enter math mode and press Command+v for math OCR"));
 #else
-  ocrBtn->setToolTip (qt_translate ("Enter math mode and press Ctrl+v for math OCR"));
+  ocrBtn->setToolTip (
+      qt_translate ("Enter math mode and press Ctrl+v for math OCR"));
 #endif
   QButtonGroup* alignGroup= new QButtonGroup (this);
   alignGroup->addButton (leftBtn);
@@ -242,10 +244,12 @@ QTMImagePopup::eventFilter (QObject* obj, QEvent* event) {
     // 垂直方向需要根据平台调整，因为不同平台的QToolTip行为可能不同
 #if defined(Q_OS_MAC)
     // macOS上使用正偏移
-    QPoint tooltipPos= globalPos + QPoint (ocrBtn->width () + 10, ocrBtn->height () / 4);
+    QPoint tooltipPos=
+        globalPos + QPoint (ocrBtn->width () + 10, -ocrBtn->height () * 3 / 4);
 #else
     // 其他平台使用负偏移
-    QPoint tooltipPos= globalPos + QPoint (ocrBtn->width () + 10, -ocrBtn->height () / 4);
+    QPoint tooltipPos=
+        globalPos + QPoint (ocrBtn->width () + 10, -ocrBtn->height () / 4);
 #endif
 
     // 显示tooltip在按钮右侧
