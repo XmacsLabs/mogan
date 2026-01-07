@@ -13,5 +13,6 @@
 #define INIT_GLUE_L5_HPP
 
 void initialize_glue_l5 ();
+void open_pricing_url ();
 
 #endif

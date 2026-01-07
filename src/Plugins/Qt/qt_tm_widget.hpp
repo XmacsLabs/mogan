@@ -121,7 +121,6 @@ private:
                             const QString& productType);
   void showNotLoggedInDialog (const QString& errorMessage);
   void logout ();
-  void openRenewalPage ();
 
   qt_widget main_widget;
   qt_widget main_menu_widget;
@@ -154,6 +153,7 @@ public:
   void        install_main_menu ();
   void        restoreSettings ();
   static void tweak_iconbar_size (QSize& sz);
+  void        openRenewalPage ();
 
   friend class QTMInteractiveInputHelper;
 
