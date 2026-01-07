@@ -68,15 +68,11 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   ocrBtn= new QToolButton ();
   ocrBtn->setObjectName ("image-align-button");
   ocrBtn->setProperty ("icon-name", "ocr");
-  // 设置tooltip - 由于tooltip会挡住图片，建议用户将鼠标移到按钮上方查看完整提示
+  // 设置tooltip - 由于tooltip会挡住图片，建议用户将鼠标移到按钮右侧查看完整提示
 #if defined(Q_OS_MAC)
-  ocrBtn->setToolTip (
-      qt_translate ("For mathematical formulas, enter math mode and press "
-                    "Command+V for OCR insertion."));
+  ocrBtn->setToolTip (qt_translate ("Enter math mode and press Command+v for math OCR"));
 #else
-  ocrBtn->setToolTip (
-      qt_translate ("For mathematical formulas, enter math mode and press "
-                    "Ctrl+V for OCR insertion."));
+  ocrBtn->setToolTip (qt_translate ("Enter math mode and press Ctrl+v for math OCR"));
 #endif
   QButtonGroup* alignGroup= new QButtonGroup (this);
   alignGroup->addButton (leftBtn);
@@ -242,10 +238,10 @@ QTMImagePopup::eventFilter (QObject* obj, QEvent* event) {
     QHelpEvent* helpEvent= static_cast<QHelpEvent*> (event);
     // 获取按钮的全局位置
     QPoint globalPos= ocrBtn->mapToGlobal (QPoint (0, 0));
-    // 计算tooltip应该显示的位置（按钮上方）
-    QPoint tooltipPos= globalPos - QPoint (0, ocrBtn->height () + 10);
+    // 计算tooltip应该显示的位置（按钮右侧）
+    QPoint tooltipPos= globalPos + QPoint (ocrBtn->width () + 10, 0);
 
-    // 显示tooltip在按钮上方
+    // 显示tooltip在按钮右侧
     QToolTip::showText (tooltipPos, ocrBtn->toolTip (), ocrBtn);
     return true; // 事件已处理
   }
