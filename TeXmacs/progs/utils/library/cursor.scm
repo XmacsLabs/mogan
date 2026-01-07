@@ -260,9 +260,9 @@
                 (,new ,name))
            (and (or (url? ,new) (string? ,new))
                 (buffer-exists? ,new)
-                (buffer-focus ,new)
+                (buffer-focus ,new #f)
                 (with ,res (begin ,@body)
-                  (buffer-focus ,old)
+                  (buffer-focus ,old #f)
                   ,res))))))
 
 (define-public-macro (with-window name . body)

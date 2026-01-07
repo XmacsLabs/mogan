@@ -743,7 +743,7 @@ focus_on_editor (editor ed) {
 }
 
 bool
-focus_on_buffer (url name) {
+focus_on_buffer (url name, bool isfocus) {
   // Focus on the most recent view on a buffer, preferably active in a window
   // Return false if no view exists for the buffer
   if (the_view != NULL && the_view->buf->buf->name == name) return true;
@@ -755,7 +755,7 @@ focus_on_buffer (url name) {
   }
   if (is_none (r)) return false;
   tm_view new_vw= concrete_view (r);
-  send_keyboard_focus (new_vw->ed);
+  if (isfocus) send_keyboard_focus (new_vw->ed);
   set_current_view (r);
   return true;
 }

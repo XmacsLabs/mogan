@@ -161,7 +161,7 @@
   (padded
     (let* ((quit* (lambda (x)
                     (quit x)
-                    (buffer-focus (window->buffer win))
+                    (buffer-focus (window->buffer win) #f)
                     (tool-close :any 'db-search-tool noop win)))
            (dummy (set! db-quit-search quit*))
 	   (query ""))

@@ -320,7 +320,7 @@ edit_interface_rep::key_press (string gkey) {
     concrete_window (parent_window)->set_auxiliary_widget_flag (false);
     exec_delayed (scheme_cmd (
         "(when (defined? 'close-auxiliary-widget) (close-auxiliary-widget))"));
-    focus_on_buffer (window_to_buffer (parent_window));
+    focus_on_buffer (window_to_buffer (parent_window), true);
   }
 
   string new_sh= N (sh_s) == 0 ? key : sh_s * " " * key;

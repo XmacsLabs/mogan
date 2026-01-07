@@ -1445,12 +1445,12 @@
 (tm-define (tool-focus pos tool u)
   (:check-mark "v" tool-active?)
   (if (tool-active? pos tool)
-      (buffer-focus* u)
+      (buffer-focus* u #f)
       (begin
         (tool-select pos tool)
         (delayed
           (:pause 250)
-          (buffer-focus* u)))))
+          (buffer-focus* u #f)))))
 
 (tm-define (tool-toggle pos tool . opt-win)
   (:check-mark "v" tool-active?)
@@ -1475,7 +1475,7 @@
              (f (list-filter l (lambda (t) (!= (car t) tool)))))
         (when (!= f l)
           (when quit (quit))
-          (buffer-focus (window->buffer win))
+          (buffer-focus (window->buffer win) #f)
           (set-window-tools win pos f)))))
 
 (tm-define ((tool-quit tool quit . opt-win) . args)
