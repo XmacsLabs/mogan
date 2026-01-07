@@ -72,17 +72,11 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
 #if defined(Q_OS_MAC)
   ocrBtn->setToolTip (
       qt_translate ("For mathematical formulas, enter math mode and press "
-                    "Command+V for OCR insertion.") +
-      "\n" +
-      qt_translate ("This image-based recognition is better for mixed text and "
-                    "formulas."));
+                    "Command+V for OCR insertion."));
 #else
   ocrBtn->setToolTip (
       qt_translate ("For mathematical formulas, enter math mode and press "
-                    "Ctrl+V for OCR insertion.") +
-      "\n" +
-      qt_translate ("This image-based recognition is better for mixed text and "
-                    "formulas."));
+                    "Ctrl+V for OCR insertion."));
 #endif
   QButtonGroup* alignGroup= new QButtonGroup (this);
   alignGroup->addButton (leftBtn);
