@@ -20,6 +20,7 @@
 #include "object_l5.hpp"
 
 #include "Freetype/tt_tools.hpp"
+#include "Qt/qt_tm_widget.hpp"
 #include "boxes.hpp"
 #include "editor.hpp"
 #include "iterator.hpp"
@@ -296,6 +297,21 @@ freetype_version () {
 #include "glue_font.cpp"
 #include "glue_server.cpp"
 #include "glue_widget.cpp"
+
+void
+open_pricing_url () {
+  // 获取当前窗口
+  if (!has_current_window ()) return;
+  tm_window win= concrete_window ();
+  if (win == NULL) return;
+
+  // 尝试将widget转换为qt_tm_widget_rep
+  widget            w        = win->win;
+  qt_tm_widget_rep* tm_widget= dynamic_cast<qt_tm_widget_rep*> (w.rep);
+  if (tm_widget != NULL) {
+    tm_widget->openRenewalPage ();
+  }
+}
 
 void
 initialize_glue_l5 () {
