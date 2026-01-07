@@ -545,6 +545,7 @@ StartupLoginDialog::fadeOutAndClose () {
   connect (fadeAnimation, &QPropertyAnimation::finished, this, [guard] () {
     if (guard) {
       guard->accept (); // 以接受状态关闭对话框
+      guard->deleteLater (); // 动画完成后自行删除，避免外部删除导致的竞态条件
     }
   });
 
