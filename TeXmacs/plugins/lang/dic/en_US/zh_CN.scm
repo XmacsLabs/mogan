@@ -34,7 +34,7 @@
 ("Image file" "图片文件")
 ("JPEG File InterChange Format" "JPEG文件交换格式")
 ("Keep track of source code" "保持源代码追踪")
-("Log in now!" "现在登录！")
+("Log in Now!" "现在登录！")
 ("Merge lines into paragraphs unless separated by blank lines" "无空行分隔时自动合并多行为段落")
 ("No multiple spaces" "不允许多个空格")
 ("Only convert changes when re-importing" "仅在重新导入时转换更改")
