@@ -955,7 +955,7 @@ show_startup_login_dialog () {
   // Create non-modal dialog
   QWK::StartupLoginDialog* dialog= new QWK::StartupLoginDialog ();
   dialog->setModal (false);
-  // dialog->setAttribute (Qt::WA_DeleteOnClose); // 可能导致double free，与deleteLater()冲突
+  dialog->setAttribute (Qt::WA_DeleteOnClose); // 对话框关闭时自动删除
 
   // Local event loop to wait for user decision
   QEventLoop eventLoop;
@@ -982,8 +982,8 @@ show_startup_login_dialog () {
   // Enter local event loop to wait for user decision
   eventLoop.exec ();
 
-  // Cleanup
-  dialog->deleteLater ();
+  // Cleanup - 对话框将通过WA_DeleteOnClose在关闭时自动删除
+  // dialog->deleteLater (); // 不再需要，与WA_DeleteOnClose冲突会导致double free
 
   return userDecisionMade;
 }

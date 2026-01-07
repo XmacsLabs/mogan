@@ -519,6 +519,13 @@ StartupLoginDialog::enableButtons (bool enabled) {
 
 void
 StartupLoginDialog::fadeOutAndClose () {
+  // 删除旧的动画对象（如果存在）
+  if (fadeAnimation) {
+    fadeAnimation->stop();
+    fadeAnimation->deleteLater();
+    fadeAnimation = nullptr;
+  }
+
   // 创建淡出动画
   fadeAnimation= new QPropertyAnimation (this, "windowOpacity");
   fadeAnimation->setDuration (300);
@@ -527,7 +534,7 @@ StartupLoginDialog::fadeOutAndClose () {
   fadeAnimation->setEasingCurve (QEasingCurve::OutCubic);
 
   connect (fadeAnimation, &QPropertyAnimation::finished, this, [this] () {
-    accept (); // 以接受状态关闭对话框
+    accept (); // 以接受状态关闭对话框，触发WA_DeleteOnClose自动删除
   });
 
   fadeAnimation->start ();
