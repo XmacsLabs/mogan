@@ -957,21 +957,16 @@ show_startup_login_dialog () {
   dialog->setModal (false);
   dialog->setAttribute (Qt::WA_DeleteOnClose);
 
-  // Local event loop to wait for user decision
-  // QEventLoop eventLoop;
   bool userDecisionMade= false;
 
   // Connect dialog signals
   QObject::connect (dialog, &QWK::StartupLoginDialog::loginRequested, [&] () {
     g_startup_login_requested= true;
     userDecisionMade         = true;
-    // eventLoop.quit ();
   });
 
-  QObject::connect (dialog, &QWK::StartupLoginDialog::skipRequested, [&] () {
-    userDecisionMade= true;
-    // eventLoop.quit ();
-  });
+  QObject::connect (dialog, &QWK::StartupLoginDialog::skipRequested,
+                    [&] () { userDecisionMade= true; });
 
   // Show the dialog (non-blocking)
   dialog->show ();
@@ -981,9 +976,6 @@ show_startup_login_dialog () {
 
   // Enter local event loop to wait for user decision
   dialog->exec ();
-
-  // Cleanup
-  // dialog->deleteLater ();
 
   return userDecisionMade;
 }
