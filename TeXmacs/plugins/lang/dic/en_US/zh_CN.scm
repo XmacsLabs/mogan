@@ -8,6 +8,7 @@
 ("As" "作为")
 ("BibTeX command" "BibTeX命令")
 ("Bitmap export resolution (dpi):" "Bitmap 导出分辨率（dpi）：")
+("Buy Now!" "现在购买！")
 ("CJK" "中日韩")
 ("CSS stylesheet:" "CSS 样式表：")
 ("Clipboard image format:" "剪贴板图片格式：")
