@@ -239,8 +239,14 @@ QTMImagePopup::eventFilter (QObject* obj, QEvent* event) {
     // 获取按钮的全局位置
     QPoint globalPos= ocrBtn->mapToGlobal (QPoint (0, 0));
     // 计算tooltip应该显示的位置（按钮右侧，垂直居中）
-    // 垂直方向需要向上调整，因为QToolTip会将tooltip显示在指定位置下方
+    // 垂直方向需要根据平台调整，因为不同平台的QToolTip行为可能不同
+#if defined(Q_OS_MAC)
+    // macOS上使用正偏移
+    QPoint tooltipPos= globalPos + QPoint (ocrBtn->width () + 10, ocrBtn->height () / 4);
+#else
+    // 其他平台使用负偏移
     QPoint tooltipPos= globalPos + QPoint (ocrBtn->width () + 10, -ocrBtn->height () / 4);
+#endif
 
     // 显示tooltip在按钮右侧
     QToolTip::showText (tooltipPos, ocrBtn->toolTip (), ocrBtn);
