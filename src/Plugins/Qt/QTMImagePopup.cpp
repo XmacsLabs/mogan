@@ -69,10 +69,21 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   ocrBtn->setObjectName ("image-align-button");
   ocrBtn->setProperty ("icon-name", "ocr");
   // 设置tooltip - 由于tooltip会挡住图片，建议用户将鼠标移到按钮上方查看完整提示
+#if defined(Q_OS_MAC)
   ocrBtn->setToolTip (
       qt_translate ("For mathematical formulas, enter math mode and press "
-                    "Ctrl+V for OCR insertion. This image-based recognition is "
-                    "better for mixed text and formulas."));
+                    "Command+V for OCR insertion.") +
+      "\n" +
+      qt_translate ("This image-based recognition is better for mixed text and "
+                    "formulas."));
+#else
+  ocrBtn->setToolTip (
+      qt_translate ("For mathematical formulas, enter math mode and press "
+                    "Ctrl+V for OCR insertion.") +
+      "\n" +
+      qt_translate ("This image-based recognition is better for mixed text and "
+                    "formulas."));
+#endif
   QButtonGroup* alignGroup= new QButtonGroup (this);
   alignGroup->addButton (leftBtn);
   alignGroup->addButton (middleBtn);
