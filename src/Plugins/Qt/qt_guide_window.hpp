@@ -12,6 +12,7 @@
 #define STARTUP_LOGIN_DIALOG_H
 
 #include <QPropertyAnimation>
+#include <QPointer>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -49,6 +50,7 @@ signals:
   void initializationStarted ();
   void initializationFinished (bool success);
   void windowReadyForTransition ();
+  void readyForDeletion ();
 
 protected:
   void showEvent (QShowEvent* event) override;

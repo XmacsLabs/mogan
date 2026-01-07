@@ -251,12 +251,18 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
 }
 
 StartupLoginDialog::~StartupLoginDialog () {
+  // 清理动画资源
+  if (fadeAnimation) {
+    fadeAnimation->disconnect ();
+    fadeAnimation->stop ();
+    // fadeAnimation有父对象(this)，Qt会自动删除，不需要手动delete
+  }
+
   // windowAgent有父对象(this)，Qt会自动删除，不需要手动delete
   // 否则会导致double free
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
   // windowAgent = nullptr; // 不需要，因为对象即将被销毁
 #endif
-  // fadeAnimation有父对象(this)，Qt会自动删除
 }
 
 StartupLoginDialog::Result
@@ -519,11 +525,12 @@ StartupLoginDialog::enableButtons (bool enabled) {
 
 void
 StartupLoginDialog::fadeOutAndClose () {
-  // 删除旧的动画对象（如果存在）
+  // 清理旧动画
   if (fadeAnimation) {
-    fadeAnimation->stop();
-    fadeAnimation->deleteLater();
-    fadeAnimation = nullptr;
+    fadeAnimation->disconnect ();
+    fadeAnimation->stop ();
+    fadeAnimation->deleteLater ();
+    fadeAnimation= nullptr;
   }
 
   // 创建淡出动画
@@ -533,8 +540,12 @@ StartupLoginDialog::fadeOutAndClose () {
   fadeAnimation->setEndValue (0.0);
   fadeAnimation->setEasingCurve (QEasingCurve::OutCubic);
 
-  connect (fadeAnimation, &QPropertyAnimation::finished, this, [this] () {
-    accept (); // 以接受状态关闭对话框，触发WA_DeleteOnClose自动删除
+  // 使用QPointer保护this指针
+  QPointer<StartupLoginDialog> guard (this);
+  connect (fadeAnimation, &QPropertyAnimation::finished, this, [guard] () {
+    if (guard) {
+      guard->accept (); // 以接受状态关闭对话框
+    }
   });
 
   fadeAnimation->start ();
@@ -543,6 +554,14 @@ StartupLoginDialog::fadeOutAndClose () {
 void
 StartupLoginDialog::closeEvent (QCloseEvent* event) {
   // 处理窗口关闭按钮（X）
+
+  // 如果淡出动画正在运行，触发动画并延迟关闭
+  if (fadeAnimation && fadeAnimation->state () == QAbstractAnimation::Running) {
+    event->ignore ();
+    fadeOutAndClose ();
+    return;
+  }
+
   if (initializationInProgress) {
     // 如果初始化正在进行中，阻止关闭
     event->ignore ();
