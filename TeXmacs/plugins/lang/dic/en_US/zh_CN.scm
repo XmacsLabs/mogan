@@ -2256,7 +2256,7 @@
 ("the leaves of TeXmacs trees" "")
 ("the mycas example" "")
 ("The OCR feature requires logging in to use..."  "OCR功能需要登录才能使用...")
-("Sign up now and get 14 days of membership for free!" "快去登录！现在注册还送14天会员资格！")
+("Sign up now and get 14 days of membership for free!" "现在注册还送14天会员资格！")
 ("The OCR feature requires an internet connection to use..." "OCR功能需要连接网络才能使用...")
 ("Connect to the network to enjoy convenient and fast OCR features!" "连接网络享受方便又快捷的OCR功能！")
 ("You have reached the limit of free uses..." "免费次数已达到上限...")
