@@ -45,21 +45,26 @@ edit_interface_rep::should_show_image_popup (tree t) {
   if (is_nil (t)) return false;
 
   int t_N= N (t);
-  if (t_N < 2) return false;
+  if (t_N <= 2) return false;
 
   if (is_func (t, WITH)) {
     for (int i= 0; i < t_N; ++i) {
-      if (t[i] == "par-mode") {
+      if (t[i] == PAR_MODE) {
         return true;
       }
     }
   }
-  path p= path_up (obtain_ip (t));
+
+  path ip= obtain_ip (t);
+  if (is_nil (ip) || ip->item == DETACHED) return false;
+
+  path p= path_up (reverse (ip));
+  tree sub;
   // 持续向上遍历至最顶层的编辑树，若过程中出现了非 document
   // 节点，说明图片被其他节点包裹，返回 false
-  while (p != et) {
-    t= subtree (et, p);
-    if (!is_func (t, DOCUMENT)) {
+  while (rp <= p) {
+    sub= subtree (et, p);
+    if (!is_func (sub, DOCUMENT)) {
       return false;
     }
     p= path_up (p);
