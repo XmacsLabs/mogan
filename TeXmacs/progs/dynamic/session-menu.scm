@@ -207,10 +207,11 @@
     ---
     (link supported-sessions-menu)
     ---
-    ("Remote" (open-remote-plugin-selector
-               "Start remote session"
-               (lambda (x) (apply make-session x))))
-    ("Other" (interactive make-session))
+    (assuming #f
+      ("Remote" (open-remote-plugin-selector
+                "Start remote session"
+                (lambda (x) (apply make-session x))))
+      ("Other" (interactive make-session)))
     ("Manual path" (dialogue-window manual-path-widget 
                      (lambda (args)  
                        (when (!= args "cancel") ; 仅路径存在并点击确定时开始设置路径
