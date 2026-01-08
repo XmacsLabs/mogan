@@ -3,36 +3,62 @@
 <style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref>>
 
 <\body>
+  \;
+
   <\session|scheme|default>
-    <\unfolded-io|Scheme] >
+    <\folded-io|Scheme] >
       (get-kbd-bindings "space")
-    <|unfolded-io>
-      \;
-    </unfolded-io>
+    <|folded-io>
+      ((((inside? 'hybrid)) (hybrid-kbd-space) "") (() (kbd-space) ""))
+    </folded-io>
 
-    <\unfolded-io|Scheme] >
+    <\folded-io|Scheme] >
       (get-kbd-bindings "backspace")
-    <|unfolded-io>
-      \;
-    </unfolded-io>
+    <|folded-io>
+      ((((and (in-graphics?) (== (get-env "preamble") "false"))) (graphics-kbd-remove #f) "") (() (kbd-backspace) ""))
+    </folded-io>
 
-    <\unfolded-io|Scheme] >
+    <\folded-io|Scheme] >
       (get-kbd-bindings "return")
-    <|unfolded-io>
-      \;
-    </unfolded-io>
+    <|folded-io>
+      ((((inside-replace-buffer?)) (replace-one (window-\<gtr\>buffer (auxiliary-buffer-\<gtr\>window (replace-buffer))) (replace-buffer)) "") (((inside-search-or-replace-buffer?)) (search-rotate-match #t) "") (((and (in-graphics?) (== (get-env "preamble") "false"))) (graphics-apply-props-at-mouse) "") (() (kbd-return) ""))
+    </folded-io>
 
-    <\unfolded-io|Scheme] >
+    <\folded-io|Scheme] >
       (get-kbd-bindings "C-1")
-    <|unfolded-io>
-      \;
-    </unfolded-io>
+    <|folded-io>
+      ((((inside-search-or-replace-buffer?)) (insert '(wildcard "x")) "") (((and (inside-version?) (with-versioning-tool?))) (version-retain 0) "") (() (switch-to-view-index 0) ""))
+    </folded-io>
 
-    <\unfolded-io|Scheme] >
+    <\folded-io|Scheme] >
       (get-kbd-bindings "C-2")
-    <|unfolded-io>
+    <|folded-io>
       \;
-    </unfolded-io>
+    </folded-io>
+
+    <\folded-io|Scheme] >
+      (get-bindings-by-condition '((inside? 'hybrid)))
+    <|folded-io>
+      (("_ tab" "_") ("^ tab" "^") ("space" (hybrid-kbd-space)) ("}" (hybrid-kbd-curly-right)) ("{" (hybrid-kbd-curly-left)) ("_" (hybrid-kbd-sub)) ("^" (hybrid-kbd-sup)) ("\\\\" (hybrid-kbd-backslash)))
+    </folded-io>
+
+    <\folded-io|Scheme] >
+      (get-bindings-by-condition '((inside-replace-buffer?)))
+    <|folded-io>
+      (("C-return" (replace-all (window-\<gtr\>buffer (auxiliary-buffer-\<gtr\>window (replace-buffer))) (replace-buffer))) ("return" (replace-one (window-\<gtr\>buffer (auxiliary-buffer-\<gtr\>window (replace-buffer))) (replace-buffer))))
+    </folded-io>
+
+    <\folded-io|Scheme] >
+      (get-bindings-by-command '(hybrid-kbd-space))
+    <|folded-io>
+      (("space" ((inside? 'hybrid))))
+    </folded-io>
+
+    <\folded-io|Scheme] >
+      (get-bindings-by-command '(kbd-backspace))
+    <|folded-io>
+      (("backspace" ()) ("S-backspace" ()))
+    </folded-io>
 
     <\input|Scheme] >
       \;

@@ -435,3 +435,113 @@ list
                    (extract-code-str cmd)
                    help)))
              raw-map))))
+
+#|
+get-bindings-by-command
+根据指定的命令代码，反向查找绑定了该命令的所有快捷键及其生效条件。
+
+语法
+----
+(get-bindings-by-command target-cmd)
+
+参数
+----
+target-cmd : list | symbol
+    目标命令的源码结构。
+    例如：
+    - 查找特定调用：`'(search-next-match #t)`
+    - 查找简单命令：`'(make 'select-region)`
+
+返回值
+----
+list
+- 返回一个列表，其中每个元素结构为 `(按键字符串 (条件代码列表...))`。
+- 示例：`(("F3" ((inside-search-or-replace-buffer?))) ("return" (...)))`
+
+逻辑
+----
+1. 遍历：扫描 `kbd-map-table` 中的每一个按键定义。
+2. 提取：对每个绑定的命令闭包调用 `extract-code-str` 获取其源码对象。
+3. 比对：使用 `equal?` 将提取出的命令源码与 `target-cmd` 进行深度比对。
+4. 收集：如果匹配，将 `(Key Conditions)` 加入结果列表。
+|#
+(tm-define (get-bindings-by-command target-cmd)
+  (let ((all-entries (ahash-table->list kbd-map-table))
+        (matches '()))
+    (for-each
+      (lambda (map-entry)
+        (let ((key (car map-entry))        ; 按键，如 "F3"
+              (ctx-list (cdr map-entry)))  ; 上下文列表
+          (for-each
+            (lambda (ctx-item)
+              (let* ((cmd-proc (cadr ctx-item))
+                     ;; 核心步骤：提取命令的源码进行比对
+                     (cmd-code (extract-code-str cmd-proc)))
+                (when (equal? cmd-code target-cmd)
+                  (let ((cond-codes (map extract-code-str (car ctx-item))))
+                    ;; 收集结果：(按键 (条件...))
+                    (set! matches (cons (list key cond-codes) matches))))))
+            ctx-list)))
+      all-entries)
+    (reverse matches)))
+
+
+
+#|
+get-bindings-by-condition
+根据指定的条件列表，反向查找所有匹配的快捷键及其对应的命令代码。
+此函数用于回答“在某个特定环境（如表格中、数学模式中）下，定义了哪些快捷键？”
+
+语法
+----
+(get-bindings-by-condition target-conds)
+
+参数
+----
+target-conds : list
+    目标条件源码列表。这是一个由 Scheme 代码对象（S-expression）组成的列表。
+    例如：
+    - 查找无条件绑定：`()`
+    - 查找数学模式绑定：`'((in-math?))` 或 `(list '(in-math?))`
+    - 查找特定条件：`'((inside-replace-buffer?))`
+
+返回值
+----
+list
+- 返回一个列表，其中每个元素也是一个列表，结构为 `(按键字符串 命令代码对象)`。
+- 示例：`(("return" (replace-one ...)) ("C-2" (insert ...)))`
+
+逻辑
+----
+1. 获取全集：调用 `ahash-table->list` 将 `kbd-map-table` 哈希表转换为遍历列表。
+2. 双层遍历：
+   - 外层遍历每一个按键定义（Key Entry）。
+   - 内层遍历该按键下的每一个上下文重载（Context Entry）。
+3. 源码比对：
+   - 使用 `extract-code-str` 提取当前上下文中的条件源码。
+   - 使用 `equal?` 将提取出的条件与参数 `target-conds` 进行深度比对。
+4. 收集结果：
+   - 如果匹配成功，提取对应的命令源码，并将 `(Key Command)` 组合加入结果列表。
+|#
+(tm-define (get-bindings-by-condition target-conds)
+  (let ((all-entries (ahash-table->list kbd-map-table))
+        (matches '()))
+    (for-each
+      (lambda (map-entry)
+        (let ((key (car map-entry))        ; 按键字符串，如 "C-2"
+              (ctx-list (cdr map-entry)))  ; 上下文列表
+          ;; 遍历该按键的所有重载定义
+          (for-each
+            (lambda (ctx-item)
+              (let* ((cond-funcs (car ctx-item))
+                     ;; 提取源码用于比对
+                     (cond-codes (map extract-code-str cond-funcs)))
+                ;; 深度比对条件结构
+                (when (equal? cond-codes target-conds)
+                  (let ((cmd-code (extract-code-str (cadr ctx-item))))
+                    ;; 收集结果：(按键 命令)
+                    (set! matches (cons (list key cmd-code) matches))))))
+            ctx-list)))
+      all-entries)
+    ;; 返回结果（反转以保持发现顺序，虽不强求）
+    (reverse matches)))
