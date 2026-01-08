@@ -339,3 +339,99 @@
 
 (tm-define (emulate-keyboard k)
   (delayed (raw-emulate-keyboard k)))
+
+#|
+extract-code-str
+从过程对象（Procedure）或列表中提取源码对象（S-Expression）。
+这是用于调试快捷键绑定的核心辅助函数，能够“透视”匿名 Lambda 函数的内部逻辑，
+并返回可供进一步程序处理的原始代码结构。
+
+语法
+----
+(extract-code-str proc)
+
+参数
+----
+proc : procedure | any
+    需要提取源码的目标对象。通常是 `kbd-get-map` 返回列表中的条件闭包或命令闭包。
+    如果是 procedure，尝试获取其源码；如果是普通列表或其他数据，则按原样处理。
+
+返回值
+----
+any (list | symbol)
+- 返回对象源码的原始 Scheme 结构（S-Expression）。
+- 如果输入是 `(lambda () (func))`，则返回列表 `(func)`（保留括号结构）。
+- 如果输入是 `(lambda () (func arg))`，则返回列表 `(func arg)`。
+
+逻辑
+----
+1. 源码获取：首先检查输入是否为过程，如果是则调用 `procedure-source` 获取源码列表。
+2. Lambda 识别：
+   - 检查源码是否为列表 (pair)。
+   - 检查第一个元素是否为符号 `lambda`。
+   - 检查列表长度是否足够包含函数体 (cddr)。
+3. 剥离外壳：
+   - 如果确认为 Lambda 结构，直接提取第三个元素 `(caddr src)` 作为函数体代码。
+   - 注意：不进行额外的 `car` 拆包，完整保留函数体内的逻辑结构。
+|#
+(define (extract-code-str proc)
+  (let* ((src (if (procedure? proc) (procedure-source proc) proc))
+         (code (if (and (pair? src) 
+                        (eq? (car src) 'lambda)
+                        (pair? (cddr src)))
+                   (caddr src)
+                   src)))
+    code))
+
+#|
+get-kbd-bindings
+获取指定按键序列的所有绑定详情，并以结构化数据的形式返回。
+这是一个高层调试工具，用于查看某个快捷键在不同上下文（条件）下的行为定义。
+
+语法
+----
+(get-kbd-bindings key-str)
+
+参数
+----
+key-str : string
+    按键序列字符串，例如 "return"、"C-x C-f" 或 "tab"。
+
+返回值
+----
+list
+- 如果按键未定义：返回 `(not-bound)`。
+- 如果按键已定义：返回一个列表的列表，格式为：
+  `(( (条件代码列表...) 命令代码 "帮助文档" ) ...)`
+  示例：`(( ((inside-replace-buffer?)) (replace-one ...) "" ) ...)`
+  注意：这里的条件和命令是 Scheme 代码对象（List），而非字符串。
+
+逻辑
+----
+1. 获取原始映射：调用 `kbd-get-map` 获取按键对应的原始关联列表 (Association List)。
+2. 空值检查：如果 `kbd-get-map` 返回 #f，则返回 `(not-bound)`。
+3. 遍历处理：使用 `map` 遍历原始列表中的每一项绑定：
+   - 条件处理：原始数据的 car 部分是条件闭包列表，对其中每个元素调用 `extract-code-str` 获取源码对象。
+   - 命令处理：原始数据的 cadr 部分是命令闭包，对其调用 `extract-code-str` 获取源码对象。
+   - 帮助文档：原始数据的 caddr 部分是字符串，保持原样。
+4. 结果组装：将处理后的条件代码列表、命令代码对象和帮助文档重新组装成一个新的列表返回。
+
+注意
+----
+1. 本函数使用 `tm-define` 定义，使其在 Mogan/TeXmacs 的模块系统中可见。
+2. 返回结果中的条件部分始终是一个列表（如 `((cond1) (cond2))`），
+   因为 Mogan 允许一个快捷键绑定同时依赖多个条件（逻辑与关系）。
+|#
+(tm-define (get-kbd-bindings key-str)
+  (let ((raw-map (kbd-get-map key-str)))
+    (if (not raw-map)
+        (list 'not-bound)
+        (map (lambda (item)
+               (let ((conds (car item))
+                     (cmd   (cadr item))
+                     (help  (caddr item)))
+                 (list 
+                   (map extract-code-str conds)
+                   (extract-code-str cmd)
+                   help)))
+             raw-map))))

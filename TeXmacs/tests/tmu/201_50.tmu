@@ -1,0 +1,48 @@
+<TMU|<tuple|1.1.0|2025.2.3>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref>>
+
+<\body>
+  <\session|scheme|default>
+    <\unfolded-io|Scheme] >
+      (get-kbd-bindings "space")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (get-kbd-bindings "backspace")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (get-kbd-bindings "return")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (get-kbd-bindings "C-1")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\unfolded-io|Scheme] >
+      (get-kbd-bindings "C-2")
+    <|unfolded-io>
+      \;
+    </unfolded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
