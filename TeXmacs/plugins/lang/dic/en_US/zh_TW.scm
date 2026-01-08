@@ -1664,6 +1664,7 @@
 ("ternary" "")
 ("test" "測試")
 ("tex" "")
+("text background color" "文書背景色")
 ("text box alignment" "文書框對齊")
 ("text box horizontal alignment" "文書框水平對齊")
 ("text box vertical alignment" "文書框垂直對齊")

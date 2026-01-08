@@ -2225,6 +2225,7 @@
 ("ternary" "")
 ("test" "检测")
 ("tex" "")
+("text background color" "文本背景色")
 ("text borders" "文本边界")
 ("text box alignment" "文本框对齐")
 ("text box horizontal alignment" "文本框水平对齐")
