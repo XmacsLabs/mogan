@@ -85,7 +85,7 @@
       ((== key "scope") "user+llm")
       ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
       ((== key "user-info-url") (string-append base-url ":8080/api/oauthUser/membershipInfo"))
-      ((== key "pricing-url") (string-append base-url "/pricing-fruit.html"))
+      ((== key "pricing-url") (string-append base-url "/pricing.html"))
       ((== key "click-return-liii-url") "http://www.liiistem.cn/?from=login_button")
       (else ""))))
 
@@ -99,7 +99,7 @@
 ;     ((== key "scope") "user+llm")
 ;     ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
 ;     ((== key "user-info-url") "http://127.0.0.1:8080/api/oauthUser/membershipInfo")
-;     ((== key "pricing-url") "http://127.0.0.1:3000/pricing-fruit.html")
+;     ((== key "pricing-url") "http://127.0.0.1:3000/pricing.html")
 ;     ((== key "click-return-liii-url") "http://127.0.0.1:3000/?from=login_button")
 ;     (else "")))
 
