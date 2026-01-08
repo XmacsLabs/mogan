@@ -88,6 +88,9 @@ extern string MATH_TOP_SWELL_END;
 extern string MATH_BOT_SWELL_START;
 extern string MATH_BOT_SWELL_END;
 
+extern string TREE_MODE;
+extern string TREE_LABEL_POS;
+
 extern string PROG_LANGUAGE;
 extern string PROG_SCRIPTS;
 extern string PROG_FONT;

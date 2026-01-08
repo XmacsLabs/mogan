@@ -754,6 +754,233 @@ tree_box (path ip, array<box> bs, font fn, pencil pen) {
   return tm_new<tree_box_rep> (ip, bs, fn, pen);
 }
 
+/******************************************************************************
+ * Proof tree boxes (natural deduction trees)
+ ******************************************************************************/
+
+struct proof_tree_box_rep : public composite_box_rep {
+  font   fn;
+  pencil pen;
+  SI     border;
+  bool   has_label;
+  bool   label_left;
+  int    n_children;  // Store original child count before adding decorations
+  SI     line_center; // X-coordinate of line center (for alignment with parent)
+  proof_tree_box_rep (path ip, array<box> bs, font fn, pencil pen,
+                      bool has_label, bool label_left);
+  operator tree () { return "proof-tree box"; }
+  box adjust_kerning (int mode, double factor);
+  box expand_glyphs (int mode, double factor);
+  int find_child (SI x, SI y, SI delta, bool force);
+  SI  get_leaf_offset (string search);
+};
+
+proof_tree_box_rep::proof_tree_box_rep (path ip, array<box> bs, font fn2,
+                                        pencil pen2, bool has_label2,
+                                        bool label_left2)
+    : composite_box_rep (ip), fn (fn2), pen (pen2), has_label (has_label2),
+      label_left (label_left2), n_children (N (bs)) {
+  // For labeled: bs[0] is label, bs[1] is conclusion, bs[2..n-1] are premises
+  // For unlabeled: bs[0] is conclusion, bs[1..n-1] are premises
+  // n_children stores original count before adding decoration line box
+  //
+  // IMPORTANT: Insert boxes in ORIGINAL ORDER (0, 1, 2, ..., n-1) first,
+  // then add line box LAST. This ensures internal bs array indices match
+  // original indices for find_child to work correctly.
+  //
+  // KEY ALIGNMENT PRINCIPLE: The box is centered on its inference line center.
+  // This means x=0 corresponds to the line center, so when this box is used
+  // as a premise in a parent proof-tree, the parent will align by line centers.
+  SI sep     = fn->sep;
+  SI min_hsep= fn->wfn; // minimum horizontal space between premises
+  SI hsep    = max (2 * fn->spc->def, min_hsep);
+  SI vsep    = 2 * fn->spc->def;
+  SI line_w  = fn->wline;
+  SI label_sp= fn->spc->def; // space between line and label
+
+  int i, n= N (bs);
+  int conc_idx  = has_label ? 1 : 0;
+  int prem_start= has_label ? 2 : 1;
+
+  // Calculate premises layout info
+  // For proper spacing with alignment, we need left/right extents from
+  // alignment point This prevents overlap when child proof-trees have labels
+  // extending beyond their lines
+  SI max_y2= MIN_SI;
+  SI min_y1= MAX_SI;
+
+  // Calculate align offsets (line center or geometric center) for all premises
+  array<SI> align_offsets (n);
+  array<SI> left_extents (n);  // distance from box x1 to alignment point
+  array<SI> right_extents (n); // distance from alignment point to box x2
+  for (i= prem_start; i < n; i++) {
+    SI offset= bs[i]->get_leaf_offset ("line_center");
+    if (offset == bs[i]->w ()) {
+      // Default return - not a proof-tree, use geometric center
+      offset= (bs[i]->x1 + bs[i]->x2) >> 1;
+    }
+    align_offsets[i]= offset;
+    left_extents[i] = offset;
+    right_extents[i]= bs[i]->w () - offset;
+    max_y2          = max (max_y2, bs[i]->y2);
+    min_y1          = min (min_y1, bs[i]->y1);
+  }
+
+  // Calculate total premises width based on proper spacing:
+  // Total = left_ext[first] + sum(right_ext[i] + hsep + left_ext[i+1]) +
+  // right_ext[last]
+  SI prem_w= 0;
+  for (i= prem_start; i < n; i++) {
+    if (i == prem_start) {
+      prem_w+= left_extents[i]; // First premise: count left extent
+    }
+    prem_w+= right_extents[i]; // Count right extent
+    if (i < n - 1) {
+      prem_w+= hsep;                // Add spacing between premises
+      prem_w+= left_extents[i + 1]; // Next premise's left extent
+    }
+  }
+
+  // Calculate conclusion dimensions
+  SI conc_w= bs[conc_idx]->w ();
+
+  // Calculate label width if present
+  SI label_w= has_label ? bs[0]->w () : 0;
+
+  // Calculate inference line width (covers premises and conclusion)
+  SI line_margin = fn->spc->def;
+  SI line_w_total= max (prem_w, conc_w) + 2 * line_margin;
+
+  // Line extends from -line_w_total/2 to +line_w_total/2 (centered on 0)
+  SI line_half= line_w_total >> 1;
+  SI line_x1  = -line_half;
+  SI line_x2  = line_half;
+  SI line_y   = max (bs[conc_idx]->y2, fn->y2) + (vsep >> 1);
+
+  // Calculate premise baseline
+  SI prem_baseline= max (bs[conc_idx]->y2, fn->y2) + sep + vsep - min_y1;
+
+  // Store positions for each child box
+  array<SI> pos_x (n);
+  array<SI> pos_y (n);
+
+  // Position premises centered on line, aligned by their line centers
+  // Use pre-calculated align_offsets and extents for proper spacing
+  if (n > prem_start) {
+    SI prem_half= prem_w >> 1;
+    // align_x tracks where the current premise's alignment point should be
+    SI align_x= -prem_half + left_extents[prem_start];
+    for (i= prem_start; i < n; i++) {
+      // Position box so its alignment point is at align_x
+      pos_x[i]= align_x - align_offsets[i];
+      pos_y[i]= prem_baseline;
+      // Advance to next alignment point: current right extent + hsep + next
+      // left extent
+      if (i < n - 1) {
+        align_x+= right_extents[i] + hsep + left_extents[i + 1];
+      }
+    }
+  }
+
+  // Position conclusion centered on line (0 point)
+  SI conc_center = (bs[conc_idx]->x1 + bs[conc_idx]->x2) >> 1;
+  pos_x[conc_idx]= -conc_center;
+  pos_y[conc_idx]= 0;
+
+  // Position label if present
+  if (has_label) {
+    pos_y[0]= line_y - ((bs[0]->y1 + bs[0]->y2) >> 1);
+    if (label_left) {
+      // Label is to the left of line: ends at line_x1 - label_sp
+      pos_x[0]= line_x1 - label_sp - bs[0]->x2;
+    }
+    else {
+      // Label is to the right of line: starts at line_x2 + label_sp
+      pos_x[0]= line_x2 + label_sp - bs[0]->x1;
+    }
+  }
+
+  // Now insert boxes in ORIGINAL ORDER (0, 1, 2, ..., n-1)
+  for (i= 0; i < n; i++) {
+    insert (bs[i], pos_x[i], pos_y[i]);
+  }
+
+  // Insert line box LAST (so it doesn't interfere with child indices)
+  pencil tpen= pen->set_width (line_w);
+  insert (line_box (decorate_middle (ip), line_x1, 0, line_x2, 0, tpen), 0,
+          line_y);
+
+  position ();
+  border= line_y;
+
+  // Store line center position before left_justify
+  // Since we centered on x=0, line_center is currently 0
+  // After left_justify(), line_center becomes -old_x1
+  SI old_x1  = x1;
+  line_center= 0;
+  left_justify ();
+  line_center= -old_x1; // Now relative to x1=0
+
+  finalize ();
+}
+
+box
+proof_tree_box_rep::adjust_kerning (int mode, double factor) {
+  (void) mode;
+  // Use n_children to exclude the decoration line box
+  array<box> adj (n_children);
+  for (int i= 0; i < n_children; i++)
+    adj[i]= bs[i]->adjust_kerning (0, factor);
+  return proof_tree_box (ip, adj, fn, pen, has_label, label_left);
+}
+
+box
+proof_tree_box_rep::expand_glyphs (int mode, double factor) {
+  (void) mode;
+  // Use n_children to exclude the decoration line box
+  array<box> adj (n_children);
+  for (int i= 0; i < n_children; i++)
+    adj[i]= bs[i]->expand_glyphs (0, factor);
+  return proof_tree_box (ip, adj, fn, pen, has_label, label_left);
+}
+
+int
+proof_tree_box_rep::find_child (SI x, SI y, SI delta, bool force) {
+  if (outside (x, delta, x1, x2) && (is_accessible (ip) || force)) return -1;
+  int conc_idx= has_label ? 1 : 0;
+  int i       = conc_idx;
+  // Conclusion is below the border, premises above
+  if (y > border) {
+    int prem_start= has_label ? 2 : 1;
+    int j, d= MAX_SI;
+    // Use n_children (not N(bs)) to exclude decoration line box
+    for (j= prem_start; j < n_children; j++)
+      if (distance (j, x, y, delta) < d)
+        if (bs[j]->accessible () || force) {
+          d= distance (j, x, y, delta);
+          i= j;
+        }
+  }
+  // Check if clicking on label
+  if (has_label && distance (0, x, y, delta) < distance (i, x, y, delta))
+    if (bs[0]->accessible () || force) i= 0;
+  if (bs[i]->decoration () && (!force)) return -1;
+  return i;
+}
+
+SI
+proof_tree_box_rep::get_leaf_offset (string search) {
+  // Return the line center as alignment point for parent proof-trees
+  if (search == "line_center") return line_center;
+  return composite_box_rep::get_leaf_offset (search);
+}
+
+box
+proof_tree_box (path ip, array<box> bs, font fn, pencil pen, bool has_label,
+                bool label_left) {
+  return tm_new<proof_tree_box_rep> (ip, bs, fn, pen, has_label, label_left);
+}
+
 box
 wide_box (path ip, box ref, string s, font fn, pencil pen, bool wf, bool af) {
   return tm_new<wide_box_rep> (ip, ref, s, fn, pen, wf, af);

@@ -111,6 +111,9 @@ initialize_default_env () {
   env (MATH_BOT_SWELL_START)= "-0.7ex";   // start padding below this level
   env (MATH_BOT_SWELL_END)  = "-2.5ex";   // maximal padding reached here
 
+  env (TREE_MODE)     = "normal"; // tree rendering mode: "normal" or "proof"
+  env (TREE_LABEL_POS)= "none"; // tree label position: "none", "left", "right"
+
   env (PROG_LANGUAGE)   = "scheme";  // the default programming language
   env (PROG_SCRIPTS)    = "none";    // the scripting language
   env (PROG_FONT)       = "roman";   // the font name in prog mode
