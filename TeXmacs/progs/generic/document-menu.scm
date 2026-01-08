@@ -1017,7 +1017,7 @@
         ("Other style" (interactive set-main-style)))
     (dynamic (focus-style-extra-menu t))
     (for (pack (list-filter (cdr st) (negate hidden-package?)))
-      (-> (eval (upcase-first pack))
+      (-> (eval `(verbatim ,(upcase-first pack)))
           ("Edit package" (edit-package-source pack))
           ("Remove package" (remove-style-package pack)))))
   (-> "Add style package"
