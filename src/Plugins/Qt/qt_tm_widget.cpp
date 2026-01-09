@@ -415,6 +415,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   sideTools      = new QDockWidget ("side tools", 0);
   leftTools      = new QDockWidget ("left tools", 0);
   auxiliaryWidget= new QTMAuxiliaryWidget ("auxiliary widget", 0);
+  shortcut_widget= new Qshortcut_widget ("shortcut");
   // HACK: Wrap the dock in a "fake" window widget (last parameter = true) to
   // have clicks report the right position.
   static int cnt      = 0;
@@ -960,6 +961,9 @@ qt_tm_widget_rep::send (slot s, blackbox val) {
     check_type<string> (val, s);
     string title= open_box<string> (val);
     auxiliaryWidget->setWindowTitle (to_qstring (title));
+  } break;
+  case SLOT_SHORTCUT_WIDGET: {
+    shortcut_widget->show ();
   } break;
   case SLOT_LEFT_FOOTER: {
     check_type<string> (val, s);

@@ -88,6 +88,7 @@ slot_name (const slot s) {
                              "SLOT_INPUT_PROPOSAL",
                              "SLOT_FILE",
                              "SLOT_DIRECTORY",
+                             "SLOT_SHORTCUT_WIDGET",
 
                              "slot_id__LAST"};
 

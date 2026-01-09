@@ -12,6 +12,7 @@
 #include "tm_frame.hpp"
 #include "message.hpp"
 #include "new_view.hpp"
+#include "new_window.hpp"
 #include "object_l5.hpp"
 #include "tm_window.hpp"
 
@@ -191,6 +192,18 @@ tm_frame_rep::set_auxiliary_widget_title (string title) {
     return;
   }
   concrete_window ()->set_auxiliary_widget_new_title (title);
+}
+
+void
+tm_frame_rep::shortcut_widget () {
+  if (!has_current_view ()) return;
+  url current_view= get_current_view ();
+  if (is_tmfs_view_type (as_string (current_view), "aux")) {
+    url vw= get_most_recent_view ();
+    concrete_view (vw)->win->set_shortcut_widget ();
+    return;
+  }
+  concrete_window ()->set_shortcut_widget ();
 }
 
 bool

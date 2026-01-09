@@ -14,6 +14,7 @@
 
 #include "list.hpp"
 
+#include "qt_shortcut_widget.hpp"
 #include "qt_simple_widget.hpp"
 #include "qt_widget.hpp"
 #include "qt_window_widget.hpp"
@@ -78,6 +79,7 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
   QDockWidget*            extraTools;
   QTMTabPageContainer*    tabPageContainer;
   QTMAuxiliaryWidget*     auxiliaryWidget;
+  Qshortcut_widget*       shortcut_widget;
   QWK::WidgetWindowAgent* windowAgent;
   QWK::LoginButton*       loginButton;
   QWK::LoginDialog*       m_loginDialog;

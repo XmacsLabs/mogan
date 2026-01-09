@@ -91,6 +91,7 @@ enum slot_id {
   SLOT_INPUT_PROPOSAL,
   SLOT_FILE,
   SLOT_DIRECTORY,
+  SLOT_SHORTCUT_WIDGET,
 
   slot_id__LAST // Please leave last and don't assign integer values to members
 };
@@ -599,6 +600,11 @@ set_auxiliary_widget_visibility (widget w, bool visible) {
 inline void
 set_auxiliary_widget_headline (widget w, string title) {
   send<string> (w, SLOT_AUXILIARY_WIDGET_TITLE, title);
+}
+
+inline void
+set_shortcut_widgets (widget w) {
+  send (w, SLOT_SHORTCUT_WIDGET);
 }
 
 inline bool
