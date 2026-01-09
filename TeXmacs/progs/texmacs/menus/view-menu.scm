@@ -154,5 +154,4 @@
   ---
   ("Search toolbar" (toggle-bottom-bar "search"))
   ("Replace toolbar" (toggle-bottom-bar "replace"))
-  ("Database toolbar" (toggle-bottom-bar "database"))
   ("Animation toolbar" (toggle-bottom-bar "animate")))
