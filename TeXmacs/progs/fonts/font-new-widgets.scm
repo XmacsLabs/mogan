@@ -538,6 +538,7 @@
   (texmacs-output
     `(with "bg-color" ,(font-sample-bg-color)
            "color" ,(font-sample-fg-color)
+           "magnification" "1.6"
        ,(selector-font-demo-text specs))
     '(style "generic")))
 
