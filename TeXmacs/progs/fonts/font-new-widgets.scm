@@ -132,7 +132,7 @@
        "Uppercase: ABCDEFGHIJKLMNOPQRSTUVWXYZ"
        "Numbers: 0123456789 +-*/^=<less><gtr>"
        "Special: ([{|}]) \"`,.:;!?'\" @#$%&_\\~"
-       "Accented: àáäâãèéëêìíïîòóöôõùúüû"
+       "Accented: Ã Ã¡Ã¤Ã¢Ã£Ã¨Ã©Ã«ÃªÃ¬Ã­Ã¯Ã®Ã²Ã³Ã¶Ã´ÃµÃ¹ÃºÃ¼Ã»"
        ,(string-append
          "Greek: <alpha><beta><gamma><delta><varepsilon><zeta><eta><theta>"
          "<iota><kappa><lambda><mu><nu><xi><omicron><pi>"
@@ -526,9 +526,16 @@
           (font-default-sizes*)
           (selector-get specs :size) "3em")))
 
+(define (font-sample-bg-color)
+  (if (== (get-preference "gui theme") "liii-night") "#404040" "white"))
+
+(define (font-sample-fg-color)
+  (if (== (get-preference "gui theme") "liii-night") "#e0e0e0" "black"))
+
 (tm-widget (font-sample-text specs)
   (texmacs-output
-    `(with "bg-color" "white"
+    `(with "bg-color" ,(font-sample-bg-color)
+           "color" ,(font-sample-fg-color)
        ,(selector-font-demo-text specs))
     '(style "generic")))
 
