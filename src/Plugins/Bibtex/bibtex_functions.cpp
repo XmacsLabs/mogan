@@ -233,23 +233,29 @@ bib_add_period (scheme_tree st) {
      content looks like a full date (e.g., contains a hyphen such as
      "(2025-12-28)"), do not append a period. */
   if (*ch == ')') {
-    tree node = t;
+    tree node= t;
     while (!is_atomic (node)) {
-      int pos = N (node) - 1;
-      while ((pos >= 0) && bib_is_bad (node[pos])) pos--;
-      if (pos >= 0) node = node[pos];
+      int pos= N (node) - 1;
+      while ((pos >= 0) && bib_is_bad (node[pos]))
+        pos--;
+      if (pos >= 0) node= node[pos];
       else break;
     }
     if (is_atomic (node)) {
-      string s = node->label;
-      int end = N (s) - 1;
-      while ((end >= 0) && is_space (s[end])) end--;
-      int open = end;
-      while ((open >= 0) && s[open] != '(') open--;
+      string s  = node->label;
+      int    end= N (s) - 1;
+      while ((end >= 0) && is_space (s[end]))
+        end--;
+      int open= end;
+      while ((open >= 0) && s[open] != '(')
+        open--;
       if (open >= 0) {
-        bool has_hyphen = false;
-        for (int i = open + 1; i <= end; i++)
-          if (s[i] == '-') { has_hyphen = true; break; }
+        bool has_hyphen= false;
+        for (int i= open + 1; i <= end; i++)
+          if (s[i] == '-') {
+            has_hyphen= true;
+            break;
+          }
         if (has_hyphen) return tree_to_scheme_tree (t);
       }
     }
