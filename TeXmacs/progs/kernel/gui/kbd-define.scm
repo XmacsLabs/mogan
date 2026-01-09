@@ -339,3 +339,209 @@
 
 (tm-define (emulate-keyboard k)
   (delayed (raw-emulate-keyboard k)))
+
+#|
+extract-code-str
+从过程对象（Procedure）或列表中提取源码对象（S-Expression）。
+这是用于调试快捷键绑定的核心辅助函数，能够“透视”匿名 Lambda 函数的内部逻辑，
+并返回可供进一步程序处理的原始代码结构。
+
+语法
+----
+(extract-code-str proc)
+
+参数
+----
+proc : procedure | any
+    需要提取源码的目标对象。通常是 `kbd-get-map` 返回列表中的条件闭包或命令闭包。
+    如果是 procedure，尝试获取其源码；如果是普通列表或其他数据，则按原样处理。
+
+返回值
+----
+any (list | symbol)
+- 返回对象源码的原始 Scheme 结构（S-Expression）。
+- 如果输入是 `(lambda () (func))`，则返回列表 `(func)`（保留括号结构）。
+- 如果输入是 `(lambda () (func arg))`，则返回列表 `(func arg)`。
+
+逻辑
+----
+1. 源码获取：首先检查输入是否为过程，如果是则调用 `procedure-source` 获取源码列表。
+2. Lambda 识别：
+   - 检查源码是否为列表 (pair)。
+   - 检查第一个元素是否为符号 `lambda`。
+   - 检查列表长度是否足够包含函数体 (cddr)。
+3. 剥离外壳：
+   - 如果确认为 Lambda 结构，直接提取第三个元素 `(caddr src)` 作为函数体代码。
+   - 注意：不进行额外的 `car` 拆包，完整保留函数体内的逻辑结构。
+|#
+(define (extract-code-str proc)
+  (let* ((src (if (procedure? proc) (procedure-source proc) proc))
+         (code (if (and (pair? src) 
+                        (eq? (car src) 'lambda)
+                        (pair? (cddr src)))
+                   (caddr src)
+                   src)))
+    code))
+
+#|
+get-kbd-bindings
+获取指定按键序列的所有绑定详情，并以结构化数据的形式返回。
+这是一个高层调试工具，用于查看某个快捷键在不同上下文（条件）下的行为定义。
+
+语法
+----
+(get-kbd-bindings key-str)
+
+参数
+----
+key-str : string
+    按键序列字符串，例如 "return"、"C-x C-f" 或 "tab"。
+
+返回值
+----
+list
+- 如果按键未定义：返回 `(not-bound)`。
+- 如果按键已定义：返回一个列表的列表，格式为：
+  `(( (条件代码列表...) 命令代码 "帮助文档" ) ...)`
+  示例：`(( ((inside-replace-buffer?)) (replace-one ...) "" ) ...)`
+  注意：这里的条件和命令是 Scheme 代码对象（List），而非字符串。
+
+逻辑
+----
+1. 获取原始映射：调用 `kbd-get-map` 获取按键对应的原始关联列表 (Association List)。
+2. 空值检查：如果 `kbd-get-map` 返回 #f，则返回 `(not-bound)`。
+3. 遍历处理：使用 `map` 遍历原始列表中的每一项绑定：
+   - 条件处理：原始数据的 car 部分是条件闭包列表，对其中每个元素调用 `extract-code-str` 获取源码对象。
+   - 命令处理：原始数据的 cadr 部分是命令闭包，对其调用 `extract-code-str` 获取源码对象。
+   - 帮助文档：原始数据的 caddr 部分是字符串，保持原样。
+4. 结果组装：将处理后的条件代码列表、命令代码对象和帮助文档重新组装成一个新的列表返回。
+
+注意
+----
+1. 本函数使用 `tm-define` 定义，使其在 Mogan/TeXmacs 的模块系统中可见。
+2. 返回结果中的条件部分始终是一个列表（如 `((cond1) (cond2))`），
+   因为 Mogan 允许一个快捷键绑定同时依赖多个条件（逻辑与关系）。
+|#
+(tm-define (get-kbd-bindings key-str)
+  (let ((raw-map (kbd-get-map key-str)))
+    (if (not raw-map)
+        (list 'not-bound)
+        (map (lambda (item)
+               (let ((conds (car item))
+                     (cmd   (cadr item))
+                     (help  (caddr item)))
+                 (list 
+                   (map extract-code-str conds)
+                   (extract-code-str cmd)
+                   help)))
+             raw-map))))
+
+#|
+get-bindings-by-command
+根据指定的命令代码，反向查找绑定了该命令的所有快捷键及其生效条件。
+
+语法
+----
+(get-bindings-by-command target-cmd)
+
+参数
+----
+target-cmd : list | symbol
+    目标命令的源码结构。
+    例如：
+    - 查找特定调用：`'(search-next-match #t)`
+    - 查找简单命令：`'(make 'select-region)`
+
+返回值
+----
+list
+- 返回一个列表，其中每个元素结构为 `(按键字符串 (条件代码列表...))`。
+- 示例：`(("F3" ((inside-search-or-replace-buffer?))) ("return" (...)))`
+
+逻辑
+----
+1. 遍历：扫描 `kbd-map-table` 中的每一个按键定义。
+2. 提取：对每个绑定的命令闭包调用 `extract-code-str` 获取其源码对象。
+3. 比对：使用 `equal?` 将提取出的命令源码与 `target-cmd` 进行深度比对。
+4. 收集：如果匹配，将 `(Key Conditions)` 加入结果列表。
+|#
+(tm-define (get-bindings-by-command target-cmd)
+  (let ((all-entries (ahash-table->list kbd-map-table))
+        (matches '()))
+    (for-each
+      (lambda (map-entry)
+        (let ((key (car map-entry))        ; 按键，如 "F3"
+              (ctx-list (cdr map-entry)))  ; 上下文列表
+          (for-each
+            (lambda (ctx-item)
+              (let* ((cmd-proc (cadr ctx-item))
+                     ;; 核心步骤：提取命令的源码进行比对
+                     (cmd-code (extract-code-str cmd-proc)))
+                (when (equal? cmd-code target-cmd)
+                  (let ((cond-codes (map extract-code-str (car ctx-item))))
+                    ;; 收集结果：(按键 (条件...))
+                    (set! matches (cons (list key cond-codes) matches))))))
+            ctx-list)))
+      all-entries)
+    (reverse matches)))
+
+
+
+#|
+get-bindings-by-condition
+根据指定的条件列表，反向查找所有匹配的快捷键及其对应的命令代码。
+此函数用于回答“在某个特定环境（如表格中、数学模式中）下，定义了哪些快捷键？”
+
+语法
+----
+(get-bindings-by-condition target-conds)
+
+参数
+----
+target-conds : list
+    目标条件源码列表。这是一个由 Scheme 代码对象（S-expression）组成的列表。
+    例如：
+    - 查找无条件绑定：`()`
+    - 查找数学模式绑定：`'((in-math?))` 或 `(list '(in-math?))`
+    - 查找特定条件：`'((inside-replace-buffer?))`
+
+返回值
+----
+list
+- 返回一个列表，其中每个元素也是一个列表，结构为 `(按键字符串 命令代码对象)`。
+- 示例：`(("return" (replace-one ...)) ("C-2" (insert ...)))`
+
+逻辑
+----
+1. 获取全集：调用 `ahash-table->list` 将 `kbd-map-table` 哈希表转换为遍历列表。
+2. 双层遍历：
+   - 外层遍历每一个按键定义（Key Entry）。
+   - 内层遍历该按键下的每一个上下文重载（Context Entry）。
+3. 源码比对：
+   - 使用 `extract-code-str` 提取当前上下文中的条件源码。
+   - 使用 `equal?` 将提取出的条件与参数 `target-conds` 进行深度比对。
+4. 收集结果：
+   - 如果匹配成功，提取对应的命令源码，并将 `(Key Command)` 组合加入结果列表。
+|#
+(tm-define (get-bindings-by-condition target-conds)
+  (let ((all-entries (ahash-table->list kbd-map-table))
+        (matches '()))
+    (for-each
+      (lambda (map-entry)
+        (let ((key (car map-entry))        ; 按键字符串，如 "C-2"
+              (ctx-list (cdr map-entry)))  ; 上下文列表
+          ;; 遍历该按键的所有重载定义
+          (for-each
+            (lambda (ctx-item)
+              (let* ((cond-funcs (car ctx-item))
+                     ;; 提取源码用于比对
+                     (cond-codes (map extract-code-str cond-funcs)))
+                ;; 深度比对条件结构
+                (when (equal? cond-codes target-conds)
+                  (let ((cmd-code (extract-code-str (cadr ctx-item))))
+                    ;; 收集结果：(按键 命令)
+                    (set! matches (cons (list key cmd-code) matches))))))
+            ctx-list)))
+      all-entries)
+    ;; 返回结果（反转以保持发现顺序，虽不强求）
+    (reverse matches)))
