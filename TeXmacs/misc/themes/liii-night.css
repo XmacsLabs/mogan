@@ -387,6 +387,30 @@ QTMTabPageContainer QToolButton#add-tab-button:pressed {
   background-color: rgba(255, 255, 255, 0.10);
 }
 
+/* Tab Widget 样式 */
+QTabBar::tab {
+  background: #4c4c4c;
+  color: #ffffff;
+  padding: 6px 12px;
+  border: 1px solid #5c5c5c;
+}
+
+QTabBar::tab:selected {
+  background: #2c2c2c;
+  color: #ffffff;
+  margin-top: 0px;
+  padding: 6px 12px;
+  border: 1px solid #5c5c5c;
+  border-bottom: none;
+}
+
+QTabWidget::pane {
+  background: #2c2c2c;
+  color: #ffffff;
+  border: 1px solid #5c5c5c;
+  margin-top: -1px;
+}
+
 /****************************************************************************
 * 菜单样式
 ****************************************************************************/
