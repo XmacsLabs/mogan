@@ -770,7 +770,7 @@
   (init-env-tree "bg-color" (tm-pattern name "100%" "100@")))
 
 (menu-bind document-foreground-color-menu
-  ("None" (init-default "color"))
+  ("Default" (init-default "color"))
   ---
   (pick-color (init-env "color" answer))
   ---
