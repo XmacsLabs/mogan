@@ -70,7 +70,6 @@ Qshortcut_widget::~Qshortcut_widget () {}
 void
 Qshortcut_widget::setupUi () {
   resize (800, 600);
-  setWindowTitle ("配置键盘快捷键");
 
   QVBoxLayout* mainLayout= new QVBoxLayout (this);
   mainLayout->setSpacing (10);
