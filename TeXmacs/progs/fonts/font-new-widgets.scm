@@ -132,7 +132,9 @@
        "Uppercase: ABCDEFGHIJKLMNOPQRSTUVWXYZ"
        "Numbers: 0123456789 +-*/^=<less><gtr>"
        "Special: ([{|}]) \"`,.:;!?'\" @#$%&_\\~"
-       "Accented: àáäâãèéëêìíïîòóöôõùúüû"
+       ,(string-append
+          "Accented: <#E0><#E1><#E4><#E2><#E3><#E8><#E9><#EB><#EA><#EC><#ED><#EF>"
+          "<#EE><#F2><#F3><#F6><#F4><#F5><#F9><#FA><#FC><#FB>")
        ,(string-append
          "Greek: <alpha><beta><gamma><delta><varepsilon><zeta><eta><theta>"
          "<iota><kappa><lambda><mu><nu><xi><omicron><pi>"
