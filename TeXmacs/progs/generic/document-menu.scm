@@ -779,7 +779,7 @@
   ("Other" (init-interactive-env "color")))
 
 (menu-bind document-background-color-menu
-  ("Default" (init-default "bg-color"))
+  ("None" (init-default "bg-color"))
   ---
   (pick-background "" (init-env-tree "bg-color" answer))
   ---

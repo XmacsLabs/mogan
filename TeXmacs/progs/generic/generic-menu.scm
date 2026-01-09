@@ -336,7 +336,7 @@
                    (parameter-set l col mode)
                    (when (or (== l "text-bg-color") (== l "marked-color"))
                      (set-preference "marked-color" col))))
-    ((check "Default" "*" (parameter-default? l mode))
+    ((check "None" "*" (parameter-default? l mode))
      (parameter-reset l mode))
     ---
     (pick-background "" (setter answer))
