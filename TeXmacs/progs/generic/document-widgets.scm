@@ -13,7 +13,13 @@
 
 (texmacs-module (generic document-widgets)
   (:use (generic document-menu)
+        (kernel gui menu-widget)
         (generic format-widgets)))
+
+
+(tm-define (set-page-headers-footers-window-state opened?)
+  (set-auxiliary-widget-state opened? 'page-headers-footers))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Style chooser widget (still to be implemented)
@@ -843,7 +849,8 @@
     (apply auxiliary-widget
            (cons* (lambda (quit) (page-formatter-headers u st quit))
                   noop (translate "Headers and footers")
-                  (header-buffers)))))
+                  (header-buffers)))
+    (set-page-headers-footers-window-state #t)))
 
 (tm-define (open-page-headers-footers)
   (:interactive #t)
@@ -927,3 +934,5 @@
   (if (side-tools?)
       (tool-select :right 'document-colors-tool)
       (open-document-colors-window)))
+
+(register-auxiliary-widget-type 'page-headers-footers (list open-page-headers-footers-window))

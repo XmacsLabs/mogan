@@ -16,8 +16,12 @@
 (texmacs-module (generic format-widgets)
   (:use (generic format-menu)
         (generic document-edit)
+        (kernel gui menu-widget)
         (utils library cursor)))
 
+
+(tm-define (set-page-format-window-state opened?)
+  (set-auxiliary-widget-state opened? 'page-format))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Subroutines
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -388,7 +392,8 @@
         (collect-settings par t)))
     (auxiliary-widget (page-formatter u st t #t)
                       noop "Page format"
-                      (header-buffer) (footer-buffer))))
+                      (header-buffer) (footer-buffer))
+    (set-page-format-window-state #t)))
 
 (tm-define (open-page-format)
   (:interactive #t)
@@ -401,3 +406,5 @@
             (collect-settings par t)))
         (tool-select :right (list 'format-page-tool u st t)))
       (open-page-format-window)))
+
+(register-auxiliary-widget-type 'page-format (list open-page-format-window))

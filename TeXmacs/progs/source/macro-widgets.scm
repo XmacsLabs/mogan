@@ -16,6 +16,7 @@
         (version version-edit) ;; FIXME: for selection-trees
         (generic format-edit)
         (generic document-part)
+        (kernel gui menu-widget)
         (utils library cursor)))
 
 (import (only (liii hash-table) hash-table-keys))
@@ -23,6 +24,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Major operation mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (set-macro-window-state opened?)
+  (set-auxiliary-widget-state opened? 'macro-editor))
 
 (tm-define macro-major-mode :global)
 (tm-define macro-major-focus #f)
@@ -244,6 +248,7 @@
           (auxiliary-widget (macro-editor u styps doc macro-mode)
                             (lambda x (terminate-macro-editor b))
                             (translate "Macro editor") u))
+      (set-macro-window-state #t)
       (buffer-focus u #t))))
 
 (tm-define (edit-focus-macro)
@@ -519,3 +524,6 @@
         (dialogue-window (macros-editor u styps names)
                          (lambda x (terminate-macro-editor))
                          "Macros editor" u))))
+
+(register-auxiliary-widget-type 'macro-editor 
+  (list (lambda () (open-macro-editor "" :global))))
