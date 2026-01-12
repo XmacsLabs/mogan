@@ -83,7 +83,10 @@
        (not (string-starts? (car init) "page-"))))
 
 (tm-define (open-comment-editor-aux)
-  (if (auxiliary-widget-visible?) (key-press "escape") noop)
+  (if (and (auxiliary-widget-visible?)
+         (== (url->string (current-window))  "{}"))
+    (key-press "escape")
+    noop)
   (key-press "escape")
   (and-let* ((c (tm->stree (tree-innermost any-comment-context? #t)))
              (b (current-buffer-url))

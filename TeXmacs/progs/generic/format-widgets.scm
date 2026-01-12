@@ -384,7 +384,10 @@
 
 (tm-define (open-page-format-window)
   (:interactive #t)
-  (if (auxiliary-widget-visible?) (key-press "escape") noop)
+  (if (and (auxiliary-widget-visible?)
+         (== (url->string (current-window))  "{}"))
+    (key-press "escape")
+    noop)
   (let* ((u  (current-buffer))
          (st (embedded-style-list "macro-editor"))
          (t  (make-ahash-table)))
