@@ -35,10 +35,15 @@
   (when (func? mode :local)
     (set! macro-major-focus (tree->tree-pointer (focus-tree)))))
 
-(define (terminate-macro-editor)
+(define (terminate-macro-editor . args)
   (when macro-major-focus
     (tree-pointer-detach macro-major-focus)
-    (set! macro-major-focus #f)))
+    (set! macro-major-focus #f))
+  
+  ;; 如果传入了参数，则取出第一个参数作为 b 并转移焦点过去
+  (when (pair? args)
+    (let ((b (car args)))
+      (buffer-focus b #t))))
 
 (define (macro-editor-get l)
   (cond ((== macro-major-mode :global)
@@ -237,8 +242,9 @@
       (if (side-tools?)
           (tool-focus :right tool u)
           (auxiliary-widget (macro-editor u styps doc macro-mode)
-                            (lambda x (terminate-macro-editor))
-                            (translate "Macro editor") u)))))
+                            (lambda x (terminate-macro-editor b))
+                            (translate "Macro editor") u))
+      (buffer-focus u #t))))
 
 (tm-define (edit-focus-macro)
   (:interactive #t)
