@@ -236,7 +236,7 @@
   ("generic"        "Default document style")
   ("letter"         "Default style for writing letters")
   ("poster"         "Style for posters")
-  ("seminar"        "Style for presentations using an overhead projector")
+  ("seminar"        "Style for seminar")
   ("source"         "Style for editing style files and packages")
 
   ("acmconf"        "ACM conference style")
