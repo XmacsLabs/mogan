@@ -175,7 +175,7 @@
           (inert (input "path" "string" (list binary-path) ""))
           //
           (resize "44px" "20px" (explicit-buttons
-            (""
+            ((balloon (icon "tm_find.xpm") "Choose binary file")
               (choose-file
                 (lambda
                   (selected-url)
