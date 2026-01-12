@@ -16,7 +16,8 @@
         (version version-edit) ;; FIXME: for selection-trees
         (generic format-edit)
         (generic document-part)
-        (utils library cursor)))
+        (utils library cursor)
+        (kernel gui menu-widget)))
 
 (import (only (liii hash-table) hash-table-keys))
 
@@ -38,7 +39,8 @@
 (define (terminate-macro-editor)
   (when macro-major-focus
     (tree-pointer-detach macro-major-focus)
-    (set! macro-major-focus #f)))
+    (set! macro-major-focus #f))
+  (set-macro-editor-window-state #f))
 
 (define (macro-editor-get l)
   (cond ((== macro-major-mode :global)
@@ -513,3 +515,26 @@
         (dialogue-window (macros-editor u styps names)
                          (lambda x (terminate-macro-editor))
                          "Macros editor" u))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Macro editor auxiliary widget state management
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (set-macro-editor-window-state opened?)
+  (set-auxiliary-widget-state opened? 'macro-editor))
+
+(tm-define (get-macro-editor-window-state)
+  (let ((state (get-auxiliary-widget-state)))
+    (if state
+        (let ((opened? (car state))
+              (widget-type (cadr state)))
+          (and (== widget-type 'macro-editor) opened?))
+        #f)))
+
+(tm-define (interactive-macro-editor)
+  (:interactive #t)
+  (set-macro-editor-window-state #t)
+  (open-macro-editor "" :global))
+
+(register-auxiliary-widget-type 'macro-editor
+  (list interactive-macro-editor terminate-macro-editor))

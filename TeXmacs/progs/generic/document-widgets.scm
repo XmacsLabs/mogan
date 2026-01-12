@@ -13,7 +13,8 @@
 
 (texmacs-module (generic document-widgets)
   (:use (generic document-menu)
-        (generic format-widgets)))
+        (generic format-widgets)
+        (kernel gui menu-widget)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Style chooser widget (still to be implemented)
@@ -836,19 +837,6 @@
       (tool-select :right 'document-page-tool)
       (open-document-page-format-window)))
 
-(tm-define (open-page-headers-footers-window)
-  (:interactive #t)
-  (let* ((u  (current-buffer))
-         (st (embedded-style-list "macro-editor")))
-    (apply auxiliary-widget
-           (cons* (lambda (quit) (page-formatter-headers u st quit))
-                  noop (translate "Headers and footers")
-                  (header-buffers)))))
-
-(tm-define (open-page-headers-footers)
-  (:interactive #t)
-  (open-page-headers-footers-window))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Document -> Metadata
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -927,3 +915,39 @@
   (if (side-tools?)
       (tool-select :right 'document-colors-tool)
       (open-document-colors-window)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Headers and footers auxiliary widget state management
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (open-page-headers-footers-window)
+  (:interactive #t)
+  (let* ((u  (current-buffer))
+         (st (embedded-style-list "macro-editor")))
+    (set-headers-footers-window-state #t)
+    (apply auxiliary-widget
+           (cons* (lambda (quit) (page-formatter-headers u st quit))
+                  (lambda () (set-headers-footers-window-state #f))
+                  (translate "Headers and footers")
+                  (header-buffers)))))
+
+(tm-define (open-page-headers-footers)
+  (:interactive #t)
+  (open-page-headers-footers-window))
+
+(tm-define (set-headers-footers-window-state opened?)
+  (set-auxiliary-widget-state opened? 'headers-footers))
+
+(tm-define (get-headers-footers-window-state)
+  (let ((state (get-auxiliary-widget-state)))
+    (if state
+        (let ((opened? (car state))
+              (widget-type (cadr state)))
+          (and (== widget-type 'headers-footers) opened?))
+        #f)))
+
+(define (close-headers-footers-widget)
+  (set-headers-footers-window-state #f))
+
+(register-auxiliary-widget-type 'headers-footers
+  (list open-page-headers-footers-window close-headers-footers-widget))
