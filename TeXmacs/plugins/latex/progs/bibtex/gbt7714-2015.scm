@@ -179,7 +179,7 @@
 ;; 作者姓名格式
 (tm-define (bib-format-name x)
   (:mode bib-gbt7714-2015?)
-  ;; 西文作者：姓在前，名缩写（如 "Yu H B"）
+  ;; 西文作者：姓在前（全大写），名缩写（如 "YU H B"）
   ;; 中文作者：姓在前，名在后（全称）
   (let* ((first-name-raw (if (bib-null? (list-ref x 1)) "" (list-ref x 1)))
          (last-name-raw (if (bib-null? (list-ref x 3)) "" (list-ref x 3)))
@@ -187,7 +187,7 @@
          (first-name (if chinese?
                          first-name-raw  ;; 中文名不缩写
                          (if (bib-null? first-name-raw) "" (bib-abbreviate first-name-raw "" " "))))
-         (last-name (if (bib-null? last-name-raw) "" (bib-purify last-name-raw))))
+         (last-name (if (bib-null? last-name-raw) "" (if chinese? (bib-purify last-name-raw) (string-upcase (bib-purify last-name-raw))))))
     (if (bib-null? last-name)
         first-name
         (if (bib-null? first-name)
@@ -198,12 +198,13 @@
 (tm-define (bib-format-date x)
   (:mode bib-gbt7714-2015?)
   ;; 优先使用 date 字段；若没有则回退到 year；返回空字符串表示没有可用的日期信息
+  ;; date字段加括号，year字段不加括号
   (let* ((d (bib-field x "date"))
-         (y (bib-field x "year"))
-         (date-str (if (bib-null? d) y d)))
-    (if (bib-null? date-str)
-        ""
-        `(concat "(" ,date-str ")"))))
+         (y (bib-field x "year")))
+    (cond
+      ((not (bib-null? d)) `(concat "(" ,d ")"))
+      ((not (bib-null? y)) y)
+      (else ""))))
 
 ;; 书名格式
 (tm-define (bib-format-in-ed-booktitle x)
