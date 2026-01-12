@@ -38,6 +38,13 @@ option_end()
 
 set_config("is_community", is_community)
 
+option("debug_with_timestamp")
+    set_default(true)
+    set_description("Enable timestamps in debug messages")
+option_end()
+
+set_config("debug_with_timestamp", true)
+
 -- Generate build/config.h from template
 add_configfiles("src/System/config.h.xmake", {
     filename = "config.h",
@@ -70,6 +77,7 @@ add_configfiles("src/System/config.h.xmake", {
         PDFHUMMUS_NO_TIFF = true,
         USE_MUPDF_RENDERER = has_config("mupdf"),
         IS_COMMUNITY = has_config("is_community"),
+        DEBUG_WITH_TIMESTAMP = has_config("debug_with_timestamp"),
     }
 })
 
@@ -675,6 +683,7 @@ target("libmogan") do
                 USE_PLUGIN_HTML = true,
                 USE_MUPDF_RENDERER = has_config("mupdf"),
                 IS_COMMUNITY = has_config("is_community"),
+                DEBUG_WITH_TIMESTAMP = has_config("debug_with_timestamp"),
                 }})
 
     if is_plat("linux") then 
