@@ -197,13 +197,27 @@
 ;; 日期格式
 (tm-define (bib-format-date x)
   (:mode bib-gbt7714-2015?)
-  ;; 优先使用 date 字段；若没有则回退到 year；返回空字符串表示没有可用的日期信息
+  ;; 日期处理函数，支持date字段和year字段
   ;; date字段加括号，year字段不加括号
+  ;; 如果有pages字段，则格式为"年份:页码"
   (let* ((d (bib-field x "date"))
-         (y (bib-field x "year")))
+         (y (bib-field x "year"))
+         (p (bib-field x "pages")))
     (cond
       ((not (bib-null? d)) `(concat "(" ,d ")"))
-      ((not (bib-null? y)) y)
+      ((not (bib-null? y))
+       (let* ((year y)
+              (pag (if (or (bib-null? p) (nlist? p))
+                       ""
+                       (cond
+                         ((equal? 1 (length p)) "")
+                         ((equal? 2 (length p)) `(concat ": " ,(list-ref p 1)))
+                         (else
+                          `(concat ": " ,(list-ref p 1)
+                                   ,bib-range-symbol ,(list-ref p 2)))))))
+         (if (== pag "")
+             year
+             `(concat ,year ,pag))))
       (else ""))))
 
 ;; 书名格式
@@ -238,7 +252,9 @@
         year
         (if (bib-null? year)
             `(concat ,vol ,num ,pag)
-            `(concat ,year ", " ,vol ,num ,pag)))))
+            (if (not (== vol ""))
+                `(concat ,year ", " ,vol ,num ,pag)
+                `(concat ,year ,num ,pag))))))
 
 ;; 数字标签格式
 (tm-define (bib-format-bibitem n x)
