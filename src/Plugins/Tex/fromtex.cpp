@@ -2531,6 +2531,8 @@ latex_command_to_tree (tree t) {
     if (s == "Vert" || s == "Arrowvert") s= "||";
     if (s == "lbrace") s= "{";
     if (s == "rbrace") s= "}";
+    if (s == "lbrack") s= "[";
+    if (s == "rbrack") s= "]";
     if (dtype == -1) return tree (LEFT, s);
     else if (dtype == 1) return tree (RIGHT, s);
     else return tree (MID, s);
