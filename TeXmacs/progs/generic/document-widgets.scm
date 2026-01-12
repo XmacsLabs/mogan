@@ -17,8 +17,9 @@
         (generic format-widgets)))
 
 
-(tm-define (set-document-window-state opened?)
-  (set-auxiliary-widget-state opened? 'document-editor))
+(tm-define (set-page-headers-footers-window-state opened?)
+  (set-auxiliary-widget-state opened? 'page-headers-footers))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Style chooser widget (still to be implemented)
@@ -849,7 +850,7 @@
            (cons* (lambda (quit) (page-formatter-headers u st quit))
                   noop (translate "Headers and footers")
                   (header-buffers)))
-    (set-document-window-state #t)))
+    (set-page-headers-footers-window-state #t)))
 
 (tm-define (open-page-headers-footers)
   (:interactive #t)
@@ -934,4 +935,4 @@
       (tool-select :right 'document-colors-tool)
       (open-document-colors-window)))
 
-(register-auxiliary-widget-type 'document-editor (list open-page-headers-footers-window))
+(register-auxiliary-widget-type 'page-headers-footers (list open-page-headers-footers-window))
