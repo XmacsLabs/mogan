@@ -583,7 +583,7 @@
      ;; (initial-default u header-parameters)
      ;; (refresh-now "page-header-settings"))
      ;;// //
-     ("Ok" (apply-headers-settings u) (quit))
+     ("Ok" (apply-headers-settings u) (begin (quit) (buffer-focus u #t)))
      // // // // //)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -850,7 +850,8 @@
            (cons* (lambda (quit) (page-formatter-headers u st quit))
                   noop (translate "Headers and footers")
                   (header-buffers)))
-    (set-page-headers-footers-window-state #t)))
+    (set-page-headers-footers-window-state #t)
+    (buffer-focus (header-buffer "page-odd-header") #t)))
 
 (tm-define (open-page-headers-footers)
   (:interactive #t)
