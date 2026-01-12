@@ -13,6 +13,7 @@
 
 (texmacs-module (generic document-widgets)
   (:use (generic document-menu)
+        (kernel gui menu-widget)
         (generic format-widgets)))
 
 
