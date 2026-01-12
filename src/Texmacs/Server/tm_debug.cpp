@@ -24,7 +24,41 @@
 #include "file.hpp"
 #include "tm_file.hpp"
 
+#include <cstdio>
+#include <ctime>
+#include <tbox/platform/time.h>
+
 bool rescue_mode= false;
+
+/******************************************************************************
+ * Timestamp formatting
+ ******************************************************************************/
+
+static string
+get_formatted_timestamp () {
+  tb_timeval_t tv= {0};
+  if (!tb_gettimeofday (&tv, tb_null)) {
+    return "0000-00-00-00.00.00.000";
+  }
+
+  time_t seconds     = (time_t) tv.tv_sec;
+  int    milliseconds= (int) (tv.tv_usec / 1000);
+
+  struct tm tm_buf;
+#ifdef OS_WIN
+  localtime_s (&tm_buf, &seconds);
+#else
+  localtime_r (&seconds, &tm_buf);
+#endif
+
+  char buffer[64];
+  strftime (buffer, sizeof (buffer), "%Y-%m-%d-%H.%M.%S", &tm_buf);
+
+  char result[80];
+  snprintf (result, sizeof (result), "%s.%03d", buffer, milliseconds);
+
+  return result;
+}
 
 /******************************************************************************
  * Status reports
@@ -218,6 +252,9 @@ debug_message_sub (string channel, string msg) {
       debug_messages << tuple (channel, msg, "");
       debug_lf_flag= false;
       if (channel != "debug-boot") {
+#ifdef DEBUG_WITH_TIMESTAMP
+        cout << get_formatted_timestamp () << " ";
+#endif
         cout << "TeXmacs] ";
         if (channel != "debug-automatic" && channel != "boot-error")
           cout << channel << ", ";
