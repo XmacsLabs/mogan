@@ -74,7 +74,7 @@
 ("Sprout User" "发芽用户")
 ("Start an AI interactive session" "AI功能")
 ("Store tracking information in LaTeX files" "在 LaTeX 文件中保存追踪信息")
-("Style for presentations using an overhead projector" "使用投影仪进行演示的风格")
+("Style for seminar" "研讨会样式")
 ("Tab::keyboard" "Tab")
 ("Tag Image File Format" "标记图像文件格式")
 ("Taiwan" "中国台湾")
