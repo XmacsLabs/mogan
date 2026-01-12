@@ -232,6 +232,7 @@
 
 (tm-define (open-macro-editor l mode)
   (:interactive #t)
+  (if (auxiliary-widget-visible?) (key-press "escape") noop)
   (if (symbol? l) (set! l (symbol->string l)))
   (initialize-macro-editor l mode)
   (let* ((b (current-buffer-url))

@@ -1299,6 +1299,7 @@ tree 或 #f
                               ((in-graphics?) "Graphics mode cannot search")
                               (else "Only search in text mode")))
   (set-boolean-preference "search-and-replace" #f)
+  (if (auxiliary-widget-visible?) (key-press "escape") noop)
   (open-search))
 
 (tm-define (interactive-replace)
@@ -1309,6 +1310,7 @@ tree 或 #f
                               ((in-graphics?) "Graphics mode cannot search and replace")
                               (else "Only search and replace in text mode")))
   (set-boolean-preference "search-and-replace" #t)
+  (if (auxiliary-widget-visible?) (key-press "escape") noop)
   (open-replace))
 
 (define (close-search-widget)
