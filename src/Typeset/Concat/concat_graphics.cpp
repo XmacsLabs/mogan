@@ -195,7 +195,7 @@ concater_rep::typeset_gr_transform (tree t, path ip) {
     box b= typeset_as_atomic (env, t[0], descend (ip, 0));
     if (is_tuple (tr, "rotation", 1)) {
       tree  angle = tr[1];
-      point center= point ((b->x2 - b->x1) / 2.0, (b->y2 - b->y1) / 2.0);
+      point center= point ((b->x2 + b->x1) / 2.0, (b->y2 + b->y1) / 2.0);
       tr          = tuple ("rotation", as_tree (center), angle);
     }
     frame f= get_transformation (tr);
