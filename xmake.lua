@@ -683,7 +683,7 @@ target("libmogan") do
                 USE_PLUGIN_HTML = true,
                 USE_MUPDF_RENDERER = has_config("mupdf"),
                 IS_COMMUNITY = has_config("is_community"),
-                DEBUG_WITH_TIMESTAMP = has_config("debug_with_timestamp")
+                DEBUG_WITH_TIMESTAMP = has_config("debug_with_timestamp"),
                 }})
 
     if is_plat("linux") then 
