@@ -1,0 +1,208 @@
+<TMU|<tuple|1.1.0|2025.2.3>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref>>
+
+<\body>
+  以下给出纯文本 LaTeX 代码片段，依次复制并使用选择性粘贴功能检查来源格式。
+
+  <subsection|已经支持的检测>
+
+  <subsubsection|简短的LaTeX代码片段>
+
+  <\verbatim-code>
+    \\alpha+\\beta
+  </verbatim-code>
+
+  <subsubsection|含有反斜杠的脚本>
+
+  <\verbatim-code>
+    @echo off
+
+    set PATH=C:\\\\Program Files\\\\App
+
+    if exist "file.txt" (
+
+    \ \ \ \ echo Found: %~dp0\\\\file.txt
+
+    )
+  </verbatim-code>
+
+  <\subsubsection>
+    含有反斜杠的代码
+  </subsubsection>
+
+  <\verbatim-code>
+    char* path = "C:\\\\Users\\\\Name";
+
+    char* regex = "\\\\d+\\\\.\\\\d+";
+
+    printf("Line: %s\\\\n", str);
+  </verbatim-code>
+
+  <subsubsection|低反斜杠的LaTeX代码>
+
+  通过对标签的优先检测，实现对其的格式检测。
+
+  <\verbatim-code>
+    \\documentclass{article}
+
+    \\begin{document}
+
+    \;
+
+    这是一篇纯文本论文，没有任何数学公式。
+
+    只有章节和引用。
+
+    \;
+
+    \\section{引言}
+
+    这是引言部分。
+
+    \;
+
+    \\section{结论}
+
+    这是结论部分。
+
+    \;
+
+    \\end{document}
+  </verbatim-code>
+
+  <subsubsection|Markdown包含LaTeX代码>
+
+  <\verbatim-code>
+    # 标题
+
+    \;
+
+    这是Markdown文档，但包含LaTeX公式：
+
+    \;
+
+    $$
+
+    f(x) = \\int_{-\\infty}^{\\infty} \\hat{f}(\\xi) e^{2\\pi i \\xi x} d\\xi
+
+    $$
+
+    \;
+
+    更多文本...
+  </verbatim-code>
+
+  <subsubsection|代码注释中的LaTeX>
+
+  <\verbatim-code>
+    # 这个函数实现以下公式：
+
+    # \\frac{d}{dx}f(x) = \\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}
+
+    def derivative(f, x, h=1e-5):
+
+    \ \ \ \ return (f(x+h) - f(x)) / h
+  </verbatim-code>
+
+  <subsection|尚未支持的检测>
+
+  <subsubsection|自定义命令极多的LaTeX代码>
+
+  <\verbatim-code>
+    \\def\\mymacro#1#2{(#1+#2)}
+
+    \\def\\another#1{\\sqrt{#1}}
+
+    \\newcommand{\\mycmd}[2]{#1 \\otimes #2}
+
+    \;
+
+    \\mycmd{x}{y} \\another{\\mymacro{a}{b}}
+  </verbatim-code>
+
+  <subsubsection|无反斜杠的LaTeX代码片段>
+
+  暂未支持此种类型检测
+
+  <\verbatim-code>
+    <code|$a^2+b^2=c^2$>
+  </verbatim-code>
+
+  <subsubsection|某些反斜杠含量较高的纯文本片段>
+
+  <\verbatim-code>
+    要匹配反斜杠：\\\\ 需要\\\\\\\\
+
+    路径：C:\\\\Users\\\\Name\\\\Files
+
+    特殊字符：\\n \\t \\r \\"
+  </verbatim-code>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
+
+<\references>
+  <\collection>
+    <associate|auto-1|<tuple|1|1|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+    <associate|auto-10|<tuple|2.2|?|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+    <associate|auto-11|<tuple|2.3|?|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+    <associate|auto-2|<tuple|1.1|1|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+    <associate|auto-3|<tuple|1.2|1|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+    <associate|auto-4|<tuple|1.3|1|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+    <associate|auto-5|<tuple|1.4|1|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+    <associate|auto-6|<tuple|1.5|1|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+    <associate|auto-7|<tuple|1.6|1|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+    <associate|auto-8|<tuple|2|?|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+    <associate|auto-9|<tuple|2.1|?|../.local/share/moganlab/texts/scratch/no_name_4.tm>>
+  </collection>
+</references>
+
+<\auxiliary>
+  <\collection>
+    <\associate|toc>
+      <with|par-left|<quote|2tab>|1<space|2spc>无反斜杠的LaTeX代码片段<datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-1>>
+
+      <with|par-left|<quote|2tab>|2<space|2spc>简短的LaTeX代码片段<datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-2>>
+
+      <with|par-left|<quote|2tab>|3<space|2spc>含有较多反斜杠的纯文本<datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-3>>
+
+      <with|par-left|<quote|2tab>|4<space|2spc>含有反斜杠的脚本<datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-4>>
+
+      <with|par-left|<quote|2tab>|5<space|2spc>含有反斜杠的代码<datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-5>>
+
+      <with|par-left|<quote|2tab>|6<space|2spc>低反斜杠的LaTeX代码<datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-6>>
+
+      <with|par-left|<quote|3tab>|\\documentclass{article}
+
+      \\begin{document}
+
+      \;
+
+      这是一篇纯文本论文，没有任何数学公式。
+
+      只有章节和引用。
+
+      \;
+
+      \\section{引言}
+
+      这是引言部分。
+
+      \;
+
+      \\section{结论}
+
+      这是结论部分。
+
+      \;
+
+      \\end{document}<datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.05fn>.<space|0.05fn>>>>>|<htab|5mm>><no-break><pageref|auto-7>>
+    </associate>
+  </collection>
+</auxiliary>
