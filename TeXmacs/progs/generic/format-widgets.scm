@@ -384,6 +384,7 @@
 
 (tm-define (open-page-format-window)
   (:interactive #t)
+  (change-auxiliary-widget-focus)
   (let* ((u  (current-buffer))
          (st (embedded-style-list "macro-editor"))
          (t  (make-ahash-table)))

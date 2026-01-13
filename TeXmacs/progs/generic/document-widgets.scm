@@ -844,6 +844,7 @@
 
 (tm-define (open-page-headers-footers-window)
   (:interactive #t)
+  (change-auxiliary-widget-focus)
   (let* ((u  (current-buffer))
          (st (embedded-style-list "macro-editor")))
     (apply auxiliary-widget

@@ -220,7 +220,8 @@
       (when (not (selection-active-non-small?))
         ("Marginal note" (make-marginal-note))))
     ---
-    ("Folded comment" (make-folded-comment "comment"))
+    (when (!= (url->string (current-window))  "{}")
+      ("Folded comment" (make-folded-comment "comment")))
     ("Unfolded comment" (make-unfolded-comment "comment"))
     ---
     (when (in-main-flow?)
