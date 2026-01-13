@@ -81,11 +81,14 @@
   bignone bigtimes bigoplus bigotimes bigodot
   bigvee bigwedge bigsqcup bigcup bigcap bigpluscup
   bigtriangledown bigtriangleup
-  int bigiint bigiiint bigiiiint bigidotsint oint bigoiint bigoiiint
-  bigintwl bigiintwl bigiiintwl bigiiiintwl bigidotsintwl
-  bigointwl bigoiintwl bigoiiintwl
-  bigupint bigupiint bigupiiint bigupoint bigupoiint bigupoiiint
-  bigupintwl bigupiintwl bigupiiintwl bigupointwl bigupoiintwl bigupoiiintwl)
+  int iint iiint iiiint idotsint bigint bigiint bigiiint bigiiiint bigidotsint
+  upint upiint upiiint upiiiint upidotsint bigupint bigupiint bigupiiint bigupiiiint bigupidotsint
+  oint oiint oiiint bigoint bigoiint bigoiiint
+  upoint upoiint upoiiint bigupoint bigupoiint bigupoiiint
+  intwl iintwl iiintwl iiiintwl idotsintwl bigintwl bigiintwl bigiiintwl bigiiiintwl bigidotsintwl
+  upintwl upiintwl upiiintwl upiiiintwl upidotsintwl bigupintwl bigupiintwl bigupiiintwl bigupiiiintwl bigupidotsintwl
+  ointwl oiintwl oiiintwl bigointwl bigoiintwl bigoiiintwl
+  upointwl upoiintwl upoiiintwl bigupointwl bigupoiintwl bigupoiiintwl)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Symbols from latexsym package
