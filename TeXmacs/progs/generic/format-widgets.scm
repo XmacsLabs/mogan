@@ -380,7 +380,7 @@
         // //
         ("Page number" (when (editing-headers?) (insert '(page-number))))
         >>>
-        ("Ok" (apply-page-settings u settings) (quit))))))
+        ("Ok" (apply-page-settings u settings) (begin (quit) (buffer-focus u #t)))))))
 
 (tm-define (open-page-format-window)
   (:interactive #t)
@@ -393,7 +393,8 @@
     (auxiliary-widget (page-formatter u st t #t)
                       noop "Page format"
                       (header-buffer) (footer-buffer))
-    (set-page-format-window-state #t)))
+    (set-page-format-window-state #t)
+    (buffer-focus (header-buffer) #t)))
 
 (tm-define (open-page-format)
   (:interactive #t)
