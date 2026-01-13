@@ -30,14 +30,15 @@
 (tm-define (gbt-new-smart-sentence x ref)
   (:mode bib-gbt7714-2015?)
   (if (gbt-has-url-doi? ref)
-      (bib-upcase-first (bib-new-list ", " x))  ; 有URL/DOI/urldate时不添加句点
-      (bib-add-period (bib-upcase-first (bib-new-list ", " x)))))  ; 没有URL/DOI/urldate时添加句点
+      (bib-upcase-first (bib-new-list ", " x))
+      (bib-add-period (bib-upcase-first (bib-new-list ", " x)))))
 
-;; 智能块函数：包装智能句子，添加newblock但不添加额外句点
-(tm-define (gbt-new-smart-block x ref)
+;; 智能块函数：包装智能句子，包含URL/DOI，不添加额外空格
+(tm-define (gbt-new-smart-block-with-url x ref)
   (:mode bib-gbt7714-2015?)
   (if (bib-null? x) ""
-      `(concat ,(gbt-new-smart-sentence x ref) (newblock))))
+      `(concat ,(gbt-new-smart-sentence x ref)
+               ,(bib-new-case-preserved-block (bib-format-url-doi ref)))))
 
 ;; 子字符串检查函数
 (define (substring? pat text)
@@ -337,14 +338,13 @@
          ,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "article")))
-         ,(gbt-new-smart-block
+         ,(gbt-new-smart-block-with-url
            (if (bib-empty? x "crossref")
                `(,(bib-format-field x "journal")
                  ,(bib-format-vol-num-pages x))
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
-                 ,(bib-format-pages x))) x)
-         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
+                 ,(bib-format-pages x))) x)))))
 
 ;; 重写图书格式以添加文献类型标识符 [M]
 (tm-define (bib-format-book n x)
@@ -361,7 +361,7 @@
            (bib-new-sentence
             `((concat ,(bib-format-field x "title")
                       ,(bib-document-type-identifier x "book")))))
-         ,(gbt-new-smart-block
+         ,(gbt-new-smart-block-with-url
            (if (bib-empty? x "crossref")
                `(,(bib-format-number-series x)
                  ,(bib-format-address-institution x)
@@ -372,8 +372,7 @@
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-field x "edition")
-                 ,(bib-format-date x))) x)
-         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
+                 ,(bib-format-date x))) x)))))
 
 ;; 重写会议论文格式以添加文献类型标识符 [C]
 (tm-define (bib-format-inproceedings n x)
@@ -394,10 +393,9 @@
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-pages x)) x)))
-        ,(gbt-new-smart-block
+        ,(gbt-new-smart-block-with-url
           `(,(bib-format-address-institution x)
-            ,(bib-format-date x)) x)
-        ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
+            ,(bib-format-date x)) x)))))
 
 ;; 重写会议录格式以添加文献类型标识符 [C]
 (tm-define (bib-format-proceedings n x)
@@ -410,10 +408,9 @@
          ,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "proceedings")))
-         ,(gbt-new-smart-block
+         ,(gbt-new-smart-block-with-url
            `(,(bib-format-address-institution x)
-             ,(bib-format-date x)) x)
-         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
+             ,(bib-format-date x)) x)))))
 
 ;; 重写手册格式以添加文献类型标识符 [S]
 (tm-define (bib-format-manual n x)
@@ -433,27 +430,9 @@
              (if (bib-null? number)
                  `(concat ,title ,identifier)
                  `(concat ,title ": " ,number ,identifier))))
-         ,(gbt-new-smart-block
+         ,(gbt-new-smart-block-with-url
            `(,(bib-format-address-institution x)
-             ,(bib-format-date x)) x)
-         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
-
-;; 重写杂项文献格式以添加文献类型标识符 [EB]
-(tm-define (bib-format-misc n x)
-  (:mode bib-gbt7714-2015?)
-  `(concat
-     ,(bib-format-bibitem n x)
-     ,(bib-label (list-ref x 2))
-     ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
-           `(concat ,(bib-format-field-preserve-case x "title")
-                    ,(bib-document-type-identifier x "misc")))
-         ,(bib-new-case-preserved-block
-           (bib-new-case-preserved-sentence
-            `(,(bib-format-field-preserve-case x "howpublished")
-              ,(bib-format-date x))))
-         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
+             ,(bib-format-date x)) x)))))
 
 ;; 重写博士论文格式以添加文献类型标识符 [D]
 (tm-define (bib-format-phdthesis n x)
@@ -466,12 +445,11 @@
          ,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "phdthesis")))
-         ,(gbt-new-smart-block
+         ,(gbt-new-smart-block-with-url
            `(,(if (bib-empty? x "type")
                   (bib-format-field-Locase x "type"))
              ,(bib-format-address-institution x)
-             ,(bib-format-date x)) x)
-         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
+             ,(bib-format-date x)) x)))))
 
 ;; 重写硕士论文格式以添加文献类型标识符 [D]
 (tm-define (bib-format-mastersthesis n x)
@@ -484,12 +462,11 @@
          ,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "mastersthesis")))
-         ,(gbt-new-smart-block
+         ,(gbt-new-smart-block-with-url
            `(,(if (bib-empty? x "type")
                   (bib-format-field-Locase x "type"))
              ,(bib-format-address-institution x)
-             ,(bib-format-date x)) x)
-         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
+             ,(bib-format-date x)) x)))))
 
 ;; 重写报告格式以添加文献类型标识符 [R]
 (tm-define (bib-format-techreport n x)
@@ -502,7 +479,6 @@
          ,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "techreport")))
-         ,(gbt-new-smart-block
+         ,(gbt-new-smart-block-with-url
            `(,(bib-format-address-institution x)
-             ,(bib-format-date x)) x)
-         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
+             ,(bib-format-date x)) x)))))
