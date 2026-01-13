@@ -287,21 +287,17 @@
          (has-doi (not (bib-null? doi)))
          (has-urldate (not (bib-null? urldate))))
     (cond
-      ((and has-url has-doi)
-       ;; 同时有 URL 和 DOI：引用日期放在 URL 前，DOI 在 URL 后
-       (if has-urldate
-           `(concat "[" ,urldate "]. " ,url ". DOI: " ,doi)
-           `(concat ,url ". DOI: " ,doi)))
+      (has-doi
+       ;; 有 DOI（优先使用，忽略 URL）：添加https://doi.org/前缀
+       (let ((doi-url `(concat "https://doi.org/" ,doi)))
+         (if has-urldate
+             `(concat "[" ,urldate "]. " ,doi-url)
+             doi-url)))
       (has-url
-       ;; 只有 URL
+       ;; 只有 URL（没有 DOI）
        (if has-urldate
            `(concat "[" ,urldate "]. " ,url)
            `(concat ,url)))
-      (has-doi
-       ;; 只有 DOI
-       (if has-urldate
-           `(concat "[" ,urldate "]. DOI: " ,doi)
-           `(concat "DOI: " ,doi)))
       (else ""))))
 
 ;; 重写文章格式以添加文献类型标识符 [J]
@@ -313,7 +309,7 @@
      ,(bib-new-list-spc
        `(,(bib-new-block (bib-format-author x))
          ,(bib-new-block
-           `(concat ,(bib-format-field-Locase x "title")
+           `(concat ,(bib-format-field-preserve-case x "title")
                     " "
                     ,(bib-document-type-identifier x "article")))
          ,(bib-new-block
@@ -325,7 +321,7 @@
                 `((concat ,(bib-translate "in ")
                           (cite ,(bib-field x "crossref")))
                   ,(bib-format-pages x)))))
-         ,(bib-new-block (bib-format-url-doi x))))))
+         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写图书格式以添加文献类型标识符 [M]
 (tm-define (bib-format-book n x)
@@ -358,7 +354,7 @@
                           (cite ,(bib-field x "crossref")))
                   ,(bib-format-field x "edition")
                   ,(bib-format-date x)))))
-         ,(bib-new-block (bib-format-url-doi x))))))
+         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写会议论文格式以添加文献类型标识符 [C]
 (tm-define (bib-format-inproceedings n x)
@@ -369,26 +365,22 @@
     ,(bib-new-list-spc
       `(,(bib-new-block (bib-format-author x))
         ,(bib-new-block
-          `(concat ,(bib-format-field-Locase x "title")
-                   " "
-                   ,(bib-document-type-identifier x "inproceedings")))
-        ,(bib-new-block
           (if (bib-empty? x "crossref")
-              (bib-new-list-spc
-               `(,(bib-new-sentence
-                   `(,(bib-format-in-ed-booktitle x)
-                     ,(bib-format-bvolume x)
-                     ,(bib-format-number-series x)
-                     ,(bib-format-pages x)))
-                 ,(if (bib-empty? x "address")
-                      (bib-new-sentence
-                       `(,(bib-format-address-institution x)
-                         ,(bib-format-date x))))))
+              `(concat ,(bib-format-field-preserve-case x "title")
+                       " "
+                       ,(bib-document-type-identifier x "inproceedings")
+                       "//"
+                       ,(bib-format-field-preserve-case x "booktitle")
+                       ".")
               (bib-new-sentence
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-pages x)))))
-        ,(bib-new-block (bib-format-url-doi x))))))
+        ,(bib-new-block
+          (bib-new-sentence
+           `(,(bib-format-address-institution x)
+             ,(bib-format-date x))))
+        ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写会议录格式以添加文献类型标识符 [C]
 (tm-define (bib-format-proceedings n x)
@@ -399,14 +391,14 @@
      ,(bib-new-list-spc
        `(,(bib-new-block (bib-format-field x "editor"))
          ,(bib-new-block
-           `(concat ,(bib-format-field-Locase x "title")
+           `(concat ,(bib-format-field-preserve-case x "title")
                     " "
                     ,(bib-document-type-identifier x "proceedings")))
          ,(bib-new-block
            (bib-new-sentence
             `(,(bib-format-address-institution x)
               ,(bib-format-date x))))
-         ,(bib-new-block (bib-format-url-doi x))))))
+         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写手册格式以添加文献类型标识符 [S]
 (tm-define (bib-format-manual n x)
@@ -420,13 +412,17 @@
                (bib-new-sentence `(,(bib-format-address-institution x)))
                (bib-format-author x)))
          ,(bib-new-block
-           `(concat ,(bib-format-field-Locase x "title")
-                    " "
-                    ,(bib-document-type-identifier x "manual")))
+           (let* ((title (bib-format-field-preserve-case x "title"))
+                  (number (bib-field x "number"))
+                  (identifier (bib-document-type-identifier x "manual")))
+             (if (bib-null? number)
+                 `(concat ,title " " ,identifier)
+                 `(concat ,title ": " ,number " " ,identifier))))
          ,(bib-new-block
            (bib-new-sentence
-            `(,(bib-format-address-institution x))))
-         ,(bib-new-block (bib-format-url-doi x))))))
+            `(,(bib-format-address-institution x)
+              ,(bib-format-date x))))
+         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写杂项文献格式以添加文献类型标识符 [EB]
 (tm-define (bib-format-misc n x)
@@ -437,14 +433,14 @@
      ,(bib-new-list-spc
        `(,(bib-new-block (bib-format-author x))
          ,(bib-new-block
-           `(concat ,(bib-format-field-Locase x "title")
+           `(concat ,(bib-format-field-preserve-case x "title")
                     " "
                     ,(bib-document-type-identifier x "misc")))
          ,(bib-new-case-preserved-block
            (bib-new-case-preserved-sentence
             `(,(bib-format-field-preserve-case x "howpublished")
               ,(bib-format-date x))))
-         ,(bib-new-block (bib-format-url-doi x))))))
+         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写博士论文格式以添加文献类型标识符 [D]
 (tm-define (bib-format-phdthesis n x)
@@ -455,7 +451,7 @@
      ,(bib-new-list-spc
        `(,(bib-new-block (bib-format-author x))
          ,(bib-new-block
-           `(concat ,(bib-format-field-Locase x "title")
+           `(concat ,(bib-format-field-preserve-case x "title")
                     " "
                     ,(bib-document-type-identifier x "phdthesis")))
          ,(bib-new-block
@@ -464,7 +460,7 @@
                    (bib-format-field-Locase x "type"))
               ,(bib-format-address-institution x)
               ,(bib-format-date x))))
-         ,(bib-new-block (bib-format-url-doi x))))))
+         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写硕士论文格式以添加文献类型标识符 [D]
 (tm-define (bib-format-mastersthesis n x)
@@ -475,7 +471,7 @@
      ,(bib-new-list-spc
        `(,(bib-new-block (bib-format-author x))
          ,(bib-new-block
-           `(concat ,(bib-format-field-Locase x "title")
+           `(concat ,(bib-format-field-preserve-case x "title")
                     " "
                     ,(bib-document-type-identifier x "mastersthesis")))
          ,(bib-new-block
@@ -484,7 +480,7 @@
                    (bib-format-field-Locase x "type"))
               ,(bib-format-address-institution x)
               ,(bib-format-date x))))
-         ,(bib-new-block (bib-format-url-doi x))))))
+         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写报告格式以添加文献类型标识符 [R]
 (tm-define (bib-format-techreport n x)
@@ -495,11 +491,11 @@
      ,(bib-new-list-spc
        `(,(bib-new-block (bib-format-author x))
          ,(bib-new-block
-           `(concat ,(bib-format-field-Locase x "title")
+           `(concat ,(bib-format-field-preserve-case x "title")
                     " "
                     ,(bib-document-type-identifier x "techreport")))
          ,(bib-new-block
            (bib-new-sentence
             `(,(bib-format-address-institution x)
               ,(bib-format-date x))))
-         ,(bib-new-block (bib-format-url-doi x))))))
+         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))

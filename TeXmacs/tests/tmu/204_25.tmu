@@ -18,91 +18,321 @@
   <cite|li_2024_efficient><cite|STUD20250306006><cite|GGYY202510006><cite|dewdney1984computer><cite|weiser1999computer><cite|japandict2004><cite|Kochetkov1993><cite|GB/T3792.4-2009><cite|ISO15836:2009><cite|马欢2011><cite|CALMS1965><cite|国务院新闻办公室2013><cite|萧钰2001>
 
   <\bib-list|>
-    <bibitem|1>本条已符合要求
+    <\with|color|dark red>
+      <bibitem|1>本条已符合要求
 
-    @article{ STUD20250306006,
+      @article{ STUD20250306006,
 
-    author \ = {闵超},
+      author \ = {闵超},
 
-    \ \ title \ \ = {马克思1848年法国革命研究与唯物史观的具体化转向},
+      \ \ title \ \ = {马克思1848年法国革命研究与唯物史观的具体化转向},
 
-    \ \ journal = {马克思主义研究},
+      \ \ journal = {马克思主义研究},
 
-    \ \ year \ \ \ = {2025},
+      \ \ year \ \ \ = {2025},
 
-    \ \ number \ = {01},\ 
+      \ \ number \ = {01},\ 
 
-    \ \ pages \ \ = {52--60},
+      \ \ pages \ \ = {52--60},
 
-    \ \ urldate = {2025-12-25},
+      \ \ urldate = {2025-12-25},
 
-    \ \ url \ \ \ \ \ ={https://link.cnki.net/urlid/11.3591.A.20250306.1018.012},
+      \ \ url \ \ \ \ \ ={https://link.cnki.net/urlid/11.3591.A.20250306.1018.012},
+
+      }
+
+      闵超.马克思1848年法国革命研究与唯物史观的具体化转向 [J/OL]. 马克思主义研究, 2025(01):52-60. [2025-12-25]. https://link.cnki.net/urlid/11.3591.A.20250306.1018.012.
+
+      闵超. <newblock>马克思1848年法国革命研究与唯物史观的具体化转向 [J/OL]. <newblock>马克思主义研究, 2025(01): 52-60. <newblock>[2025-12-25]. https://link.cnki.net/urlid/11.3591.A.20250306.1018.012.
+    </with>
+
+    <\with|color|dark magenta>
+      <bibitem|2>本条已符合要求
+
+      @article{GGYY202510006,
+
+      author = { \ 李磊 and \ \ \ \ 刘博聪 and \ \ \ \ 盛斌 and 李川川},
+
+      title = {专利出海与企业跨国供应链韧性提升},
+
+      journal = {中国工业经济},
+
+      volume = {},
+
+      number = {10},
+
+      pages = {97-116},
+
+      year = {2025},
+
+      issn = {1006-480X},
+
+      doi = {10.19581/j.cnki.ciejournal.2025.10.006}
+
+      } \ 
+
+      李磊,刘博聪,盛斌,等.专利出海与企业跨国供应链韧性提升[J/OL].中国工业经济,2025(10):97-116. https://doi.org/10.19581/j.cnki.ciejournal.2025.10.006.
+
+      李磊,刘博聪,盛斌,等. <newblock>专利出海与企业跨国供应链韧性提升 [J/OL]. <newblock>中国工业经济, 2025(10): 97-116. <newblock>https://doi.org/10.19581/j.cnki.ciejournal.2025.10.006.<newblock><newblock>
+    </with>
+
+    <\with|color|dark blue>
+      <bibitem|3>本条已符合要求
+
+      @article{dewdney1984computer,
+
+      \ \ title={Computer recreations},
+
+      \ \ author={Dewdney, Alexander K},
+
+      \ \ journal={Scientific American},
+
+      \ \ volume={250},
+
+      \ \ number={6},
+
+      \ \ pages={19--C14},
+
+      \ \ year={1984},
+
+      \ \ publisher={JSTOR}
+
+      }
+
+      DEWDNEY A K. Computer recreations [J]. Scientific American, 1984, 250(6): 19-C14.
+
+      DEWDNEY A K. <newblock>Computer recreations [J]. <newblock>Scientific American, 1984, 250(6): 19-C14.<newblock>
+    </with>
+
+    <\with|color|dark cyan>
+      <bibitem|4>本条已符合要求
+
+      @article{weiser1999computer,
+
+      \ \ title={The computer for the 21st century},
+
+      \ \ author={Weiser, Mark},
+
+      \ \ journal={ACM SIGMOBILE mobile computing and communications review},
+
+      \ \ volume={3},
+
+      \ \ number={3},
+
+      \ \ pages={3--11},
+
+      \ \ year={1999},
+
+      \ \ publisher={ACM New York, NY, USA}
+
+      }
+
+      WEISER M. The computer for the 21st century[J]. ACM SIGMOBILE mobile computing and communications review, 1999, 3(3): 3-11.
+
+      WEISER M. <newblock>The computer for the 21st century [J]. <newblock>ACM SIGMOBILE mobile computing and communications review, 1999, 3(3): 3-11.<newblock>
+    </with>
+
+    <\with|color|dark green>
+      <bibitem|5>本条已符合要求
+
+      @manual{GB/T3792.4-2009,
+
+      \ \ author \ \ \ \ \ = {全国信息与文献标准化技术委员会},
+
+      \ \ title \ \ \ \ \ \ = {文献著录: 第四部分 非书资料},
+
+      \ \ number \ \ \ \ \ = {GB/T 3792.4—2009},
+
+      \ \ address \ \ \ \ = {北京},
+
+      \ \ publisher \ \ = {中国标准出版社},
+
+      \ \ year \ \ \ \ \ \ \ = {2010},
+
+      \ \ pages \ \ \ \ \ \ = {3}
+
+      }
+
+      全国信息与文献标准化技术委员会. 文献著录: 第四部分 非书资料: GB/T 3792.4—2009 [S]. 北京: 中国标准出版社, 2010: 3.
+
+      全国信息与文献标准化技术委员会. <newblock>文献著录: 第四部分 非书资料: GB/T 3792.4—2009 [S]. <newblock>北京: 中国标准出版社, 2010: 3.<newblock>
+    </with>
+
+    <\with|color|dark yellow>
+      <bibitem|6>本条已符合要求
+
+      @book{japandict2004,
+
+      \ \ author \ \ \ = {図書館用語辞典編集委員会},
+
+      \ \ title \ \ \ \ = {最新図書館用語大辭典},
+
+      \ \ publisher = {柏書房株式會社},
+
+      \ \ address \ \ = {東京},
+
+      \ \ year \ \ \ \ \ = {2004},
+
+      \ \ pages \ \ \ \ = {154}
+
+      }
+
+      図書館用語辞典編集委員会. 最新図書館用語大辭典 [M]. 東京: 柏書房株式會社, 2004: 154.
+
+      図書館用語辞典編集委員会. <newblock>最新図書館用語大辭典 [M]. <newblock>東京: 柏書房株式會社, 2004: 154.<newblock>
+    </with>
+
+    <\with|color|dark orange>
+      <bibitem|7>本条已符合要求
+
+      @article{Kochetkov1993,
+
+      \ \ author \ = {Кочетков, А. Я.},
+
+      \ \ title \ \ = {Молибден--медно--эоловое порфировое месторождение Рябиновское},
+
+      \ \ journal = {Отечественная геология},
+
+      \ \ year \ \ \ = {1993},
+
+      \ \ number \ = {7},
+
+      \ \ pages \ \ = {50--58},
+
+      \ \ note \ \ \ = {[J/OL]},
+
+      }
+
+      Кочетков А. Я. Молибден–медно–эоловое порфировое месторождение Pябиновское[J/OL]. Отечественная геология, 1993(7): 50-58.
+
+      Кочетков А. Я. <newblock>Молибден–медно–эоловое порфировое месторождение Рябиновское [J/OL]. <newblock>Отечественная геология, 1993(7): 50-58.<newblock>
+    </with>
+
+    <\with|color|dark brown>
+      <bibitem*|8>本条基本符合要求，只有URL的_会被转成下标
+
+      @techreport{国务院新闻办公室2013,
+
+      \ \ author \ \ \ \ \ = {中华人民共和国国务院新闻办公室},
+
+      \ \ title \ \ \ \ \ \ = {国防白皮书：中国武装力量的多样化运用},
+
+      \ \ date \ \ \ \ \ \ \ = {2013-04-16},
+
+      \ \ urldate \ \ \ \ = {2014-06-11},
+
+      \ \ url \ \ \ \ \ \ \ \ = {http://www.mod.gov.cn/affair/2013-04/16/content_4442839.htm}
+
+      }
+
+      中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. (2013-04-16)<newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content_4442839.htm.<newblock>
+
+      中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. <newblock>(2013-04-16) <newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content<rsub|4>442839.htm.
+    </with>
+
+    <\with|color|red>
+      <bibitem*|9>本条已符合要求
+
+      @misc{萧钰2001,
+
+      \ \ author \ = {萧钰},
+
+      \ \ title \ \ = {出版业信息化迈入快车道},
+
+      \ \ year \ \ \ = {2001},
+
+      \ \ date \ \ \ = {2001-12-19},
+
+      \ \ urldate = {2002-04-15},
+
+      \ \ url \ \ \ \ = {http://www.creader.com/news/20011219/200112190019.html}
+
+      }
+
+      萧钰. <newblock>出版业信息化迈入快车道 [EB/OL]. <newblock>(2001-12-19) <newblock>[2002-04-15]. http://www.creader.com/news/20011219/200112190019.html.<newblock>
+
+      萧钰. <newblock>出版业信息化迈入快车道 [EB/OL]. <newblock>(2001-12-19) <newblock>[2002-04-15]. http://www.creader.com/news/20011219/200112190019.html.<newblock>
+    </with>
+
+    <\with|color|magenta>
+      <bibitem|10>
+
+      @mastersthesis{CALMS1965,
+
+      \ \ author \ = {Calms, R. B.},
+
+      \ \ title \ \ = {Infrared spectroscopic studies on solid oxygen},
+
+      \ \ school \ = {University of California},
+
+      \ \ address = {Berkeley},
+
+      \ \ year \ \ \ = {1965}
+
+      }
+
+      CALMS R B. <newblock>Infrared spectroscopic studies on solid oxygen [D]. <newblock>Berkeley: University of California, 1965.<newblock>
+
+      CALMS R B. <newblock>Infrared spectroscopic studies on solid oxygen [D]. <newblock>Berkeley: University of California, 1965.<newblock>
+    </with>
+
+    <\with|color|blue>
+      <bibitem|11>本条已符合要求
+
+      @phdthesis{马欢2011,
+
+      \ \ author \ = {马欢},
+
+      \ \ title \ \ = {人类活动影响下海河流域典型区水循环变化分析},
+
+      \ \ school \ = {清华大学},
+
+      \ \ address = {北京},
+
+      \ \ year \ \ \ = {2011},
+
+      \ \ pages \ \ = {27},
+
+      \ \ url \ \ \ \ = {http://www.cnki.net/kcms/detail/detail.aspx?},
+
+      \ \ urldate = {2013-10-14}
+
+      }
+
+      马欢. <newblock>人类活动影响下海河流域典型区水循环变化分析 [D/OL]. <newblock>北京: 清华大学, 2011: 27 <newblock>[2013-10-14]. http://www.cnki.net/kcms/detail/detail.aspx?<newblock>
+
+      马欢. <newblock>人类活动影响下海河流域典型区水循环变化分析 [D/OL]. <newblock>北京: 清华大学, 2011: 27. <newblock>[2013-10-14]. http://www.cnki.net/kcms/detail/detail.aspx?<newblock>
+    </with>
+
+    <bibitem|12>
+
+    @inproceedings{li_2024_efficient,
+
+    \ \ author \ \ \ = {Yan Song LI and Shuo HAN},
+
+    \ \ title \ \ \ \ = {Efficient collaboration with unknown agents: Ignoring similar agents without checking similarity},
+
+    \ \ booktitle = {Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024)},
+
+    \ \ address \ \ = {Auckland, New Zealand},
+
+    \ \ date \ \ \ \ \ = {2024-05-06/2024-05-10},
+
+    \ \ pages \ \ \ \ = {2363--2365},
+
+    \ \ publisher = {International Foundation for Autonomous Agents and Multiagent Systems},
+
+    \ \ doi \ \ \ \ \ \ = {10.5555/3635637.3663161},
+
+    \ \ url \ \ \ \ \ \ = {https://dl.acm.org/doi/10.5555/3635637.3663161},
+
+    \ \ urldate \ \ = {2025-12-25}
 
     }
 
-    闵超.马克思1848年法国革命研究与唯物史观的具体化转向 [J/OL]. 马克思主义研究, 2025(01):52-60. [2025-12-25]. https://link.cnki.net/urlid/11.3591.A.20250306.1018.012.
+    LI Y S, HAN S. Efficient collaboration with unknown agents: Ignoring similar agents without checking similarity[C/OL]//Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024). Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024: 2363-2365[2025-12-25]. https://doi.org/10.5555/3635637.3663161.
 
-    闵超. <newblock>马克思1848年法国革命研究与唯物史观的具体化转向 [J/OL]. <newblock>马克思主义研究, 2025(01): 52-60. <newblock>[2025-12-25]. https://link.cnki.net/urlid/11.3591.A.20250306.1018.012.
-
-    <bibitem|2>李磊,刘博聪,盛斌,等.专利出海与企业跨国供应链韧性提升[J].中国工业经济,2025(10):97-116.DOI:10.19581/j.cnki.ciejournal.2025.10.006.
-
-    <bibitem|3>DEWDNEY A K. Computer recreations[J]. Scientific American, 1984, 250(6): 19-C14.
-
-    <bibitem|4>WEISER M. The computer for the 21st century[J]. ACM SIGMOBILE mobile computing and \ communications review, 1999, 3(3): 3-11.
-
-    <bibitem|5>全国信息与文献标准化技术委员会. 文献著录: 第四部分 非书资料: GB/T 3792.4—2009[S]. 北京: 中国标准出版社, 2010: 3.
-
-    <bibitem|6>図書館用語辞典編集委員会. 最新図書館用語大辭典[M]. 東京: 柏書房株式會社, 2004: 154.
-
-    <bibitem|7>本条已符合要求
-
-    @article{Kochetkov1993,
-
-    \ \ author \ = {Кочетков, А. Я.},
-
-    \ \ title \ \ = {Молибден--медно--эоловое порфировое месторождение Рябиновское},
-
-    \ \ journal = {Отечественная геология},
-
-    \ \ year \ \ \ = {1993},
-
-    \ \ number \ = {7},
-
-    \ \ pages \ \ = {50--58},
-
-    \ \ note \ \ \ = {[J/OL]},
-
-    }
-
-    Кочетков А. Я. Молибден–медно–эоловое порфировое месторождение рябиновское[J/OL]. Отечественная геология, 1993(7): 50-58.
-
-    Кочетков А. Я. <newblock>Молибден–медно–эоловое порфировое месторождение рябиновское [J/OL]. <newblock>Отечественная геология, 1993(7): 50-58.
-
-    <bibitem*|8>本条基本符合要求，只有URL的_会被转成下标，date和urldate中间多了空格
-
-    @techreport{国务院新闻办公室2013,
-
-    \ \ author \ \ \ \ \ = {中华人民共和国国务院新闻办公室},
-
-    \ \ title \ \ \ \ \ \ = {国防白皮书：中国武装力量的多样化运用},
-
-    \ \ date \ \ \ \ \ \ \ = {2013-04-16},
-
-    \ \ urldate \ \ \ \ = {2014-06-11},
-
-    \ \ url \ \ \ \ \ \ \ \ = {http://www.mod.gov.cn/affair/2013-04/16/content_4442839.htm}
-
-    }
-
-    中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. (2013-04-16)<newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content_4442839.htm.<newblock>
-
-    中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. <newblock>(2013-04-16) <newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content<rsub|4>442839.htm.
-
-    <bibitem*|9>萧钰. <newblock>出版业信息化迈入快车道 [EB/OL]. <newblock>(2001-12-19)<newblock>[2002-04-15]. http://www.creader.com/news/20011219/200112190019.html.<newblock>
-
-    <bibitem|10>CALMS R B. <newblock>Infrared spectroscopic studies on solid oxygen [D]. <newblock>Berkeley: University of California, 1965.<newblock>
-
-    <bibitem|11>马欢. <newblock>人类活动影响下海河流域典型区水循环变化分析 [D/OL]. <newblock>北京: 清华大学, 2011: 27 <newblock>[2013-10-14]. http://www.cnki.net/kcms/detail/detail.aspx?<newblock>
+    LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: Ignoring similar agents without checking similarity [C/OL]//Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024). <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024: 2363-2365. <newblock>[2025-12-25]. https://doi.org/10.5555/3635637.3663161.<newblock>
   </bib-list>
 
   \;
@@ -111,15 +341,15 @@
 
   <\bibliography|bib|tm-gbt7714-2015|./204_25>
     <\bib-list|13>
-      <bibitem*|1><label|bib-Kochetkov1993>Кочетков А. Я. <newblock>Молибден–медно–эоловое порфировое месторождение рябиновское [J/OL]. <newblock>Отечественная геология, 1993(7): 50-58.<newblock>
+      <bibitem*|1><label|bib-Kochetkov1993>Кочетков А. Я. <newblock>Молибден–медно–эоловое порфировое месторождение Рябиновское [J/OL]. <newblock>Отечественная геология, 1993(7): 50-58.<newblock>
 
       <bibitem*|2><label|bib-国务院新闻办公室2013>中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. <newblock>(2013-04-16) <newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content<rsub|4>442839.htm.<newblock>
 
-      <bibitem*|3><label|bib-GB/T3792.4-2009>全国信息与文献标准化技术委员会. <newblock>文献著录: 第四部分 非书资料 [S]. <newblock>北京: 中国标准出版社.<newblock>
+      <bibitem*|3><label|bib-GB/T3792.4-2009>全国信息与文献标准化技术委员会. <newblock>文献著录: 第四部分 非书资料: GB/T 3792.4—2009 [S]. <newblock>北京: 中国标准出版社, 2010: 3.<newblock>
 
       <bibitem*|4><label|bib-japandict2004>図書館用語辞典編集委員会. <newblock>最新図書館用語大辭典 [M]. <newblock>東京: 柏書房株式會社, 2004: 154.<newblock>
 
-      <bibitem*|5><label|bib-GGYY202510006>李磊,刘博聪,盛斌,等. <newblock>专利出海与企业跨国供应链韧性提升 [J/OL]. <newblock>中国工业经济, 2025(10): 97-116. <newblock>DOI: 10.19581/j.cnki.ciejournal.2025.10.006.<newblock>
+      <bibitem*|5><label|bib-GGYY202510006>李磊,刘博聪,盛斌,等. <newblock>专利出海与企业跨国供应链韧性提升 [J/OL]. <newblock>中国工业经济, 2025(10): 97-116. <newblock>https://doi.org/10.19581/j.cnki.ciejournal.2025.10.006.<newblock>
 
       <bibitem*|6><label|bib-萧钰2001>萧钰. <newblock>出版业信息化迈入快车道 [EB/OL]. <newblock>(2001-12-19) <newblock>[2002-04-15]. http://www.creader.com/news/20011219/200112190019.html.<newblock>
 
@@ -131,9 +361,9 @@
 
       <bibitem*|10><label|bib-dewdney1984computer>DEWDNEY A K. <newblock>Computer recreations [J]. <newblock>Scientific American, 1984, 250(6): 19-C14.<newblock>
 
-      <bibitem*|11><label|bib-ISO15836:2009>Information and documentation – the dublin core metadata element set [EB/OL]. <newblock>[2013-03-24]. http://www.iso.org/iso/home/store/catalogue<rsub|t>c/catalogue<rsub|d>etail.htm?csnumber=52142.<newblock>
+      <bibitem*|11><label|bib-ISO15836:2009>Information and documentation – The Dublin Core metadata element set [EB/OL]. <newblock>[2013-03-24]. http://www.iso.org/iso/home/store/catalogue<rsub|t>c/catalogue<rsub|d>etail.htm?csnumber=52142.<newblock>
 
-      <bibitem*|12><label|bib-li_2024_efficient>LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: ignoring similar agents without checking similarity [C/OL]. <newblock>In Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024), pages 2363-2365. ? <newblock>[2025-12-25]. https://dl.acm.org/doi/10.5555/3635637.3663161. DOI: 10.5555/3635637.3663161.<newblock>
+      <bibitem*|12><label|bib-li_2024_efficient>LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: Ignoring similar agents without checking similarity [C/OL]//Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024). <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024: 2363-2365. <newblock>[2025-12-25]. https://doi.org/10.5555/3635637.3663161.<newblock>
 
       <bibitem*|13><label|bib-weiser1999computer>WEISER M. <newblock>The computer for the 21st century [J]. <newblock>ACM SIGMOBILE mobile computing and communications review, 1999, 3(3): 3-11.<newblock>
     </bib-list>
@@ -149,10 +379,11 @@
 
 <\references>
   <\collection>
-    <associate|auto-1|<tuple|11|1>>
+    <associate|auto-1|<tuple|12|1>>
     <associate|bib-1|<tuple|1|1>>
     <associate|bib-10|<tuple|10|?>>
     <associate|bib-11|<tuple|11|?>>
+    <associate|bib-12|<tuple|12|?>>
     <associate|bib-2|<tuple|2|1>>
     <associate|bib-3|<tuple|3|1>>
     <associate|bib-4|<tuple|4|1>>
