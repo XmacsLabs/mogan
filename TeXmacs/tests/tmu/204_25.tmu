@@ -18,7 +18,31 @@
   <cite|li_2024_efficient><cite|STUD20250306006><cite|GGYY202510006><cite|dewdney1984computer><cite|weiser1999computer><cite|japandict2004><cite|Kochetkov1993><cite|GB/T3792.4-2009><cite|ISO15836:2009><cite|马欢2011><cite|CALMS1965><cite|国务院新闻办公室2013><cite|萧钰2001>
 
   <\bib-list|>
-    <bibitem|1>闵超.马克思1848年法国革命研究与唯物史观的具体化转向[J/OL].马克思主义研究,2025(01):52-60[2025-12-25].https://link.cnki.net/urlid/11.3591.A.20250306.1018.012.
+    <bibitem|1>本条已符合要求
+
+    @article{ STUD20250306006,
+
+    author \ = {闵超},
+
+    \ \ title \ \ = {马克思1848年法国革命研究与唯物史观的具体化转向},
+
+    \ \ journal = {马克思主义研究},
+
+    \ \ year \ \ \ = {2025},
+
+    \ \ number \ = {01},\ 
+
+    \ \ pages \ \ = {52--60},
+
+    \ \ urldate = {2025-12-25},
+
+    \ \ url \ \ \ \ \ ={https://link.cnki.net/urlid/11.3591.A.20250306.1018.012},
+
+    }
+
+    闵超.马克思1848年法国革命研究与唯物史观的具体化转向 [J/OL]. 马克思主义研究, 2025(01):52-60. [2025-12-25]. https://link.cnki.net/urlid/11.3591.A.20250306.1018.012.
+
+    闵超. <newblock>马克思1848年法国革命研究与唯物史观的具体化转向 [J/OL]. <newblock>马克思主义研究, 2025(01): 52-60. <newblock>[2025-12-25]. https://link.cnki.net/urlid/11.3591.A.20250306.1018.012.
 
     <bibitem|2>李磊,刘博聪,盛斌,等.专利出海与企业跨国供应链韧性提升[J].中国工业经济,2025(10):97-116.DOI:10.19581/j.cnki.ciejournal.2025.10.006.
 
@@ -30,15 +54,55 @@
 
     <bibitem|6>図書館用語辞典編集委員会. 最新図書館用語大辭典[M]. 東京: 柏書房株式會社, 2004: 154.
 
-    <bibitem|7>Кочетков А. Я. Молибден–медно–эоловое порфировое месторождение Рябиновское[J/OL]. Отечественная геология, 1993(7): 50–58.
+    <bibitem|7>本条已符合要求
 
-    <bibitem*|8>中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. (2013-04-16)<newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content_4442839.htm.<newblock>
+    @article{Kochetkov1993,
 
-    <bibitem*|9>萧钰. <newblock>出版业信息化迈入快车道 [EB/OL]. <newblock>(2001-12-19)<newblock>[2002-04-15]. <slink|http://www.creader.com/news/20011219/200112190019.html>.<newblock>
+    \ \ author \ = {Кочетков, А. Я.},
+
+    \ \ title \ \ = {Молибден--медно--эоловое порфировое месторождение Рябиновское},
+
+    \ \ journal = {Отечественная геология},
+
+    \ \ year \ \ \ = {1993},
+
+    \ \ number \ = {7},
+
+    \ \ pages \ \ = {50--58},
+
+    \ \ note \ \ \ = {[J/OL]},
+
+    }
+
+    Кочетков А. Я. Молибден–медно–эоловое порфировое месторождение рябиновское[J/OL]. Отечественная геология, 1993(7): 50-58.
+
+    Кочетков А. Я. <newblock>Молибден–медно–эоловое порфировое месторождение рябиновское [J/OL]. <newblock>Отечественная геология, 1993(7): 50-58.
+
+    <bibitem*|8>本条基本符合要求，只有URL的_会被转成下标，date和urldate中间多了空格
+
+    @techreport{国务院新闻办公室2013,
+
+    \ \ author \ \ \ \ \ = {中华人民共和国国务院新闻办公室},
+
+    \ \ title \ \ \ \ \ \ = {国防白皮书：中国武装力量的多样化运用},
+
+    \ \ date \ \ \ \ \ \ \ = {2013-04-16},
+
+    \ \ urldate \ \ \ \ = {2014-06-11},
+
+    \ \ url \ \ \ \ \ \ \ \ = {http://www.mod.gov.cn/affair/2013-04/16/content_4442839.htm}
+
+    }
+
+    中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. (2013-04-16)<newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content_4442839.htm.<newblock>
+
+    中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. <newblock>(2013-04-16) <newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content<rsub|4>442839.htm.
+
+    <bibitem*|9>萧钰. <newblock>出版业信息化迈入快车道 [EB/OL]. <newblock>(2001-12-19)<newblock>[2002-04-15]. http://www.creader.com/news/20011219/200112190019.html.<newblock>
 
     <bibitem|10>CALMS R B. <newblock>Infrared spectroscopic studies on solid oxygen [D]. <newblock>Berkeley: University of California, 1965.<newblock>
 
-    <bibitem|11>马欢. <newblock>人类活动影响下海河流域典型区水循环变化分析 [D/OL]. <newblock>北京: 清华大学, 2011: 27 <newblock>[2013-10-14]. <slink|http://www.cnki.net/kcms/detail/detail.aspx?><newblock>
+    <bibitem|11>马欢. <newblock>人类活动影响下海河流域典型区水循环变化分析 [D/OL]. <newblock>北京: 清华大学, 2011: 27 <newblock>[2013-10-14]. http://www.cnki.net/kcms/detail/detail.aspx?<newblock>
   </bib-list>
 
   \;
@@ -47,7 +111,7 @@
 
   <\bibliography|bib|tm-gbt7714-2015|./204_25>
     <\bib-list|13>
-      <bibitem*|1><label|bib-Kochetkov1993>Кочетков А. Я. <newblock>Молибден–медно–эоловое порфировое месторождение рябиновское [J]. <newblock>Отечественная геология, 1993(7): 50-58.<newblock>
+      <bibitem*|1><label|bib-Kochetkov1993>Кочетков А. Я. <newblock>Молибден–медно–эоловое порфировое месторождение рябиновское [J/OL]. <newblock>Отечественная геология, 1993(7): 50-58.<newblock>
 
       <bibitem*|2><label|bib-国务院新闻办公室2013>中华人民共和国国务院新闻办公室. <newblock>国防白皮书：中国武装力量的多样化运用 [R/OL]. <newblock>(2013-04-16) <newblock>[2014-06-11]. http://www.mod.gov.cn/affair/2013-04/16/content<rsub|4>442839.htm.<newblock>
 
@@ -57,11 +121,11 @@
 
       <bibitem*|5><label|bib-GGYY202510006>李磊,刘博聪,盛斌,等. <newblock>专利出海与企业跨国供应链韧性提升 [J/OL]. <newblock>中国工业经济, 2025(10): 97-116. <newblock>DOI: 10.19581/j.cnki.ciejournal.2025.10.006.<newblock>
 
-      <bibitem*|6><label|bib-萧钰2001>萧钰. <newblock>出版业信息化迈入快车道 [EB/OL]. <newblock>(2001-12-19) <newblock>[2002-04-15]. <slink|http://www.creader.com/news/20011219/200112190019.html>.<newblock>
+      <bibitem*|6><label|bib-萧钰2001>萧钰. <newblock>出版业信息化迈入快车道 [EB/OL]. <newblock>(2001-12-19) <newblock>[2002-04-15]. http://www.creader.com/news/20011219/200112190019.html.<newblock>
 
-      <bibitem*|7><label|bib-STUD20250306006>闵超. <newblock>马克思1848年法国革命研究与唯物史观的具体化转向 [J/OL]. <newblock>马克思主义研究, 2025(01): 52-60.<newblock>
+      <bibitem*|7><label|bib-STUD20250306006>闵超. <newblock>马克思1848年法国革命研究与唯物史观的具体化转向 [J/OL]. <newblock>马克思主义研究, 2025(01): 52-60. <newblock>[2025-12-25]. https://link.cnki.net/urlid/11.3591.A.20250306.1018.012.<newblock>
 
-      <bibitem*|8><label|bib-马欢2011>马欢. <newblock>人类活动影响下海河流域典型区水循环变化分析 [D/OL]. <newblock>北京: 清华大学, 2011: 27. <newblock>[2013-10-14]. <slink|http://www.cnki.net/kcms/detail/detail.aspx?><newblock>
+      <bibitem*|8><label|bib-马欢2011>马欢. <newblock>人类活动影响下海河流域典型区水循环变化分析 [D/OL]. <newblock>北京: 清华大学, 2011: 27. <newblock>[2013-10-14]. http://www.cnki.net/kcms/detail/detail.aspx?<newblock>
 
       <bibitem*|9><label|bib-CALMS1965>CALMS R B. <newblock>Infrared spectroscopic studies on solid oxygen [D]. <newblock>Berkeley: University of California, 1965.<newblock>
 
@@ -69,7 +133,7 @@
 
       <bibitem*|11><label|bib-ISO15836:2009>Information and documentation – the dublin core metadata element set [EB/OL]. <newblock>[2013-03-24]. http://www.iso.org/iso/home/store/catalogue<rsub|t>c/catalogue<rsub|d>etail.htm?csnumber=52142.<newblock>
 
-      <bibitem*|12><label|bib-li_2024_efficient>LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: ignoring similar agents without checking similarity [C/OL]. <newblock>In Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024), pages 2363-2365. ? <newblock>[2025-12-25]. <slink|https://dl.acm.org/doi/10.5555/3635637.3663161>. DOI: 10.5555/3635637.3663161.<newblock>
+      <bibitem*|12><label|bib-li_2024_efficient>LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: ignoring similar agents without checking similarity [C/OL]. <newblock>In Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024), pages 2363-2365. ? <newblock>[2025-12-25]. https://dl.acm.org/doi/10.5555/3635637.3663161. DOI: 10.5555/3635637.3663161.<newblock>
 
       <bibitem*|13><label|bib-weiser1999computer>WEISER M. <newblock>The computer for the 21st century [J]. <newblock>ACM SIGMOBILE mobile computing and communications review, 1999, 3(3): 3-11.<newblock>
     </bib-list>

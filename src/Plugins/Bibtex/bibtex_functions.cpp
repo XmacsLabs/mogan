@@ -17,6 +17,7 @@
 #include "tree_modify.hpp"
 #include <moebius/data/scheme.hpp>
 #include <moebius/vars.hpp>
+#include <s7_tm.hpp>
 
 using namespace moebius;
 using moebius::data::scheme_tree_to_tree;
@@ -25,6 +26,13 @@ using moebius::data::tree_to_scheme_tree;
 /******************************************************************************
  * Helper functions
  ******************************************************************************/
+
+static bool
+is_gbt7714_style () {
+  // 检查当前是否使用gbt7714-2015样式
+  tmscm result= eval_scheme ("(bib-mode? \"gbt7714-2015\")");
+  return tmscm_to_bool (result);
+}
 
 static string
 bib_parse_char (string s, int& pos, int& depth, bool& special, int& math) {
@@ -1060,8 +1068,9 @@ bib_parse_fields (tree& t) {
   }
   // cout << "<<< " << t << LF;
   // cout << ">>> " << latex << LF;
+  bool gbt7714_style= is_gbt7714_style ();
   for (int k= 0; k < N (latex); k++)
-    if (is_atomic (latex[k]) && is_hyper_link (latex[k]->label))
+    if (is_atomic (latex[k]) && is_hyper_link (latex[k]->label) && !gbt7714_style)
       latex[k]= compound ("slink", latex[k]);
   int i= 0;
   if (nb == N (latex)) bib_set_fields (t, latex, i);
