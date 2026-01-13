@@ -303,7 +303,7 @@
   (check (latex-recognizes-at? text25 0)
          => #f))
 
-(tm-define (test_222_22)
+(tm-define (test_222_25)
   (test-latex-format-determine)
   (check-report))
   
