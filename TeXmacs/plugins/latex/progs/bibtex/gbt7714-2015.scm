@@ -18,6 +18,27 @@
 
 ;; GBT 7714-2015 特定格式化函数
 
+;; 检查是否有URL/DOI/urldate的辅助函数
+(tm-define (gbt-has-url-doi? x)
+  (:mode bib-gbt7714-2015?)
+  (let* ((url (bib-field x "url"))
+         (doi (bib-field x "doi"))
+         (urldate (bib-field x "urldate")))
+    (or (not (bib-null? url)) (not (bib-null? doi)) (not (bib-null? urldate)))))
+
+;; 智能句子函数：如果有URL/DOI/urldate则不添加句点，否则添加句点
+(tm-define (gbt-new-smart-sentence x ref)
+  (:mode bib-gbt7714-2015?)
+  (if (gbt-has-url-doi? ref)
+      (bib-upcase-first (bib-new-list ", " x))  ; 有URL/DOI/urldate时不添加句点
+      (bib-add-period (bib-upcase-first (bib-new-list ", " x)))))  ; 没有URL/DOI/urldate时添加句点
+
+;; 智能块函数：包装智能句子，添加newblock但不添加额外句点
+(tm-define (gbt-new-smart-block x ref)
+  (:mode bib-gbt7714-2015?)
+  (if (bib-null? x) ""
+      `(concat ,(gbt-new-smart-sentence x ref) (newblock))))
+
 ;; 子字符串检查函数
 (define (substring? pat text)
   (let ((pat-len (string-length pat))
@@ -137,27 +158,28 @@
          (online (or has-url has-doi)))
     (cond
       ((and (not (bib-null? note)) (not (equal? note ""))) note)  ;; 优先使用note字段
-      ((equal? type "article") (if online "[J/OL]" "[J]"))         ;; 期刊
-      ((equal? type "book") (if online "[M/OL]" "[M]"))            ;; 普通图书
-      ((equal? type "inproceedings") (if online "[C/OL]" "[C]"))   ;; 会议录
-      ((equal? type "phdthesis") (if online "[D/OL]" "[D]"))       ;; 学位论文-博士
-      ((equal? type "mastersthesis") (if online "[D/OL]" "[D]"))   ;; 学位论文-硕士
-      ((equal? type "techreport") (if online "[R/OL]" "[R]"))      ;; 报告
-      ((equal? type "misc") (if online "[EB/OL]" "[EB]"))          ;; 电子公告
-      ((equal? type "collection") (if online "[G/OL]" "[G]"))      ;; 汇编
-      ((equal? type "proceedings") (if online "[C/OL]" "[C]"))     ;; 会议录（同inproceedings）
-      ((equal? type "manual") (if online "[S/OL]" "[S]"))          ;; 标准（常用manual表示标准）
-      ((equal? type "standard") (if online "[S/OL]" "[S]"))        ;; 标准
-      ((equal? type "patent") (if online "[P/OL]" "[P]"))          ;; 专利
-      ((equal? type "database") (if online "[DB/OL]" "[DB]"))      ;; 数据库
-      ((equal? type "software") (if online "[CP/OL]" "[CP]"))      ;; 计算机程序
-      ((equal? type "program") (if online "[CP/OL]" "[CP]"))       ;; 计算机程序
-      ((equal? type "electronic") (if online "[EB/OL]" "[EB]"))    ;; 电子公告
-      ((equal? type "archive") (if online "[A/OL]" "[A]"))         ;; 档案
-      ((equal? type "map") (if online "[CM/OL]" "[CM]"))           ;; 舆图
-      ((equal? type "dataset") (if online "[DS/OL]" "[DS]"))       ;; 数据集
-      ((equal? type "newspaper") (if online "[N/OL]" "[N]"))       ;; 报纸
-      ((equal? type "other") (if online "[Z/OL]" "[Z]"))           ;; 其他
+      ((equal? type "article") (if online "[J/OL]" "[J]"))         ;; 期刊!
+      ((equal? type "book") (if online "[M/OL]" "[M]"))            ;; 普通图书!
+      ((equal? type "inproceedings") (if online "[C/OL]" "[C]"))   ;; 会议录!
+      ((equal? type "proceedings") (if online "[C/OL]" "[C]"))     ;; 会议录!
+      ((equal? type "phdthesis") (if online "[D/OL]" "[D]"))       ;; 学位论文-博士!
+      ((equal? type "mastersthesis") (if online "[D/OL]" "[D]"))   ;; 学位论文-硕士!
+      ((equal? type "techreport") (if online "[R/OL]" "[R]"))      ;; 报告!
+      ((equal? type "collection") (if online "[G/OL]" "[G]"))      ;; 汇编!
+      ((equal? type "manual") (if online "[M/OL]" "[M]"))          ;; 手册/说明书!
+      ((equal? type "standard") (if online "[S/OL]" "[S]"))        ;; 标准!
+      ((equal? type "patent") (if online "[P/OL]" "[P]"))          ;; 专利!
+      ((equal? type "database") (if online "[DB/OL]" "[DB]"))      ;; 数据库!
+      ((equal? type "software") (if online "[CP/OL]" "[CP]"))      ;; 计算机程序!
+      ((equal? type "program") (if online "[CP/OL]" "[CP]"))       ;; 计算机程序!
+      ((equal? type "online") (if online "[EB/OL]" "[EB]"))        ;; 电子公告!
+      ((equal? type "electronic") (if online "[EB/OL]" "[EB]"))    ;; 电子公告!
+      ((equal? type "archive") (if online "[A/OL]" "[A]"))         ;; 档案!
+      ((equal? type "map") (if online "[CM/OL]" "[CM]"))           ;; 舆图!
+      ((equal? type "dataset") (if online "[DS/OL]" "[DS]"))       ;; 数据集!
+      ((equal? type "newspaper") (if online "[N/OL]" "[N]"))       ;; 报纸!
+      ((equal? type "misc") (if online "[Z/OL]" "[Z]"))            ;; 其他!
+      ((equal? type "other") (if online "[Z/OL]" "[Z]"))           ;; 其他!
       (else ""))))
 
 ;; 地址:机构格式
@@ -265,18 +287,6 @@
   ;; 使用数字标签，如 [1], [2], ...
   `(bibitem* ,(number->string n)))
 
-;; 卷-册格式
-(tm-define (bib-format-bvolume x)
-  (:mode bib-gbt7714-2015?)
-  (let* ((v (bib-field x "volume"))
-	 (s (bib-default-field x "series")))
-    (if (bib-null? v)
-	""
-	(let ((series (if (bib-null? s) ""
-			  `(concat ,(bib-translate " of ") ,s)))
-	      (sep (if (< (bib-text-length v) 3) `(nbsp) " ")))
-	  `(concat ,(bib-translate "volume") ,sep ,v ,series)))))
-
 ;; URL/DOI 信息格式
 (tm-define (bib-format-url-doi x)
   (:mode bib-gbt7714-2015?)
@@ -312,15 +322,13 @@
            `(concat ,(bib-format-field-preserve-case x "title")
                     " "
                     ,(bib-document-type-identifier x "article")))
-         ,(bib-new-block
+         ,(gbt-new-smart-block
            (if (bib-empty? x "crossref")
-               (bib-new-sentence
-                `(,(bib-format-field x "journal")
-                  ,(bib-format-vol-num-pages x)))
-               (bib-new-sentence
-                `((concat ,(bib-translate "in ")
-                          (cite ,(bib-field x "crossref")))
-                  ,(bib-format-pages x)))))
+               `(,(bib-format-field x "journal")
+                 ,(bib-format-vol-num-pages x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-pages x))) x)
          ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写图书格式以添加文献类型标识符 [M]
@@ -336,24 +344,19 @@
            (bib-new-sentence
             `((concat ,(bib-format-field x "title")
                       " "
-                      ,(bib-document-type-identifier x "book"))
-              ,(bib-format-bvolume x))))
-         ,(bib-new-block
+                      ,(bib-document-type-identifier x "book")))))
+         ,(gbt-new-smart-block
            (if (bib-empty? x "crossref")
-               (bib-new-list-spc
-                `(,(bib-new-sentence
-                    `(,(bib-format-number-series x)))
-                  ,(bib-new-sentence
-                    `(,(bib-format-address-institution x)
-                      ,(if (bib-empty? x "edition") ""
-                           `(concat ,(bib-format-field x "edition")
-                                    ,(bib-translate " edition")))
-                      ,(bib-format-date x)))))
-               (bib-new-sentence
-                `((concat ,(bib-translate "in ")
-                          (cite ,(bib-field x "crossref")))
-                  ,(bib-format-field x "edition")
-                  ,(bib-format-date x)))))
+               `(,(bib-format-number-series x)
+                 ,(bib-format-address-institution x)
+                 ,(if (bib-empty? x "edition") ""
+                      `(concat ,(bib-format-field x "edition")
+                               ,(bib-translate " edition")))
+                 ,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-field x "edition")
+                 ,(bib-format-date x))) x)
          ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写会议论文格式以添加文献类型标识符 [C]
@@ -372,14 +375,13 @@
                        "//"
                        ,(bib-format-field-preserve-case x "booktitle")
                        ".")
-              (bib-new-sentence
+              (gbt-new-smart-sentence
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
-                 ,(bib-format-pages x)))))
-        ,(bib-new-block
-          (bib-new-sentence
-           `(,(bib-format-address-institution x)
-             ,(bib-format-date x))))
+                 ,(bib-format-pages x)) x)))
+        ,(gbt-new-smart-block
+          `(,(bib-format-address-institution x)
+            ,(bib-format-date x)) x)
         ,(bib-new-case-preserved-block (bib-format-url-doi x))))))
 
 ;; 重写会议录格式以添加文献类型标识符 [C]
