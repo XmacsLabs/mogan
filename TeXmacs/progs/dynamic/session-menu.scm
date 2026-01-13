@@ -174,7 +174,7 @@
           (text "Select path: ")
           (inert (input "path" "string" (list binary-path) ""))
           //
-          (resize "44px" "20px" (explicit-buttons
+          (explicit-buttons
             ((balloon (icon "tm_find.xpm") "Choose binary file")
               (choose-file
                 (lambda
@@ -182,7 +182,7 @@
                   (set! binary-path (url->system selected-url))
                   (refresh-now "input-path-widget"))
                 "Choose binary file"
-                (if (os-win32?) "windows-executables" "generic")))))
+                (if (os-win32?) "windows-executables" "generic"))))
           ))
       (glue #t #f 0 10)
       (hlist
