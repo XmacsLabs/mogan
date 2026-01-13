@@ -185,7 +185,6 @@ void
 tm_frame_rep::change_auxiliary_widget_focus () {
   url parent_window= concrete_window ()->parent;
   if (parent_window != url_none ()) {
-    cout << "当前buffer: " << window_to_buffer (parent_window) << "\n";
     focus_on_buffer (window_to_buffer (parent_window), true);
   }
 }
