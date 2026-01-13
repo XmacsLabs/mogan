@@ -29,7 +29,7 @@
 
   王青,张志学,张立峰. <newblock>基于深度学习的肺癌病理图像分类方法 [J/OL]. <newblock>中国医学影像技术, 2024, 40(1): 52-58 <newblock>[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.<newblock>
 
-  基本一致，标识符前不加空格，pages和dateurl之间不加空格，中文姓名的逗号后也需要空格
+  基本一致，标识符前不加空格，pages和dateurl之间不加空格
 
   \;
 
@@ -39,7 +39,7 @@
 
   李清泉,张远. <newblock>人工智能导论 [M/OL]. <newblock>北京: 电子工业出版社, 3 edition, 2023: 101-150 <newblock>[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
 
-  edition写法有问题，标识符前不加空格，pages和dateurl之间不加空格，中文姓名的逗号后也需要空格
+  edition写法有问题，标识符前不加空格，pages和dateurl之间不加空格
 
   \;
 
@@ -55,11 +55,11 @@
 
   4. 会议录 [C/OL] \ 
 
-  Dignum F, Omicini A, Tuyls K, eds. Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems[C/OL]. Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024[2025-12-25]. https://doi.org/10.5555/3635637.
+  DIGNUM F, OMICINI A, TUYLS K, eds. Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems[C/OL]. Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024[2025-12-25]. https://doi.org/10.5555/3635637.
 
-  <bib-names|<bib-name|Frank||Dignum|>|<bib-name|Andrea||Omicini|>|<bib-name|Karl||Tuyls|>>. <newblock>Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems [C/OL]. <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024. <newblock>[2025-12-25]. https://doi.org/10.5555/3635637.<newblock>
+  DIGNUM F, OMICINI A, TUYLS K, eds. <newblock>Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems [C/OL]. <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024 <newblock>[2025-12-25]. https://doi.org/10.5555/3635637.<newblock>
 
-  无法识别editor，标识符前不加空格，pages和dateurl之间不加.空格
+  基本一致，标识符前不加空格，pages和dateurl之间不加空格
 
   \;
 
@@ -87,9 +87,9 @@
 
   陈聪. 面向自动驾驶的鲁棒感知关键技术研究[D/OL]. 北京: 清华大学, 2023: 45-67[2025-12-25]. https://doi.org/10.5000/THU2023PC001.
 
-  陈聪. <newblock>面向自动驾驶的鲁棒感知关键技术研究 [D/OL]. <newblock>北京: 清华大学, 2023: 45-67. <newblock>[2025-12-25]. https://doi.org/10.5000/THU2023PC001.<newblock>
+  陈聪. <newblock>面向自动驾驶的鲁棒感知关键技术研究 [D/OL]. <newblock>北京: 清华大学, 2023: 45-67 <newblock>[2025-12-25]. https://doi.org/10.5000/THU2023PC001.<newblock>
 
-  基本一致，标识符前不加空格，pages和dateurl之间不加.空格
+  基本一致，标识符前不加空格，pages和dateurl之间不加空格
 
   \;
 
@@ -97,9 +97,9 @@
 
   刘思雨. 基于深度学习的肺结节检测算法研究[D/OL]. 上海: 上海交通大学, 2022: 23-40[2025-12-25]. https://dspace.sjtu.edu.cn/handle/12699/12345.
 
-  刘思雨. <newblock>基于深度学习的肺结节检测算法研究 [D/OL]. <newblock>上海: 上海交通大学, 2022: 23-40. <newblock>[2025-12-25]. https://dspace.sjtu.edu.cn/handle/12699/12345.<newblock>
+  刘思雨. <newblock>基于深度学习的肺结节检测算法研究 [D/OL]. <newblock>上海: 上海交通大学, 2022: 23-40 <newblock>[2025-12-25]. https://dspace.sjtu.edu.cn/handle/12699/12345.<newblock>
 
-  基本一致，标识符前不加空格，pages和dateurl之间不加.空格
+  基本一致，标识符前不加空格，pages和dateurl之间不加空格
 
   \;
 
@@ -245,49 +245,49 @@
 
   <\bibliography|bib|tm-gbt7714-2015|204_25>
     <\bib-list|22>
-      <bibitem*|1><label|bib-bib-format-electronic>中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知 [Z/OL]. <newblock>(2022-09-13) <newblock>[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe<rsub|8>33/202209/t20220913<rsub|6>60658.html.<newblock>
+      <bibitem*|1><label|bib-bib-format-electronic>中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知[Z/OL]. <newblock>(2022-09-13) <newblock>[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe<rsub|8>33/202209/t20220913<rsub|6>60658.html.<newblock>
 
-      <bibitem*|2><label|bib-bib-format-misc>中国载人航天工程办公室. <newblock>中国空间站科学实验资源手册 [Z/OL]. <newblock>2022. <newblock>[2025-12-25]. http://www.cmse.gov.cn/kxzy/kxzyzy/202207/P020220704356248569283.pdf.<newblock>
+      <bibitem*|2><label|bib-bib-format-misc>中国载人航天工程办公室. <newblock>中国空间站科学实验资源手册[Z/OL]. <newblock>2022. <newblock>[2025-12-25]. http://www.cmse.gov.cn/kxzy/kxzyzy/202207/P020220704356248569283.pdf.<newblock>
 
-      <bibitem*|3><label|bib-bib-format-mastersthesis>刘思雨. <newblock>基于深度学习的肺结节检测算法研究 [D/OL]. <newblock>上海: 上海交通大学, 2022: 23-40. <newblock>[2025-12-25]. https://dspace.sjtu.edu.cn/handle/12699/12345.<newblock>
+      <bibitem*|3><label|bib-bib-format-mastersthesis>刘思雨. <newblock>基于深度学习的肺结节检测算法研究[D/OL]. <newblock>上海: 上海交通大学, 2022: 23-40 <newblock>[2025-12-25]. https://dspace.sjtu.edu.cn/handle/12699/12345.<newblock>
 
-      <bibitem*|4><label|bib-bib-format-archive>南京市档案馆. <newblock>《南京长江大桥建设档案》 [Z/OL]. <newblock>1969. <newblock>[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
+      <bibitem*|4><label|bib-bib-format-archive>南京市档案馆. <newblock>《南京长江大桥建设档案》[Z/OL]. <newblock>1969. <newblock>[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
 
-      <bibitem*|5><label|bib-bib-format-online>国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见 [Z/OL]. <newblock>(2023-04-11) <newblock>[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c<rsub|1>683617348175741.htm.<newblock>
+      <bibitem*|5><label|bib-bib-format-online>国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见[Z/OL]. <newblock>(2023-04-11) <newblock>[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c<rsub|1>683617348175741.htm.<newblock>
 
-      <bibitem*|6><label|bib-bib-format-map>国家基础地理信息中心. <newblock>中国1∶100万数字地貌图 [Z/OL]. <newblock>2021. <newblock>[2025-12-25]. https://doi.org/10.12345/CM202103.<newblock>
+      <bibitem*|6><label|bib-bib-format-map>国家基础地理信息中心. <newblock>中国1∶100万数字地貌图[Z/OL]. <newblock>2021. <newblock>[2025-12-25]. https://doi.org/10.12345/CM202103.<newblock>
 
-      <bibitem*|7><label|bib-bib-format-techreport>张凯,王磊. <newblock>城市快速路交通流状态判别与预测技术报告 [R/OL]. <newblock>北京: 交通运输部公路科学研究院, 2023: 12-30. <newblock>[2025-12-25]. https://www.rioh.cn/uploads/tech/2023ITSC.pdf.<newblock>
+      <bibitem*|7><label|bib-bib-format-techreport>张凯, 王磊. <newblock>城市快速路交通流状态判别与预测技术报告[R/OL]. <newblock>北京: 交通运输部公路科学研究院, 2023: 12-30 <newblock>[2025-12-25]. https://www.rioh.cn/uploads/tech/2023ITSC.pdf.<newblock>
 
-      <bibitem*|8><label|bib-bib-format-patent>李建军,王雪. <newblock>一种面向自动驾驶的多模态融合感知系统 [Z/OL]. <newblock>2022. <newblock>[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.<newblock>
+      <bibitem*|8><label|bib-bib-format-patent>李建军, 王雪. <newblock>一种面向自动驾驶的多模态融合感知系统[Z/OL]. <newblock>2022. <newblock>[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.<newblock>
 
-      <bibitem*|9><label|bib-bib-format-book>李清泉,张远. <newblock>人工智能导论 [M/OL]. <newblock>北京: 电子工业出版社, 3 edition, 2023: 101-150 <newblock>[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
+      <bibitem*|9><label|bib-bib-format-book>李清泉, 张远. <newblock>人工智能导论[M/OL]. <newblock>北京: 电子工业出版社, 3 edition, 2023: 101-150 <newblock>[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
 
-      <bibitem*|10><label|bib-bib-format-newspaper>王姝. <newblock>“双减”后首批中考学生迎考：命题难度降低，分流力度不变 [Z/OL]. <newblock>(2023-06-21) <newblock>[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
+      <bibitem*|10><label|bib-bib-format-newspaper>王姝. <newblock>“双减”后首批中考学生迎考：命题难度降低，分流力度不变[Z/OL]. <newblock>(2023-06-21) <newblock>[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
 
-      <bibitem*|11><label|bib-bib-format-article>王青,张志学,张立峰. <newblock>基于深度学习的肺癌病理图像分类方法 [J/OL]. <newblock>中国医学影像技术, 2024, 40(1): 52-58 <newblock>[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.<newblock>
+      <bibitem*|11><label|bib-bib-format-article>王青, 张志学, 张立峰. <newblock>基于深度学习的肺癌病理图像分类方法[J/OL]. <newblock>中国医学影像技术, 2024, 40(1): 52-58 <newblock>[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.<newblock>
 
-      <bibitem*|12><label|bib-bib-format-other>赵一,钱二,孙三,等. <newblock>内部工作手册（光盘版） [Z]. <newblock>CD-ROM, 2020.<newblock>
+      <bibitem*|12><label|bib-bib-format-other>赵一, 钱二, 孙三, 等. <newblock>内部工作手册（光盘版）[Z]. <newblock>CD-ROM, 2020.<newblock>
 
-      <bibitem*|13><label|bib-bib-format-phdthesis>陈聪. <newblock>面向自动驾驶的鲁棒感知关键技术研究 [D/OL]. <newblock>北京: 清华大学, 2023: 45-67. <newblock>[2025-12-25]. https://doi.org/10.5000/THU2023PC001.<newblock>
+      <bibitem*|13><label|bib-bib-format-phdthesis>陈聪. <newblock>面向自动驾驶的鲁棒感知关键技术研究[D/OL]. <newblock>北京: 清华大学, 2023: 45-67 <newblock>[2025-12-25]. https://doi.org/10.5000/THU2023PC001.<newblock>
 
-      <bibitem*|14><label|bib-bib-format-software>APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka [Z/OL]. <newblock>2023. <newblock>[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
+      <bibitem*|14><label|bib-bib-format-software>APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka[Z/OL]. <newblock>2023. <newblock>[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
 
-      <bibitem*|15><label|bib-bib-format-program>APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka [Z/OL]. <newblock>2023. <newblock>[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
+      <bibitem*|15><label|bib-bib-format-program>APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka[Z/OL]. <newblock>2023. <newblock>[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
 
-      <bibitem*|16><label|bib-bib-format-collection>中国机械工程学会年会论文集 [Z/OL]. <newblock>2022: 1-15. <newblock>[2025-12-25]. https://doi.org/10.5000/CME2022G001.<newblock>
+      <bibitem*|16><label|bib-bib-format-collection>中国机械工程学会年会论文集[Z/OL]. <newblock>2022: 1-15. <newblock>[2025-12-25]. https://doi.org/10.5000/CME2022G001.<newblock>
 
-      <bibitem*|17><label|bib-bib-format-manual>北京: 国家市场监督管理总局 国家标准化管理委员会. <newblock>信息技术 人工智能 伦理审查指南: GB/T 43264-2023 [M/OL]. <newblock>北京: 国家市场监督管理总局 国家标准化管理委员会, 2023: 1-30. <newblock>[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.<newblock>
+      <bibitem*|17><label|bib-bib-format-manual>北京: 国家市场监督管理总局 国家标准化管理委员会. <newblock>信息技术 人工智能 伦理审查指南: GB/T 43264-2023[M/OL]. <newblock>北京: 国家市场监督管理总局 国家标准化管理委员会, 2023: 1-30 <newblock>[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.<newblock>
 
-      <bibitem*|18><label|bib-bib-format-standard>信息安全技术 个人信息安全规范 [Z/OL]. <newblock>2020: 1-35. <newblock>[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=7B8C7D8E7F8A8B8C8D8E8F.<newblock>
+      <bibitem*|18><label|bib-bib-format-standard>信息安全技术 个人信息安全规范[Z/OL]. <newblock>2020: 1-35. <newblock>[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=7B8C7D8E7F8A8B8C8D8E8F.<newblock>
 
-      <bibitem*|19><label|bib-bib-format-proceedings><bib-names|<bib-name|Frank||Dignum|>|<bib-name|Andrea||Omicini|>|<bib-name|Karl||Tuyls|>>. <newblock>Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems [C/OL]. <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024. <newblock>[2025-12-25]. https://doi.org/10.5555/3635637.<newblock>
+      <bibitem*|19><label|bib-bib-format-proceedings>DIGNUM F, OMICINI A, TUYLS K, eds. <newblock>Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems[C/OL]. <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024 <newblock>[2025-12-25]. https://doi.org/10.5555/3635637.<newblock>
 
-      <bibitem*|20><label|bib-bib-format-dataset>HE K, GKIOXARI G, DOLLÁR P, et al. <newblock>COCO 2017 Dataset [Z/OL]. <newblock>2017. <newblock>[2025-12-25]. https://doi.org/10.5281/zenodo.3243629.<newblock>
+      <bibitem*|20><label|bib-bib-format-dataset>HE K, GKIOXARI G, DOLLÁR P, et al. <newblock>COCO 2017 Dataset[Z/OL]. <newblock>2017. <newblock>[2025-12-25]. https://doi.org/10.5281/zenodo.3243629.<newblock>
 
-      <bibitem*|21><label|bib-bib-format-database>KAGGLE. <newblock>COVID-19 Open Research Dataset Challenge (CORD-19) [Z/OL]. <newblock>2020. <newblock>[2025-12-25]. https://www.kaggle.com/datasets/allen-institute/CORD-19-research-challenge.<newblock>
+      <bibitem*|21><label|bib-bib-format-database>KAGGLE. <newblock>COVID-19 Open Research Dataset Challenge (CORD-19)[Z/OL]. <newblock>2020. <newblock>[2025-12-25]. https://www.kaggle.com/datasets/allen-institute/CORD-19-research-challenge.<newblock>
 
-      <bibitem*|22><label|bib-bib-format-inproceedings>LI Y S, HAN S. <newblock>Efficient Collaboration with Unknown Agents: Ignoring Similar Agents Without Checking Similarity [C/OL]//Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024). <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024: 2363-2365 <newblock>[2025-12-25]. https://doi.org/10.5555/3635637.3663161.<newblock>
+      <bibitem*|22><label|bib-bib-format-inproceedings>LI Y S, HAN S. <newblock>Efficient Collaboration with Unknown Agents: Ignoring Similar Agents Without Checking Similarity[C/OL]//Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024). <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024: 2363-2365 <newblock>[2025-12-25]. https://doi.org/10.5555/3635637.3663161.<newblock>
     </bib-list>
   </bibliography>
 </body>
