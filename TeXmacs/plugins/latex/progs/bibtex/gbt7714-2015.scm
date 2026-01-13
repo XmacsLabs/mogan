@@ -129,11 +129,14 @@
   (:mode bib-gbt7714-2015?)
   ;; 根据文献类型和是否有在线访问信息返回标识符
   ;; type: "article", "book", "inproceedings", 等
-  ;; 检查是否有url或doi字段来判断是否为在线文献
-  (let* ((has-url (not (bib-null? (bib-field x "url"))))
+  ;; 优先使用note字段，如果note字段包含标识符
+  ;; 否则检查是否有url或doi字段来判断是否为在线文献
+  (let* ((note (bib-field x "note"))
+         (has-url (not (bib-null? (bib-field x "url"))))
          (has-doi (not (bib-null? (bib-field x "doi"))))
          (online (or has-url has-doi)))
     (cond
+      ((and (not (bib-null? note)) (not (equal? note ""))) note)  ;; 优先使用note字段
       ((equal? type "article") (if online "[J/OL]" "[J]"))         ;; 期刊
       ((equal? type "book") (if online "[M/OL]" "[M]"))            ;; 普通图书
       ((equal? type "inproceedings") (if online "[C/OL]" "[C]"))   ;; 会议录
