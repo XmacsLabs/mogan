@@ -21,7 +21,7 @@
 
   <with|text-bg-color|#ffe47f|1.期刊[J/OL]>
 
-  王青, 张志学, 张立峰. 基于深度学习的肺癌病理图像分类方法[J/OL]. 中国医学影像技术, 2024, 40(1): 52-58[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.
+  王青,张志学,张立峰. 基于深度学习的肺癌病理图像分类方法[J/OL]. 中国医学影像技术, 2024, 40(1): 52-58[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.
 
   王青, 张志学, 张立峰. <newblock>基于深度学习的肺癌病理图像分类方法[J/OL]. <newblock>中国医学影像技术, 2024, 40(1): 52-58[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.<newblock>
 
@@ -31,7 +31,7 @@
 
   <with|text-bg-color|#ffe47f|2.图书[M/OL]>
 
-  李清泉, 张远. 人工智能导论[M/OL]. 3版. 北京: 电子工业出版社, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.
+  李清泉,张远. 人工智能导论[M/OL]. 3版. 北京: 电子工业出版社, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.
 
   李清泉, 张远. <newblock>人工智能导论[M/OL]. <newblock>3版. <newblock>北京: 电子工业出版社, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
 
@@ -61,7 +61,7 @@
 
   5.手册/说明书[M/OL]
 
-  国家市场监督管理总局, 国家标准化管理委员会. 信息技术 人工智能 伦理审查指南: GB/T 43264-2023[M/OL]. 北京, 2023: 1-30[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.
+  国家市场监督管理总局,国家标准化管理委员会. 信息技术 人工智能 伦理审查指南: GB/T 43264-2023[M/OL]. 北京, 2023: 1-30[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.
 
   北京: 国家市场监督管理总局 国家标准化管理委员会. <newblock>信息技术 人工智能 伦理审查指南: GB/T 43264-2023[M/OL]. <newblock>北京: 国家市场监督管理总局 国家标准化管理委员会, 2023: 1-30[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.<newblock>
 
@@ -69,13 +69,13 @@
 
   \;
 
-  6. 杂项 [Z/OL] \ 
+  <with|text-bg-color|#ffe47f|6.杂项[Z/OL]>
 
   中国载人航天工程办公室. 中国空间站科学实验资源手册[Z/OL]. 2022[2025-12-25]. http://www.cmse.gov.cn/kxzy/kxzyzy/202207/P020220704356248569283.pdf.
 
-  中国载人航天工程办公室. <newblock>中国空间站科学实验资源手册 [Z/OL]. <newblock>2022. <newblock>[2025-12-25]. http://www.cmse.gov.cn/kxzy/kxzyzy/202207/P020220704356248569283.pdf.<newblock>
+  中国载人航天工程办公室. <newblock>中国空间站科学实验资源手册[Z/OL]. <newblock>2022[2025-12-25]. http://www.cmse.gov.cn/kxzy/kxzyzy/202207/P020220704356248569283.pdf.<newblock>
 
-  基本一致，标识符前不加空格，pages和dateurl之间不加.空格
+  完全一致！
 
   \;
 
@@ -101,7 +101,7 @@
 
   <with|text-bg-color|#ffe47f|9.技术报告[R/OL]>
 
-  张凯, 王磊. 城市快速路交通流状态判别与预测技术报告[R/OL]. 北京: 交通运输部公路科学研究院, 2023: 12-30[2025-12-25]. https://www.rioh.cn/uploads/tech/2023ITSC.pdf.
+  张凯,王磊. 城市快速路交通流状态判别与预测技术报告[R/OL]. 北京: 交通运输部公路科学研究院, 2023: 12-30[2025-12-25]. https://www.rioh.cn/uploads/tech/2023ITSC.pdf.
 
   张凯, 王磊. <newblock>城市快速路交通流状态判别与预测技术报告[R/OL]. <newblock>北京: 交通运输部公路科学研究院, 2023: 12-30[2025-12-25]. https://www.rioh.cn/uploads/tech/2023ITSC.pdf.<newblock>
 
@@ -111,11 +111,11 @@
 
   10. 专利 [P/OL] \ 
 
-  李建军, 王雪. 一种面向自动驾驶的多模态融合感知系统: CN114123456A[P/OL]. 2022-08-30[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.
+  李建军,王雪. 一种面向自动驾驶的多模态融合感知系统: CN114123456A[P/OL]. 2022-08-30[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.
 
-  李建军,王雪. <newblock>一种面向自动驾驶的多模态融合感知系统 [Z/OL]. <newblock>2022. <newblock>[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.<newblock>
+  李建军, 王雪. <newblock>一种面向自动驾驶的多模态融合感知系统: CN114123456A[P/OL]. <newblock>(2022-08-30)[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.<newblock>
 
-  标识符错误，缺少number
+  date不需要（）
 
   \;
 
@@ -123,19 +123,17 @@
 
   中华人民共和国教育部. 教育部关于印发《研究生教育学科专业目录（2022年）》的通知[EB/OL]. 2022-09-13[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe833/202209/t20220913_660658.html.
 
-  中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知 [Z/OL]. <newblock>(2022-09-13) <newblock>[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe833/202209/t20220913<rsub|6>60658.html.<newblock>
+  中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知[EB/OL]. <newblock>2022-09-13[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe<rsub|8>33/202209/t20220913<rsub|6>60658.html.<newblock>
 
-  标识符错误，EB的date不需要括号
-
-  “更新或修改日期（如有）<strong|直接放在题名之后、引用日期之前>，<strong|不加括号>；只有当文献本身有“出版年、卷、期、页码”等出版信息时，才把日期纳入括号内与它们并列。”
+  URL问题
 
   \;
 
   12. 标准 [S/OL] \ 
 
-  国家市场监督管理总局, 国家标准化管理委员会. 信息安全技术 个人信息安全规范: GB/T 35273-2020[S/OL]. 北京: 中国标准出版社, 2020: 1-35[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=7B8C7D8E7F8A8B8C8D8E8F.
+  国家市场监督管理总局,国家标准化管理委员会. 信息安全技术 个人信息安全规范: GB/T 35273-2020[S/OL]. 北京: 中国标准出版社, 2020: 1-35[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=7B8C7D8E7F8A8B8C8D8E8F.
 
-  信息安全技术 个人信息安全规范 [Z/OL]. <newblock>2020: 1-35. <newblock>[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=7B8C7D8E7F8A8B8C8D8E8F.<newblock>
+  信息安全技术 个人信息安全规范: GB/T 35273-2020[S/OL]. <newblock>北京: 国家市场监督管理总局 国家标准化管理委员会, 2020: 1-35[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=7B8C7D8E7F8A8B8C8D8E8F.<newblock>
 
   问题很大，标识符错误，缺信息
 
@@ -145,19 +143,19 @@
 
   Kaggle. COVID-19 Open Research Dataset Challenge (CORD-19)[DB/OL]. 2020[2025-12-25]. https://www.kaggle.com/datasets/allen-institute/CORD-19-research-challenge.
 
-  KAGGLE. <newblock>COVID-19 Open Research Dataset Challenge (CORD-19) [Z/OL]. <newblock>2020. <newblock>[2025-12-25]. https://www.kaggle.com/datasets/allen-institute/CORD-19-research-challenge.<newblock>
+  KAGGLE. <newblock>COVID-19 Open Research Dataset Challenge (CORD-19)[DB/OL]. <newblock>2020[2025-12-25]. https://www.kaggle.com/datasets/allen-institute/CORD-19-research-challenge.<newblock>
 
-  基本一致，标识符错误
+  author使用双括号时，不需要处理
 
   \;
 
-  14. 在线网页 [EB/OL] \ 
+  <with|text-bg-color|#ffe47f|14.在线网页[EB/OL]>
 
   国家互联网信息办公室. 《生成式人工智能服务管理办法（征求意见稿）》公开征求意见[EB/OL]. 2023-04-11[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c_1683617348175741.htm.
 
-  国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见 [Z/OL]. <newblock>(2023-04-11) <newblock>[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c<rsub|1>683617348175741.htm.<newblock>
+  国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见[EB/OL]. <newblock>2023-04-11[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c<rsub|1>683617348175741.htm.<newblock>
 
-  缺标识符
+  完全一致
 
   \;
 
@@ -165,19 +163,19 @@
 
   王姝. “双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. 新京报, 2023-06-21(A06)[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.
 
-  王姝. <newblock>“双减”后首批中考学生迎考：命题难度降低，分流力度不变 [Z/OL]. <newblock>(2023-06-21) <newblock>[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
+  王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, (2023-06-21)[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
 
-  缺标识符和journal
+  date不用括号，pages需要
 
   \;
 
-  16. 汇编 [G/OL] \ 
+  <with|text-bg-color|#ffe47f|16.汇编[G/OL]>
 
-  周济, 谢友柏, 编. 中国机械工程学会年会论文集[G/OL]. 上海: 上海交通大学出版社, 2022: 1-15[2025-12-25]. https://doi.org/10.5000/CME2022G001.
+  周济,谢友柏,主编. 中国机械工程学会年会论文集[G/OL]. 上海: 上海交通大学出版社, 2022: 1-15[2025-12-25]. https://doi.org/10.5000/CME2022G001.
 
-  中国机械工程学会年会论文集 [Z/OL]. <newblock>2022: 1-15. <newblock>[2025-12-25]. https://doi.org/10.5000/CME2022G001.<newblock>
+  周济,谢友柏,主编. <newblock>中国机械工程学会年会论文集[G/OL]. <newblock>上海: 上海交通大学出版社, 2022: 1-15[2025-12-25]. https://doi.org/10.5000/CME2022G001.<newblock>
 
-  缺editor
+  完全一致！
 
   \;
 
@@ -185,9 +183,9 @@
 
   Apache Software Foundation. Apache Kafka[CP/OL]. Version 3.5.0, 2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.
 
-  APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka [Z/OL]. <newblock>2023. <newblock>[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
+  APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0. \ <newblock>2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
 
-  author不需要大写，缺version
+  author
 
   \;
 
@@ -195,7 +193,7 @@
 
   Apache Software Foundation. Apache Kafka[CP/OL]. Version 3.5.0, 2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.
 
-  APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka [Z/OL]. <newblock>2023. <newblock>[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
+  APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0. \ <newblock>2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
 
   同上
 
@@ -205,9 +203,9 @@
 
   南京市档案馆. 南京长江大桥建设档案[A/OL]. 档号: J007-001-123. 南京, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.
 
-  南京市档案馆. <newblock>《南京长江大桥建设档案》 [Z/OL]. <newblock>1969. <newblock>[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
+  南京市档案馆. <newblock>《南京长江大桥建设档案》: 档号：J007-001-123[A/OL]. <newblock>南京, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
 
-  缺标识符，内容有问题
+  内容有问题
 
   \;
 
@@ -215,9 +213,9 @@
 
   国家基础地理信息中心. 中国1∶100万数字地貌图[CM/OL]. 3版. 北京, 2021[2025-12-25]. https://doi.org/10.12345/CM202103.
 
-  国家基础地理信息中心. <newblock>中国1∶100万数字地貌图 [Z/OL]. <newblock>2021. <newblock>[2025-12-25]. https://doi.org/10.12345/CM202103.<newblock>
+  国家基础地理信息中心. <newblock>中国1∶100万数字地貌图[CM/OL]. <newblock>3 edition. <newblock>北京, 2021[2025-12-25]. https://doi.org/10.12345/CM202103.<newblock>
 
-  缺标识符，缺address
+  edition有问题
 
   \;
 
@@ -233,55 +231,55 @@
 
   22. 其他 [Z] \ 
 
-  赵一, 钱二, 孙三,等. 内部工作手册（光盘版）[Z]. 北京: 内部发行, 2020.
+  赵一,钱二,孙三,等. 内部工作手册（光盘版）[Z]. 北京: 内部发行, 2020.
 
-  赵一,钱二,孙三,等. <newblock>内部工作手册（光盘版） [Z]. <newblock>CD-ROM, 2020.<newblock>
+  赵一,钱二,孙三,等. <newblock>内部工作手册（光盘版）[Z]. <newblock>北京: 内部发行, 2020.
 
-  address和publisher没有
+  完全一致！
 
   <\bibliography|bib|tm-gbt7714-2015|204_25>
     <\bib-list|22>
-      <bibitem*|1><label|bib-bib-format-electronic>中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知. <newblock>(2022-09-13)<newblock>
+      <bibitem*|1><label|bib-bib-format-electronic>中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知[EB/OL]. <newblock>2022-09-13[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe<rsub|8>33/202209/t20220913<rsub|6>60658.html.<newblock>
 
-      <bibitem*|2><label|bib-bib-format-misc>中国载人航天工程办公室. <newblock>中国空间站科学实验资源手册. <newblock>2022.<newblock>
+      <bibitem*|2><label|bib-bib-format-misc>中国载人航天工程办公室. <newblock>中国空间站科学实验资源手册[Z/OL]. <newblock>2022[2025-12-25]. http://www.cmse.gov.cn/kxzy/kxzyzy/202207/P020220704356248569283.pdf.<newblock>
 
       <bibitem*|3><label|bib-bib-format-mastersthesis>刘思雨. <newblock>基于深度学习的肺结节检测算法研究[D/OL]. <newblock>上海: 上海交通大学, 2022: 23-40[2025-12-25]. https://dspace.sjtu.edu.cn/handle/12699/12345.<newblock>
 
-      <bibitem*|4><label|bib-bib-format-archive>南京市档案馆. <newblock>《南京长江大桥建设档案》. <newblock>1969.<newblock>
+      <bibitem*|4><label|bib-bib-format-archive>南京市档案馆. <newblock>《南京长江大桥建设档案》: 档号：J007-001-123[A/OL]. <newblock>南京, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
 
-      <bibitem*|5><label|bib-bib-format-online>国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见. <newblock>(2023-04-11)<newblock>
+      <bibitem*|5><label|bib-bib-format-online>国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见[EB/OL]. <newblock>2023-04-11[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c<rsub|1>683617348175741.htm.<newblock>
 
-      <bibitem*|6><label|bib-bib-format-map>国家基础地理信息中心. <newblock>中国1∶100万数字地貌图. <newblock>2021.<newblock>
+      <bibitem*|6><label|bib-bib-format-map>国家基础地理信息中心. <newblock>中国1∶100万数字地貌图[CM/OL]. <newblock>3 edition. <newblock>北京, 2021[2025-12-25]. https://doi.org/10.12345/CM202103.<newblock>
 
-      <bibitem*|7><label|bib-bib-format-techreport>张凯, 王磊. <newblock>城市快速路交通流状态判别与预测技术报告[R/OL]. <newblock>北京: 交通运输部公路科学研究院, 2023: 12-30[2025-12-25]. https://www.rioh.cn/uploads/tech/2023ITSC.pdf.<newblock>
+      <bibitem*|7><label|bib-bib-format-techreport>张凯,王磊. <newblock>城市快速路交通流状态判别与预测技术报告[R/OL]. <newblock>北京: 交通运输部公路科学研究院, 2023: 12-30[2025-12-25]. https://www.rioh.cn/uploads/tech/2023ITSC.pdf.<newblock>
 
-      <bibitem*|8><label|bib-bib-format-patent>李建军, 王雪. <newblock>一种面向自动驾驶的多模态融合感知系统. <newblock>2022.<newblock>
+      <bibitem*|8><label|bib-bib-format-patent>李建军,王雪. <newblock>一种面向自动驾驶的多模态融合感知系统: CN114123456A[P/OL]. <newblock>(2022-08-30)[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.<newblock>
 
-      <bibitem*|9><label|bib-bib-format-book>李清泉, 张远. <newblock>人工智能导论[M/OL]. <newblock>3版. <newblock>北京: 电子工业出版社, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
+      <bibitem*|9><label|bib-bib-format-book>李清泉,张远. <newblock>人工智能导论[M/OL]. <newblock>3版. <newblock>北京: 电子工业出版社, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
 
-      <bibitem*|10><label|bib-bib-format-newspaper>王姝. <newblock>“双减”后首批中考学生迎考：命题难度降低，分流力度不变. <newblock>(2023-06-21)<newblock>
+      <bibitem*|10><label|bib-bib-format-newspaper>王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, (2023-06-21)[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
 
-      <bibitem*|11><label|bib-bib-format-article>王青, 张志学, 张立峰. <newblock>基于深度学习的肺癌病理图像分类方法[J/OL]. <newblock>中国医学影像技术, 2024, 40(1): 52-58[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.<newblock>
+      <bibitem*|11><label|bib-bib-format-article>王青,张志学,张立峰. <newblock>基于深度学习的肺癌病理图像分类方法[J/OL]. <newblock>中国医学影像技术, 2024, 40(1): 52-58[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.<newblock>
 
-      <bibitem*|12><label|bib-bib-format-other>赵一, 钱二, 孙三, 等. <newblock>内部工作手册（光盘版）. <newblock>CD-ROM, 2020.<newblock>
+      <bibitem*|12><label|bib-bib-format-other>赵一,钱二,孙三,等. <newblock>内部工作手册（光盘版）[Z]. <newblock>北京: 内部发行, 2020.
 
       <bibitem*|13><label|bib-bib-format-phdthesis>陈聪. <newblock>面向自动驾驶的鲁棒感知关键技术研究[D/OL]. <newblock>北京: 清华大学, 2023: 45-67[2025-12-25]. https://doi.org/10.5000/THU2023PC001.<newblock>
 
-      <bibitem*|14><label|bib-bib-format-software>APACHE SOFTWARE FOUNDATION. <newblock>Apache kafka. <newblock>2023.<newblock>
+      <bibitem*|14><label|bib-bib-format-software>APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0. \ <newblock>2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
 
-      <bibitem*|15><label|bib-bib-format-program>APACHE SOFTWARE FOUNDATION. <newblock>Apache kafka. <newblock>2023.<newblock>
+      <bibitem*|15><label|bib-bib-format-program>APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0. \ <newblock>2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
 
-      <bibitem*|16><label|bib-bib-format-collection>中国机械工程学会年会论文集. <newblock>2022: 1-15.<newblock>
+      <bibitem*|16><label|bib-bib-format-collection>周济,谢友柏,主编. <newblock>中国机械工程学会年会论文集[G/OL]. <newblock>上海: 上海交通大学出版社, 2022: 1-15[2025-12-25]. https://doi.org/10.5000/CME2022G001.<newblock>
 
       <bibitem*|17><label|bib-bib-format-manual>北京: 国家市场监督管理总局 国家标准化管理委员会. <newblock>信息技术 人工智能 伦理审查指南: GB/T 43264-2023[M/OL]. <newblock>北京: 国家市场监督管理总局 国家标准化管理委员会, 2023: 1-30[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.<newblock>
 
-      <bibitem*|18><label|bib-bib-format-standard>信息安全技术 个人信息安全规范. <newblock>2020: 1-35.<newblock>
+      <bibitem*|18><label|bib-bib-format-standard>信息安全技术 个人信息安全规范: GB/T 35273-2020[S/OL]. <newblock>北京: 国家市场监督管理总局 国家标准化管理委员会, 2020: 1-35[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=7B8C7D8E7F8A8B8C8D8E8F.<newblock>
 
       <bibitem*|19><label|bib-bib-format-proceedings>DIGNUM F, OMICINI A, TUYLS K, eds. <newblock>Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems[C/OL]. <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024[2025-12-25]. https://doi.org/10.5555/3635637.<newblock>
 
-      <bibitem*|20><label|bib-bib-format-dataset>HE K, GKIOXARI G, DOLLÁR P, et al. <newblock>Coco 2017 dataset. <newblock>2017.<newblock>
+      <bibitem*|20><label|bib-bib-format-dataset>HE K, GKIOXARI G, DOLLÁR P, et al. <newblock>COCO 2017 Dataset[DS/OL]. <newblock>2017[2025-12-25]. https://doi.org/10.5281/zenodo.3243629.<newblock>
 
-      <bibitem*|21><label|bib-bib-format-database>KAGGLE. <newblock>Covid-19 open research dataset challenge (cord-19) <newblock>2020.<newblock>
+      <bibitem*|21><label|bib-bib-format-database>KAGGLE. <newblock>COVID-19 Open Research Dataset Challenge (CORD-19)[DB/OL]. <newblock>2020[2025-12-25]. https://www.kaggle.com/datasets/allen-institute/CORD-19-research-challenge.<newblock>
 
       <bibitem*|22><label|bib-bib-format-inproceedings>LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: Ignoring similar agents without checking similarity[C/OL]//Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024). <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024: 2363-2365[2025-12-25]. https://doi.org/10.5555/3635637.3663161.<newblock>
     </bib-list>
