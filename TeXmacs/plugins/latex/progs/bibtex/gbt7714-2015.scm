@@ -40,6 +40,16 @@
       `(concat ,(gbt-new-smart-sentence x ref)
                ,(bib-new-case-preserved-block (bib-format-url-doi ref)))))
 
+;; 通用版本格式化函数
+(tm-define (gbt-format-edition x chinese?)
+  (:mode bib-gbt7714-2015?)
+  (let ((edition-field (bib-field x "edition")))
+    (if (or (bib-null? edition-field) (equal? edition-field ""))
+        ""
+        (if chinese?
+            `(concat "<#7B2C>" ,edition-field "<#7248>")  ;; 第X版
+            `(concat ,edition-field " edition")))))
+
 ;; 子字符串检查函数
 (define (substring? pat text)
   (let ((pat-len (string-length pat))
@@ -386,11 +396,8 @@
               `((concat ,(bib-format-field x "title")
                         ,(bib-document-type-identifier x "book")))))
            ,(bib-new-block
-             (if (bib-empty? x "edition") ""
-                 `(concat ,(bib-format-field x "edition")
-                          ,(if chinese?
-                               "<#7248>" ;;版
-                               " edition"))))
+             (let ((edition-str (gbt-format-edition x chinese?)))
+               (if (equal? edition-str "") "" edition-str)))
            ,(gbt-new-smart-block-with-url
              (if (bib-empty? x "crossref")
                  `(,(bib-format-number-series x)
@@ -446,28 +453,42 @@
 ;; 重写手册格式以添加文献类型标识符 [S]
 (tm-define (bib-format-manual n x)
   (:mode bib-gbt7714-2015?)
-  `(concat
-     ,(bib-format-bibitem n x)
-     ,(bib-label (list-ref x 2))
-     ,(bib-new-list-spc
-       `(,(bib-new-block
-           (if (bib-empty? x "author")
-               (bib-new-sentence `(,(bib-format-address-institution x)))
-               (bib-format-author x)))
-         ,(bib-new-block
-           (let* ((title (bib-format-field-preserve-case x "title"))
-                  (number (bib-field x "number"))
-                  (identifier (bib-document-type-identifier x "manual")))
-             (if (bib-null? number)
-                 `(concat ,title ,identifier)
-                 `(concat ,title ": " ,number ,identifier))))
-         ,(gbt-new-smart-block-with-url
+  (let ((chinese? (authors-contain-chinese?
+                   (if (bib-empty? x "author")
+                       '()
+                       (bib-field x "author")))))
+    `(concat
+       ,(bib-format-bibitem n x)
+       ,(bib-label (list-ref x 2))
+       ,(bib-new-list-spc
+         `(,(bib-new-block
+             (if (bib-empty? x "author")
+                 (bib-new-sentence `(,(bib-format-address-institution x)))
+                 (bib-format-author x)))
+           ,(bib-new-block
+             (let* ((title (bib-format-field-preserve-case x "title"))
+                    (number (bib-field x "number"))
+                    (identifier (bib-document-type-identifier x "manual")))
+               (if (bib-null? number)
+                   `(concat ,title ,identifier)
+                   `(concat ,title ": " ,number ,identifier))))
+           ,(bib-new-block
+             (let ((edition-str (gbt-format-edition x chinese?)))
+               (if (equal? edition-str "") "" edition-str)))
+           ,(gbt-new-smart-block-with-url
            (if (bib-empty? x "crossref")
-               `(,(bib-format-address-institution x)
-                 ,(bib-format-date x))
+               (if (bib-empty? x "author")
+                   (let ((address (bib-field x "address"))
+                         (date (bib-format-date x)))
+                     (cond
+                       ((and (bib-null? address) (bib-null? date)) '())
+                       ((bib-null? address) `(,date))
+                       (else `(,address ,date))))
+                   `(,(bib-format-address-institution x)
+                     ,(bib-format-date x)))
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
-                 ,(bib-format-date x))) x)))))
+                 ,(bib-format-date x))) x))))))
 
 ;; 重写博士论文格式以添加文献类型标识符 [D]
 (tm-define (bib-format-phdthesis n x)
@@ -587,8 +608,12 @@
                  `(concat ,title ": " ,number ,identifier))))
          ,(gbt-new-smart-block-with-url
            (if (bib-empty? x "crossref")
-               `(,(bib-format-address-institution x)
-                 ,(bib-format-date x))
+               (let ((address (bib-field x "address"))
+                     (date (bib-format-date x)))
+                 (cond
+                   ((and (bib-null? address) (bib-null? date)) '())
+                   ((bib-null? address) `(,date))
+                   (else `(,address ,date))))
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-date x))) x)))))
@@ -782,11 +807,8 @@
              `(concat ,(bib-format-field-preserve-case x "title")
                       ,(bib-document-type-identifier x "map")))
            ,(bib-new-block
-             (if (bib-empty? x "edition") ""
-                 `(concat ,(bib-format-field x "edition")
-                          ,(if chinese?
-                               "<#7248>" ;;版
-                               " edition"))))
+             (let ((edition-str (gbt-format-edition x chinese?)))
+               (if (equal? edition-str "") "" edition-str)))
            ,(gbt-new-smart-block-with-url
              (if (bib-empty? x "crossref")
                  `(,(bib-format-address-institution x)
