@@ -1070,7 +1070,8 @@ bib_parse_fields (tree& t) {
   // cout << ">>> " << latex << LF;
   bool gbt7714_style= is_gbt7714_style ();
   for (int k= 0; k < N (latex); k++)
-    if (is_atomic (latex[k]) && is_hyper_link (latex[k]->label) && !gbt7714_style)
+    if (is_atomic (latex[k]) && is_hyper_link (latex[k]->label) &&
+        !gbt7714_style)
       latex[k]= compound ("slink", latex[k]);
   int i= 0;
   if (nb == N (latex)) bib_set_fields (t, latex, i);
