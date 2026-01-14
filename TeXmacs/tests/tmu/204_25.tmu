@@ -15,7 +15,7 @@
     <assign|transform-bibitem|<macro|body|[<arg|body>]<space|1.5fn>>>
   </hide-preamble>
 
-  <cite|bib-format-article><cite|bib-format-book><cite|bib-format-inproceedings><cite|bib-format-proceedings><cite|bib-format-manual><cite|bib-format-misc><cite|bib-format-phdthesis><cite|bib-format-mastersthesis><cite|bib-format-techreport><cite|bib-format-patent><cite|bib-format-electronic><cite|bib-format-standard><cite|bib-format-database><cite|bib-format-online><cite|bib-format-newspaper><cite|bib-format-collection><cite|bib-format-software><cite|bib-format-program><cite|bib-format-archive><cite|bib-format-map><cite|bib-format-dataset><cite|bib-format-other>
+  <cite|bib-format-article><cite|bib-format-book><cite|bib-format-inproceedings><cite|bib-format-proceedings><cite|bib-format-manual><cite|bib-format-misc><cite|bib-format-phdthesis><cite|bib-format-mastersthesis><cite|bib-format-techreport><cite|bib-format-patent><cite|bib-format-electronic><cite|bib-format-standard><cite|bib-format-database><cite|bib-format-online><cite|bib-format-newspaper><cite|bib-format-collection><cite|bib-format-software><cite|bib-format-program><cite|bib-format-archive><cite|bib-format-map><cite|bib-format-dataset><cite|bib-format-other><cite|bib-format-inbook><cite|bib-format-incollection>
 
   \;
 
@@ -171,7 +171,7 @@
 
   \;
 
-  20. 舆图 [CM/OL] \ 
+  <with|text-bg-color|#ffe47f|20.舆图[CM/OL]>
 
   国家基础地理信息中心. 中国1∶100万数字地貌图[CM/OL]. 第3版. 北京, 2021[2025-12-25]. https://doi.org/10.12345/CM202103.
 
@@ -189,12 +189,28 @@
 
   <with|text-bg-color|#ffe47f|22.其他[Z]>
 
-  赵一,钱二,孙三,等. 内部工作手册（光盘版）[Z]. 北京: 内部发行, 2020.
+  赵一,钱二,孙三,等. 内部工作手册[Z]. 北京: 内部发行, 2020.
 
-  赵一,钱二,孙三,等. <newblock>内部工作手册（光盘版）[Z]. <newblock>北京: 内部发行, 2020.
+  赵一,钱二,孙三,等. <newblock>内部工作手册[Z]. <newblock>北京: 内部发行, 2020.
+
+  \;
+
+  <with|text-bg-color|#ffe47f|23.析出图书[M]>
+
+  王重. 南京长江大桥结构设计[M]//铁道部大桥工程局. 南京长江大桥技术总结: 第2版. 北京: 人民交通出版社, 2020: 66-78.
+
+  王重. <newblock>南京长江大桥结构设计[M]//铁道部大桥工程局. 南京长江大桥技术总结: 第2版. <newblock>北京: 人民交通出版社, 2020: 66-78.
+
+  \;
+
+  <with|text-bg-color|#ffe47f|24.析出汇编[G]>
+
+  赵军. 长江岸线资源评价方法[G]//刘昌明,杨桂山. 长江岸线资源调查与评估. 北京: 科学出版社, \ 2020: 45-58.
+
+  赵军. <newblock>长江岸线资源评价方法[G]//刘昌明,杨桂山. 长江岸线资源调查与评估. <newblock>北京: 科学出版社, 2020: 45-58.
 
   <\bibliography|bib|tm-gbt7714-2015|204_25>
-    <\bib-list|22>
+    <\bib-list|24>
       <bibitem*|1><label|bib-bib-format-electronic>中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知[EB/OL]. <newblock>2022-09-13[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe<rsub|8>33/202209/t20220913<rsub|6>60658.html.<newblock>
 
       <bibitem*|2><label|bib-bib-format-misc>中国载人航天工程办公室. <newblock>中国空间站科学实验资源手册[Z/OL]. <newblock>2022[2025-12-25]. http://www.cmse.gov.cn/kxzy/kxzyzy/202207/P020220704356248569283.pdf.<newblock>
@@ -219,25 +235,29 @@
 
       <bibitem*|12><label|bib-bib-format-newspaper>王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, 2023-06-21(A06)[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
 
-      <bibitem*|13><label|bib-bib-format-article>王青,张志学,张立峰. <newblock>基于深度学习的肺癌病理图像分类方法[J/OL]. <newblock>中国医学影像技术, 2024, 40(1): 52-58[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.<newblock>
+      <bibitem*|13><label|bib-bib-format-inbook>王重. <newblock>南京长江大桥结构设计[M]//铁道部大桥工程局. 南京长江大桥技术总结: 第2版. <newblock>北京: 人民交通出版社, 2020: 66-78.
 
-      <bibitem*|14><label|bib-bib-format-other>赵一,钱二,孙三,等. <newblock>内部工作手册（光盘版）[Z]. <newblock>北京: 内部发行, 2020.
+      <bibitem*|14><label|bib-bib-format-article>王青,张志学,张立峰. <newblock>基于深度学习的肺癌病理图像分类方法[J/OL]. <newblock>中国医学影像技术, 2024, 40(1): 52-58[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.<newblock>
 
-      <bibitem*|15><label|bib-bib-format-phdthesis>陈聪. <newblock>面向自动驾驶的鲁棒感知关键技术研究[D/OL]. <newblock>北京: 清华大学, 2023: 45-67[2025-12-25]. https://doi.org/10.5000/THU2023PC001.<newblock>
+      <bibitem*|15><label|bib-bib-format-other>赵一,钱二,孙三,等. <newblock>内部工作手册[Z]. <newblock>北京: 内部发行, 2020.
 
-      <bibitem*|16><label|bib-bib-format-software>Apache Software Foundation. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0, 2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
+      <bibitem*|16><label|bib-bib-format-incollection>赵军. <newblock>长江岸线资源评价方法[G]//刘昌明,杨桂山. 长江岸线资源调查与评估. <newblock>北京: 科学出版社, 2020: 45-58.
 
-      <bibitem*|17><label|bib-bib-format-program>Apache Software Foundation. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0, 2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
+      <bibitem*|17><label|bib-bib-format-phdthesis>陈聪. <newblock>面向自动驾驶的鲁棒感知关键技术研究[D/OL]. <newblock>北京: 清华大学, 2023: 45-67[2025-12-25]. https://doi.org/10.5000/THU2023PC001.<newblock>
 
-      <bibitem*|18><label|bib-bib-format-collection>周济,谢友柏,主编. <newblock>中国机械工程学会年会论文集[G/OL]. <newblock>上海: 上海交通大学出版社, 2022: 1-15[2025-12-25]. https://doi.org/10.5000/CME2022G001.<newblock>
+      <bibitem*|18><label|bib-bib-format-software>Apache Software Foundation. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0, 2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
 
-      <bibitem*|19><label|bib-bib-format-proceedings>DIGNUM F, OMICINI A, TUYLS K, eds. <newblock>Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems[C/OL]. <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024[2025-12-25]. https://doi.org/10.5555/3635637.<newblock>
+      <bibitem*|19><label|bib-bib-format-program>Apache Software Foundation. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0, 2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
 
-      <bibitem*|20><label|bib-bib-format-dataset>HE K, GKIOXARI G, DOLLÁR P, et al. <newblock>COCO 2017 Dataset[DS/OL]. <newblock>2017[2025-12-25]. https://doi.org/10.5281/zenodo.3243629.<newblock>
+      <bibitem*|20><label|bib-bib-format-collection>周济,谢友柏,主编. <newblock>中国机械工程学会年会论文集[G/OL]. <newblock>上海: 上海交通大学出版社, 2022: 1-15[2025-12-25]. https://doi.org/10.5000/CME2022G001.<newblock>
 
-      <bibitem*|21><label|bib-bib-format-database>Kaggle. <newblock>COVID-19 Open Research Dataset Challenge (CORD-19)[DB/OL]. <newblock>2020[2025-12-25]. https://www.kaggle.com/datasets/allen-institute/CORD-19-research-challenge.<newblock>
+      <bibitem*|21><label|bib-bib-format-proceedings>DIGNUM F, OMICINI A, TUYLS K, eds. <newblock>Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems[C/OL]. <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024[2025-12-25]. https://doi.org/10.5555/3635637.<newblock>
 
-      <bibitem*|22><label|bib-bib-format-inproceedings>LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: Ignoring similar agents without checking similarity[C/OL]//Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024). <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024: 2363-2365[2025-12-25]. https://doi.org/10.5555/3635637.3663161.<newblock>
+      <bibitem*|22><label|bib-bib-format-dataset>HE K, GKIOXARI G, DOLLÁR P, et al. <newblock>COCO 2017 Dataset[DS/OL]. <newblock>2017[2025-12-25]. https://doi.org/10.5281/zenodo.3243629.<newblock>
+
+      <bibitem*|23><label|bib-bib-format-database>Kaggle. <newblock>COVID-19 Open Research Dataset Challenge (CORD-19)[DB/OL]. <newblock>2020[2025-12-25]. https://www.kaggle.com/datasets/allen-institute/CORD-19-research-challenge.<newblock>
+
+      <bibitem*|24><label|bib-bib-format-inproceedings>LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: Ignoring similar agents without checking similarity[C/OL]//Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024). <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024: 2363-2365[2025-12-25]. https://doi.org/10.5555/3635637.3663161.<newblock>
     </bib-list>
   </bibliography>
 </body>
@@ -254,25 +274,27 @@
   <\collection>
     <associate|auto-1|<tuple|?|?>>
     <associate|bib-bib-format-archive|<tuple|5|?>>
-    <associate|bib-bib-format-article|<tuple|13|?>>
+    <associate|bib-bib-format-article|<tuple|14|?>>
     <associate|bib-bib-format-book|<tuple|11|?>>
-    <associate|bib-bib-format-collection|<tuple|18|?>>
-    <associate|bib-bib-format-database|<tuple|21|?>>
-    <associate|bib-bib-format-dataset|<tuple|20|?>>
+    <associate|bib-bib-format-collection|<tuple|20|?>>
+    <associate|bib-bib-format-database|<tuple|23|?>>
+    <associate|bib-bib-format-dataset|<tuple|22|?>>
     <associate|bib-bib-format-electronic|<tuple|1|?>>
-    <associate|bib-bib-format-inproceedings|<tuple|22|?>>
+    <associate|bib-bib-format-inbook|<tuple|13|?>>
+    <associate|bib-bib-format-incollection|<tuple|16|?>>
+    <associate|bib-bib-format-inproceedings|<tuple|24|?>>
     <associate|bib-bib-format-manual|<tuple|4|?>>
     <associate|bib-bib-format-map|<tuple|7|?>>
     <associate|bib-bib-format-mastersthesis|<tuple|3|?>>
     <associate|bib-bib-format-misc|<tuple|2|?>>
     <associate|bib-bib-format-newspaper|<tuple|12|?>>
     <associate|bib-bib-format-online|<tuple|6|?>>
-    <associate|bib-bib-format-other|<tuple|14|?>>
+    <associate|bib-bib-format-other|<tuple|15|?>>
     <associate|bib-bib-format-patent|<tuple|10|?>>
-    <associate|bib-bib-format-phdthesis|<tuple|15|?>>
-    <associate|bib-bib-format-proceedings|<tuple|19|?>>
-    <associate|bib-bib-format-program|<tuple|17|?>>
-    <associate|bib-bib-format-software|<tuple|16|?>>
+    <associate|bib-bib-format-phdthesis|<tuple|17|?>>
+    <associate|bib-bib-format-proceedings|<tuple|21|?>>
+    <associate|bib-bib-format-program|<tuple|19|?>>
+    <associate|bib-bib-format-software|<tuple|18|?>>
     <associate|bib-bib-format-standard|<tuple|8|?>>
     <associate|bib-bib-format-techreport|<tuple|9|?>>
   </collection>
@@ -324,6 +346,10 @@
       bib-format-dataset
 
       bib-format-other
+
+      bib-format-inbook
+
+      bib-format-incollection
     </associate>
     <\associate|toc>
       <vspace*|2fn><\with|font-series|<quote|bold>|math-font-series|<quote|bold>|font-size|<quote|1.19>>

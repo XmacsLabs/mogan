@@ -240,12 +240,14 @@
       ((and (not (bib-null? note)) (not (equal? note ""))) note)  ;; 优先使用note字段
       ((equal? type "article") (if online "[J/OL]" "[J]"))         ;; 期刊!
       ((equal? type "book") (if online "[M/OL]" "[M]"))            ;; 普通图书!
+      ((equal? type "inbook") (if online "[M/OL]" "[M]"))          ;; 析出图书!
       ((equal? type "inproceedings") (if online "[C/OL]" "[C]"))   ;; 会议录!
       ((equal? type "proceedings") (if online "[C/OL]" "[C]"))     ;; 会议录!
       ((equal? type "phdthesis") (if online "[D/OL]" "[D]"))       ;; 学位论文-博士!
       ((equal? type "mastersthesis") (if online "[D/OL]" "[D]"))   ;; 学位论文-硕士!
       ((equal? type "techreport") (if online "[R/OL]" "[R]"))      ;; 报告!
       ((equal? type "collection") (if online "[G/OL]" "[G]"))      ;; 汇编!
+      ((equal? type "incollection") (if online "[G/OL]" "[G]"))      ;; 析出汇编!
       ((equal? type "manual") (if online "[M/OL]" "[M]"))          ;; 手册/说明书!
       ((equal? type "standard") (if online "[S/OL]" "[S]"))        ;; 标准!
       ((equal? type "patent") (if online "[P/OL]" "[P]"))          ;; 专利!
@@ -445,6 +447,75 @@
            ,(bib-new-block
              (let ((edition-str (gbt-format-edition x chinese?)))
                (if (equal? edition-str "") "" edition-str)))
+           ,(gbt-new-smart-block-with-url
+             (if (bib-empty? x "crossref")
+                 `(,(bib-format-number-series x)
+                   ,(bib-format-address-institution x)
+                   ,(bib-format-date x))
+                 `((concat ,(bib-translate "in ")
+                           (cite ,(bib-field x "crossref")))
+                   ,(bib-format-field x "edition")
+                   ,(bib-format-date x))) x))))))
+
+;; 重写析出图书格式以添加文献类型标识符 [M]
+(tm-define (bib-format-inbook n x)
+  (:mode bib-gbt7714-2015?)
+  (let ((chinese? (authors-contain-chinese?
+                   (if (bib-empty? x "editor")
+                       (bib-field x "author")
+                       (bib-field x "editor")))))
+    `(concat
+       ,(bib-format-bibitem n x)
+       ,(bib-label (list-ref x 2))
+       ,(bib-new-list-spc
+         `(,(bib-new-block
+             (if (bib-empty? x "editor")
+                 (bib-format-author x)
+                 (bib-format-editor x)))
+           ,(bib-new-block
+             (if (bib-empty? x "crossref")
+                 (let* ((bookauthor-field (bib-field x "bookauthor"))
+                        (editor-field (bib-field x "editor"))
+                        (booktitle-field (bib-field x "booktitle"))
+                        (edition-str (gbt-format-edition x chinese?))
+                        (has-bookauthor (not (bib-null? bookauthor-field)))
+                        (has-editor (not (bib-null? editor-field))))
+                   (cond
+                     (has-bookauthor
+                      (let ((bookauthor-names (cond
+                                                ((bib-null? bookauthor-field) "")
+                                                ((nlist? bookauthor-field) bookauthor-field)
+                                                (else (bib-format-names bookauthor-field)))))
+                        `(concat ,(bib-format-field-preserve-case x "title")
+                                 ,(bib-document-type-identifier x "book")
+                                 "//"
+                                 ,bookauthor-names ". "
+                                 ,(bib-format-field-preserve-case x "booktitle")
+                                 ,(if (equal? edition-str "") "" `(concat ": " ,edition-str))
+                                 ".")))
+                     (has-editor
+                      (let ((editor-names (cond
+                                            ((bib-null? editor-field) "")
+                                            ((nlist? editor-field) editor-field)
+                                            (else (bib-format-names editor-field)))))
+                        `(concat ,(bib-format-field-preserve-case x "title")
+                                 ,(bib-document-type-identifier x "book")
+                                 "//"
+                                 ,editor-names ". "
+                                 ,(bib-format-field-preserve-case x "booktitle")
+                                 ,(if (equal? edition-str "") "" `(concat ": " ,edition-str))
+                                 ".")))
+                     (else
+                      `(concat ,(bib-format-field-preserve-case x "title")
+                               ,(bib-document-type-identifier x "book")
+                               "//. "
+                               ,(bib-format-field-preserve-case x "booktitle")
+                               ,(if (equal? edition-str "") "" `(concat ": " ,edition-str))
+                               "."))))
+                 (gbt-new-smart-sentence
+                  `((concat ,(bib-translate "in ")
+                            (cite ,(bib-field x "crossref")))
+                    ,(bib-format-pages x)) x)))
            ,(gbt-new-smart-block-with-url
              (if (bib-empty? x "crossref")
                  `(,(bib-format-number-series x)
@@ -788,6 +859,50 @@
          ,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "collection")))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-address-institution x)
+                 ,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x)))))
+
+;; 重写析出汇编格式以添加文献类型标识符 [G]
+(tm-define (bib-format-incollection n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block
+            (if (bib-empty? x "author")
+                (bib-format-editor x)
+                (bib-format-author x)))
+         ,(bib-new-block
+           (if (bib-empty? x "crossref")
+               (let* ((editor-field (bib-field x "editor"))
+                      (booktitle-field (bib-field x "booktitle"))
+                      (has-editor (not (bib-null? editor-field))))
+                 (if has-editor
+                     (let ((editor-names (cond
+                                           ((bib-null? editor-field) "")
+                                           ((nlist? editor-field) editor-field)
+                                           (else (bib-format-names editor-field)))))
+                       `(concat ,(bib-format-field-preserve-case x "title")
+                                ,(bib-document-type-identifier x "collection")
+                                "//"
+                                ,editor-names ". "
+                                ,(bib-format-field-preserve-case x "booktitle")
+                                "."))
+                     `(concat ,(bib-format-field-preserve-case x "title")
+                              ,(bib-document-type-identifier x "collection")
+                              "//"
+                              ,(bib-format-field-preserve-case x "booktitle")
+                              ".")))
+               (gbt-new-smart-sentence
+                `((concat ,(bib-translate "in ")
+                          (cite ,(bib-field x "crossref")))
+                  ,(bib-format-pages x)) x)))
          ,(gbt-new-smart-block-with-url
            (if (bib-empty? x "crossref")
                `(,(bib-format-address-institution x)
