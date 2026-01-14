@@ -868,6 +868,7 @@ tree 或 #f
 
 (tm-define (open-search)
   (:interactive #t)
+  (change-auxiliary-widget-focus)
   (when (not (inside-search-buffer?))
     (let* ((u (current-buffer))
            (st (embedded-style-list "macro-editor"))
@@ -989,6 +990,7 @@ tree 或 #f
 
 (tm-define (open-replace)
   (:interactive #t)
+  (change-auxiliary-widget-focus)
   (when (not (inside-search-buffer?))
     (let* ((u (current-buffer))
            (st (embedded-style-list "macro-editor"))

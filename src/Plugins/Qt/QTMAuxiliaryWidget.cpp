@@ -22,9 +22,6 @@ QTMAuxiliaryWidget::QTMAuxiliaryWidget (const QString& p_title,
                                         QWidget*       p_parent)
     : QDockWidget (p_title, p_parent) {
   setObjectName ("auxiliary_widget");
-
-  // 设置焦点策略，使 widget 能够接收键盘事件
-  setFocusPolicy (Qt::StrongFocus);
 }
 
 QTMAuxiliaryWidget::~QTMAuxiliaryWidget () {}
