@@ -98,6 +98,18 @@
                   #t
                   (loop (+ i 1) n)))))))
 
+;; 移除keepcase标签的辅助函数
+(define (gbt-remove-keepcase x)
+  (cond
+    ((list? x)
+     (if (not (null? x))
+         (if (equal? (car x) 'keepcase)
+             (gbt-remove-keepcase (cadr x))
+             (cons (car x) (map gbt-remove-keepcase (cdr x))))
+         '()))
+    ((string? x) x)
+    (else x)))
+
 ;; 作者列表格式
 (tm-define (bib-format-names a)
   (:mode bib-gbt7714-2015?)
@@ -131,7 +143,7 @@
                                           (bib-format-name (list-ref a i))
                                           `(concat ,result ,comma-sep ,(bib-format-name (list-ref a i))))))))
                   (last-part (if has-more
-                                 (if chinese? "<#7b49>" "et al") ; Unicode U+7B49 "等"
+                                 (if chinese? "<#7b49>" "et al") ;;等
                                  (if (>= author-count 2)
                                      (bib-format-name (list-ref a (- n 1)))
                                      "")))
@@ -230,11 +242,18 @@
                          first-name-raw  ;; 中文名不缩写
                          (if (bib-null? first-name-raw) "" (bib-abbreviate first-name-raw "" " "))))
          (last-name (if (bib-null? last-name-raw) "" (if chinese? (bib-purify last-name-raw) (string-upcase (bib-purify last-name-raw))))))
-    (if (bib-null? last-name)
-        first-name
-        (if (bib-null? first-name)
-            last-name
-            `(concat ,last-name " " ,first-name)))))
+    ;; 西文姓名处理：如果没有逗号分隔，保持原样
+    (if (not chinese?)
+        (cond
+          ((bib-null? last-name-raw) first-name-raw)   ;; 没有姓，返回名
+          ((bib-null? first-name-raw) last-name-raw)   ;; 没有名，返回姓
+          (else `(concat ,last-name " " ,first-name))) ;; 正常格式化
+        ;; 中文姓名处理：保持原有逻辑
+        (if (bib-null? last-name)
+            first-name
+            (if (bib-null? first-name)
+                last-name
+                `(concat ,last-name " " ,first-name))))))
 
 ;; 日期格式
 (tm-define (bib-format-date x)
@@ -818,33 +837,34 @@
   (if (and (list? x) (func? x 'bib-entry)
            (= (length x) 4) (func? (list-ref x 3) 'document))
       (with doctype (list-ref x 1)
-        (cond
-          ((equal? doctype "article") (bib-format-article n x))
-          ((equal? doctype "book") (bib-format-book n x))
-          ((equal? doctype "booklet") (bib-format-booklet n x))
-          ((equal? doctype "inbook") (bib-format-inbook n x))
-          ((equal? doctype "incollection") (bib-format-incollection n x))
-          ((equal? doctype "inproceedings") (bib-format-inproceedings n x))
-          ((equal? doctype "conference") (bib-format-inproceedings n x))
-          ((equal? doctype "manual") (bib-format-manual n x))
-          ((equal? doctype "mastersthesis") (bib-format-mastersthesis n x))
-          ((equal? doctype "misc") (bib-format-misc n x))
-          ((equal? doctype "phdthesis") (bib-format-phdthesis n x))
-          ((equal? doctype "proceedings") (bib-format-proceedings n x))
-          ((equal? doctype "techreport") (bib-format-techreport n x))
-          ((equal? doctype "unpublished") (bib-format-unpublished n x))
-          ;; GBT 7714-2015 新增类型
-          ((equal? doctype "standard") (bib-format-standard n x))
-          ((equal? doctype "database") (bib-format-database n x))
-          ((equal? doctype "software") (bib-format-software n x))
-          ((equal? doctype "program") (bib-format-program n x))
-          ((equal? doctype "archive") (bib-format-archive n x))
-          ((equal? doctype "map") (bib-format-map n x))
-          ((equal? doctype "dataset") (bib-format-dataset n x))
-          ((equal? doctype "electronic") (bib-format-electronic n x))
-          ((equal? doctype "online") (bib-format-online n x))
-          ((equal? doctype "newspaper") (bib-format-newspaper n x))
-          ((equal? doctype "collection") (bib-format-collection n x))
-          ((equal? doctype "patent") (bib-format-patent n x))
-          ((equal? doctype "other") (bib-format-other n x))
-          (else (bib-format-misc n x))))))
+        (gbt-remove-keepcase
+         (cond
+           ((equal? doctype "article") (bib-format-article n x))
+           ((equal? doctype "book") (bib-format-book n x))
+           ((equal? doctype "booklet") (bib-format-booklet n x))
+           ((equal? doctype "inbook") (bib-format-inbook n x))
+           ((equal? doctype "incollection") (bib-format-incollection n x))
+           ((equal? doctype "inproceedings") (bib-format-inproceedings n x))
+           ((equal? doctype "conference") (bib-format-inproceedings n x))
+           ((equal? doctype "manual") (bib-format-manual n x))
+           ((equal? doctype "mastersthesis") (bib-format-mastersthesis n x))
+           ((equal? doctype "misc") (bib-format-misc n x))
+           ((equal? doctype "phdthesis") (bib-format-phdthesis n x))
+           ((equal? doctype "proceedings") (bib-format-proceedings n x))
+           ((equal? doctype "techreport") (bib-format-techreport n x))
+           ((equal? doctype "unpublished") (bib-format-unpublished n x))
+           ;; GBT 7714-2015 新增类型
+           ((equal? doctype "standard") (bib-format-standard n x))
+           ((equal? doctype "database") (bib-format-database n x))
+           ((equal? doctype "software") (bib-format-software n x))
+           ((equal? doctype "program") (bib-format-program n x))
+           ((equal? doctype "archive") (bib-format-archive n x))
+           ((equal? doctype "map") (bib-format-map n x))
+           ((equal? doctype "dataset") (bib-format-dataset n x))
+           ((equal? doctype "electronic") (bib-format-electronic n x))
+           ((equal? doctype "online") (bib-format-online n x))
+           ((equal? doctype "newspaper") (bib-format-newspaper n x))
+           ((equal? doctype "collection") (bib-format-collection n x))
+           ((equal? doctype "patent") (bib-format-patent n x))
+           ((equal? doctype "other") (bib-format-other n x))
+           (else (bib-format-misc n x)))))))

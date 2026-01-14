@@ -265,9 +265,9 @@
 
       <bibitem*|13><label|bib-bib-format-phdthesis>陈聪. <newblock>面向自动驾驶的鲁棒感知关键技术研究[D/OL]. <newblock>北京: 清华大学, 2023: 45-67[2025-12-25]. https://doi.org/10.5000/THU2023PC001.<newblock>
 
-      <bibitem*|14><label|bib-bib-format-software>APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0. \ <newblock>2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
+      <bibitem*|14><label|bib-bib-format-software>Apache Software Foundation. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0. \ <newblock>2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
 
-      <bibitem*|15><label|bib-bib-format-program>APACHE SOFTWARE FOUNDATION. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0. \ <newblock>2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
+      <bibitem*|15><label|bib-bib-format-program>Apache Software Foundation. <newblock>Apache Kafka[CP/OL]. <newblock>Version 3.5.0. \ <newblock>2023[2025-12-25]. https://downloads.apache.org/kafka/3.5.0/kafka-3.5.0-src.tgz.<newblock>
 
       <bibitem*|16><label|bib-bib-format-collection>周济,谢友柏,主编. <newblock>中国机械工程学会年会论文集[G/OL]. <newblock>上海: 上海交通大学出版社, 2022: 1-15[2025-12-25]. https://doi.org/10.5000/CME2022G001.<newblock>
 
@@ -279,7 +279,7 @@
 
       <bibitem*|20><label|bib-bib-format-dataset>HE K, GKIOXARI G, DOLLÁR P, et al. <newblock>COCO 2017 Dataset[DS/OL]. <newblock>2017[2025-12-25]. https://doi.org/10.5281/zenodo.3243629.<newblock>
 
-      <bibitem*|21><label|bib-bib-format-database>KAGGLE. <newblock>COVID-19 Open Research Dataset Challenge (CORD-19)[DB/OL]. <newblock>2020[2025-12-25]. https://www.kaggle.com/datasets/allen-institute/CORD-19-research-challenge.<newblock>
+      <bibitem*|21><label|bib-bib-format-database>Kaggle. <newblock>COVID-19 Open Research Dataset Challenge (CORD-19)[DB/OL]. <newblock>2020[2025-12-25]. https://www.kaggle.com/datasets/allen-institute/CORD-19-research-challenge.<newblock>
 
       <bibitem*|22><label|bib-bib-format-inproceedings>LI Y S, HAN S. <newblock>Efficient collaboration with unknown agents: Ignoring similar agents without checking similarity[C/OL]//Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024). <newblock>Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024: 2363-2365[2025-12-25]. https://doi.org/10.5555/3635637.3663161.<newblock>
     </bib-list>
