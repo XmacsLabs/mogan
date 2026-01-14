@@ -91,7 +91,8 @@
   (if (or (bib-null? a) (nlist? a)) #f
       (let loop ((i 1) (n (length a)))
         (if (>= i n) #f
-            (let* ((author (list-ref a i))
+            (let* ((author-raw (list-ref a i))
+                   (author (gbt-remove-keepcase author-raw))
                    ;; 将作者的所有字符串部分连接成一个字符串，然后检查是否包含中文
                    (author-str (cond
                                  ((string? author) author)
