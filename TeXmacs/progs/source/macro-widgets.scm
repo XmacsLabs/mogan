@@ -236,7 +236,8 @@
   (if (symbol? l) (set! l (symbol->string l)))
   (initialize-macro-editor l mode)
   (let* ((b (current-buffer-url))
-         (u (string->url (string-append "tmfs://aux/edit-" l)))
+         (u (string->url (string-append "tmfs://aux/edit-" l "/" 
+                            (url->string (url-tail (current-window))))))
          (styps (embedded-style-list "macro-editor"))
          (macro-mode (if (in-math?) "Mathematics" "Text"))
          (doc (build-macro-document l))
