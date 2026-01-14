@@ -16,9 +16,49 @@
 
 (bib-define-style "gbt7714-2015" "gbt7714-2015")
 
-;; GBT 7714-2015 特定格式化函数
+;; 重写条目格式函数以支持所有文献类型
+(tm-define (bib-format-entry n x)
+  (:mode bib-gbt7714-2015?)
+  (if (and (list? x) (func? x 'bib-entry)
+           (= (length x) 4) (func? (list-ref x 3) 'document))
+      (with doctype (list-ref x 1)
+        (gbt-remove-keepcase
+         (cond
+           ((equal? doctype "article") (bib-format-article n x))
+           ((equal? doctype "book") (bib-format-book n x))
+           ((equal? doctype "booklet") (bib-format-booklet n x))
+           ((equal? doctype "inbook") (bib-format-inbook n x))
+           ((equal? doctype "incollection") (bib-format-incollection n x))
+           ((equal? doctype "inproceedings") (bib-format-inproceedings n x))
+           ((equal? doctype "conference") (bib-format-inproceedings n x))
+           ((equal? doctype "manual") (bib-format-manual n x))
+           ((equal? doctype "mastersthesis") (bib-format-mastersthesis n x))
+           ((equal? doctype "misc") (bib-format-misc n x))
+           ((equal? doctype "phdthesis") (bib-format-phdthesis n x))
+           ((equal? doctype "proceedings") (bib-format-proceedings n x))
+           ((equal? doctype "techreport") (bib-format-techreport n x))
+           ((equal? doctype "unpublished") (bib-format-unpublished n x))
+           ;; GBT 7714-2015 新增类型
+           ((equal? doctype "standard") (bib-format-standard n x))
+           ((equal? doctype "database") (bib-format-database n x))
+           ((equal? doctype "software") (bib-format-software n x))
+           ((equal? doctype "program") (bib-format-program n x))
+           ((equal? doctype "archive") (bib-format-archive n x))
+           ((equal? doctype "map") (bib-format-map n x))
+           ((equal? doctype "dataset") (bib-format-dataset n x))
+           ((equal? doctype "electronic") (bib-format-electronic n x))
+           ((equal? doctype "online") (bib-format-online n x))
+           ((equal? doctype "newspaper") (bib-format-newspaper n x))
+           ((equal? doctype "collection") (bib-format-collection n x))
+           ((equal? doctype "patent") (bib-format-patent n x))
+           ((equal? doctype "other") (bib-format-other n x))
+           (else (bib-format-misc n x)))))))
 
-;; 检查是否有URL/DOI/urldate的辅助函数
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 辅助函数
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; 检查是否有URL/DOI/urldate
 (tm-define (gbt-has-url-doi? x)
   (:mode bib-gbt7714-2015?)
   (let* ((url (bib-field x "url"))
@@ -359,6 +399,10 @@
            `(concat "[" ,urldate "]. " ,url)
            `(concat ,url)))
       (else ""))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 类型格式函数
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; 重写文章格式以添加文献类型标识符 [J]
 (tm-define (bib-format-article n x)
@@ -883,41 +927,3 @@
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-date x))) x)))))
-
-;; 重写条目格式函数以支持所有文献类型
-(tm-define (bib-format-entry n x)
-  (:mode bib-gbt7714-2015?)
-  (if (and (list? x) (func? x 'bib-entry)
-           (= (length x) 4) (func? (list-ref x 3) 'document))
-      (with doctype (list-ref x 1)
-        (gbt-remove-keepcase
-         (cond
-           ((equal? doctype "article") (bib-format-article n x))
-           ((equal? doctype "book") (bib-format-book n x))
-           ((equal? doctype "booklet") (bib-format-booklet n x))
-           ((equal? doctype "inbook") (bib-format-inbook n x))
-           ((equal? doctype "incollection") (bib-format-incollection n x))
-           ((equal? doctype "inproceedings") (bib-format-inproceedings n x))
-           ((equal? doctype "conference") (bib-format-inproceedings n x))
-           ((equal? doctype "manual") (bib-format-manual n x))
-           ((equal? doctype "mastersthesis") (bib-format-mastersthesis n x))
-           ((equal? doctype "misc") (bib-format-misc n x))
-           ((equal? doctype "phdthesis") (bib-format-phdthesis n x))
-           ((equal? doctype "proceedings") (bib-format-proceedings n x))
-           ((equal? doctype "techreport") (bib-format-techreport n x))
-           ((equal? doctype "unpublished") (bib-format-unpublished n x))
-           ;; GBT 7714-2015 新增类型
-           ((equal? doctype "standard") (bib-format-standard n x))
-           ((equal? doctype "database") (bib-format-database n x))
-           ((equal? doctype "software") (bib-format-software n x))
-           ((equal? doctype "program") (bib-format-program n x))
-           ((equal? doctype "archive") (bib-format-archive n x))
-           ((equal? doctype "map") (bib-format-map n x))
-           ((equal? doctype "dataset") (bib-format-dataset n x))
-           ((equal? doctype "electronic") (bib-format-electronic n x))
-           ((equal? doctype "online") (bib-format-online n x))
-           ((equal? doctype "newspaper") (bib-format-newspaper n x))
-           ((equal? doctype "collection") (bib-format-collection n x))
-           ((equal? doctype "patent") (bib-format-patent n x))
-           ((equal? doctype "other") (bib-format-other n x))
-           (else (bib-format-misc n x)))))))
