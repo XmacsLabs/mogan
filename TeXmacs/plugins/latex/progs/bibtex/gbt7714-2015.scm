@@ -509,3 +509,305 @@
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-date x))) x)))))
+
+;; 重写杂项格式以添加文献类型标识符 [Z]
+(tm-define (bib-format-misc n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-preserve-case x "title")
+                    ,(bib-document-type-identifier x "misc")))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
+
+;; 重写专利格式以添加文献类型标识符 [P]
+(tm-define (bib-format-patent n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           (let* ((title (bib-format-field-preserve-case x "title"))
+                  (number (bib-field x "number"))
+                  (identifier (bib-document-type-identifier x "patent")))
+             (if (bib-null? number)
+                 `(concat ,title ,identifier)
+                 `(concat ,title ": " ,number ,identifier))))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
+
+;; 重写电子公告格式以添加文献类型标识符 [EB]
+(tm-define (bib-format-electronic n x)
+  (:mode bib-gbt7714-2015?)
+  (let ((date-str (let ((d (bib-field x "date"))
+                        (y (bib-field x "year")))
+                    (cond
+                      ((not (bib-null? d)) d)  ;; EB类型：date不加括号
+                      ((not (bib-null? y)) y)
+                      (else "")))))
+    `(concat
+       ,(bib-format-bibitem n x)
+       ,(bib-label (list-ref x 2))
+       ,(bib-new-list-spc
+         `(,(bib-new-block (bib-format-author x))
+           ,(bib-new-block
+             `(concat ,(bib-format-field-preserve-case x "title")
+                      ,(bib-document-type-identifier x "electronic")))
+           ,(gbt-new-smart-block-with-url
+             (if (bib-empty? x "crossref")
+                 `(,date-str)
+                 `((concat ,(bib-translate "in ")
+                           (cite ,(bib-field x "crossref")))
+                   ,date-str)) x))))))
+
+;; 重写标准格式以添加文献类型标识符 [S]
+(tm-define (bib-format-standard n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           (let* ((title (bib-format-field-preserve-case x "title"))
+                  (number (bib-field x "number"))
+                  (identifier (bib-document-type-identifier x "standard")))
+             (if (bib-null? number)
+                 `(concat ,title ,identifier)
+                 `(concat ,title ": " ,number ,identifier))))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-address-institution x)
+                 ,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
+
+;; 重写数据库格式以添加文献类型标识符 [DB]
+(tm-define (bib-format-database n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-preserve-case x "title")
+                    ,(bib-document-type-identifier x "database")))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
+
+;; 重写在线网页格式以添加文献类型标识符 [EB]
+(tm-define (bib-format-online n x)
+  (:mode bib-gbt7714-2015?)
+  (let ((date-str (let ((d (bib-field x "date"))
+                        (y (bib-field x "year")))
+                    (cond
+                      ((not (bib-null? d)) d)  ;; EB类型：date不加括号
+                      ((not (bib-null? y)) y)
+                      (else "")))))
+    `(concat
+       ,(bib-format-bibitem n x)
+       ,(bib-label (list-ref x 2))
+       ,(bib-new-list-spc
+         `(,(bib-new-block (bib-format-author x))
+           ,(bib-new-block
+             `(concat ,(bib-format-field-preserve-case x "title")
+                      ,(bib-document-type-identifier x "online")))
+           ,(gbt-new-smart-block-with-url
+             (if (bib-empty? x "crossref")
+                 `(,date-str)
+                 `((concat ,(bib-translate "in ")
+                           (cite ,(bib-field x "crossref")))
+                   ,date-str)) x))))))
+
+;; 重写报纸格式以添加文献类型标识符 [N]
+(tm-define (bib-format-newspaper n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-preserve-case x "title")
+                    ,(bib-document-type-identifier x "newspaper")))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-field x "journal")
+                 ,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
+
+;; 重写汇编格式以添加文献类型标识符 [G]
+(tm-define (bib-format-collection n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-editor x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-preserve-case x "title")
+                    ,(bib-document-type-identifier x "collection")))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-address-institution x)
+                 ,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
+
+;; 重写软件格式以添加文献类型标识符 [CP]
+(tm-define (bib-format-software n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-preserve-case x "title")
+                    ,(bib-document-type-identifier x "software")))
+         ,(bib-new-block
+           (let ((version (bib-field x "version")))
+             (if (bib-null? version)
+                 ""
+                 `(concat "Version " ,version ", "))))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
+
+;; 重写程序格式以添加文献类型标识符 [CP]
+(tm-define (bib-format-program n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-preserve-case x "title")
+                    ,(bib-document-type-identifier x "program")))
+         ,(bib-new-block
+           (let ((version (bib-field x "version")))
+             (if (bib-null? version)
+                 ""
+                 `(concat "Version " ,version ", "))))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
+
+;; 重写档案格式以添加文献类型标识符 [A]
+(tm-define (bib-format-archive n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           (let* ((title (bib-format-field-preserve-case x "title"))
+                  (number (bib-field x "number"))
+                  (identifier (bib-document-type-identifier x "archive")))
+             (if (bib-null? number)
+                 `(concat ,title ,identifier)
+                 `(concat ,title ": " ,number ,identifier))))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-address-institution x)
+                 ,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
+
+;; 重写舆图格式以添加文献类型标识符 [CM]
+(tm-define (bib-format-map n x)
+  (:mode bib-gbt7714-2015?)
+  (let ((chinese? (authors-contain-chinese?
+                   (if (bib-empty? x "editor")
+                       (bib-field x "author")
+                       (bib-field x "editor")))))
+    `(concat
+       ,(bib-format-bibitem n x)
+       ,(bib-label (list-ref x 2))
+       ,(bib-new-list-spc
+         `(,(bib-new-block (bib-format-author x))
+           ,(bib-new-block
+             `(concat ,(bib-format-field-preserve-case x "title")
+                      ,(bib-document-type-identifier x "map")))
+           ,(bib-new-block
+             (if (bib-empty? x "edition") ""
+                 `(concat ,(bib-format-field x "edition")
+                          ,(if chinese?
+                               "<#7248>" ;;版
+                               " edition"))))
+           ,(gbt-new-smart-block-with-url
+             (if (bib-empty? x "crossref")
+                 `(,(bib-format-address-institution x)
+                   ,(bib-format-date x))
+                 `((concat ,(bib-translate "in ")
+                           (cite ,(bib-field x "crossref")))
+                   ,(bib-format-date x))) x))))))
+
+;; 重写数据集格式以添加文献类型标识符 [DS]
+(tm-define (bib-format-dataset n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-preserve-case x "title")
+                    ,(bib-document-type-identifier x "dataset")))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
+
+;; 重写其他格式以添加文献类型标识符 [Z]
+(tm-define (bib-format-other n x)
+  (:mode bib-gbt7714-2015?)
+  `(concat
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block (bib-format-author x))
+         ,(bib-new-block
+           `(concat ,(bib-format-field-preserve-case x "title")
+                    ,(bib-document-type-identifier x "other")))
+         ,(gbt-new-smart-block-with-url
+           (if (bib-empty? x "crossref")
+               `(,(bib-format-address-institution x)
+                 ,(bib-format-date x))
+               `((concat ,(bib-translate "in ")
+                         (cite ,(bib-field x "crossref")))
+                 ,(bib-format-date x))) x))))))
