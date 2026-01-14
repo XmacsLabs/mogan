@@ -235,6 +235,7 @@
   (:mode bib-gbt7714-2015?)
   ;; 西文作者：姓在前（全大写），名缩写（如 "YU H B"）
   ;; 中文作者：姓在前，名在后（全称）
+  ;; 使用双层花括号的机构名：不进行格式化处理
   (let* ((first-name-raw (if (bib-null? (list-ref x 1)) "" (list-ref x 1)))
          (last-name-raw (if (bib-null? (list-ref x 3)) "" (list-ref x 3)))
          (chinese? (or (contains-chinese? first-name-raw) (contains-chinese? last-name-raw)))
@@ -707,14 +708,14 @@
          ,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "software")))
-         ,(bib-new-block
-           (let ((version (bib-field x "version")))
-             (if (bib-null? version)
-                 ""
-                 `(concat "Version " ,version ", "))))
          ,(gbt-new-smart-block-with-url
            (if (bib-empty? x "crossref")
-               `(,(bib-format-date x))
+               (let ((version (bib-field x "version"))
+                     (date (bib-format-date x)))
+                 (cond
+                   ((and (bib-null? version) (bib-null? date)) '())
+                   ((bib-null? version) `(,date))
+                   (else `((concat "Version " ,version) ,date))))
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-date x))) x)))))
@@ -730,14 +731,14 @@
          ,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "program")))
-         ,(bib-new-block
-           (let ((version (bib-field x "version")))
-             (if (bib-null? version)
-                 ""
-                 `(concat "Version " ,version ", "))))
          ,(gbt-new-smart-block-with-url
            (if (bib-empty? x "crossref")
-               `(,(bib-format-date x))
+               (let ((version (bib-field x "version"))
+                     (date (bib-format-date x)))
+                 (cond
+                   ((and (bib-null? version) (bib-null? date)) '())
+                   ((bib-null? version) `(,date))
+                   (else `((concat "Version " ,version) ,date))))
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-date x))) x)))))
