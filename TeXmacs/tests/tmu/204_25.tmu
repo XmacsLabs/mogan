@@ -51,11 +51,11 @@
 
   \;
 
-  5.手册/说明书[M/OL]
+  <with|text-bg-color|#ffe47f|5.手册/说明书[M/OL]>
 
-  华为技术有限公司. 华为云会议 用户使用手册: 第3.2版[M/OL]. 深圳, 2024: 1-60[2025-12-26]. https://support.huaweicloud.com/usermanual-meeting/
+  华为技术有限公司. 华为云会议 用户使用手册: 第3.2版[M/OL]. 深圳, 2024: 1-60[2025-12-26]. https://support.huaweicloud.com/usermanual-meeting/.
 
-  华为技术有限公司. <newblock>华为云会议 用户使用手册[M/OL]. <newblock>第3.2版. <newblock>深圳, 2024: 1-60[2025-12-26]. https://support.huaweicloud.com/usermanual-meeting/.<newblock>
+  华为技术有限公司. <newblock>华为云会议 用户使用手册: 第3.2版[M/OL]. <newblock>深圳, 2024: 1-60[2025-12-26]. https://support.huaweicloud.com/usermanual-meeting/.<newblock>
 
   \;
 
@@ -91,13 +91,11 @@
 
   \;
 
-  10. 专利 [P/OL] \ 
+  <with|text-bg-color|#ffe47f|10.专利[P/OL]>
 
   李建军,王雪. 一种面向自动驾驶的多模态融合感知系统: CN114123456A[P/OL]. 2022-08-30[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.
 
-  李建军,王雪. <newblock>一种面向自动驾驶的多模态融合感知系统: CN114123456A[P/OL]. <newblock>(2022-08-30)[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.<newblock>
-
-  date不需要（）
+  李建军,王雪. <newblock>一种面向自动驾驶的多模态融合感知系统: CN114123456A[P/OL]. <newblock>2022-08-30[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.
 
   \;
 
@@ -109,11 +107,11 @@
 
   \;
 
-  12. 标准 [S/OL] \ 
+  <with|text-bg-color|#ffe47f|12.标准[S/OL]>
 
   国家市场监督管理总局, 国家标准化管理委员会. 信息技术 人工智能 伦理审查指南: GB/T 43264-2023[S/OL]. 北京: 中国标准出版社, 2023: 1-30[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.
 
-  国家市场监督管理总局,国家标准化管理委员会. <newblock>信息技术 人工智能 伦理审查指南: GB/T 43264-2023[S/OL]. <newblock>北京, 2023: 1-30[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.<newblock>
+  国家市场监督管理总局,国家标准化管理委员会. <newblock>信息技术 人工智能 伦理审查指南: GB/T 43264-2023[S/OL]. <newblock>北京: 中国标准出版社, 2023: 1-30[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.<newblock>
 
   \;
 
@@ -137,9 +135,9 @@
 
   王姝. “双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. 新京报, 2023-06-21(A06)[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.
 
-  王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, (2023-06-21)[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
+  王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, 2023-06-21[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
 
-  date不用括号，pages需要
+  缺少pages，并且需要括号
 
   \;
 
@@ -209,7 +207,7 @@
 
       <bibitem*|3><label|bib-bib-format-mastersthesis>刘思雨. <newblock>基于深度学习的肺结节检测算法研究[D/OL]. <newblock>上海: 上海交通大学, 2022: 23-40[2025-12-25]. https://dspace.sjtu.edu.cn/handle/12699/12345.<newblock>
 
-      <bibitem*|4><label|bib-bib-format-manual>华为技术有限公司. <newblock>华为云会议 用户使用手册[M/OL]. <newblock>第3.2版. <newblock>深圳, 2024: 1-60[2025-12-26]. https://support.huaweicloud.com/usermanual-meeting/.<newblock>
+      <bibitem*|4><label|bib-bib-format-manual>华为技术有限公司. <newblock>华为云会议 用户使用手册: 第3.2版[M/OL]. <newblock>深圳, 2024: 1-60[2025-12-26]. https://support.huaweicloud.com/usermanual-meeting/.<newblock>
 
       <bibitem*|5><label|bib-bib-format-archive>南京市档案馆. <newblock>《南京长江大桥建设档案》: 档号：J007-001-123[A/OL]. <newblock>南京, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
 
@@ -217,15 +215,15 @@
 
       <bibitem*|7><label|bib-bib-format-map>国家基础地理信息中心. <newblock>中国1∶100万数字地貌图[CM/OL]. <newblock>3 edition. <newblock>北京, 2021[2025-12-25]. https://doi.org/10.12345/CM202103.<newblock>
 
-      <bibitem*|8><label|bib-bib-format-standard>国家市场监督管理总局,国家标准化管理委员会. <newblock>信息技术 人工智能 伦理审查指南: GB/T 43264-2023[S/OL]. <newblock>北京, 2023: 1-30[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.<newblock>
+      <bibitem*|8><label|bib-bib-format-standard>国家市场监督管理总局,国家标准化管理委员会. <newblock>信息技术 人工智能 伦理审查指南: GB/T 43264-2023[S/OL]. <newblock>北京: 中国标准出版社, 2023: 1-30[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.<newblock>
 
       <bibitem*|9><label|bib-bib-format-techreport>张凯,王磊. <newblock>城市快速路交通流状态判别与预测技术报告[R/OL]. <newblock>北京: 交通运输部公路科学研究院, 2023: 12-30[2025-12-25]. https://www.rioh.cn/uploads/tech/2023ITSC.pdf.<newblock>
 
-      <bibitem*|10><label|bib-bib-format-patent>李建军,王雪. <newblock>一种面向自动驾驶的多模态融合感知系统: CN114123456A[P/OL]. <newblock>(2022-08-30)[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.<newblock>
+      <bibitem*|10><label|bib-bib-format-patent>李建军,王雪. <newblock>一种面向自动驾驶的多模态融合感知系统: CN114123456A[P/OL]. <newblock>2022-08-30[2025-12-25]. https://pss-system.cponline.cnipa.gov.cn/documents/detail/CN114123456A.<newblock>
 
       <bibitem*|11><label|bib-bib-format-book>李清泉,张远. <newblock>人工智能导论[M/OL]. <newblock>第3版. <newblock>北京: 电子工业出版社, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
 
-      <bibitem*|12><label|bib-bib-format-newspaper>王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, (2023-06-21)[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
+      <bibitem*|12><label|bib-bib-format-newspaper>王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, 2023-06-21[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
 
       <bibitem*|13><label|bib-bib-format-article>王青,张志学,张立峰. <newblock>基于深度学习的肺癌病理图像分类方法[J/OL]. <newblock>中国医学影像技术, 2024, 40(1): 52-58[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.<newblock>
 

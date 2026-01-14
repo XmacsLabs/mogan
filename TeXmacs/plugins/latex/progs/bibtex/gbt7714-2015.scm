@@ -468,22 +468,25 @@
            ,(bib-new-block
              (let* ((title (bib-format-field-preserve-case x "title"))
                     (number (bib-field x "number"))
-                    (identifier (bib-document-type-identifier x "manual")))
-               (if (bib-null? number)
-                   `(concat ,title ,identifier)
-                   `(concat ,title ": " ,number ,identifier))))
-           ,(bib-new-block
-             (let ((edition-str (gbt-format-edition x chinese?)))
-               (if (equal? edition-str "") "" edition-str)))
+                    (edition-str (gbt-format-edition x chinese?))
+                    (identifier (bib-document-type-identifier x "manual"))
+                    (parts (list title)))
+               (if (not (equal? edition-str ""))
+                   (set! parts (append parts (list ": " edition-str))))
+               (if (not (bib-null? number))
+                   (set! parts (append parts (list ": " number))))
+               (set! parts (append parts (list identifier)))
+               (apply tmconcat parts)))
            ,(gbt-new-smart-block-with-url
            (if (bib-empty? x "crossref")
                (if (bib-empty? x "author")
-                   (let ((address (bib-field x "address"))
+                   (let ((address-institution (bib-format-address-institution x))
                          (date (bib-format-date x)))
                      (cond
-                       ((and (bib-null? address) (bib-null? date)) '())
-                       ((bib-null? address) `(,date))
-                       (else `(,address ,date))))
+                       ((and (equal? address-institution "") (bib-null? date)) '())
+                       ((equal? address-institution "") `(,date))
+                       ((bib-null? date) `(,address-institution))
+                       (else `(,address-institution ,date))))
                    `(,(bib-format-address-institution x)
                      ,(bib-format-date x)))
                `((concat ,(bib-translate "in ")
@@ -572,24 +575,30 @@
 ;; 重写专利格式以添加文献类型标识符 [P]
 (tm-define (bib-format-patent n x)
   (:mode bib-gbt7714-2015?)
-  `(concat
-     ,(bib-format-bibitem n x)
-     ,(bib-label (list-ref x 2))
-     ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
-           (let* ((title (bib-format-field-preserve-case x "title"))
-                  (number (bib-field x "number"))
-                  (identifier (bib-document-type-identifier x "patent")))
-             (if (bib-null? number)
-                 `(concat ,title ,identifier)
-                 `(concat ,title ": " ,number ,identifier))))
-         ,(gbt-new-smart-block-with-url
-           (if (bib-empty? x "crossref")
-               `(,(bib-format-date x))
-               `((concat ,(bib-translate "in ")
-                         (cite ,(bib-field x "crossref")))
-                 ,(bib-format-date x))) x)))))
+  (let ((date-str (let ((d (bib-field x "date"))
+                        (y (bib-field x "year")))
+                    (cond
+                      ((not (bib-null? d)) d)
+                      ((not (bib-null? y)) y)
+                      (else "")))))
+    `(concat
+       ,(bib-format-bibitem n x)
+       ,(bib-label (list-ref x 2))
+       ,(bib-new-list-spc
+         `(,(bib-new-block (bib-format-author x))
+           ,(bib-new-block
+             (let* ((title (bib-format-field-preserve-case x "title"))
+                    (number (bib-field x "number"))
+                    (identifier (bib-document-type-identifier x "patent")))
+               (if (bib-null? number)
+                   `(concat ,title ,identifier)
+                   `(concat ,title ": " ,number ,identifier))))
+           ,(gbt-new-smart-block-with-url
+             (if (bib-empty? x "crossref")
+                 `(,date-str)
+                 `((concat ,(bib-translate "in ")
+                           (cite ,(bib-field x "crossref")))
+                   ,date-str)) x))))))
 
 ;; 重写标准格式以添加文献类型标识符 [S]
 (tm-define (bib-format-standard n x)
@@ -608,12 +617,13 @@
                  `(concat ,title ": " ,number ,identifier))))
          ,(gbt-new-smart-block-with-url
            (if (bib-empty? x "crossref")
-               (let ((address (bib-field x "address"))
+               (let ((address-institution (bib-format-address-institution x))
                      (date (bib-format-date x)))
                  (cond
-                   ((and (bib-null? address) (bib-null? date)) '())
-                   ((bib-null? address) `(,date))
-                   (else `(,address ,date))))
+                   ((and (equal? address-institution "") (bib-null? date)) '())
+                   ((equal? address-institution "") `(,date))
+                   ((bib-null? date) `(,address-institution))
+                   (else `(,address-institution ,date))))
                `((concat ,(bib-translate "in ")
                          (cite ,(bib-field x "crossref")))
                  ,(bib-format-date x))) x)))))
@@ -687,21 +697,27 @@
 ;; 重写报纸格式以添加文献类型标识符 [N]
 (tm-define (bib-format-newspaper n x)
   (:mode bib-gbt7714-2015?)
-  `(concat
-     ,(bib-format-bibitem n x)
-     ,(bib-label (list-ref x 2))
-     ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
-           `(concat ,(bib-format-field-preserve-case x "title")
-                    ,(bib-document-type-identifier x "newspaper")))
-         ,(gbt-new-smart-block-with-url
-           (if (bib-empty? x "crossref")
-               `(,(bib-format-field x "journal")
-                 ,(bib-format-date x))
-               `((concat ,(bib-translate "in ")
-                         (cite ,(bib-field x "crossref")))
-                 ,(bib-format-date x))) x)))))
+  (let ((date-str (let ((d (bib-field x "date"))
+                        (y (bib-field x "year")))
+                    (cond
+                      ((not (bib-null? d)) d)
+                      ((not (bib-null? y)) y)
+                      (else "")))))
+    `(concat
+       ,(bib-format-bibitem n x)
+       ,(bib-label (list-ref x 2))
+       ,(bib-new-list-spc
+         `(,(bib-new-block (bib-format-author x))
+           ,(bib-new-block
+             `(concat ,(bib-format-field-preserve-case x "title")
+                      ,(bib-document-type-identifier x "newspaper")))
+           ,(gbt-new-smart-block-with-url
+             (if (bib-empty? x "crossref")
+                 `(,(bib-format-field x "journal")
+                   ,date-str)
+                 `((concat ,(bib-translate "in ")
+                           (cite ,(bib-field x "crossref")))
+                   ,date-str)) x))))))
 
 ;; 重写汇编格式以添加文献类型标识符 [G]
 (tm-define (bib-format-collection n x)
