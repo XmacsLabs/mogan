@@ -19,7 +19,7 @@
 
   \;
 
-  1. 期刊 [J/OL] \ 
+  <with|text-bg-color|#ffe47f|1.期刊[J/OL]>
 
   王青, 张志学, 张立峰. 基于深度学习的肺癌病理图像分类方法[J/OL]. 中国医学影像技术, 2024, 40(1): 52-58[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.
 
@@ -29,17 +29,17 @@
 
   \;
 
-  2. 图书 [M/OL] \ 
+  <with|text-bg-color|#ffe47f|2.图书[M/OL]>
 
   李清泉, 张远. 人工智能导论[M/OL]. 3版. 北京: 电子工业出版社, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.
 
-  李清泉, 张远. <newblock>人工智能导论[M/OL]. <newblock>北京: 电子工业出版社, 3 edition, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
+  李清泉, 张远. <newblock>人工智能导论[M/OL]. <newblock>3版. <newblock>北京: 电子工业出版社, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
 
-  edition写法有问题
+  完全一致！
 
   \;
 
-  3. 会议论文 [C/OL] \ 
+  <with|text-bg-color|#ffe47f|3.会议论文[C/OL]>
 
   Li Y S, Han S. Efficient collaboration with unknown agents: Ignoring similar agents without checking similarity[C/OL]//Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2024). Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024: 2363-2365[2025-12-25]. https://doi.org/10.5555/3635637.3663161.
 
@@ -49,7 +49,7 @@
 
   \;
 
-  4. 会议录 [C/OL] \ 
+  <with|text-bg-color|#ffe47f|4.会议录[C/OL]>
 
   DIGNUM F, OMICINI A, TUYLS K, eds. Proceedings of the 23rd International Conference on Autonomous Agents and Multiagent Systems[C/OL]. Auckland, New Zealand: International Foundation for Autonomous Agents and Multiagent Systems, 2024[2025-12-25]. https://doi.org/10.5555/3635637.
 
@@ -59,7 +59,7 @@
 
   \;
 
-  5. 手册/说明书 [M/OL] \ 
+  5.手册/说明书[M/OL]
 
   国家市场监督管理总局, 国家标准化管理委员会. 信息技术 人工智能 伦理审查指南: GB/T 43264-2023[M/OL]. 北京, 2023: 1-30[2025-12-25]. https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8D8A8E8F8A8B8C8D8E8F.
 
@@ -79,7 +79,7 @@
 
   \;
 
-  7. 博士论文 [D/OL] \ 
+  <with|text-bg-color|#ffe47f|7.博士论文[D/OL]>
 
   陈聪. 面向自动驾驶的鲁棒感知关键技术研究[D/OL]. 北京: 清华大学, 2023: 45-67[2025-12-25]. https://doi.org/10.5000/THU2023PC001.
 
@@ -89,7 +89,7 @@
 
   \;
 
-  8. 硕士论文 [D/OL] \ 
+  <with|text-bg-color|#ffe47f|8.硕士论文[D/OL]>
 
   刘思雨. 基于深度学习的肺结节检测算法研究[D/OL]. 上海: 上海交通大学, 2022: 23-40[2025-12-25]. https://dspace.sjtu.edu.cn/handle/12699/12345.
 
@@ -99,7 +99,7 @@
 
   \;
 
-  9. 技术报告 [R/OL] \ 
+  <with|text-bg-color|#ffe47f|9.技术报告[R/OL]>
 
   张凯, 王磊. 城市快速路交通流状态判别与预测技术报告[R/OL]. 北京: 交通运输部公路科学研究院, 2023: 12-30[2025-12-25]. https://www.rioh.cn/uploads/tech/2023ITSC.pdf.
 
@@ -257,7 +257,7 @@
 
       <bibitem*|8><label|bib-bib-format-patent>李建军, 王雪. <newblock>一种面向自动驾驶的多模态融合感知系统. <newblock>2022.<newblock>
 
-      <bibitem*|9><label|bib-bib-format-book>李清泉, 张远. <newblock>人工智能导论[M/OL]. <newblock>北京: 电子工业出版社, 3 edition, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
+      <bibitem*|9><label|bib-bib-format-book>李清泉, 张远. <newblock>人工智能导论[M/OL]. <newblock>3版. <newblock>北京: 电子工业出版社, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
 
       <bibitem*|10><label|bib-bib-format-newspaper>王姝. <newblock>“双减”后首批中考学生迎考：命题难度降低，分流力度不变. <newblock>(2023-06-21)<newblock>
 
