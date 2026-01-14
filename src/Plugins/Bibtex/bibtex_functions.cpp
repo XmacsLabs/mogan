@@ -911,10 +911,7 @@ bib_field_pages (string p) {
       }
     }
     else if (c == ' ' || c == '\t') {
-      if (in_part) {
-      }
-      else {
-      }
+      continue;
     }
     else {
       if (!in_part) {
