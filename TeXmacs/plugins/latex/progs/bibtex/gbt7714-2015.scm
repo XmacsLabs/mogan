@@ -224,19 +224,21 @@
 ;; 地址:机构格式
 (tm-define (bib-format-address-institution x)
   (:mode bib-gbt7714-2015?)
-  (let* ((addr (bib-field x "address"))
+  (let* ((addr (cond
+                 ((not (bib-empty? x "address")) (bib-field x "address"))
+                 ((not (bib-empty? x "location")) (bib-field x "location"))
+                 (else "")))
          (inst-field (cond
                        ((not (bib-empty? x "school")) (bib-field x "school"))
                        ((not (bib-empty? x "organization")) (bib-field x "organization"))
                        ((not (bib-empty? x "publisher")) (bib-field x "publisher"))
                        ((not (bib-empty? x "institution")) (bib-field x "institution"))
                        (else "")))
-         (addr-val (if (bib-empty? x "address") "" addr))
          (inst-val (if (or (bib-null? inst-field) (equal? inst-field "")) "" inst-field)))
     (cond
-      ((and (not (equal? addr-val "")) (not (equal? inst-val "")))
-       `(concat ,addr-val ": " ,inst-val))
-      ((not (equal? addr-val "")) addr-val)
+      ((and (not (equal? addr "")) (not (equal? inst-val "")))
+       `(concat ,addr ": " ,inst-val))
+      ((not (equal? addr "")) addr)
       ((not (equal? inst-val "")) inst-val)
       (else ""))))
 
@@ -697,12 +699,23 @@
 ;; 重写报纸格式以添加文献类型标识符 [N]
 (tm-define (bib-format-newspaper n x)
   (:mode bib-gbt7714-2015?)
-  (let ((date-str (let ((d (bib-field x "date"))
-                        (y (bib-field x "year")))
-                    (cond
-                      ((not (bib-null? d)) d)
-                      ((not (bib-null? y)) y)
-                      (else "")))))
+  (let* ((date-str (let ((d (bib-field x "date"))
+                         (y (bib-field x "year")))
+                     (cond
+                       ((not (bib-null? d)) d)
+                       ((not (bib-null? y)) y)
+                       (else ""))))
+         (p (bib-field x "pages"))
+         (pag (if (or (bib-null? p) (nlist? p))
+                  ""
+                  (cond
+                    ((equal? 1 (length p)) "")
+                    ((equal? 2 (length p)) (list-ref p 1))
+                    (else `(concat ,(list-ref p 1)
+                                   ,bib-range-symbol ,(list-ref p 2))))))
+         (date-pages-str (if (== pag "")
+                             date-str
+                             `(concat ,date-str "(" ,pag ")"))))
     `(concat
        ,(bib-format-bibitem n x)
        ,(bib-label (list-ref x 2))
@@ -714,10 +727,10 @@
            ,(gbt-new-smart-block-with-url
              (if (bib-empty? x "crossref")
                  `(,(bib-format-field x "journal")
-                   ,date-str)
+                   ,date-pages-str)
                  `((concat ,(bib-translate "in ")
                            (cite ,(bib-field x "crossref")))
-                   ,date-str)) x))))))
+                   ,date-pages-str)) x))))))
 
 ;; 重写汇编格式以添加文献类型标识符 [G]
 (tm-define (bib-format-collection n x)

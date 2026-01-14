@@ -131,13 +131,11 @@
 
   \;
 
-  15. 报纸 [N/OL] \ 
+  <with|text-bg-color|#ffe47f|15.报纸[N/OL]>
 
   王姝. “双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. 新京报, 2023-06-21(A06)[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.
 
-  王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, 2023-06-21[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
-
-  缺少pages，并且需要括号
+  王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, 2023-06-21(A06)[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
 
   \;
 
@@ -165,13 +163,11 @@
 
   \;
 
-  19. 档案 [A/OL] \ 
+  <with|text-bg-color|#ffe47f|19.档案[A/OL]>
 
-  南京市档案馆. 南京长江大桥建设档案[A/OL]. 档号: J007-001-123. 南京, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.
+  南京市档案馆. 南京长江大桥建设档案[A/OL]. 南京: 南京市档案馆, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.
 
-  南京市档案馆. <newblock>《南京长江大桥建设档案》: 档号：J007-001-123[A/OL]. <newblock>南京, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
-
-  内容有问题
+  南京市档案馆. <newblock>南京长江大桥建设档案[A/OL]. <newblock>南京: 南京市档案馆, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
 
   \;
 
@@ -209,7 +205,7 @@
 
       <bibitem*|4><label|bib-bib-format-manual>华为技术有限公司. <newblock>华为云会议 用户使用手册: 第3.2版[M/OL]. <newblock>深圳, 2024: 1-60[2025-12-26]. https://support.huaweicloud.com/usermanual-meeting/.<newblock>
 
-      <bibitem*|5><label|bib-bib-format-archive>南京市档案馆. <newblock>《南京长江大桥建设档案》: 档号：J007-001-123[A/OL]. <newblock>南京, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
+      <bibitem*|5><label|bib-bib-format-archive>南京市档案馆. <newblock>南京长江大桥建设档案[A/OL]. <newblock>南京: 南京市档案馆, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
 
       <bibitem*|6><label|bib-bib-format-online>国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见[EB/OL]. <newblock>2023-04-11[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c<rsub|1>683617348175741.htm.<newblock>
 
@@ -223,7 +219,7 @@
 
       <bibitem*|11><label|bib-bib-format-book>李清泉,张远. <newblock>人工智能导论[M/OL]. <newblock>第3版. <newblock>北京: 电子工业出版社, 2023: 101-150[2025-12-25]. https://doi.org/10.1002/9781119123456.<newblock>
 
-      <bibitem*|12><label|bib-bib-format-newspaper>王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, 2023-06-21[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
+      <bibitem*|12><label|bib-bib-format-newspaper>王姝. <newblock>“双减”后首批中考学生迎考: 命题难度降低, 分流力度不变[N/OL]. <newblock>新京报, 2023-06-21(A06)[2025-12-25]. https://www.bjnews.com.cn/detail/1687312345167891.html.<newblock>
 
       <bibitem*|13><label|bib-bib-format-article>王青,张志学,张立峰. <newblock>基于深度学习的肺癌病理图像分类方法[J/OL]. <newblock>中国医学影像技术, 2024, 40(1): 52-58[2025-12-25]. https://doi.org/10.13929/j.issn.1003-3289.2024.01.012.<newblock>
 
