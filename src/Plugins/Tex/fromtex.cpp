@@ -2511,7 +2511,7 @@ latex_command_to_tree (tree t) {
     if (is_tuple (t[1], "\\prime", 0)) return tree (RPRIME, "'");
     else return tree (RSUP, l2e (t[1]));
   }
-  tree out_tree;
+  tree out_tree         = tree ();
   auto handle_over_under= [&] (const string& cmd, bool below) {
     if (!is_tuple (t) || N (t) < 3 || as_string (t[0]) != cmd) return false;
     tree cur_tree= tree (below ? BELOW : ABOVE, l2e (t[2]), l2e (t[1]));
