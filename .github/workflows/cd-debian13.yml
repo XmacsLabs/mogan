@@ -21,7 +21,6 @@ jobs:
       APPIMAGE_EXTRACT_AND_RUN: 1
       DEBIAN_FRONTEND: noninteractive
       XMAKE_ROOT: y
-      # [CI reference] 设置 Qt 平台为 offscreen，避免 GUI 初始化错误
       QT_QPA_PLATFORM: offscreen 
 
     steps:
@@ -81,10 +80,6 @@ jobs:
       # 3. 编译流程
       # ==========================================
       - name: Config
-        # [Merged Strategy] 
-        # 1. 保留 --qt=system (为了打出依赖系统的 deb 包)
-        # 2. 增加 --policies=build.ccache (参照 CI)
-        # 3. 使用 release 模式
         run: xmake config --yes -vD -m release --qt=system --policies=build.ccache
 
       - name: Build
