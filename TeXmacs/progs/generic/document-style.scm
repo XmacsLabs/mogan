@@ -121,7 +121,7 @@
   (:check-mark "v" has-main-style?)
   (:balloon style-get-documentation)
   (if (and (== style "beamer") (not (document-empty?)))
-      (show-message "The document is not empty" "Cannot switch style")
+      (show-message "Switching non-empty documents to Beamer style is not supported" "Cannot switch style")
       (begin
           (let* ((old (get-style-list))
                  (new (if (null? old) (list style) (cons style (cdr old)))))
