@@ -62,26 +62,26 @@ else
     ICON_FINAL_NAME="$APP_NAME"
 fi
 
-# ================= 3. 确保 .desktop 文件存在并正确 =================
-DESKTOP_PATH="$APP_DIR/usr/share/applications/$APP_NAME.desktop"
-if [ ! -f "$DESKTOP_PATH" ]; then
-    echo "📄 [3/6] 生成 .desktop 文件..."
-    mkdir -p "$(dirname "$DESKTOP_PATH")"
-    cat > "$DESKTOP_PATH" <<EOF
-[Desktop Entry]
-Type=Application
-Name=Mogan Stem
-Comment=Scientific Editor
-Exec=$BINARY_NAME
-Icon=$ICON_FINAL_NAME
-Categories=Education;Science;Qt;
-Terminal=false
-EOF
-else
-    # 强制修正 Icon 字段，确保它使用我们刚才复制进去的图标名
-    echo "   -> 更新现有 .desktop 文件的图标设置..."
-    sed -i "s|^Icon=.*|Icon=$ICON_FINAL_NAME|" "$DESKTOP_PATH"
-fi
+# # ================= 3. 确保 .desktop 文件存在并正确 =================
+# DESKTOP_PATH="$APP_DIR/usr/share/applications/$APP_NAME.desktop"
+# if [ ! -f "$DESKTOP_PATH" ]; then
+#     echo "📄 [3/6] 生成 .desktop 文件..."
+#     mkdir -p "$(dirname "$DESKTOP_PATH")"
+#     cat > "$DESKTOP_PATH" <<EOF
+# [Desktop Entry]
+# Type=Application
+# Name=Mogan Stem
+# Comment=Scientific Editor
+# Exec=$BINARY_NAME
+# Icon=$ICON_FINAL_NAME
+# Categories=Education;Science;Qt;
+# Terminal=false
+# EOF
+# else
+#     # 强制修正 Icon 字段，确保它使用我们刚才复制进去的图标名
+#     echo "   -> 更新现有 .desktop 文件的图标设置..."
+#     sed -i "s|^Icon=.*|Icon=$ICON_FINAL_NAME|" "$DESKTOP_PATH"
+# fi
 
 # ================= 4. 准备工具 =================
 echo "🛠️ [4/6] 准备 LinuxDeploy..."
