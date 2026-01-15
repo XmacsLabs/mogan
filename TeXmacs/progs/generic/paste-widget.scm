@@ -155,7 +155,6 @@
 
 (define (paste-as-html)
   (with source-format (qt-clipboard-format)
-    (display* source-format "\n")
     (if (string=? source-format "html")
         (let* ((fm (format-determine (qt-clipboard-text) "verbatim")))
           (cond ((string=? fm "html") (clipboard-paste-import "html" "primary"))
