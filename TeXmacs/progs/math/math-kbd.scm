@@ -2470,7 +2470,7 @@
   ("A A" "<bbb-A>")
   ("A A var" "<cal-A>")
   ; ("A A var var" (math-insert '(with "math-font" "cal*" "A")))
-  ("A A var var" (math-insert '(mathscr "A")))
+  ("A A var var" "<cal*-A>")
   ("A A var var var" "<frak-A>")
   ("A A var var var var" "<b-A>")
   ("A A var var var var var" "<up-A>")
