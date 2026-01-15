@@ -30,7 +30,7 @@
 				 (math-cal-star (tex rsfs $s $d))
 	       (math-frak (tex eufm $s $d))
 	       (math-bbb (tex bbm $s $d))
-				 (math-bbb-cap (tex msbm $s $d))
+				 (math-bbb-cap (tex bbold $s $d))
 	       (math-upgreek (tex grmn $s $d))
 	       (math-bold-1 (tex cmbx $s $d))
 	       (math-bold-2 (tex cmmib $s $d))
