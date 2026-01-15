@@ -41,6 +41,7 @@ public:
   void show_side_tools (int which, bool flag);
   void show_auxiliary_widget (bool flag);
   void change_auxiliary_widget_focus ();
+  url  get_auxiliary_widget_parent_url ();
   void show_bottom_tools (int which, bool flag);
   bool visible_header ();
   bool auxiliary_widget_visible ();

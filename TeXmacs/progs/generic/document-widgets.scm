@@ -527,10 +527,9 @@
         "page-odd-footer" "page-even-footer"))
 
 (define (header-buffer var)
-  (change-auxiliary-widget-focus)
   (string->url
             (string-append "tmfs://aux/" var "/" 
-                           (url->string (url-tail (current-window))))))
+                           (url->string (url-tail (get-auxiliary-widget-parent-url))))))
 
 (define (header-buffers)
   (map header-buffer header-parameters))
