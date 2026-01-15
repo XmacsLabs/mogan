@@ -27,6 +27,7 @@
 	       (line (tex line $s $d))
 	       (cmex (tex cmex $s $d))
 	       (math-cal (tex cmsy $s $d))
+				 (math-cal-star (tex rsfs $s $d))
 	       (math-frak (tex eufm $s $d))
 	       (math-bbb (tex bbm $s $d))
 	       (math-upgreek (tex grmn $s $d))
