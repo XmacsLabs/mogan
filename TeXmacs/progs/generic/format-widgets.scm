@@ -292,10 +292,14 @@
            (open-background-picture-selector setter)))))
 
 (define (header-buffer)
-  (string->url "tmfs://aux/this-page-header"))
+  (string->url
+            (string-append "tmfs://aux/this-page-header" "/"
+                           (url->string (url-tail (get-auxiliary-widget-parent-url))))))
 
 (define (footer-buffer)
-  (string->url "tmfs://aux/this-page-footer"))
+  (string->url
+            (string-append "tmfs://aux/this-page-footer" "/"
+                           (url->string (url-tail (get-auxiliary-widget-parent-url))))))
 
 (define (editing-headers?)
   (in? (current-buffer) (list (header-buffer) (footer-buffer))))

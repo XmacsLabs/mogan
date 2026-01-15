@@ -30,6 +30,7 @@ void
 QTMAuxiliaryWidget::closeEvent (QCloseEvent* event) {
   // 需要通过 scheme 层设置可见性，否则下次UI刷新会重置到先前的状态
   // 参见 qt_tm_widget_rep::update_visibility ()
+  get_server ()->change_auxiliary_widget_focus ();
   exec_delayed (scheme_cmd (
       "(when (defined? 'close-auxiliary-widget) (close-auxiliary-widget))"));
   event->accept ();

@@ -12,8 +12,10 @@
 #include "tm_frame.hpp"
 #include "message.hpp"
 #include "new_view.hpp"
+#include "new_window.hpp"
 #include "object_l5.hpp"
 #include "tm_window.hpp"
+#include "url.hpp"
 
 #define NUM_TOOLBARS 4
 
@@ -186,6 +188,17 @@ tm_frame_rep::change_auxiliary_widget_focus () {
   url parent_window= concrete_window ()->parent;
   if (parent_window != url_none ()) {
     focus_on_buffer (window_to_buffer (parent_window), true);
+  }
+}
+
+url
+tm_frame_rep::get_auxiliary_widget_parent_url () {
+  url parent_window= concrete_window ()->parent;
+  if (parent_window != url_none ()) {
+    return parent_window;
+  }
+  else {
+    return concrete_window ()->id;
   }
 }
 

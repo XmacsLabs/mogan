@@ -110,7 +110,7 @@ QTMWindow::closeEvent (QCloseEvent* event) {
 
   // 保存窗口状态和几何信息
   saveSettings ();
-
+  set_auxiliary_widget_visibility (tmwid, false);
   event->ignore ();
 #if defined(OS_MACOS)
   notify_window_destroy (name);

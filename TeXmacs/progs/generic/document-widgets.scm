@@ -527,7 +527,9 @@
         "page-odd-footer" "page-even-footer"))
 
 (define (header-buffer var)
-  (string->url (string-append "tmfs://aux/" var)))
+  (string->url
+            (string-append "tmfs://aux/" var "/" 
+                           (url->string (url-tail (get-auxiliary-widget-parent-url))))))
 
 (define (header-buffers)
   (map header-buffer header-parameters))
@@ -541,7 +543,7 @@
 (define (apply-headers-settings u)
   (with l (list)
     (for (var header-parameters)
-      (and-with doc (get-field-contents (string-append "tmfs://aux/" var))
+      (and-with doc (get-field-contents (header-buffer var))
         (set! l (cons `(,var ,doc) l))))
     (when (nnull? l)
       (delayed
@@ -551,8 +553,7 @@
 
 (define (editing-headers?)
   (in? (current-buffer)
-       (map (lambda (x) (string->url (string-append "tmfs://aux/" x)))
-            header-parameters)))
+       (map header-buffer header-parameters)))
 
 (tm-widget (page-formatter-headers u style quit)
   (padded
@@ -844,7 +845,7 @@
 
 (tm-define (open-page-headers-footers-window)
   (:interactive #t)
-  (change-auxiliary-widget-focus)
+  ;(change-auxiliary-widget-focus)
   (let* ((u  (current-buffer))
          (st (embedded-style-list "macro-editor")))
     (apply auxiliary-widget
