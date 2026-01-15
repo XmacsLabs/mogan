@@ -55,9 +55,9 @@
 	   cmsy rsfs eufm bbm bbold grmn cmbx cmmib cmbsy cmex $s $d))
     ((bold-math-std $ecrm $cmr $cmmi $s $d)
      (math $ecrm $cmr $cmmi cmbsy msam msbm stmary wasyb linew
-     cmbsy rsfs eufb bbmbx bbold grxn cmbx cmmib cmbsy cmexb $s $d))
+	   cmbsy rsfs eufb bbmbx bbold grxn cmbx cmmib cmbsy cmexb $s $d))
     ((math-conc $ecrm $cmr $cmmi $s $d)
-    (math $ecrm $cmr $cmmi xccsy xccam xccbm stmary wasy line
+     (math $ecrm $cmr $cmmi xccsy xccam xccbm stmary wasy line
 	   cmsy rsfs eufm bbm bbold grmn cmbx cmmib cmbsy xccex $s $d))
     ((math-bright $ecrm $cmr $cmmi $s $d)
      (math $ecrm $cmr $cmmi cmbrsy cmbram cmbrbm stmary wasy line
@@ -136,22 +136,22 @@
 	   cmbsy rsfs eufb bbmbx msbm grxn cmbx cmmib cmbsy cmexb $s $d))
     ((math-conc $ecrm $cmr $cmmi $s $d)
      (math $ecrm $cmr $cmmi xccsy xccam xccbm stmary wasy line
-     cmsy rsfs eufm bbm msbm grmn cmbx cmmib cmbsy xccex $s $d))
+	   cmsy rsfs eufm bbm msbm grmn cmbx cmmib cmbsy xccex $s $d))
     ((math-bright $ecrm $cmr $cmmi $s $d)
      (math $ecrm $cmr $cmmi cmbrsy cmbram cmbrbm stmary wasy line
-     cmbrsy rsfs eufb bbmbx msbm grxn cmbx cmmib cmbsy cmex $s $d))
+	   cmbrsy rsfs eufb bbmbx msbm grxn cmbx cmmib cmbsy cmex $s $d))
 
     ((math-var $ecrm $cmr $cmmi $s $d)
      (var-math $ecrm $cmr $cmmi cmsy msam msbm stmary wasy line
 	       cmsy rsfs eufm bbm bbold grmn cmbx cmmib cmbsy cmex $s $d))
     ((bold-math-var $ecrm $cmr $cmmi $s $d)
      (var-math $ecrm $cmr $cmmi cmbsy msam msbm stmary wasyb linew
-	       cmbsy rsfs eufm bbmbx bbold grxn cmbx cmmib cmbsy cmexb $s $d))
+	       cmsy rsfs eufm bbmbx bbold grxn cmbx cmmib cmbsy cmexb $s $d))
     ((math-conc-var $ecrm $cmr $cmmi $s $d)
-    (var-math $ecrm $cmr $cmmi xccsy xccam xccbm stmary wasy line
+     (var-math $ecrm $cmr $cmmi xccsy xccam xccbm stmary wasy line
 	       cmsy rsfs eufm bbm bbold grmn cmbx cmmib cmbsy xccex $s $d))
     ((math-bright-var $ecrm $cmr $cmmi $s $d)
-    (var-math $ecrm $cmr $cmmi cmbrsy cmbram cmbrbm stmary wasy line
+     (var-math $ecrm $cmr $cmmi cmbrsy cmbram cmbrbm stmary wasy line
 	       cmbrsy rsfs eufm bbm bbold grmn cmbx cmmib cmbsy cmex $s $d))
 
     ((math-alt $ecrm $ecti $cmr $cmmi $s $d)
