@@ -232,6 +232,7 @@
 
 (tm-define (open-macro-editor l mode)
   (:interactive #t)
+  (change-auxiliary-widget-focus)
   (if (symbol? l) (set! l (symbol->string l)))
   (initialize-macro-editor l mode)
   (let* ((b (current-buffer-url))

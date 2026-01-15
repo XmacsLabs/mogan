@@ -182,6 +182,14 @@ tm_frame_rep::show_auxiliary_widget (bool flag) {
 }
 
 void
+tm_frame_rep::change_auxiliary_widget_focus () {
+  url parent_window= concrete_window ()->parent;
+  if (parent_window != url_none ()) {
+    focus_on_buffer (window_to_buffer (parent_window), true);
+  }
+}
+
+void
 tm_frame_rep::set_auxiliary_widget_title (string title) {
   if (!has_current_view ()) return;
   url current_view= get_current_view ();
