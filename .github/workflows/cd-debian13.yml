@@ -74,7 +74,7 @@ jobs:
             debhelper \
             file \
             fcitx5-frontend-qt6
-          apt remove 7zip
+          apt remove -y 7zip
 
 
       # ==========================================
