@@ -83,6 +83,7 @@ fi
 #     sed -i "s|^Icon=.*|Icon=$ICON_FINAL_NAME|" "$DESKTOP_PATH"
 # fi
 
+
 # ================= 4. 准备工具 =================
 echo "🛠️ [4/6] 准备 LinuxDeploy..."
 if [ ! -f "$DEPLOY_TOOL" ]; then
@@ -102,7 +103,33 @@ if [ -n "$XMAKE_QMAKE" ]; then
     export PATH="$(dirname "$XMAKE_QMAKE"):$PATH"
 fi
 
+# -------------------------------------------------------------
+# 手动导入输入法插件 (Fix for Chinese Input Method)
+# -------------------------------------------------------------
+echo "🔧 [Manual Import] 正在导入 Fcitx5/中文输入法支持..."
+
+# 1. 定义我们要在 AppDir (安装包) 里存放插件的位置
+#    Qt 程序默认去 plugins/platforminputcontexts 找输入法
+DEST_PLUGIN_DIR="$APP_DIR/usr/plugins/platforminputcontexts"
+mkdir -p "$DEST_PLUGIN_DIR"
+
+# 2. 定义系统源路径 
+SRC_PLUGIN_DIR="/usr/lib/x86_64-linux-gnu/qt6/plugins/platforminputcontexts"
+
+# 3. 执行复制
+if [ -d "$SRC_PLUGIN_DIR" ]; then
+    echo "   -> 发现系统插件目录: $SRC_PLUGIN_DIR"
+    # 复制该目录下所有 .so 文件到包内的插件目录
+    cp -v "$SRC_PLUGIN_DIR/"*.so "$DEST_PLUGIN_DIR/" 2>/dev/null || true
+    echo "   -> 复制完成。"
+else
+    echo "⚠️ 警告: 未在系统中找到 $SRC_PLUGIN_DIR"
+    echo "   请确保构建环境安装了 'fcitx5-frontend-qt6' 或 'libqt6gui6'。"
+fi
+# -------------------------------------------------------------
+
 # 运行 linuxdeploy
+# 它会扫描我们刚才复制进去的 .so 文件，并把它们依赖的 fcitx 库也打包进去
 ./"$DEPLOY_TOOL" --appdir "$APP_DIR" --plugin qt --executable "$APP_DIR/usr/bin/$BINARY_NAME" --icon-file "$ICON_SRC"
 
 # ================= 6. 构建 /opt 包结构 =================
