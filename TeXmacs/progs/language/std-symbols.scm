@@ -604,6 +604,11 @@
     "<cal-H>" "<cal-I>" "<cal-J>" "<cal-K>" "<cal-L>" "<cal-M>" "<cal-N>"
     "<cal-O>" "<cal-P>" "<cal-Q>" "<cal-R>" "<cal-S>" "<cal-T>" "<cal-U>"
     "<cal-V>" "<cal-W>" "<cal-X>" "<cal-Y>" "<cal-Z>"
+
+    "<cal*-A>" "<cal*-B>" "<cal*-C>" "<cal*-D>" "<cal*-E>" "<cal*-F>" "<cal*-G>"
+    "<cal*-H>" "<cal*-I>" "<cal*-J>" "<cal*-K>" "<cal*-L>" "<cal*-M>" "<cal*-N>"
+    "<cal*-O>" "<cal*-P>" "<cal*-Q>" "<cal*-R>" "<cal*-S>" "<cal*-T>" "<cal*-U>"
+    "<cal*-V>" "<cal*-W>" "<cal*-X>" "<cal*-Y>" "<cal*-Z>"
     
     "<b-cal-a>" "<b-cal-b>" "<b-cal-c>" "<b-cal-d>" "<b-cal-e>" "<b-cal-f>"
     "<b-cal-g>" "<b-cal-h>" "<b-cal-i>" "<b-cal-j>" "<b-cal-k>" "<b-cal-l>"
@@ -628,6 +633,9 @@
     "<frak-M>" "<frak-N>" "<frak-O>" "<frak-P>" "<frak-Q>" "<frak-R>"
     "<frak-S>" "<frak-T>" "<frak-U>" "<frak-V>" "<frak-W>" "<frak-X>"
     "<frak-Y>" "<frak-Z>"
+
+    "<Bbb-0>" "<Bbb-1>" "<Bbb-2>" "<Bbb-3>" "<Bbb-4>"
+    "<Bbb-5>" "<Bbb-6>" "<Bbb-7>" "<Bbb-8>" "<Bbb-9>"
 
     "<bbb-a>" "<bbb-b>" "<bbb-c>" "<bbb-d>" "<bbb-e>" "<bbb-f>" "<bbb-g>"
     "<bbb-h>" "<bbb-i>" "<bbb-j>" "<bbb-k>" "<bbb-l>" "<bbb-m>" "<bbb-n>"
