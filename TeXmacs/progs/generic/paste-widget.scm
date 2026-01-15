@@ -155,8 +155,13 @@
 
 (define (paste-as-html)
   (with source-format (qt-clipboard-format)
+    (display* source-format "\n")
     (if (string=? source-format "html")
-        (kbd-paste)
+        (let* ((fm (format-determine (qt-clipboard-text) "verbatim")))
+          (cond ((string=? fm "html") (clipboard-paste-import "html" "primary"))
+                ((string=? fm "latex") (clipboard-paste-import "latex" "primary"))  
+                ((string=? fm "verbatim") (kbd-paste))
+                ((string=? fm "markdown") (kbd-paste))))
         (clipboard-paste-import "html" "primary"))))
 
 (define (paste-as-markdown)
