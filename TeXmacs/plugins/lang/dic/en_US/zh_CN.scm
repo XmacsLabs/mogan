@@ -75,6 +75,7 @@
 ("Start an AI interactive session" "AI功能")
 ("Store tracking information in LaTeX files" "在 LaTeX 文件中保存追踪信息")
 ("Style for seminar" "研讨会样式")
+("Switching non-empty documents to Beamer style is not supported" "不支持非空文档切换到beamer样式")
 ("Tab::keyboard" "Tab")
 ("Tag Image File Format" "标记图像文件格式")
 ("Taiwan" "中国台湾")

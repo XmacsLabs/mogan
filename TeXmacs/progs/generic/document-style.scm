@@ -102,6 +102,11 @@
   (:check-mark "v" has-no-style?)
   (set-style-list '()))
 
+(tm-define (document-empty?)
+  (:synopsis "Check if current document is empty")
+  (with t (buffer-tree)
+    (tree-empty? t)))
+
 (tm-define (has-main-style? style)
   (with l (get-style-list)
     (and (nnull? l) (== (car l) style))))
@@ -115,12 +120,15 @@
   (:default  style "generic")
   (:check-mark "v" has-main-style?)
   (:balloon style-get-documentation)
-  (let* ((old (get-style-list))
-         (new (if (null? old) (list style) (cons style (cdr old)))))
-    (set-style-list new))
-  (delayed
-    (:idle 1)
-    (notify-new-style style)))
+  (if (and (== style "beamer") (not (document-empty?)))
+      (show-message "Switching non-empty documents to Beamer style is not supported" "Cannot switch style")
+      (begin
+          (let* ((old (get-style-list))
+                 (new (if (null? old) (list style) (cons style (cdr old)))))
+            (set-style-list new))
+          (delayed
+            (:idle 1)
+            (notify-new-style style)))))
 
 (tm-define (has-style-package? pack)
   (or (in? pack (get-style-list))
