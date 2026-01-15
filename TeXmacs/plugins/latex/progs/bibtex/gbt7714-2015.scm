@@ -58,6 +58,21 @@
 ;; 辅助函数
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; 将URL里rsub表达式转换回下划线：将(rsub "x")转换为_x
+(define (convert-rsub-to-underscore expr)
+  (cond
+    ((and (list? expr) (= (length expr) 2) (equal? (car expr) 'rsub))
+     (let ((text (cadr expr)))
+       (if (string? text)
+           (string-append "_" text)
+           (string-append "_" (tm->string text)))))
+    ((and (list? expr) (>= (length expr) 1) (equal? (car expr) 'concat))
+     `(concat ,@(map convert-rsub-to-underscore (cdr expr))))
+    ((list? expr)
+     (map convert-rsub-to-underscore expr))
+    ((string? expr) expr)
+    (else expr)))
+
 ;; 检查是否有URL/DOI/urldate
 (tm-define (gbt-has-url-doi? x)
   (:mode bib-gbt7714-2015?)
@@ -382,11 +397,14 @@
 ;; URL/DOI 信息格式
 (tm-define (bib-format-url-doi x)
   (:mode bib-gbt7714-2015?)
-  (let* ((url (bib-field x "url"))
-         (doi (bib-field x "doi"))
+  (let* ((url-raw (bib-field x "url"))
+         (doi-raw (bib-field x "doi"))
          (urldate (bib-field x "urldate"))
-         (has-url (not (bib-null? url)))
-         (has-doi (not (bib-null? doi)))
+         ;; 转换rsub表达式为下划线
+         (url (convert-rsub-to-underscore url-raw))
+         (doi (convert-rsub-to-underscore doi-raw))
+         (has-url (not (bib-null? url-raw)))
+         (has-doi (not (bib-null? doi-raw)))
          (has-urldate (not (bib-null? urldate))))
     (cond
       (has-doi

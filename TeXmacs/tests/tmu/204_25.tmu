@@ -101,9 +101,9 @@
 
   <with|text-bg-color|#ffe47f|11.电子公告[EB/OL]>
 
-  中华人民共和国教育部. 教育部关于印发《研究生教育学科专业目录（2022年）》的通知[EB/OL]. 2022-09-13[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe833/202209/t20220913_660658.html.
+  中华人民共和国教育部. 教育部关于印发《研究生教育学科专业目录（2022年）》的通知[EB/OL]. 2022-09-13[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe_833/202209/t20220913_660658.html.
 
-  中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知[EB/OL]. <newblock>2022-09-13[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe<rsub|8>33/202209/t20220913<rsub|6>60658.html.<newblock>
+  中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知[EB/OL]. <newblock>2022-09-13[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe_833/202209/t20220913_660658.html.<newblock>
 
   \;
 
@@ -127,7 +127,7 @@
 
   国家互联网信息办公室. 《生成式人工智能服务管理办法（征求意见稿）》公开征求意见[EB/OL]. 2023-04-11[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c_1683617348175741.htm.
 
-  国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见[EB/OL]. <newblock>2023-04-11[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c<rsub|1>683617348175741.htm.<newblock>
+  国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见[EB/OL]. <newblock>2023-04-11[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c_1683617348175741.htm.<newblock>
 
   \;
 
@@ -211,7 +211,7 @@
 
   <\bibliography|bib|tm-gbt7714-2015|204_25>
     <\bib-list|24>
-      <bibitem*|1><label|bib-bib-format-electronic>中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知[EB/OL]. <newblock>2022-09-13[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe<rsub|8>33/202209/t20220913<rsub|6>60658.html.<newblock>
+      <bibitem*|1><label|bib-bib-format-electronic>中华人民共和国教育部. <newblock>教育部关于印发《研究生教育学科专业目录（2022年）》的通知[EB/OL]. <newblock>2022-09-13[2025-12-25]. http://www.moe.gov.cn/srcsite/A22/moe_833/202209/t20220913_660658.html.<newblock>
 
       <bibitem*|2><label|bib-bib-format-misc>中国载人航天工程办公室. <newblock>中国空间站科学实验资源手册[Z/OL]. <newblock>2022[2025-12-25]. http://www.cmse.gov.cn/kxzy/kxzyzy/202207/P020220704356248569283.pdf.<newblock>
 
@@ -221,7 +221,7 @@
 
       <bibitem*|5><label|bib-bib-format-archive>南京市档案馆. <newblock>南京长江大桥建设档案[A/OL]. <newblock>南京: 南京市档案馆, 1969[2025-12-25]. http://www.njdaj.gov.cn/daanc/J007-001-123.<newblock>
 
-      <bibitem*|6><label|bib-bib-format-online>国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见[EB/OL]. <newblock>2023-04-11[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c<rsub|1>683617348175741.htm.<newblock>
+      <bibitem*|6><label|bib-bib-format-online>国家互联网信息办公室. <newblock>《生成式人工智能服务管理办法（征求意见稿）》公开征求意见[EB/OL]. <newblock>2023-04-11[2025-12-25]. http://www.cac.gov.cn/2023-04/11/c_1683617348175741.htm.<newblock>
 
       <bibitem*|7><label|bib-bib-format-map>国家基础地理信息中心. <newblock>中国1∶100万数字地貌图[CM/OL]. <newblock>第3版. <newblock>北京, 2021[2025-12-25]. https://doi.org/10.12345/CM202103.<newblock>
 
