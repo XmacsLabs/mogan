@@ -1302,7 +1302,6 @@
 
 ;; Script symbols
 ("<cal-A>"	"#1D49C")
-("<cal*-A>"	"#1D4D0")
 ;("<cal-B>"	"#212C")
 ("<cal-C>"	"#1D49E")
 ("<cal-D>"	"#1D49F")
