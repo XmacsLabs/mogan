@@ -94,10 +94,10 @@
 
 (define (is-latex-string? s)
   (let ((percent-slash (backslash-from-string s)))
-    (if (and (>= percent-slash 0.04) 
+    (if (and (>= percent-slash 0.01) 
              (<= percent-slash 0.25))
         (let ((percent-parentheses (parentheses-from-string s)))
-          (if (>= percent-parentheses 0.04)
+          (if (>= percent-parentheses 0.01)
               (let ((percent-backslash-line (backslash-line-from-string s)))
                 (if (>= percent-backslash-line 0.25)
                     #t
