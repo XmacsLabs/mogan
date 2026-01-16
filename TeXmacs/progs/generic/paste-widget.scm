@@ -36,7 +36,8 @@
         ((== name (translate "Image and OCR")) "image_and_ocr")
         ((== name (translate "Only image"))    "image")
         ((== name "Graphics")                  "graphics")
-        ((== name (translate "Code"))          "code")))
+        ((== name (translate "Code"))          "code")
+        ((== name (translate "Internal format")) "internal")))
 
 (define (convert-symbol-to-format-string symbol)
   (cond ((== symbol "md")       "Markdown")
@@ -49,6 +50,7 @@
         ((== symbol "image_and_ocr")      (translate "Image and OCR"))
         ((== symbol "image")       (translate "Only image"))
         ((== symbol "code")     (translate "Code"))
+        ((== symbol "internal") (translate "Internal format"))
         (else (translate "Plain text"))))
 
 (define (get-tips fm)
@@ -66,13 +68,13 @@
 
 (define (get-clipboard-format)
   (let* ((fm1 (qt-clipboard-format)))
-    (if (== fm1 "verbatim")
-      (let* ((raw-text (qt-clipboard-text))
-             (fm2 (format-determine raw-text "verbatim")))
-        fm2)
-      (if (string-starts? fm1 "image")
-        "image"
-        fm1))))
+    (cond ((== fm1 "verbatim")
+           (let* ((raw-text (qt-clipboard-text))
+                  (fm2 (format-determine raw-text "verbatim")))
+             fm2))
+          ((== fm1 "texmacs-snippet") "internal")
+          ((string-starts? fm1 "image") "image")
+          (else fm1))))
 
 (define (init-choices l format)
   (let* ((fm format))
@@ -190,6 +192,7 @@
               ((and (string=? fm "latex")
                     (string=? (get-clipboard-format) "image"))
                (ocr-paste))
+              ((== fm "internal") (paste-as-texmacs))
               (else               (clipboard-paste-import fm "primary"))))))
 
   (dialogue-window clipboard-paste-from-widget callback "Paste Special"))
