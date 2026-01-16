@@ -34,6 +34,9 @@ public:
   void refreshToken ();
   void handleAuthorizationCode (const QString& code);
 
+signals:
+  void loginStateChanged (bool loggedIn);
+
 private slots:
   void checkTokenStatus ();
 

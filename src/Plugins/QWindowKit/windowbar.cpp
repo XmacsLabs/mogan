@@ -8,6 +8,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QLocale>
 #include <QtGui/QtEvents>
+#include <QWidget>
 
 namespace QWK {
 
@@ -68,6 +69,7 @@ WindowBar::WindowBar (QWidget* parent)
 
 WindowBar::~WindowBar ()= default;
 
+
 QMenuBar*
 WindowBar::menuBar () const {
   Q_D (const WindowBar);
@@ -127,6 +129,7 @@ WindowBar::closeButton () const {
   return static_cast<QAbstractButton*> (
       d->widgetAt (WindowBarPrivate::CloseButton));
 }
+
 
 void
 WindowBar::setMenuBar (QMenuBar* menuBar) {
@@ -219,6 +222,7 @@ WindowBar::setCloseButton (QAbstractButton* btn) {
   d->setWidgetAt (WindowBarPrivate::CloseButton, btn);
   connect (btn, &QAbstractButton::clicked, this, &WindowBar::closeRequested);
 }
+
 
 QMenuBar*
 WindowBar::takeMenuBar () {
