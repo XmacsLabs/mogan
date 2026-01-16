@@ -40,14 +40,13 @@
           (and (== widget-type 'comment-editor) opened?))
         #f)))
 
-(define (comment-editor-done)
-  (and-let* ((popup  (current-buffer))
-             (master (buffer-get-master popup))
-             (pc     (tree-innermost any-comment-context? #t))
+(define (comment-editor-done u b)
+  (buffer-focus u #t)
+  (and-let* ((pc (tree-innermost any-comment-context? #t))
              (mid    (and pc (tm->string (tm-ref pc 1))))
              (body   (and pc (tm-ref pc :last))))
-    (with-buffer master
-      (let* ((mb (buffer-get-body master))
+    (with-buffer b
+      (let* ((mb (buffer-get-body b))
              (l  (tree-search
                    mb
                    (lambda (t)
@@ -64,7 +63,7 @@
   (comment-quit-command))
 
 ;; 用于auxiliary-widget的comment编辑器widget
-(tm-widget ((comment-aux-widget u packs doc) quit)
+(tm-widget ((comment-aux-widget u packs doc b) quit)
   (padded
     (resize "480px" "300px"
       (texmacs-input doc `(style (tuple ,@packs)) u))
@@ -72,7 +71,7 @@
     (hlist
       >>
       (explicit-buttons
-        ("Done" (comment-editor-done))))))
+        ("Done" (comment-editor-done u b))))))
 
 ;; Comment编辑器取消函数
 (tm-define ((comment-cancel u) . args)
@@ -85,7 +84,9 @@
 (tm-define (open-comment-editor-aux)
   (and-let* ((c (tm->stree (tree-innermost any-comment-context? #t)))
              (b (current-buffer-url))
-             (u (string->url "tmfs://aux/edit-comment"))
+             (u (string->url (string-append "tmfs://aux/edit-comment" 
+                                            "/" (url->string 
+                                                  (url-tail (get-auxiliary-widget-parent-url))))))
              (packs (embedded-style-list))
              (pre (document-get-preamble (buffer-tree)))
              (inits* (map cdr (cdr (tm->stree (get-all-inits)))))
@@ -94,10 +95,10 @@
              (com (mirror-comment c 'carbon-comment))
              (doc `(with ,@env (document (hide-preamble ,pre) ,com))))
     (buffer-set-master u b)
-    (auxiliary-widget (comment-aux-widget u packs doc)
+    (auxiliary-widget (comment-aux-widget u packs doc b)
                       (comment-cancel b)
                       (translate comment-text) u)
-    (buffer-focus "tmfs://aux/edit-comment" #t)
+    (buffer-focus u #t)
     (go-end)))
 
 (tm-define (open-comment-editor)
