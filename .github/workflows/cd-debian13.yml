@@ -92,15 +92,21 @@ jobs:
       - name: Determine Version
         id: get_version
         run: |
-          if [ -n "${{ inputs.manual_version }}" ]; then
-            VERSION="${{ inputs.manual_version }}"
-          elif [[ "$GITHUB_REF" == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/}
+          REF_NAME="${{ github.ref }}"
+          MANUAL_VER="${{ inputs.manual_version }}"
+          
+          echo "Debug: REF_NAME is $REF_NAME"
+
+          if [ -n "$MANUAL_VER" ]; then
+            VERSION="$MANUAL_VER"
+          elif [[ "$REF_NAME" == refs/tags/* ]]; then
+            VERSION=${REF_NAME#refs/tags/}
             VERSION=${VERSION//\//}
           else
             VERSION=$(date +%Y.%m.%d)
           fi
-          echo "Version: $VERSION"
+          
+          echo "Final Version Detected: $VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       # ==========================================
