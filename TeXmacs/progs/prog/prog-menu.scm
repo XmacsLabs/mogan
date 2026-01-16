@@ -117,7 +117,8 @@
       ("Shell" (make 'shell))
       ("Goldfish" (make* 'goldfish-lang "goldfish"))
       ("Scala" (make* 'scala "scala"))
-      ("Python" (make* 'python "python")))
+      ("Python" (make* 'python "python"))
+      ("R" (make* 'r "r")))
   (-> "Block of code"
       ("Verbatim" (make 'verbatim-code))
       ("C++" (make 'cpp-code))
@@ -125,7 +126,8 @@
       ("Shell" (make 'shell-code))
       ("Goldfish" (make* 'goldfish-code "goldfish"))
       ("Scala" (make* 'scala-code "scala"))
-      ("Python" (make* 'python-code "python")))
+      ("Python" (make* 'python-code "python"))
+      ("R" (make* 'r-code "r")))
   (-> "Listing"
       ("Verbatim" (make 'listing))
       ("C++" (make 'cpp-listing))
