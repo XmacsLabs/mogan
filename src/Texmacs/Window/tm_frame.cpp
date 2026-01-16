@@ -214,6 +214,18 @@ tm_frame_rep::set_auxiliary_widget_title (string title) {
   concrete_window ()->set_auxiliary_widget_new_title (title);
 }
 
+void
+tm_frame_rep::shortcut_widget () {
+  if (!has_current_view ()) return;
+  url current_view= get_current_view ();
+  if (is_tmfs_view_type (as_string (current_view), "aux")) {
+    url vw= get_most_recent_view ();
+    concrete_view (vw)->win->set_shortcut_widget ();
+    return;
+  }
+  concrete_window ()->set_shortcut_widget ();
+}
+
 bool
 tm_frame_rep::auxiliary_widget_visible () {
   if (!has_current_view ()) return false;

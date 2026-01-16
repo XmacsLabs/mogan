@@ -75,6 +75,8 @@
                        (set-user-shortcut sh (global-ref u :cmd))
                        (refresh-now "shortcuts-list")))
             // //
+            ("open" (open-shortcuts-widget))
+            // //
             ("Ok" (begin
                     (and-with sh (get-shortcut u)
                       (set-user-shortcut sh (global-ref u :cmd)))
@@ -139,3 +141,8 @@
         (dialogue-window (shortcuts-editor u)
                          (lambda x (noop))
                          "Shortcuts editor" u))))
+
+(tm-define (open-shortcuts-widget)
+  (:interactive #t)
+  (set-shortcut-widget))
+

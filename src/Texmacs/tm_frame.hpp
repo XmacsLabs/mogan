@@ -12,6 +12,7 @@
 #ifndef TM_FRAME_H
 #define TM_FRAME_H
 #include "server.hpp"
+#include "widget.hpp"
 
 class tm_frame_rep : virtual public server_rep {
 protected:
@@ -55,6 +56,7 @@ public:
   void set_auxiliary_widget_title (string title);
   void auxiliary_widget (widget w, string name);
   void bottom_tools (int which, string menu);
+  void shortcut_widget ();
 
   /* canvas */
   void   set_window_zoom_factor (double zoom);

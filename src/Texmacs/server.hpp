@@ -84,6 +84,7 @@ public:
   virtual void   full_screen_mode (bool on, bool edit)       = 0;
   virtual bool   in_full_screen_mode ()                      = 0;
   virtual bool   in_full_screen_edit_mode ()                 = 0;
+  virtual void   shortcut_widget ()                          = 0;
 
   virtual void show_footer (bool flag)                              = 0;
   virtual bool visible_footer ()                                    = 0;
