@@ -214,7 +214,7 @@
 
 (logic-group latex-textcomp-symbol%
   textcent textcurrency textyen textbrokenbar textasciidieresis textlnot
-  textasciimacron textdegree textpm texttwosuperior textthreesuperior
+  textasciimacron textdegree degree textpm texttwosuperior textthreesuperior
   textasciiacute textmu textonesuperior textonequarter textonehalf
   textthreequarters texttimes textdiv)
 
