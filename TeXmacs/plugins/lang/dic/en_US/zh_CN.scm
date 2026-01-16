@@ -1023,6 +1023,7 @@
 ("insert a prominent piece of text" "插入一个外观块")
 ("insert a root" "插入平方根")
 ("insert a script" "插入上下标")
+("insert a script character" "插入手写字母")
 ("insert a square root" "插入平方根")
 ("insert a table or a matrix" "")
 ("insert a table" "插入表格")
