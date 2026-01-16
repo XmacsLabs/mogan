@@ -98,9 +98,11 @@ clean_exit_on_signal (int sig_num) {
   case SIGSEGV:
     sig_name= "SIGSEGV (segmentation fault)";
     break;
+#ifndef OS_WIN
   case SIGTRAP:
     sig_name= "SIGTRAP (trace/breakpoint trap)";
     break;
+#endif
   case SIGABRT:
     sig_name= "SIGABRT (abort)";
     break;
@@ -124,7 +126,11 @@ clean_exit_on_signal (int sig_num) {
        << ")\n";
 
   // 对于崩溃类信号，打印堆栈跟踪
-  if (sig_num == SIGSEGV || sig_num == SIGTRAP || sig_num == SIGABRT) {
+  if (sig_num == SIGSEGV || sig_num == SIGABRT
+#ifndef OS_WIN
+      || sig_num == SIGTRAP
+#endif
+  ) {
     cerr << lolly::get_stacktrace () << LF;
   }
 
