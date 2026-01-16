@@ -935,6 +935,7 @@ latex_symbol_to_tree (string s) {
       if (s == "lnot") return "<neg>";
       if (s == "land") return "<wedge>";
       if (s == "lor") return "<vee>";
+      if (s == "textdegree") return "<degree>";
       if (s == "textbackslash") return "\\";
       if (s == "hdots") return "<ldots>";
       if (s == "arrowvert") return "|";

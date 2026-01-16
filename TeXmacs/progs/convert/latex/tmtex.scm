@@ -455,6 +455,7 @@
   ("copyright"     textcopyright)
   ("currency"      textcurrency)
   ("degree"        textdegree)
+  ("textdegree"    textdegree)
   ("mu"            textmu)
   ("onehalf"       textonehalf)
   ("onequarter"    textonequarter)
