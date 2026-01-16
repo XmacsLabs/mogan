@@ -74,13 +74,14 @@ jobs:
             debhelper \
             file \
             fcitx5-frontend-qt6
+          apt remove -y 7zip
 
 
       # ==========================================
       # 3. 编译流程
       # ==========================================
       - name: Config
-        run: xmake config --yes -vD -m release --qt=system --policies=build.ccache
+        run: xmake config --yes -vD -m release --policies=build.ccache
 
       - name: Build
         run: xmake build -vD stem
