@@ -38,7 +38,7 @@
   </enumerate-numeric>
 
   <with|framed-color|pastel magenta|ornament-border|0ln|ornament-color|pastel yellow|<\ornamented>
-    You are using <strong|v<Xmacs-version>>. The current latest stable version is <strong|v<include|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/latest_version.tm>>. Visit the official website <hlink|https://mogan.app|https://mogan.app/en/?from=app> to download the latest stable version.
+    You are using <strong|v<Xmacs-version>>. The current latest stable version is <strong|v<include|https://liiistem.cn/mogan_latest_version.tm>>. Visit the official website <hlink|https://mogan.app|https://mogan.app/en/?from=app> to download the latest stable version.
   </ornamented>>
 
   <section*|Example Documents: What can I do with Mogan STEM?>
