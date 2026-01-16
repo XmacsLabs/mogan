@@ -20,6 +20,7 @@
 #include "server.hpp"
 #include "sys_utils.hpp"
 #include "tm_file.hpp"
+#include "tm_link.hpp"
 
 #include <signal.h>
 #ifdef OS_WIN
@@ -83,14 +84,50 @@ bool show_startup_login_dialog ();
 void server_start ();
 
 /******************************************************************************
- * Clean exit on segmentation faults
+ * Clean exit on fatal signals
  ******************************************************************************/
 
-void
-clean_exit_on_segfault (int sig_num) {
-  (void) sig_num;
-  cerr << lolly::get_stacktrace () << LF;
-  TM_FAILED ("segmentation fault");
+static void
+clean_exit_on_signal (int sig_num) {
+  // 首先关闭所有管道（子进程）
+  close_all_pipes ();
+
+  // 打印信号信息
+  const char* sig_name= "UNKNOWN";
+  switch (sig_num) {
+  case SIGSEGV:
+    sig_name= "SIGSEGV (segmentation fault)";
+    break;
+  case SIGTRAP:
+    sig_name= "SIGTRAP (trace/breakpoint trap)";
+    break;
+  case SIGABRT:
+    sig_name= "SIGABRT (abort)";
+    break;
+  case SIGTERM:
+    sig_name= "SIGTERM (termination signal)";
+    break;
+#ifdef SIGQUIT
+  case SIGQUIT:
+    sig_name= "SIGQUIT (quit)";
+    break;
+#endif
+  default:
+    sig_name= "UNKNOWN";
+    break;
+  }
+
+  cerr << "Process terminated by signal: " << sig_name << " (" << sig_num
+       << ")\n";
+
+  // 对于崩溃类信号，打印堆栈跟踪
+  if (sig_num == SIGSEGV || sig_num == SIGTRAP || sig_num == SIGABRT) {
+    cerr << lolly::get_stacktrace () << LF;
+  }
+
+  // 使用默认信号处理器终止程序
+  signal (sig_num, SIG_DFL);
+  raise (sig_num);
 }
 
 /******************************************************************************
@@ -899,7 +936,18 @@ TeXmacs_main (int argc, char** argv) {
 
     if (DEBUG_STD) debug_boot << "Starting event loop...\n";
     texmacs_started= true;
-    if (!disable_error_recovery) signal (SIGSEGV, clean_exit_on_segfault);
+    if (!disable_error_recovery) {
+      // 注册崩溃类信号处理器，确保子进程被正确清理
+      // 注意：SIGINT (Ctrl+C) 不需要在这里处理，因为 Qt 事件循环退出后会
+      // 正常触发 server 析构，进而调用 close_all_pipes()
+      signal (SIGSEGV, clean_exit_on_signal); // 段错误
+      signal (SIGTRAP, clean_exit_on_signal); // 断点陷阱/跟踪
+      signal (SIGABRT, clean_exit_on_signal); // abort
+      signal (SIGTERM, clean_exit_on_signal); // 终止信号 (kill 命令)
+#ifdef SIGQUIT
+      signal (SIGQUIT, clean_exit_on_signal); // 退出 (Ctrl+\)
+#endif
+    }
     if (start_server_flag) server_start ();
     release_boot_lock ();
 

@@ -89,11 +89,17 @@ void
 QTMPipeLink::killProcess (int msecs) {
   disconnect (SIGNAL (readyReadStandardOutput ()), this, SLOT (readErrOut ()));
   disconnect (SIGNAL (readyReadStandardError ()), this, SLOT (readErrOut ()));
-#if defined(OS_MINGW) || defined(OS_WIN)
-  (void) msecs;
-  close ();
-#else
-  terminate ();
-  if (!waitForFinished (msecs)) kill ();
-#endif
+
+  if (state () != QProcess::Running) return;
+
+  // 在第一次终止前等待 msecs 毫秒，给进程清理的机会
+  if (msecs > 0) waitForFinished (msecs);
+
+  // 尝试终止进程，最多重试 4 次，每次等待 50ms
+  for (int i= 0; i < 4 && state () == QProcess::Running; i++) {
+    debug_io << "[KILL] Terminating process: " << cmd << " (attempt " << (i + 1)
+             << "/4)\n";
+    kill ();
+    waitForFinished (50);
+  }
 }

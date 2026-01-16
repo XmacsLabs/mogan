@@ -168,7 +168,11 @@ tm_server_rep::tm_server_rep (app_type app) : def_zoomf (1.0) {
 #endif
 }
 
-tm_server_rep::~tm_server_rep () {}
+tm_server_rep::~tm_server_rep () {
+  // 确保在析构时清理所有子进程（插件）
+  // 这处理了正常退出和 Ctrl+C (SIGINT) 的情况
+  close_all_pipes ();
+}
 server::server (app_type app) : rep (tm_new<tm_server_rep> (app)) {}
 server_rep*
 tm_server_rep::get_server () {
