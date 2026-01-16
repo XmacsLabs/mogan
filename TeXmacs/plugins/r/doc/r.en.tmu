@@ -1,4 +1,4 @@
-<TMU|<tuple|1.0.0|2026.1.16>>
+<TMU|<tuple|1.1.0|2026.1.1-rc1>>
 
 <style|<tuple|tmudoc|number-europe|r>>
 
@@ -26,20 +26,35 @@
   Here is an example <value|code-Name> code block with syntax highlight:
 
   <\r-code>
-    print_hello <- function() {
-      print("Hello, world!")
+    print_hello \<less\>- function() {
+
+    \ \ print("Hello, world!")
+
     }
 
-    x <- 1:10
-    mean_x <- mean(x)
+    \;
 
-    if (mean_x < 5) {
-      print("Mean is less than 5")
+    x \<less\>- 1:10
+
+    mean_x \<less\>- mean(x)
+
+    \;
+
+    if (mean_x \<less\> 5) {
+
+    \ \ print("Mean is less than 5")
+
     } else {
-      print("Mean is 5 or greater")
+
+    \ \ print("Mean is 5 or greater")
+
     }
+
+    \;
 
     print_hello()
+
+    \;
   </r-code>
 
   <paragraph|<value|code-Name> editing>
