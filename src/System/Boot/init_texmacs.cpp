@@ -949,7 +949,9 @@ TeXmacs_main (int argc, char** argv) {
       // 注册信号处理器，确保子进程被正确清理
       // 包括崩溃类信号和用户中断信号
       signal (SIGSEGV, clean_exit_on_signal); // 段错误
+#ifndef OS_WIN
       signal (SIGTRAP, clean_exit_on_signal); // 断点陷阱/跟踪
+#endif
       signal (SIGABRT, clean_exit_on_signal); // abort
       signal (SIGTERM, clean_exit_on_signal); // 终止信号 (kill 命令)
       signal (SIGINT, clean_exit_on_signal);  // 中断 (Ctrl+C)
