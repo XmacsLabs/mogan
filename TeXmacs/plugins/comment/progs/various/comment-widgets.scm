@@ -94,7 +94,7 @@
              (env (apply append inits))
              (com (mirror-comment c 'carbon-comment))
              (doc `(with ,@env (document (hide-preamble ,pre) ,com))))
-    ;(buffer-set-master u b)
+    (buffer-set-master u b)
     (auxiliary-widget (comment-aux-widget u packs doc b)
                       (comment-cancel b)
                       (translate comment-text) u)
