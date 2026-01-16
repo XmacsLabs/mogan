@@ -160,7 +160,7 @@
           (cond ((string=? fm "html") (clipboard-paste-import "html" "primary"))
                 ((string=? fm "latex") (clipboard-paste-import "latex" "primary"))  
                 ((string=? fm "verbatim") (kbd-paste))
-                ((string=? fm "markdown") (kbd-paste))))
+                ((string=? fm "markdown") (paste-as-markdown))))
         (clipboard-paste-import "html" "primary"))))
 
 (define (paste-as-markdown)
