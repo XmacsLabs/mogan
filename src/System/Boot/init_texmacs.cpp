@@ -107,6 +107,9 @@ clean_exit_on_signal (int sig_num) {
   case SIGTERM:
     sig_name= "SIGTERM (termination signal)";
     break;
+  case SIGINT:
+    sig_name= "SIGINT (interrupt)";
+    break;
 #ifdef SIGQUIT
   case SIGQUIT:
     sig_name= "SIGQUIT (quit)";
@@ -937,13 +940,13 @@ TeXmacs_main (int argc, char** argv) {
     if (DEBUG_STD) debug_boot << "Starting event loop...\n";
     texmacs_started= true;
     if (!disable_error_recovery) {
-      // 注册崩溃类信号处理器，确保子进程被正确清理
-      // 注意：SIGINT (Ctrl+C) 不需要在这里处理，因为 Qt 事件循环退出后会
-      // 正常触发 server 析构，进而调用 close_all_pipes()
+      // 注册信号处理器，确保子进程被正确清理
+      // 包括崩溃类信号和用户中断信号
       signal (SIGSEGV, clean_exit_on_signal); // 段错误
       signal (SIGTRAP, clean_exit_on_signal); // 断点陷阱/跟踪
       signal (SIGABRT, clean_exit_on_signal); // abort
       signal (SIGTERM, clean_exit_on_signal); // 终止信号 (kill 命令)
+      signal (SIGINT, clean_exit_on_signal);  // 中断 (Ctrl+C)
 #ifdef SIGQUIT
       signal (SIGQUIT, clean_exit_on_signal); // 退出 (Ctrl+\)
 #endif

@@ -191,10 +191,14 @@ make_pipe_link (string cmd) {
 
 void
 close_all_pipes () {
+  debug_io << "[CLEAN] Closing all pipes\n";
   iterator<pointer> it= iterate (pipe_link_set);
   while (it->busy ()) {
     qt_pipe_link_rep* con= (qt_pipe_link_rep*) it->next ();
-    if (con->alive) con->stop ();
+    if (con->alive) {
+      debug_io << "[CLEAN] Stopping pipe: " << con->PipeLink.cmd << "\n";
+      con->stop ();
+    }
   }
 }
 
