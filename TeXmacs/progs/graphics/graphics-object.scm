@@ -73,7 +73,11 @@
     (< (+ (* (- x2 x1) (- x2 x1)) (* (- y2 y1) (- y2 y1))) (* eps eps))))
 
 ;; Graphical object
-(tm-define default-color-go-points "#4040ff")
+(tm-define (default-color-go-points)
+  (if (has-style-package? "dark")
+      "#3A86FF"
+      "#4040ff"))
+
 (tm-define default-color-selected-points "#ff6060")
 
 (tm-define graphical-attrs
@@ -376,7 +380,7 @@
                              (list-starts? path ptr)))
                     (begin
                       (set! on-aobj #t)
-                      (set! curscol default-color-go-points)))
+                      (set! curscol (default-color-go-points))))
                 (set! path0 path)
                 (set! o (tree->stree o))) ;; FIXME: Remove this (tree->stree)
               )
@@ -465,7 +469,7 @@
   (if (and o (not (null? o)))
       (let* ((op (add-selections-colors
                   (create-graphical-contour o edge no)
-                  default-color-go-points #f))
+                  (default-color-go-points) #f))
              (props (if (and pts (!= pts 'points))
                         (create-graphical-props mode #f)
                         (create-graphical-props 'default #f)))
