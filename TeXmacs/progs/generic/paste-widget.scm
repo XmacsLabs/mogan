@@ -155,28 +155,6 @@
       (bottom-buttons
         >> ("ok" (cmd selected-format)) // ("cancel" (cmd #f)))))
 
-(define (paste-as-html)
-  (with source-format (qt-clipboard-format)
-    (if (string=? source-format "html")
-        (let* ((fm (format-determine (qt-clipboard-text) "verbatim")))
-          (cond ((string=? fm "html") (clipboard-paste-import "html" "primary"))
-                ((string=? fm "latex") (clipboard-paste-import "latex" "primary"))  
-                ((string=? fm "verbatim") (kbd-paste))
-                ((string=? fm "markdown") (paste-as-markdown))))
-        (clipboard-paste-import "html" "primary"))))
-
-(define (paste-as-markdown)
-  (if (community-stem?)
-      (begin
-        (clipboard-paste-import "verbatim" "primary")
-        (kbd-return)
-        (let* ((latex-code (string-load (unix->url "$TEXMACS_PATH/plugins/account/data/md.tex")))
-               (parsed-latex (parse-latex latex-code))
-               (texmacs-latex (latex->texmacs parsed-latex)))
-          (insert texmacs-latex)))
-      (clipboard-paste-import "markdown" "primary")))
-
-
 (tm-define (open-clipboard-paste-from-widget)
   (:interactive #t)
   

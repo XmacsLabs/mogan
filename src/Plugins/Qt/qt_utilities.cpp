@@ -1470,7 +1470,7 @@ qt_clipboard_text () {
   QCoreApplication::processEvents (); // 处理挂起的事件
   QClipboard*      clipboard= QApplication::clipboard ();
   const QMimeData* mimeData = clipboard->mimeData ();
-  if (mimeData->hasFormat ( "application/x-texmacs-clipboard")) {
+  if (mimeData->hasFormat ("application/x-texmacs-clipboard")) {
     QByteArray buf= mimeData->data ("application/x-texmacs-clipboard");
     return string (buf.constData (), buf.size ());
   }
