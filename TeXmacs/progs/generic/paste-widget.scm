@@ -170,6 +170,24 @@
           (insert texmacs-latex)))
       (clipboard-paste-import "markdown" "primary")))
 
+(define (paste-as-latex)
+  (with source-format (qt-clipboard-format)
+    (if (string=? source-format "verbatim")
+        (let* ((raw-text (qt-clipboard-text))
+               (detected-format (format-determine raw-text "verbatim")))
+          (cond ((string=? detected-format "latex") 
+                 (let* ((clipboard-data (clipboard-get "primary"))
+                        (snippet (texmacs->string (tree-ref clipboard-data 1)))
+                        (parsed-latex (parse-latex snippet))
+                        (texmacs-from-latex (latex->texmacs parsed-latex)))
+                   (display* "clipboard-data: " clipboard-data "\n")
+                   (display* "snippet: " snippet "\n")
+                   (insert texmacs-from-latex)))
+                ((string=? detected-format "html") (clipboard-paste-import "html" "primary"))
+                ((string=? detected-format "markdown") (paste-as-markdown))
+                (else (clipboard-paste-import "verbatim" "primary"))))
+        (clipboard-paste-import "latex" "primary"))))
+
 
 (tm-define (open-clipboard-paste-from-widget)
   (:interactive #t)
@@ -186,6 +204,7 @@
               ((and (string=? fm "latex")
                     (string=? (get-clipboard-format) "image"))
                (ocr-paste))
+              ((== fm "latex") (paste-as-latex))
               (else               (clipboard-paste-import fm "primary"))))))
 
   (dialogue-window clipboard-paste-from-widget callback "Paste Special"))
