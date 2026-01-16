@@ -175,6 +175,7 @@
     (if (string=? source-format "verbatim")
         (let* ((raw-text (qt-clipboard-text))
                (detected-format (format-determine raw-text "verbatim")))
+          (clipboard-set "primary" raw-text)
           (cond ((string=? detected-format "latex") 
                  (let* ((clipboard-data (clipboard-get "primary"))
                         (snippet (texmacs->string (tree-ref clipboard-data 1)))
