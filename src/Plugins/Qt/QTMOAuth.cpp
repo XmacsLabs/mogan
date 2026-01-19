@@ -214,6 +214,9 @@ QTMOAuth::handleAuthorizationCode (const QString& code) {
         call ("account-save-token-expiry",
               from_qstring (QString::number (m_tokenExpiryTime)));
 
+        // 发出登录状态变化信号
+        emit loginStateChanged (true);
+
         debug_boot << "Token exchange successful" << "\n";
       }
       else {
@@ -288,6 +291,12 @@ QTMOAuth::refreshToken () {
         m_tokenExpiryTime= QDateTime::currentSecsSinceEpoch () + expiresIn;
         call ("account-save-token-expiry",
               from_qstring (QString::number (m_tokenExpiryTime)));
+
+        // 确保登录状态为true
+        if (!m_isLoggedIn) {
+          m_isLoggedIn= true;
+          emit loginStateChanged (true);
+        }
       }
       else {
         // 返回内容不存在accessToken，清除无效的token信息
@@ -310,11 +319,27 @@ QTMOAuth::refreshToken () {
 void
 QTMOAuth::checkTokenStatus () {
   if (oauth2.token ().isEmpty ()) {
-    m_isLoggedIn= false;
+    if (m_isLoggedIn) {
+      m_isLoggedIn= false;
+      emit loginStateChanged (false);
+    }
     return;
   }
 
   qint64 currentTime= QDateTime::currentSecsSinceEpoch ();
+
+  // 检查token是否已过期
+  if (m_tokenExpiryTime > 0 && m_tokenExpiryTime <= currentTime) {
+    // Token已过期，需要刷新或清除
+    refreshToken ();
+    return;
+  }
+
+  // Token有效且未过期
+  if (!m_isLoggedIn) {
+    m_isLoggedIn= true;
+    emit loginStateChanged (true);
+  }
 
   // 如果token将在3分钟内过期，自动刷新
   if (m_tokenExpiryTime - currentTime <= 180) { // 3分钟
@@ -357,6 +382,9 @@ QTMOAuth::clearInvalidTokens () {
   m_refreshToken.clear ();
   m_tokenExpiryTime= 0;
   m_isLoggedIn     = false;
+
+  // 发出登录状态变化信号
+  emit loginStateChanged (false);
 }
 
 QString

@@ -2527,3 +2527,5 @@
 ("zoom" "缩放")
 ("zoom/unzoom objects" "放大/缩小对象")
 ("zoom/unzoom" "放大/缩小")
+("You are currently in guest mode, login to enable AI, MathOCR,and other features" "您当前处于访客状态，登录激活AI和公式识别等功能")
+("Login Now" "立即登录")

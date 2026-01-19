@@ -5,6 +5,7 @@
 #include "windowbar.hpp"
 #include "windowbar_p.hpp"
 
+#include <QWidget>
 #include <QtCore/QDebug>
 #include <QtCore/QLocale>
 #include <QtGui/QtEvents>
