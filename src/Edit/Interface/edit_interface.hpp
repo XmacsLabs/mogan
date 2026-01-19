@@ -73,6 +73,25 @@ protected:
   bool       table_selection;
   int        mouse_adjusting; // mask with active key modifiers upon click
   rectangles selection_rects;
+  struct table_hit {
+    bool vertical;
+    path fp;
+    int  index;
+    SI   first_size;
+    SI   second_size;
+  };
+  bool              table_resizing          = false;
+  bool              table_resize_vertical   = false;
+  path              table_resize_path       = path ();
+  int               table_resize_index      = 0;
+  SI                table_resize_start_x    = 0;
+  SI                table_resize_start_y    = 0;
+  SI                table_resize_first_size = 0;
+  SI                table_resize_second_size= 0;
+  bool              table_resize_hit (SI x, SI y, table_hit& hit);
+  void              table_resize_start (const table_hit& hit, SI x, SI y);
+  void              table_resize_apply (SI x, SI y);
+  void              table_resize_stop ();
   array<rectangles> alt_selection_rects;
   rectangle         last_visible;
   rectangles        env_rects;
