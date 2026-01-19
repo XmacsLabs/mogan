@@ -179,6 +179,60 @@ edit_interface_rep::draw_selection (renderer ren, rectangle r) {
     ren->draw_rectangles (selection_rects & visible);
 #endif
   }
+
+  draw_resize_handles (ren);
+}
+
+void
+edit_interface_rep::draw_resize_handles (renderer ren) {
+  // Draw image resize handles when cursor is inside an image.
+  SI        hs               = 10 * ren->pixel; // handle radius for visuals
+  rectangle new_image_handles= rectangle (0, 0, 0, 0);
+  SI        x1= 0, y1= 0, x2= 0, y2= 0, mx= 0, my= 0;
+  bool      have_bbox= false;
+
+  // Check if any ancestor of current path is an IMAGE
+  for (path p= path_up (tp); !is_nil (p) && p != rp; p= path_up (p)) {
+    tree st= subtree (et, p);
+    if (!is_func (st, IMAGE)) continue;
+
+    selection sel= eb->find_check_selection (p * 0, p * 1);
+    if (!sel->valid || is_nil (sel->rs)) break; // image not drawable now
+
+    rectangle bbox   = least_upper_bound (sel->rs);
+    x1               = bbox->x1;
+    y1               = bbox->y1;
+    x2               = bbox->x2;
+    y2               = bbox->y2;
+    mx               = (x1 + x2) / 2;
+    my               = (y1 + y2) / 2;
+    new_image_handles= rectangle (x1 - hs, y1 - hs, x2 + hs, y2 + hs);
+    have_bbox        = true;
+    break; // only the closest IMAGE ancestor
+  }
+
+  if (new_image_handles != last_image_handles) {
+    if (!is_zero (last_image_handles)) invalidate (last_image_handles);
+    if (!is_zero (new_image_handles)) invalidate (new_image_handles);
+    last_image_handles= new_image_handles;
+  }
+
+  if (!have_bbox) return; // nothing to draw
+
+  // Draw 8 resize handles: 4 corners + 4 edge midpoints
+  color handle_col= rgb_color (0, 120, 215); // Blue color
+  ren->set_pencil (pencil (handle_col, ren->pixel));
+  ren->set_brush (brush (handle_col));
+
+  // Array of handle center positions: sw, se, nw, ne, s, n, w, e
+  SI hx[8]= {x1, x2, x1, x2, mx, mx, x1, x2};
+  SI hy[8]= {y1, y1, y2, y2, y1, y2, my, my};
+
+  for (int i= 0; i < 8; i++) {
+    SI cx= hx[i], cy= hy[i];
+    ren->fill_arc (cx - hs, cy - hs, cx + hs, cy + hs, 0, 64 * 360);
+    ren->arc (cx - hs, cy - hs, cx + hs, cy + hs, 0, 64 * 360);
+  }
 }
 
 void

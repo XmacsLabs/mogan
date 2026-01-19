@@ -14,7 +14,9 @@
 (texmacs-module (generic format-geometry-edit)
   (:use (utils edit selections)
         (generic embedded-edit)
-        (generic format-drd)))
+        (generic format-drd)
+        (kernel gui kbd-handlers)
+        (utils library length)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customizable step changes for length modifications
@@ -506,3 +508,114 @@
     (length-scale (tree-ref t 2) scale mult)
     (set! pinch-modified? (!= (tree->stree t) old))
     (tree-go-to t :end)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Image mouse dragging for resizing
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define image-resize-handle #f)
+(define image-resize-start-x #f)
+(define image-resize-start-y #f)
+(define image-resize-orig-w #f)
+(define image-resize-orig-h #f)
+
+(define (image-get-bbox t)
+  (and-with rect (tree-bounding-rectangle t)
+    (and (== (length rect) 4) rect)))
+
+(define image-handle-hitbox 6000)
+
+(define (image-point-on-handle? t)
+  (and-with bbox (image-get-bbox t)
+    (let* ((mpos (get-mouse-position))
+           (mx (car mpos)) (my (cadr mpos))
+           (x1 (car bbox)) (y1 (cadr bbox))
+           (x2 (caddr bbox)) (y2 (cadddr bbox))
+           (midx (/ (+ x1 x2) 2)) (midy (/ (+ y1 y2) 2))
+           (hs image-handle-hitbox)
+           (near? (lambda (a b) (< (abs (- a b)) hs)))
+           (handles `((nw ,x1 ,y2)
+                      (n  ,midx ,y2)
+                      (ne ,x2 ,y2)
+                      (e  ,x2 ,midy)
+                      (se ,x2 ,y1)
+                      (s  ,midx ,y1)
+                      (sw ,x1 ,y1)
+                      (w  ,x1 ,midy))))
+      (let loop ((hspec handles))
+        (if (null? hspec) #f
+            (let* ((h (car hspec)) (hx (cadr h)) (hy (caddr h)))
+              (if (and (near? mx hx) (near? my hy)) (car h) (loop (cdr hspec)))))))))
+
+(define (image-get-dimensions t)
+  (let* ((w-str (tm->string (tree-ref t 1)))
+         (h-str (tm->string (tree-ref t 2)))
+         (w (and w-str (not (string-null? w-str)) (length-decode w-str)))
+         (h (and h-str (not (string-null? h-str)) (length-decode h-str))))
+    (or (and w h (list w h))
+        (and-with bbox (image-get-bbox t)
+          (list (- (caddr bbox) (car bbox)) (- (cadddr bbox) (cadr bbox)))))))
+
+(define (tmpt->cm v) (/ v 60472.0))
+(define (cm->str v) (string-append (number->string v) "cm"))
+
+(define (image-set-size! t w h)
+  (when (> w 0.1) (tree-set! t 1 (cm->str w)))
+  (when (> h 0.1) (tree-set! t 2 (cm->str h)))
+  (refresh-window))
+
+(define (image-apply-resize t handle dx dy)
+  (when (and image-resize-orig-w image-resize-orig-h)
+    (let* ((ow (tmpt->cm image-resize-orig-w))
+           (oh (tmpt->cm image-resize-orig-h))
+           (sx (tmpt->cm dx)) (sy (tmpt->cm dy))
+           (nw (- ow sx)) (nh (- oh sy))
+           (uniform-scale
+            (lambda (scale-x scale-y)
+              (let* ((scale (if (or (> scale-x 1) (> scale-y 1))
+                                (max scale-x scale-y)
+                                (min scale-x scale-y))))
+                (when (> (* ow scale) 0.1)
+                  (image-set-size! t (* ow scale) (* oh scale)))))))
+      (case handle
+        ((se) (uniform-scale (/ (+ ow sx) ow) (/ (- oh sy) oh)))
+        ((sw) (uniform-scale (/ nw ow) (/ (- oh sy) oh)))
+        ((ne) (uniform-scale (/ (+ ow sx) ow) (/ nh oh)))
+        ((nw) (uniform-scale (/ nw ow) (/ nh oh)))
+        ((e)  (when (> (+ ow sx) 0.1) (tree-set! t 1 (cm->str (+ ow sx))) (refresh-window)))
+        ((w)  (when (> nw 0.1) (tree-set! t 1 (cm->str nw)) (refresh-window)))
+        ((n)  (when (> nh 0.1) (tree-set! t 2 (cm->str nh)) (refresh-window)))
+        ((s)  (when (> (- oh sy) 0.1) (tree-set! t 2 (cm->str (- oh sy))) (refresh-window)))))))
+
+(define (image-reset-drag-state!)
+  (set! image-resize-handle #f)
+  (set! image-resize-start-x #f)
+  (set! image-resize-start-y #f)
+  (set! image-resize-orig-w #f)
+  (set! image-resize-orig-h #f))
+
+(tm-define (mouse-event key x y mods time data)
+  (:require (and (tree-innermost image-context? #t)
+                 (in? key '("start-drag-left" "dragging-left" "end-drag-left"))))
+  (and-with t (tree-innermost image-context? #t)
+    (cond
+      ((== key "start-drag-left")
+       (image-reset-drag-state!)
+       (let ((handle (image-point-on-handle? t)))
+         (when handle
+           (let ((dims (image-get-dimensions t)))
+             (set! image-resize-handle handle)
+             (set! image-resize-start-x x)
+             (set! image-resize-start-y y)
+             (set! image-resize-orig-w (if dims (car dims) 60472))
+             (set! image-resize-orig-h (if dims (cadr dims) 60472)))))
+       (former key x y mods time data))
+      ((== key "dragging-left")
+       (if image-resize-handle
+           (when (and image-resize-start-x image-resize-start-y)
+             (image-apply-resize t image-resize-handle
+                                  (- x image-resize-start-x) (- y image-resize-start-y)))
+           (former key x y mods time data)))
+      ((== key "end-drag-left")
+       (image-reset-drag-state!)
+       (former key x y mods time data)))))
