@@ -2,7 +2,7 @@
 ;;
 ;; MODULE      : r-lang.scm
 ;; DESCRIPTION : R Language
-;; COPYRIGHT   : (C) 2025  veista
+;; COPYRIGHT   : (C) 2026 Hongli Zha
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
 ;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -21,7 +21,8 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "r") (== key "keyword")))
   `(,(string->symbol key)
-    (extra_chars "_") ;; 变量/关键字可包含下划线
+    (extra_chars "_") 
+  ;; 变量/关键字可包含下划线
     (constant ;; 常量
       "NULL" "NA" "NaN" "Inf" "TRUE" "FALSE")
     (declare_function ;; 内置函数
@@ -69,7 +70,7 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "r") (== key "string")))
   `(,(string->symbol key)
-    (bool_features "single_quote" "double_quote")
+    (bool_features "single_quote" "double_quote" "multi_byte")
     (escape_sequences "\\" "\"" "'" "a" "b" "f" "n" "r" "t" "v" "newline")))
 
 ;; 注释格式
