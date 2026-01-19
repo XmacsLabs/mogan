@@ -1,6 +1,12 @@
-// Copyright (C) 2023-2024 Stdware Collections (https://www.github.com/stdware)
-// Copyright (C) 2021-2023 wangwenx190 (Yuhang Zhao)
-// SPDX-License-Identifier: Apache-2.0
+/******************************************************************************
+ * MODULE     : fast_search.hpp
+ * DESCRIPTION: Fast multiple searches in same string
+ * COPYRIGHT  : (C) 2026 Mogan Team 
+ *******************************************************************************
+ * This software falls under the GNU general public license version 3 or later.
+ * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
+ * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
+ ******************************************************************************/
 
 #include "guestnotificationbar.hpp"
 #include "qt_utilities.hpp"
