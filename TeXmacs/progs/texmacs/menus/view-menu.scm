@@ -152,6 +152,4 @@
       ("Right side tools" (toggle-visible-side-tools 0))
       ("GUI through markup" (toggle-markup-gui)))
   ---
-  ;; ("Search toolbar" (toggle-bottom-bar "search")) ;; Removed on 2026-01-19
-  ("Replace toolbar" (toggle-bottom-bar "replace"))
   ("Animation toolbar" (toggle-bottom-bar "animate")))
