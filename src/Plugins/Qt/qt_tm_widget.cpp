@@ -717,8 +717,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   }
   else {
     std_error << "qt_tm_widget_rep: server not started, cannot connect ";
-                "loginStateChanged signal"
-             << LF;
+    "loginStateChanged signal" << LF;
   }
 
   // 恢复窗口状态和几何信息

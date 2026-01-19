@@ -1,7 +1,7 @@
 /******************************************************************************
  * MODULE     : fast_search.hpp
  * DESCRIPTION: Fast multiple searches in same string
- * COPYRIGHT  : (C) 2026 Mogan Team 
+ * COPYRIGHT  : (C) 2026 Mogan Team
  *******************************************************************************
  * This software falls under the GNU general public license version 3 or later.
  * It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -46,8 +46,9 @@ GuestNotificationBar::setupUI () {
 
   // 提示文字
   m_messageLabel= new QLabel (contentWidget);
-  m_messageLabel->setText (qt_translate (
-      "You are currently in guest mode, login to enable AI, MathOCR,and other features"));
+  m_messageLabel->setText (
+      qt_translate ("You are currently in guest mode, login to enable AI, "
+                    "MathOCR,and other features"));
   m_messageLabel->setAlignment (Qt::AlignLeft | Qt::AlignVCenter);
   m_messageLabel->setWordWrap (false);
   contentLayout->addWidget (m_messageLabel);
