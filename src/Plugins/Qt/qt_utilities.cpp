@@ -591,8 +591,10 @@ qt_pretty_image_size (int ww, int hh, string& w, string& h) {
     h= "";
   }
   else if (ww * pt > par) {
-    w= "0.8par";
-    h= "";
+    double factor= 0.8 / (ww * pt * 1.0 / par);
+    double dhpar = hh * 1.0 * pt / par * factor;
+    w            = "0.8par";
+    h            = as_string (dhpar) * "par";
   }
   else {
     w= as_string (ww) * "pt";
