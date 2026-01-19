@@ -24,7 +24,7 @@
     (extra_chars "_") 
   ;; 变量/关键字可包含下划线
     (constant ;; 常量
-      "NULL" "NA" "NaN" "Inf" "TRUE" "FALSE")
+      "NULL" "NA" "NaN" "Inf" "TRUE" "FALSE" "T" "F")
     (declare_function ;; 内置函数
       "abs" "sign" "sqrt" "ceiling" "floor" "trunc" "round"
       "exp" "log" "log10" "log2" "cos" "sin" "tan" "acos" "asin" "atan"
@@ -40,11 +40,11 @@
       "system" "Sys.time" "Sys.Date" "version"
       "sample" "set.seed" "duplicated")
     (declare_type ;; 类型
-      "list" "data.frame" "matrix" "array" "factor" "numeric" "integer" "logical" "character")
+      "numeric" "integer" "logical" "character")
     (declare_module ;; 包/模块
       "library" "require" "attach" "detach")
     (keyword ;; 基本关键字
-      "if" "else" "for" "while" "repeat" "break" "next" "in" "return")
+      "if" "else" "for" "while" "repeat" "break" "next" "in" "return" "...")
     (keyword_control ;; 控制/异常关键字
       "stop" "warning" "message" "switch" "try" "tryCatch")))
 
@@ -53,25 +53,28 @@
   (:require (and (== lan "r") (== key "operator")))
   `(,(string->symbol key)
     (operator
-      "+" "-" "*" "/" "^" "%%" "%/%" "<" ">" "<=" ">=" "==" "!=" "&" "&&" "|" "||" "!" "~" "$" "@")
-    (operator_special "::" ":::")
+      "+" "-" "*" "/" "^" ":" "%%" "%/%" "<" ">" "<=" ">=" "==" "!=" "&" "&&" "|" "||" "!" "~" "$" "@")
+    (operator_special "::" ":::" "|>")
     (operator_openclose "(" "[" "{")
     (operator_openclose ")" "]" "}")
-    (operator_field "$" "@" "<-" "<<-" "->" "->>")))
+    (operator_field "$" "@" "<-" "=" "<<-" "->" "->>")))
 
 ;; 数字特性
 (tm-define (parser-feature lan key)
   (:require (and (== lan "r") (== key "number")))
   `(,(string->symbol key)
-    (bool_features "decimal" "sci_notation")
-    (separator "_")))
+    (bool_features "decimal" "sci_notation" "prefix_0x") ; 支持 0x 十六进制
+    (separator "_")
+    (suffix
+      (integer "L" "l")  ; 整数后缀
+      (imag "i"))))       ; 复数后缀
 
 ;; 字符串特性
 (tm-define (parser-feature lan key)
   (:require (and (== lan "r") (== key "string")))
   `(,(string->symbol key)
-    (bool_features "single_quote" "double_quote" "multi_byte")
-    (escape_sequences "\\" "\"" "'" "a" "b" "f" "n" "r" "t" "v" "newline")))
+      (bool_features "single_quote" "double_quote" "multi_byte" "unicode_escape" "hex_escape")
+      (escape_sequences "\\" "\"" "'" "a" "b" "f" "n" "r" "t" "v" "newline" "x" "u" "U")))
 
 ;; 注释格式
 (tm-define (parser-feature lan key)
