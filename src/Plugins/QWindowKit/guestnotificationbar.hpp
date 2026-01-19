@@ -40,7 +40,6 @@ private:
 
 private:
   QHBoxLayout* m_layout;
-  QLabel*      m_iconLabel;
   QLabel*      m_messageLabel;
   QPushButton* m_loginButton;
   QPushButton* m_closeButton;

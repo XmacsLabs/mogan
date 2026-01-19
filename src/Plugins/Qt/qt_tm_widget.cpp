@@ -337,8 +337,6 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
 
   // 初始化访客提示条
   guestNotificationBar= new QWK::GuestNotificationBar (mw);
-  qDebug () << "GuestNotificationBar created in qt_tm_widget:"
-            << guestNotificationBar;
 
   // 连接提示条信号
   QObject::connect (guestNotificationBar,
@@ -355,7 +353,6 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   // 2. 商业版：用户未登录时显示，用户已登录时不显示
   if (is_community_stem ()) {
     // 社区版：不显示提示条
-    qDebug () << "Community version, hiding guest notification bar";
     guestNotificationBar->hide ();
   }
   else {
@@ -363,22 +360,17 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     try {
       // 直接调用全局的logged-in?函数，不需要导入模块
       bool isLoggedIn= as_bool (call ("logged-in?"));
-      qDebug () << "Commercial version, isLoggedIn:" << isLoggedIn;
 
       if (isLoggedIn) {
         // 用户已登录，不显示提示条
-        qDebug () << "User is logged in, hiding guest notification bar";
         guestNotificationBar->hide ();
       }
       else {
         // 用户未登录，显示提示条
-        qDebug () << "User is not logged in, showing guest notification bar";
         guestNotificationBar->show ();
       }
     } catch (...) {
       // 如果检查登录状态失败，默认显示提示条
-      qDebug () << "Error checking login status, showing guest notification "
-                   "bar by default";
       guestNotificationBar->show ();
     }
   }

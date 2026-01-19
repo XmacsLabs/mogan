@@ -14,19 +14,16 @@
 namespace QWK {
 
 GuestNotificationBar::GuestNotificationBar (QWidget* parent)
-    : QFrame (parent), m_layout (nullptr), m_iconLabel (nullptr),
-      m_messageLabel (nullptr), m_loginButton (nullptr),
-      m_closeButton (nullptr) {
+    : QFrame (parent), m_layout (nullptr), m_messageLabel (nullptr),
+      m_loginButton (nullptr), m_closeButton (nullptr) {
   setupUI ();
   applyStyle ();
-  qDebug () << "GuestNotificationBar created, close button:" << m_closeButton;
 }
 
 GuestNotificationBar::~GuestNotificationBar ()= default;
 
 void
 GuestNotificationBar::setupUI () {
-  qDebug () << "GuestNotificationBar::setupUI() called";
   // 设置主布局
   m_layout= new QHBoxLayout (this);
   m_layout->setContentsMargins (12, 8, 12, 8);
@@ -40,12 +37,6 @@ GuestNotificationBar::setupUI () {
   QHBoxLayout* contentLayout= new QHBoxLayout (contentWidget);
   contentLayout->setContentsMargins (0, 0, 0, 0);
   contentLayout->setSpacing (8);
-
-  // 警告图标
-  m_iconLabel= new QLabel (contentWidget);
-  m_iconLabel->setText ("⚠️");
-  m_iconLabel->setAlignment (Qt::AlignCenter);
-  contentLayout->addWidget (m_iconLabel);
 
   // 提示文字
   m_messageLabel= new QLabel (contentWidget);
@@ -69,7 +60,6 @@ GuestNotificationBar::setupUI () {
 
   // 关闭按钮 - 单独放在最右侧
   m_closeButton= new QPushButton (this);
-  qDebug () << "Close button created:" << m_closeButton;
   m_closeButton->setText ("×"); // 使用乘号字符
   m_closeButton->setCursor (Qt::PointingHandCursor);
   m_closeButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -77,8 +67,6 @@ GuestNotificationBar::setupUI () {
   // 设置文本对齐方式为居中
   m_closeButton->setStyleSheet ("text-align: center;");
   m_layout->addWidget (m_closeButton);
-  qDebug () << "Close button added to main layout, visible:"
-            << m_closeButton->isVisible ();
 
   // 连接信号
   connect (m_loginButton, &QPushButton::clicked, this,
@@ -88,7 +76,6 @@ GuestNotificationBar::setupUI () {
 
   // 设置对象名用于样式表
   setObjectName ("guestNotificationBar");
-  m_iconLabel->setObjectName ("guestNotificationIcon");
   m_messageLabel->setObjectName ("guestNotificationMessage");
   m_loginButton->setObjectName ("guestNotificationLoginButton");
   m_closeButton->setObjectName ("guestNotificationCloseButton");
@@ -96,70 +83,8 @@ GuestNotificationBar::setupUI () {
 
 void
 GuestNotificationBar::applyStyle () {
-  qDebug () << "GuestNotificationBar::applyStyle() called";
-  // 设置浅黄色背景 (#FFF3CD) 和浅橙色边框 (#FFE69C)
-  QString styleSheet= R"(
-    #guestNotificationBar {
-      background-color: #FFF3CD;
-      border: 1px solid #FFE69C;
-      border-left: none;
-      border-right: none;
-      border-top: none;
-    }
-
-    #guestNotificationMessage {
-      color: #856404;
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    #guestNotificationIcon {
-      font-size: 16px;
-      color: #856404;
-      min-width: 20px;
-    }
-
-    #guestNotificationLoginButton {
-      background-color: #FD7E14;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 6px 16px;
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    #guestNotificationLoginButton:hover {
-      background-color: #E96B00;
-    }
-
-    #guestNotificationLoginButton:pressed {
-      background-color: #D45A00;
-    }
-
-    #guestNotificationCloseButton {
-      background-color: transparent;
-      color: #000000;
-      border: none;
-      font-size: 14px;
-      font-weight: bold;
-      border-radius: 4px;
-      padding: 0;
-      margin: 0;
-      min-width: 24px;
-      min-height: 24px;
-    }
-
-    #guestNotificationCloseButton:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    #guestNotificationCloseButton:pressed {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-  )";
-
-  setStyleSheet (styleSheet);
+  // 样式已迁移到主题文件中 (liii.css 和 liii-night.css)
+  // 不再需要内联样式表
 }
 
 void
