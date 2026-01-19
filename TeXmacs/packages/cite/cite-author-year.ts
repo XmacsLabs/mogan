@@ -63,12 +63,16 @@
   <active*|<src-short-comment|The LaTeX standard actually uses brackets ( )
   instead>>
 
+  <assign|render-year|<macro|x|(<arg|x>)>>
+
   <assign|cite-sep|<macro|; >>
 
   <assign|natbib-show|<macro|nr|text|<natbib-author*|<arg|text>><if|<equal|<natbib-year|<arg|text>>|?>||,
   <natbib-year|<arg|text>>>>>
 
   <assign|natbib-bind|<macro|nr|text|<arg|text>>>
+
+  <assign|transform-bibitem|<macro|body|<arg|body> \ >>
 
   <active*|<src-short-comment|Use nr argument instead for short style
   references>>
@@ -92,10 +96,10 @@
   <cite-year|<arg|key>>>>>
 
   <assign|cite-author-year*|<macro|key|<cite-author|<arg|key>><if|<equal|<natbib-year|<cite-data|<arg|key>>>|?>||
-  <render-cite|<cite-year|<arg|key>>>>>>
+  <render-year|<cite-year|<arg|key>>>>>>
 
   <assign|cite-author*-year*|<macro|key|<cite-author*|<arg|key>><if|<equal|<natbib-year|<cite-data|<arg|key>>>|?>||
-  <render-cite|<cite-year|<arg|key>>>>>>
+  <render-year|<cite-year|<arg|key>>>>>>
 
   \;
 
