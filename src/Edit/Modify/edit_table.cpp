@@ -1356,6 +1356,12 @@ edit_table_rep::table_set_format (string var, tree val) {
   }
 }
 
+void
+edit_table_rep::table_set_format_region (path fp, int I1, int J1, int I2,
+                                         int J2, string var, tree val) {
+  table_set_format (fp, I1, J1, I2, J2, var, val);
+}
+
 tree
 edit_table_rep::table_get_format () {
   path fp= search_format ();
