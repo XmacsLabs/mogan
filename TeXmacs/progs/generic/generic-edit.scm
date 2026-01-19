@@ -261,6 +261,63 @@ image-and-ocr-paste
           (kbd-return)
           (ocr-to-latex-by-cursor data))))
 
+(tm-define (paste-as-html)
+  (with source-format (qt-clipboard-format)
+    (if (string=? source-format "html")
+        (let* ((fm (format-determine (qt-clipboard-text) "verbatim")))
+          (cond ((string=? fm "html") (clipboard-paste-import "html" "primary"))
+                ((string=? fm "latex") (clipboard-paste-import "latex" "primary"))  
+                ((string=? fm "verbatim") (kbd-paste))
+                ((string=? fm "markdown") (paste-as-markdown))))
+        (clipboard-paste-import "html" "primary"))))
+
+(tm-define (paste-as-markdown)
+  (if (community-stem?)
+      (begin
+        (clipboard-paste-import "verbatim" "primary")
+        (kbd-return)
+        (let* ((latex-code (string-load (unix->url "$TEXMACS_PATH/plugins/account/data/md.tex")))
+               (parsed-latex (parse-latex latex-code))
+               (texmacs-latex (latex->texmacs parsed-latex)))
+          (insert texmacs-latex)))
+      (clipboard-paste-import "markdown" "primary")))
+
+#|
+paste-as-texmacs
+期望以texmacs格式粘贴
+
+语法
+(paste-as-texmacs)
+|#
+
+(tm-define (paste-as-texmacs)
+  (with img-tree (tree-ref (clipboard-get "primary") 1)
+    (cond ((tree-is? img-tree 'image) 
+           (ocr-to-latex-by-cursor img-tree))
+          ((and (tree-is? img-tree 'with) (not (null? (tree-ref img-tree 2))))
+           (let* ((sub-img-tree (tree-ref img-tree 2)))
+             (when (tree-is? sub-img-tree 'image)
+               (ocr-to-latex-by-cursor img-tree)))))))
+
+#|
+smart-format-paste
+智能格式粘贴，对剪贴板格式进行检测，按照对应格式进行粘贴
+
+语法
+(smart-format-paste)
+|#
+
+(tm-define (smart-format-paste)
+  (with source-format (qt-clipboard-format)
+    (cond ((or (string=? source-format "verbatim") (string=? source-format "html"))
+           (let* ((fm (format-determine (qt-clipboard-text) "verbatim")))
+             (cond ((string=? fm "html") (clipboard-paste-import "html" "primary"))
+                   ((string=? fm "latex") (clipboard-paste-import "latex" "primary"))  
+                   ((string=? fm "verbatim") (kbd-paste))
+                   ((string=? fm "markdown") (paste-as-markdown)))))
+          ((string=? source-format "texmacs-snippet") (paste-as-texmacs))
+          (else (kbd-paste-verbatim)))))
+
 #|
 kbd-magic-paste
 智能粘贴。通过`Ctrl+Shift+v`或者`编辑->智能粘贴`触发，能够根据粘贴内容和当前模式，切换粘贴的方式。
@@ -287,7 +344,7 @@ TODO: 在文本模式中，可以自动识别剪贴板中的内容，并智能�
                (clipboard-paste-import "code" "primary"))
               ((== mode "math")
                (clipboard-paste-import "latex" "primary"))
-              (else (kbd-paste-verbatim))))))
+              (else (smart-format-paste))))))
 
 (tm-define (any-image-context?)
   (tree-innermost 

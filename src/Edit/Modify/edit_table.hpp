@@ -101,6 +101,8 @@ public:
   path       table_search_cell (int row, int col);
   void       table_go_to (int row, int col);
   void       table_set_format (string var, tree val);
+  void       table_set_format_region (path fp, int I1, int J1, int I2, int J2,
+                                      string var, tree val);
   tree       table_get_format ();
   string     table_get_format (string var);
   void       table_del_format (string var);

@@ -403,9 +403,66 @@ struct table_box_rep : public concrete_composite_box_rep {
     finalize ();
   }
   operator tree () { return tree ("table"); }
-  box adjust_kerning (int mode, double factor);
-  box expand_glyphs (int mode, double factor);
+  tree message (tree t, SI x, SI y, rectangles& rs);
+  box  adjust_kerning (int mode, double factor);
+  box  expand_glyphs (int mode, double factor);
 };
+
+tree
+table_box_rep::message (tree t, SI x, SI y, rectangles& rs) {
+  (void) rs;
+  if (is_atomic (t) && t->label == "table-loc?") {
+    SI tol= 10 * PIXEL;
+    SI mx = x;
+    SI my = y;
+
+    /* horizontal line (columns) */
+    if (my >= y1 - tol && my <= y2 + tol) {
+      for (int j= 1; j < cols; j++) {
+        int idx   = j - 1;
+        int k     = idx;
+        SI  border= this->x[k] + bs[k]->w ();
+        if (abs (mx - border) <= tol) {
+          SI   lw= bs[k]->w ();
+          SI   rw= bs[k + 1]->w ();
+          tree res (TUPLE);
+          res << tree ("table-loc") << tree ("col") << tree (as_string (j))
+              << tree (as_string (border)) << tree (as_string (lw))
+              << tree (as_string (rw)) << tree (as_string (cols))
+              << tree (as_string (rows)) << tree (as_string (ip));
+          return res;
+        }
+      }
+    }
+
+    /* vertical line (rows) */
+    if (mx >= x1 - tol && mx <= x2 + tol) {
+      for (int i= 1; i < rows; i++) {
+        int idx   = (i - 1) * cols;
+        SI  border= this->y[idx];
+        if (abs (my - border) <= tol) {
+          SI   th= bs[idx]->h ();
+          SI   bh= bs[idx + cols]->h ();
+          tree res (TUPLE);
+          res << tree ("table-loc") << tree ("row") << tree (as_string (i))
+              << tree (as_string (border)) << tree (as_string (th))
+              << tree (as_string (bh)) << tree (as_string (cols))
+              << tree (as_string (rows)) << tree (as_string (ip));
+          return res;
+        }
+      }
+    }
+
+    /* inside area (cells) */
+    if (mx >= x1 && mx <= x2 && my >= y1 && my <= y2) {
+      tree res (TUPLE);
+      res << tree ("table-loc") << tree ("cell");
+      return res;
+    }
+  }
+
+  return concrete_composite_box_rep::message (t, x, y, rs);
+}
 
 box
 table_box_rep::adjust_kerning (int mode, double factor) {

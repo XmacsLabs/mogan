@@ -316,6 +316,8 @@ QTMWidget::inputMethodEvent (QInputMethodEvent* event) {
   else if (im_preedit_str == "on") {
     im_preedit_switch= true;
   }
+  // Disable preedit in math mode to prevent crash in QQPinyin
+  if (as_bool (call ("in-math?"))) im_preedit_switch= false;
 
   string r= "pre-edit:";
   if (im_preedit_switch && !preedit_string.isEmpty ()) {
