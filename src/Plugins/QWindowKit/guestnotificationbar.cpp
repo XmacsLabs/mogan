@@ -41,7 +41,7 @@ GuestNotificationBar::setupUI () {
   // 提示文字
   m_messageLabel= new QLabel (contentWidget);
   m_messageLabel->setText (qt_translate (
-      "You are currently in guest mode, some features are limited"));
+      "You are currently in guest mode, login to enable AI, MathOCR,and other features"));
   m_messageLabel->setAlignment (Qt::AlignLeft | Qt::AlignVCenter);
   m_messageLabel->setWordWrap (false);
   contentLayout->addWidget (m_messageLabel);
