@@ -65,31 +65,31 @@ class qt_tm_widget_rep : public qt_window_widget_rep {
    tab_tools_visibility     = 1024
    } visibility_t;
    */
-  QLabel*                 rightLabel;
-  QLabel*                 leftLabel;
-  QLabel*                 middleLabel;
-  QToolBar*               menuToolBar;
-  QToolBar*               mainToolBar;
-  QToolBar*               modeToolBar;
-  QToolBar*               focusToolBar;
-  QToolBar*               userToolBar;
-  QDockWidget*            sideTools;
-  QDockWidget*            leftTools;
-  QDockWidget*            bottomTools;
-  QDockWidget*            extraTools;
-  QTMTabPageContainer*    tabPageContainer;
-  QTMAuxiliaryWidget*     auxiliaryWidget;
-  QWK::WidgetWindowAgent* windowAgent;
+  QLabel*                    rightLabel;
+  QLabel*                    leftLabel;
+  QLabel*                    middleLabel;
+  QToolBar*                  menuToolBar;
+  QToolBar*                  mainToolBar;
+  QToolBar*                  modeToolBar;
+  QToolBar*                  focusToolBar;
+  QToolBar*                  userToolBar;
+  QDockWidget*               sideTools;
+  QDockWidget*               leftTools;
+  QDockWidget*               bottomTools;
+  QDockWidget*               extraTools;
+  QTMTabPageContainer*       tabPageContainer;
+  QTMAuxiliaryWidget*        auxiliaryWidget;
+  QWK::WidgetWindowAgent*    windowAgent;
   QWK::GuestNotificationBar* guestNotificationBar; // 新增：访客提示条
-  QWK::LoginButton*       loginButton;
-  QWK::LoginDialog*       m_loginDialog;
-  QLabel*                 avatarLabel;
-  QLabel*                 nameLabel;
-  QLabel*                 accountIdLabel;
-  QLabel*                 membershipPeriodLabel;
-  QLabel*                 membershipTitleLabel;
-  QPushButton*            loginActionButton;
-  QPushButton*            logoutButton;
+  QWK::LoginButton*          loginButton;
+  QWK::LoginDialog*          m_loginDialog;
+  QLabel*                    avatarLabel;
+  QLabel*                    nameLabel;
+  QLabel*                    accountIdLabel;
+  QLabel*                    membershipPeriodLabel;
+  QLabel*                    membershipTitleLabel;
+  QPushButton*               loginActionButton;
+  QPushButton*               logoutButton;
 
 #ifdef Q_OS_MAC
   QToolBar* dumbToolBar;

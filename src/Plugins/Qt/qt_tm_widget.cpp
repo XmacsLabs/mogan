@@ -336,45 +336,50 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
                     [this] () { checkLocalTokenAndLogin (); });
 
   // 初始化访客提示条
-  guestNotificationBar = new QWK::GuestNotificationBar(mw);
-  qDebug() << "GuestNotificationBar created in qt_tm_widget:" << guestNotificationBar;
+  guestNotificationBar= new QWK::GuestNotificationBar (mw);
+  qDebug () << "GuestNotificationBar created in qt_tm_widget:"
+            << guestNotificationBar;
 
   // 连接提示条信号
-  QObject::connect(guestNotificationBar, &QWK::GuestNotificationBar::loginRequested,
-                   [this]() { triggerOAuth2(); });
-  QObject::connect(guestNotificationBar, &QWK::GuestNotificationBar::closeRequested,
-                   [this]() {
-                     guestNotificationBar->hide();
-                     // 只隐藏当前会话，不保存到设置
-                   });
+  QObject::connect (guestNotificationBar,
+                    &QWK::GuestNotificationBar::loginRequested,
+                    [this] () { triggerOAuth2 (); });
+  QObject::connect (guestNotificationBar,
+                    &QWK::GuestNotificationBar::closeRequested, [this] () {
+                      guestNotificationBar->hide ();
+                      // 只隐藏当前会话，不保存到设置
+                    });
 
   // 检查是否应该显示提示条
   // 1. 社区版不显示
   // 2. 商业版：用户未登录时显示，用户已登录时不显示
-  if (is_community_stem()) {
+  if (is_community_stem ()) {
     // 社区版：不显示提示条
-    qDebug() << "Community version, hiding guest notification bar";
-    guestNotificationBar->hide();
-  } else {
+    qDebug () << "Community version, hiding guest notification bar";
+    guestNotificationBar->hide ();
+  }
+  else {
     // 商业版：检查用户登录状态（使用和OCR功能相同的判断方法）
     try {
       // 直接调用全局的logged-in?函数，不需要导入模块
-      bool isLoggedIn = as_bool(call("logged-in?"));
-      qDebug() << "Commercial version, isLoggedIn:" << isLoggedIn;
+      bool isLoggedIn= as_bool (call ("logged-in?"));
+      qDebug () << "Commercial version, isLoggedIn:" << isLoggedIn;
 
       if (isLoggedIn) {
         // 用户已登录，不显示提示条
-        qDebug() << "User is logged in, hiding guest notification bar";
-        guestNotificationBar->hide();
-      } else {
+        qDebug () << "User is logged in, hiding guest notification bar";
+        guestNotificationBar->hide ();
+      }
+      else {
         // 用户未登录，显示提示条
-        qDebug() << "User is not logged in, showing guest notification bar";
-        guestNotificationBar->show();
+        qDebug () << "User is not logged in, showing guest notification bar";
+        guestNotificationBar->show ();
       }
     } catch (...) {
       // 如果检查登录状态失败，默认显示提示条
-      qDebug() << "Error checking login status, showing guest notification bar by default";
-      guestNotificationBar->show();
+      qDebug () << "Error checking login status, showing guest notification "
+                   "bar by default";
+      guestNotificationBar->show ();
     }
   }
 
@@ -694,25 +699,28 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     tm_server_rep* server=
         dynamic_cast<tm_server_rep*> (get_server ().operator->());
     if (server && server->getAccount ()) {
-      QTMOAuth* account = server->getAccount ();
-      QObject::connect (account, &QTMOAuth::loginStateChanged, [this] (bool loggedIn) {
-        // 登录状态变化时，重新检查登录状态并更新提示条
-        if (guestNotificationBar) {
-          // 社区版不显示提示条
-          if (is_community_stem()) {
-            guestNotificationBar->hide();
-          } else {
-            // 商业版：根据登录状态决定是否显示
-            if (loggedIn) {
-              // 用户已登录，隐藏提示条
-              guestNotificationBar->hide();
-            } else {
-              // 用户未登录，显示提示条
-              guestNotificationBar->show();
-            }
-          }
-        }
-      });
+      QTMOAuth* account= server->getAccount ();
+      QObject::connect (account, &QTMOAuth::loginStateChanged,
+                        [this] (bool loggedIn) {
+                          // 登录状态变化时，重新检查登录状态并更新提示条
+                          if (guestNotificationBar) {
+                            // 社区版不显示提示条
+                            if (is_community_stem ()) {
+                              guestNotificationBar->hide ();
+                            }
+                            else {
+                              // 商业版：根据登录状态决定是否显示
+                              if (loggedIn) {
+                                // 用户已登录，隐藏提示条
+                                guestNotificationBar->hide ();
+                              }
+                              else {
+                                // 用户未登录，显示提示条
+                                guestNotificationBar->show ();
+                              }
+                            }
+                          }
+                        });
     }
   }
 
@@ -2090,16 +2098,18 @@ qt_tm_widget_rep::updateDialogContent (bool isLoggedIn, const QString& username,
   // 根据登录状态更新访客提示条可见性
   if (guestNotificationBar) {
     // 社区版不显示提示条
-    if (is_community_stem()) {
-      guestNotificationBar->hide();
-    } else {
+    if (is_community_stem ()) {
+      guestNotificationBar->hide ();
+    }
+    else {
       // 商业版：根据登录状态决定是否显示
       if (isLoggedIn) {
         // 用户已登录，隐藏提示条
-        guestNotificationBar->hide();
-      } else {
+        guestNotificationBar->hide ();
+      }
+      else {
         // 用户未登录，显示提示条
-        guestNotificationBar->show();
+        guestNotificationBar->show ();
       }
     }
   }
@@ -2176,11 +2186,12 @@ qt_tm_widget_rep::logout () {
   // 用户注销后显示访客提示条（除非用户已手动关闭）
   if (guestNotificationBar) {
     // 社区版不显示提示条
-    if (is_community_stem()) {
-      guestNotificationBar->hide();
-    } else {
+    if (is_community_stem ()) {
+      guestNotificationBar->hide ();
+    }
+    else {
       // 商业版：用户注销后显示提示条
-      guestNotificationBar->show();
+      guestNotificationBar->show ();
     }
   }
 

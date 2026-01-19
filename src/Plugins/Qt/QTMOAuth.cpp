@@ -333,7 +333,8 @@ QTMOAuth::checkTokenStatus () {
     // Token已过期，需要刷新或清除
     if (!m_refreshToken.isEmpty ()) {
       refreshToken ();
-    } else {
+    }
+    else {
       clearInvalidTokens ();
     }
     return;
