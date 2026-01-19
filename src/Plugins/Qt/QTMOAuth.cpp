@@ -331,12 +331,7 @@ QTMOAuth::checkTokenStatus () {
   // 检查token是否已过期
   if (m_tokenExpiryTime > 0 && m_tokenExpiryTime <= currentTime) {
     // Token已过期，需要刷新或清除
-    if (!m_refreshToken.isEmpty ()) {
-      refreshToken ();
-    }
-    else {
-      clearInvalidTokens ();
-    }
+    refreshToken ();
     return;
   }
 
