@@ -1,6 +1,6 @@
 <TMU|<tuple|1.1.0|2026.1.1>>
 
-<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref|bash|python>>
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref|bash>>
 
 <\body>
   Bash行内代码示例：
@@ -12,93 +12,309 @@
   <\bash-code>
     #!/usr/bin/env bash
 
-    # ========= 基础结构 =========
+    # ==========================================
+
+    # Bash syntax highlighting comprehensive test
+
+    # ==========================================
 
     \;
 
     set -euo pipefail
 
-    \;
-
-    USER_NAME="$USER"
-
-    COUNT=3
-
-    DEFAULT_DIR="${HOME:-/tmp}"
+    IFS=$'\\n\\t'
 
     \;
 
-    echo "User=$USER_NAME, Home=$HOME"
+    # ---------- globals ----------
 
-    echo "Args: $@ \ Count=$# \ PID=$$ \ Status=$?"
+    NAME="Mogan"
+
+    JOBS="${JOBS:-4}"
+
+    MODE="${1:-debug}" \ \ \ \ \ \ \ # debug \| release
+
+    REMOTE="${2:-upstream}"
+
+    WORKDIR="${WORKDIR:-/tmp/mogan_test}"
+
+    LOG="$WORKDIR/test.log"
 
     \;
 
-    # ========= 函数 + 控制结构 =========
+    mkdir -p "$WORKDIR"
+
+    : \<gtr\>"$LOG"
 
     \;
 
     log() {
 
-    \ \ local level="$1"
+    \ \ local level="$1"; shift
 
-    \ \ shift
-
-    \ \ echo "[$level] $*"
+    \ \ printf '[%s] %-5s %s\\n' "$(date '+%F %T')" "$level" "$*" \| tee -a "$LOG"
 
     }
 
     \;
 
-    if [[ "$COUNT" -gt 0 ]]; then
+    cleanup() {
 
-    \ \ log INFO "COUNT=$COUNT"
+    \ \ log INFO "cleanup: removing temp files"
+
+    \ \ rm -rf "$WORKDIR/tmp" \|\| true
+
+    }
+
+    trap cleanup EXIT INT TERM
+
+    \;
+
+    # ---------- arrays ----------
+
+    TOOLS=(git xmake python3 cmake make gcc clang)
+
+    declare -A KV=([os]="linux" [arch]="x86_64")
+
+    \;
+
+    # ---------- string & escapes ----------
+
+    log INFO "name=$NAME mode=$MODE jobs=$JOBS workdir=$WORKDIR"
+
+    log INFO "escape demo: \\"quoted\\" \\n tab=\\t dollar=\\$ backtick=\\‘"
+
+    \;
+
+    # ---------- tests / conditionals ----------
+
+    if [[ "$JOBS" -gt 1 && -n "${KV[os]}" ]]; then
+
+    \ \ log INFO "Parallel jobs=$JOBS, os=${KV[os]}"
 
     else
 
-    \ \ log ERROR "COUNT is zero"
+    \ \ log WARN "Single job mode or missing KV[os]"
 
     fi
 
     \;
 
-    # ========= 循环 =========
+    # ---------- loop + parameter expansion ----------
 
-    \;
+    for tool in "${TOOLS[@]}"; do
 
-    for i in 1 2 3; do
+    \ \ # ${var:-default} / ${var#pat} / ${var##pat} / ${var%pat} / ${var%%pat}
 
-    \ \ echo "Loop $i"
+    \ \ t="${tool:-unknown}"
+
+    \ \ short="${t#g}" \ \ \ \ \ \ \ \ \ # remove one leading 'g' if present
+
+    \ \ longest="${t##g}" \ \ \ \ \ \ # remove all leading 'g'
+
+    \ \ tail1="${t%g}" \ \ \ \ \ \ \ \ \ # remove one trailing 'g'
+
+    \ \ tail2="${t%%g}" \ \ \ \ \ \ \ \ # remove all trailing 'g'
+
+    \ \ log INFO "tool=$t short=$short longest=$longest tail1=$tail1 tail2=$tail2"
 
     done
 
     \;
 
-    # ========= case / esac =========
+    # ---------- case/esac ----------
 
-    \;
+    case "$MODE" in
 
-    case "$1" in
+    \ \ debug\|dbg)
 
-    \ \ start)
-
-    \ \ \ \ echo "Start mode"
+    \ \ \ \ log INFO "mode is debug"
 
     \ \ \ \ ;;
 
-    \ \ stop\|restart)
+    \ \ release\|rel)
 
-    \ \ \ \ echo "Stop or restart"
+    \ \ \ \ log INFO "mode is release"
 
     \ \ \ \ ;;
 
     \ \ *)
 
-    \ \ \ \ echo "Usage: $0 {start\|stop\|restart}"
+    \ \ \ \ log ERROR "unknown mode: $MODE"
 
     \ \ \ \ ;;
 
     esac
+
+    \;
+
+    # ---------- arithmetic ----------
+
+    x=10
+
+    y=3
+
+    ((sum = x + y))
+
+    ((pow = x ** y))
+
+    ((mod = x % y))
+
+    log INFO "arith: x=$x y=$y sum=$sum pow=$pow mod=$mod"
+
+    ((x++))
+
+    ((--y))
+
+    log INFO "arith: x++ -\<gtr\> $x, --y -\<gtr\> $y"
+
+    \;
+
+    # ---------- command substitution ----------
+
+    now="$(date +%s)"
+
+    host="$(hostname \|\| echo unknown)"
+
+    log INFO "substitution: now=$now host=$host"
+
+    \;
+
+    # ---------- while / read ----------
+
+    cat \<less\>\<less\>'EOF' \<gtr\>"$WORKDIR/tmp.txt"
+
+    alpha \ 1
+
+    beta \ \ 2
+
+    gamma \ 3
+
+    EOF
+
+    \;
+
+    i=0
+
+    while read -r word num; do
+
+    \ \ ((i++))
+
+    \ \ log INFO "line $i: word=$word num=$num"
+
+    done \<less\>"$WORKDIR/tmp.txt"
+
+    \;
+
+    # ---------- function + return status ----------
+
+    need() {
+
+    \ \ local cmd="$1"
+
+    \ \ if command -v "$cmd" \<gtr\>/dev/null 2\<gtr\>&1; then
+
+    \ \ \ \ return 0
+
+    \ \ fi
+
+    \ \ return 1
+
+    }
+
+    \;
+
+    for cmd in "${TOOLS[@]}"; do
+
+    \ \ if need "$cmd"; then
+
+    \ \ \ \ log INFO "found: $cmd"
+
+    \ \ else
+
+    \ \ \ \ log WARN "missing: $cmd"
+
+    \ \ fi
+
+    done
+
+    \;
+
+    # ---------- redirections / pipes ----------
+
+    echo "hello world" \<gtr\>"$WORKDIR/out.txt"
+
+    echo "error line" 1\<gtr\>\<gtr\>"$WORKDIR/out.txt" 2\<gtr\>\<gtr\>"$WORKDIR/err.txt"
+
+    \;
+
+    # pipe + grep + awk + redirection
+
+    cat "$WORKDIR/out.txt" \\
+
+    \ \ \| grep -E 'hello\|error' \\
+
+    \ \ \| awk '{print toupper($0)}' \\
+
+    \ \ \<gtr\>\<gtr\>"$WORKDIR/piped.txt" 2\<gtr\>&1
+
+    \;
+
+    # here-string (\<less\>\<less\>\<less\>)
+
+    grep -n "HELLO" \<less\>\<less\>\<less\>"HELLO from here-string" \<gtr\>\<gtr\>"$WORKDIR/piped.txt" 2\<gtr\>&1
+
+    \;
+
+    # noclobber override (\<gtr\>\|) and read/write open (\<less\>\<gtr\>)
+
+    echo "overwrite" \<gtr\>\|"$WORKDIR/out.txt"
+
+    exec 3\<less\>\<gtr\>"$WORKDIR/out.txt"
+
+    printf 'FD3-write\\n' \<gtr\>&3
+
+    exec 3\<gtr\>&-
+
+    \;
+
+    # ---------- subshell / group ----------
+
+    ( log INFO "subshell: $(pwd)" )
+
+    { log INFO "group: ok"; true; }
+
+    \;
+
+    # ---------- special parameters ----------
+
+    log INFO "specials: \\$0=$0 \\$#=$# \\$?=$? \\$\\$=$$ \\$@=$*"
+
+    \;
+
+    # ---------- select ----------
+
+    select opt in "one" "two" "quit"; do
+
+    \ \ case "$opt" in
+
+    \ \ \ \ one\|two) log INFO "select: $opt";;
+
+    \ \ \ \ quit) \ \ log INFO "select: quit"; break;;
+
+    \ \ \ \ *) \ \ \ \ \ log WARN "select: invalid";;
+
+    \ \ esac
+
+    done \<less\>\<less\>\<less\>"3"
+
+    \;
+
+    # ---------- final ----------
+
+    log INFO "DONE"
+
+    exit 0
 
     \;
   </bash-code>
