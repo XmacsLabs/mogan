@@ -60,6 +60,7 @@
 
 ;; 获取作者字段（优先使用author，如果没有则使用editor）
 (define (gbt-get-author-field x)
+  ;; editor和author同逻辑：优先使用author，没有author才使用editor
   (let ((author-field (bib-field x "author"))
         (editor-field (bib-field x "editor")))
     (cond
@@ -69,17 +70,8 @@
 
 ;; 为作者字符串添加后缀（如果是editor）
 (define (gbt-add-suffix author-str field-type chinese? count)
-  (cond
-    ((equal? field-type 'author) author-str)  ;; author不加后缀
-    ((equal? field-type 'editor)
-     (if chinese?
-         (if (= count 1)
-             `(concat ,author-str " (<#7F16>)")  ;; (编)
-             `(concat ,author-str " (<#4E3B><#7F16>)"))  ;; (主编)
-         (if (= count 1)
-             `(concat ,author-str " (ed.)")
-             `(concat ,author-str " (eds.)"))))
-    (else author-str)))
+  ;; editor和author同逻辑：都不加后缀
+  author-str)
 
 ;; 获取作者字符串（用于natbib-triple的author字段 - 完整格式，用于参考文献表）
 (tm-define (gbt-get-author-string x)
@@ -490,8 +482,8 @@
          ,(bib-new-block
             (bib-new-sentence
               `(,(bib-format-field x "journal")
-                ,(bib-format-vol-num-pages x)))
-         ,(bib-new-block (bib-format-url-doi x)))))))
+                ,(bib-format-vol-num-pages x))))
+         ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写图书格式以添加文献类型标识符 [M]
 (tm-define (bib-format-book n x)
@@ -515,7 +507,7 @@
              (bib-new-sentence
               `(,(bib-format-number-series x)
                 ,(bib-format-address-institution x))))
-           ,(bib-new-block (bib-format-url-doi x))))))
+           ,(bib-new-block (bib-format-url-doi x)))))))
 
 ;; 重写析出图书格式以添加文献类型标识符 [M]
 (tm-define (bib-format-inbook n x)
@@ -571,7 +563,7 @@
              (bib-new-sentence
               `(,(bib-format-number-series x)
                 ,(bib-format-address-institution x))))
-           ,(bib-new-block (bib-format-url-doi x))))))
+           ,(bib-new-block (bib-format-url-doi x)))))))
 
 ;; 重写会议论文格式以添加文献类型标识符 [C]
 (tm-define (bib-format-inproceedings n x)
@@ -635,7 +627,7 @@
                   (let ((address-institution (bib-format-address-institution x)))
                     (if (equal? address-institution "") '() `(,address-institution)))
                   `(,(bib-format-address-institution x)))))
-           ,(bib-new-block (bib-format-url-doi x))))))
+           ,(bib-new-block (bib-format-url-doi x)))))))
 
 ;; 重写博士论文格式以添加文献类型标识符 [D]
 (tm-define (bib-format-phdthesis n x)
@@ -750,13 +742,13 @@
 (tm-define (bib-format-electronic n x)
   (:mode bib-gbt7714-2015-author-year?)
   `(concat
-       ,(bib-format-bibitem n x)
-       ,(bib-label (list-ref x 2))
-       ,(bib-new-list-spc
-         `(,(bib-new-block
-             `(concat ,(bib-format-field-preserve-case x "title")
-                      ,(bib-document-type-identifier x "electronic")))
-           ,(bib-new-block (bib-format-url-doi x))))))
+     ,(bib-format-bibitem n x)
+     ,(bib-label (list-ref x 2))
+     ,(bib-new-list-spc
+       `(,(bib-new-block
+           `(concat ,(bib-format-field-preserve-case x "title")
+                    ,(bib-document-type-identifier x "electronic")))
+         ,(bib-new-block (bib-format-url-doi x))))))
 
 ;; 重写在线网页格式以添加文献类型标识符 [EB]
 (tm-define (bib-format-online n x)
@@ -795,7 +787,7 @@
              (bib-new-sentence
               `(,(bib-format-field x "journal")
                 ,date-pages-str)))
-           ,(bib-new-block (bib-format-url-doi x))))))
+           ,(bib-new-block (bib-format-url-doi x)))))))
 
 ;; 重写汇编格式以添加文献类型标识符 [G]
 (tm-define (bib-format-collection n x)
@@ -915,7 +907,7 @@
            ,(bib-new-block
              (bib-new-sentence
               `(,(bib-format-address-institution x))))
-           ,(bib-new-block (bib-format-url-doi x))))))
+           ,(bib-new-block (bib-format-url-doi x)))))))
 
 ;; 重写数据集格式以添加文献类型标识符 [DS]
 (tm-define (bib-format-dataset n x)
