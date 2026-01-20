@@ -130,7 +130,6 @@
       ("Python" (make* 'python-code "python"))
       ("R" (make* 'r-code "r"))
       ("Bash" (make* 'bash-code "bash")))
-
   (-> "Listing"
       ("Verbatim" (make 'listing))
       ("C++" (make 'cpp-listing))

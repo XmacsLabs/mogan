@@ -119,7 +119,7 @@
     (if (< r 0) -1
         (let* ((line (bash-get-line doc r))
                (t (bash-trim line)))
-          (if (== t "") (loop (- r 1)) r))))
+          (if (== t "") (loop (- r 1)) r)))))
 
 (define (bash-indent-level-from-prev doc row)
   (let* ((pr (bash-prev-nonempty-row doc row)))
@@ -208,11 +208,11 @@
   ;; bash programming mode keyboard shortcuts
   ("A-tab" (insert-tabstop))                 ;; Alt+Tab: insert tabstop
   ("cmd S-tab" (remove-tabstop))             ;; Cmd+Shift+Tab: remove tabstop
-  ("{" (bash-bracket-open "{" "}" ))            ;; Auto-insert matching braces
-  ("}" (bash-bracket-close "{" "}" ))           ;; Handle closing brace
-  ("(" (bash-bracket-open "(" ")" ))            ;; Auto-insert matching parentheses
-  (")" (bash-bracket-close "(" ")" ))           ;; Handle closing parenthesis
-  ("[" (bash-bracket-open "[" "]" ))            ;; Auto-insert matching brackets
-  ("]" (bash-bracket-close "[" "]" ))           ;; Handle closing bracket
-  ("\"" (bash-bracket-open "\"" "\"" ))         ;; Auto-insert matching double quotes
-  ("'" (bash-bracket-open "'" "'" )))           ;; Auto-insert matching single quotes
+  ("{" (bash-bracket-open "{" "}" ))         ;; Auto-insert matching braces
+  ("}" (bash-bracket-close "{" "}" ))        ;; Handle closing brace
+  ("(" (bash-bracket-open "(" ")" ))         ;; Auto-insert matching parentheses
+  (")" (bash-bracket-close "(" ")" ))        ;; Handle closing parenthesis
+  ("[" (bash-bracket-open "[" "]" ))         ;; Auto-insert matching brackets
+  ("]" (bash-bracket-close "[" "]" ))        ;; Handle closing bracket
+  ("\"" (bash-bracket-open "\"" "\"" ))      ;; Auto-insert matching double quotes
+  ("'" (bash-bracket-open "'" "'" )))        ;; Auto-insert matching single quotes
