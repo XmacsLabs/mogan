@@ -29,25 +29,34 @@
 
     ;; SQL constants
     (constant
-      "TRUE" "FALSE" "NULL" "UNKNOWN")
+      "TRUE" "FALSE" "NULL" "UNKNOWN"
+      "true" "false" "null" "unknown")
 
     ;; SQL function and procedure declarations
     (declare_function
-      "FUNCTION" "PROCEDURE")
+      "FUNCTION" "PROCEDURE"
+      "function" "procedure")
 
     ;; SQL type and object declarations
     (declare_type
       "CREATE" "DROP" "ALTER" "TABLE" "VIEW" "INDEX" "SEQUENCE" "TRIGGER"
-      "TYPE" "DOMAIN" "CONSTRAINT" "SCHEMA" "DATABASE")
+      "TYPE" "DOMAIN" "CONSTRAINT" "SCHEMA" "DATABASE"
+
+      "create" "drop" "alter" "table" "view" "index" "sequence" "trigger"
+      "type" "domain" "constraint" "schema" "database")
 
     ;; SQL module declarations (schemas, databases)
     (declare_module
-      "SCHEMA" "DATABASE")
+      "SCHEMA" "DATABASE"
+      "schema" "database")
 
     ;; SQL identifier declarations
     (declare_identifier
       "PRIMARY" "FOREIGN" "REFERENCES" "UNIQUE" "CHECK" "DEFAULT"
-      "NOT" "NULL" "AUTO_INCREMENT" "IDENTITY" "SERIAL" "BIGSERIAL")
+      "NOT" "NULL" "AUTO_INCREMENT" "IDENTITY" "SERIAL" "BIGSERIAL"
+
+      "primary" "foreign" "references" "unique" "check" "default"
+      "not" "null" "auto_increment" "identity" "serial" "bigserial")
 
     ;; General SQL keywords
     (keyword
@@ -59,15 +68,27 @@
       "UNION" "INTERSECT" "EXCEPT" "MINUS" "LIMIT" "OFFSET" "FETCH" "NEXT"
       "ONLY" "EXISTS" "IN" "ANY" "ALL" "SOME" "LIKE" "ILIKE" "BETWEEN"
       "IS" "AND" "OR" "NOT" "CAST" "COALESCE" "NULLIF" "IFNULL" "NVL"
-      "KEY")
+      "KEY"
+
+      "select" "from" "where" "group" "by" "having" "order" "asc" "desc"
+      "distinct" "all" "as" "on" "using" "with" "recursive"
+      "join" "inner" "left" "right" "full" "outer" "cross" "natural"
+      "insert" "into" "values" "update" "set" "delete" "merge" "upsert"
+      "grant" "revoke" "deny"
+      "union" "intersect" "except" "minus" "limit" "offset" "fetch" "next"
+      "only" "exists" "in" "any" "all" "some" "like" "ilike" "between"
+      "is" "and" "or" "not" "cast" "coalesce" "nullif" "ifnull" "nvl"
+      "key")
 
     ;; SQL conditional keywords
     (keyword_conditional
-      "CASE" "WHEN" "THEN" "ELSE" "END")
+      "CASE" "WHEN" "THEN" "ELSE" "END"
+      "case" "when" "then" "else" "end")
 
     ;; SQL control keywords (transactions, etc.)
     (keyword_control
-      "BEGIN" "COMMIT" "ROLLBACK" "SAVEPOINT" "TRANSACTION")
+      "BEGIN" "COMMIT" "ROLLBACK" "SAVEPOINT" "TRANSACTION"
+      "begin" "commit" "rollback" "savepoint" "transaction")
 
     ;; SQL functions and aggregates (treated as keywords for highlighting)
     (keyword
@@ -78,7 +99,16 @@
       "INTERVAL" "EXTRACT" "DATE_PART" "DATE_TRUNC" "TO_CHAR" "TO_DATE"
       "TO_NUMBER" "TO_TIMESTAMP" "CONCAT" "SUBSTR" "SUBSTRING" "TRIM"
       "LTRIM" "RTRIM" "UPPER" "LOWER" "INITCAP" "LENGTH" "CHAR_LENGTH"
-      "POSITION" "INSTR" "REPLACE" "TRANSLATE" "REGEXP_MATCH" "REGEXP_REPLACE")
+      "POSITION" "INSTR" "REPLACE" "TRANSLATE" "REGEXP_MATCH" "REGEXP_REPLACE"
+
+      "count" "sum" "avg" "min" "max" "round" "trunc" "ceil" "floor"
+      "abs" "mod" "power" "sqrt" "exp" "log" "ln" "sin" "cos" "tan"
+      "asin" "acos" "atan" "atan2" "random" "rand" "now" "current_date"
+      "current_time" "current_timestamp" "date" "time" "timestamp"
+      "interval" "extract" "date_part" "date_trunc" "to_char" "to_date"
+      "to_number" "to_timestamp" "concat" "substr" "substring" "trim"
+      "ltrim" "rtrim" "upper" "lower" "initcap" "length" "char_length"
+      "position" "instr" "replace" "translate" "regexp_match" "regexp_replace")
 
     ;; SQL data types (treated as keywords for highlighting)
     (keyword
@@ -87,7 +117,14 @@
       "CHAR" "CHARACTER" "VARCHAR" "TEXT" "CLOB" "BLOB" "BYTEA"
       "DATE" "TIME" "TIMESTAMP" "DATETIME" "YEAR" "MONTH" "DAY"
       "HOUR" "MINUTE" "SECOND" "INTERVAL" "ENUM" "SET" "JSON" "XML"
-      "UUID" "ARRAY" "RECORD" "ROW" "OBJECT")))
+      "UUID" "ARRAY" "RECORD" "ROW" "OBJECT"
+      
+      "int" "integer" "smallint" "bigint" "tinyint" "mediumint" "decimal"
+      "numeric" "real" "float" "double" "precision" "boolean" "bool"
+      "char" "character" "varchar" "text" "clob" "blob" "bytea"
+      "date" "time" "timestamp" "datetime" "year" "month" "day"
+      "hour" "minute" "second" "interval" "enum" "set" "json" "xml"
+      "uuid" "array" "record" "row" "object")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Operators
@@ -110,7 +147,8 @@
       "+" "-" "*" "/" "%" "||"
       "=" "<>" "!=" "<" "<=" ">" ">="
       "&" "|" "^" "~" "<<" ">>"
-      "LIKE" "ILIKE" "BETWEEN" "IN" "IS" "EXISTS" "ANY" "ALL" "SOME")
+      "LIKE" "ILIKE" "BETWEEN" "IN" "IS" "EXISTS" "ANY" "ALL" "SOME"
+      "like" "ilike" "between" "in" "is" "exists" "any" "all" "some")
 
     ;; Brackets / braces / parentheses
     (operator_openclose

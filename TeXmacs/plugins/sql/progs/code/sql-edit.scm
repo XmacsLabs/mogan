@@ -38,13 +38,17 @@
 
 (define sql-increase-indent-keys
   '("SELECT" "FROM" "WHERE" "JOIN" "INNER" "LEFT" "RIGHT" "FULL" "OUTER"
-    "GROUP" "HAVING" "ORDER" "WITH" "CASE" "WHEN" "AND" "OR"))
+    "GROUP" "HAVING" "ORDER" "WITH" "CASE" "WHEN" "AND" "OR"
+    "select" "from" "where" "join" "inner" "left" "right" "full" "outer"
+    "group" "having" "order" "with" "case" "when" "and" "or"))
 
 (define sql-decrease-indent-keys
-  '("END" "ELSE" "ELSEIF"))
+  '("END" "ELSE" "ELSEIF"
+    "end" "else" "elseif"))
 
 (define sql-end-keys
-  '(")" "END"))
+  '(")" "END"
+        "end"))
 
 ;; Helper function to check if string ends with a keyword
 (define (ends-with-keyword? s keys)
