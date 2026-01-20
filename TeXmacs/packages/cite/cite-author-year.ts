@@ -67,8 +67,7 @@
 
   <assign|cite-sep|<macro|; >>
 
-  <assign|natbib-show|<macro|nr|text|<natbib-author*|<arg|text>><if|<equal|<natbib-year|<arg|text>>|?>||,
-  <natbib-year|<arg|text>>>>>
+  <assign|natbib-show|<macro|nr|text|<natbib-author*|<arg|text>><if|<equal|<natbib-year|<arg|text>>|?>||.<natbib-year|<arg|text>.>>>>
 
   <assign|natbib-bind|<macro|nr|text|<arg|text>>>
 
@@ -139,9 +138,9 @@
 
   \;
 
-  <assign|cite|<xmacro|x|<render-cite|<cite-raw-1|<arg|x|0>><map-args|cite-raw+|concat|x|1>>>>
+  <assign|cite|<value|cite-textual>>
 
-  <assign|cite*|<xmacro|x|<render-cite|<cite-raw*-1|<arg|x|0>><map-args|cite-raw*+|concat|x|1>>>>
+  <assign|cite*|<value|cite-textual*>>
 
   <assign|cite-detail|<macro|key|details|<render-cite-detail|<cite-raw-1|<arg|key>>|<arg|details>>>>
 

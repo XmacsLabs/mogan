@@ -11,7 +11,7 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (bibtex gbt7714-2015)
+(texmacs-module (bibtex gbt7714-2015-natbib)
   (:use (bibtex bib-utils) (bibtex plain)))
 
 (bib-define-style "gbt7714-2015-natbib" "gbt7714-2015-natbib")
@@ -53,6 +53,127 @@
            ((equal? doctype "patent") (bib-format-patent n x))
            ((equal? doctype "other") (bib-format-other n x))
            (else (bib-format-misc n x)))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; cite相关
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; 获取作者字段（优先使用author，如果没有则使用editor）
+(define (gbt-get-author-field x)
+  (let ((author-field (bib-field x "author"))
+        (editor-field (bib-field x "editor")))
+    (cond
+      ((not (or (bib-null? author-field) (nlist? author-field))) (cons 'author author-field))
+      ((not (or (bib-null? editor-field) (nlist? editor-field))) (cons 'editor editor-field))
+      (else (cons 'empty '())))))
+
+;; 为作者字符串添加后缀（如果是editor）
+(define (gbt-add-suffix author-str field-type chinese? count)
+  (cond
+    ((equal? field-type 'author) author-str)  ;; author不加后缀
+    ((equal? field-type 'editor)
+     (if chinese?
+         (if (= count 1)
+             `(concat ,author-str " (<#7F16>)")  ;; (编)
+             `(concat ,author-str " (<#4E3B><#7F16>)"))  ;; (主编)
+         (if (= count 1)
+             `(concat ,author-str " (ed.)")
+             `(concat ,author-str " (eds.)"))))
+    (else author-str)))
+
+;; 获取作者字符串（用于natbib-triple的author字段 - 完整格式，用于参考文献表）
+(tm-define (gbt-get-author-string x)
+  (:mode bib-gbt7714-2015-natbib?)
+  (let* ((field-info (gbt-get-author-field x))
+         (field-type (car field-info))
+         (field-list (cdr field-info))
+         (has-author (not (equal? field-type 'empty)))
+         (chinese? (if has-author (authors-contain-chinese? field-list) #f)))
+    (if has-author
+        (let* ((n (length field-list))
+               (author-count (- n 1))
+               ;; 参考文献表阈值：像plainnat一样显示前4位作者
+               (max-authors 4)
+               (show-count (min author-count max-authors))
+               (has-more (> author-count max-authors)))
+          (cond
+            ((equal? author-count 1)
+             (let ((author-name (bib-format-name (list-ref field-list 1))))
+               (gbt-add-suffix author-name field-type chinese? 1)))
+            (else
+             (let* ((first (bib-format-name (list-ref field-list 1)))
+                    ;; 收集中间作者：从第2位到第show-count-1位
+                    (middle-count (- show-count 1))
+                    (middle (if (<= middle-count 0)
+                                ""
+                                (let loop ((i 2) (count 0) (result ""))
+                                  (if (or (>= i n) (>= count middle-count))
+                                      result
+                                      (loop (+ i 1) (+ count 1)
+                                            (if (equal? result "")
+                                                (bib-format-name (list-ref field-list i))
+                                                `(concat ,result ", " ,(bib-format-name (list-ref field-list i)))))))))
+                    (last-part (if has-more
+                                   (if chinese? "<#7b49>" "et al") ;;等
+                                   (if (>= author-count 2)
+                                       (bib-format-name (list-ref field-list (- n 1)))
+                                       "")))
+                    ;; 构建作者字符串
+                    (author-str (cond
+                                  ((and (equal? middle "") (equal? last-part "")) first)
+                                  ((equal? middle "") `(concat ,first ", " ,last-part))
+                                  ((equal? last-part "") `(concat ,first ", " ,middle))
+                                  (else `(concat ,first ", " ,middle ", " ,last-part)))))
+               (gbt-add-suffix author-str field-type chinese? author-count)))))
+        "")))
+
+;; 获取短作者字符串（用于natbib-triple的author*字段 - 引用标签格式）
+(tm-define (gbt-get-author*-string x)
+  (:mode bib-gbt7714-2015-natbib?)
+  (let* ((field-info (gbt-get-author-field x))
+         (field-type (car field-info))
+         (field-list (cdr field-info))
+         (has-author (not (equal? field-type 'empty)))
+         (chinese? (if has-author (authors-contain-chinese? field-list) #f)))
+    (if has-author
+        (let* ((n (length field-list))
+               (author-count (- n 1)))
+          (cond
+            ;; 作者数 ≥ 3：显示第一位 + et al
+            ((>= author-count 3)
+             (let ((first (bib-format-name (list-ref field-list 1))))
+               (if chinese?
+                   (gbt-add-suffix `(concat ,first "<#7b49>") field-type chinese? author-count)
+                   (gbt-add-suffix `(concat ,first ", et al") field-type chinese? author-count))))
+            ;; 作者数 = 2：显示两位，用"and"或"和"连接
+            ((= author-count 2)
+             (let ((first (bib-format-name (list-ref field-list 1)))
+                   (second (bib-format-name (list-ref field-list 2))))
+               (if chinese?
+                   (gbt-add-suffix `(concat ,first "<#548C>" ,second) field-type chinese? author-count)
+                   (gbt-add-suffix `(concat ,first " and " ,second) field-type chinese? author-count))))
+            ;; 作者数 = 1：显示一位
+            ((= author-count 1)
+             (gbt-add-suffix (bib-format-name (list-ref field-list 1)) field-type chinese? author-count))
+            ;; 其他情况（应该不会发生）
+            (else "")))
+        "")))
+
+;; 获取年份字符串
+(tm-define (gbt-get-year-string x)
+  (:mode bib-gbt7714-2015-natbib?)
+  (let ((y (bib-field x "year")))
+    (if (bib-null? y) "?" y)))
+
+;; 标签格式
+(tm-define (bib-format-bibitem n x)
+  (:mode bib-gbt7714-2015-natbib?)
+  ;; 返回作者(年份)格式用于cite-author-year包
+  (let ((author-str (gbt-get-author*-string x))
+        (year-str (gbt-get-year-string x)))
+    `(bibitem* (natbib-triple ,(gbt-get-author-string x)
+                              ,author-str
+                              ,year-str))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 辅助函数
@@ -332,25 +453,8 @@
   ;; 日期处理函数，支持date字段和year字段
   ;; date字段加括号，year字段不加括号
   ;; 如果有pages字段，则格式为"年份:页码"
-  (let* ((d (bib-field x "date"))
-         (y (bib-field x "year"))
-         (p (bib-field x "pages")))
-    (cond
-      ((not (bib-null? d)) `(concat "(" ,d ")"))
-      ((not (bib-null? y))
-       (let* ((year y)
-              (pag (if (or (bib-null? p) (nlist? p))
-                       ""
-                       (cond
-                         ((equal? 1 (length p)) "")
-                         ((equal? 2 (length p)) `(concat ": " ,(list-ref p 1)))
-                         (else
-                          `(concat ": " ,(list-ref p 1)
-                                   ,bib-range-symbol ,(list-ref p 2)))))))
-         (if (== pag "")
-             year
-             `(concat ,year ,pag))))
-      (else ""))))
+  ;; 在著者-出版年制中，年份通过natbib-triple显示，此处返回空字符串
+  "")
 
 ;; 书名格式
 (tm-define (bib-format-in-ed-booktitle x)
@@ -361,15 +465,13 @@
         ""
         `(concat ,(bib-translate "in ") ,b))))
 
-;; 年份,卷(期):页码格式
+;; 卷(期):页码格式
 (tm-define (bib-format-vol-num-pages x)
   (:mode bib-gbt7714-2015-natbib?)
-  ;; GBT 7714-2015 格式：年份,卷(期):页码
-  (let* ((y (bib-field x "year"))
-         (v (bib-field x "volume"))
+  ;; GBT 7714-2015-natbib 格式：卷(期):页码（年份在标签中）
+  (let* ((v (bib-field x "volume"))
          (n (bib-field x "number"))
          (p (bib-field x "pages"))
-         (year (if (bib-null? y) "" y))
          (vol (if (bib-null? v) "" v))
          (num (if (bib-null? n) "" `(concat "(" ,n ")")))
          (pag (if (or (bib-null? p) (nlist? p))
@@ -380,133 +482,7 @@
                     (else
                      `(concat ": " ,(list-ref p 1)
                               ,bib-range-symbol ,(list-ref p 2)))))))
-    (if (and (== vol "") (== num "") (== pag ""))
-        year
-        (if (bib-null? year)
-            `(concat ,vol ,num ,pag)
-            (if (not (== vol ""))
-                `(concat ,year ", " ,vol ,num ,pag)
-                `(concat ,year ,num ,pag))))))
-
-;; 获取作者字段（优先使用author，如果没有则使用editor）
-(define (gbt-get-author-field x)
-  (let ((author-field (bib-field x "author"))
-        (editor-field (bib-field x "editor")))
-    (cond
-      ((not (or (bib-null? author-field) (nlist? author-field))) (cons 'author author-field))
-      ((not (or (bib-null? editor-field) (nlist? editor-field))) (cons 'editor editor-field))
-      (else (cons 'empty '())))))
-
-;; 为作者字符串添加后缀（如果是editor）
-(define (gbt-add-suffix author-str field-type chinese? count)
-  (cond
-    ((equal? field-type 'author) author-str)  ;; author不加后缀
-    ((equal? field-type 'editor)
-     (if chinese?
-         (if (= count 1)
-             `(concat ,author-str " (<#7F16>)")  ;; (编)
-             `(concat ,author-str " (<#4E3B><#7F16>)"))  ;; (主编)
-         (if (= count 1)
-             `(concat ,author-str " (ed.)")
-             `(concat ,author-str " (eds.)"))))
-    (else author-str)))
-
-;; 获取作者字符串（用于natbib-triple的author字段 - 完整格式，用于参考文献表）
-(tm-define (gbt-get-author-string x)
-  (:mode bib-gbt7714-2015-natbib?)
-  (let* ((field-info (gbt-get-author-field x))
-         (field-type (car field-info))
-         (field-list (cdr field-info))
-         (has-author (not (equal? field-type 'empty)))
-         (chinese? (if has-author (authors-contain-chinese? field-list) #f)))
-    (if has-author
-        (let* ((n (length field-list))
-               (author-count (- n 1))
-               ;; 参考文献表阈值：像plainnat一样显示前4位作者
-               (max-authors 4)
-               (show-count (min author-count max-authors))
-               (has-more (> author-count max-authors)))
-          (cond
-            ((equal? author-count 1)
-             (let ((author-name (bib-format-name (list-ref field-list 1))))
-               (gbt-add-suffix author-name field-type chinese? 1)))
-            (else
-             (let* ((first (bib-format-name (list-ref field-list 1)))
-                    ;; 收集中间作者：从第2位到第show-count-1位
-                    (middle-count (- show-count 1))
-                    (middle (if (<= middle-count 0)
-                                ""
-                                (let loop ((i 2) (count 0) (result ""))
-                                  (if (or (>= i n) (>= count middle-count))
-                                      result
-                                      (loop (+ i 1) (+ count 1)
-                                            (if (equal? result "")
-                                                (bib-format-name (list-ref field-list i))
-                                                `(concat ,result ", " ,(bib-format-name (list-ref field-list i)))))))))
-                    (last-part (if has-more
-                                   (if chinese? "<#7b49>" "et al") ;;等
-                                   (if (>= author-count 2)
-                                       (bib-format-name (list-ref field-list (- n 1)))
-                                       "")))
-                    ;; 构建作者字符串
-                    (author-str (cond
-                                  ((and (equal? middle "") (equal? last-part "")) first)
-                                  ((equal? middle "") `(concat ,first ", " ,last-part))
-                                  ((equal? last-part "") `(concat ,first ", " ,middle))
-                                  (else `(concat ,first ", " ,middle ", " ,last-part)))))
-               (gbt-add-suffix author-str field-type chinese? author-count)))))
-        "")))
-
-;; 获取短作者字符串（用于natbib-triple的author*字段 - 引用标签格式）
-(tm-define (gbt-get-author*-string x)
-  (:mode bib-gbt7714-2015-natbib?)
-  (let* ((field-info (gbt-get-author-field x))
-         (field-type (car field-info))
-         (field-list (cdr field-info))
-         (has-author (not (equal? field-type 'empty)))
-         (chinese? (if has-author (authors-contain-chinese? field-list) #f)))
-    (if has-author
-        (let* ((n (length field-list))
-               (author-count (- n 1)))
-          (cond
-            ;; 作者数 ≥ 3：显示第一位 + et al
-            ((>= author-count 3)
-             (let ((first (bib-format-name (list-ref field-list 1))))
-               (if chinese?
-                   (gbt-add-suffix `(concat ,first "<#7b49>") field-type chinese? author-count)
-                   (gbt-add-suffix `(concat ,first ", et al") field-type chinese? author-count))))
-            ;; 作者数 = 2：显示两位，用"and"或"和"连接
-            ((= author-count 2)
-             (let ((first (bib-format-name (list-ref field-list 1)))
-                   (second (bib-format-name (list-ref field-list 2))))
-               (if chinese?
-                   (gbt-add-suffix `(concat ,first "<#548C>" ,second) field-type chinese? author-count)
-                   (gbt-add-suffix `(concat ,first " and " ,second) field-type chinese? author-count))))
-            ;; 作者数 = 1：显示一位
-            ((= author-count 1)
-             (gbt-add-suffix (bib-format-name (list-ref field-list 1)) field-type chinese? author-count))
-            ;; 其他情况（应该不会发生）
-            (else "")))
-        "")))
-
-;; 获取年份字符串
-(tm-define (gbt-get-year-string x)
-  (:mode bib-gbt7714-2015-natbib?)
-  (let ((y (bib-field x "year")))
-    (if (bib-null? y) "?" y)))
-
-;; 数字标签格式
-(tm-define (bib-format-bibitem n x)
-  (:mode bib-gbt7714-2015-natbib?)
-  ;; 使用数字标签，如 [1], [2], ...
-  ;; 但对于cite-author-year包，返回作者(年份)格式
-  (let ((author-str (gbt-get-author-string x))
-        (year-str (gbt-get-year-string x)))
-    (if (and (not (equal? author-str "")) (not (equal? year-str "?")))
-        `(bibitem* (natbib-triple ,(gbt-get-author*-string x)
-                                  ,author-str
-                                  ,year-str))
-        `(bibitem* ,(number->string n)))))
+    `(concat ,vol ,num ,pag)))
 
 ;; URL/DOI 信息格式
 (tm-define (bib-format-url-doi x)
@@ -545,8 +521,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "article")))
          ,(gbt-new-smart-block-with-url
@@ -565,10 +540,6 @@
        ,(bib-label (list-ref x 2))
        ,(bib-new-list-spc
          `(,(bib-new-block
-             (if (bib-empty? x "editor")
-                 (bib-format-author x)
-                 (bib-format-editor x)))
-           ,(bib-new-block
              (bib-new-sentence
               `((concat ,(bib-format-field x "title")
                         ,(bib-document-type-identifier x "book")))))
@@ -592,10 +563,6 @@
        ,(bib-label (list-ref x 2))
        ,(bib-new-list-spc
          `(,(bib-new-block
-             (if (bib-empty? x "editor")
-                 (bib-format-author x)
-                 (bib-format-editor x)))
-           ,(bib-new-block
              (let* ((bookauthor-field (bib-field x "bookauthor"))
                     (editor-field (bib-field x "editor"))
                     (booktitle-field (bib-field x "booktitle"))
@@ -646,8 +613,7 @@
     ,(bib-format-bibitem n x)
     ,(bib-label (list-ref x 2))
     ,(bib-new-list-spc
-      `(,(bib-new-block (bib-format-author x))
-        ,(bib-new-block
+      `(,(bib-new-block
               `(concat ,(bib-format-field-preserve-case x "title")
                        ,(bib-document-type-identifier x "inproceedings")
                        "//"
@@ -664,8 +630,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-editor x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "proceedings")))
          ,(gbt-new-smart-block-with-url
@@ -684,10 +649,6 @@
        ,(bib-label (list-ref x 2))
        ,(bib-new-list-spc
          `(,(bib-new-block
-             (if (bib-empty? x "author")
-                 (bib-new-sentence `(,(bib-format-address-institution x)))
-                 (bib-format-author x)))
-           ,(bib-new-block
              (let* ((title (bib-format-field-preserve-case x "title"))
                     (number (bib-field x "number"))
                     (edition-str (gbt-format-edition x chinese?))
@@ -718,8 +679,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "phdthesis")))
          ,(gbt-new-smart-block-with-url
@@ -735,8 +695,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "mastersthesis")))
          ,(gbt-new-smart-block-with-url
@@ -752,8 +711,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "techreport")))
          ,(gbt-new-smart-block-with-url
@@ -767,8 +725,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "misc")))
          ,(gbt-new-smart-block-with-url
@@ -777,18 +734,12 @@
 ;; 重写专利格式以添加文献类型标识符 [P]
 (tm-define (bib-format-patent n x)
   (:mode bib-gbt7714-2015-natbib?)
-  (let ((date-str (let ((d (bib-field x "date"))
-                        (y (bib-field x "year")))
-                    (cond
-                      ((not (bib-null? d)) d)
-                      ((not (bib-null? y)) y)
-                      (else "")))))
+  (let ((date-str ""))  ;; 年份通过natbib-triple显示
     `(concat
        ,(bib-format-bibitem n x)
        ,(bib-label (list-ref x 2))
        ,(bib-new-list-spc
-         `(,(bib-new-block (bib-format-author x))
-           ,(bib-new-block
+         `(,(bib-new-block
              (let* ((title (bib-format-field-preserve-case x "title"))
                     (number (bib-field x "number"))
                     (identifier (bib-document-type-identifier x "patent")))
@@ -805,8 +756,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            (let* ((title (bib-format-field-preserve-case x "title"))
                   (number (bib-field x "number"))
                   (identifier (bib-document-type-identifier x "standard")))
@@ -829,8 +779,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "database")))
          ,(gbt-new-smart-block-with-url
@@ -839,18 +788,12 @@
 ;; 重写电子公告格式以添加文献类型标识符 [EB]
 (tm-define (bib-format-electronic n x)
   (:mode bib-gbt7714-2015-natbib?)
-  (let ((date-str (let ((d (bib-field x "date"))
-                        (y (bib-field x "year")))
-                    (cond
-                      ((not (bib-null? d)) d)  ;; EB类型：date不加括号
-                      ((not (bib-null? y)) y)
-                      (else "")))))
+  (let ((date-str ""))
     `(concat
        ,(bib-format-bibitem n x)
        ,(bib-label (list-ref x 2))
        ,(bib-new-list-spc
-         `(,(bib-new-block (bib-format-author x))
-           ,(bib-new-block
+         `(,(bib-new-block
              `(concat ,(bib-format-field-preserve-case x "title")
                       ,(bib-document-type-identifier x "electronic")))
            ,(gbt-new-smart-block-with-url
@@ -859,18 +802,12 @@
 ;; 重写在线网页格式以添加文献类型标识符 [EB]
 (tm-define (bib-format-online n x)
   (:mode bib-gbt7714-2015-natbib?)
-  (let ((date-str (let ((d (bib-field x "date"))
-                        (y (bib-field x "year")))
-                    (cond
-                      ((not (bib-null? d)) d)  ;; EB类型：date不加括号
-                      ((not (bib-null? y)) y)
-                      (else "")))))
+  (let ((date-str ""))
     `(concat
        ,(bib-format-bibitem n x)
        ,(bib-label (list-ref x 2))
        ,(bib-new-list-spc
-         `(,(bib-new-block (bib-format-author x))
-           ,(bib-new-block
+         `(,(bib-new-block
              `(concat ,(bib-format-field-preserve-case x "title")
                       ,(bib-document-type-identifier x "online")))
            ,(gbt-new-smart-block-with-url
@@ -879,12 +816,7 @@
 ;; 重写报纸格式以添加文献类型标识符 [N]
 (tm-define (bib-format-newspaper n x)
   (:mode bib-gbt7714-2015-natbib?)
-  (let* ((date-str (let ((d (bib-field x "date"))
-                         (y (bib-field x "year")))
-                     (cond
-                       ((not (bib-null? d)) d)
-                       ((not (bib-null? y)) y)
-                       (else ""))))
+  (let* ((date-str "")  ;; 年份通过natbib-triple显示
          (p (bib-field x "pages"))
          (pag (if (or (bib-null? p) (nlist? p))
                   ""
@@ -900,8 +832,7 @@
        ,(bib-format-bibitem n x)
        ,(bib-label (list-ref x 2))
        ,(bib-new-list-spc
-         `(,(bib-new-block (bib-format-author x))
-           ,(bib-new-block
+         `(,(bib-new-block
              `(concat ,(bib-format-field-preserve-case x "title")
                       ,(bib-document-type-identifier x "newspaper")))
            ,(gbt-new-smart-block-with-url
@@ -915,8 +846,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-editor x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "collection")))
          ,(gbt-new-smart-block-with-url
@@ -931,10 +861,6 @@
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
        `(,(bib-new-block
-            (if (bib-empty? x "author")
-                (bib-format-editor x)
-                (bib-format-author x)))
-         ,(bib-new-block
                (let* ((editor-field (bib-field x "editor"))
                       (booktitle-field (bib-field x "booktitle"))
                       (has-editor (not (bib-null? editor-field))))
@@ -965,8 +891,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "software")))
          ,(gbt-new-smart-block-with-url
@@ -984,8 +909,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "program")))
          ,(gbt-new-smart-block-with-url
@@ -1003,8 +927,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            (let* ((title (bib-format-field-preserve-case x "title"))
                   (number (bib-field x "number"))
                   (identifier (bib-document-type-identifier x "archive")))
@@ -1026,8 +949,7 @@
        ,(bib-format-bibitem n x)
        ,(bib-label (list-ref x 2))
        ,(bib-new-list-spc
-         `(,(bib-new-block (bib-format-author x))
-           ,(bib-new-block
+         `(,(bib-new-block
              `(concat ,(bib-format-field-preserve-case x "title")
                       ,(bib-document-type-identifier x "map")))
            ,(bib-new-block
@@ -1044,8 +966,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "dataset")))
          ,(gbt-new-smart-block-with-url
@@ -1058,8 +979,7 @@
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
      ,(bib-new-list-spc
-       `(,(bib-new-block (bib-format-author x))
-         ,(bib-new-block
+       `(,(bib-new-block
            `(concat ,(bib-format-field-preserve-case x "title")
                     ,(bib-document-type-identifier x "other")))
          ,(gbt-new-smart-block-with-url
