@@ -314,6 +314,7 @@ cell_rep::compute_width (SI& mw, SI& lw, SI& rw, bool large) {
   if (hmode == "exact") mw= width;
   else if (hmode == "max") mw= max (width, mw);
   else if (hmode == "min") mw= min (width, mw);
+  else if (hmode == "auto") mw+= env->as_length ("1em");
   if (mw < lw + rw) {
     SI d= lw + rw - mw;
     if (align_c == 'L' || align_c == 'O') rw-= d;
