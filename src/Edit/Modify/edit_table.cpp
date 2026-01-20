@@ -1086,6 +1086,21 @@ edit_table_rep::make_table (int nr_rows, int nr_cols) {
     }
   }
 
+  // Ensure freshly created cells start with a reasonable minimum width
+  // (1em plus current paddings and borders).
+  auto cell_len= [this, fp] (string var) -> SI {
+    tree v= get_env_value (var, fp);
+    if (is_atomic (v)) return as_length (as_string (v));
+    return 0;
+  };
+
+  SI min_width= as_length ("1em") + cell_len (CELL_LSEP) + cell_len (CELL_RSEP)
+                + cell_len (CELL_LBORDER) + cell_len (CELL_RBORDER);
+
+  table_set_format (fp, 1, 1, -1, -1, "cell-hmode", tree ("max"));
+  table_set_format (fp, 1, 1, -1, -1, "cell-width",
+                    tree (as_string (min_width) * string ("tmpt")));
+
   table_correct_block_content ();
   set_message (concat (kbd_shortcut ("(structured-insert-down)"), ": new row",
                        kbd_shortcut ("(structured-insert-right)"),

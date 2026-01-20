@@ -603,9 +603,17 @@ edit_interface_rep::table_resize_apply (SI x, SI y) {
   edit_table_rep* et= dynamic_cast<edit_table_rep*> (this);
   if (et == nullptr) return;
 
-  SI delta   = table_resize_vertical ? (x - table_resize_start_x)
-                                     : (table_resize_start_y - y);
-  SI min_size= 2 * PIXEL;
+  SI delta= table_resize_vertical ? (x - table_resize_start_x)
+                                  : (table_resize_start_y - y);
+
+  auto cell_len= [this] (string var) -> SI {
+    tree v= get_env_value (var, table_resize_path);
+    if (is_atomic (v)) return as_length (as_string (v));
+    return 0;
+  };
+
+  SI min_size= as_length ("1em") + cell_len (CELL_LSEP) + cell_len (CELL_RSEP) +
+               cell_len (CELL_LBORDER) + cell_len (CELL_RBORDER);
 
   SI first = table_resize_first_size + delta;
   SI second= table_resize_second_size - delta;
