@@ -71,8 +71,8 @@
 ; 根据当前 profile 获取环境地址
 (tm-define (current-stem-site)
   (cond
-    ((string=? (current-stem-profile) "production") "http://www.liiistem.cn")
-    ((string=? (current-stem-profile) "staging") "http://test-www.liiistem.cn")
+    ((string=? (current-stem-profile) "production") "https://liiistem.cn")
+    ((string=? (current-stem-profile) "staging") "https://test-www.liiistem.cn")
     (else "local")))
 
 ;; OAuth2 配置
@@ -80,13 +80,14 @@
   (let ((base-url (current-stem-site)))
     (cond
       ((== key "authorization-url") (string-append base-url "/oauth2-login.html"))
-      ((== key "access-token-url") (string-append base-url ":8080/oauth2/token"))
+      ; 直接请求后台接口
+      ((== key "access-token-url") (string-append (string-replace base-url "https" "http") ":8080/oauth2/token"))
       ((== key "client-identifier") "public-client")
       ((== key "scope") "user+llm")
       ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
-      ((== key "user-info-url") (string-append base-url ":8080/api/oauthUser/membershipInfo"))
+      ((== key "user-info-url") (string-append base-url "/api/oauthUser/membershipInfo"))
       ((== key "pricing-url") (string-append base-url "/pricing.html"))
-      ((== key "click-return-liii-url") "http://www.liiistem.cn/?from=login_button")
+      ((== key "click-return-liii-url") "https://liiistem.cn/?from=login_button")
       (else ""))))
 
 ;; 本地
