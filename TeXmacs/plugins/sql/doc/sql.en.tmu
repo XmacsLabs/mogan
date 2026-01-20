@@ -1,0 +1,194 @@
+<TMU|<tuple|1.1.0|2026.1.1>>
+
+<style|<tuple|tmudoc|british|sql>>
+
+<\body>
+  <\hide-preamble>
+    <assign|code-name|sql> <assign|code-Name|SQL>
+  </hide-preamble>
+
+  <tmdoc-title|<value|code-Name> Code Plugin>
+
+  <paragraph|<value|code-Name> style package>
+
+  Click <menu|Document|Style|Add package|Code|<value|code-name>> or click <menu|<icon|tm_add.svg>|Code|<value|code-name>> on the focus toolbar to add the <value|code-Name> style package.
+
+  In the <code-Name> style package, <markup|<value|code-name>> is provided for inline snippets and <markup|<value|code-name>-code> is provided for <code-Name> code blocks.
+
+  \;
+
+  <paragraph|<value|code-Name> syntax>
+
+  The syntax of the <value|code-Name> language is defined in:
+
+  <slink|$TEXMACS_PATH/plugins/<value|code-name>/progs/code/<value|code-name>-lang.scm>
+
+  \;
+
+  The SQL plugin provides syntax highlighting for:
+
+  <\itemize>
+    <item>SQL Data Query Language (SELECT, FROM, WHERE, etc.)\ 
+
+    <item>SQL Data Manipulation Language (INSERT, UPDATE, DELETE, etc.)\ 
+
+    <item>SQL Data Definition Language (CREATE, DROP, ALTER, etc.)\ 
+
+    <item>SQL Data Control Language (GRANT, REVOKE, etc.)
+
+    <item>SQL Transaction Control Language (COMMIT, ROLLBACK, etc.)\ 
+
+    <item>SQL functions and aggregate functions\ 
+
+    <item>SQL data types\ 
+
+    <item>SQL operators and special keywords
+  </itemize>
+
+  \;
+
+  Here is an example <value|code-Name> code block with syntax highlighting:
+
+  <\sql-code>
+    -- Create a table with constraints
+
+    CREATE TABLE users (
+
+    \ \ \ \ id \ \ \ \ \ \ \ \ \ SERIAL PRIMARY KEY,
+
+    \ \ \ \ username \ \ \ VARCHAR(50) NOT NULL UNIQUE,
+
+    \ \ \ \ email \ \ \ \ \ \ VARCHAR(255) NOT NULL,
+
+    \ \ \ \ created_at \ TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    \ \ \ \ is_active \ \ BOOLEAN DEFAULT TRUE
+
+    );
+
+    \;
+
+    CREATE TABLE orders (
+
+    \ \ \ \ id \ \ \ \ \ \ \ \ \ SERIAL PRIMARY KEY,
+
+    \ \ \ \ user_id \ \ \ \ INTEGER NOT NULL,
+
+    \ \ \ \ amount \ \ \ \ \ DECIMAL(10, 2) CHECK (amount \<gtr\>= 0),
+
+    \ \ \ \ status \ \ \ \ \ VARCHAR(20) DEFAULT 'pending',
+
+    \ \ \ \ created_at \ TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    \ \ \ \ CONSTRAINT fk_user
+
+    \ \ \ \ \ \ \ \ FOREIGN KEY (user_id)
+
+    \ \ \ \ \ \ \ \ REFERENCES users(id)
+
+    \ \ \ \ \ \ \ \ ON DELETE CASCADE
+
+    );
+
+    \;
+
+    -- Insert data
+
+    INSERT INTO users (username, email)
+
+    VALUES
+
+    \ \ \ \ ('alice', 'alice@example.com'),
+
+    \ \ \ \ ('bob', \ \ 'bob@example.com');
+
+    \;
+
+    INSERT INTO orders (user_id, amount, status)
+
+    VALUES
+
+    \ \ \ \ (1, 99.99, 'paid'),
+
+    \ \ \ \ (1, 15.50, 'pending'),
+
+    \ \ \ \ (2, 42.00, 'paid');
+
+    \;
+
+    -- Query with JOIN, aggregation, and filtering
+
+    SELECT
+
+    \ \ \ \ u.username,
+
+    \ \ \ \ COUNT(o.id) AS order_count,
+
+    \ \ \ \ SUM(o.amount) AS total_spent
+
+    FROM users u
+
+    LEFT JOIN orders o
+
+    \ \ \ \ ON u.id = o.user_id
+
+    WHERE u.is_active = TRUE
+
+    GROUP BY u.username
+
+    HAVING SUM(o.amount) \<gtr\> 20
+
+    ORDER BY total_spent DESC;
+
+    \;
+
+    -- Subquery example
+
+    SELECT *
+
+    FROM orders
+
+    WHERE amount \<gtr\> (
+
+    \ \ \ \ SELECT AVG(amount)
+
+    \ \ \ \ FROM orders
+
+    );
+
+    \;
+
+    -- Update and delete
+
+    UPDATE orders
+
+    SET status = 'shipped'
+
+    WHERE status = 'paid';
+
+    \;
+
+    DELETE FROM users
+
+    WHERE username = 'bob';
+  </sql-code>
+
+  \;
+
+  <paragraph|<value|code-Name> editing>
+
+  The editing of the <value|code-Name> code is defined in:
+
+  <slink|$TEXMACS_PATH/plugins/<value|code-name>/progs/code/<value|code-name>-edit.scm>
+
+  <tmdoc-copyright|2026|Claude Code>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|papyrus>
+    <associate|page-screen-margin|true>
+  </collection>
+</initial>

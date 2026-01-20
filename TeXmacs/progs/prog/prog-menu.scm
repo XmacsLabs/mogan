@@ -13,7 +13,7 @@
 
 (texmacs-module (prog prog-menu)
   (:use (generic format-edit)
-	(generic insert-menu)))
+  (generic insert-menu)))
 
 (tm-menu (focus-code-icons t)
   (mini #t
@@ -89,7 +89,7 @@
    (make-with "prog-font-family" "ss"))
   (if (not (in-graphics?))
       (=> (balloon (icon "tm_color.xpm") "Select a foreground color")
-	  (link color-menu))))
+    (link color-menu))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Icons in prog mode
@@ -118,7 +118,8 @@
       ("Goldfish" (make* 'goldfish-lang "goldfish"))
       ("Scala" (make* 'scala "scala"))
       ("Python" (make* 'python "python"))
-      ("R" (make* 'r "r")))
+      ("R" (make* 'r "r"))
+      ("SQL" (make* 'sql "sql")))
   (-> "Block of code"
       ("Verbatim" (make 'verbatim-code))
       ("C++" (make 'cpp-code))
@@ -127,7 +128,8 @@
       ("Goldfish" (make* 'goldfish-code "goldfish"))
       ("Scala" (make* 'scala-code "scala"))
       ("Python" (make* 'python-code "python"))
-      ("R" (make* 'r-code "r")))
+      ("R" (make* 'r-code "r"))
+      ("SQL" (make* 'sql-code "sql")))
   (-> "Listing"
       ("Verbatim" (make 'listing))
       ("C++" (make 'cpp-listing))
