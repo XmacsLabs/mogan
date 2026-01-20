@@ -455,9 +455,13 @@ table_box_rep::message (tree t, SI x, SI y, rectangles& rs) {
 
     /* inside area (cells) */
     if (mx >= x1 && mx <= x2 && my >= y1 && my <= y2) {
-      tree res (TUPLE);
-      res << tree ("table-loc") << tree ("cell");
-      return res;
+        // go into children to find if any sub table line is hit
+        tree child_res= concrete_composite_box_rep::message (t, x, y, rs);
+        if (child_res != "") return child_res;
+
+        tree res (TUPLE);
+        res << tree ("table-loc") << tree ("cell");
+        return res;
     }
   }
 
