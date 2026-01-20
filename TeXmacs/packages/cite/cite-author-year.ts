@@ -1,8 +1,12 @@
-<TeXmacs|1.99.19>
+<TeXmacs|2.1.4>
 
 <style|source>
 
 <\body>
+  <\hide-preamble>
+    \;
+  </hide-preamble>
+
   <active*|<\src-title>
     <src-package|cite-author-year|1.0>
 
@@ -67,7 +71,8 @@
 
   <assign|cite-sep|<macro|; >>
 
-  <assign|natbib-show|<macro|nr|text|<natbib-author*|<arg|text>><if|<equal|<natbib-year|<arg|text>>|?>||.<natbib-year|<arg|text>.>>>>
+  <assign|natbib-show|<macro|nr|text|<natbib-author*|<arg|text>><if|<equal|<natbib-year|<arg|text>>|?>||.
+  <natbib-year|<arg|text>>.>>>
 
   <assign|natbib-bind|<macro|nr|text|<arg|text>>>
 

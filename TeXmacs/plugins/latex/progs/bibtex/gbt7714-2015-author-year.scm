@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; MODULE      : gbt7714-2015-natbib.scm
-;; DESCRIPTION : GBT 7714-2015-natbib style for BibTeX files
+;; MODULE      : gbt7714-2015-author-year.scm
+;; DESCRIPTION : GBT 7714-2015-author-year style for BibTeX files
 ;; COPYRIGHT   : (C) 2025 Yuki Lu
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
@@ -11,14 +11,14 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(texmacs-module (bibtex gbt7714-2015-natbib)
+(texmacs-module (bibtex gbt7714-2015-author-year)
   (:use (bibtex bib-utils) (bibtex plain)))
 
-(bib-define-style "gbt7714-2015-natbib" "gbt7714-2015-natbib")
+(bib-define-style "gbt7714-2015-author-year" "gbt7714-2015-author-year")
 
 ;; 重写条目格式函数以支持所有文献类型
 (tm-define (bib-format-entry n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (if (and (list? x) (func? x 'bib-entry)
            (= (length x) 4) (func? (list-ref x 3) 'document))
       (with doctype (list-ref x 1)
@@ -83,7 +83,7 @@
 
 ;; 获取作者字符串（用于natbib-triple的author字段 - 完整格式，用于参考文献表）
 (tm-define (gbt-get-author-string x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let* ((field-info (gbt-get-author-field x))
          (field-type (car field-info))
          (field-list (cdr field-info))
@@ -129,7 +129,7 @@
 
 ;; 获取短作者字符串（用于natbib-triple的author*字段 - 引用标签格式）
 (tm-define (gbt-get-author*-string x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let* ((field-info (gbt-get-author-field x))
          (field-type (car field-info))
          (field-list (cdr field-info))
@@ -161,13 +161,13 @@
 
 ;; 获取年份字符串
 (tm-define (gbt-get-year-string x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let ((y (bib-field x "year")))
     (if (bib-null? y) "?" y)))
 
 ;; 标签格式
 (tm-define (bib-format-bibitem n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   ;; 返回作者(年份)格式用于cite-author-year包
   (let ((author-str (gbt-get-author*-string x))
         (year-str (gbt-get-year-string x)))
@@ -196,7 +196,7 @@
 
 ;; 检查是否有URL/DOI/urldate
 (tm-define (gbt-has-url-doi? x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let* ((url (bib-field x "url"))
          (doi (bib-field x "doi"))
          (urldate (bib-field x "urldate")))
@@ -204,21 +204,21 @@
 
 ;; 智能句子函数：如果有URL/DOI/urldate则不添加句点，否则添加句点
 (tm-define (gbt-new-smart-sentence x ref)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (if (gbt-has-url-doi? ref)
       (bib-upcase-first (bib-new-list ", " x))
       (bib-add-period (bib-upcase-first (bib-new-list ", " x)))))
 
 ;; 智能块函数：包装智能句子，包含URL/DOI，不添加额外空格
 (tm-define (gbt-new-smart-block-with-url x ref)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (if (bib-null? x) ""
       `(concat ,(gbt-new-smart-sentence x ref)
                ,(bib-new-case-preserved-block (bib-format-url-doi ref)))))
 
 ;; 通用版本格式化函数
 (tm-define (gbt-format-edition x chinese?)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let ((edition-field (bib-field x "edition")))
     (if (or (bib-null? edition-field) (equal? edition-field ""))
         ""
@@ -299,7 +299,7 @@
 
 ;; 作者列表格式
 (tm-define (bib-format-names a)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (if (or (bib-null? a) (nlist? a))
       ""
       (let* ((n (length a))
@@ -346,7 +346,7 @@
 
 ;; 编者格式
 (tm-define (bib-format-editor x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   ;; 格式化编者字段，添加 ed. 或 eds. 后缀（中文为“编”或“主编”）
   (let* ((e (bib-field x "editor"))
          (chinese? (if (or (bib-null? e) (nlist? e)) #f (authors-contain-chinese? e))))
@@ -364,7 +364,7 @@
 
 ;; 文献类型标识符函数
 (tm-define (bib-document-type-identifier x type)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   ;; 根据文献类型和是否有在线访问信息返回标识符
   ;; 优先使用note字段，如果note字段包含标识符
   ;; 否则检查是否有url或doi字段来判断是否为在线文献
@@ -402,7 +402,7 @@
 
 ;; 地址:机构格式
 (tm-define (bib-format-address-institution x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let* ((addr (cond
                  ((not (bib-empty? x "address")) (bib-field x "address"))
                  ((not (bib-empty? x "location")) (bib-field x "location"))
@@ -423,7 +423,7 @@
 
 ;; 作者姓名格式
 (tm-define (bib-format-name x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   ;; 西文作者：姓在前（全大写），名缩写（如 "YU H B"）
   ;; 中文作者：姓在前，名在后（全称）
   ;; 使用双层花括号的机构名：不进行格式化处理
@@ -449,7 +449,7 @@
 
 ;; 日期格式
 (tm-define (bib-format-date x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   ;; 日期处理函数，支持date字段和year字段
   ;; date字段加括号，year字段不加括号
   ;; 如果有pages字段，则格式为"年份:页码"
@@ -458,7 +458,7 @@
 
 ;; 书名格式
 (tm-define (bib-format-in-ed-booktitle x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let* ((b (bib-default-field x "booktitle"))
          (e (bib-field x "editor")))
     (if (bib-null? b)
@@ -467,8 +467,8 @@
 
 ;; 卷(期):页码格式
 (tm-define (bib-format-vol-num-pages x)
-  (:mode bib-gbt7714-2015-natbib?)
-  ;; GBT 7714-2015-natbib 格式：卷(期):页码（年份在标签中）
+  (:mode bib-gbt7714-2015-author-year?)
+  ;; GBT 7714-2015-author-year 格式：卷(期):页码（年份在标签中）
   (let* ((v (bib-field x "volume"))
          (n (bib-field x "number"))
          (p (bib-field x "pages"))
@@ -486,7 +486,7 @@
 
 ;; URL/DOI 信息格式
 (tm-define (bib-format-url-doi x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let* ((url-raw (bib-field x "url"))
          (doi-raw (bib-field x "doi"))
          (urldate (bib-field x "urldate"))
@@ -516,7 +516,7 @@
 
 ;; 重写文章格式以添加文献类型标识符 [J]
 (tm-define (bib-format-article n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -530,7 +530,7 @@
 
 ;; 重写图书格式以添加文献类型标识符 [M]
 (tm-define (bib-format-book n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let ((chinese? (authors-contain-chinese?
                    (if (bib-empty? x "editor")
                        (bib-field x "author")
@@ -553,7 +553,7 @@
 
 ;; 重写析出图书格式以添加文献类型标识符 [M]
 (tm-define (bib-format-inbook n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let ((chinese? (authors-contain-chinese?
                    (if (bib-empty? x "editor")
                        (bib-field x "author")
@@ -608,7 +608,7 @@
 
 ;; 重写会议论文格式以添加文献类型标识符 [C]
 (tm-define (bib-format-inproceedings n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
     ,(bib-format-bibitem n x)
     ,(bib-label (list-ref x 2))
@@ -625,7 +625,7 @@
 
 ;; 重写会议录格式以添加文献类型标识符 [C]
 (tm-define (bib-format-proceedings n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -639,7 +639,7 @@
 
 ;; 重写手册格式以添加文献类型标识符 [S]
 (tm-define (bib-format-manual n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let ((chinese? (authors-contain-chinese?
                    (if (bib-empty? x "author")
                        '()
@@ -674,7 +674,7 @@
 
 ;; 重写博士论文格式以添加文献类型标识符 [D]
 (tm-define (bib-format-phdthesis n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -690,7 +690,7 @@
 
 ;; 重写硕士论文格式以添加文献类型标识符 [D]
 (tm-define (bib-format-mastersthesis n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -706,7 +706,7 @@
 
 ;; 重写报告格式以添加文献类型标识符 [R]
 (tm-define (bib-format-techreport n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -720,7 +720,7 @@
 
 ;; 重写杂项格式以添加文献类型标识符 [Z]
 (tm-define (bib-format-misc n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -733,7 +733,7 @@
 
 ;; 重写专利格式以添加文献类型标识符 [P]
 (tm-define (bib-format-patent n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let ((date-str ""))  ;; 年份通过natbib-triple显示
     `(concat
        ,(bib-format-bibitem n x)
@@ -751,7 +751,7 @@
 
 ;; 重写标准格式以添加文献类型标识符 [S]
 (tm-define (bib-format-standard n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -774,7 +774,7 @@
 
 ;; 重写数据库格式以添加文献类型标识符 [DB]
 (tm-define (bib-format-database n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -787,7 +787,7 @@
 
 ;; 重写电子公告格式以添加文献类型标识符 [EB]
 (tm-define (bib-format-electronic n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let ((date-str ""))
     `(concat
        ,(bib-format-bibitem n x)
@@ -801,7 +801,7 @@
 
 ;; 重写在线网页格式以添加文献类型标识符 [EB]
 (tm-define (bib-format-online n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let ((date-str ""))
     `(concat
        ,(bib-format-bibitem n x)
@@ -815,7 +815,7 @@
 
 ;; 重写报纸格式以添加文献类型标识符 [N]
 (tm-define (bib-format-newspaper n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let* ((date-str "")  ;; 年份通过natbib-triple显示
          (p (bib-field x "pages"))
          (pag (if (or (bib-null? p) (nlist? p))
@@ -841,7 +841,7 @@
 
 ;; 重写汇编格式以添加文献类型标识符 [G]
 (tm-define (bib-format-collection n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -855,7 +855,7 @@
 
 ;; 重写析出汇编格式以添加文献类型标识符 [G]
 (tm-define (bib-format-incollection n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -886,7 +886,7 @@
 
 ;; 重写软件格式以添加文献类型标识符 [CP]
 (tm-define (bib-format-software n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -904,7 +904,7 @@
 
 ;; 重写程序格式以添加文献类型标识符 [CP]
 (tm-define (bib-format-program n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -922,7 +922,7 @@
 
 ;; 重写档案格式以添加文献类型标识符 [A]
 (tm-define (bib-format-archive n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -940,7 +940,7 @@
 
 ;; 重写舆图格式以添加文献类型标识符 [CM]
 (tm-define (bib-format-map n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   (let ((chinese? (authors-contain-chinese?
                    (if (bib-empty? x "editor")
                        (bib-field x "author")
@@ -961,7 +961,7 @@
 
 ;; 重写数据集格式以添加文献类型标识符 [DS]
 (tm-define (bib-format-dataset n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
@@ -974,7 +974,7 @@
 
 ;; 重写其他格式以添加文献类型标识符 [Z]
 (tm-define (bib-format-other n x)
-  (:mode bib-gbt7714-2015-natbib?)
+  (:mode bib-gbt7714-2015-author-year?)
   `(concat
      ,(bib-format-bibitem n x)
      ,(bib-label (list-ref x 2))
