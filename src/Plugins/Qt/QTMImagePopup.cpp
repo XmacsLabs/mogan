@@ -115,10 +115,6 @@ QTMImagePopup::showImagePopup (qt_renderer_rep* ren, rectangle selr,
                                int canvas_x, int canvas_y) {
   if (painted) return;
   cachePosition (selr, magf, scroll_x, scroll_y, canvas_x, canvas_y);
-  if (cached_magf <= 0.1) {
-    setFixedSize (0, 0);
-    return;
-  }
   autoSize ();
   int x, y;
   getCachedPosition (ren, x, y);
@@ -209,41 +205,28 @@ QTMImagePopup::cachePosition (rectangle selr, double magf, int scroll_x,
 // 计算菜单显示位置 / 2
 void
 QTMImagePopup::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
-  double    rx1, rx2, ry1, ry2;
-  rectangle selr= cached_rect;
-  ren->decode (selr->x1, selr->y1, rx1, ry1);
-  ren->decode (selr->x2, selr->y2, rx2, ry2);
-  int    x1= (int) ((rx1 + rx2) / 2) * cached_magf;
-  int    y1= (int) ((ry2) *cached_magf);
-  double scroll_x, scroll_y, canvas_x, canvas_y;
-  ren->decode (cached_scroll_x, cached_scroll_y, scroll_x, scroll_y);
+  rectangle selr     = cached_rect;
+  double    inv_unit = 1.0 / 256.0;
+  double    cx_logic = (selr->x1 + selr->x2) * 0.5;
+  double    top_logic= selr->y2;
 
-  QScreen* screen= QGuiApplication::primaryScreen ();
-  double   _scale= 1.0;
-#if defined(Q_OS_WIN)
-  double dpi= screen->logicalDotsPerInch ();
-  _scale    = screen->devicePixelRatio ();
-  if (_scale == 1) _scale= dpi / 96.0;
-  double scale= std::floor (_scale + 0.25);
-  if (_scale == 0.875) {
-    scale = 2;
-    _scale= 1;
+  // use the formula to calculate the QT coordinates
+  double cx_px=
+      ((cx_logic - cached_scroll_x) * cached_magf + cached_canvas_x) * inv_unit;
+  double top_px= -(top_logic - cached_scroll_y) * cached_magf * inv_unit;
+
+  // fix: viewport > surface: blank_top exists
+  double blank_top= 0.0;
+  if (owner && owner->scrollarea () && owner->scrollarea ()->viewport () &&
+      owner->scrollarea ()->surface ()) {
+    int vp_h  = owner->scrollarea ()->viewport ()->height ();
+    int surf_h= owner->scrollarea ()->surface ()->height ();
+    if (vp_h > surf_h) blank_top= (vp_h - surf_h) * 0.5;
   }
-  else if (_scale == 2) {
-    _scale= 1;
-  }
-  x= x1 / scale + cached_canvas_x / 256 - scroll_x * cached_magf / scale -
-     cached_width / 2;
-  y= y1 / scale + cached_canvas_y / 256 + 161 - scroll_y * cached_magf / scale -
-     cached_height / (_scale * (_scale + 0.25));
-#else
-  _scale      = screen ? screen->devicePixelRatio () : 1.0; // 正确的屏幕缩放比
-  double scale= std::floor (_scale + 0.25);
-  x= x1 / scale + cached_canvas_x / 256 - scroll_x * cached_magf / scale -
-     cached_width / 2;
-  y= y1 / scale + cached_canvas_y / 256 + 161 - scroll_y * cached_magf / scale -
-     cached_height;
-#endif
+  top_px+= blank_top;
+
+  x= int (std::round (cx_px - cached_width * 0.5));
+  y= int (std::round (top_px - cached_height));
 }
 
 // 事件过滤器，用于控制OCR按钮的tooltip位置
