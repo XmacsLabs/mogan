@@ -1,0 +1,148 @@
+<TMU|<tuple|1.1.0|2026.1.1>>
+
+<style|<tuple|generic|number-europe|preview-ref|sql|chinese|table-captions-above>>
+
+<\body>
+  SQL 语言行内代码示例：
+
+  <\itemize>
+    <item>这是一段 SQL 代码示例 <sql|<code|<code*|SELECT * FROM Students;>>>，用于查询所有学生。
+  </itemize>
+
+  \;
+
+  SQL 语言代码块示例：
+
+  <\sql-code>
+    -- Create a table with constraints
+
+    CREATE TABLE users (
+
+    \ \ \ \ id \ \ \ \ \ \ \ \ \ SERIAL PRIMARY KEY,
+
+    \ \ \ \ username \ \ \ VARCHAR(50) NOT NULL UNIQUE,
+
+    \ \ \ \ email \ \ \ \ \ \ VARCHAR(255) NOT NULL,
+
+    \ \ \ \ created_at \ TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    \ \ \ \ is_active \ \ BOOLEAN DEFAULT TRUE
+
+    );
+
+    \;
+
+    CREATE TABLE orders (
+
+    \ \ \ \ id \ \ \ \ \ \ \ \ \ SERIAL PRIMARY KEY,
+
+    \ \ \ \ user_id \ \ \ \ INTEGER NOT NULL,
+
+    \ \ \ \ amount \ \ \ \ \ DECIMAL(10, 2) CHECK (amount \<gtr\>= 0),
+
+    \ \ \ \ status \ \ \ \ \ VARCHAR(20) DEFAULT 'pending',
+
+    \ \ \ \ created_at \ TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    \ \ \ \ CONSTRAINT fk_user
+
+    \ \ \ \ \ \ \ \ FOREIGN KEY (user_id)
+
+    \ \ \ \ \ \ \ \ REFERENCES users(id)
+
+    \ \ \ \ \ \ \ \ ON DELETE CASCADE
+
+    );
+
+    \;
+
+    -- Insert data
+
+    INSERT INTO users (username, email)
+
+    VALUES
+
+    \ \ \ \ ('alice', 'alice@example.com'),
+
+    \ \ \ \ ('bob', \ \ 'bob@example.com');
+
+    \;
+
+    INSERT INTO orders (user_id, amount, status)
+
+    VALUES
+
+    \ \ \ \ (1, 99.99, 'paid'),
+
+    \ \ \ \ (1, 15.50, 'pending'),
+
+    \ \ \ \ (2, 42.00, 'paid');
+
+    \;
+
+    -- Query with JOIN, aggregation, and filtering
+
+    SELECT
+
+    \ \ \ \ u.username,
+
+    \ \ \ \ COUNT(o.id) AS order_count,
+
+    \ \ \ \ SUM(o.amount) AS total_spent
+
+    FROM users u
+
+    LEFT JOIN orders o
+
+    \ \ \ \ ON u.id = o.user_id
+
+    WHERE u.is_active = TRUE
+
+    GROUP BY u.username
+
+    HAVING SUM(o.amount) \<gtr\> 20
+
+    ORDER BY total_spent DESC;
+
+    \;
+
+    -- Subquery example
+
+    SELECT *
+
+    FROM orders
+
+    WHERE amount \<gtr\> (
+
+    \ \ \ \ SELECT AVG(amount)
+
+    \ \ \ \ FROM orders
+
+    );
+
+    \;
+
+    -- Update and delete
+
+    UPDATE orders
+
+    SET status = 'shipped'
+
+    WHERE status = 'paid';
+
+    \;
+
+    DELETE FROM users
+
+    WHERE username = 'bob';
+
+    \;
+  </sql-code>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
