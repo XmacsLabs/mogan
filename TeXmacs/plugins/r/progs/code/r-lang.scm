@@ -34,10 +34,10 @@
       "paste" "paste0" "substr" "nchar" "sprintf" "grep" "grepl" "sub" "gsub" "strsplit" "toupper" "tolower" "trimws"
       "list" "data.frame" "matrix" "array" "factor"
       "function" "args" "body" "environment" "formals" "quote" "eval" "do.call" "match.call" "get" "assign" "exists"
-      "print" "cat" "read.table" "read.csv" "write.table" "write.csv" "scan" "readLines" "writeLines"
-      "library" "require" "attach" "detach" "search" "ls"
+      "print" "cat" "read.table" "read.csv" "write.table" "write.csv" "scan" "readLines" "writeLines" "source"
+      "detach" "search" "ls"
       "subset" "transform" "with" "within"
-      "system" "Sys.time" "Sys.Date" "version"
+      "system" "Sys.time" "Sys.Date" "version" "setwd" "getwd"
       "sample" "set.seed" "duplicated")
     (declare_type ;; 类型
       "numeric" "integer" "logical" "character")
@@ -55,8 +55,7 @@
     (operator
       "+" "-" "*" "/" "^" ":" "%%" "%/%" "<" ">" "<=" ">=" "==" "!=" "&" "&&" "|" "||" "!" "~" "$" "@")
     (operator_special "::" ":::" "|>")
-    (operator_openclose "(" "[" "{")
-    (operator_openclose ")" "]" "}")
+    (operator_openclose "(" "[" "{" ")" "]" "}")
     (operator_field "$" "@" "<-" "=" "<<-" "->" "->>")))
 
 ;; 数字特性
