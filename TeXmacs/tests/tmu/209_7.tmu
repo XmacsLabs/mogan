@@ -1,0 +1,112 @@
+<TMU|<tuple|1.1.0|2026.1.1>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref|bash|python>>
+
+<\body>
+  Bash行内代码示例：
+
+  <bash|echo "Hello, $name!">
+
+  Bash代码块示例：
+
+  <\bash-code>
+    #!/usr/bin/env bash
+
+    # ========= 基础结构 =========
+
+    \;
+
+    set -euo pipefail
+
+    \;
+
+    USER_NAME="$USER"
+
+    COUNT=3
+
+    DEFAULT_DIR="${HOME:-/tmp}"
+
+    \;
+
+    echo "User=$USER_NAME, Home=$HOME"
+
+    echo "Args: $@ \ Count=$# \ PID=$$ \ Status=$?"
+
+    \;
+
+    # ========= 函数 + 控制结构 =========
+
+    \;
+
+    log() {
+
+    \ \ local level="$1"
+
+    \ \ shift
+
+    \ \ echo "[$level] $*"
+
+    }
+
+    \;
+
+    if [[ "$COUNT" -gt 0 ]]; then
+
+    \ \ log INFO "COUNT=$COUNT"
+
+    else
+
+    \ \ log ERROR "COUNT is zero"
+
+    fi
+
+    \;
+
+    # ========= 循环 =========
+
+    \;
+
+    for i in 1 2 3; do
+
+    \ \ echo "Loop $i"
+
+    done
+
+    \;
+
+    # ========= case / esac =========
+
+    \;
+
+    case "$1" in
+
+    \ \ start)
+
+    \ \ \ \ echo "Start mode"
+
+    \ \ \ \ ;;
+
+    \ \ stop\|restart)
+
+    \ \ \ \ echo "Stop or restart"
+
+    \ \ \ \ ;;
+
+    \ \ *)
+
+    \ \ \ \ echo "Usage: $0 {start\|stop\|restart}"
+
+    \ \ \ \ ;;
+
+    esac
+
+    \;
+  </bash-code>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
