@@ -1093,7 +1093,12 @@
   ("Square root" (make-sqrt))
   ("N-th root" (make-var-sqrt))
   ("Negation" (make-neg))
-  ("Tree" (make-tree))
+  (-> "Tree"
+      ("Tree" (make-tree))
+      ---
+      ("Proof tree" (make-proof-tree))
+      ("Proof tree (right label)" (make-proof-tree*))
+      ("Proof tree (left label)" (make-proof-tree**)))
   ---
   (-> "Script"
       ("Left subscript" (make-script #f #f))
@@ -1498,3 +1503,78 @@
   ;;((balloon (icon "tm_reset.xpm") "Reset to default bracket size")
   ;; (geometry-reset))
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Proof tree focus menus
+;; Note: proof-tree is now a macro wrapping tree with tree-mode=proof
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(tm-define (focus-can-insert-remove? t)
+  (:require (proof-tree-tag? t))
+  #t)
+
+;; For proof-tree, we use symbolic variant names for the focus menu
+;; These don't correspond to actual tags but allow the dropdown to work
+(tm-define (focus-tag-name l)
+  (:require (== l 'proof-tree-none))
+  "Proof tree")
+
+(tm-define (focus-tag-name l)
+  (:require (== l 'proof-tree-right))
+  "Proof tree (right label)")
+
+(tm-define (focus-tag-name l)
+  (:require (== l 'proof-tree-left))
+  "Proof tree (left label)")
+
+;; Return the current variant symbol based on label position
+(define (proof-tree-current-variant t)
+  (let ((pos (proof-tree-current-label-pos t)))
+    (cond ((== pos "right") 'proof-tree-right)
+          ((== pos "left") 'proof-tree-left)
+          (else 'proof-tree-none))))
+
+;; Override focus-tag-name for tree when in proof mode
+(tm-define (focus-tag-name l)
+  (:require (and (== l 'tree) (tm-equal? (get-env-tree "tree-mode") "proof")))
+  (let ((pos (get-env-tree "tree-label-pos")))
+    (cond ((tm-equal? pos "right") "Proof tree (right label)")
+          ((tm-equal? pos "left") "Proof tree (left label)")
+          (else "Proof tree"))))
+
+;; Return 3 variants so dropdown appears
+(tm-define (focus-variants-of t)
+  (:require (proof-tree-tag? t))
+  '(proof-tree-none proof-tree-right proof-tree-left))
+
+(tm-menu (focus-variant-menu t)
+  (:require (proof-tree-tag? t))
+  (let ((current (proof-tree-current-variant t)))
+    ((check (eval (focus-tag-name 'proof-tree-none)) "v"
+            (== current 'proof-tree-none))
+     (proof-tree-set-label-pos t "none"))
+    ((check (eval (focus-tag-name 'proof-tree-right)) "v"
+            (== current 'proof-tree-right))
+     (proof-tree-set-label-pos t "right"))
+    ((check (eval (focus-tag-name 'proof-tree-left)) "v"
+            (== current 'proof-tree-left))
+     (proof-tree-set-label-pos t "left"))))
+
+(tm-menu (focus-insert-menu t)
+  (:require (proof-tree-tag? t))
+  ("Insert premise before" (structured-insert-left))
+  ("Insert premise after" (structured-insert-right))
+  ---
+  ("Insert sub-proof above" (structured-insert-up))
+  ("Remove premise" (structured-remove-right)))
+
+(tm-menu (focus-insert-icons t)
+  (:require (proof-tree-tag? t))
+  ((balloon (icon "tm_insert_left.xpm") "Insert premise before")
+   (structured-insert-left))
+  ((balloon (icon "tm_insert_right.xpm") "Insert premise after")
+   (structured-insert-right))
+  ((balloon (icon "tm_insert_up.xpm") "Insert sub-proof above")
+   (structured-insert-up))
+  ((balloon (icon "tm_delete_right.xpm") "Remove premise")
+   (structured-remove-right)))

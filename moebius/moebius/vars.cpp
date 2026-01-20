@@ -94,6 +94,9 @@ string MATH_TOP_SWELL_END ("math-top-swell-end");
 string MATH_BOT_SWELL_START ("math-bot-swell-start");
 string MATH_BOT_SWELL_END ("math-bot-swell-end");
 
+string TREE_MODE ("tree-mode");
+string TREE_LABEL_POS ("tree-label-pos");
+
 string PROG_LANGUAGE ("prog-language");
 string PROG_SCRIPTS ("prog-scripts");
 string PROG_FONT ("prog-font");

@@ -281,7 +281,7 @@ init_std_drd () {
             ->name ("wide under")
             ->name (1, "accent"));
   init (NEG, "neg", fixed (1)->accessible (0)->name ("negation"));
-  init (TREE, "tree", repeat (2, 1)->accessible (0));
+  init (TREE, "tree", repeat (2, 1)->accessible (0)->name ("tree"));
   init (SYNTAX, "syntax",
         fixed (1, 1, BIFORM)
             ->accessible (0)

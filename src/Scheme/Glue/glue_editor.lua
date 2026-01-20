@@ -852,7 +852,7 @@ function main()
                 cpp_name = "make_tree",
                 ret_type = "void"
             },
-            
+
             -- modify tables
             {
                 scm_name = "make-subtable",
