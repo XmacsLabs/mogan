@@ -16,6 +16,10 @@
 
 (bib-define-style "gbt7714-2015" "gbt7714-2015")
 
+(tm-define (bib-sorted-entries l)
+  (:mode bib-gbt7714-2015?)
+  l)
+
 ;; 重写条目格式函数以支持所有文献类型
 (tm-define (bib-format-entry n x)
   (:mode bib-gbt7714-2015?)
