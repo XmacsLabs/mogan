@@ -1,0 +1,30 @@
+<TMU|<tuple|1.1.0|2026.1.1>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref>>
+
+<\body>
+  C++代码换行示例('\|'表示在第一行末按下回车期待光标出现的位置):
+
+  <\cpp-code>
+    abc def
+
+    \|
+  </cpp-code>
+
+  \;
+
+  <\cpp-code>
+    \ \ abc def
+
+    \ \ \|
+
+    \ \ 
+  </cpp-code>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
