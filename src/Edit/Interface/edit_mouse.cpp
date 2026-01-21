@@ -765,11 +765,10 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
         int64_t dy= ((int64_t) y) - hy[i];
         if (dx * dx + dy * dy <= hr2) over_handles= true;
         if (over_handles) {
-          // Map handle index to cursor direction: 0 sw,1 se,2 nw,3 ne,4 s,5 n,6 w,7 e
-          if (i == 0 || i == 3) handle_cursor= "size_bdiag";  // sw / ne
+          if (i == 0 || i == 3) handle_cursor= "size_bdiag";      // sw / ne
           else if (i == 1 || i == 2) handle_cursor= "size_fdiag"; // se / nw
-          else if (i == 4 || i == 5) handle_cursor= "size_ver";   // south / north
-          else if (i == 6 || i == 7) handle_cursor= "size_hor";   // west / east
+          else if (i == 4 || i == 5) handle_cursor= "size_ver"; // south / north
+          else if (i == 6 || i == 7) handle_cursor= "size_hor"; // west / east
         }
       }
       hovering_image= false;
