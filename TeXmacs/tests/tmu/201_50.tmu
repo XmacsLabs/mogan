@@ -1,9 +1,9 @@
-<TMU|<tuple|1.1.0|2025.2.3>>
+<TMU|<tuple|1.1.0|2026.1.1>>
 
 <style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref>>
 
 <\body>
-  \;
+  查询函数
 
   <\session|scheme|default>
     <\folded-io|Scheme] >
@@ -33,7 +33,7 @@
     <\folded-io|Scheme] >
       (get-kbd-bindings "C-2")
     <|folded-io>
-      \;
+      ((((inside-search-or-replace-buffer?)) (insert '(wildcard "y")) "") (((and (inside-version?) (with-versioning-tool?))) (version-retain 1) "") (((and (in-graphics?) (== (get-env "preamble") "false"))) (graphics-set-grid-aspect 'detailed 2 #t) "") (() (switch-to-view-index 1) ""))
     </folded-io>
 
     <\folded-io|Scheme] >
@@ -55,15 +55,109 @@
     </folded-io>
 
     <\folded-io|Scheme] >
-      (get-bindings-by-command '(kbd-backspace))
+      (get-bindings-by-command '(kbd-copy))
     <|folded-io>
-      (("backspace" ()) ("S-backspace" ()))
+      (("C-insert" ()) ("F16" ()) ("C-c" ()))
     </folded-io>
 
     <\input|Scheme] >
       \;
     </input>
   </session>
+
+  \;
+
+  如下两个函数可以查询快捷键"C-c"和"C-v"在全局条件下是否有设置对应操作函数，若有则返回对应的操作函数，若无则返回#f，，之后的操作都可以在这里验证
+
+  <\session|scheme|default>
+    <\folded-io|Scheme] >
+      (kbd-conflict-query '() "C-c")
+    <|folded-io>
+      (kbd-copy)
+    </folded-io>
+
+    <\folded-io|Scheme] >
+      (kbd-conflict-query '() "C-v")
+    <|folded-io>
+      (kbd-paste)
+    </folded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  通过如下操作可以将"C-c"和复制解绑,测试ctrl+c对应的复制还能不能生效
+
+  <\session|scheme|default>
+    <\input|Scheme] >
+      (kbd-execute-edit '() '(kbd-copy) "C-c" "")
+    </input>
+
+    <\input| >
+      \;
+    </input>
+  </session>
+
+  通过如下操作可以将"C-c"与复制绑定回来,测试ctrl+c对应的复制还能不能生效
+
+  <\session|scheme|default>
+    <\folded-io|Scheme] >
+      (kbd-execute-edit '() '(kbd-copy) "" "C-c")
+    <|folded-io>
+      ("C-c")
+    </folded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  \;
+
+  通过如下操作可以将复制与粘贴的快捷键进行切换，执行完成之后进行测试
+
+  <\session|scheme|default>
+    <\folded-io|Scheme] >
+      (kbd-execute-edit '() '(kbd-copy) "C-c" "C-v")
+    <|folded-io>
+      ("C-v")
+    </folded-io>
+
+    <\folded-io|Scheme] >
+      (kbd-execute-edit '() '(kbd-paste) "C-v" "C-c")
+    <|folded-io>
+      ("C-c")
+    </folded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  \;
+
+  再换回来
+
+  <\session|scheme|default>
+    <\folded-io|Scheme] >
+      (kbd-execute-edit '() '(kbd-copy) "C-v" "C-c")
+    <|folded-io>
+      ("C-c")
+    </folded-io>
+
+    <\folded-io|Scheme] >
+      (kbd-execute-edit '() '(kbd-paste) "C-c" "C-v")
+    <|folded-io>
+      ("C-v")
+    </folded-io>
+
+    <\input|Scheme] >
+      \;
+    </input>
+  </session>
+
+  \;
 </body>
 
 <\initial>

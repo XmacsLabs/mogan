@@ -545,3 +545,101 @@ list
       all-entries)
     ;; 返回结果（反转以保持发现顺序，虽不强求）
     (reverse matches)))
+
+#|
+kbd-conflict-query
+冲突查询函数
+检查在新按键序列（new-key）下，是否存在与给定条件（conds）完全一致的绑定。
+
+参数
+----
+conds   : list
+    条件源码列表（S-Expression），例如 '((in-math?)) 或 '()。
+new-key : string
+    待检查的新按键序列，例如 "C-a"。
+
+返回值
+----
+any | #f
+- 如果存在冲突：返回冲突绑定的命令源码（通常是一个列表）。
+- 如果无冲突：返回 #f。
+|#
+(tm-define (kbd-conflict-query conds new-key)
+  (let ((raw-map (kbd-get-map new-key)))
+    (if raw-map
+        (let loop ((entries raw-map))
+          (if (null? entries)
+              #f
+              (let* ((entry (car entries))
+                     (entry-conds (car entry))
+                     ;; 提取现有绑定的条件源码进行比对
+                     (entry-conds-src (map extract-code-str entry-conds)))
+                ;; 检查条件是否完全一致（精确匹配上下文）
+                (if (equal? entry-conds-src conds)
+                    ;; 发现冲突，返回占用该位置的命令源码
+                    (extract-code-str (cadr entry))
+                    ;; 继续检查下一个重载
+                    (loop (cdr entries))))))
+        #f)))
+
+#|
+kbd-execute-edit
+编辑执行函数
+根据给定的条件，删除旧按键绑定（如果存在），并创建新按键绑定。
+
+参数
+----
+conds   : list
+    条件源码列表。
+cmd     : any
+    命令源码（S-Expression），例如 '(insert "alpha")。
+old-key : string
+    旧按键序列。如果非空，函数将尝试移除该按键下匹配 conds 的绑定。
+new-key : string
+    新按键序列。如果非空，函数将在该按键下创建指向 cmd 的新绑定。
+
+逻辑 (四种状态)
+--------------
+1. 清理旧绑定 (Old Key)：
+   若 old-key 非空，遍历其映射表，寻找条件源码与 conds 完全匹配的条目。
+   找到后，利用原始闭包对象将其从哈希表中移除。
+
+2. 应用新绑定 (New Key)：
+   若 new-key 非空，将 conds 和 cmd 动态编译为闭包，插入到 new-key 的映射表中。
+   **若 new-key 为空，则跳过此步。**
+
+四种行为
+--------
+- 新增: old-key="", new-key="C-a" -> 旧的无动作，新增 C-a 绑定。
+- 修改: old-key="C-b", new-key="C-a"  -> 将绑定从 C-b 搬到 C-a。
+- 删除: old-key="C-b",  new-key="" -> C-b 被解绑，且没有新绑定生成。
+- 无效操作：都为空，直接返回。
+|#
+(tm-define (kbd-execute-edit conds cmd old-key new-key)
+  ;; 1. 如果提供了旧按键，则尝试删除旧绑定
+  (when (and (string? old-key) (> (string-length old-key) 0))
+    (let ((raw-map (kbd-get-map old-key)))
+      (when raw-map
+        (for-each (lambda (entry)
+                    (let* ((entry-conds (car entry))
+                           (entry-conds-src (map extract-code-str entry-conds))
+                           ;; [新增] 提取当前绑定中的命令源码
+                           (entry-cmd-src (extract-code-str (cadr entry))))
+                      
+                      ;; 只有当 (条件匹配) 且 (命令也匹配) 时，才认为是同一个绑定进行删除
+                      ;; 这样可以防止在交换快捷键时，误删刚刚绑定上去的新命令
+                      (when (and (equal? entry-conds-src conds)
+                                 (equal? entry-cmd-src cmd))
+                        ;; 使用原始的条件闭包列表进行删除
+                        (kbd-delete-key-binding2 entry-conds old-key))))
+                  raw-map))))
+
+  ;; 2. 如果提供了新按键，则插入新绑定
+  (when (and (string? new-key) (> (string-length new-key) 0))
+    ;; 将数据层面的源码 (S-Expression) 转换为可执行的闭包 (Procedure)
+    (let ((cond-funcs (map (lambda (c) 
+                             (eval `(lambda () ,c) (current-module))) 
+                           conds))
+          (cmd-func   (eval `(lambda () ,cmd) (current-module))))
+      ;; 插入新绑定，帮助文档暂留空字符串
+      (kbd-insert-key-binding cond-funcs new-key (list cmd-func "")))))
