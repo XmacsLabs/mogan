@@ -131,10 +131,10 @@
       ("Python" (make* 'python-code "python"))
       ("R" (make* 'r-code "r"))
       ("SQL" (make* 'sql-code "sql")))
-      ("Bash" (make* 'bash-code "bash")))
+      ("Bash" (make* 'bash-code "bash"))
   (-> "Listing"
       ("Verbatim" (make 'listing))
       ("C++" (make 'cpp-listing))
       ("Scheme" (make 'scm-listing))
-      ("Shell" (make 'shell-listing))))
+      ("Shell" (make 'shell-listing)))
 
