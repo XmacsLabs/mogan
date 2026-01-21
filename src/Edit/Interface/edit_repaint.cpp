@@ -186,8 +186,8 @@ edit_interface_rep::draw_selection (renderer ren, rectangle r) {
 void
 edit_interface_rep::draw_resize_handles (renderer ren) {
   // Draw image resize handles when cursor is inside an image.
-  SI        hs               = 10 * ren->pixel; // handle radius for visuals
-  rectangle new_image_handles= rectangle (0, 0, 0, 0);
+  SI        hs            = 10 * ren->pixel; // handle radius for visuals
+  rectangle new_image_brec= rectangle (0, 0, 0, 0);
   SI        x1= 0, y1= 0, x2= 0, y2= 0, mx= 0, my= 0;
   bool      have_bbox= false;
 
@@ -199,25 +199,29 @@ edit_interface_rep::draw_resize_handles (renderer ren) {
     selection sel= eb->find_check_selection (p * 0, p * 1);
     if (!sel->valid || is_nil (sel->rs)) break; // image not drawable now
 
-    rectangle bbox   = least_upper_bound (sel->rs);
-    x1               = bbox->x1;
-    y1               = bbox->y1;
-    x2               = bbox->x2;
-    y2               = bbox->y2;
-    mx               = (x1 + x2) / 2;
-    my               = (y1 + y2) / 2;
-    new_image_handles= rectangle (x1 - hs, y1 - hs, x2 + hs, y2 + hs);
-    have_bbox        = true;
+    rectangle bbox= least_upper_bound (sel->rs);
+    x1            = bbox->x1;
+    y1            = bbox->y1;
+    x2            = bbox->x2;
+    y2            = bbox->y2;
+    mx            = (x1 + x2) / 2;
+    my            = (y1 + y2) / 2;
+    new_image_brec= rectangle (x1 - hs, y1 - hs, x2 + hs, y2 + hs);
+    have_bbox     = true;
     break; // only the closest IMAGE ancestor
   }
 
-  if (new_image_handles != last_image_handles) {
-    if (!is_zero (last_image_handles)) invalidate (last_image_handles);
-    if (!is_zero (new_image_handles)) invalidate (new_image_handles);
-    last_image_handles= new_image_handles;
+  if (new_image_brec != last_image_brec) {
+    if (!is_zero (last_image_brec)) invalidate (last_image_brec);
+    if (!is_zero (new_image_brec)) invalidate (new_image_brec);
+    last_image_brec= new_image_brec;
   }
 
-  if (!have_bbox) return; // nothing to draw
+  if (!have_bbox) {
+    last_handles_r= 0;
+    return; // nothing to draw
+  }
+  last_handles_r= hs;
 
   // Draw 8 resize handles: 4 corners + 4 edge midpoints
   color border_col= rgb_color (0x61, 0x61, 0x61);

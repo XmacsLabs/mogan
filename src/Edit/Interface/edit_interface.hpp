@@ -94,7 +94,8 @@ protected:
   void              table_resize_stop ();
   array<rectangles> alt_selection_rects;
   rectangle         last_visible;
-  rectangle         last_image_handles;
+  rectangle         last_image_brec;
+  SI                last_handles_r;
   rectangles        env_rects;
   rectangles        foc_rects;
   rectangles        sem_rects;

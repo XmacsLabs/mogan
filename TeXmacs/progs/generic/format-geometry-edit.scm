@@ -523,8 +523,6 @@
   (and-with rect (tree-bounding-rectangle t)
     (and (== (length rect) 4) rect)))
 
-(define image-handle-hitbox 6000)
-
 (define (image-point-on-handle? t)
   (and-with bbox (image-get-bbox t)
     (let* ((mpos (get-mouse-position))
@@ -532,7 +530,7 @@
            (x1 (car bbox)) (y1 (cadr bbox))
            (x2 (caddr bbox)) (y2 (cadddr bbox))
            (midx (/ (+ x1 x2) 2)) (midy (/ (+ y1 y2) 2))
-           (hs image-handle-hitbox)
+           (hs (px->tmpt 10))
            (near? (lambda (a b) (< (abs (- a b)) hs)))
            (handles `((nw ,x1 ,y2)
                       (n  ,midx ,y2)
@@ -556,6 +554,7 @@
         (and-with bbox (image-get-bbox t)
           (list (- (caddr bbox) (car bbox)) (- (cadddr bbox) (cadr bbox)))))))
 
+(define (px->tmpt v) (* v 256.0))
 (define (tmpt->cm v) (/ v 60472.0))
 (define (cm->str v) (string-append (number->string v) "cm"))
 
