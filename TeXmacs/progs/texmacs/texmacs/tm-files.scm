@@ -554,7 +554,7 @@
   (buffer-notify-recent name)
   ;; Remember directory for file dialog (Issue #327)
   (remember-file-dialog-directory name)
-  ;; Restore cursor position (Issue #45)
+  ;; Restore cursor position when reopening a buffer
   (when (not (url-scratch? name))
     (restore-buffer-cursor-position name))
   (when (nnull? (select (buffer-get name)
