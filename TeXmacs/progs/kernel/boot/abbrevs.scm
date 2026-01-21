@@ -208,8 +208,14 @@
 		       (else ""))
       (set! opts (list prompt))))
   (when (null? (cdr opts))
-    (with u (buffer-get-master (current-buffer))
-      (set! opts (list (car opts) u))))
+    ;; Issue #327: Use last file dialog directory if current buffer is scratch
+    (let* ((master (buffer-get-master (current-buffer)))
+           (last-dir (and (url-scratch? master)
+                          (defined? 'get-last-file-dialog-directory)
+                          (get-last-file-dialog-directory))))
+      (if (and last-dir (string? last-dir) (not (string-null? last-dir)))
+          (set! opts (list (car opts) (system->url last-dir)))
+          (set! opts (list (car opts) master)))))
   (cpp-choose-file 
     (lambda (u)
     ;; u is return from tm_frame_rep::choose_file in tm_dialogue.cpp

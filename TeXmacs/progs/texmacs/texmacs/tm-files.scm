@@ -21,6 +21,30 @@
 (import (only (srfi srfi-1) remove))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Remember last save/open directory 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define last-file-dialog-directory #f)
+
+(tm-define (get-last-file-dialog-directory)
+  "Get the last directory used in file dialog"
+  (or last-file-dialog-directory
+      (get-preference "last-file-dialog-directory")))
+
+(tm-define (set-last-file-dialog-directory dir)
+  "Set the last directory used in file dialog"
+  (let ((u (system->url dir)))
+    (when (and (string? dir) (url-exists? u) (url-directory? u))
+      (set! last-file-dialog-directory dir)
+      (set-preference "last-file-dialog-directory" dir))))
+
+(tm-define (remember-file-dialog-directory name)
+  "Remember the directory from a file operation"
+  (when (url? name)
+    (let ((dir (url->system (url-head name))))
+      (set-last-file-dialog-directory dir))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Check whether the file name is valid (exclude *)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -229,6 +253,8 @@
           (if (== (url-suffix name) "ts") (style-clear-cache))
           (autosave-remove name)
           (buffer-notify-recent name)
+          ;; Remember directory for file dialog 
+          (remember-file-dialog-directory name)
           (set-message `(concat "Saved " ,vname) "Save file")
           (save-buffer-post name opts)))))
 
@@ -535,6 +561,8 @@
                (not (buffer-modified? prev-buffer)))
       (cpp-buffer-close prev-buffer)))
   (buffer-notify-recent name)
+  ;; Remember directory for file dialog
+  (remember-file-dialog-directory name)
   (when (nnull? (select (buffer-get name)
                         '(:* gpg-passphrase-encrypted-buffer)))
     (tm-gpg-dialogue-passphrase-decrypt-buffer name))
