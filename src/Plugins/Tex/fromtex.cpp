@@ -935,6 +935,7 @@ latex_symbol_to_tree (string s) {
       if (s == "lnot") return "<neg>";
       if (s == "land") return "<wedge>";
       if (s == "lor") return "<vee>";
+      if (s == "textdegree") return "<degree>";
       if (s == "textbackslash") return "\\";
       if (s == "hdots") return "<ldots>";
       if (s == "arrowvert") return "|";
@@ -2511,11 +2512,23 @@ latex_command_to_tree (tree t) {
     if (is_tuple (t[1], "\\prime", 0)) return tree (RPRIME, "'");
     else return tree (RSUP, l2e (t[1]));
   }
-  if (is_tuple (t, "\\stackrel", 2))
-    return tree (ABOVE, l2e (t[2]), l2e (t[1]));
-  if (is_tuple (t, "\\overset", 2)) return tree (ABOVE, l2e (t[2]), l2e (t[1]));
-  if (is_tuple (t, "\\underset", 2))
-    return tree (BELOW, l2e (t[2]), l2e (t[1]));
+  tree out_tree         = tree ();
+  auto handle_over_under= [&] (const string& cmd, bool below) {
+    if (!is_tuple (t) || N (t) < 3 || as_string (t[0]) != cmd) return false;
+    tree cur_tree= tree (below ? BELOW : ABOVE, l2e (t[2]), l2e (t[1]));
+    if (N (t) == 3) out_tree= cur_tree;
+    else {
+      tree tmp (CONCAT);
+      tmp << cur_tree;
+      for (int i= 3; i < N (t); i++)
+        tmp << l2e (t[i]);
+      out_tree= tmp;
+    }
+    return true;
+  };
+  if (handle_over_under ("\\stackrel", false)) return out_tree;
+  if (handle_over_under ("\\overset", false)) return out_tree;
+  if (handle_over_under ("\\underset", true)) return out_tree;
   if (is_tuple (t, "\\parbox", 2))
     return compound ("mini-paragraph", v2e (t[1]), l2e (t[2]));
   if (is_tuple (t, "\\parbox*", 3))
@@ -2531,6 +2544,8 @@ latex_command_to_tree (tree t) {
     if (s == "Vert" || s == "Arrowvert") s= "||";
     if (s == "lbrace") s= "{";
     if (s == "rbrace") s= "}";
+    if (s == "lbrack") s= "[";
+    if (s == "rbrack") s= "]";
     if (dtype == -1) return tree (LEFT, s);
     else if (dtype == 1) return tree (RIGHT, s);
     else return tree (MID, s);

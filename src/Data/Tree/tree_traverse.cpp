@@ -361,6 +361,71 @@ is_iso_alphanum (char c) {
   return is_iso_alpha (c) || is_digit (c);
 }
 
+// Extract a single TeXmacs character at byte position `pos`
+// and return a coarse Unicode codepoint for boundary checks.
+static inline bool
+tm_codepoint_at (string s, int pos, unsigned int& code) {
+  if (pos < 0 || pos >= N (s)) return false;
+
+  int i= pos;
+  tm_char_forwards (s, i);
+  string c= s (pos, i);
+  if (c == "") return false;
+
+  // Plain ASCII
+  if (N (c) == 1) {
+    code= (unsigned int) (unsigned char) c[0];
+    return true;
+  }
+
+  // TeXmacs internal hexadecimal form: <#....>
+  // Only parse leading hex digits for block-level checks.
+  if (starts (c, "<#") && ends (c, ">")) {
+    unsigned int v= 0;
+    int          k= 2, cnt= 0;
+    for (; k < N (c) - 1 && cnt < 4; k++, cnt++) {
+      char         ch= c[k];
+      unsigned int d;
+      if (ch >= '0' && ch <= '9') d= (unsigned int) (ch - '0');
+      else if (ch >= 'a' && ch <= 'f') d= 10u + (unsigned int) (ch - 'a');
+      else if (ch >= 'A' && ch <= 'F') d= 10u + (unsigned int) (ch - 'A');
+      else break;
+      v= (v << 4) | d;
+    }
+    if (cnt > 0) {
+      code= v;
+      return true;
+    }
+  }
+
+  // Unknown non-ASCII character
+  code= 0xFFFFFFFFu;
+  return true;
+}
+
+// Return true if the codepoint should be treated as a word separator
+// for word-based cursor movement.
+static inline bool
+is_word_separator (unsigned int c) {
+  // ASCII whitespace
+  if (c == 0x20u || c == 0x09u || c == 0x0Au || c == 0x0Du) return true;
+
+  if (c == 0xFFFFFFFFu) return false;
+
+  // ASCII punctuation
+  if (c < 0x80u) {
+    char ch= (char) c;
+    return (!is_iso_alphanum (ch) && ch != '_');
+  }
+
+  // Unicode punctuation blocks
+  if (c >= 0x2000u && c <= 0x206Fu) return true; // General Punctuation
+  if (c >= 0x3000u && c <= 0x303Fu) return true; // CJK Symbols & Punctuation
+  if (c >= 0xFF00u && c <= 0xFFEFu) return true; // Fullwidth / Halfwidth
+
+  return false;
+}
+
 static bool
 at_border (tree t, path p, bool forward) {
   tree st= subtree (t, path_up (p));
@@ -390,19 +455,46 @@ move_word (tree t, path p, bool forward) {
       string s= st->label;
       int    n= N (s);
       if (s == "") return q;
-      if (forward && l > 0 &&
-          (is_iso_alphanum (s[l - 1]) || (l < n && s[l] == ' ') ||
-           (l == n && at_border (t, path_up (q), forward))) &&
-          (l == n || !is_iso_alphanum (s[l])))
-        return q;
-      if (!forward && l < n &&
-          (is_iso_alphanum (s[l]) || (l > 0 && s[l - 1] == ' ') ||
-           (l == 0 && at_border (t, path_up (q), forward))) &&
-          (l == 0 || !is_iso_alphanum (s[l - 1])))
-        return q;
+
+      unsigned int cl= 0, cr= 0;
+      bool         has_l= false, has_r= false;
+
+      // Character immediately before the cursor
+      if (l > 0) {
+        int lp= l;
+        tm_char_backwards (s, lp);
+        has_l= tm_codepoint_at (s, lp, cl);
+      }
+
+      // Character at the cursor
+      if (l < n) {
+        has_r= tm_codepoint_at (s, l, cr);
+      }
+
+      bool lsep = (!has_l) ? true : is_word_separator (cl);
+      bool rsep = (!has_r) ? true : is_word_separator (cr);
+      bool lword= has_l && !lsep;
+      bool rword= has_r && !rsep;
+
+      // Forward word movement
+      if (forward && l > 0) {
+        if ((lword || rsep || (l == n && at_border (t, path_up (q), true))) &&
+            (l == n || !rword))
+          return q;
+      }
+
+      // Backward word movement
+      if (!forward && l < n) {
+        if ((rword || lsep || (l == 0 && at_border (t, path_up (q), false))) &&
+            (l == 0 || !lword))
+          return q;
+      }
+
+      // Preserve original special case
       if (!forward && l == n && next_is_word (t, path_up (q))) return q;
     }
     else {
+      // Structural traversal (unchanged)
       if (forward && l == 1) return q;
       if (!forward && l == 0) return q;
       if (!forward && next_is_word (t, path_up (q))) return q;

@@ -32,7 +32,7 @@
   </enumerate-numeric>
 
   <with|framed-color|pastel magenta|ornament-border|0ln|ornament-color|pastel yellow|<\ornamented>
-    您正在使用<strong|v<Xmacs-version>>，当前最新稳定版是<strong|v<include|http://git.tmml.wiki/XmacsLabs/planet/raw/branch/main/latest_version.tm>>，可访问官网<hlink|https://mogan.app/zh|https://mogan.app/zh?from=app>下载最新稳定版。
+    您正在使用<strong|v<Xmacs-version>>，当前最新稳定版是<strong|v<include|https://liiistem.cn/mogan_latest_version.tm>>，可访问官网<hlink|https://mogan.app/zh|https://mogan.app/zh?from=app>下载最新稳定版。
   </ornamented>>
 
   <section*|示例文档：我能用墨干做什么？>

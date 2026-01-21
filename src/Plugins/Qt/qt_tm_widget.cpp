@@ -335,6 +335,46 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   QObject::connect (loginButton, &QWK::LoginButton::clicked,
                     [this] () { checkLocalTokenAndLogin (); });
 
+  // 初始化访客提示条
+  guestNotificationBar= new QWK::GuestNotificationBar (mw);
+
+  // 连接提示条信号
+  QObject::connect (guestNotificationBar,
+                    &QWK::GuestNotificationBar::loginRequested,
+                    [this] () { triggerOAuth2 (); });
+  QObject::connect (guestNotificationBar,
+                    &QWK::GuestNotificationBar::closeRequested, [this] () {
+                      guestNotificationBar->hide ();
+                      // 只隐藏当前会话，不保存到设置
+                    });
+
+  // 检查是否应该显示提示条
+  // 1. 社区版不显示
+  // 2. 商业版：用户未登录时显示，用户已登录时不显示
+  if (is_community_stem ()) {
+    // 社区版：不显示提示条
+    guestNotificationBar->hide ();
+  }
+  else {
+    // 商业版：检查用户登录状态（使用和OCR功能相同的判断方法）
+    try {
+      // 直接调用全局的logged-in?函数，不需要导入模块
+      bool isLoggedIn= as_bool (call ("logged-in?"));
+
+      if (isLoggedIn) {
+        // 用户已登录，不显示提示条
+        guestNotificationBar->hide ();
+      }
+      else {
+        // 用户未登录，显示提示条
+        guestNotificationBar->show ();
+      }
+    } catch (...) {
+      // 如果检查登录状态失败，默认显示提示条
+      guestNotificationBar->show ();
+    }
+  }
+
   // there is a bug in the early implementation of toolbars in Qt 4.6
   // which has been fixed in 4.6.2 (at least)
   // this is why we change dimension of icons
@@ -493,6 +533,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   QWidget* q= main_widget->as_qwidget (); // force creation of QWidget
   q->setParent (
       qwid); // q->layout()->removeWidget(q) will reset the parent to this
+  bl->addWidget (guestNotificationBar); // 添加访客提示条
   bl->addWidget (q);
 
   mw->setCentralWidget (cw);
@@ -550,8 +591,9 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
     bl->insertWidget (2, modeToolBar);
     bl->insertWidget (3, rulerWidget);
     bl->insertWidget (4, focusToolBar);
-    bl->insertWidget (5, userToolBar);
-    bl->insertWidget (6, r2);
+    bl->insertWidget (5, guestNotificationBar); // 访客提示条在焦点工具栏下方
+    bl->insertWidget (6, userToolBar);
+    bl->insertWidget (7, r2);
 
     // mw->setContentsMargins (-2, -2, -2, -2);  // Why this?
     bar->setContentsMargins (0, 1, 0, 1);
@@ -644,6 +686,39 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   QColor   bgcol= to_qcolor (tm_background);
   pal.setColor (QPalette::Mid, bgcol);
   mainwindow ()->setPalette (pal);
+
+  // 连接登录状态变化信号
+  if (is_server_started ()) {
+    tm_server_rep* server=
+        dynamic_cast<tm_server_rep*> (get_server ().operator->());
+    if (server && server->getAccount ()) {
+      QTMOAuth* account= server->getAccount ();
+      QObject::connect (account, &QTMOAuth::loginStateChanged,
+                        [this] (bool loggedIn) {
+                          // 登录状态变化时，重新检查登录状态并更新提示条
+                          if (guestNotificationBar) {
+                            // 社区版不显示提示条
+                            if (is_community_stem ()) {
+                              guestNotificationBar->hide ();
+                            }
+                            else {
+                              // 商业版：根据登录状态决定是否显示
+                              if (loggedIn) {
+                                // 用户已登录，隐藏提示条
+                                guestNotificationBar->hide ();
+                              }
+                              else {
+                                // 用户未登录，显示提示条
+                                guestNotificationBar->show ();
+                              }
+                            }
+                          }
+                        });
+    }
+  }
+  else {
+    std_error << "qt_tm_widget_rep: server not started, cannot connect ";
+  }
 
   // 恢复窗口状态和几何信息
   restoreSettings ();
@@ -2019,6 +2094,25 @@ qt_tm_widget_rep::updateDialogContent (bool isLoggedIn, const QString& username,
                                        const QString& periodLabel,
                                        const QString& periodLabelColor,
                                        const QString& productType) {
+  // 根据登录状态更新访客提示条可见性
+  if (guestNotificationBar) {
+    // 社区版不显示提示条
+    if (is_community_stem ()) {
+      guestNotificationBar->hide ();
+    }
+    else {
+      // 商业版：根据登录状态决定是否显示
+      if (isLoggedIn) {
+        // 用户已登录，隐藏提示条
+        guestNotificationBar->hide ();
+      }
+      else {
+        // 用户未登录，显示提示条
+        guestNotificationBar->show ();
+      }
+    }
+  }
+
   // 更新对话框中的UI组件内容
   if (nameLabel) {
     nameLabel->setText (username);
@@ -2086,6 +2180,18 @@ qt_tm_widget_rep::logout () {
   // 关闭登录对话框
   if (m_loginDialog && m_loginDialog->isVisible ()) {
     m_loginDialog->hide ();
+  }
+
+  // 用户注销后显示访客提示条（除非用户已手动关闭）
+  if (guestNotificationBar) {
+    // 社区版不显示提示条
+    if (is_community_stem ()) {
+      guestNotificationBar->hide ();
+    }
+    else {
+      // 商业版：用户注销后显示提示条
+      guestNotificationBar->show ();
+    }
   }
 
   // 通过tm_server获取QTMOAuth实例并调用clearInvalidTokens

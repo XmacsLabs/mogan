@@ -127,6 +127,20 @@ function main()
                 }
             },
             {
+                --将焦点由辅助窗口切换为主窗口
+                scm_name = "change-auxiliary-widget-focus",
+                cpp_name = "change_auxiliary_widget_focus",
+                ret_type = "void",
+                arg_list = {}
+            },
+            {
+                --获取辅助窗口的parent url
+                scm_name = "get-auxiliary-widget-parent-url",
+                cpp_name = "get_auxiliary_widget_parent_url",
+                ret_type = "url",
+                arg_list = {}
+            },
+            {
                 -- 设置辅助组件标题
                 scm_name = "set-auxiliary-widget-title",
                 cpp_name = "set_auxiliary_widget_title",

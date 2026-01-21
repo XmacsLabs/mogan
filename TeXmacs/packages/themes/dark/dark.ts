@@ -90,6 +90,8 @@
 
   <assign|preview-bg-color|#5a7cc2>
 
+  <assign|gr-grid-aspect|<tuple|<tuple|axes|#999999>|<tuple|1|#666666>|<tuple|10|#003153>>>
+
   <\active*>
     <\src-comment>
       Preamble

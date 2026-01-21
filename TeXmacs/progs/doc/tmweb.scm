@@ -150,7 +150,7 @@
             (input (when answer (set! src-dir answer))
                    "file" (list src-dir) "30em") // //
             (explicit-buttons
-              ((icon "tm_find.xpm")
+              ((balloon (icon "tm_find.xpm") "Choose source directory")
                (cpp-choose-file
                 (lambda (u) (set! src-dir (url->string u))
                         (refresh-now "website-tool-directories"))
@@ -161,7 +161,7 @@
             (input (when answer (set! dest-dir answer))
                    "file" (list dest-dir) "30em") // //
             (explicit-buttons
-              ((icon "tm_find.xpm")
+              ((balloon (icon "tm_find.xpm") "Choose destination directory")
                (cpp-choose-file
                 (lambda (u) (set! dest-dir (url->string u))
                         (refresh-now "website-tool-directories"))

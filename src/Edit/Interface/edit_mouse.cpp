@@ -9,6 +9,7 @@
  * in the root directory or <http://www.gnu.org/licenses/gpl-3.0.html>.
  ******************************************************************************/
 
+#include "Modify/edit_table.hpp"
 #include "analyze.hpp"
 #include "edit_interface.hpp"
 #include "link.hpp"
@@ -552,6 +553,115 @@ detect_right_drag (void* handle, string type, SI x, SI y, time_t t, int m,
 }
 
 /******************************************************************************
+ * mouse detection for table line resizing
+ ******************************************************************************/
+
+bool
+edit_interface_rep::table_resize_hit (SI x, SI y, table_hit& hit) {
+  rectangles rs;
+  tree       r= eb->message (tree ("table-loc?"), x, y, rs);
+  if (!is_func (r, TUPLE) || r[0] != "table-loc") return false;
+
+  string orient= as_string (r[1]);
+  if ((orient != "col" && orient != "row") || N (r) < 9) return false;
+
+  hit.vertical   = (orient == "col");
+  hit.index      = as_int (r[2]);
+  hit.first_size = as_int (r[4]);
+  hit.second_size= as_int (r[5]);
+  hit.fp         = as_path (as_string (r[8]));
+
+  if (is_nil (hit.fp) || hit.index <= 0) return false;
+  return true;
+}
+
+void
+edit_interface_rep::table_resize_start (const table_hit& hit, SI x, SI y) {
+  path sp= find_innermost_scroll (eb, tp);
+  path tp= tree_path (sp, x, y, 0);
+  while (!is_nil (tp) && !has_subtree (et, tp))
+    tp= path_up (tp);
+  if (is_nil (tp)) return;
+
+  path fp= ::table_search_format (et, tp);
+  if (is_nil (fp)) return;
+
+  table_resizing          = true;
+  table_resize_vertical   = hit.vertical;
+  table_resize_path       = fp;
+  table_resize_index      = hit.index;
+  table_resize_start_x    = x;
+  table_resize_start_y    = y;
+  table_resize_first_size = hit.first_size;
+  table_resize_second_size= hit.second_size;
+}
+
+void
+edit_interface_rep::table_resize_apply (SI x, SI y) {
+  if (!table_resizing || is_nil (table_resize_path)) return;
+
+  edit_table_rep* et= dynamic_cast<edit_table_rep*> (this);
+  if (et == nullptr) return;
+
+  SI delta   = table_resize_vertical ? (x - table_resize_start_x)
+                                     : (table_resize_start_y - y);
+  SI min_size= 2 * PIXEL;
+
+  SI first = table_resize_first_size + delta;
+  SI second= table_resize_second_size - delta;
+
+  // clamp sizes to avoid collapsing rows/columns
+  SI total= table_resize_first_size + table_resize_second_size;
+  if (first < min_size) {
+    first = min_size;
+    second= max (min_size, total - first);
+  }
+  if (second < min_size) {
+    second= min_size;
+    first = max (min_size, total - second);
+  }
+
+  if (table_resize_vertical) {
+    int col1= table_resize_index;
+    int col2= table_resize_index + 1;
+
+    et->table_set_format_region (table_resize_path, 1, col1, -1, col1,
+                                 "cell-hmode", tree ("exact"));
+    et->table_set_format_region (table_resize_path, 1, col2, -1, col2,
+                                 "cell-hmode", tree ("exact"));
+    et->table_set_format_region (table_resize_path, 1, col1, -1, col1,
+                                 "cell-width",
+                                 tree (as_string (first) * string ("tmpt")));
+    et->table_set_format_region (table_resize_path, 1, col2, -1, col2,
+                                 "cell-width",
+                                 tree (as_string (second) * string ("tmpt")));
+  }
+  else {
+    int row1= table_resize_index;
+    int row2= table_resize_index + 1;
+
+    et->table_set_format_region (table_resize_path, row1, 1, row1, -1,
+                                 "cell-vmode", tree ("exact"));
+    et->table_set_format_region (table_resize_path, row2, 1, row2, -1,
+                                 "cell-vmode", tree ("exact"));
+    et->table_set_format_region (table_resize_path, row1, 1, row1, -1,
+                                 "cell-height",
+                                 tree (as_string (first) * string ("tmpt")));
+    et->table_set_format_region (table_resize_path, row2, 1, row2, -1,
+                                 "cell-height",
+                                 tree (as_string (second) * string ("tmpt")));
+  }
+
+  table_resize_notify ();
+}
+
+void
+edit_interface_rep::table_resize_stop () {
+  table_resizing   = false;
+  table_resize_path= path ();
+}
+
+/******************************************************************************
  * dispatching
  ******************************************************************************/
 
@@ -604,6 +714,17 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
   if ((!move_like) || (is_attached (this) && !check_event (MOTION_EVENT)))
     update_mouse_loci ();
 
+  int hovering_table= 0;
+  if (type == "move" || type == "dragging-left" || type == "dragging-right") {
+    rectangles rs;
+    tree       r= eb->message (tree ("table-loc?"), x, y, rs);
+    if (is_func (r, TUPLE) && r[0] == "table-loc") {
+      string orient= as_string (r[1]);
+      if (orient == "cell") hovering_table= -1;
+      else if (orient == "row") hovering_table= 1;
+      else if (orient == "col") hovering_table= 2;
+    }
+  }
   bool hovering_hlink= false;
   if (!is_nil (mouse_ids) && type == "move") {
     notify_change (THE_FREEZE);
@@ -637,7 +758,14 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
       }
     }
   }
-  if (hovering_hlink) set_cursor_style ("pointing_hand");
+  if (hovering_table) {
+    if (hovering_table == -1) {
+      set_cursor_style ("normal");
+      // draw table resizing handles
+    }
+    else set_cursor_style (hovering_table == 1 ? "size_ver" : "size_hor");
+  }
+  else if (hovering_hlink) set_cursor_style ("pointing_hand");
   else if (hovering_image) {
     set_cursor_style ("pointing_hand");
     path path_of_image_parent= path_up (current_path);
@@ -694,6 +822,24 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
         is_in_graphics_mode= false;
       }
     };
+  }
+
+  // table line resizing
+  if ((type == "press-left" || type == "start-drag-left") && mods <= 1 &&
+      !table_resizing) {
+    table_hit hit;
+    if (table_resize_hit (x, y, hit)) {
+      table_resize_start (hit, x, y);
+      return;
+    }
+  }
+  if (type == "dragging-left" && table_resizing) {
+    table_resize_apply (x, y);
+    return;
+  }
+  if ((type == "release-left" || type == "end-drag-left") && table_resizing) {
+    table_resize_stop ();
+    return;
   }
 
   if (type == "press-left" || type == "start-drag-left") {

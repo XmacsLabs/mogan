@@ -16,8 +16,12 @@
 (texmacs-module (generic format-widgets)
   (:use (generic format-menu)
         (generic document-edit)
+        (kernel gui menu-widget)
         (utils library cursor)))
 
+
+(tm-define (set-page-format-window-state opened?)
+  (set-auxiliary-widget-state opened? 'page-format))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Subroutines
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -288,10 +292,14 @@
            (open-background-picture-selector setter)))))
 
 (define (header-buffer)
-  (string->url "tmfs://aux/this-page-header"))
+  (string->url
+            (string-append "tmfs://aux/this-page-header" "/"
+                           (url->string (url-tail (get-auxiliary-widget-parent-url))))))
 
 (define (footer-buffer)
-  (string->url "tmfs://aux/this-page-footer"))
+  (string->url
+            (string-append "tmfs://aux/this-page-footer" "/"
+                           (url->string (url-tail (get-auxiliary-widget-parent-url))))))
 
 (define (editing-headers?)
   (in? (current-buffer) (list (header-buffer) (footer-buffer))))
@@ -376,10 +384,11 @@
         // //
         ("Page number" (when (editing-headers?) (insert '(page-number))))
         >>>
-        ("Ok" (apply-page-settings u settings) (quit))))))
+        ("Ok" (apply-page-settings u settings) (begin (quit) (buffer-focus u #t)))))))
 
 (tm-define (open-page-format-window)
   (:interactive #t)
+  (change-auxiliary-widget-focus)
   (let* ((u  (current-buffer))
          (st (embedded-style-list "macro-editor"))
          (t  (make-ahash-table)))
@@ -388,7 +397,9 @@
         (collect-settings par t)))
     (auxiliary-widget (page-formatter u st t #t)
                       noop "Page format"
-                      (header-buffer) (footer-buffer))))
+                      (header-buffer) (footer-buffer))
+    (set-page-format-window-state #t)
+    (buffer-focus (header-buffer) #t)))
 
 (tm-define (open-page-format)
   (:interactive #t)
@@ -401,3 +412,5 @@
             (collect-settings par t)))
         (tool-select :right (list 'format-page-tool u st t)))
       (open-page-format-window)))
+
+(register-auxiliary-widget-type 'page-format (list open-page-format-window))

@@ -1,0 +1,384 @@
+<TMU|<tuple|1.1.0|2026.1.1-rc3>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref|r>>
+
+<\body>
+  R语言行内代码示例：
+
+  <\r>
+    x \<less\>- sum(1:5)
+
+    \;
+  </r>
+
+  R语言代码块示例：
+
+  <\r-code>
+    # -------------------------------
+
+    # 1. R 基础语法 / 注释 / 打印
+
+    # -------------------------------
+
+    # Single-line comment
+
+    print("Hello, R!") \ \ \ \ \ \ \ \ 
+
+    # Multi-line comment using multiple # lines
+
+    # This is a demonstration
+
+    # of basic R syntax
+
+    \;
+
+    # -------------------------------
+
+    # 2. 基础运算 / 数据类型
+
+    # -------------------------------
+
+    a \<less\>- 10 \ \ \ \ \ \ \ \ \ # numeric
+
+    b \<less\>- 3
+
+    sum_ab \<less\>- a + b
+
+    diff_ab \<less\>- a - b
+
+    prod_ab \<less\>- a * b
+
+    div_ab \ \<less\>- a / b
+
+    mod_ab \ \<less\>- a %% b \ \ \ \ \ \ \ \ # modulo
+
+    int_div \<less\>- a %/% b \ \ \ \ \ \ \ # integer division
+
+    \;
+
+    flag \<less\>- TRUE \ \ \ \ \ \ \ \ \ \ \ \ \ # logical
+
+    text \<less\>- "R language" \ \ \ \ \ # character
+
+    missing_val \<less\>- NA \ \ \ \ \ \ \ \ # missing value
+
+    empty_val \<less\>- NULL \ \ \ \ \ \ \ \ # null
+
+    \;
+
+    # -------------------------------
+
+    # 3. 判断语句
+
+    # -------------------------------
+
+    x \<less\>- 25
+
+    if (x \<gtr\> 20) {
+
+    \ \ print("x is greater than 20")
+
+    } else if (x == 20) {
+
+    \ \ print("x equals 20")
+
+    } else {
+
+    \ \ print("x is less than 20")
+
+    }
+
+    \;
+
+    choice \<less\>- "B"
+
+    result \<less\>- switch(choice,
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A = "Option A",
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B = "Option B",
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ C = "Option C",
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ "Unknown")
+
+    print(result)
+
+    \;
+
+    # -------------------------------
+
+    # 4. 循环
+
+    # -------------------------------
+
+    vec \<less\>- 1:5
+
+    for (i in vec) {
+
+    \ \ cat("i =", i, "\\n")
+
+    }
+
+    \;
+
+    i \<less\>- 1
+
+    while (i \<less\>= 3) {
+
+    \ \ print(i)
+
+    \ \ i \<less\>- i + 1
+
+    }
+
+    \;
+
+    cnt \<less\>- 1
+
+    repeat {
+
+    \ \ if (cnt \<gtr\> 3) break
+
+    \ \ print(cnt)
+
+    \ \ cnt \<less\>- cnt + 1
+
+    }
+
+    \;
+
+    # -------------------------------
+
+    # 5. 函数
+
+    # -------------------------------
+
+    add \<less\>- function(x, y=5) {
+
+    \ \ return(x + y)
+
+    }
+
+    print(add(10)) \ \ \ \ \ \ \ \ \ # default y
+
+    print(add(10, 2)) \ \ \ \ \ \ # custom y
+
+    \;
+
+    # -------------------------------
+
+    # 6. 字符串
+
+    # -------------------------------
+
+    str1 \<less\>- "Hello"
+
+    str2 \<less\>- "R"
+
+    combined \<less\>- paste(str1, str2, sep=", ")
+
+    print(combined)
+
+    substr(combined, 1, 5)
+
+    \;
+
+    # -------------------------------
+
+    # 7. 列表 / 矩阵 / 数组 / 因子 / 数据框
+
+    # -------------------------------
+
+    # List
+
+    lst \<less\>- list(name="Alice", age=25, scores=c(90, 85, 88))
+
+    \;
+
+    # Matrix
+
+    mat \<less\>- matrix(1:9, nrow=3, ncol=3)
+
+    print(mat)
+
+    \;
+
+    # Array
+
+    arr \<less\>- array(1:12, dim=c(2,3,2))
+
+    print(arr)
+
+    \;
+
+    # Factor
+
+    f \<less\>- factor(c("Male", "Female", "Female", "Male"))
+
+    print(f)
+
+    \;
+
+    # Data frame
+
+    df \<less\>- data.frame(
+
+    \ \ id = 1:3,
+
+    \ \ score = c(90, 85, 88),
+
+    \ \ pass = c(TRUE, TRUE, FALSE)
+
+    )
+
+    print(df)
+
+    \;
+
+    # -------------------------------
+
+    # 8. 数据重塑 (示例)
+
+    # -------------------------------
+
+    # Wide to long using reshape
+
+    df_wide \<less\>- data.frame(
+
+    \ \ id = 1:2,
+
+    \ \ score_math = c(90, 85),
+
+    \ \ score_eng = c(88, 92)
+
+    )
+
+    df_long \<less\>- reshape(df_wide,
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ varying = c("score_math","score_eng"),
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v.names = "score",
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timevar = "subject",
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ times = c("math","eng"),
+
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ direction = "long")
+
+    print(df_long)
+
+    \;
+
+    # -------------------------------
+
+    # 9. 包管理
+
+    # -------------------------------
+
+    # install.packages("ggplot2")
+
+    library(ggplot2)
+
+    \;
+
+    # -------------------------------
+
+    # 10. CSV / Excel / XML / JSON / MySQL 示例
+
+    # -------------------------------
+
+    # CSV
+
+    write.csv(df, "df.csv", row.names=FALSE)
+
+    df_csv \<less\>- read.csv("df.csv")
+
+    print(df_csv)
+
+    \;
+
+    # Excel (requires readxl / writexl)
+
+    library(writexl)
+
+    write_xlsx(df, "df.xlsx")
+
+    \;
+
+    # XML (requires XML package)
+
+    library(XML)
+
+    xml_data \<less\>- xmlParse("\<less\>root\<gtr\>\<less\>item\<gtr\>1\<less\>/item\<gtr\>\<less\>/root\<gtr\>")
+
+    \;
+
+    # JSON (requires jsonlite)
+
+    library(jsonlite)
+
+    json_text \<less\>- toJSON(df)
+
+    df_json \<less\>- fromJSON(json_text)
+
+    \;
+
+    # MySQL connection (requires RMySQL / DBI)
+
+    library(DBI)
+
+    con \<less\>- dbConnect(RMySQL::MySQL(), dbname="testdb", host="localhost", user="user", password="pass")
+
+    dbDisconnect(con)
+
+    \;
+
+    # -------------------------------
+
+    # 11. 绘图示例
+
+    # -------------------------------
+
+    # Pie chart
+
+    slices \<less\>- c(10, 12, 4, 16, 8)
+
+    lbls \<less\>- c("A", "B", "C", "D", "E")
+
+    pie(slices, labels = lbls, main="Pie Chart Example")
+
+    \;
+
+    # Bar plot
+
+    barplot(slices, names.arg=lbls, main="Bar Plot Example", col="blue")
+
+    \;
+
+    # Scatter plot
+
+    x \<less\>- 1:10
+
+    y \<less\>- x^2
+
+    plot(x, y, main="Scatter Plot", xlab="X-axis", ylab="Y-axis", col="red", pch=19)
+
+    \;
+
+    # Function curve
+
+    curve(sin, from=0, to=2*pi, col="green", lwd=2, main="Sine Curve")
+
+    \;
+
+    \;
+  </r-code>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

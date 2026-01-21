@@ -13,7 +13,13 @@
 
 (texmacs-module (generic document-widgets)
   (:use (generic document-menu)
+        (kernel gui menu-widget)
         (generic format-widgets)))
+
+
+(tm-define (set-page-headers-footers-window-state opened?)
+  (set-auxiliary-widget-state opened? 'page-headers-footers))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Style chooser widget (still to be implemented)
@@ -521,7 +527,9 @@
         "page-odd-footer" "page-even-footer"))
 
 (define (header-buffer var)
-  (string->url (string-append "tmfs://aux/" var)))
+  (string->url
+            (string-append "tmfs://aux/" var "/" 
+                           (url->string (url-tail (get-auxiliary-widget-parent-url))))))
 
 (define (header-buffers)
   (map header-buffer header-parameters))
@@ -535,7 +543,7 @@
 (define (apply-headers-settings u)
   (with l (list)
     (for (var header-parameters)
-      (and-with doc (get-field-contents (string-append "tmfs://aux/" var))
+      (and-with doc (get-field-contents (header-buffer var))
         (set! l (cons `(,var ,doc) l))))
     (when (nnull? l)
       (delayed
@@ -545,8 +553,7 @@
 
 (define (editing-headers?)
   (in? (current-buffer)
-       (map (lambda (x) (string->url (string-append "tmfs://aux/" x)))
-            header-parameters)))
+       (map header-buffer header-parameters)))
 
 (tm-widget (page-formatter-headers u style quit)
   (padded
@@ -577,7 +584,7 @@
      ;; (initial-default u header-parameters)
      ;; (refresh-now "page-header-settings"))
      ;;// //
-     ("Ok" (apply-headers-settings u) (quit))
+     ("Ok" (apply-headers-settings u) (begin (quit) (buffer-focus u #t)))
      // // // // //)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -838,12 +845,15 @@
 
 (tm-define (open-page-headers-footers-window)
   (:interactive #t)
+  ;(change-auxiliary-widget-focus)
   (let* ((u  (current-buffer))
          (st (embedded-style-list "macro-editor")))
     (apply auxiliary-widget
            (cons* (lambda (quit) (page-formatter-headers u st quit))
                   noop (translate "Headers and footers")
-                  (header-buffers)))))
+                  (header-buffers)))
+    (set-page-headers-footers-window-state #t)
+    (buffer-focus (header-buffer "page-odd-header") #t)))
 
 (tm-define (open-page-headers-footers)
   (:interactive #t)
@@ -927,3 +937,5 @@
   (if (side-tools?)
       (tool-select :right 'document-colors-tool)
       (open-document-colors-window)))
+
+(register-auxiliary-widget-type 'page-headers-footers (list open-page-headers-footers-window))

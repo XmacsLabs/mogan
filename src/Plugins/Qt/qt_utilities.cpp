@@ -1445,6 +1445,11 @@ qt_clipboard_format () {
     return "html";
   }
 
+  // 然后是 texmacs-clipboard （内部格式）
+  if (mimeData->hasFormat ("application/x-texmacs-clipboard")) {
+    return "texmacs-snippet";
+  }
+
   // 然后是 verbatim（纯文本）
   if (mimeData->hasText ()) {
     return "verbatim";
@@ -1465,6 +1470,10 @@ qt_clipboard_text () {
   QCoreApplication::processEvents (); // 处理挂起的事件
   QClipboard*      clipboard= QApplication::clipboard ();
   const QMimeData* mimeData = clipboard->mimeData ();
+  if (mimeData->hasFormat ("application/x-texmacs-clipboard")) {
+    QByteArray buf= mimeData->data ("application/x-texmacs-clipboard");
+    return string (buf.constData (), buf.size ());
+  }
   if (mimeData->hasImage ()) {
     return "";
   }
