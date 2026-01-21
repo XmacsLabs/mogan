@@ -623,7 +623,6 @@ new-key : string
         (for-each (lambda (entry)
                     (let* ((entry-conds (car entry))
                            (entry-conds-src (map extract-code-str entry-conds))
-                           ;; [新增] 提取当前绑定中的命令源码
                            (entry-cmd-src (extract-code-str (cadr entry))))
                       
                       ;; 只有当 (条件匹配) 且 (命令也匹配) 时，才认为是同一个绑定进行删除
