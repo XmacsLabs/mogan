@@ -132,150 +132,7 @@ Qshortcut_widget::setupUi () {
 
 void
 Qshortcut_widget::setupStyle () {
-  QString qss= R"(
-        /* === 整体窗口 === */
-        QWidget {
-            font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
-            font-size: 14px;
-            background-color: #fcfcfc;
-            color: #232629;
-        }
-
-        /* === 搜索框 === */
-        QLineEdit {
-            border: 1px solid #dcdcdc;
-            border-radius: 4px;
-            padding: 6px;
-            background-color: #ffffff;
-            selection-background-color: #3daee9;
-        }
-        QLineEdit:focus {
-            border: 1px solid #3daee9;
-        }
-
-        /* === 树形列表 === */
-        QTreeWidget {
-            border: 1px solid #dcdcdc;
-            background-color: #ffffff;
-            alternate-background-color: #f7f8fa;
-            outline: 0;
-        }
-
-        QTreeWidget::item {
-            height: 32px;
-            padding-left: 5px;
-            border: none;
-        }
-
-        QTreeWidget::item:hover {
-            background-color: #eaf5fc;
-        }
-
-        QTreeWidget::item:selected {
-            background-color: #3daee9;
-            color: white;
-        }
-
-        QTreeWidget::item:selected:!active {
-            background-color: #e0e0e0;
-            color: black;
-        }
-
-        /* === 表头 === */
-        QHeaderView::section {
-            background-color: #eff0f1;
-            border: none;
-            border-bottom: 1px solid #dcdcdc;
-            border-right: 1px solid #dcdcdc;
-            padding: 4px;
-            font-weight: bold;
-            color: #555;
-            min-height: 25px;
-        }
-        QHeaderView::section:last {
-            border-right: none;
-        }
-
-        /* === 按钮 === */
-        QPushButton {
-            border: 1px solid #c0c0c0;
-            border-radius: 4px;
-            padding: 5px 15px;
-            background-color: #fdfdfd;
-            min-width: 70px;
-        }
-        QPushButton:hover {
-            background-color: #f0f0f0;
-            border-color: #3daee9;
-        }
-        QPushButton:pressed {
-            background-color: #e0e0e0;
-        }
-        QPushButton[default="true"] {
-            background-color: #3daee9;
-            color: white;
-            border: 1px solid #3298cc;
-        }
-        QPushButton[default="true"]:hover {
-            background-color: #4dbfff;
-        }
-
-
-        /* 1. 垂直滚动条整体槽道 */
-        QScrollBar:vertical {
-            border: none;
-            background: #f7f8fa; /* 极浅的灰色背景，融合感更好 */
-            width: 10px;         /* 宽度变窄 */
-            margin: 0px 0px 0px 0px;
-        }
-
-        /* 2. 滚动条滑块 (Handle) */
-        QScrollBar::handle:vertical {
-            background: #c1c1c1; /* 默认浅灰 */
-            min-height: 30px;    /* 防止滑块太小 */
-            border-radius: 5px;  /* 圆角胶囊形状 */
-            margin: 2px;         /* 给滑块四周留一点空隙 */
-        }
-
-        /* 3. 鼠标悬停在滑块上 */
-        QScrollBar::handle:vertical:hover {
-            background: #a8a8a8; /* 加深颜色提示可点击 */
-        }
-
-        /* 4. 鼠标按下拖拽时 */
-        QScrollBar::handle:vertical:pressed {
-            background: #787878; /* 更深 */
-        }
-
-        /* 5. 隐藏上下箭头按钮 (add-line 和 sub-line) */
-        QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
-            height: 0px;
-            background: none;
-            border: none;
-        }
-
-        /* 6. 隐藏箭头区域的背景 */
-        QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-            background: transparent;
-            border: none;
-        }
-
-        QScrollBar:horizontal {
-            border: none;
-            background: #f7f8fa;
-            height: 10px;
-            margin: 0px;
-        }
-        QScrollBar::handle:horizontal {
-            background: #c1c1c1;
-            min-width: 30px;
-            border-radius: 5px;
-            margin: 2px;
-        }
-        QScrollBar::handle:horizontal:hover { background: #a8a8a8; }
-        QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal { width: 0px; }
-    )";
-  this->setStyleSheet (qss);
+  //this->setStyleSheet (qss);
 }
 
 void
@@ -330,6 +187,29 @@ Qshortcut_widget::initData () {
   addShortcutItem (viewGroup, "放大字体", "Ctrl++");
   addShortcutItem (viewGroup, "缩小字体", "Ctrl+-");
   addShortcutItem (viewGroup, "重置缩放", "Ctrl+0");
+  QTreeWidgetItem* tabGrop = new QTreeWidgetItem (viewGroup);
+  tabGrop->setText(0, "tab循环");
+  // 3. 设置样式（粗体，类似顶级分组）
+    tabGrop->setFont(0, QFont("Microsoft YaHei", 10, QFont::Bold));
+    
+    // 4. 设置Flag：允许选中，但禁止编辑
+    tabGrop->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+
+    // 5. 默认展开
+    tabGrop->setExpanded(true);
+    addShortcutItem (tabGrop, "复制当前行", "Ctrl+D");
+  // 1. 获取父节点 (viewGroup) 的 ModelIndex
+    QModelIndex parentIndex = treeWidget->indexFromItem(viewGroup);
+
+    // 2. 获取 tabGrop 在父节点中的行号
+    int childRow = viewGroup->indexOfChild(tabGrop);
+
+    // 3. 设置跨列 (注意第二个参数传入了 parentIndex)
+    treeWidget->setFirstColumnSpanned(childRow, parentIndex, true);
+    // 6. 让这个分组标题跨越两列（这样更好看，防止分割线穿过文字）
+    // 注意：需要通过 treeWidget 去设置跨列
+    //treeWidget->setFirstColumnSpanned(tabGrop, true);
+
   connect (treeWidget, &QTreeWidget::itemChanged, this,
            &Qshortcut_widget::onShortcutChanged);
 }
