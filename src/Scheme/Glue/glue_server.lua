@@ -167,6 +167,13 @@ function main()
                 }
             },
             {
+                --快捷键编辑窗口
+                scm_name = "set-shortcut-widget",
+                cpp_name = "shortcut_widget",
+                ret_type = "void",
+                arg_list = {}
+            },
+            {
                 scm_name = "show-bottom-tools",
                 cpp_name = "show_bottom_tools",
                 ret_type = "void",

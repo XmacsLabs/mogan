@@ -508,6 +508,11 @@ tm_window_rep::set_auxiliary_widget_new_title (string title) {
 }
 
 void
+tm_window_rep::set_shortcut_widget () {
+  set_shortcut_widgets (wid);
+}
+
+void
 tm_window_rep::set_bottom_tools_flag (int which, bool flag) {
   if (which == 0) set_bottom_tools_visibility (wid, flag);
   else if (which == 1) set_extra_tools_visibility (wid, flag);
