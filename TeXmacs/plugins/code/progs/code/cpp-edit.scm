@@ -39,6 +39,12 @@
   (:mode in-prog-cpp?)
   (select-brackets-after-movement "([{" ")]}" "\\"))
 
+(tm-define (program-compute-indentation doc row col)
+  (:mode in-prog-cpp?)
+  (if (<= row 0) 0
+      (let ((prev-row (program-row (- row 1))))
+        (if prev-row (string-get-indent prev-row) 0))))
+
 (kbd-map
   (:mode in-prog-cpp?)
   ("{" (cpp-bracket-open "{" "}" ))
