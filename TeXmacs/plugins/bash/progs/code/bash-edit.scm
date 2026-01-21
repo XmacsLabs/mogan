@@ -42,14 +42,15 @@
 (define (bash-trim s) (bash-trim-right (bash-trim-left s)))
 
 ;; Continuation heuristic: \, pipes, &&, ||, redirects, etc.
+(define bash-continuation-ops '("|" "||" "&&" "&" ">" ">>" "<" "<<" "2>" "2>>" "1>" "1>>"))
+(define bash-block-keywords '("if" "for" "while" "until" "case" "select" "function"))
 (define (bash-line-continues? line)
   (let* ((t (bash-trim-right line))
          (n (string-length t)))
     (if (<= n 0) #f
         (or
           (== (string-ref t (- n 1)) #\\)
-          (let ((ops '("|" "||" "&&" "&" ">" ">>" "<" "<<" "2>" "2>>" "1>" "1>>")))
-            (let loop ((xs ops))
+          (let loop ((xs bash-continuation-ops))
               (if (null? xs) #f
                   (let* ((op (car xs))
                          (m (string-length op)))
@@ -105,8 +106,7 @@
                    (and (> (string-length trimmed) 0)
                         (== (string-ref trimmed (- (string-length trimmed) 1)) #\{))
                    ;; crude: control keywords that often start blocks
-                   (let ((words '("if" "for" "while" "until" "case" "select" "function")))
-                     (let loop ((ws words))
+                   (let loop ((ws bash-block-keywords))
                        (if (null? ws) #f
                            (let ((w (car ws)))
                              (if (bash-string-prefix? trimmed w)
