@@ -21,6 +21,81 @@
 (import (only (srfi srfi-1) remove))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Remember cursor positions for buffers (Issue #45)
+;; This allows restoring cursor position when reopening a document
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define buffer-cursor-positions (make-ahash-table))
+
+(define (buffer-cursor-positions-key name)
+  "Generate a key for storing cursor position based on buffer URL"
+  (url->system name))
+
+(tm-define (save-buffer-cursor-position name)
+  "Save the cursor position for a buffer before closing"
+  (when (and (url? name) (buffer-exists? name))
+    (with-buffer name
+      (let* ((key (buffer-cursor-positions-key name))
+             (path (cursor-path)))
+        (ahash-set! buffer-cursor-positions key path)
+        (learn-interactive 'buffer-cursor-position 
+          (list (cons "url" (url->system name))
+                (cons "path" (object->string path))))))))
+
+(tm-define (restore-buffer-cursor-position name)
+  "Restore the cursor position for a buffer after opening"
+  (when (and (url? name) (buffer-exists? name))
+    (with-buffer name
+      (let* ((key (buffer-cursor-positions-key name))
+             (saved-path (ahash-ref buffer-cursor-positions key)))
+        (when saved-path
+          (catch #t
+            (lambda () 
+              (delayed (:idle 1) 
+                (go-to-path saved-path)))
+            (lambda err 
+              (noop))))))))
+
+(tm-define (load-buffer-cursor-positions-from-learned)
+  "Load buffer cursor positions from learned interactive data"
+  (for-each 
+    (lambda (entry)
+      (with url-str (assoc-ref entry "url")
+        (with path-str (assoc-ref entry "path")
+          (when (and url-str path-str)
+            (catch #t
+              (lambda ()
+                (ahash-set! buffer-cursor-positions url-str (string->object path-str)))
+              (lambda err (noop)))))))
+    (learned-interactive "buffer-cursor-position")))
+
+;; Load cursor positions at startup
+(delayed (:idle 100) (load-buffer-cursor-positions-from-learned))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Remember last save/open directory (Issue #327)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define last-file-dialog-directory #f)
+
+(tm-define (get-last-file-dialog-directory)
+  "Get the last directory used in file dialog"
+  (or last-file-dialog-directory
+      (get-preference "last-file-dialog-directory")))
+
+(tm-define (set-last-file-dialog-directory dir)
+  "Set the last directory used in file dialog"
+  (when (and (string? dir) (url-exists? (system->url dir)))
+    (set! last-file-dialog-directory dir)
+    (set-preference "last-file-dialog-directory" dir)))
+
+(tm-define (remember-file-dialog-directory name)
+  "Remember the directory from a file operation"
+  (when (url? name)
+    (let ((dir (url->system (url-head name))))
+      (set-last-file-dialog-directory dir))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Check whether the file name is valid (exclude *)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -229,6 +304,8 @@
           (if (== (url-suffix name) "ts") (style-clear-cache))
           (autosave-remove name)
           (buffer-notify-recent name)
+          ;; Remember directory for file dialog (Issue #327)
+          (remember-file-dialog-directory name)
           (set-message `(concat "Saved " ,vname) "Save file")
           (save-buffer-post name opts)))))
 
@@ -527,6 +604,11 @@
               (switch-to-buffer* name)
               (switch-to-buffer name)))))
   (buffer-notify-recent name)
+  ;; Remember directory for file dialog (Issue #327)
+  (remember-file-dialog-directory name)
+  ;; Restore cursor position (Issue #45)
+  (when (not (url-scratch? name))
+    (restore-buffer-cursor-position name))
   (when (nnull? (select (buffer-get name)
                         '(:* gpg-passphrase-encrypted-buffer)))
     (tm-gpg-dialogue-passphrase-decrypt-buffer name))
