@@ -120,6 +120,7 @@
       ("Python" (make* 'python "python"))
       ("R" (make* 'r "r"))
       ("SQL" (make* 'sql "sql")))
+      ("Bash" (make* 'bash "bash")))
   (-> "Block of code"
       ("Verbatim" (make 'verbatim-code))
       ("C++" (make 'cpp-code))
@@ -130,6 +131,7 @@
       ("Python" (make* 'python-code "python"))
       ("R" (make* 'r-code "r"))
       ("SQL" (make* 'sql-code "sql")))
+      ("Bash" (make* 'bash-code "bash")))
   (-> "Listing"
       ("Verbatim" (make 'listing))
       ("C++" (make 'cpp-listing))

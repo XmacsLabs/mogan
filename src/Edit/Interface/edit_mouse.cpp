@@ -594,6 +594,8 @@ edit_interface_rep::table_resize_start (const table_hit& hit, SI x, SI y) {
   table_resize_start_y    = y;
   table_resize_first_size = hit.first_size;
   table_resize_second_size= hit.second_size;
+  table_resize_mark       = new_marker ();
+  mark_start (table_resize_mark);
 }
 
 void
@@ -657,6 +659,10 @@ edit_interface_rep::table_resize_apply (SI x, SI y) {
 
 void
 edit_interface_rep::table_resize_stop () {
+  if (table_resize_mark != 0.0) {
+    mark_end (table_resize_mark);
+    table_resize_mark= 0.0;
+  }
   table_resizing   = false;
   table_resize_path= path ();
 }

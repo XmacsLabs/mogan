@@ -1,0 +1,75 @@
+<TMU|<tuple|1.1.0|2026.1.1>>
+
+<style|<tuple|tmudoc|number-europe|bash>>
+
+<\body>
+  <\hide-preamble>
+    <assign|code-name|bash>
+
+    <assign|code-Name|Bash>
+  </hide-preamble>
+
+  <tmdoc-title|Bash Code Plugin>
+
+  <paragraph|Bash style package>
+
+  Click <menu|Document|Style|Add package|Code|bash> or click <menu|<icon|tm_add.svg>|Code|bash> on the focus toolbar to add the Bash style package.
+
+  In the Bash style package, <markup|bash> is provided for inline snippets and <markup|bash-code> is provided for Bash code blocks.
+
+  <paragraph|Bash syntax>
+
+  The syntax of the Bash language is defined in:
+
+  <slink|$TEXMACS_PATH/plugins/bash/progs/code/bash-lang.scm>
+
+  Here is an example Bash code block with syntax highlight:
+
+  <\bash-code>
+    name="Mogan"
+
+    count=3
+
+    \;
+
+    greet() {
+
+    \ \ echo "Hello, $name!"
+
+    }
+
+    \;
+
+    if [ "$count" -gt 0 ]; then
+
+    \ \ greet
+
+    fi
+
+    \;
+
+    for i in $(seq 1 "$count"); do
+
+    \ \ echo "Loop $i"
+
+    done
+  </bash-code>
+
+  <paragraph|Bash editing>
+
+  The editing of the Bash code is defined in:
+
+  <slink|$TEXMACS_PATH/plugins/bash/progs/code/bash-edit.scm>
+
+  <tmdoc-copyright|2026|Mogan Developers>
+
+  <tmdoc-license|Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.1 or any later version published by the Free Software Foundation; with no Invariant Sections, with no Front-Cover Texts, and with no Back-Cover Texts. A copy of the license is included in the section entitled "GNU Free Documentation License".>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+    <associate|preamble|false>
+  </collection>
+</initial>
