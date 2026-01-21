@@ -40,10 +40,10 @@
     ;; SQL type and object declarations
     (declare_type
       "CREATE" "DROP" "ALTER" "TABLE" "VIEW" "INDEX" "SEQUENCE" "TRIGGER"
-      "TYPE" "DOMAIN" "CONSTRAINT" "SCHEMA" "DATABASE"
+      "TYPE" "DOMAIN" "CONSTRAINT"
 
       "create" "drop" "alter" "table" "view" "index" "sequence" "trigger"
-      "type" "domain" "constraint" "schema" "database")
+      "type" "domain" "constraint")
 
     ;; SQL module declarations (schemas, databases)
     (declare_module
@@ -61,24 +61,20 @@
     ;; General SQL keywords
     (keyword
       "SELECT" "FROM" "WHERE" "GROUP" "BY" "HAVING" "ORDER" "ASC" "DESC"
-      "DISTINCT" "ALL" "AS" "ON" "USING" "WITH" "RECURSIVE"
+      "DISTINCT" "AS" "ON" "USING" "WITH" "RECURSIVE"
       "JOIN" "INNER" "LEFT" "RIGHT" "FULL" "OUTER" "CROSS" "NATURAL"
       "INSERT" "INTO" "VALUES" "UPDATE" "SET" "DELETE" "MERGE" "UPSERT"
       "GRANT" "REVOKE" "DENY"
       "UNION" "INTERSECT" "EXCEPT" "MINUS" "LIMIT" "OFFSET" "FETCH" "NEXT"
-      "ONLY" "EXISTS" "IN" "ANY" "ALL" "SOME" "LIKE" "ILIKE" "BETWEEN"
-      "IS" "AND" "OR" "NOT" "CAST" "COALESCE" "NULLIF" "IFNULL" "NVL"
-      "KEY"
+      "ONLY" "CAST" "COALESCE" "NULLIF" "IFNULL" "NVL" "KEY"
 
       "select" "from" "where" "group" "by" "having" "order" "asc" "desc"
-      "distinct" "all" "as" "on" "using" "with" "recursive"
+      "distinct" "as" "on" "using" "with" "recursive"
       "join" "inner" "left" "right" "full" "outer" "cross" "natural"
       "insert" "into" "values" "update" "set" "delete" "merge" "upsert"
       "grant" "revoke" "deny"
       "union" "intersect" "except" "minus" "limit" "offset" "fetch" "next"
-      "only" "exists" "in" "any" "all" "some" "like" "ilike" "between"
-      "is" "and" "or" "not" "cast" "coalesce" "nullif" "ifnull" "nvl"
-      "key")
+      "only" "cast" "coalesce" "nullif" "ifnull" "nvl" "key")
 
     ;; SQL conditional keywords
     (keyword_conditional
@@ -147,8 +143,8 @@
       "+" "-" "*" "/" "%" "||"
       "=" "<>" "!=" "<" "<=" ">" ">="
       "&" "|" "^" "~" "<<" ">>"
-      "LIKE" "ILIKE" "BETWEEN" "IN" "IS" "EXISTS" "ANY" "ALL" "SOME"
-      "like" "ilike" "between" "in" "is" "exists" "any" "all" "some")
+      "LIKE" "ILIKE" "BETWEEN" "IN" "IS" "EXISTS" "ANY" "ALL" "SOME" "AND" "OR" "NOT"
+      "like" "ilike" "between" "in" "is" "exists" "any" "all" "some" "and" "or" "not")
 
     ;; Brackets / braces / parentheses
     (operator_openclose

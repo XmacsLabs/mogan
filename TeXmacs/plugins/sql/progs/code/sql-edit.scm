@@ -62,11 +62,23 @@
        (or (string-starts? s (string-append (car keys) " "))
            (starts-with-keyword? s (cdr keys)))))
 
+;; Trim whitespace from left side of string
+(define (string-strip-left s)
+  (let loop ((i 0) (n (string-length s)))
+    (if (or (>= i n)
+            (not (char-whitespace? (string-ref s i))))
+        (substring s i n)
+        (loop (+ i 1) n))))
+
 ;; Trim whitespace from right side of string
 (define (string-strip-right s)
-  (let* ((n (string-length s))
-         (r (or (string-rindex s (char-set-complement char-set:whitespace)) n)))
-    (string-take s (min n (+ 1 r)))))
+  (let loop ((i (- (string-length s) 1)))
+    (if (< i 0) ""
+        (if (char-whitespace? (string-ref s i))
+            (loop (- i 1))
+            (substring s 0 (+ i 1))))))
+
+(define (string-strip s) (string-strip-right (string-strip-left s)))
 
 ;; Get indentation level of a line (number of leading spaces)
 (define (string-get-indent s)
@@ -84,7 +96,8 @@
              (stripped-prev (string-strip-right (if prev-line prev-line "")))
              (prev-indent (string-get-indent stripped-prev))
              (tab-width (get-tabstop))
-             (current-line (program-row row)))
+             (current-line (program-row row))
+             (stripped-current (string-strip-left (if current-line current-line ""))))
 
         ;; Check for parentheses
         (let ((open-parens (string-count stripped-prev #\())
@@ -95,8 +108,8 @@
              (+ prev-indent tab-width))
 
             ;; If current line starts with closing paren or END keyword, decrease indent
-            ((or (and current-line (string-starts? current-line ")"))
-                 (starts-with-keyword? current-line sql-end-keys))
+            ((or (and stripped-current (string-starts? stripped-current ")"))
+                 (starts-with-keyword? stripped-current sql-end-keys))
              (max 0 (- prev-indent tab-width)))
 
             ;; If previous line ends with increase-indent keyword
@@ -104,7 +117,7 @@
              (+ prev-indent tab-width))
 
             ;; If current line starts with decrease-indent keyword
-            ((starts-with-keyword? current-line sql-decrease-indent-keys)
+            ((starts-with-keyword? stripped-current sql-decrease-indent-keys)
              (max 0 (- prev-indent tab-width)))
 
             ;; Otherwise maintain previous indent
