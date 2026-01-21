@@ -12,7 +12,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (texmacs-module (math math-menu)
-  (:use (table table-edit)))
+  (:use (table table-edit)
+        (math math-edit)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Inserting mathematical markup
@@ -1466,11 +1467,30 @@
 
 (tm-define (focus-tag-name l)
   (:require (in? l '(around around*)))
-  "Around")
+  (with t (focus-tree)
+    (if (and t (tree-in? t '(around around*)))
+        (with v (get-bracket-variant t)
+          (if v (focus-tag-name v) "Around"))
+        "Around")))
+
+(tm-define (focus-tag-name l)
+  (:require (in? l '(parentheses brackets braces angle double floor ceiling vertical double-vertical slash backslash empty)))
+  (cond ((== l 'parentheses) "Parentheses ( )")
+        ((== l 'brackets) "Brackets [ ]")
+        ((== l 'braces) "Braces { }")
+        ((== l 'angle) "Angle brackets ⟨ ⟩")
+        ((== l 'double) "Double brackets ⟦ ⟧")
+        ((== l 'floor) "Floor brackets ⌊ ⌋")
+        ((== l 'ceiling) "Ceiling brackets ⌈ ⌉")
+        ((== l 'vertical) "Vertical bars | |")
+        ((== l 'double-vertical) "Double vertical bars ‖ ‖")
+        ((== l 'slash) "Slash / \\")
+        ((== l 'backslash) "Backslash \\ /")
+        ((== l 'empty) "Empty brackets . .")))
 
 (tm-define (focus-variants-of t)
   (:require (tree-in? t '(around around*)))
-  '(around))
+  '(parentheses brackets braces angle double floor ceiling vertical double-vertical slash backslash empty))
 
 (tm-menu (focus-toggle-menu t)
   (:require (tree-in? t '(around around*)))
