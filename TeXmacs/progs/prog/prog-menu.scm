@@ -13,7 +13,7 @@
 
 (texmacs-module (prog prog-menu)
   (:use (generic format-edit)
-	(generic insert-menu)))
+  (generic insert-menu)))
 
 (tm-menu (focus-code-icons t)
   (mini #t
@@ -89,7 +89,7 @@
    (make-with "prog-font-family" "ss"))
   (if (not (in-graphics?))
       (=> (balloon (icon "tm_color.xpm") "Select a foreground color")
-	  (link color-menu))))
+    (link color-menu))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Icons in prog mode
@@ -119,6 +119,7 @@
       ("Scala" (make* 'scala "scala"))
       ("Python" (make* 'python "python"))
       ("R" (make* 'r "r"))
+      ("SQL" (make* 'sql "sql"))
       ("Bash" (make* 'bash "bash")))
   (-> "Block of code"
       ("Verbatim" (make 'verbatim-code))
@@ -129,10 +130,10 @@
       ("Scala" (make* 'scala-code "scala"))
       ("Python" (make* 'python-code "python"))
       ("R" (make* 'r-code "r"))
+      ("SQL" (make* 'sql-code "sql"))
       ("Bash" (make* 'bash-code "bash")))
   (-> "Listing"
       ("Verbatim" (make 'listing))
       ("C++" (make 'cpp-listing))
       ("Scheme" (make 'scm-listing))
       ("Shell" (make 'shell-listing))))
-
