@@ -310,13 +310,75 @@
 
     \;
 
+    # ---------- external commands (highlight test) ----------
+
+    log INFO "external command highlight test begin"
+
+    \;
+
+    # 常见 VCS / build / language commands
+
+    git status
+
+    git log --oneline --decorate -5
+
+    \;
+
+    xmake config --mode=debug
+
+    xmake build
+
+    \;
+
+    cmake -S . -B build
+
+    make -j"$JOBS"
+
+    \;
+
+    gcc -Wall -O2 -o hello hello.c
+
+    clang --version
+
+    \;
+
+    python3 - \<less\>\<less\>'PYCODE'
+
+    print("hello from python3")
+
+    PYCODE
+
+    \;
+
+    # 网络 / 远程
+
+    ssh user@example.com true
+
+    scp file.txt user@example.com:/tmp/file.txt
+
+    rsync -av src/ dst/
+
+    \;
+
+    # 容器 / 工具
+
+    docker ps
+
+    docker run --rm alpine echo hello
+
+    \;
+
+    # 文本处理
+
+    grep -E "error\|warn" "$LOG" \| awk '{print NR ":" $0}' \| sed 's/^/LOG: /'
+
+    \;
+
     # ---------- final ----------
 
     log INFO "DONE"
 
     exit 0
-
-    \;
   </bash-code>
 </body>
 

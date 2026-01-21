@@ -48,7 +48,19 @@
       "trap" "shopt" "ulimit" "umask"
       "history" "fc"
       "compgen" "complete"
-      "times")
+      "times"
+      "git" "ssh" "scp" "rsync"    ;;常用外部命令
+      "curl" "wget"
+      "xmake" "cmake" "make" "ninja"
+      "gcc" "g++" "clang" "clang++"
+      "python" "python3" "pip" "pip3"
+      "node" "npm" "pnpm"
+      "docker" "docker-compose"
+      "tar" "zip" "unzip"
+      "grep" "sed" "awk"
+      "jq"
+      "vim" "nvim"
+      "sudo")
 
     ;; 关键字
     (keyword
