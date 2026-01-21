@@ -212,11 +212,6 @@
     "Save buffer?")))
 
 (tm-define (buffer-close name)
-  ;; Save cursor position before closing (Issue #45)
-  (when (and (url? name) 
-             (buffer-exists? name)
-             (not (url-scratch? name)))
-    (save-buffer-cursor-position name))
   (cpp-buffer-close name))
 
 (tm-define (buffers-modified?)
