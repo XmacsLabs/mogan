@@ -10,6 +10,7 @@
  ******************************************************************************/
 
 #include "analyze.hpp"
+#include "code_wrap.hpp"
 #include "impl_language.hpp"
 #include "observers.hpp"
 #include "packrat.hpp"
@@ -22,46 +23,6 @@ verb_language_rep::verb_language_rep (string name) : language_rep (name) {
 inline static bool
 is_sep_char (char c) {
   return c == '-' || c == '/' || c == '\\' || c == ',' || c == '?';
-}
-
-// Protect TeXmacs internal escape sequences like "<#4E2D>" (CJK, etc.)
-// from being split during automatic line wrapping in code/prog environments.
-static inline int
-tm_atom_end_for_code_wrap (string s, int i) {
-  int n= N (s);
-  if (i < 0 || i >= n) return i;
-  if (s[i] != '<') return i + 1;
-
-  // Only treat "<#...>" as an indivisible atom to avoid affecting normal code
-  // like "<tag>"
-  if (i + 1 >= n || s[i + 1] != '#') return i + 1;
-
-  int j= i + 2;
-  while (j < n && s[j] != '>')
-    j++;
-  if (j < n && s[j] == '>') return j + 1;
-
-  // malformed sequence: degrade gracefully
-  return i + 1;
-}
-
-// Snap "after" to the greatest atom boundary <= after, so we never split inside
-// "<#...>".
-static inline int
-tm_snap_after_boundary_for_code_wrap (string s, int after) {
-  int n= N (s);
-  if (after <= 0) return 0;
-  if (after >= n) return n;
-
-  int i   = 0;
-  int last= 0;
-  while (i < n) {
-    int j= tm_atom_end_for_code_wrap (s, i);
-    if (j > after) break;
-    last= j;
-    i   = j;
-  }
-  return last;
 }
 
 text_property
