@@ -33,9 +33,10 @@
 
 (tm-define (set-last-file-dialog-directory dir)
   "Set the last directory used in file dialog"
-  (when (and (string? dir) (url-exists? (system->url dir)))
-    (set! last-file-dialog-directory dir)
-    (set-preference "last-file-dialog-directory" dir)))
+  (let ((u (system->url dir)))
+    (when (and (string? dir) (url-exists? u) (url-directory? u))
+      (set! last-file-dialog-directory dir)
+      (set-preference "last-file-dialog-directory" dir))))
 
 (tm-define (remember-file-dialog-directory name)
   "Remember the directory from a file operation"
