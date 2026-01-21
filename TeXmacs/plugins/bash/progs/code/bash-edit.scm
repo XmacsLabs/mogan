@@ -57,7 +57,7 @@
                     (if (and (>= n m)
                              (== (substring t (- n m) n) op))
                         #t
-                        (loop (cdr xs)))))))))))
+                        (loop (cdr xs))))))))))
 
 (define (bash-line-starts-with-closing-brace? line)
   (let ((t (bash-trim-left line)))
@@ -123,7 +123,7 @@
       ((or (bash-line-starts-with-closing-brace? line)
            (bash-line-starts-with-fi-done-esac? line))
        (max 0 (- base tab)))
-      (else base)))))
+      (else base))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Commenting
