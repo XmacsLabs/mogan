@@ -517,15 +517,23 @@
 
 (define (load-buffer-open name opts)
   ;;(display* "load-buffer-open " name ", " opts "\n")
-  (cond ((in? :background opts) (noop))
-        ((in? :new-window opts)
-         (open-buffer-in-window name (buffer-get name) ""))
-        (else
-          (with wins (buffer->windows-of-tabpage name)
-            (if (and (!= wins '())
-                     (in? (current-window) wins))
-              (switch-to-buffer* name)
-              (switch-to-buffer name)))))
+  ;; Remember current buffer to check if it's an unmodified scratch buffer
+  (let ((prev-buffer (current-buffer)))
+    (cond ((in? :background opts) (noop))
+          ((in? :new-window opts)
+           (open-buffer-in-window name (buffer-get name) ""))
+          (else
+            (with wins (buffer->windows-of-tabpage name)
+              (if (and (!= wins '())
+                       (in? (current-window) wins))
+                (switch-to-buffer* name)
+                (switch-to-buffer name)))))
+    ;; Close the previous unmodified scratch buffer after loading new file
+    (when (and prev-buffer
+               (!= prev-buffer name)
+               (url-scratch? prev-buffer)
+               (not (buffer-modified? prev-buffer)))
+      (cpp-buffer-close prev-buffer)))
   (buffer-notify-recent name)
   (when (nnull? (select (buffer-get name)
                         '(:* gpg-passphrase-encrypted-buffer)))
