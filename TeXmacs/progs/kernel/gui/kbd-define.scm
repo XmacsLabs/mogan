@@ -502,7 +502,7 @@ target-conds : list
     目标条件源码列表。这是一个由 Scheme 代码对象（S-expression）组成的列表。
     例如：
     - 查找无条件绑定：`()`
-    - 查找数学模式绑定：`'((in-math?))` 或 `(list '(in-math?))`
+    - 查找数学模式绑定：`'((and (== (get-env "mode") "text") (not (in-graphics?))))` 或 `(list '(and (== (get-env "mode") "text") (not (in-graphics?))))`
     - 查找特定条件：`'((inside-replace-buffer?))`
 
 返回值
@@ -554,7 +554,7 @@ kbd-conflict-query
 参数
 ----
 conds   : list
-    条件源码列表（S-Expression），例如 '((in-math?)) 或 '()。
+    条件源码列表（S-Expression），例如 '((and (== (get-env "mode") "text") (not (in-graphics?)))) 或 '()。
 new-key : string
     待检查的新按键序列，例如 "C-a"。
 
