@@ -220,9 +220,9 @@ edit_interface_rep::draw_resize_handles (renderer ren) {
   if (!have_bbox) return; // nothing to draw
 
   // Draw 8 resize handles: 4 corners + 4 edge midpoints
-  color handle_col= rgb_color (0, 120, 215); // Blue color
-  ren->set_pencil (pencil (handle_col, ren->pixel));
-  ren->set_brush (brush (handle_col));
+  color border_col= rgb_color (0x61, 0x61, 0x61);
+  SI    border_w  = max (2 * ren->pixel, hs / 3);
+  ren->set_pencil (pencil (border_col, border_w));
 
   // Array of handle center positions: sw, se, nw, ne, s, n, w, e
   SI hx[8]= {x1, x2, x1, x2, mx, mx, x1, x2};
@@ -230,8 +230,16 @@ edit_interface_rep::draw_resize_handles (renderer ren) {
 
   for (int i= 0; i < 8; i++) {
     SI cx= hx[i], cy= hy[i];
+
+    // Outer disk for border
+    ren->set_brush (brush (border_col));
     ren->fill_arc (cx - hs, cy - hs, cx + hs, cy + hs, 0, 64 * 360);
-    ren->arc (cx - hs, cy - hs, cx + hs, cy + hs, 0, 64 * 360);
+
+    // Inner disk for fill, shrunk to leave a visible ring
+    SI inner_r= max (hs - border_w, ren->pixel);
+    ren->set_brush (brush (white));
+    ren->fill_arc (cx - inner_r, cy - inner_r, cx + inner_r, cy + inner_r, 0,
+                   64 * 360);
   }
 }
 
