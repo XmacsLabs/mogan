@@ -291,6 +291,7 @@ cell_rep::compute_width (SI& mw, SI& lw, SI& rw, bool large) {
       lw= lsep + lborder;
       rw= fw->width + rsep + rborder;
     }
+    cout << "fw->width: " << fw->width << LF;
   }
   else {
     // cout << "  b= " << b << ", " << !is_nil (lz) << LF;
@@ -309,12 +310,19 @@ cell_rep::compute_width (SI& mw, SI& lw, SI& rw, bool large) {
       }
     }
     else mw= b->w () + lsep + rsep + lborder + rborder;
+    cout << "b->w (): " << b->w () << LF;
   }
 
   if (hmode == "exact") mw= width;
   else if (hmode == "max") mw= max (width, mw);
   else if (hmode == "min") mw= min (width, mw);
-  else if (hmode == "auto") mw+= env->as_length ("1em");
+  else if (hmode == "auto") {
+    int min_w  = env->as_length ("1em") + lsep + rsep + lborder + rborder;
+    if (mw < min_w) {
+      // cout << mw + env->as_length ("1em") << " " << min_w << LF;
+      mw = min_w;
+    }
+  }
   if (mw < lw + rw) {
     SI d= lw + rw - mw;
     if (align_c == 'L' || align_c == 'O') rw-= d;
