@@ -14,6 +14,7 @@
 
 #include <QPainter>
 #include <QPen>
+#include <cmath>
 
 QTMMathCompletionPopup::QTMMathCompletionPopup (QWidget*              parent,
                                                 qt_simple_widget_rep* owner)
@@ -127,6 +128,14 @@ QTMMathCompletionPopup::getCachedPosition (int& x, int& y) {
       cached_canvas_x) /
      256;
   y= -((cached_cursor_y - 5000 - cached_scroll_y) * cached_magf) / 256;
+  double blank_top= 0.0;
+  if (owner && owner->scrollarea () && owner->scrollarea ()->viewport () &&
+      owner->scrollarea ()->surface ()) {
+    int vp_h  = owner->scrollarea ()->viewport ()->height ();
+    int surf_h= owner->scrollarea ()->surface ()->height ();
+    if (vp_h > surf_h) blank_top= (vp_h - surf_h) * 0.5;
+  }
+  y+= int (std::round (blank_top));
   y+= 10;
 }
 
