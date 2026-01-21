@@ -84,27 +84,31 @@
     (if has-author
         (let* ((n (length field-list))
                (author-count (- n 1))
-               ;; 参考文献表阈值：像plainnat一样显示前4位作者
-               (max-authors 4)
+               ;; 参考文献表阈值：GB/T 7714-2015规定：≤3人全部列出，≥4人写"前3人+等"
+               (max-authors 3)
                (show-count (min author-count max-authors))
-               (has-more (> author-count max-authors)))
+               (has-more (> author-count max-authors))
+               ;; 分隔符：中文不加空格，英文加空格
+               (separator (if chinese? "," ", ")))
           (cond
-            ((equal? author-count 1)
+            ((= author-count 1)
              (let ((author-name (bib-format-name (list-ref field-list 1))))
                (gbt-add-suffix author-name field-type chinese? 1)))
             (else
              (let* ((first (bib-format-name (list-ref field-list 1)))
-                    ;; 收集中间作者：从第2位到第show-count-1位
-                    (middle-count (- show-count 1))
-                    (middle (if (<= middle-count 0)
-                                ""
-                                (let loop ((i 2) (count 0) (result ""))
-                                  (if (or (>= i n) (>= count middle-count))
-                                      result
-                                      (loop (+ i 1) (+ count 1)
-                                            (if (equal? result "")
-                                                (bib-format-name (list-ref field-list i))
-                                                `(concat ,result ", " ,(bib-format-name (list-ref field-list i)))))))))
+                    ;; 收集中间作者
+                    ;; 如果有更多作者（>3）：收集第2到第3个作者（共2个中间作者）
+                    ;; 如果没有更多作者（<=3）：收集第2到第author-count-1个作者
+                    (middle (let loop ((i 2) (result ""))
+                              (if (or (>= i n)
+                                      (if has-more
+                                          (> i max-authors)
+                                          (>= i author-count)))
+                                  result
+                                  (loop (+ i 1)
+                                        (if (equal? result "")
+                                            (bib-format-name (list-ref field-list i))
+                                            `(concat ,result ,separator ,(bib-format-name (list-ref field-list i))))))))
                     (last-part (if has-more
                                    (if chinese? "<#7b49>" "et al") ;;等
                                    (if (>= author-count 2)
@@ -113,9 +117,9 @@
                     ;; 构建作者字符串
                     (author-str (cond
                                   ((and (equal? middle "") (equal? last-part "")) first)
-                                  ((equal? middle "") `(concat ,first ", " ,last-part))
-                                  ((equal? last-part "") `(concat ,first ", " ,middle))
-                                  (else `(concat ,first ", " ,middle ", " ,last-part)))))
+                                  ((equal? middle "") `(concat ,first ,separator ,last-part))
+                                  ((equal? last-part "") `(concat ,first ,separator ,middle))
+                                  (else `(concat ,first ,separator ,middle ,separator ,last-part)))))
                (gbt-add-suffix author-str field-type chinese? author-count)))))
         "")))
 
@@ -130,23 +134,33 @@
     (if has-author
         (let* ((n (length field-list))
                (author-count (- n 1)))
+          ;; 辅助函数：提取作者姓氏（英文）或完整姓名（中文）
+          (define (get-author-display i)
+            (let ((author (list-ref field-list i)))
+              (if chinese?
+                  (bib-format-name author)  ;; 中文：完整姓名
+                  ;; 英文：只提取姓氏，不大写
+                  (let ((last-name-raw (list-ref author 3)))
+                    (if (bib-null? last-name-raw)
+                        ""
+                        (bib-purify last-name-raw))))))
           (cond
-            ;; 作者数 ≥ 3：显示第一位 + et al
+            ;; 作者数 ≥ 3：显示第一位 + et al/等
             ((>= author-count 3)
-             (let ((first (bib-format-name (list-ref field-list 1))))
+             (let ((first (get-author-display 1)))
                (if chinese?
                    (gbt-add-suffix `(concat ,first "<#7b49>") field-type chinese? author-count)
-                   (gbt-add-suffix `(concat ,first ", et al") field-type chinese? author-count))))
+                   (gbt-add-suffix `(concat ,first " et al.") field-type chinese? author-count))))
             ;; 作者数 = 2：显示两位，用"and"或"和"连接
             ((= author-count 2)
-             (let ((first (bib-format-name (list-ref field-list 1)))
-                   (second (bib-format-name (list-ref field-list 2))))
+             (let ((first (get-author-display 1))
+                   (second (get-author-display 2)))
                (if chinese?
                    (gbt-add-suffix `(concat ,first "<#548C>" ,second) field-type chinese? author-count)
                    (gbt-add-suffix `(concat ,first " and " ,second) field-type chinese? author-count))))
             ;; 作者数 = 1：显示一位
             ((= author-count 1)
-             (gbt-add-suffix (bib-format-name (list-ref field-list 1)) field-type chinese? author-count))
+             (gbt-add-suffix (get-author-display 1) field-type chinese? author-count))
             ;; 其他情况（应该不会发生）
             (else "")))
         "")))
