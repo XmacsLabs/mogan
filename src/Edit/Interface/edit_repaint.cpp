@@ -224,7 +224,7 @@ edit_interface_rep::draw_resize_handles (renderer ren) {
   last_handles_r= hs;
 
   // Draw 8 resize handles: 4 corners + 4 edge midpoints
-  color border_col= rgb_color (0x61, 0x61, 0x61);
+  color border_col= get_env_color (FOCUS_COLOR);
   SI    border_w  = max (2 * ren->pixel, hs / 3);
   ren->set_pencil (pencil (border_col, border_w));
 
