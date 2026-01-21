@@ -12,6 +12,8 @@
   (:use (prog prog-edit)
         (code sql-mode)))
 
+(import (liii string))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Indentation settings
 ;;
@@ -50,6 +52,23 @@
   '(")" "END"
         "end"))
 
+;; Trim whitespace from left side of string
+(define (string-strip-left s)
+  (with char-set:not-whitespace (char-set-complement char-set:whitespace)
+    (with n (string-length s)
+      (with r (or (string-index s char-set:not-whitespace) 0)
+        ; (string-take s (min n (+ 1 r)))
+        (substring s r n)))))
+
+;; Trim whitespace from right side of string
+(define (string-strip-right s)
+  (with char-set:not-whitespace (char-set-complement char-set:whitespace)
+    (with n (string-length s)
+      (with r (or (string-rindex s char-set:not-whitespace) n)
+        (string-take s (min n (+ 1 r)))))))
+
+(define (string-strip s) (string-strip-right (string-strip-left s)))
+
 ;; Helper function to check if string ends with a keyword
 (define (ends-with-keyword? s keys)
   (and (not (null? keys))
@@ -61,24 +80,6 @@
   (and (not (null? keys))
        (or (string-starts? s (string-append (car keys) " "))
            (starts-with-keyword? s (cdr keys)))))
-
-;; Trim whitespace from left side of string
-(define (string-strip-left s)
-  (let loop ((i 0) (n (string-length s)))
-    (if (or (>= i n)
-            (not (char-whitespace? (string-ref s i))))
-        (substring s i n)
-        (loop (+ i 1) n))))
-
-;; Trim whitespace from right side of string
-(define (string-strip-right s)
-  (let loop ((i (- (string-length s) 1)))
-    (if (< i 0) ""
-        (if (char-whitespace? (string-ref s i))
-            (loop (- i 1))
-            (substring s 0 (+ i 1))))))
-
-(define (string-strip s) (string-strip-right (string-strip-left s)))
 
 ;; Get indentation level of a line (number of leading spaces)
 (define (string-get-indent s)
@@ -107,17 +108,17 @@
             ((> open-parens close-parens)
              (+ prev-indent tab-width))
 
-            ;; If current line starts with closing paren or END keyword, decrease indent
-            ((or (and stripped-current (string-starts? stripped-current ")"))
-                 (starts-with-keyword? stripped-current sql-end-keys))
-             (max 0 (- prev-indent tab-width)))
-
             ;; If previous line ends with increase-indent keyword
             ((ends-with-keyword? stripped-prev sql-increase-indent-keys)
              (+ prev-indent tab-width))
 
             ;; If current line starts with decrease-indent keyword
             ((starts-with-keyword? stripped-current sql-decrease-indent-keys)
+             (max 0 (- prev-indent tab-width)))
+
+            ;; If current line starts with closing paren or END keyword, decrease indent
+            ((or (and stripped-current (string-starts? stripped-current ")"))
+                 (starts-with-keyword? stripped-current sql-end-keys))
              (max 0 (- prev-indent tab-width)))
 
             ;; Otherwise maintain previous indent
