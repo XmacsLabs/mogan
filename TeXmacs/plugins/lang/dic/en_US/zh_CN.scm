@@ -405,7 +405,7 @@
 ("closing style" "结束风格")
 ("closing" "")
 ("code" "代码")
-("color formulas and several other basic tags" "为公式和若干基础标记着色")
+("color formulas and several other basic tags" "着色公式和一些基础标记")
 ("color of the axes" "坐标轴颜色")
 ("color of the subunits" "子单元颜色")
 ("color of the units" "单元颜色")
