@@ -21,58 +21,6 @@
 (import (only (srfi srfi-1) remove))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Remember cursor positions for buffers (Issue #45)
-;; This allows restoring cursor position when reopening a document
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(define buffer-cursor-positions (make-ahash-table))
-
-(define (buffer-cursor-positions-key name)
-  "Generate a key for storing cursor position based on buffer URL"
-  (url->system name))
-
-(tm-define (save-buffer-cursor-position name)
-  "Save the cursor position for a buffer before closing"
-  (when (and (url? name) (buffer-exists? name))
-    (with-buffer name
-      (let* ((key (buffer-cursor-positions-key name))
-             (path (cursor-path)))
-        (ahash-set! buffer-cursor-positions key path)
-        (learn-interactive 'buffer-cursor-position 
-          (list (cons "url" (url->system name))
-                (cons "path" (object->string path))))))))
-
-(tm-define (restore-buffer-cursor-position name)
-  "Restore the cursor position for a buffer after opening"
-  (when (and (url? name) (buffer-exists? name))
-    (with-buffer name
-      (let* ((key (buffer-cursor-positions-key name))
-             (saved-path (ahash-ref buffer-cursor-positions key)))
-        (when saved-path
-          (catch #t
-            (lambda () 
-              (delayed (:idle 1) 
-                (go-to-path saved-path)))
-            (lambda err 
-              (noop))))))))
-
-(tm-define (load-buffer-cursor-positions-from-learned)
-  "Load buffer cursor positions from learned interactive data"
-  (for-each 
-    (lambda (entry)
-      (with url-str (assoc-ref entry "url")
-        (with path-str (assoc-ref entry "path")
-          (when (and url-str path-str)
-            (catch #t
-              (lambda ()
-                (ahash-set! buffer-cursor-positions url-str (string->object path-str)))
-              (lambda err (noop)))))))
-    (learned-interactive "buffer-cursor-position")))
-
-;; Load cursor positions at startup
-(delayed (:idle 100) (load-buffer-cursor-positions-from-learned))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Remember last save/open directory (Issue #327)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
