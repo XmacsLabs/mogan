@@ -21,7 +21,7 @@
 (import (only (srfi srfi-1) remove))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Remember last save/open directory
+;; Remember last save/open directory 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define last-file-dialog-directory #f)
@@ -253,7 +253,7 @@
           (if (== (url-suffix name) "ts") (style-clear-cache))
           (autosave-remove name)
           (buffer-notify-recent name)
-          ;; Remember directory for file dialog
+          ;; Remember directory for file dialog 
           (remember-file-dialog-directory name)
           (set-message `(concat "Saved " ,vname) "Save file")
           (save-buffer-post name opts)))))
@@ -555,9 +555,6 @@
   (buffer-notify-recent name)
   ;; Remember directory for file dialog
   (remember-file-dialog-directory name)
-  ;; Restore cursor position when reopening a buffer
-  (when (not (url-scratch? name))
-    (restore-buffer-cursor-position name))
   (when (nnull? (select (buffer-get name)
                         '(:* gpg-passphrase-encrypted-buffer)))
     (tm-gpg-dialogue-passphrase-decrypt-buffer name))
