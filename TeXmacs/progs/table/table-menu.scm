@@ -568,25 +568,25 @@
     (if (== (get-cell-mode) "cell")
         (=> (balloon "Cell" "Change cell operation mode")
             (mini #f
-              (link cell-mode-icons)
+              (link cell-mode-menu)
 	      ---
 	      ("Cell properties" (open-cell-properties)))))
     (if (== (get-cell-mode) "row")
         (=> (balloon "Row" "Change cell operation mode")
             (mini #f
-              (link cell-mode-icons)
+              (link cell-mode-menu)
 	      ---
 	      ("Cell properties" (open-cell-properties)))))
     (if (== (get-cell-mode) "column")
         (=> (balloon "Column" "Change cell operation mode")
             (mini #f
-              (link cell-mode-icons)
+              (link cell-mode-menu)
 	      ---
 	      ("Cell properties" (open-cell-properties)))))
     (if (== (get-cell-mode) "table")
         (=> (balloon "All cells" "Change cell operation mode")
             (mini #f
-              (link cell-mode-icons)
+              (link cell-mode-menu)
 	      ---
 	      ("Cell properties" (open-cell-properties)))))
     (=> (balloon (icon "tm_cell_size_var.xpm") "Modify cell size")
