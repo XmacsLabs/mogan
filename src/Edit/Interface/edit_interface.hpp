@@ -88,6 +88,7 @@ protected:
   SI                table_resize_start_y    = 0;
   SI                table_resize_first_size = 0;
   SI                table_resize_second_size= 0;
+  double            table_resize_mark       = 0.0;
   bool              table_resize_hit (SI x, SI y, table_hit& hit);
   void              table_resize_start (const table_hit& hit, SI x, SI y);
   void              table_resize_apply (SI x, SI y);
