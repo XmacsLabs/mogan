@@ -13,7 +13,6 @@
 (texmacs-module (generic paste-widget)
   (:use (generic generic-edit)
         (utils edit selections)
-        (liii ocr)
         (kernel texmacs tm-convert)))
 (import (only (liii list) delete))
 
