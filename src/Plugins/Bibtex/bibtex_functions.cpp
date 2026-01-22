@@ -30,7 +30,8 @@ using moebius::data::tree_to_scheme_tree;
 static bool
 is_gbt7714_style () {
   // 检查当前是否使用gbt7714-2015样式或gbt7714-2015-author-year样式
-  tmscm result= eval_scheme ("(or (bib-mode? \"gbt7714-2015\") (bib-mode? \"gbt7714-2015-author-year\"))");
+  tmscm result= eval_scheme ("(or (bib-mode? \"gbt7714-2015\") (bib-mode? "
+                             "\"gbt7714-2015-author-year\"))");
   return tmscm_to_bool (result);
 }
 
