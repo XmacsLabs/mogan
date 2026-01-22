@@ -17,8 +17,7 @@
 	(utils edit variants)
         (utils misc tooltip)
         (bibtex bib-complete)
-	(source macro-search)
-  (liii ocr)))
+	(source macro-search)))
 
 (tm-define (generic-context? t) #t) ;; overridden in, e.g., graphics mode
 
@@ -240,6 +239,8 @@ ocr-paste
 (ocr-paste)
 |#
 (tm-define (ocr-paste)
+  (when (not (defined? 'ocr-to-latex-by-cursor))
+    (use-modules (liii ocr)))
   (with data 
     (parse-texmacs-snippet (tree->string (tree-ref (clipboard-get "primary") 1)))
     (when (tree-is? (tree-ref data 0) 'image)
@@ -259,6 +260,8 @@ image-and-ocr-paste
     (when (tree-is? (tree-ref data 0) 'image)
           (kbd-paste)
           (kbd-return)
+          (when (not (defined? 'ocr-to-latex-by-cursor))
+            (use-modules (liii ocr)))
           (ocr-to-latex-by-cursor data))))
 
 (tm-define (paste-as-html)
@@ -291,6 +294,8 @@ paste-as-texmacs
 |#
 
 (tm-define (paste-as-texmacs)
+  (when (not (defined? 'ocr-to-latex-by-cursor))
+    (use-modules (liii ocr)))
   (with img-tree (tree-ref (clipboard-get "primary") 1)
     (cond ((tree-is? img-tree 'image) 
            (ocr-to-latex-by-cursor img-tree))
