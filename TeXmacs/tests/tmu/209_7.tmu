@@ -316,7 +316,7 @@
 
     \;
 
-    # 常见 VCS / build / language commands
+    # VCS / build / language commands
 
     git status
 
@@ -350,7 +350,7 @@
 
     \;
 
-    # 网络 / 远程
+    # net
 
     ssh user@example.com true
 
@@ -360,7 +360,7 @@
 
     \;
 
-    # 容器 / 工具
+    # docker
 
     docker ps
 
@@ -368,9 +368,41 @@
 
     \;
 
-    # 文本处理
+    # text
 
     grep -E "error\|warn" "$LOG" \| awk '{print NR ":" $0}' \| sed 's/^/LOG: /'
+
+    \;
+
+    # ---------- team tools / aliases highlight test ----------
+
+    \;
+
+    # shell aliases
+
+    ll
+
+    la
+
+    l
+
+    \;
+
+    # git / github aliases
+
+    git status
+
+    gh repo view
+
+    gco main
+
+    \;
+
+    # editor / ai tools
+
+    code .
+
+    claude help
 
     \;
 

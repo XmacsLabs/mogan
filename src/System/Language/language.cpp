@@ -244,6 +244,7 @@ initialize_color_encodings () {
   language_rep::color_encoding ("declare_type")          = 33;
   language_rep::color_encoding ("declare_category")      = 34;
   language_rep::color_encoding ("declare_module")        = 35;
+  language_rep::color_encoding ("external_command")      = 36;
   language_rep::color_encoding ("operator")              = 40;
   language_rep::color_encoding ("operator_openclose")    = 41;
   language_rep::color_encoding ("operator_field")        = 42;
@@ -297,6 +298,8 @@ initialize_color_decodings (string lan_name) {
   lan->color_decoding (34)=
       get_preference (pfx * "declare_category", "#d030d0");
   lan->color_decoding (35)= get_preference (pfx * "declare_module", "#0000c0");
+  lan->color_decoding (36)=
+      get_preference (pfx * "external_command", "#0000c0");
   lan->color_decoding (40)= get_preference (pfx * "operator", "#8b008b");
   lan->color_decoding (41)=
       get_preference (pfx * "operator_openclose", "#B02020");
