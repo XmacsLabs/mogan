@@ -151,12 +151,18 @@
         (mini #t
           (=> (eval in)
               (for (prop props)
-                (assuming (string? prop)
-                  ((eval prop) (setter prop)))
-                (assuming (== prop :other)
-                  ---
-                  ("Other"
-                   (interactive setter (list (upcase-first name) fm in))))))))
+                (cond ((string? prop)
+                       (let ((eval-result (eval prop)))
+                         ;; 处理verbatim表达式
+                         (if (and (list? eval-result) (== (car eval-result) 'verbatim))
+                             (eval-result (setter (cadr eval-result)))
+                             (eval-result (setter prop)))))
+                      ((and (list? prop) (== (car prop) 'verbatim))
+                       ((eval prop) (setter (cadr prop))))
+                      ((== prop :other)
+                       ---
+                       ("Other"
+                        (interactive setter (list (upcase-first name) fm in)))))))))
       (assuming (not props)
         (when active?
           (mini #t
@@ -208,12 +214,18 @@
         (assuming props
           (-> (eval s)
               (for (prop props)
-                (assuming (string? prop)
-                  ((eval prop) (setter prop)))
-                (assuming (== prop :other)
-                  ---
-                  ("Other"
-                   (interactive setter (list (upcase-first name) fm in)))))))
+                (cond ((string? prop)
+                       (let ((eval-result (eval prop)))
+                         ;; 处理verbatim表达式
+                         (if (and (list? eval-result) (== (car eval-result) 'verbatim))
+                             (eval-result (setter (cadr eval-result)))
+                             (eval-result (setter prop)))))
+                      ((and (list? prop) (== (car prop) 'verbatim))
+                       ((eval prop) (setter (cadr prop))))
+                      ((== prop :other)
+                       ---
+                       ("Other"
+                        (interactive setter (list (upcase-first name) fm in))))))))
         (assuming (not props)
           (when (inputter-active? (tree-ref t i) type)
             ((eval s)

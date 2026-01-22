@@ -205,7 +205,9 @@
   ;;     Pixmap menu label, the <string> is the name of the pixmap.
   (let ((tt? (and (nnull? opt) (car opt)))
         (col (color (if (greyed? style) "dark grey" "black"))))
-    (cond ((translatable? p)            ; "text"
+    (cond ((and (list? p) (== (car p) 'verbatim)) ; (verbatim "text")
+           (widget-text (cadr p) style col #t))
+          ((translatable? p)            ; "text"
            (widget-text (adjust-translation p (translate p)) style col #t))
           ((tuple? p 'balloon 2)        ; (balloon <label> "balloon text")
            (make-menu-label (cadr p) style tt?))

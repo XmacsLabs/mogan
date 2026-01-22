@@ -925,7 +925,9 @@
 
 (tm-define (child-proposals t i)
   (:require (and (tree-in? t '(bibliography bibliography*)) (<= i 1)))
-  (if (== i 0) (list "bib" :other) (rcons (bib-standard-styles) :other)))
+  (if (== i 0)
+      (list (list 'verbatim "bib") :other)
+      (rcons (map (lambda (s) (list 'verbatim s)) (bib-standard-styles)) :other)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Focus menu for lists
