@@ -173,7 +173,7 @@ sqrt_box_rep::sqrt_box_rep (path ip, box b1, box b2, box sqrtb, font fn2,
 
   SI sep  = fn->sep;
   SI wline= fn->wline;
-  SI dx= -fn->wfn / 36, dy= -fn->wfn / 36; // correction
+  SI dx= -fn->wfn / 36, dy= +fn->wfn / 52; // correction
   SI by= sqrtb->y2 + dy;
   if (sqrtb->x2 - sqrtb->x4 > wline) dx-= (sqrtb->x2 - sqrtb->x4);
 
