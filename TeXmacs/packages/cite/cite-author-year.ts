@@ -3,10 +3,6 @@
 <style|source>
 
 <\body>
-  <\hide-preamble>
-    \;
-  </hide-preamble>
-
   <active*|<\src-title>
     <src-package|cite-author-year|1.0>
 
