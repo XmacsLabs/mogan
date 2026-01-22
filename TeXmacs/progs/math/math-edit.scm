@@ -1039,9 +1039,9 @@ list
         (noop))
     (noop))
 
-;;; 括号变体统一映射表和辅助函数
-;; 定义统一的变体映射表：每个变体对应左右括号符号
 (define bracket-variant-alist
+  ;; 括号变体统一映射表和辅助函数
+  ;; 定义统一的变体映射表：每个变体对应左右括号符号
   '((parentheses      "(" ")")
     (brackets         "[" "]")
     (braces           "{" "}")
@@ -1055,23 +1055,23 @@ list
     (backslash        "\\" "/")
     (empty            "<nobracket>" "<nobracket>")))
 
-;; 辅助函数：获取括号节点中的实际符号节点
 (define (get-bracket-node child)
+  ;; 获取括号节点中的实际符号节点
   (cond ((tree-atomic? child) child)
         ((and (tree-in? child '(left right))
               (> (tree-arity child) 1))
          (tree-ref child 0))
         (else #f)))
 
-;; 辅助函数：设置括号节点中的符号
+;; 辅助函数：
 (define (set-bracket-node! child sym)
+  ;; 设置括号节点中的符号
   (with node (get-bracket-node child)
     (when node (tree-assign node sym))))
 
-(tm-define (bracket-set-pair t lb rb)
-  ;; 核心括号设置函数
+(define (bracket-set-pair t lb rb)
+  ;; 括号设置函数
   ;; 实际修改 around/around* 节点的左右括号符号
-  (:require (tree-in? t '(around around*)))
   (when (== (tree-arity t) 3)
     (set-bracket-node! (tree-ref t 0) lb)
     (set-bracket-node! (tree-ref t 2) rb)))
@@ -1092,6 +1092,37 @@ list
            (caar alist))
           (else (loop (cdr alist))))))
 
+#|
+get-bracket-variant
+从 around/around* 节点检测当前括号类型，返回伪变体标识
+
+语法
+----
+(get-bracket-variant t)
+
+参数
+----
+t : tree
+必须是 around 或 around* 节点，表示一个括号结构
+
+返回值
+----
+symbol | boolean
+- 成功时：返回对应的变体标识符（如 parentheses, brackets, braces 等）
+- 失败时：返回 #f（当 t 不是 around/around* 节点或 arity 不为 3 时）
+
+逻辑
+----
+1. 检查 t 是否为 around 或 around* 节点（通过 :require 条件）
+2. 验证节点的 arity 是否为 3（左括号、内容、右括号）
+3. 通过 get-bracket-symbol 提取左右括号的实际符号字符串
+4. 调用 bracket-pair->variant 将符号对映射到预定义的变体标识
+
+注意
+----
+此函数是括号变体系统的一部分，用于检测当前括号的显示样式。
+变体标识定义在 bracket-variant-alist 中，如 parentheses, brackets, braces 等
+|#
 (tm-define (get-bracket-variant t)
   ;; 当前括号类型检测器
   ;; 从 around 节点检测当前括号类型，返回伪变体标识
@@ -1102,6 +1133,35 @@ list
           (bracket-pair->variant lb rb)))
       #f))
 
+#|
+variant-set
+变体切换系统的重载函数，将伪变体标识映射到具体的括号符号对
+
+语法
+----
+(variant-set t v)
+
+参数
+----
+t : tree
+必须是 around 或 around* 节点，表示一个括号结构
+v : symbol
+变体标识符，如 parentheses, brackets, braces 等（定义在 bracket-variant-alist 中）
+
+返回值
+----
+不返回
+
+逻辑
+----
+1. 在 bracket-variant-alist 中查找变体标识 v
+2. 如果找到对应的括号符号对，调用 bracket-set-pair 设置节点的左右括号
+
+注意
+----
+此函数是括号变体系统的一部分，用于切换括号的显示样式。
+是通用变体系统 variant-set 针对 around/around* 节点的重载实现
+|#
 (tm-define (variant-set t v)
   ;; 变体切换系统的重载函数
   ;; 将伪变体标识映射到具体的括号符号对，调用 bracket-set-pair

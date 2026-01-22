@@ -1477,7 +1477,7 @@
         "Around")))
 
 (tm-define (focus-tag-name l)
-  ;; 新增的具体括号类型伪变体表
+  ;; 具体括号类型伪变体表
   (:require (in? l '(parentheses brackets braces angle double floor ceiling vertical double-vertical slash backslash empty)))
   (cond ((== l 'parentheses) "Parentheses ( )")
         ((== l 'brackets) "Brackets [ ]")
