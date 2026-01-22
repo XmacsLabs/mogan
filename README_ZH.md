@@ -15,7 +15,7 @@
 - 一键转换格式，无需手动调整
 - 保持原始格式与样式完整性
 
-![Magic Paste PRE](./public/images/magic-paste.gif)
+![Magic Paste PRE](./public/images/magic-paste_zh.gif)
 
 ### 🛠 导出 PDF 与 LaTeX
 - 支持多种格式的批量导出，满足不同使用场景
