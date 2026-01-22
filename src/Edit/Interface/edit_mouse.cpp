@@ -26,8 +26,6 @@
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
 
-#include <cstdint>
-
 #include <moebius/data/scheme.hpp>
 #include <moebius/drd/drd_mode.hpp>
 
@@ -759,11 +757,11 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
       SI        my      = (y1 + y2) / 2;
       SI        hx[8]   = {x1, x2, x1, x2, mx, mx, x1, x2};
       SI        hy[8]   = {y1, y1, y2, y2, y1, y2, my, my};
-      int64_t   hr2     = ((int64_t) handle_r) * handle_r;
       for (int i= 0; i < 8 && !over_handles; i++) {
-        int64_t dx= ((int64_t) x) - hx[i];
-        int64_t dy= ((int64_t) y) - hy[i];
-        if (dx * dx + dy * dy <= hr2) over_handles= true;
+        int dx= x - hx[i];
+        int dy= y - hy[i];
+        if (1ll * dx * dx + 1ll * dy * dy <= 1ll * handle_r * handle_r)
+          over_handles= true;
         if (over_handles) {
           if (i == 0 || i == 3) handle_cursor= "size_bdiag";      // sw / ne
           else if (i == 1 || i == 2) handle_cursor= "size_fdiag"; // se / nw
