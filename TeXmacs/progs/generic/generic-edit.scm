@@ -635,20 +635,6 @@ TODO: 在文本模式中，可以自动识别剪贴板中的内容，并智能�
   (structured-insert-incremental (focus-tree) #t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; macOS smart cmd+left/right (Option+left/right)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(tm-define (macos-cmd-left)
-  (if (focus-can-insert-remove? (focus-tree))
-      (structured-insert-left)
-      (traverse-left)))
-
-(tm-define (macos-cmd-right)
-  (if (focus-can-insert-remove? (focus-tree))
-      (structured-insert-right)
-      (traverse-right)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Structured movements
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
