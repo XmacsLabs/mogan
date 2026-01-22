@@ -141,6 +141,7 @@ is_valid_window (tm_window win) {
 
 tm_window
 concrete_window (url win) {
+  debug_io << "[DEBUG] Getting concrete window for\n";
   return tm_window_table[win];
 }
 
