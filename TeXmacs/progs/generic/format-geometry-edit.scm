@@ -555,6 +555,7 @@
           (list (- (caddr bbox) (car bbox)) (- (cadddr bbox) (cadr bbox)))))))
 
 (define (px->tmpt v) (* v 256.0))
+(define (cm->tmpt v) (* v 60472.0))
 (define (tmpt->cm v) (/ v 60472.0))
 (define (cm->str v) (string-append (number->string v) "cm"))
 
@@ -606,8 +607,8 @@
              (set! image-resize-handle handle)
              (set! image-resize-start-x x)
              (set! image-resize-start-y y)
-             (set! image-resize-orig-w (if dims (car dims) 60472))
-             (set! image-resize-orig-h (if dims (cadr dims) 60472)))))
+             (set! image-resize-orig-w (if dims (car dims) (cm->tmpt 1)))
+             (set! image-resize-orig-h (if dims (cadr dims) (cm->tmpt 1))))))
        (former key x y mods time data))
       ((== key "dragging-left")
        (if image-resize-handle
