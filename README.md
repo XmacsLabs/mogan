@@ -14,7 +14,7 @@ Mogan STEM is a professional scientific writing platform targeted at mathematics
 - One-click conversion to the standard TeXmacs format with no manual adjustment required
 - Preserves original formatting and style integrity
 
-![Magic Paste PRE](./public/images/magic-paste.gif)
+![Magic Paste PRE](./public/images/magic-paste_en.gif)
 
 ### 🛠 Export PDF & LaTeX
 - Batch export in multiple formats to suit different scenarios
