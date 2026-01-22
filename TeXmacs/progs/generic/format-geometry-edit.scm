@@ -520,10 +520,12 @@
 (define image-resize-orig-h #f)
 
 (define (image-get-bbox t)
+  ;; 获取图片节点的边界框坐标列表 (x1 y1 x2 y2)
   (and-with rect (tree-bounding-rectangle t)
     (and (== (length rect) 4) rect)))
 
 (define (image-point-on-handle? t)
+  ;; 检测鼠标是否点在图片的8个handles上
   (and-with bbox (image-get-bbox t)
     (let* ((mpos (get-mouse-position))
            (mx (car mpos)) (my (cadr mpos))
@@ -546,6 +548,7 @@
               (if (and (near? mx hx) (near? my hy)) (car h) (loop (cdr hspec)))))))))
 
 (define (image-get-dimensions t)
+  ;; 获取图片现在的宽高属性，返回值为 (width height) 列表，单位为 tmpt
   (let* ((w-str (tm->string (tree-ref t 1)))
          (h-str (tm->string (tree-ref t 2)))
          (w (and w-str (not (string-null? w-str)) (length-decode w-str)))
@@ -560,11 +563,16 @@
 (define (cm->str v) (string-append (number->string v) "cm"))
 
 (define (image-set-size! t w h)
+  ;; 设置图片节点的宽高属性，单位为 cm
+  ;; 并刷新窗口显示
   (when (> w 0.1) (tree-set! t 1 (cm->str w)))
   (when (> h 0.1) (tree-set! t 2 (cm->str h)))
   (refresh-window))
 
 (define (image-apply-resize t handle dx dy)
+  ;; 拖拽 handles 时偏移值计算的重要函数
+  ;; uniform-scale 用于处理四个角 handles 拖拽时的等比例缩放
+  ;; 四条边 handles 拖拽时，非等比例缩放
   (when (and image-resize-orig-w image-resize-orig-h)
     (let* ((ow (tmpt->cm image-resize-orig-w))
            (oh (tmpt->cm image-resize-orig-h))
@@ -588,6 +596,7 @@
         ((s)  (when (> (- oh sy) 0.1) (tree-set! t 2 (cm->str (- oh sy))) (refresh-window)))))))
 
 (define (image-reset-drag-state!)
+  ;; 重置5个拖拽变量的值，以便下一次重新使用
   (set! image-resize-handle #f)
   (set! image-resize-start-x #f)
   (set! image-resize-start-y #f)
@@ -595,6 +604,8 @@
   (set! image-resize-orig-h #f))
 
 (tm-define (mouse-event key x y mods time data)
+  ;; 重载 mouse-event 鼠标事件触发
+  ;; 仅在鼠标拖拽启动/结束时触发图片大小调整
   (:require (and (tree-innermost image-context? #t)
                  (in? key '("start-drag-left" "dragging-left" "end-drag-left"))))
   (and-with t (tree-innermost image-context? #t)
