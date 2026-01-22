@@ -562,13 +562,6 @@
 (define (tmpt->cm v) (/ v 60472.0))
 (define (cm->str v) (string-append (number->string v) "cm"))
 
-(define (image-set-size! t w h)
-  ;; 设置图片节点的宽高属性，单位为 cm
-  ;; 并刷新窗口显示
-  (when (> w 0.1) (tree-set! t 1 (cm->str w)))
-  (when (> h 0.1) (tree-set! t 2 (cm->str h)))
-  (refresh-window))
-
 (define (image-apply-resize t handle dx dy)
   ;; 拖拽 handles 时偏移值计算的重要函数
   ;; uniform-scale 用于处理四个角 handles 拖拽时的等比例缩放
@@ -583,8 +576,11 @@
               (let* ((scale (if (or (> scale-x 1) (> scale-y 1))
                                 (max scale-x scale-y)
                                 (min scale-x scale-y))))
-                (when (> (* ow scale) 0.1)
-                  (image-set-size! t (* ow scale) (* oh scale)))))))
+                  (let* ((nw (* ow scale))
+                         (nh (* oh scale)))
+                    (when (> nw 0.1) (tree-set! t 1 (cm->str nw)))
+                    (when (> nh 0.1) (tree-set! t 2 (cm->str nh)))
+                    (refresh-window))))))
       (case handle
         ((se) (uniform-scale (/ (+ ow sx) ow) (/ (- oh sy) oh)))
         ((sw) (uniform-scale (/ nw ow) (/ (- oh sy) oh)))
