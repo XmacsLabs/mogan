@@ -152,7 +152,7 @@ immediate_options (int argc, char** argv) {
   url u= url_system (string ("$TEXMACS_HOME_PATH/system/") *
                      get_date ("english", "%Y%m%d%H") * string (".log"));
   if (enale_logging) {
-    cout << "Logging into >> " << u << LF;
+    // cout << "Logging into >> " << u << LF;
     tm_ostream logf (c_string (concretize (u)));
     if (!logf->is_writable ()) {
       cerr << "TeXmacs] Error: could not open " << u << LF;
