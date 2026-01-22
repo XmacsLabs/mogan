@@ -3,7 +3,7 @@
 ;;
 ;; MODULE      : gbt7714-2015-author-year.scm
 ;; DESCRIPTION : GBT 7714-2015-author-year style for BibTeX files
-;; COPYRIGHT   : (C) 2025 Yuki Lu
+;; COPYRIGHT   : (C) 2026 Yuki Lu
 ;;
 ;; This software falls under the GNU general public license version 3 or later.
 ;; It comes WITHOUT ANY WARRANTY WHATSOEVER. For details, see the file LICENSE
@@ -15,6 +15,120 @@
   (:use (bibtex bib-utils) (bibtex plain)))
 
 (bib-define-style "gbt7714-2015-author-year" "gbt7714-2015-author-year")
+
+;; 哈希表用于存储年份后缀
+(define gbt-year-suffix-table #f)
+(define gbt-author-year-count-table #f)
+
+;; 安全字符串转换：确保值转换为字符串，如果为#f则返回空字符串
+(define (safe-tm->string x)
+  (cond
+    ((string? x) x)
+    ((not x) "")
+    (else (let ((result (tm->string x)))
+            (if result result "")))))
+
+;; 获取作者键字符串（用于生成哈希表键）
+(define (gbt-get-author-key-string x)
+  (let* ((field-info (gbt-get-author-field x))
+         (field-type (car field-info))
+         (field-list (cdr field-info))
+         (has-author (not (equal? field-type 'empty)))
+         (chinese? (if has-author (authors-contain-chinese? field-list) #f)))
+    (if has-author
+        (let* ((n (length field-list))
+               (author-count (- n 1)))
+          ;; 辅助函数：提取作者姓氏（英文）或完整姓名（中文）
+          (define (get-author-key i)
+            (let ((author (list-ref field-list i)))
+              (if chinese?
+                  ;; 中文：使用bib-format-name获取完整姓名
+                  (let ((formatted-name (bib-format-name author)))
+                    (cond
+                      ((string? formatted-name) formatted-name)
+                      ((not formatted-name) "")
+                      (else (safe-tm->string formatted-name))))
+                  ;; 英文：只提取姓氏
+                  (let ((last-name-raw (list-ref author 3)))
+                    (if (bib-null? last-name-raw)
+                        ""
+                        (let ((last-name (bib-purify last-name-raw)))
+                          (cond
+                            ((string? last-name) last-name)
+                            ((not last-name) "")
+                            (else (safe-tm->string last-name)))))))))
+          (cond
+            ;; 作者数 ≥ 3：显示第一位 + et al/等
+            ((>= author-count 3)
+             (let ((first (get-author-key 1)))
+               (if chinese?
+                   (string-append first "<#7b49>")
+                   (string-append first " et al."))))
+            ;; 作者数 = 2：显示两位，用"and"或"和"连接
+            ((= author-count 2)
+             (let ((first (get-author-key 1))
+                   (second (get-author-key 2)))
+               (if chinese?
+                   (string-append first "<#548C>" second)
+                   (string-append first " & " second))))
+            ;; 作者数 = 1：显示一位
+            ((= author-count 1)
+             (get-author-key 1))
+            ;; 其他情况
+            (else "")))
+        "")))
+
+;; 预处理函数：计算同一年同一作者文献的年份后缀
+(tm-define (bib-preprocessing t)
+  (:mode bib-gbt7714-2015-author-year?)
+  ;; 初始化哈希表
+  (set! gbt-year-suffix-table (make-hash-table 100))
+  (set! gbt-author-year-count-table (make-hash-table 100))
+  ;; 第一遍：统计每个作者-年份组合的文献数量（所有条目）
+  (for-each (lambda (entry)
+              (when (func? entry 'bib-entry)
+                (let* ((author-short (gbt-get-author-key-string entry))
+                       (year-raw (bib-field entry "year"))
+                       (year-expr (cond ((bib-null? year-raw) "?")
+                                        ((string? year-raw) year-raw)
+                                        ((not year-raw) "?")
+                                        (else (safe-tm->string year-raw))))
+                       (year (cond ((string? year-expr) year-expr)
+                                   ((not year-expr) "?")
+                                   (else (safe-tm->string year-expr))))
+                       (author-year-key (string-append author-short ":" year)))
+                  (ahash-set! gbt-author-year-count-table
+                             author-year-key
+                             (+ 1 (or (ahash-ref gbt-author-year-count-table author-year-key) 0))))))
+            t)
+  ;; 第二遍：按排序顺序分配后缀
+  (let ((sorted-entries (bib-sorted-entries t)))
+    (for-each (lambda (entry)
+                (when (func? entry 'bib-entry)
+                  (let* ((key (list-ref entry 2))
+                         (author-short (gbt-get-author-key-string entry))
+                         (year-raw (bib-field entry "year"))
+                         (year-expr (cond ((bib-null? year-raw) "?")
+                                          ((string? year-raw) year-raw)
+                                          ((not year-raw) "?")
+                                          (else (safe-tm->string year-raw))))
+                         (year (cond ((string? year-expr) year-expr)
+                                     ((not year-expr) "?")
+                                     (else (safe-tm->string year-expr))))
+                         (author-year-key (string-append author-short ":" year))
+                         (count (ahash-ref gbt-author-year-count-table author-year-key)))
+                    (if (> count 1)
+                        ;; 需要后缀：分配a, b, c...
+                        ;; 使用哈希表记录已分配的后缀索引（按作者-年份组合）
+                        (let* ((suffix-index-key (string-append author-year-key ":index"))
+                               (next-index (or (ahash-ref gbt-year-suffix-table suffix-index-key) 0))
+                               (suffix-char (integer->char (+ 97 next-index))) ; 97 = 'a'
+                               (suffix (string suffix-char)))
+                          (ahash-set! gbt-year-suffix-table key suffix)
+                          (ahash-set! gbt-year-suffix-table suffix-index-key (+ next-index 1)))
+                        ;; 单一文献，无后缀
+                        (ahash-set! gbt-year-suffix-table key "")))))
+              sorted-entries)))
 
 ;; 重写条目格式函数以支持所有文献类型
 (tm-define (bib-format-entry n x)
@@ -165,11 +279,24 @@
             (else "")))
         "")))
 
-;; 获取年份字符串
+;; 获取年份字符串（带后缀）
 (tm-define (gbt-get-year-string x)
   (:mode bib-gbt7714-2015-author-year?)
-  (let ((y (bib-field x "year")))
-    (if (bib-null? y) "?" y)))
+  (let* ((key (list-ref x 2))
+         (y (bib-field x "year"))
+         (year-base-expr (cond ((bib-null? y) "?")
+                               ((string? y) y)
+                               ((not y) "?")
+                               (else (safe-tm->string y))))
+         (year-base (cond ((string? year-base-expr) year-base-expr)
+                          ((not year-base-expr) "?")
+                          (else (safe-tm->string year-base-expr))))
+         (suffix (if gbt-year-suffix-table
+                     (or (ahash-ref gbt-year-suffix-table key) "")
+                     "")))
+    (if (equal? suffix "")
+        year-base
+        (string-append year-base suffix))))
 
 ;; 标签格式
 (tm-define (bib-format-bibitem n x)
@@ -192,7 +319,7 @@
      (let ((text (cadr expr)))
        (if (string? text)
            (string-append "_" text)
-           (string-append "_" (tm->string text)))))
+           (string-append "_" (safe-tm->string text)))))
     ((and (list? expr) (>= (length expr) 1) (equal? (car expr) 'concat))
      `(concat ,@(map convert-rsub-to-underscore (cdr expr))))
     ((list? expr)
