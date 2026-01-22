@@ -11,5 +11,27 @@
         <file>ocr-button/middle-align-white.svg</file>
         <file>ocr-button/right-align-white.svg</file>
         <file>ocr-button/ocr-white.svg</file>
+
+        <!-- text toolbar icons -->
+        <file>text-toolbar/bold.svg</file>
+        <file>text-toolbar/italic.svg</file>
+        <file>text-toolbar/underline.svg</file>
+        <file>text-toolbar/highlight.svg</file>
+        <file>text-toolbar/color.svg</file>
+        <file>text-toolbar/align-left.svg</file>
+        <file>text-toolbar/align-center.svg</file>
+        <file>text-toolbar/align-right.svg</file>
+        <file>text-toolbar/align-justify.svg</file>
+
+        <!-- dark theme text toolbar icons -->
+        <file>text-toolbar/bold-white.svg</file>
+        <file>text-toolbar/italic-white.svg</file>
+        <file>text-toolbar/underline-white.svg</file>
+        <file>text-toolbar/highlight-white.svg</file>
+        <file>text-toolbar/color-white.svg</file>
+        <file>text-toolbar/align-left-white.svg</file>
+        <file>text-toolbar/align-center-white.svg</file>
+        <file>text-toolbar/align-right-white.svg</file>
+        <file>text-toolbar/align-justify-white.svg</file>
     </qresource>
 </RCC>

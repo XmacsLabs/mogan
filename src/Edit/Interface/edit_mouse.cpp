@@ -25,6 +25,7 @@
 #include "sys_utils.hpp"
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
+#include "qt_simple_widget.hpp"
 
 #include <moebius/data/scheme.hpp>
 #include <moebius/drd/drd_mode.hpp>
@@ -780,10 +781,23 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
       show_image_popup (tree_of_image_parent, selr, magf, get_scroll_x (),
                         get_scroll_y (), get_canvas_x (), get_canvas_y ());
     }
+    hide_text_toolbar ();
   }
   else {
     set_cursor_style ("normal");
     hide_image_popup ();
+
+    // 检查是否应该显示文本工具栏
+    if (should_show_text_toolbar ()) {
+      rectangle text_selr= get_text_selection_rect ();
+      // 检查矩形是否有效（非零面积）
+      if (text_selr->x1 < text_selr->x2 && text_selr->y1 < text_selr->y2) {
+        show_text_toolbar (text_selr, magf, get_scroll_x (),
+                          get_scroll_y (), get_canvas_x (), get_canvas_y ());
+      }
+    } else {
+      hide_text_toolbar ();
+    }
   }
 
   if (type == "move") mouse_message ("move", x, y);
@@ -1013,4 +1027,50 @@ edit_interface_rep::handle_mouse (string kind, SI x, SI y, int m, time_t t,
     if (started) cancel_editing ();
   }
   handle_exceptions ();
+}
+
+/******************************************************************************
+ * Text toolbar support
+ ******************************************************************************/
+
+bool
+edit_interface_rep::should_show_text_toolbar () {
+  // 检查是否有活动的文本选区
+  if (!selection_active_any ()) return false;
+
+  // 检查选区是否非空
+  tree sel_tree= selection_get ();
+  if (is_atomic (sel_tree) && as_string (sel_tree) == "") return false;
+
+  return true;
+}
+
+rectangle
+edit_interface_rep::get_text_selection_rect () {
+  rectangle sel_rect;
+
+  if (selection_active_any () && !is_nil (selection_rects)) {
+    // 使用现有的选区矩形
+    sel_rect= least_upper_bound (selection_rects);
+  }
+
+  return sel_rect;
+}
+
+void
+edit_interface_rep::show_text_toolbar (rectangle selr, double magf,
+                                      int scroll_x, int scroll_y, int canvas_x,
+                                      int canvas_y) {
+  // 通过qt_simple_widget显示文本工具栏
+  // this指针实际上是edit_interface_rep，它继承自editor_rep，而editor_rep继承自simple_widget_rep
+  // 在Qt环境下，simple_widget_rep实际上是qt_simple_widget_rep
+  qt_simple_widget_rep* qsw= static_cast<qt_simple_widget_rep*> (this);
+  qsw->show_text_toolbar (selr, magf, scroll_x, scroll_y, canvas_x, canvas_y);
+}
+
+void
+edit_interface_rep::hide_text_toolbar () {
+  // 通过qt_simple_widget隐藏文本工具栏
+  qt_simple_widget_rep* qsw= static_cast<qt_simple_widget_rep*> (this);
+  qsw->hide_text_toolbar ();
 }
