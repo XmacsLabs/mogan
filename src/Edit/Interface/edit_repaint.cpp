@@ -185,21 +185,21 @@ edit_interface_rep::draw_selection (renderer ren, rectangle r) {
 
 void
 edit_interface_rep::draw_resize_handles (renderer ren) {
-  // Draw image resize handles when cursor is inside an image.
-  SI        hs            = 10 * ren->pixel; // handle radius for visuals
+  // 鼠标位于图片中时，绘制 handles
+  SI        hs            = 10 * ren->pixel; // handles 半径
   rectangle new_image_brec= rectangle (0, 0, 0, 0);
   SI        x1= 0, y1= 0, x2= 0, y2= 0, mx= 0, my= 0;
   bool      have_bbox= false;
 
-  // Check if any ancestor of current path is an IMAGE
+  // 检测当前路径往上的祖先有没有是 IMAGE 的
   for (path p= path_up (tp); !is_nil (p) && p != rp; p= path_up (p)) {
     tree st= subtree (et, p);
     if (!is_func (st, IMAGE)) continue;
 
     selection sel= eb->find_check_selection (p * 0, p * 1);
-    if (!sel->valid || is_nil (sel->rs)) break; // image not drawable now
+    if (!sel->valid || is_nil (sel->rs)) break;
 
-    rectangle bbox= least_upper_bound (sel->rs);
+    rectangle bbox= least_upper_bound (sel->rs); // 获取盒子边界
     x1            = bbox->x1;
     y1            = bbox->y1;
     x2            = bbox->x2;
@@ -208,7 +208,7 @@ edit_interface_rep::draw_resize_handles (renderer ren) {
     my            = (y1 + y2) / 2;
     new_image_brec= rectangle (x1 - hs, y1 - hs, x2 + hs, y2 + hs);
     have_bbox     = true;
-    break; // only the closest IMAGE ancestor
+    break; // 只处理最近的 IMAGE 祖先
   }
 
   if (new_image_brec != last_image_brec) {
@@ -217,29 +217,29 @@ edit_interface_rep::draw_resize_handles (renderer ren) {
     last_image_brec= new_image_brec;
   }
 
-  if (!have_bbox) {
+  if (!have_bbox) { // 不用画，但要设置缓存
     last_handles_r= 0;
-    return; // nothing to draw
+    return;
   }
   last_handles_r= hs;
 
-  // Draw 8 resize handles: 4 corners + 4 edge midpoints
+  // 8 个 handles，4 个位于边中点，4 个位于角上
   color border_col= get_env_color (FOCUS_COLOR);
   SI    border_w  = max (2 * ren->pixel, hs / 3);
   ren->set_pencil (pencil (border_col, border_w));
 
-  // Array of handle center positions: sw, se, nw, ne, s, n, w, e
+  // 8 个点分别是：sw, se, nw, ne, s, n, w, e
   SI hx[8]= {x1, x2, x1, x2, mx, mx, x1, x2};
   SI hy[8]= {y1, y1, y2, y2, y1, y2, my, my};
 
   for (int i= 0; i < 8; i++) {
     SI cx= hx[i], cy= hy[i];
 
-    // Outer disk for border
+    // 外圆作为边框
     ren->set_brush (brush (border_col));
     ren->fill_arc (cx - hs, cy - hs, cx + hs, cy + hs, 0, 64 * 360);
 
-    // Inner disk for fill, shrunk to leave a visible ring
+    // 内圆作为填充
     SI inner_r= max (hs - border_w, ren->pixel);
     ren->set_brush (brush (white));
     ren->fill_arc (cx - inner_r, cy - inner_r, cx + inner_r, cy + inner_r, 0,
