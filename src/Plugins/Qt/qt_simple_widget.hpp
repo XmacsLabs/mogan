@@ -129,6 +129,7 @@ public:
                          int canvas_y);
   void hide_text_toolbar ();
   void scroll_text_toolbar_by (SI x, SI y);
+  bool is_point_in_text_toolbar (SI x, SI y);
 
   ////////////////////// backing store management
 

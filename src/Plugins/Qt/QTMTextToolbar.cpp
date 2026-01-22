@@ -16,6 +16,7 @@
 #include "scheme.hpp"
 #include "server.hpp"
 #include "tm_ostream.hpp"
+#include "moebius/data/scheme.hpp"
 
 #include <QGuiApplication>
 #include <QHelpEvent>
@@ -84,27 +85,21 @@ QTMTextToolbar::QTMTextToolbar (QWidget* parent, qt_simple_widget_rep* owner)
 
   alignLeftBtn= new QToolButton ();
   alignLeftBtn->setObjectName ("text-toolbar-button");
-  alignLeftBtn->setProperty ("icon-name", "align-left");
+  alignLeftBtn->setProperty ("icon-name", "left-align");
   alignLeftBtn->setCheckable (true);
   alignLeftBtn->setToolTip (qt_translate ("Align left"));
 
   alignCenterBtn= new QToolButton ();
   alignCenterBtn->setObjectName ("text-toolbar-button");
-  alignCenterBtn->setProperty ("icon-name", "align-center");
+  alignCenterBtn->setProperty ("icon-name", "middle-align");
   alignCenterBtn->setCheckable (true);
   alignCenterBtn->setToolTip (qt_translate ("Align center"));
 
   alignRightBtn= new QToolButton ();
   alignRightBtn->setObjectName ("text-toolbar-button");
-  alignRightBtn->setProperty ("icon-name", "align-right");
+  alignRightBtn->setProperty ("icon-name", "right-align");
   alignRightBtn->setCheckable (true);
   alignRightBtn->setToolTip (qt_translate ("Align right"));
-
-  alignJustifyBtn= new QToolButton ();
-  alignJustifyBtn->setObjectName ("text-toolbar-button");
-  alignJustifyBtn->setProperty ("icon-name", "align-justify");
-  alignJustifyBtn->setCheckable (true);
-  alignJustifyBtn->setToolTip (qt_translate ("Justify"));
 
   // 添加按钮到布局
   layout->addWidget (boldBtn);
@@ -115,23 +110,34 @@ QTMTextToolbar::QTMTextToolbar (QWidget* parent, qt_simple_widget_rep* owner)
   layout->addWidget (alignLeftBtn);
   layout->addWidget (alignCenterBtn);
   layout->addWidget (alignRightBtn);
-  layout->addWidget (alignJustifyBtn);
 
-  // 连接按钮点击事件（暂时只显示，不实现功能）
-  connect (boldBtn, &QToolButton::clicked, this, []() {
-    // TODO: 实现加粗功能
+  // 连接按钮点击事件
+  connect (boldBtn, &QToolButton::clicked, this, [this]() {
+    if (this->owner) {
+      call ("toggle-bold");
+    }
   });
-  connect (italicBtn, &QToolButton::clicked, this, []() {
-    // TODO: 实现斜体功能
+  connect (italicBtn, &QToolButton::clicked, this, [this]() {
+    if (this->owner) {
+      call ("toggle-italic");
+    }
   });
-  connect (underlineBtn, &QToolButton::clicked, this, []() {
-    // TODO: 实现下划线功能
+  connect (underlineBtn, &QToolButton::clicked, this, [this]() {
+    if (this->owner) {
+      call ("toggle-underlined");
+    }
   });
-  connect (highlightBtn, &QToolButton::clicked, this, []() {
-    // TODO: 实现高亮功能
+  connect (highlightBtn, &QToolButton::clicked, this, [this]() {
+    if (this->owner) {
+      // 高亮功能
+      call ("mark-text");
+    }
   });
-  connect (colorBtn, &QToolButton::clicked, this, []() {
-    // TODO: 实现文字颜色功能
+  connect (colorBtn, &QToolButton::clicked, this, [this]() {
+    if (this->owner) {
+      // 文字颜色功能 - 打开颜色选择器
+      call ("interactive", object ("open-color-selector"));
+    }
   });
 
   // 对齐按钮分组
@@ -139,13 +145,20 @@ QTMTextToolbar::QTMTextToolbar (QWidget* parent, qt_simple_widget_rep* owner)
   alignGroup->addButton (alignLeftBtn);
   alignGroup->addButton (alignCenterBtn);
   alignGroup->addButton (alignRightBtn);
-  alignGroup->addButton (alignJustifyBtn);
   alignGroup->setExclusive (true);
 
   connect (alignGroup,
            QOverload<QAbstractButton*>::of (&QButtonGroup::buttonClicked), this,
            [=] (QAbstractButton* button) {
-             // TODO: 实现对齐功能
+             if (this->owner) {
+               if (button == alignLeftBtn) {
+                 call ("make-line-with", object ("par-mode"), object ("left"));
+               } else if (button == alignCenterBtn) {
+                 call ("make-line-with", object ("par-mode"), object ("center"));
+               } else if (button == alignRightBtn) {
+                 call ("make-line-with", object ("par-mode"), object ("right"));
+               }
+             }
            });
 
   autoSize ();
@@ -232,7 +245,7 @@ QTMTextToolbar::autoSize () {
   QScreen*     Screen    = QGuiApplication::primaryScreen ();
   const double Dpi       = Screen ? Screen->logicalDotsPerInch () : 96.0;
   const double Scale     = Dpi / 96.0;
-  const double totalScale= Scale * cached_magf * 3.0;
+  const double totalScale= Scale * cached_magf * 12.0; // 原始3.0倍，扩大4倍后为12.0倍
   int          btn_size;
 
 #if defined(Q_OS_MAC)
@@ -255,10 +268,9 @@ QTMTextToolbar::autoSize () {
   alignLeftBtn->setIconSize (icon_size);
   alignCenterBtn->setIconSize (icon_size);
   alignRightBtn->setIconSize (icon_size);
-  alignJustifyBtn->setIconSize (icon_size);
 
   // 设置按钮固定大小
-  QSize fixed_size (btn_size + 8, btn_size + 8);
+  QSize fixed_size (btn_size + 32, btn_size + 32); // 内边距也扩大4倍 (8 * 4.0 = 32)
   boldBtn->setFixedSize (fixed_size);
   italicBtn->setFixedSize (fixed_size);
   underlineBtn->setFixedSize (fixed_size);
@@ -267,7 +279,6 @@ QTMTextToolbar::autoSize () {
   alignLeftBtn->setFixedSize (fixed_size);
   alignCenterBtn->setFixedSize (fixed_size);
   alignRightBtn->setFixedSize (fixed_size);
-  alignJustifyBtn->setFixedSize (fixed_size);
 
   // 调整窗口大小
   adjustSize ();

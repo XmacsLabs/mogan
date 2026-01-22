@@ -48,7 +48,6 @@ protected:
   QToolButton*               alignLeftBtn;
   QToolButton*               alignCenterBtn;
   QToolButton*               alignRightBtn;
-  QToolButton*               alignJustifyBtn;
   QString                    btn_style;
 
 public:

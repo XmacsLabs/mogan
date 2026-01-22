@@ -836,3 +836,19 @@ qt_simple_widget_rep::scroll_text_toolbar_by (SI x, SI y) {
     textToolbar->updatePosition (ren);
   }
 }
+
+bool
+qt_simple_widget_rep::is_point_in_text_toolbar (SI x, SI y) {
+  if (!textToolbar) return false;
+
+  // 将逻辑坐标转换为像素坐标
+  double inv_unit = 1.0 / 256.0;
+  int px = int (std::round (x * inv_unit));
+  int py = int (std::round (y * inv_unit));
+
+  // 获取工具栏的几何位置
+  QRect toolbarRect = textToolbar->geometry();
+
+  // 检查点是否在工具栏内
+  return toolbarRect.contains (px, py);
+}
