@@ -1466,6 +1466,9 @@
   (list "math-brackets"))
 
 (tm-define (focus-tag-name l)
+  ;; 在 around 环境中时
+  ;; get-bracket-variant 如果能获取到伪变体则走伪变体 focus-tag-name
+  ;; 否则返回默认的 "Around"
   (:require (in? l '(around around*)))
   (with t (focus-tree)
     (if (and t (tree-in? t '(around around*)))
@@ -1474,6 +1477,7 @@
         "Around")))
 
 (tm-define (focus-tag-name l)
+  ;; 新增的具体括号类型伪变体表
   (:require (in? l '(parentheses brackets braces angle double floor ceiling vertical double-vertical slash backslash empty)))
   (cond ((== l 'parentheses) "Parentheses ( )")
         ((== l 'brackets) "Brackets [ ]")
