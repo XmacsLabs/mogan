@@ -862,23 +862,23 @@ QWidget#text_toolbar {
 
 /*文本工具栏按钮图标*/
 QToolButton#text-toolbar-button[icon-name="bold"] {
-  qproperty-icon: url(":/mode-toolbar/bold.svg");
+  qproperty-icon: url(":/pixmaps/liii/20x20/mode/tm_bold.svg");
 }
 
 QToolButton#text-toolbar-button[icon-name="italic"] {
-  qproperty-icon: url(":/mode-toolbar/italic.svg");
+  qproperty-icon: url(":/pixmaps/liii/20x20/mode/tm_italic.svg");
 }
 
 QToolButton#text-toolbar-button[icon-name="underline"] {
-  qproperty-icon: url(":/mode-toolbar/underline.svg");
+  qproperty-icon: url(":/pixmaps/liii/20x20/mode/tm_underline.svg");
 }
 
 QToolButton#text-toolbar-button[icon-name="highlight"] {
-  qproperty-icon: url(":/mode-toolbar/highlight.svg");
+  qproperty-icon: url(":/pixmaps/liii/20x20/mode/tm_marked.svg");
 }
 
 QToolButton#text-toolbar-button[icon-name="color"] {
-  qproperty-icon: url(":/text-toolbar/color.svg");
+  qproperty-icon: url(":/pixmaps/liii/20x20/mode/tm_color.svg");
 }
 
 QToolButton#text-toolbar-button[icon-name="left-align"] {

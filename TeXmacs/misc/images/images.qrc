@@ -13,39 +13,31 @@
         <file>ocr-button/ocr-white.svg</file>
 
         <!-- text toolbar icons -->
-        <file>text-toolbar/bold.svg</file>
-        <file>text-toolbar/italic.svg</file>
-        <file>text-toolbar/underline.svg</file>
-        <file>text-toolbar/highlight.svg</file>
-        <file>text-toolbar/color.svg</file>
+        <file>../pixmaps/liii/20x20/mode/tm_bold.svg</file>
+        <file>../pixmaps/liii/20x20/mode/tm_italic.svg</file>
+        <file>../pixmaps/liii/20x20/mode/tm_underline.svg</file>
+        <file>../pixmaps/liii/20x20/mode/tm_marked.svg</file>
+        <file>../pixmaps/liii/20x20/mode/tm_color.svg</file>
         <file>ocr-button/left-align.svg</file>
         <file>ocr-button/middle-align.svg</file>
         <file>ocr-button/right-align.svg</file>
         
-     <!-- liii mode icons for text toolbar -->
-          <file alias="mode-toolbar/bold.svg"  >../pixmaps/liii/20x20/mode/tm_bold.svg</file>
-     <file alias="mode-toolbar/italic.svg"  >../pixmaps/liii/20x20/mode/tm_italic.svg</file>
-        <file alias="mode-toolbar/underline.svg"  >../pixmaps/liii/20x20/mode/tm_underline.svg</file>
-  <file alias="mode-toolbar/highlight.svg" >../pixmaps/liii/20x20/mode/tm_marked.svg</file>
+
 
 
 
 
         <!-- dark theme text toolbar icons -->
-        <file>text-toolbar/bold-white.svg</file>
-        <file>text-toolbar/italic-white.svg</file>
-        <file>text-toolbar/underline-white.svg</file>
-        <file>text-toolbar/highlight-white.svg</file>
-        <file>text-toolbar/color-white.svg</file>
+        <file>../pixmaps/liii-night/20x20/mode/tm_bold.svg</file>
+        <file>../pixmaps/liii-night/20x20/mode/tm_italic.svg</file>
+        <file>../pixmaps/liii-night/20x20/mode/tm_underline.svg</file>
+        <file>../pixmaps/liii-night/20x20/mode/tm_marked.svg</file>
+        <file>../pixmaps/liii-night/20x20/mode/tm_color.svg</file>
         <file>ocr-button/left-align-white.svg</file>
         <file>ocr-button/middle-align-white.svg</file>
         <file>ocr-button/right-align-white.svg</file>
 
-        <!-- liii-night mode icons for text toolbar -->
-        <file alias="mode-toolbar/bold-white.svg" >../pixmaps/liii-night/20x20/mode/tm_bold.svg</file>
-       <file alias="mode-toolbar/italic-white.svg" >../pixmaps/liii-night/20x20/mode/tm_italic.svg</file>
-     <file alias="mode-toolbar/underline-white.svg" >../pixmaps/liii-night/20x20/mode/tm_underline.svg</file>
-        <file alias="mode-toolbar/highlight-white.svg" >../pixmaps/liii-night/20x20/mode/tm_marked.svg</file>
+
 
 
         
