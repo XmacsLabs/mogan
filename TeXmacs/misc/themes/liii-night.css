@@ -883,19 +883,19 @@ QWidget#text_toolbar {
 
 /*文本工具栏按钮图标*/
 QToolButton#text-toolbar-button[icon-name="bold"] {
-  qproperty-icon: url(":/text-toolbar/bold-white.svg");
+  qproperty-icon: url(":/mode-toolbar/bold-white.svg");
 }
 
 QToolButton#text-toolbar-button[icon-name="italic"] {
-  qproperty-icon: url(":/text-toolbar/italic-white.svg");
+  qproperty-icon: url(":/mode-toolbar/italic-white.svg");
 }
 
 QToolButton#text-toolbar-button[icon-name="underline"] {
-  qproperty-icon: url(":/text-toolbar/underline-white.svg");
+  qproperty-icon: url(":/mode-toolbar/underline-white.svg");
 }
 
 QToolButton#text-toolbar-button[icon-name="highlight"] {
-  qproperty-icon: url(":/text-toolbar/highlight-white.svg");
+  qproperty-icon: url(":/mode-toolbar/highlight-white.svg");
 }
 
 QToolButton#text-toolbar-button[icon-name="color"] {
