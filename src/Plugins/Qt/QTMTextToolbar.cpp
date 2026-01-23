@@ -189,8 +189,8 @@ QTMTextToolbar::updatePosition (qt_renderer_rep* ren) {
 
 void
 QTMTextToolbar::scrollBy (int x, int y) {
-  cached_scroll_x+= x;
-  cached_scroll_y+= y;
+  cached_scroll_x-= (int) (x / cached_magf);
+  cached_scroll_y-= (int) (y / cached_magf);
 }
 
 void
