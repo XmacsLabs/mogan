@@ -308,6 +308,7 @@ tm_server_rep::is_yes (string s) {
 
 void
 tm_server_rep::quit () {
+  debug_automatic << "Stopping the server..." << LF;
   close_all_pipes ();
   call ("quit-TeXmacs-scheme");
   clear_pending_commands ();
@@ -319,6 +320,7 @@ tm_server_rep::quit () {
 
 void
 tm_server_rep::restart () {
+  debug_automatic << "Restarting the server..." << LF;
   close_all_pipes ();
   call ("quit-TeXmacs-scheme");
   clear_pending_commands ();
