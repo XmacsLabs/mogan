@@ -21,11 +21,11 @@
 #include "path.hpp"
 #include "qapplication.h"
 #include "qnamespace.h"
+#include "qt_simple_widget.hpp"
 #include "scheme.hpp"
 #include "sys_utils.hpp"
 #include "tm_buffer.hpp"
 #include "tm_timer.hpp"
-#include "qt_simple_widget.hpp"
 
 #include <moebius/data/scheme.hpp>
 #include <moebius/drd/drd_mode.hpp>
@@ -1061,8 +1061,8 @@ edit_interface_rep::get_text_selection_rect () {
       else {
         // 如果选区矩形为空，使用光标位置创建一个最小矩形
         cursor cu= get_cursor ();
-        sel_rect= rectangle (cu->ox - 10 * pixel, cu->oy - 5 * pixel,
-                            cu->ox + 10 * pixel, cu->oy + 5 * pixel);
+        sel_rect = rectangle (cu->ox - 10 * pixel, cu->oy - 5 * pixel,
+                              cu->ox + 10 * pixel, cu->oy + 5 * pixel);
       }
     }
   }
@@ -1072,8 +1072,8 @@ edit_interface_rep::get_text_selection_rect () {
 
 void
 edit_interface_rep::show_text_toolbar (rectangle selr, double magf,
-                                      int scroll_x, int scroll_y, int canvas_x,
-                                      int canvas_y) {
+                                       int scroll_x, int scroll_y, int canvas_x,
+                                       int canvas_y) {
   // 通过qt_simple_widget显示文本工具栏
   // this指针实际上是edit_interface_rep，它继承自editor_rep，而editor_rep继承自simple_widget_rep
   // 在Qt环境下，simple_widget_rep实际上是qt_simple_widget_rep
@@ -1104,14 +1104,15 @@ edit_interface_rep::update_text_toolbar () {
     // 注意：rectangle 不是 list 类型，不能使用 is_nil
     // 我们检查矩形坐标是否有效
     if (text_selr->x1 < text_selr->x2 && text_selr->y1 < text_selr->y2) {
-      show_text_toolbar (text_selr, magf, get_scroll_x (),
-                        get_scroll_y (), get_canvas_x (), get_canvas_y ());
+      show_text_toolbar (text_selr, magf, get_scroll_x (), get_scroll_y (),
+                         get_canvas_x (), get_canvas_y ());
     }
     else {
       // 即使矩形无效，也尝试显示工具栏（例如单个字符选区）
       hide_text_toolbar ();
     }
-  } else {
+  }
+  else {
     hide_text_toolbar ();
   }
 }

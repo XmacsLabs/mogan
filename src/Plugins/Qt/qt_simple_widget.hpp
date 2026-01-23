@@ -124,9 +124,8 @@ public:
 
   ////////////////////// Text toolbar support
   void ensure_text_toolbar ();
-  void show_text_toolbar (rectangle selr, double magf,
-                         int scroll_x, int scroll_y, int canvas_x,
-                         int canvas_y);
+  void show_text_toolbar (rectangle selr, double magf, int scroll_x,
+                          int scroll_y, int canvas_x, int canvas_y);
   void hide_text_toolbar ();
   void scroll_text_toolbar_by (SI x, SI y);
   bool is_point_in_text_toolbar (SI x, SI y);

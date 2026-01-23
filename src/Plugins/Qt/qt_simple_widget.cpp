@@ -19,9 +19,9 @@
 #include "QTMCompletionPopup.hpp"
 #include "QTMImagePopup.hpp"
 #include "QTMMathCompletionPopup.hpp"
-#include "QTMTextToolbar.hpp"
 #include "QTMMenuHelper.hpp"
 #include "QTMStyle.hpp"
+#include "QTMTextToolbar.hpp"
 #include "QTMWidget.hpp"
 #include <QLayout>
 #include <QPixmap>
@@ -808,12 +808,12 @@ qt_simple_widget_rep::ensure_text_toolbar () {
 
 void
 qt_simple_widget_rep::show_text_toolbar (rectangle selr, double magf,
-                                        int scroll_x, int scroll_y, int canvas_x,
-                                        int canvas_y) {
+                                         int scroll_x, int scroll_y,
+                                         int canvas_x, int canvas_y) {
   ensure_text_toolbar ();
   qt_renderer_rep* ren= the_qt_renderer ();
   textToolbar->showTextToolbar (ren, selr, magf, scroll_x, scroll_y, canvas_x,
-                               canvas_y);
+                                canvas_y);
 }
 
 void
@@ -842,12 +842,12 @@ qt_simple_widget_rep::is_point_in_text_toolbar (SI x, SI y) {
   if (!textToolbar) return false;
 
   // 将逻辑坐标转换为像素坐标
-  double inv_unit = 1.0 / 256.0;
-  int px = int (std::round (x * inv_unit));
-  int py = int (std::round (y * inv_unit));
+  double inv_unit= 1.0 / 256.0;
+  int    px      = int (std::round (x * inv_unit));
+  int    py      = int (std::round (y * inv_unit));
 
   // 获取工具栏的几何位置
-  QRect toolbarRect = textToolbar->geometry();
+  QRect toolbarRect= textToolbar->geometry ();
 
   // 检查点是否在工具栏内
   return toolbarRect.contains (px, py);

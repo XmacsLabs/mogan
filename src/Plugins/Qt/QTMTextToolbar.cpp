@@ -10,13 +10,13 @@
 
 #include "QTMTextToolbar.hpp"
 #include "bitmap_font.hpp"
+#include "moebius/data/scheme.hpp"
 #include "qbuttongroup.h"
 #include "qt_renderer.hpp"
 #include "qt_utilities.hpp"
 #include "scheme.hpp"
 #include "server.hpp"
 #include "tm_ostream.hpp"
-#include "moebius/data/scheme.hpp"
 
 #include <QGuiApplication>
 #include <QHelpEvent>
@@ -29,10 +29,11 @@
 
 // 悬浮工具栏创建函数
 QTMTextToolbar::QTMTextToolbar (QWidget* parent, qt_simple_widget_rep* owner)
-    : QWidget (parent), owner (owner), layout (nullptr), cached_selection_mid_x (0),
-      cached_selection_mid_y (0), cached_scroll_x (0), cached_scroll_y (0),
-      cached_canvas_x (0), cached_canvas_y (0), cached_magf (0.0),
-      painted (false), painted_count (0) {
+    : QWidget (parent), owner (owner), layout (nullptr),
+      cached_selection_mid_x (0), cached_selection_mid_y (0),
+      cached_scroll_x (0), cached_scroll_y (0), cached_canvas_x (0),
+      cached_canvas_y (0), cached_magf (0.0), painted (false),
+      painted_count (0) {
   Q_INIT_RESOURCE (images);
   setObjectName ("text_toolbar");
   setWindowFlags (Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -112,28 +113,28 @@ QTMTextToolbar::QTMTextToolbar (QWidget* parent, qt_simple_widget_rep* owner)
   layout->addWidget (alignRightBtn);
 
   // 连接按钮点击事件
-  connect (boldBtn, &QToolButton::clicked, this, [this]() {
+  connect (boldBtn, &QToolButton::clicked, this, [this] () {
     if (this->owner) {
       call ("toggle-bold");
     }
   });
-  connect (italicBtn, &QToolButton::clicked, this, [this]() {
+  connect (italicBtn, &QToolButton::clicked, this, [this] () {
     if (this->owner) {
       call ("toggle-italic");
     }
   });
-  connect (underlineBtn, &QToolButton::clicked, this, [this]() {
+  connect (underlineBtn, &QToolButton::clicked, this, [this] () {
     if (this->owner) {
       call ("toggle-underlined");
     }
   });
-  connect (highlightBtn, &QToolButton::clicked, this, [this]() {
+  connect (highlightBtn, &QToolButton::clicked, this, [this] () {
     if (this->owner) {
       // 高亮功能
       call ("mark-text");
     }
   });
-  connect (colorBtn, &QToolButton::clicked, this, [this]() {
+  connect (colorBtn, &QToolButton::clicked, this, [this] () {
     if (this->owner) {
       // 文字颜色功能 - 打开颜色选择器
       call ("interactive", object ("open-color-selector"));
@@ -153,9 +154,12 @@ QTMTextToolbar::QTMTextToolbar (QWidget* parent, qt_simple_widget_rep* owner)
              if (this->owner) {
                if (button == alignLeftBtn) {
                  call ("make-line-with", object ("par-mode"), object ("left"));
-               } else if (button == alignCenterBtn) {
-                 call ("make-line-with", object ("par-mode"), object ("center"));
-               } else if (button == alignRightBtn) {
+               }
+               else if (button == alignCenterBtn) {
+                 call ("make-line-with", object ("par-mode"),
+                       object ("center"));
+               }
+               else if (button == alignRightBtn) {
                  call ("make-line-with", object ("par-mode"), object ("right"));
                }
              }
@@ -167,8 +171,9 @@ QTMTextToolbar::QTMTextToolbar (QWidget* parent, qt_simple_widget_rep* owner)
 QTMTextToolbar::~QTMTextToolbar () {}
 
 void
-QTMTextToolbar::showTextToolbar (qt_renderer_rep* ren, rectangle selr, double magf,
-                                int scroll_x, int scroll_y, int canvas_x, int canvas_y) {
+QTMTextToolbar::showTextToolbar (qt_renderer_rep* ren, rectangle selr,
+                                 double magf, int scroll_x, int scroll_y,
+                                 int canvas_x, int canvas_y) {
   cachePosition (selr, magf, scroll_x, scroll_y, canvas_x, canvas_y);
   updatePosition (ren);
   show ();
@@ -189,26 +194,27 @@ QTMTextToolbar::scrollBy (int x, int y) {
 }
 
 void
-QTMTextToolbar::cachePosition (rectangle selr, double magf, int scroll_x, int scroll_y,
-                              int canvas_x, int canvas_y) {
-  cached_rect      = selr;
-  cached_magf      = magf;
-  cached_scroll_x  = scroll_x;
-  cached_scroll_y  = scroll_y;
-  cached_canvas_x  = canvas_x;
-  cached_canvas_y  = canvas_y;
+QTMTextToolbar::cachePosition (rectangle selr, double magf, int scroll_x,
+                               int scroll_y, int canvas_x, int canvas_y) {
+  cached_rect    = selr;
+  cached_magf    = magf;
+  cached_scroll_x= scroll_x;
+  cached_scroll_y= scroll_y;
+  cached_canvas_x= canvas_x;
+  cached_canvas_y= canvas_y;
 
   // 计算选区中心位置
   cached_selection_mid_x= (selr->x1 + selr->x2) * 0.5;
-  cached_selection_mid_y= selr->y2; // 使用选区底部位置，使工具栏显示在选中文字正上方
+  cached_selection_mid_y=
+      selr->y2; // 使用选区底部位置，使工具栏显示在选中文字正上方
 }
 
 void
 QTMTextToolbar::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
-  rectangle selr     = cached_rect;
-  double    inv_unit = 1.0 / 256.0;
-  double    cx_logic = (selr->x1 + selr->x2) * 0.5;
-  double    top_logic= selr->y2; // 使用选区底部位置，使工具栏显示在选中文字正上方
+  rectangle selr    = cached_rect;
+  double    inv_unit= 1.0 / 256.0;
+  double    cx_logic= (selr->x1 + selr->x2) * 0.5;
+  double top_logic= selr->y2; // 使用选区底部位置，使工具栏显示在选中文字正上方
 
   // 使用公式计算QT坐标
   double cx_px=
@@ -226,11 +232,13 @@ QTMTextToolbar::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
   top_px+= blank_top;
 
   x= int (std::round (cx_px - cached_width * 0.5));
-  y= int (std::round (top_px - cached_height)); // 在选区底部上方显示，与图片悬浮窗口一致
+  y= int (std::round (top_px -
+                      cached_height)); // 在选区底部上方显示，与图片悬浮窗口一致
 
   // 确保工具栏在视口内
   if (x < 0) x= 0;
-  if (y < 0) y= int (std::round (top_px + 10)); // 如果上面空间不够，显示在选区下方
+  if (y < 0)
+    y= int (std::round (top_px + 10)); // 如果上面空间不够，显示在选区下方
   if (owner && owner->scrollarea () && owner->scrollarea ()->viewport ()) {
     int vp_w= owner->scrollarea ()->viewport ()->width ();
     int vp_h= owner->scrollarea ()->viewport ()->height ();
@@ -242,11 +250,12 @@ QTMTextToolbar::getCachedPosition (qt_renderer_rep* ren, int& x, int& y) {
 void
 QTMTextToolbar::autoSize () {
   // 根据DPI和缩放因子自动调整大小
-  QScreen*     Screen    = QGuiApplication::primaryScreen ();
-  const double Dpi       = Screen ? Screen->logicalDotsPerInch () : 96.0;
-  const double Scale     = Dpi / 96.0;
-  const double totalScale= Scale * cached_magf * 12.0; // 原始3.0倍，扩大4倍后为12.0倍
-  int          btn_size;
+  QScreen*     Screen= QGuiApplication::primaryScreen ();
+  const double Dpi   = Screen ? Screen->logicalDotsPerInch () : 96.0;
+  const double Scale = Dpi / 96.0;
+  const double totalScale=
+      Scale * cached_magf * 12.0; // 原始3.0倍，扩大4倍后为12.0倍
+  int btn_size;
 
 #if defined(Q_OS_MAC)
   btn_size= int (50 * totalScale);
@@ -270,7 +279,8 @@ QTMTextToolbar::autoSize () {
   alignRightBtn->setIconSize (icon_size);
 
   // 设置按钮固定大小
-  QSize fixed_size (btn_size + 32, btn_size + 32); // 内边距也扩大4倍 (8 * 4.0 = 32)
+  QSize fixed_size (btn_size + 32,
+                    btn_size + 32); // 内边距也扩大4倍 (8 * 4.0 = 32)
   boldBtn->setFixedSize (fixed_size);
   italicBtn->setFixedSize (fixed_size);
   underlineBtn->setFixedSize (fixed_size);

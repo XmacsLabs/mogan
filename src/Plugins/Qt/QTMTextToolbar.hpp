@@ -40,22 +40,22 @@ protected:
   int                        painted_count;
 
   // 工具栏按钮
-  QToolButton*               boldBtn;
-  QToolButton*               italicBtn;
-  QToolButton*               underlineBtn;
-  QToolButton*               highlightBtn;
-  QToolButton*               colorBtn;
-  QToolButton*               alignLeftBtn;
-  QToolButton*               alignCenterBtn;
-  QToolButton*               alignRightBtn;
-  QString                    btn_style;
+  QToolButton* boldBtn;
+  QToolButton* italicBtn;
+  QToolButton* underlineBtn;
+  QToolButton* highlightBtn;
+  QToolButton* colorBtn;
+  QToolButton* alignLeftBtn;
+  QToolButton* alignCenterBtn;
+  QToolButton* alignRightBtn;
+  QString      btn_style;
 
 public:
   QTMTextToolbar (QWidget* parent, qt_simple_widget_rep* owner);
   ~QTMTextToolbar ();
 
   void showTextToolbar (qt_renderer_rep* ren, rectangle selr, double magf,
-                       int scroll_x, int scroll_y, int canvas_x, int canvas_y);
+                        int scroll_x, int scroll_y, int canvas_x, int canvas_y);
   void updatePosition (qt_renderer_rep* ren);
   void scrollBy (int x, int y);
   void autoSize ();

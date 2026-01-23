@@ -239,9 +239,8 @@ public:
   bool      should_show_image_popup (tree t);
   bool      should_show_text_toolbar ();
   rectangle get_text_selection_rect ();
-  void      show_text_toolbar (rectangle selr, double magf,
-                              int scroll_x, int scroll_y, int canvas_x,
-                              int canvas_y);
+  void      show_text_toolbar (rectangle selr, double magf, int scroll_x,
+                               int scroll_y, int canvas_x, int canvas_y);
   void      hide_text_toolbar ();
   bool      is_point_in_text_toolbar (SI x, SI y);
   void      update_text_toolbar ();
