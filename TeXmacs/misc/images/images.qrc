@@ -22,11 +22,6 @@
         <file>ocr-button/middle-align.svg</file>
         <file>ocr-button/right-align.svg</file>
         
-
-
-
-
-
         <!-- dark theme text toolbar icons -->
         <file>../pixmaps/liii-night/20x20/mode/tm_bold.svg</file>
         <file>../pixmaps/liii-night/20x20/mode/tm_italic.svg</file>
@@ -36,10 +31,6 @@
         <file>ocr-button/left-align-white.svg</file>
         <file>ocr-button/middle-align-white.svg</file>
         <file>ocr-button/right-align-white.svg</file>
-
-
-
-
         
     </qresource>
 </RCC>
