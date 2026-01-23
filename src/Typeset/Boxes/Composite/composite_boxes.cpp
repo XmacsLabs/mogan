@@ -396,10 +396,12 @@ struct table_box_rep : public concrete_composite_box_rep {
   int           rows, cols;
   array<SI>     x, y;
   array<string> halign;
+  bool          wide_flag;
   table_box_rep (path ip, array<box> bs, array<SI> x2, array<SI> y2,
-                 array<string> halign2, int cols2)
+                 array<string> halign2, int cols2, bool wide_flag2)
       : concrete_composite_box_rep (ip, bs, x2, y2, false),
-        rows (N (bs) / cols2), cols (cols2), x (x2), y (y2), halign (halign2) {
+        rows (N (bs) / cols2), cols (cols2), x (x2), y (y2), halign (halign2),
+        wide_flag (wide_flag2) {
     finalize ();
   }
   operator tree () { return tree ("table"); }
@@ -418,18 +420,20 @@ table_box_rep::message (tree t, SI x, SI y, rectangles& rs) {
 
     /* horizontal line (columns) */
     if (my >= y1 - tol && my <= y2 + tol) {
-      for (int j= 1; j < cols; j++) {
+      for (int j= 1; j <= cols; j++) {
+        if (j == cols && wide_flag) continue;
         int idx   = j - 1;
         int k     = idx;
         SI  border= this->x[k] + bs[k]->w ();
         if (abs (mx - border) <= tol) {
           SI   lw= bs[k]->w ();
-          SI   rw= bs[k + 1]->w ();
+          SI   rw= (j < cols && k + 1 < N (bs)) ? bs[k + 1]->w () : -1;
           tree res (TUPLE);
           res << tree ("table-loc") << tree ("col") << tree (as_string (j))
               << tree (as_string (border)) << tree (as_string (lw))
               << tree (as_string (rw)) << tree (as_string (cols))
-              << tree (as_string (rows)) << tree (as_string (ip));
+              << tree (as_string (rows)) << tree (as_string (ip))
+              << tree (wide_flag ? "wide" : "plain");
           return res;
         }
       }
@@ -437,17 +441,18 @@ table_box_rep::message (tree t, SI x, SI y, rectangles& rs) {
 
     /* vertical line (rows) */
     if (mx >= x1 - tol && mx <= x2 + tol) {
-      for (int i= 1; i < rows; i++) {
+      for (int i= 1; i <= rows; i++) {
         int idx   = (i - 1) * cols;
         SI  border= this->y[idx];
         if (abs (my - border) <= tol) {
-          SI   th= bs[idx]->h ();
-          SI   bh= bs[idx + cols]->h ();
+          SI th= bs[idx]->h ();
+          SI bh= (i < rows && idx + cols < N (bs)) ? bs[idx + cols]->h () : -1;
           tree res (TUPLE);
           res << tree ("table-loc") << tree ("row") << tree (as_string (i))
               << tree (as_string (border)) << tree (as_string (th))
               << tree (as_string (bh)) << tree (as_string (cols))
-              << tree (as_string (rows)) << tree (as_string (ip));
+              << tree (as_string (rows)) << tree (as_string (ip))
+              << tree (wide_flag ? "wide" : "plain");
           return res;
         }
       }
@@ -503,7 +508,7 @@ table_box_rep::adjust_kerning (int mode, double factor) {
       adj[k]= adj[k]->adjust_cell_geometry (cdx, 0, dw);
     }
   }
-  return table_box (ip, adj, nx, y, halign, cols);
+  return table_box (ip, adj, nx, y, halign, cols, wide_flag);
 }
 
 box
@@ -541,7 +546,7 @@ table_box_rep::expand_glyphs (int mode, double factor) {
       adj[k]= adj[k]->adjust_cell_geometry (cdx, 0, dw);
     }
   }
-  return table_box (ip, adj, nx, y, halign, cols);
+  return table_box (ip, adj, nx, y, halign, cols, wide_flag);
 }
 
 /******************************************************************************
@@ -560,6 +565,6 @@ composite_box (path ip, array<box> bs, array<SI> x, array<SI> y, bool bfl) {
 
 box
 table_box (path ip, array<box> bs, array<SI> x, array<SI> y,
-           array<string> halign, int cols) {
-  return tm_new<table_box_rep> (ip, bs, x, y, halign, cols);
+           array<string> halign, int cols, bool wide_flag) {
+  return tm_new<table_box_rep> (ip, bs, x, y, halign, cols, wide_flag);
 }

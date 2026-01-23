@@ -563,13 +563,14 @@ edit_interface_rep::table_resize_hit (SI x, SI y, table_hit& hit) {
   if (!is_func (r, TUPLE) || r[0] != "table-loc") return false;
 
   string orient= as_string (r[1]);
-  if ((orient != "col" && orient != "row") || N (r) < 9) return false;
+  if ((orient != "col" && orient != "row") || N (r) < 10) return false;
 
   hit.vertical   = (orient == "col");
   hit.index      = as_int (r[2]);
   hit.first_size = as_int (r[4]);
   hit.second_size= as_int (r[5]);
   hit.fp         = as_path (as_string (r[8]));
+  hit.wide_flag  = (as_string (r[9]) == "wide");
 
   if (is_nil (hit.fp) || hit.index <= 0) return false;
   return true;
@@ -594,6 +595,7 @@ edit_interface_rep::table_resize_start (const table_hit& hit, SI x, SI y) {
   table_resize_start_y    = y;
   table_resize_first_size = hit.first_size;
   table_resize_second_size= hit.second_size;
+  table_resize_wide_flag  = hit.wide_flag;
   table_resize_mark       = new_marker ();
   mark_start (table_resize_mark);
 }
@@ -613,25 +615,38 @@ edit_interface_rep::table_resize_apply (SI x, SI y) {
   SI second= table_resize_second_size - delta;
 
   if (table_resize_vertical) {
-    if (first < min_size || second < min_size) return;
+    if (table_resize_wide_flag && ~table_resize_second_size) {
+      if (first < min_size || second < min_size) return;
 
-    int col1= table_resize_index;
-    int col2= table_resize_index + 1;
+      int col1= table_resize_index;
+      int col2= table_resize_index + 1;
 
-    et->table_set_format_region (table_resize_path, 1, col1, -1, col1,
-                                 "cell-hmode", tree ("exact"));
-    et->table_set_format_region (table_resize_path, 1, col2, -1, col2,
-                                 "cell-hmode", tree ("exact"));
-    et->table_set_format_region (table_resize_path, 1, col1, -1, col1,
-                                 "cell-width",
-                                 tree (as_string (first) * string ("tmpt")));
-    et->table_set_format_region (table_resize_path, 1, col2, -1, col2,
-                                 "cell-width",
-                                 tree (as_string (second) * string ("tmpt")));
+      et->table_set_format_region (table_resize_path, 1, col1, -1, col1,
+                                   "cell-hmode", tree ("exact"));
+      et->table_set_format_region (table_resize_path, 1, col2, -1, col2,
+                                   "cell-hmode", tree ("exact"));
+      et->table_set_format_region (table_resize_path, 1, col1, -1, col1,
+                                   "cell-width",
+                                   tree (as_string (first) * string ("tmpt")));
+      et->table_set_format_region (table_resize_path, 1, col2, -1, col2,
+                                   "cell-width",
+                                   tree (as_string (second) * string ("tmpt")));
+    }
+    else {
+      if (first < min_size) return;
+
+      int col= table_resize_index;
+
+      et->table_set_format_region (table_resize_path, 1, col, -1, col,
+                                   "cell-hmode", tree ("exact"));
+      et->table_set_format_region (table_resize_path, 1, col, -1, col,
+                                   "cell-width",
+                                   tree (as_string (first) * string ("tmpt")));
+    }
   }
   else {
     if (first < min_size) return;
-    
+
     int row= table_resize_index;
 
     et->table_set_format_region (table_resize_path, row, 1, row, -1,
@@ -650,8 +665,9 @@ edit_interface_rep::table_resize_stop () {
     mark_end (table_resize_mark);
     table_resize_mark= 0.0;
   }
-  table_resizing   = false;
-  table_resize_path= path ();
+  table_resizing        = false;
+  table_resize_path     = path ();
+  table_resize_wide_flag= false;
 }
 
 /******************************************************************************
