@@ -607,23 +607,14 @@ edit_interface_rep::table_resize_apply (SI x, SI y) {
 
   SI delta   = table_resize_vertical ? (x - table_resize_start_x)
                                      : (table_resize_start_y - y);
-  SI min_size= 2 * PIXEL;
+  SI min_size= 16 * PIXEL;
 
   SI first = table_resize_first_size + delta;
   SI second= table_resize_second_size - delta;
 
-  // clamp sizes to avoid collapsing rows/columns
-  SI total= table_resize_first_size + table_resize_second_size;
-  if (first < min_size) {
-    first = min_size;
-    second= max (min_size, total - first);
-  }
-  if (second < min_size) {
-    second= min_size;
-    first = max (min_size, total - second);
-  }
-
   if (table_resize_vertical) {
+    if (first < min_size || second < min_size) return;
+
     int col1= table_resize_index;
     int col2= table_resize_index + 1;
 
@@ -639,19 +630,15 @@ edit_interface_rep::table_resize_apply (SI x, SI y) {
                                  tree (as_string (second) * string ("tmpt")));
   }
   else {
-    int row1= table_resize_index;
-    int row2= table_resize_index + 1;
+    if (first < min_size) return;
+    
+    int row= table_resize_index;
 
-    et->table_set_format_region (table_resize_path, row1, 1, row1, -1,
+    et->table_set_format_region (table_resize_path, row, 1, row, -1,
                                  "cell-vmode", tree ("exact"));
-    et->table_set_format_region (table_resize_path, row2, 1, row2, -1,
-                                 "cell-vmode", tree ("exact"));
-    et->table_set_format_region (table_resize_path, row1, 1, row1, -1,
+    et->table_set_format_region (table_resize_path, row, 1, row, -1,
                                  "cell-height",
                                  tree (as_string (first) * string ("tmpt")));
-    et->table_set_format_region (table_resize_path, row2, 1, row2, -1,
-                                 "cell-height",
-                                 tree (as_string (second) * string ("tmpt")));
   }
 
   table_resize_notify ();
