@@ -180,11 +180,11 @@ edit_interface_rep::draw_selection (renderer ren, rectangle r) {
 #endif
   }
 
-  draw_resize_handles (ren);
+  draw_image_resize_handles (ren);
 }
 
 void
-edit_interface_rep::draw_resize_handles (renderer ren) {
+edit_interface_rep::draw_image_resize_handles (renderer ren) {
   // 鼠标位于图片中时，绘制 handles
   SI        hs            = 10 * ren->pixel; // handles 半径
   rectangle new_image_brec= rectangle (0, 0, 0, 0);
