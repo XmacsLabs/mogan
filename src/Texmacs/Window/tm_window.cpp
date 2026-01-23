@@ -793,7 +793,10 @@ windows_delayed_refresh (int ms) {
 void
 windows_refresh (string kind) {
   if (kind == "auto" && texmacs_time () < refresh_time) return;
-  send_refresh (concrete_window ()->win, kind);
+
+  if (has_current_window ()) {
+    send_refresh (concrete_window ()->win, kind);
+  }
   iterator<int> it= iterate (window_table);
   while (it->busy ()) {
     int id= it->next ();
