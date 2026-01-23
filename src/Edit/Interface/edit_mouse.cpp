@@ -747,7 +747,7 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
   if (type == "move") {
     if (!is_zero (last_image_brec)) { // already clicked on image
       // 检测鼠标是否在handles上
-      SI        handle_r= last_handles_r > 0 ? last_handles_r : 10 * pixel;
+      SI        handle_r= last_image_hr > 0 ? last_image_hr : 10 * pixel;
       rectangle h       = last_image_brec;
       SI        x1      = h->x1 + handle_r;
       SI        y1      = h->y1 + handle_r;

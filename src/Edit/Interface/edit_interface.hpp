@@ -94,8 +94,8 @@ protected:
   void              table_resize_stop ();
   array<rectangles> alt_selection_rects;
   rectangle         last_visible;
-  rectangle         last_image_brec;
-  SI                last_handles_r;
+  rectangle         last_image_brec; // 图片 bbox 缓存
+  SI                last_image_hr;   // 图片 handle 半径缓存
   rectangles        env_rects;
   rectangles        foc_rects;
   rectangles        sem_rects;

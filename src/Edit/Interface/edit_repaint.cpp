@@ -218,10 +218,10 @@ edit_interface_rep::draw_image_resize_handles (renderer ren) {
   }
 
   if (!have_bbox) { // 不用画，但要设置缓存
-    last_handles_r= 0;
+    last_image_hr= 0;
     return;
   }
-  last_handles_r= hs;
+  last_image_hr= hs;
 
   // 8 个 handles，4 个位于边中点，4 个位于角上
   color border_col= get_env_color (FOCUS_COLOR);
