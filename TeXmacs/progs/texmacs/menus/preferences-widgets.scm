@@ -274,7 +274,7 @@ pretty-val : string
   (bold (text "Keyboard"))
   ======
   (aligned
-    (meti (text "Use extensible brackets")
+    (meti (text "使用可伸缩括号")
       (toggle (set-boolean-preference "use large brackets"
                                       answer)
               (get-boolean-preference "use large brackets")))))
