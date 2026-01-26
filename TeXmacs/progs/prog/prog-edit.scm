@@ -46,11 +46,102 @@
   (:synopsis "get the horizontal position on the current line")
   (and (inside-program?) (cAr (cursor-path))))
 
+#|
+program-go-to
+将光标移动到指定行和列的位置。
+
+语法
+----
+(program-go-to row col)
+
+参数
+----
+row : integer
+目标行号（0-based）。
+
+col : integer
+目标列号（0-based）。
+
+返回值
+----
+#<unspecified> 或 #f
+- 如果成功移动光标，返回 #<unspecified>
+- 如果无法移动光标（参数无效或不在代码模式中），返回 #f
+
+逻辑
+----
+1. 获取程序文档树 (program-tree)
+2. 调用 tree-go-to 将光标移动到指定位置
+
+边界情况处理
+------------
+当 row 或 col 超出有效范围时：
+
+1. row 超出范围：
+   - 如果 row < 0：tree-ref 返回 #f，导致 tree->path 返回 #f，最终 tree-go-to 返回 #f
+   - 如果 row >= 文档行数：tree-ref 返回 #f，导致 tree->path 返回 #f，最终 tree-go-to 返回 #f
+
+2. col 超出范围：
+   - 如果 col < 0：tree->path 会创建路径，但 go-to 可能将光标移动到行的开头
+   - 如果 col >= 行长度：tree->path 会创建路径，但 go-to 可能将光标移动到行的末尾
+
+具体行为取决于 tree->path 和 go-to 的内部实现。通常：
+- col 为负值会被视为 0
+- col 超过行长度会被视为行末尾位置
+
+注意
+----
+- 此函数仅在代码模式中有效，需要 program-tree 返回有效的文档树
+- 行号和列号都是 0-based
+- 如果参数无效，函数会静默失败（返回 #f），不会抛出错误
+|#
 (tm-define (program-go-to row col)
   (:synopsis "go to the character at a given @row and @col")
   (and-with doc (program-tree)
     (tree-go-to doc row col)))
 
+#|
+program-character
+获取指定路径位置的字符。
+
+语法
+----
+(program-character path)
+
+参数
+----
+path : list
+树路径，格式为 (行路径 . 列位置)。
+
+返回值
+----
+character 或 #\nul
+- 如果路径有效且位置在字符串范围内，返回对应字符
+- 如果字符串为空、位置超出范围或位置为负，返回空字符 (#\nul)
+
+逻辑
+----
+1. 从路径中提取行路径 (cDr path) 并转换为字符串
+2. 从路径中提取列位置 (cAr path)
+3. 检查边界条件：
+   - 字符串是否为空 (string-null?)
+   - 位置是否超出字符串长度 (>= pos (string-length s))
+   - 位置是否为负数 (< pos 0)
+4. 如果任何边界条件为真，返回 #\nul
+5. 否则返回字符串中指定位置的字符
+
+边界情况处理
+------------
+- 空字符串：返回 #\nul
+- 位置超出字符串长度：返回 #\nul
+- 负位置：返回 #\nul
+
+注意
+----
+- 此函数用于安全地访问程序文本中的字符，避免索引越界错误
+- 返回 #\nul（空字符）作为错误指示符
+- 路径格式应符合树路径规范
+|#
 (tm-define (program-character path)
   (let ((s (tree->string (path->tree (cDr path))))
         (pos (cAr path)))
@@ -263,6 +354,21 @@
 ;; Automatic indentation
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+#|
+代码缩进系统架构
+
+代码缩进系统采用分层设计：
+
+1. 用户接口层: insert-return - 响应回车键事件
+2. 控制层: program-indent - 协调缩进流程
+3. 逻辑层: program-indent-line - 执行单行缩进
+4. 算法层: program-compute-indentation - 计算缩进规则（可扩展）
+5. 工具层: program-get-indent / program-set-indent - 基础操作
+
+这种设计允许不同编程语言通过重写 program-compute-indentation 来实现特定的缩进规则，
+而其他层次保持通用。
+|#
+
 (tm-define (string-get-indent s)
   (:synopsis "get the indentation of @s")
   (with pos (list-find-index (string->list s) char-non-space?)
@@ -274,21 +380,135 @@
          (r (substring s (string-get-indent s) (string-length s))))
     (string-append l r)))
 
+#|
+program-get-indent
+获取当前行的缩进级别。
+
+语法
+----
+(program-get-indent)
+
+返回值
+----
+integer 或 #f
+当前行的缩进空格数，如果不在代码模式中则返回 #f。
+
+逻辑
+----
+1. 检查是否在代码模式中 (inside-program?)
+2. 获取当前行文本 (program-row)
+3. 使用 string-get-indent 计算缩进空格数
+|#
 (tm-define (program-get-indent)
   (:synopsis "get the indentation of the current line")
   (and (inside-program?)
        (string-get-indent (program-row (program-row-number)))))
 
+#|
+program-set-indent
+设置当前行的缩进级别。
+
+语法
+----
+(program-set-indent i)
+
+参数
+----
+i : integer
+要设置的缩进空格数。
+
+逻辑
+----
+1. 检查是否在代码模式中 (inside-program?)
+2. 获取当前光标所在的文本树 (cursor-tree)
+3. 使用 string-set-indent 设置文本的缩进
+4. 更新树节点 (tree-set)
+
+注意
+----
+此函数直接修改当前行的文本内容，设置指定的缩进空格数。
+|#
 (tm-define (program-set-indent i)
   (:synopsis "set the indentation of the current line to @i spaces")
   (when (inside-program?)
     (with t (cursor-tree)
       (tree-set t (string-set-indent (tree->string t) i)))))
 
-; Redefine this for specific languages
+#|
+program-compute-indentation
+计算指定行的缩进级别。
+
+语法
+----
+(program-compute-indentation doc row col)
+
+参数
+----
+doc : tree
+程序文档树。
+
+row : integer
+要计算的行号。
+
+col : integer
+列位置（当前未使用，固定为-1）。
+
+返回值
+----
+integer
+计算出的缩进级别（空格数）。
+
+逻辑
+----
+默认返回0，需要在特定语言模块中重新定义。
+
+注意
+----
+- 这是可扩展的接口，不同编程语言应实现自己的缩进计算逻辑
+- 参数 col 当前未使用，保留给未来扩展
+|#
 (tm-define (program-compute-indentation doc row col)
   0)
 
+#|
+program-indent-line
+缩进指定行。
+
+语法
+----
+(program-indent-line doc row unindent?)
+
+参数
+----
+doc : tree
+程序文档树。
+
+row : integer
+要缩进的行号（0-based）。
+
+unindent? : boolean
+缩进方向：
+- #t : 取消缩进
+- #f : 正常缩进
+
+返回值
+----
+integer
+缩进后的列位置。
+
+逻辑
+----
+1. 调用 program-compute-indentation 计算该行的缩进级别
+2. 获取该行的文本树 (tree-ref doc row)
+3. 使用 string-set-indent 设置文本的缩进
+4. 更新树节点 (tree-set)
+5. 返回缩进级别
+
+注意
+----
+- 目前 unindent? 参数尚未实现（TODO注释）
+- 这是一个HACK实现，应该修改 program-set-indent 以接受行号参数
+|#
 (tm-define (program-indent-line doc row unindent?)
   ; TODO: implement unindent for general languages
   (let* ((i (program-compute-indentation doc row -1))
@@ -303,12 +523,69 @@
     (for-each (lambda (r) (program-indent-line doc r unindent?))
               (iota (tree-arity doc)))))
 
+#|
+program-indent
+缩进当前行。
+
+语法
+----
+(program-indent unindent?)
+
+参数
+----
+unindent? : boolean
+缩进方向：
+- #t : 取消缩进（减少缩进）
+- #f : 正常缩进（增加缩进）
+
+返回值
+----
+#<unspecified>
+无显式返回值。
+
+逻辑
+----
+1. 获取当前程序文档树 (program-tree)
+2. 获取当前行号 (program-row-number)
+3. 调用 program-indent-line 对当前行进行缩进
+4. 将光标移动到缩进后的位置 (program-go-to)
+
+注意
+----
+此函数是代码缩进的核心接口，通过 program-indent-line 实现具体缩进逻辑。
+|#
 (tm-define (program-indent unindent?)
   (and-with doc (program-tree)
     (let* ((r (program-row-number))
            (c (program-indent-line doc r unindent?)))
       (program-go-to r c))))
 
+#|
+insert-return
+代码模式回车键的行为处理函数。
+
+语法
+----
+(insert-return)
+
+参数
+----
+无参数。
+
+返回值
+----
+#<unspecified>
+无显式返回值（返回 #<unspecified>）。
+
+逻辑
+----
+1. 首先调用 insert-raw-return 插入原始换行符
+2. 然后调用 program-indent #f 对新行进行缩进
+
+注意
+----
+此函数仅在代码模式 (in-prog?) 下激活，用于实现代码编辑时的智能缩进功能。
+|#
 (tm-define (insert-return)
   (:mode in-prog?)
   (insert-raw-return)
