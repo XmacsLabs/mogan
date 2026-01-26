@@ -46,11 +46,102 @@
   (:synopsis "get the horizontal position on the current line")
   (and (inside-program?) (cAr (cursor-path))))
 
+#|
+program-go-to
+将光标移动到指定行和列的位置。
+
+语法
+----
+(program-go-to row col)
+
+参数
+----
+row : integer
+目标行号（0-based）。
+
+col : integer
+目标列号（0-based）。
+
+返回值
+----
+#<unspecified> 或 #f
+- 如果成功移动光标，返回 #<unspecified>
+- 如果无法移动光标（参数无效或不在代码模式中），返回 #f
+
+逻辑
+----
+1. 获取程序文档树 (program-tree)
+2. 调用 tree-go-to 将光标移动到指定位置
+
+边界情况处理
+------------
+当 row 或 col 超出有效范围时：
+
+1. row 超出范围：
+   - 如果 row < 0：tree-ref 返回 #f，导致 tree->path 返回 #f，最终 tree-go-to 返回 #f
+   - 如果 row >= 文档行数：tree-ref 返回 #f，导致 tree->path 返回 #f，最终 tree-go-to 返回 #f
+
+2. col 超出范围：
+   - 如果 col < 0：tree->path 会创建路径，但 go-to 可能将光标移动到行的开头
+   - 如果 col >= 行长度：tree->path 会创建路径，但 go-to 可能将光标移动到行的末尾
+
+具体行为取决于 tree->path 和 go-to 的内部实现。通常：
+- col 为负值会被视为 0
+- col 超过行长度会被视为行末尾位置
+
+注意
+----
+- 此函数仅在代码模式中有效，需要 program-tree 返回有效的文档树
+- 行号和列号都是 0-based
+- 如果参数无效，函数会静默失败（返回 #f），不会抛出错误
+|#
 (tm-define (program-go-to row col)
   (:synopsis "go to the character at a given @row and @col")
   (and-with doc (program-tree)
     (tree-go-to doc row col)))
 
+#|
+program-character
+获取指定路径位置的字符。
+
+语法
+----
+(program-character path)
+
+参数
+----
+path : list
+树路径，格式为 (行路径 . 列位置)。
+
+返回值
+----
+character 或 #\nul
+- 如果路径有效且位置在字符串范围内，返回对应字符
+- 如果字符串为空、位置超出范围或位置为负，返回空字符 (#\nul)
+
+逻辑
+----
+1. 从路径中提取行路径 (cDr path) 并转换为字符串
+2. 从路径中提取列位置 (cAr path)
+3. 检查边界条件：
+   - 字符串是否为空 (string-null?)
+   - 位置是否超出字符串长度 (>= pos (string-length s))
+   - 位置是否为负数 (< pos 0)
+4. 如果任何边界条件为真，返回 #\nul
+5. 否则返回字符串中指定位置的字符
+
+边界情况处理
+------------
+- 空字符串：返回 #\nul
+- 位置超出字符串长度：返回 #\nul
+- 负位置：返回 #\nul
+
+注意
+----
+- 此函数用于安全地访问程序文本中的字符，避免索引越界错误
+- 返回 #\nul（空字符）作为错误指示符
+- 路径格式应符合树路径规范
+|#
 (tm-define (program-character path)
   (let ((s (tree->string (path->tree (cDr path))))
         (pos (cAr path)))
