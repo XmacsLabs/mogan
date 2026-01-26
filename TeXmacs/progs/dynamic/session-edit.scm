@@ -641,9 +641,7 @@
 (define (field-go-to-previous)
   (with-innermost t field-context?
     (if (== t (field-extreme t #f))
-        (begin
-          (display* "field-go-to-previous: reached top, trying to jump out\n")
-          (go-up))
+        (go-up)
         (begin
           (with u (tree-ref t :previous)
             (if (and u (field-context? u))
@@ -654,9 +652,7 @@
 (define (field-go-to-next)
   (with-innermost t field-context?
     (if (== t (field-extreme t #t))
-        (begin
-          (display* "field-go-to-next: reached bottom, trying to jump out\n")
-          (go-down))
+        (go-down)
         (begin
           (with u (tree-ref t :next)
             (if (and u (field-context? u))
