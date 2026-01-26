@@ -352,14 +352,12 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   // 检查是否应该显示提示条
   // 1. 社区版不显示
   // 2. 商业版：用户未登录时显示，用户已登录时不显示
-  if (is_community_stem () || !checkOfficialWebsiteConnection ()) {
+  if (is_community_stem () || !checkNetworkAvailable ()) {
     // 社区版：不显示提示条 //用户没网络也不显示
     guestNotificationBar->hide ();
   }
   else {
     // 商业版：检查用户登录状态（使用和OCR功能相同的判断方法）
-    try {
-      // 直接调用全局的logged-in?函数，不需要导入模块
       bool isLoggedIn= as_bool (call ("logged-in?"));
 
       if (isLoggedIn) {
@@ -370,10 +368,6 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
         // 用户未登录，显示提示条
         guestNotificationBar->show ();
       }
-    } catch (...) {
-      // 如果检查登录状态失败，默认显示提示条
-      guestNotificationBar->show ();
-    }
   }
 
   // there is a bug in the early implementation of toolbars in Qt 4.6
@@ -2226,7 +2220,7 @@ qt_tm_widget_rep::openRenewalPage () {
 }
 
 bool
-qt_tm_widget_rep::checkOfficialWebsiteConnection () {
+qt_tm_widget_rep::checkNetworkAvailable()  {
   QString     program= "ping";
   QStringList args;
 
@@ -2239,3 +2233,5 @@ qt_tm_widget_rep::checkOfficialWebsiteConnection () {
   if (exitCode == 0) return true;
   return exitCode == 0;
 }
+
+
