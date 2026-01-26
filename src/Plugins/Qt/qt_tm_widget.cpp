@@ -28,6 +28,7 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QObject>
+#include <QProcess>
 #include <QResource>
 #include <QScreen>
 #include <QSettings>
@@ -351,8 +352,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   // 检查是否应该显示提示条
   // 1. 社区版不显示
   // 2. 商业版：用户未登录时显示，用户已登录时不显示
-  if (is_community_stem ()) {
-    // 社区版：不显示提示条
+  if (is_community_stem () || !checkOfficialWebsiteConnection ()) {
+    // 社区版：不显示提示条 //用户没网络也不显示
     guestNotificationBar->hide ();
   }
   else {
@@ -2222,4 +2223,21 @@ qt_tm_widget_rep::openRenewalPage () {
 
   // 打开浏览器跳转到续费页面
   QDesktopServices::openUrl (QUrl (fullUrl));
+}
+
+bool
+qt_tm_widget_rep::checkOfficialWebsiteConnection () {
+  QString     program= "ping";
+  QStringList args;
+
+#ifdef Q_OS_WIN
+  args << "-n" << "1" << "-w" << "500" << "8.8.8.8";
+#else
+  args << "-c" << "1" << "-W" << "0.5" << "8.8.8.8";
+#endif
+  debug_std << "[qt_tm_widget_rep] 1\n";
+  int exitCode= QProcess::execute (program, args);
+  if (exitCode == 0) return true;
+  debug_std << "[qt_tm_widget_rep] 2\n";
+  return exitCode == 0;
 }
