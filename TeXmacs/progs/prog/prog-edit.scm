@@ -468,6 +468,7 @@ integer
 - 参数 col 当前未使用，保留给未来扩展
 |#
 (tm-define (program-compute-indentation doc row col)
+  (display* "program-compute-indentation\n")
   0)
 
 #|
@@ -510,6 +511,7 @@ integer
 - 这是一个HACK实现，应该修改 program-set-indent 以接受行号参数
 |#
 (tm-define (program-indent-line doc row unindent?)
+  (display* "program-indent-line\n")
   ; TODO: implement unindent for general languages
   (let* ((i (program-compute-indentation doc row -1))
          (t (tree-ref doc row)))
@@ -555,6 +557,7 @@ unindent? : boolean
 此函数是代码缩进的核心接口，通过 program-indent-line 实现具体缩进逻辑。
 |#
 (tm-define (program-indent unindent?)
+  (display* "program-indent\n")
   (and-with doc (program-tree)
     (let* ((r (program-row-number))
            (c (program-indent-line doc r unindent?)))

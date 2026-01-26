@@ -129,7 +129,7 @@
     (tm-count (string->list (substring s 0 (cdr a))) 1)))
 
 (tm-define (program-compute-indentation doc row col)
-  (:require in-prog-scheme?)
+  (:mode in-prog-scheme?)
   (let* ((l (previous-arguments doc row col 10))
          (t (reference-type doc l))
          (i (indent-get-arity t))
