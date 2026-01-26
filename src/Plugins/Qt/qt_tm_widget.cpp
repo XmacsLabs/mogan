@@ -2235,9 +2235,7 @@ qt_tm_widget_rep::checkOfficialWebsiteConnection () {
 #else
   args << "-c" << "1" << "-W" << "0.5" << "8.8.8.8";
 #endif
-  debug_std << "[qt_tm_widget_rep] 1\n";
   int exitCode= QProcess::execute (program, args);
   if (exitCode == 0) return true;
-  debug_std << "[qt_tm_widget_rep] 2\n";
   return exitCode == 0;
 }
