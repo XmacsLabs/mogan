@@ -640,18 +640,25 @@
 
 (define (field-go-to-previous)
   (with-innermost t field-context?
-    (with u (tree-ref t :previous)
-      (if (and u (field-context? u))
-	  (tree-go-to u 1 :end)
-	  (go-to-previous-tag-same-argument field-tags)))))
+    (if (== t (field-extreme t #f))
+        (go-up)
+        (begin
+          (with u (tree-ref t :previous)
+            (if (and u (field-context? u))
+                (tree-go-to u 1 :end)
+                (go-to-previous-tag-same-argument field-tags)))
+          (go-start-line)))))
 
 (define (field-go-to-next)
   (with-innermost t field-context?
-    (with u (tree-ref t :next)
-      (if (and u (field-context? u))
-	  (tree-go-to u 1 :start)
-	  (go-to-next-tag-same-argument field-tags))
-      (go-end-line))))
+    (if (== t (field-extreme t #t))
+        (go-down)
+        (begin
+          (with u (tree-ref t :next)
+            (if (and u (field-context? u))
+                (tree-go-to u 1 :start)
+                (go-to-next-tag-same-argument field-tags)))
+          (go-end-line)))))
 
 (define (field-go-up)
   (with p (cursor-path)
