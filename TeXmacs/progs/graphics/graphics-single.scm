@@ -62,7 +62,39 @@
   (:require (== tag 'point))
   (object-set! `(point ,x ,y) 'new))
 
-(define new-gr-tags (list 'circle 'ellipse 'std-arc 'sector 'std-arc-counterclockwise 'sector-counterclockwise))
+(define new-gr-tags (list 'circle 'ellipse 'std-arc 'sector 'std-arc-counterclockwise 'sector-counterclockwise 'rectangle))
+
+;; 获得对象的 tag（暂时）
+(define (get-tag obj)
+  (car (list-ref obj 3)))
+
+;; 判断是否为固定点数图形
+(define (fixed-point-count-graph? obj)
+  (and (pair? obj)
+       (in? (get-tag obj) new-gr-tags))) ;; obj 格式为 (with "magnify" "1" (tag))
+
+;; 获取图形所需点数
+(define (graphics-points-needed obj)
+  (if (not (pair? obj)) #f
+      (let ((tag (get-tag obj)))
+        (cond
+          ;; 特殊处理图形宏
+          ((== tag 'circle) 2)
+          ;; ((== tag 'rectangle) 2)
+          ((== tag 'ellipse) 3)  ;; 两个焦点和一个椭圆上的点
+          ((== tag 'std-arc) 3)
+          ((== tag 'std-arc-counterclockwise) 3)
+          ((== tag 'sector) 3)
+          ((== tag 'sector-counterclockwise) 3)
+          ;; 使用tag-maximal-arity作为备选
+          ((and (defined? 'tag-maximal-arity)
+                (tag-maximal-arity tag))
+           (tag-maximal-arity tag))
+          (else #f)))))
+
+;; 调试输出函数
+(define (debug-msg . args)
+  (display* "[DEBUG] " args "\n"))
 
 (tm-define (object_create tag x y)
   (:require (or (in? tag gr-tags-curves) 
@@ -279,21 +311,48 @@
   (object_commit))
 
 (define (next-point)
+  (debug-msg ">> Go into <next-point>: fixed-point?: " (fixed-point-count-graph? current-obj) " graph:" (car (list-ref current-obj 3)) "points:" (tm-arity current-obj) "needed:" (graphics-points-needed current-obj))
+  (debug-msg ">>    commit check: " (and current-obj
+              (fixed-point-count-graph? current-obj)
+              (with needed (graphics-points-needed current-obj)
+                (and needed
+                     (>= current-point-no (- needed 1))))))
   (cond ((not (hardly-moved?))
          (set-message "Left click: finish; Shift+Left click or Right click: undo"
                       "Inserting control points")
-         (set! leftclick-waiting #t))
+         (set! leftclick-waiting #t)
+
+         ; 测试
+         (if (and current-obj
+               (fixed-point-count-graph? current-obj)
+               (with needed (graphics-points-needed current-obj)
+                 (and needed
+                     (>= current-point-no (- needed 1)))))
+            (begin
+              (debug-msg "Checking..> Graph tag:" (car (list-ref current-obj 3)) ", current-point-no:" current-point-no ", points-needed:" (graphics-points-needed current-obj))
+              (last-point)
+              (debug-msg "Pass <commit check> == true"))
+            (begin
+              (debug-msg "Checking..> Graph tag:" (car (list-ref current-obj 3)) ", current-point-no:" current-point-no ", points-needed:" (graphics-points-needed current-obj))
+              (debug-msg "Not pass for commit check")))
+
+
+         (debug-msg "Selected case 1: not (hardly-moved?), i.e. the point moved for a lot of distance.\nBecause of the (move-point), we know the variable (leftclick-waiting) is false. So it won't go into the case 2 (last-point).\nWe should check the <commit check>."))
         (leftclick-waiting
-         (last-point))
+         (last-point)
+         (debug-msg "Selected case 2: leftclick-waiting, so we do (last-point)"))
         ((== current-point-no 1)
          (undo 0)
-         (set! leftclick-waiting #f))
+         (set! leftclick-waiting #f)
+         (debug-msg "Selected case 3: (== current-point-no 1), cancelled for creating new object"))
+        ;; 新增：固定点数图形达到所需点数时自动提交
         (else
           (set-message "Left click: finish; Shift+Left click or Right click: undo"
                        "Inserting control points")
-         (graphics-back-state #f)
-         (graphics-move current-x current-y)
-         (set! leftclick-waiting #t))))
+          (graphics-back-state #f)
+          (graphics-move current-x current-y)
+          (set! leftclick-waiting #t)
+          (debug-msg "Selected case 4: else, i.e. hardly-moved && !leftclick-waiting && current-point-no != 1, so we go into <else>, set leftclick-waiting to true"))))
 
 (define (remove-point)
   (if (or (graphics-minimal? current-obj)
