@@ -14,7 +14,7 @@
 #include "env.hpp"
 #include "page_type.hpp"
 #include "typesetter.hpp"
-#include "Graphics/Fonts/font.hpp"
+#include "font.hpp"
 
 using namespace moebius;
 

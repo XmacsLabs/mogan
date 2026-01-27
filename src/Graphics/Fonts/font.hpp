@@ -31,6 +31,7 @@ struct font_glyphs;
 #define FONT_TYPE_UNICODE 1
 #define FONT_TYPE_QT 2
 #define FONT_TYPE_OTHER 3
+#define FONT_TYPE_TT 4
 
 #define MATH_TYPE_NORMAL 0
 #define MATH_TYPE_STIX 1

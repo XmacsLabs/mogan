@@ -519,7 +519,7 @@ error_font (font fn) {
  ******************************************************************************/
 
 font
-x_font (string family, int size, int dpi) {
+x_font (string family, double size, int dpi) {
   (void) family;
   (void) size;
   (void) dpi;
@@ -529,7 +529,7 @@ x_font (string family, int size, int dpi) {
 #ifndef QTTEXMACS
 
 font
-qt_font (string family, int size, int dpi) {
+qt_font (string family, double size, int dpi) {
   (void) family;
   (void) size;
   (void) dpi;

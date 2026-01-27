@@ -158,7 +158,7 @@ unicode_font_rep::unicode_font_rep (string name, string family2, double size2,
   y1          = min (y1, ex->y1);
   y2          = max (y2, ex->y2);
   display_size= y2 - y1;
-  design_size = size << 8;
+  design_size = (SI)(size2 * 256.0);
 
   // get character dimensions
   get_extents ("x", ex);
@@ -778,7 +778,7 @@ unicode_font_rep::draw_fixed (renderer ren, string s, SI x, SI y) {
 
 font
 unicode_font_rep::magnify (double zoomx, double zoomy) {
-  return unicode_font (family, size, (int) tm_round (hdpi * zoomx),
+  return unicode_font (family, effective_size(), (int) tm_round (hdpi * zoomx),
                        (int) tm_round (vdpi * zoomy));
 }
 

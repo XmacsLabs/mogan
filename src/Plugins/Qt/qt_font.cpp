@@ -132,8 +132,16 @@ qt_font_rep::magnify (double zoomx, double zoomy) {
  ******************************************************************************/
 
 font
-qt_font (string family, int size, int dpi) {
-  string name= "qt:" * family * as_string (size) * "@" * as_string (dpi);
+qt_font (string family, double size, int dpi) {
+  // 验证输入是否为0.5倍数，如果不是则修正
+  if (!is_half_multiple (size)) {
+    size = round_to_half_multiple (size);
+  }
+  // 浮点尺寸字符串处理：整数如"10"，0.5倍数如"10.5"
+  string sz_str;
+  if (size == round (size)) sz_str = as_string ((int) size);  // 整数
+  else sz_str = as_string (size);  // 0.5倍数，保留一位小数
+  string name= "qt:" * family * sz_str * "@" * as_string (dpi);
   if (font::instances->contains (name)) return font (name);
   else return tm_new<qt_font_rep> (name, family, size, dpi);
 }
