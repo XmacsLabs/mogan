@@ -615,7 +615,7 @@ edit_interface_rep::table_resize_apply (SI x, SI y) {
   SI second= table_resize_second_size - delta;
 
   if (table_resize_vertical) {
-    if (table_resize_wide_flag && ~table_resize_second_size) {
+    if (table_resize_wide_flag && table_resize_second_size != -1) {
       if (first < min_size || second < min_size) return;
 
       int col1= table_resize_index;
