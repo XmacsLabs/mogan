@@ -746,25 +746,59 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
     }
   }
   bool             hovering_image= false;
+  bool             over_handles  = false;
+  string           handle_cursor = "";
   static path      current_path  = path ();
   static rectangle selr          = rectangle ();
   if (type == "move") {
-    // 检测鼠标是否在图片上
-    current_path     = path_up (tree_path (path (), x, y, 0));
-    tree current_tree= subtree (et, current_path);
-    // 检查当前元素是否是图片
-    if (is_func (current_tree, IMAGE)) {
-      path      p= reverse (obtain_ip (current_tree));
-      selection sel=
-          search_selection (p * start (current_tree), p * end (current_tree));
-      selr= least_upper_bound (sel->rs);
-      if (last_x >= selr->x1 && last_y >= selr->y1 && last_x <= selr->x2 &&
-          last_y <= selr->y2 * 0.8) {
-        hovering_image= true;
+    if (!is_zero (last_image_brec)) { // already clicked on image
+      // 检测鼠标是否在handles上
+      SI        handle_r= last_image_hr > 0 ? last_image_hr : 10 * pixel;
+      rectangle h       = last_image_brec;
+      SI        x1      = h->x1 + handle_r;
+      SI        y1      = h->y1 + handle_r;
+      SI        x2      = h->x2 - handle_r;
+      SI        y2      = h->y2 - handle_r;
+      SI        mx      = (x1 + x2) / 2;
+      SI        my      = (y1 + y2) / 2;
+      SI        hx[8]   = {x1, x2, x1, x2, mx, mx, x1, x2};
+      SI        hy[8]   = {y1, y1, y2, y2, y1, y2, my, my};
+      for (int i= 0; i < 8 && !over_handles; i++) {
+        int dx= x - hx[i];
+        int dy= y - hy[i];
+        if (1ll * dx * dx + 1ll * dy * dy <= 1ll * handle_r * handle_r)
+          over_handles= true;
+        if (over_handles) {
+          if (i == 0 || i == 3) handle_cursor= "size_bdiag";      // sw / ne
+          else if (i == 1 || i == 2) handle_cursor= "size_fdiag"; // se / nw
+          else if (i == 4 || i == 5) handle_cursor= "size_ver"; // south / north
+          else if (i == 6 || i == 7) handle_cursor= "size_hor"; // west / east
+        }
+      }
+      hovering_image= false;
+    }
+    else {
+      // 检测鼠标是否在图片上
+      current_path     = path_up (tree_path (path (), x, y, 0));
+      tree current_tree= subtree (et, current_path);
+      // 检查当前元素是否是图片
+      if (is_func (current_tree, IMAGE)) {
+        path      p= reverse (obtain_ip (current_tree));
+        selection sel=
+            search_selection (p * start (current_tree), p * end (current_tree));
+        selr= least_upper_bound (sel->rs);
+        if (last_x >= selr->x1 && last_y >= selr->y1 && last_x <= selr->x2 &&
+            last_y <= selr->y2 * 0.8) {
+          hovering_image= true;
+        }
       }
     }
   }
-  if (hovering_table) {
+  if (over_handles) {
+    if (handle_cursor != "") set_cursor_style (handle_cursor);
+    else set_cursor_style ("size_all");
+  }
+  else if (hovering_table) {
     if (hovering_table == -1) {
       set_cursor_style ("normal");
       // draw table resizing handles

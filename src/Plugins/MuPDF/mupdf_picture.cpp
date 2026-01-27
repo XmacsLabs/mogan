@@ -375,7 +375,8 @@ format_picsize_string (index_type px, index_type dpi, int& w, int& h,
     *out_wcm_pointer= is_exceed_page ? "0.8par" : as_string (dwcm) * "cm";
   }
   if (out_hcm_pointer != NULL) {
-    *out_hcm_pointer= is_exceed_page ? "" : as_string (dhcm) * "cm";
+    *out_hcm_pointer= is_exceed_page ? as_string (0.8 / w * h) * "par"
+                                     : as_string (dhcm) * "cm";
   }
 }
 

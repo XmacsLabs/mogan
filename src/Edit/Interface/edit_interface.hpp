@@ -95,6 +95,8 @@ protected:
   void              table_resize_stop ();
   array<rectangles> alt_selection_rects;
   rectangle         last_visible;
+  rectangle         last_image_brec; // 图片 bbox 缓存
+  SI                last_image_hr;   // 图片 handle 半径缓存
   rectangles        env_rects;
   rectangles        foc_rects;
   rectangles        sem_rects;
@@ -159,6 +161,7 @@ public:
   void draw_env (renderer ren);
   void draw_cursor (renderer ren);
   void draw_selection (renderer ren, rectangle r);
+  void draw_image_resize_handles (renderer ren);
   void draw_graphics (renderer ren);
   void draw_pre (renderer win, renderer ren, rectangle r);
   void draw_post (renderer win, renderer ren, rectangle r);
