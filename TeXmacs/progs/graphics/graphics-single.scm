@@ -311,48 +311,28 @@
   (object_commit))
 
 (define (next-point)
-  (debug-msg ">> Go into <next-point>: fixed-point?: " (fixed-point-count-graph? current-obj) " graph:" (car (list-ref current-obj 3)) "points:" (tm-arity current-obj) "needed:" (graphics-points-needed current-obj))
-  (debug-msg ">>    commit check: " (and current-obj
-              (fixed-point-count-graph? current-obj)
-              (with needed (graphics-points-needed current-obj)
-                (and needed
-                     (>= current-point-no (- needed 1))))))
   (cond ((not (hardly-moved?))
          (set-message "Left click: finish; Shift+Left click or Right click: undo"
                       "Inserting control points")
          (set! leftclick-waiting #t)
-
-         ; 测试
-         (if (and current-obj
-               (fixed-point-count-graph? current-obj)
-               (with needed (graphics-points-needed current-obj)
-                 (and needed
-                     (>= current-point-no (- needed 1)))))
-            (begin
-              (debug-msg "Checking..> Graph tag:" (car (list-ref current-obj 3)) ", current-point-no:" current-point-no ", points-needed:" (graphics-points-needed current-obj))
-              (last-point)
-              (debug-msg "Pass <commit check> == true"))
-            (begin
-              (debug-msg "Checking..> Graph tag:" (car (list-ref current-obj 3)) ", current-point-no:" current-point-no ", points-needed:" (graphics-points-needed current-obj))
-              (debug-msg "Not pass for commit check")))
-
-
-         (debug-msg "Selected case 1: not (hardly-moved?), i.e. the point moved for a lot of distance.\nBecause of the (move-point), we know the variable (leftclick-waiting) is false. So it won't go into the case 2 (last-point).\nWe should check the <commit check>."))
+         ; 测试图像是否为固定点类型的，并且检测是否已经绘制完成
+         (when (and current-obj
+                    (fixed-point-count-graph? current-obj)
+                    (with needed (graphics-points-needed current-obj)
+                      (and needed
+                          (>= current-point-no (- needed 1)))))
+            (last-point)))
         (leftclick-waiting
-         (last-point)
-         (debug-msg "Selected case 2: leftclick-waiting, so we do (last-point)"))
+         (last-point))
         ((== current-point-no 1)
          (undo 0)
-         (set! leftclick-waiting #f)
-         (debug-msg "Selected case 3: (== current-point-no 1), cancelled for creating new object"))
-        ;; 新增：固定点数图形达到所需点数时自动提交
+         (set! leftclick-waiting #f))
         (else
           (set-message "Left click: finish; Shift+Left click or Right click: undo"
                        "Inserting control points")
           (graphics-back-state #f)
           (graphics-move current-x current-y)
-          (set! leftclick-waiting #t)
-          (debug-msg "Selected case 4: else, i.e. hardly-moved && !leftclick-waiting && current-point-no != 1, so we go into <else>, set leftclick-waiting to true"))))
+          (set! leftclick-waiting #t))))
 
 (define (remove-point)
   (if (or (graphics-minimal? current-obj)
