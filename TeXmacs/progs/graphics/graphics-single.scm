@@ -71,7 +71,7 @@
 ;; 判断是否为固定点数图形
 (define (fixed-point-count-graph? obj)
   (and (pair? obj)
-       (in? (get-tag obj) new-gr-tags)))
+       (in? (get-tag obj) new-gr-tags))) ;; obj 格式为 (with "magnify" "1" (tag))
 
 ;; 获取图形所需点数
 (define (graphics-points-needed obj)
@@ -79,8 +79,18 @@
       (let ((tag (get-tag obj)))
         (cond
           ;; 特殊处理图形宏
+<<<<<<< HEAD
           ;; ((== tag 'circle) 2)
           
+=======
+          ((== tag 'circle) 2)
+          ;; ((== tag 'rectangle) 2)
+          ((== tag 'ellipse) 3)  ;; 两个焦点和一个椭圆上的点
+          ((== tag 'std-arc) 3)
+          ((== tag 'std-arc-counterclockwise) 3)
+          ((== tag 'sector) 3)
+          ((== tag 'sector-counterclockwise) 3)
+>>>>>>> 122ff85fe (合并一起修改了单击操作逻辑和矩形绘制功能)
           ;; 使用tag-maximal-arity作为备选
           ((and (defined? 'tag-maximal-arity)
                 (tag-maximal-arity tag))
@@ -302,6 +312,12 @@
   (object_commit))
 
 (define (next-point)
+  (debug-msg ">> Go into <next-point>: fixed-point?: " (fixed-point-count-graph? current-obj) " graph:" (car (list-ref current-obj 3)) "points:" (tm-arity current-obj) "needed:" (graphics-points-needed current-obj))
+  (debug-msg ">>    commit check: " (and current-obj
+              (fixed-point-count-graph? current-obj)
+              (with needed (graphics-points-needed current-obj)
+                (and needed
+                     (>= current-point-no (- needed 1))))))
   (cond ((not (hardly-moved?))
          (set-message "Left click: finish; Shift+Left click or Right click: undo"
                       "Inserting control points")
@@ -314,10 +330,13 @@
                           (>= current-point-no (- needed 1)))))
             (last-point)))
         (leftclick-waiting
-         (last-point))
+         (last-point)
+         (debug-msg "Selected case 2: leftclick-waiting, so we do (last-point)"))
         ((== current-point-no 1)
          (undo 0)
-         (set! leftclick-waiting #f))
+         (set! leftclick-waiting #f)
+         (debug-msg "Selected case 3: (== current-point-no 1), cancelled for creating new object"))
+        ;; 新增：固定点数图形达到所需点数时自动提交
         (else
           (set-message "Left click: finish; Shift+Left click or Right click: undo"
                        "Inserting control points")
