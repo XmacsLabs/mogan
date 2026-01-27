@@ -1,0 +1,28 @@
+<TMU|<tuple|1.1.0|2026.1.2>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref>>
+
+<\body>
+  # 标题
+
+  \;
+
+  这是一个**粗体**文本和*斜体*文本。
+
+  \;
+
+  - 列表项 1
+
+  - 列表项 2
+
+  \;
+
+  [链接文本](https://example.com)
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
