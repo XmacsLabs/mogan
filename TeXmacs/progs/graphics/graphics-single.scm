@@ -62,16 +62,16 @@
   (:require (== tag 'point))
   (object-set! `(point ,x ,y) 'new))
 
-(define new-gr-tags (list 'circle 'ellipse 'std-arc 'sector 'std-arc-counterclockwise 'sector-counterclockwise 'rectangle))
+(define new-gr-tags (list 'circle 'ellipse 'std-arc 'sector 'std-arc-counterclockwise 'sector-counterclockwise))
 
-;; 获得对象的 tag（暂时）
+;; 获得对象的 tag
 (define (get-tag obj)
-  (car (list-ref obj 3)))
+  (car (list-ref obj 3))) ;; obj 格式为 (with "magnify" "1" (tag))
 
 ;; 判断是否为固定点数图形
 (define (fixed-point-count-graph? obj)
   (and (pair? obj)
-       (in? (get-tag obj) new-gr-tags))) ;; obj 格式为 (with "magnify" "1" (tag))
+       (in? (get-tag obj) new-gr-tags)))
 
 ;; 获取图形所需点数
 (define (graphics-points-needed obj)
@@ -80,7 +80,6 @@
         (cond
           ;; 特殊处理图形宏
           ((== tag 'circle) 2)
-          ;; ((== tag 'rectangle) 2)
           ((== tag 'ellipse) 3)  ;; 两个焦点和一个椭圆上的点
           ((== tag 'std-arc) 3)
           ((== tag 'std-arc-counterclockwise) 3)

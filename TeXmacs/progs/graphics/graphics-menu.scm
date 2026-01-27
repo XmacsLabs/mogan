@@ -288,7 +288,6 @@
   ("Sector" (graphics-set-mode '(edit sector-counterclockwise)))
   ("Circle" (graphics-set-mode '(edit circle)))
   ("Ellipse" (graphics-set-mode '(edit ellipse)))
-  ("Rectangle" (graphics-set-mode '(edit rectangle)))
   ---
   ("Text" (graphics-set-mode '(edit text-at)))
   ("Mathematics" (graphics-set-mode '(edit math-at)))
@@ -758,9 +757,6 @@
   ((check (balloon (icon "tm_elliptical.xpm") "Insert ellipses")
           "v" (== (graphics-mode) '(edit ellipse)))
    (graphics-set-mode '(edit ellipse)))
-  ((check (balloon (icon "tm_line_mode.xpm") "Insert rectangles") ; TODO: change to rectangle's icon
-          "v" (== (graphics-mode) '(edit rectangle)))
-   (graphics-set-mode '(edit rectangle)))
   /
   ((check (balloon (icon "tm_textat_mode.xpm") "Insert text")
           "v" (== (graphics-mode) '(edit text-at)))
@@ -998,7 +994,6 @@
         ((== s '(edit sector-counterclockwise)) "sector")
         ((== s '(edit circle)) "circle")
         ((== s '(edit ellipse)) "ellipse")
-        ((== s '(edit rectangle)) "rectangle")
         ((== s '(edit text-at)) "text")
         ((== s '(edit math-at)) "mathematics")
         ((== s '(edit document-at)) "long text")
