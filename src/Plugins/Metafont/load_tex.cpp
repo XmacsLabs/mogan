@@ -41,18 +41,36 @@ mag (double dpi, double size, double dsize) {
 static double
 to_tex_font_size (double sz) {
   if (sz == 0.0) return 0.0;
-  if (sz >= 100.0) {
-    // 已经可能是乘以100的值，保持原样
+  if (sz >= 316.0) {
+    // 已经可能是乘以100的值，检查是否为错误转换的结果
+    double original = sz / 100.0;
+    if (original < 316.0) {
+      double doubled = original * 2.0;
+      if (fabs(doubled - round(doubled)) < 0.1) {
+        // original是0.5倍数，sz是正确的乘以100的值
+        return sz;
+      }
+      if (fabs(original - round(original)) < 0.1) {
+        // original是整数，sz可能是错误转换的结果（如1000表示10），返回original
+        return original;
+      }
+    }
+    // 其他情况，保持原样
     return sz;
   }
   // 检查是否为0.5倍数
-  double scaled = sz * 100.0;
-  if (fabs(scaled - round(scaled)) < 0.1) {
-    // 是0.5倍数（如10.5 * 100 = 1050），返回乘以100的值
-    return scaled;
+  double doubled = sz * 2.0;
+  if (fabs(doubled - round(doubled)) < 0.1) {
+    // 是0.5倍数，检查是否为整数
+    if (fabs(sz - round(sz)) < 0.1) {
+      // 是整数（如10.0），直接返回
+      return sz;
+    }
+    // 是0.5倍数但不是整数（如10.5），返回乘以100的值
+    return sz * 100.0;
   }
-  // 整数尺寸，直接返回
-  return sz;
+  // 不是0.5倍数，四舍五入到最近的整数
+  return round(sz);
 }
 
 /******************************************************************************
