@@ -76,33 +76,33 @@
     (else "local")))
 
 ;; OAuth2 配置
-; (tm-define (account-oauth2-config key)
-;   (let ((base-url (current-stem-site)))
-;     (cond
-;       ((== key "authorization-url") (string-append base-url "/oauth2-login.html"))
-;       ; 直接请求后台接口
-;       ((== key "access-token-url") (string-append base-url "/api/oauth/v1/oauth2/token"))
-;       ((== key "client-identifier") "public-client")
-;       ((== key "scope") "user+llm")
-;       ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
-;       ((== key "user-info-url") (string-append base-url "/api/oauth/v1/membershipInfo"))
-;       ((== key "pricing-url") (string-append base-url "/pricing.html"))
-;       ((== key "click-return-liii-url") "https://liiistem.cn/?from=login_button")
-;       (else ""))))
+(tm-define (account-oauth2-config key)
+  (let ((base-url (current-stem-site)))
+    (cond
+      ((== key "authorization-url") (string-append base-url "/oauth2-login.html"))
+      ; 直接请求后台接口
+      ((== key "access-token-url") (string-append base-url "/api/oauth/v1/oauth2/token"))
+      ((== key "client-identifier") "public-client")
+      ((== key "scope") "user+llm")
+      ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
+      ((== key "user-info-url") (string-append base-url "/api/oauth/v1/membershipInfo"))
+      ((== key "pricing-url") (string-append base-url "/pricing.html"))
+      ((== key "click-return-liii-url") "https://liiistem.cn/?from=login_button")
+      (else ""))))
 
 ;; 本地
-(tm-define (account-oauth2-config key)
-  (cond
-    ((== key "authorization-url") "http://127.0.0.1:3000/oauth2-login")
-    ((== key "access-token-url") "http://127.0.0.1:8081/api/oauth/v1/oauth2/token")
-    ((== key "client-identifier") "public-client")
-    ((== key "client-secret") "secret")
-    ((== key "scope") "user+llm")
-    ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
-    ((== key "user-info-url") "http://127.0.0.1:8081/api/oauth/v1/membershipInfo")
-    ((== key "pricing-url") "http://127.0.0.1:3000/pricing.html")
-    ((== key "click-return-liii-url") "http://127.0.0.1:3000/?from=login_button")
-    (else "")))
+; (tm-define (account-oauth2-config key)
+;   (cond
+;     ((== key "authorization-url") "http://127.0.0.1:3000/oauth2-login")
+;     ((== key "access-token-url") "http://127.0.0.1:8081/api/oauth/v1/oauth2/token")
+;     ((== key "client-identifier") "public-client")
+;     ((== key "client-secret") "secret")
+;     ((== key "scope") "user+llm")
+;     ((== key "port-list") "6029,8087,9256,7438,5173,6391,8642,9901,44118,55055,1895")
+;     ((== key "user-info-url") "http://127.0.0.1:8081/api/oauth/v1/membershipInfo")
+;     ((== key "pricing-url") "http://127.0.0.1:3000/pricing.html")
+;     ((== key "click-return-liii-url") "http://127.0.0.1:3000/?from=login_button")
+;     (else "")))
 
 ;; 1.1 token 保存到数据文件
 (tm-define (account-save-token token)
