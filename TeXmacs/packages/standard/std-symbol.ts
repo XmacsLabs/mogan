@@ -59,6 +59,8 @@
 
   <assign|masculine|<active*|<rsup|<wide*|o|\<wide-bar\>>>>>
 
+  <assign|pandocbounded|<macro|body|arg|<arg|body>>>
+
   <assign|ordfeminine|<active*|<rsup|<wide*|a|\<wide-bar\>>>>>
 
   <assign|varmasculine|<active*|<rsup|o>>>
