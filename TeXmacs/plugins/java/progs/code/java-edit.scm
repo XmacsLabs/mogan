@@ -18,10 +18,6 @@
   (:mode in-prog-java?)
   4)
 
-(tm-define (program-compute-indentation doc row col)
-  (:mode in-prog-java?)
-  (get-tabstop))
-
 (tm-define (kbd-paste)
   (:mode in-prog-java?)
   (clipboard-paste-import "java" "primary"))
