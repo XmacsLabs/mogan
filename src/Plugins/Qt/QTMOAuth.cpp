@@ -151,6 +151,7 @@ QTMOAuth::login () {
     query.addQueryItem ("scope", oauth2.scope ());
     query.addQueryItem ("code_challenge", m_codeChallenge);
     query.addQueryItem ("code_challenge_method", "S256");
+    query.addQueryItem ("is_new_version", "Y");
 
     authUrl.setQuery (query);
     // 手动打开浏览器进行授权
