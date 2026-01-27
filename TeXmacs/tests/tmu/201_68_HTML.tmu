@@ -1,0 +1,34 @@
+<TMU|<tuple|1.1.0|2026.1.2>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref>>
+
+<\body>
+  \<less\>!DOCTYPE html\<gtr\>
+
+  \<less\>html\<gtr\>
+
+  \<less\>head\<gtr\>
+
+  \ \ \ \ \<less\>title\<gtr\>示例页面\<less\>/title\<gtr\>
+
+  \<less\>/head\<gtr\>
+
+  \<less\>body\<gtr\>
+
+  \ \ \ \ \<less\>h1\<gtr\>你好，世界！\<less\>/h1\<gtr\>
+
+  \ \ \ \ \<less\>p\<gtr\>这是一个简短的HTML示例。\<less\>/p\<gtr\>
+
+  \ \ \ \ \<less\>a href="#"\<gtr\>这是一个链接\<less\>/a\<gtr\>
+
+  \<less\>/body\<gtr\>
+
+  \<less\>/html\<gtr\>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

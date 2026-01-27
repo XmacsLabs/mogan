@@ -1,0 +1,54 @@
+<TMU|<tuple|1.1.0|2026.1.2>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref>>
+
+<\body>
+  \\documentclass{article}
+
+  \\usepackage{amsmath}
+
+  \;
+
+  \\begin{document}
+
+  \;
+
+  \\section{数学公式示例}
+
+  \;
+
+  行内公式：勾股定理 $a^2 + b^2 = c^2$。
+
+  \;
+
+  行间公式：
+
+  \\[
+
+  E = mc^2
+
+  \\]
+
+  \;
+
+  多行公式：
+
+  \\begin{align}
+
+  \ \ \ \ (a+b)^2 &= a^2 + 2ab + b^2 \\\\
+
+  \ \ \ \ (a-b)^2 &= a^2 - 2ab + b^2
+
+  \\end{align}
+
+  \;
+
+  \\end{document}
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
