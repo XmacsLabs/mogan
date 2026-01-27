@@ -2223,10 +2223,25 @@ qt_tm_widget_rep::checkNetworkAvailable () {
   QNetworkRequest request(testUrl);
   QNetworkReply* reply = manager->head(request);
   
-  QObject::connect(reply, &QNetworkReply::finished, [this, reply]() {
+  // 设置1000ms超时计时器
+  QTimer* timeoutTimer = new QTimer(mainwindow());
+  timeoutTimer->setSingleShot(true);
+  timeoutTimer->start(1000);
+  
+  QObject::connect(timeoutTimer, &QTimer::timeout, [this, reply]() {
+    debug_std <<"222\n";
+    reply->abort();
+    if (guestNotificationBar) {
+      guestNotificationBar->hide ();
+    }
+  });
+  
+  QObject::connect(reply, &QNetworkReply::finished, [this, reply, timeoutTimer]() {
+    timeoutTimer->stop();
+    timeoutTimer->deleteLater();
     bool success = (reply->error() == QNetworkReply::NoError);
     reply->deleteLater();
-    debug_std <<"222\n";
+    debug_std <<"333\n";
     if (guestNotificationBar) {
       bool isLoggedIn = as_bool (call ("logged-in?"));
       if (isLoggedIn || !success) {
