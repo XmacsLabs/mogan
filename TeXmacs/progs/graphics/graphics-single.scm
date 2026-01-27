@@ -312,12 +312,6 @@
   (object_commit))
 
 (define (next-point)
-  (debug-msg ">> Go into <next-point>: fixed-point?: " (fixed-point-count-graph? current-obj) " graph:" (car (list-ref current-obj 3)) "points:" (tm-arity current-obj) "needed:" (graphics-points-needed current-obj))
-  (debug-msg ">>    commit check: " (and current-obj
-              (fixed-point-count-graph? current-obj)
-              (with needed (graphics-points-needed current-obj)
-                (and needed
-                     (>= current-point-no (- needed 1))))))
   (cond ((not (hardly-moved?))
          (set-message "Left click: finish; Shift+Left click or Right click: undo"
                       "Inserting control points")
@@ -330,13 +324,10 @@
                           (>= current-point-no (- needed 1)))))
             (last-point)))
         (leftclick-waiting
-         (last-point)
-         (debug-msg "Selected case 2: leftclick-waiting, so we do (last-point)"))
+         (last-point))
         ((== current-point-no 1)
          (undo 0)
-         (set! leftclick-waiting #f)
-         (debug-msg "Selected case 3: (== current-point-no 1), cancelled for creating new object"))
-        ;; 新增：固定点数图形达到所需点数时自动提交
+         (set! leftclick-waiting #f))
         (else
           (set-message "Left click: finish; Shift+Left click or Right click: undo"
                        "Inserting control points")
