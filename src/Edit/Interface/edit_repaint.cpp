@@ -179,6 +179,72 @@ edit_interface_rep::draw_selection (renderer ren, rectangle r) {
     ren->draw_rectangles (selection_rects & visible);
 #endif
   }
+
+  draw_image_resize_handles (ren);
+}
+
+void
+edit_interface_rep::draw_image_resize_handles (renderer ren) {
+  // 鼠标位于图片中时，绘制 handles
+  SI        hs            = 10 * ren->pixel; // handles 半径
+  rectangle new_image_brec= rectangle (0, 0, 0, 0);
+  SI        x1= 0, y1= 0, x2= 0, y2= 0, mx= 0, my= 0;
+  bool      have_bbox= false;
+
+  // 检测当前路径往上的祖先有没有是 IMAGE 的
+  for (path p= path_up (tp); !is_nil (p) && p != rp; p= path_up (p)) {
+    tree st= subtree (et, p);
+    if (!is_func (st, IMAGE)) continue;
+
+    selection sel= eb->find_check_selection (p * 0, p * 1);
+    if (!sel->valid || is_nil (sel->rs)) break;
+
+    rectangle bbox= least_upper_bound (sel->rs); // 获取盒子边界
+    x1            = bbox->x1;
+    y1            = bbox->y1;
+    x2            = bbox->x2;
+    y2            = bbox->y2;
+    mx            = (x1 + x2) / 2;
+    my            = (y1 + y2) / 2;
+    new_image_brec= rectangle (x1 - hs, y1 - hs, x2 + hs, y2 + hs);
+    have_bbox     = true;
+    break; // 只处理最近的 IMAGE 祖先
+  }
+
+  if (new_image_brec != last_image_brec) {
+    if (!is_zero (last_image_brec)) invalidate (last_image_brec);
+    if (!is_zero (new_image_brec)) invalidate (new_image_brec);
+    last_image_brec= new_image_brec;
+  }
+
+  if (!have_bbox) { // 不用画，但要设置缓存
+    last_image_hr= 0;
+    return;
+  }
+  last_image_hr= hs;
+
+  // 8 个 handles，4 个位于边中点，4 个位于角上
+  color border_col= get_env_color (FOCUS_COLOR);
+  SI    border_w  = max (2 * ren->pixel, hs / 3);
+  ren->set_pencil (pencil (border_col, border_w));
+
+  // 8 个点分别是：sw, se, nw, ne, s, n, w, e
+  SI hx[8]= {x1, x2, x1, x2, mx, mx, x1, x2};
+  SI hy[8]= {y1, y1, y2, y2, y1, y2, my, my};
+
+  for (int i= 0; i < 8; i++) {
+    SI cx= hx[i], cy= hy[i];
+
+    // 外圆作为边框
+    ren->set_brush (brush (border_col));
+    ren->fill_arc (cx - hs, cy - hs, cx + hs, cy + hs, 0, 64 * 360);
+
+    // 内圆作为填充
+    SI inner_r= max (hs - border_w, ren->pixel);
+    ren->set_brush (brush (white));
+    ren->fill_arc (cx - inner_r, cy - inner_r, cx + inner_r, cy + inner_r, 0,
+                   64 * 360);
+  }
 }
 
 void
