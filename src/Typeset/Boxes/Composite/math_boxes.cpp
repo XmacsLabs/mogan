@@ -171,10 +171,21 @@ sqrt_box_rep::sqrt_box_rep (path ip, box b1, box b2, box sqrtb, font fn2,
     : composite_box_rep (ip), fn (fn2), pen (pen2) {
   right_italic_correct (b1);
 
+  string sqrt_str = "";
+  tree   sqrt_tree= (tree) sqrtb;
+  if (is_tuple (sqrt_tree) && N (sqrt_tree) >= 2) {
+    while (sqrt_tree[0] == "macro_delimiter")
+      sqrt_tree= sqrt_tree[1];
+    tree inner= sqrt_tree[0] == "move_delimiter" ? sqrt_tree[1] : tree ();
+    if (is_atomic (inner)) sqrt_str= inner->label;
+  }
+  int sqrt_variant= as_int (sqrt_str (12, N (sqrt_str) - 1));
+
   SI sep  = fn->sep;
   SI wline= fn->wline;
-  SI dx= -fn->wfn / 36, dy= +fn->wfn / 52; // correction
-  SI by= sqrtb->y2 + dy;
+  SI dx   = -fn->wfn / 36,
+     dy   = sqrt_variant < 7 ? -fn->wfn / 36 : +fn->wfn / 52; // correction
+  SI by   = sqrtb->y2 + dy;
   if (sqrtb->x2 - sqrtb->x4 > wline) dx-= (sqrtb->x2 - sqrtb->x4);
 
   bool use_open_type= (fn->math_type == MATH_TYPE_OPENTYPE) &&
