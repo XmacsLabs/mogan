@@ -62,7 +62,7 @@
   (:require (== tag 'point))
   (object-set! `(point ,x ,y) 'new))
 
-(define new-gr-tags (list 'circle 'ellipse 'std-arc 'sector 'std-arc-counterclockwise 'sector-counterclockwise))
+(define new-gr-tags (list 'circle 'ellipse 'std-arc 'sector 'std-arc-counterclockwise 'sector-counterclockwise 'rectangle))
 
 ;; 获得对象的 tag
 (define (get-tag obj)
