@@ -64,6 +64,33 @@
 
 (define new-gr-tags (list 'circle 'ellipse 'std-arc 'sector 'std-arc-counterclockwise 'sector-counterclockwise))
 
+;; 获得对象的 tag
+(define (get-tag obj)
+  (car (list-ref obj 3))) ;; obj 格式为 (with "magnify" "1" (tag))
+
+;; 判断是否为固定点数图形
+(define (fixed-point-count-graph? obj)
+  (and (pair? obj)
+       (in? (get-tag obj) new-gr-tags)))
+
+;; 获取图形所需点数
+(define (graphics-points-needed obj)
+  (if (not (pair? obj)) #f
+      (let ((tag (get-tag obj)))
+        (cond
+          ;; 特殊处理图形宏
+          ((== tag 'circle) 2)
+          ((== tag 'ellipse) 3)  ;; 两个焦点和一个椭圆上的点
+          ((== tag 'std-arc) 3)
+          ((== tag 'std-arc-counterclockwise) 3)
+          ((== tag 'sector) 3)
+          ((== tag 'sector-counterclockwise) 3)
+          ;; 使用tag-maximal-arity作为备选
+          ((and (defined? 'tag-maximal-arity)
+                (tag-maximal-arity tag))
+           (tag-maximal-arity tag))
+          (else #f)))))
+
 (tm-define (object_create tag x y)
   (:require (or (in? tag gr-tags-curves) 
                 (or (in? tag gr-tags-user)
@@ -282,7 +309,14 @@
   (cond ((not (hardly-moved?))
          (set-message "Left click: finish; Shift+Left click or Right click: undo"
                       "Inserting control points")
-         (set! leftclick-waiting #t))
+         (set! leftclick-waiting #t)
+         ; 测试图像是否为固定点类型的，并且检测是否已经绘制完成
+         (when (and current-obj
+                    (fixed-point-count-graph? current-obj)
+                    (with needed (graphics-points-needed current-obj)
+                      (and needed
+                          (>= current-point-no (- needed 1)))))
+            (last-point)))
         (leftclick-waiting
          (last-point))
         ((== current-point-no 1)
@@ -291,9 +325,9 @@
         (else
           (set-message "Left click: finish; Shift+Left click or Right click: undo"
                        "Inserting control points")
-         (graphics-back-state #f)
-         (graphics-move current-x current-y)
-         (set! leftclick-waiting #t))))
+          (graphics-back-state #f)
+          (graphics-move current-x current-y)
+          (set! leftclick-waiting #t))))
 
 (define (remove-point)
   (if (or (graphics-minimal? current-obj)
