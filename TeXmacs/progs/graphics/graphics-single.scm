@@ -92,10 +92,6 @@
            (tag-maximal-arity tag))
           (else #f)))))
 
-;; 调试输出函数
-(define (debug-msg . args)
-  (display* "[DEBUG] " args "\n"))
-
 (tm-define (object_create tag x y)
   (:require (or (in? tag gr-tags-curves) 
                 (or (in? tag gr-tags-user)
