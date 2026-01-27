@@ -18,10 +18,6 @@
   (:mode in-prog-moonbit?)
   2)
 
-(tm-define (program-compute-indentation doc row col)
-  (:mode in-prog-moonbit?)
-  (get-tabstop))
-
 (tm-define (kbd-paste)
   (:mode in-prog-moonbit?)
   (clipboard-paste-import "moonbit" "primary"))

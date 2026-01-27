@@ -18,10 +18,6 @@
   (:mode in-prog-scala?)
   2)
 
-(tm-define (program-compute-indentation doc row col)
-  (:mode in-prog-scala?)
-  (get-tabstop))
-
 (tm-define (kbd-paste)
   (:mode in-prog-scala?)
   (clipboard-paste-import "scala" "primary"))
