@@ -55,7 +55,7 @@
           ((starts-with-keyword? (program-row row) lua-decrease-indent-keys)
            (max 0 (- prev-indent tab-width)))
           ;; 否则保持前行的缩进
-          (else prev-indent))))
+          (else prev-indent)))))
 
 (tm-define (lua-bracket-open lbr rbr)
   (bracket-open lbr rbr "\\"))
