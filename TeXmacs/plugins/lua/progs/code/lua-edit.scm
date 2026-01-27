@@ -57,10 +57,6 @@
           ;; 否则保持前行的缩进
           (else prev-indent)))))
 
-(tm-define (program-compute-indentation doc row col)
-  (:mode in-prog-lua?)
-  (get-tabstop))
-
 (tm-define (lua-bracket-open lbr rbr)
   (bracket-open lbr rbr "\\"))
 

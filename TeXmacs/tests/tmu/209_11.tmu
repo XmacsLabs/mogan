@@ -1,0 +1,108 @@
+<TMU|<tuple|1.1.0|2026.1.2>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref|python|goldfish|java|json|moonbit|scala|lua>>
+
+<\body>
+  C++:
+
+  <\cpp-code>
+    abcd ef
+
+    \|
+
+    \ \ \ \ abcd df
+
+    \ \ \ \ \|
+  </cpp-code>
+
+  Python:
+
+  <\python-code>
+    abcd ef
+
+    \|
+
+    \ \ \ \ abcd df
+
+    \ \ \ \ \|
+  </python-code>
+
+  Goldfish:
+
+  <\goldfish-code>
+    abcd ef
+
+    \|
+
+    \ \ \ \ abcd df
+
+    \ \ \ \ \|
+  </goldfish-code>
+
+  Java:
+
+  <\java-code>
+    abcd ef
+
+    \|
+
+    \ \ \ \ abcd df
+
+    \ \ \ \ \|
+  </java-code>
+
+  Json:
+
+  <\json-code>
+    abcd ef
+
+    \|
+
+    \ \ \ \ abcd df
+
+    \ \ \ \ \|
+  </json-code>
+
+  Moonbit:
+
+  <\moonbit-code>
+    abcd ef
+
+    \|
+
+    \ \ \ \ abcd df
+
+    \ \ \ \ \|
+  </moonbit-code>
+
+  Scala:
+
+  <\scala-code>
+    abcd ef
+
+    \|
+
+    \ \ \ \ abcd df
+
+    \ \ \ \ \|
+  </scala-code>
+
+  Lua:
+
+  <\lua-code>
+    abcd ef
+
+    \|
+
+    \ \ \ \ abcd df
+
+    \ \ \ \ \|
+  </lua-code>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>

@@ -468,8 +468,9 @@ integer
 - 参数 col 当前未使用，保留给未来扩展
 |#
 (tm-define (program-compute-indentation doc row col)
-  0)
-
+  (if (<= row 0) 0
+      (let ((prev-row (program-row (- row 1))))
+        (if prev-row (string-get-indent prev-row) 0))))
 #|
 program-indent-line
 缩进指定行。
