@@ -358,16 +358,16 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   }
   else {
     // 商业版：检查用户登录状态（使用和OCR功能相同的判断方法）
-      bool isLoggedIn= as_bool (call ("logged-in?"));
+    bool isLoggedIn= as_bool (call ("logged-in?"));
 
-      if (isLoggedIn) {
-        // 用户已登录，不显示提示条
-        guestNotificationBar->hide ();
-      }
-      else {
-        // 用户未登录，显示提示条
-        guestNotificationBar->show ();
-      }
+    if (isLoggedIn) {
+      // 用户已登录，不显示提示条
+      guestNotificationBar->hide ();
+    }
+    else {
+      // 用户未登录，显示提示条
+      guestNotificationBar->show ();
+    }
   }
 
   // there is a bug in the early implementation of toolbars in Qt 4.6
@@ -2220,7 +2220,7 @@ qt_tm_widget_rep::openRenewalPage () {
 }
 
 bool
-qt_tm_widget_rep::checkNetworkAvailable()  {
+qt_tm_widget_rep::checkNetworkAvailable () {
   QString     program= "ping";
   QStringList args;
 
@@ -2233,5 +2233,3 @@ qt_tm_widget_rep::checkNetworkAvailable()  {
   if (exitCode == 0) return true;
   return exitCode == 0;
 }
-
-
