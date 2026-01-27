@@ -1,49 +1,56 @@
-(import (liii os) (liii path) (liii sys) (liii string))
+(import (liii os) (liii path) (liii sys) (liii string) (liii list))
+
+(define (get-script-dir)
+  (let* ((args (argv))
+         (script-path (if (and (list? args) (> (length args) 1))
+                          (cadr args)
+                          "")))
+    (if (string-contains script-path "/")
+        (let ((last-slash (string-index-right script-path (lambda (c) (char=? c #\/)))))
+          (if last-slash
+              (substring script-path 0 last-slash)
+              "."))
+        ".")))
+
+(define (call-or-quit . params)
+  (define ec (os-call (string-join params " ")))
+  (when (not (= ec 0))
+        (exit ec)))
+
+(define (extract-version-from-file file-path)
+  (let* ((content (path-read-text file-path))
+         (has-version (string-contains content "XMACS_VERSION")))
+    (if has-version
+        (let* ((version-start (string-index content (lambda (c) (char=? c #\X))))
+               (quote-start-pos (string-index content (lambda (c) (char=? c #\")) version-start)))
+          (if quote-start-pos
+              (let ((quote-end-pos (string-index content (lambda (c) (char=? c #\")) (+ quote-start-pos 1))))
+                (if quote-end-pos
+                    (substring content (+ quote-start-pos 1) quote-end-pos)
+                    #f))
+              #f))
+        #f)))
+
+(define PACKAGE_HOME (get-script-dir))
+(define VERSION (extract-version-from-file (string-append PACKAGE_HOME "/../../xmake/vars.lua")))
 
 (display* "Start packing via package.sh...\n")
 
 (display* "Start xmake config...\n")
-(define config-ec (os-call "xmake config --yes -vD -m release --policies=build.ccache"))
-(if (= config-ec 0)
-    (display* "Config finished.\n")
-    (exit config-ec))
+(call-or-quit "xmake" "config" "--yes" "-vD" "-m" "release" "--policies=build.ccache")
+(display* "Config finished.\n")
 
 (display* "Start xmake build...\n")
-(define build-ec (os-call "xmake build -vD stem"))
-(if (= build-ec 0)
-    (display* "Build finished.\n")
-    (exit build-rc))
+(call-or-quit "xmake" "build" "-vD" "stem")
+(display* "Build finished.\n")
 
-(display* "Start determine VERSION...\n")
-(define raw-args (cddr (argv)))
-(define RAW_VERSION
-  (if (and raw-args (not (null? raw-args)))
-      (car raw-args)
-      (getenv "VERSION" "2026")))
+(call-or-quit "chmod" "+x" (string-append PACKAGE_HOME "/./package.sh"))
 
-(if (string=? RAW_VERSION "2026")
-    (display* "Can't detected VERSION, use VERSION=2026\n")
-    (display* (string-append "Detected VERSION: " VERSION "\n")))
-
-(define VERSION "")
-(if (string-starts? RAW_VERSION "v")
-    (set! VERSION (substring RAW_VERSION 1 (- (string-length RAW_VERSION) 1)))
-    (set! VERSION RAW_VERSION))
-
-(define chmod-ec (os-call "chmod +x ./package.sh"))
-(when (not (= chmod-ec 0))
-      (exit chmod-ec))
-
-(os-call (string-append "export VERSION=" VERSION))
-
-(define package-ec (os-call "bash ./package.sh"))
-(when (not (= package-ec 0))
-      (exit package-ec))
+(call-or-quit "env" (string-append "VERSION=" VERSION)
+              "bash" (string-append PACKAGE_HOME "/./package.sh"))
 
 (define PACK_NAME (string-append "mogan-stem-" VERSION "-debian13-amd64.deb"))
-(define mv-ec (os-call (string-append "mv ../../../mogan-stem_*.deb ../../" PACK_NAME)))
-(when (not (= mv-ec 0))
-      (exit mv-ec))
+(call-or-quit "mv" (string-append PACKAGE_HOME "/../../../mogan-stem_*.deb") (string-append PACKAGE_HOME "/../../" PACK_NAME))
 
 (display* "Pack has already been placed in mogan root directory.\n")
 
