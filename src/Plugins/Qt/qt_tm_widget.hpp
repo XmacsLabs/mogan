@@ -156,7 +156,7 @@ public:
   void        restoreSettings ();
   static void tweak_iconbar_size (QSize& sz);
   void        openRenewalPage ();
-  bool        checkNetworkAvailable ();
+  void        checkNetworkAvailable ();
 
   friend class QTMInteractiveInputHelper;
 

@@ -16,6 +16,7 @@
 #include <QDesktopServices>
 #include <QDialog>
 #include <QDockWidget>
+#include <QEventLoop>
 #include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QIcon>
@@ -25,6 +26,7 @@
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QNetworkAccessManager>
+#include <QNetworkInformation>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QObject>
@@ -352,22 +354,15 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   // 检查是否应该显示提示条
   // 1. 社区版不显示
   // 2. 商业版：用户未登录时显示，用户已登录时不显示
-  if (is_community_stem () || !checkNetworkAvailable ()) {
+  if (is_community_stem ()) {
     // 社区版：不显示提示条 //用户没网络也不显示
     guestNotificationBar->hide ();
   }
   else {
     // 商业版：检查用户登录状态（使用和OCR功能相同的判断方法）
-    bool isLoggedIn= as_bool (call ("logged-in?"));
-
-    if (isLoggedIn) {
-      // 用户已登录，不显示提示条
+    // 初始隐藏，等网络检查完成后再决定是否显示guestNotificationBar->hide ();
       guestNotificationBar->hide ();
-    }
-    else {
-      // 用户未登录，显示提示条
-      guestNotificationBar->show ();
-    }
+      checkNetworkAvailable ();
   }
 
   // there is a bug in the early implementation of toolbars in Qt 4.6
@@ -2219,17 +2214,26 @@ qt_tm_widget_rep::openRenewalPage () {
   QDesktopServices::openUrl (QUrl (fullUrl));
 }
 
-bool
-qt_tm_widget_rep::checkNetworkAvailable () {
-  QString     program= "ping";
-  QStringList args;
 
-#ifdef Q_OS_WIN
-  args << "-n" << "1" << "-w" << "500" << "8.8.8.8";
-#else
-  args << "-c" << "1" << "-W" << "0.5" << "8.8.8.8";
-#endif
-  int exitCode= QProcess::execute (program, args);
-  if (exitCode == 0) return true;
-  return exitCode == 0;
+void
+qt_tm_widget_rep::checkNetworkAvailable () {
+  debug_std <<"111\n";
+  QNetworkAccessManager* manager = new QNetworkAccessManager(mainwindow());
+  QUrl testUrl("https://www.liiistem.cn");
+  QNetworkRequest request(testUrl);
+  QNetworkReply* reply = manager->head(request);
+  
+  QObject::connect(reply, &QNetworkReply::finished, [this, reply]() {
+    bool success = (reply->error() == QNetworkReply::NoError);
+    reply->deleteLater();
+    debug_std <<"222\n";
+    if (guestNotificationBar) {
+      bool isLoggedIn = as_bool (call ("logged-in?"));
+      if (isLoggedIn || !success) {
+        guestNotificationBar->hide ();
+      } else {
+        guestNotificationBar->show ();
+      }
+    }
+  });
 }
