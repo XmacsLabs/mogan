@@ -26,18 +26,25 @@
  * The implementation
  ******************************************************************************/
 
-qt_font_rep::qt_font_rep (string name, string family2, int size2, int dpi2)
+qt_font_rep::qt_font_rep (string name, string family2, double size2, int dpi2)
     : font_rep (name), family (family2), size (size2), dpi (dpi2),
       qfn (to_qstring (family), size),
       // qfn (to_qstring (family), size, QFont::Normal, false),
       qfm (qfn) {
+  // 验证输入是否为0.5倍数，如果不是则修正
+  if (!is_half_multiple (size)) {
+    size = round_to_half_multiple (size);
+    // 重新初始化 QFont 和 QFontMetricsF 使用修正后的尺寸
+    qfn = QFont (to_qstring (family), size);
+    qfm = QFontMetricsF (qfn);
+  }
   type= FONT_TYPE_QT;
 
   // get main font parameters
   y1          = FLOOR (-qfm.descent ());
   y2          = CEIL (qfm.ascent () + 1);
   display_size= y2 - y1;
-  design_size = size << 8;
+  design_size = (SI)(size * 256.0);
 
   // get character dimensions
   metric ex;

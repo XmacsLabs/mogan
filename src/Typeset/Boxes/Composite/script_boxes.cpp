@@ -91,7 +91,7 @@ lim_box_rep::lim_box_rep (path ip, box r2, box lo, box hi, font fn2, bool gl)
                      (fn->lower_limit_gap_min > 0) &&
                      (fn->lower_limit_baseline_drop_min > 0);
   if (!is_nil (lo)) {
-    SI top= max (lo->y2, fn->y2 * script (fn->size, 1) / fn->size) + sep_lo;
+    SI top= max (lo->y2, (SI)(fn->y2 * script (fn->effective_size (), 1) / fn->effective_size () + 0.5)) + sep_lo;
     Y     = ref->y1;
     X     = ((SI) (ref->right_slope () * (Y + top - lo->y1))) +
        ((ref->x1 + ref->x2) >> 1);
@@ -103,7 +103,7 @@ lim_box_rep::lim_box_rep (path ip, box r2, box lo, box hi, font fn2, bool gl)
     italic_correct (lo);
   }
   if (!is_nil (hi)) {
-    SI bot= min (hi->y1, fn->y1 * script (fn->size, 1) / fn->size) - sep_hi;
+    SI bot= min (hi->y1, (SI)(fn->y1 * script (fn->effective_size (), 1) / fn->effective_size () + 0.5)) - sep_hi;
     Y     = ref->y2;
     X     = ((SI) (ref->right_slope () * (Y + hi->y2 - bot))) +
        ((ref->x1 + ref->x2) >> 1);
@@ -207,7 +207,7 @@ dummy_script_box_rep::dummy_script_box_rep (path ip, box b1, box b2, font fn2)
   SI sep  = fn->sep;
   SI lo_y = fn->ysub_lo_base;
   SI hi_y = fn->ysup_lo_base;
-  SI miny2= (fn->y2 - fn->yshift) * script (fn->size, 1) / fn->size;
+  SI miny2= (SI)((fn->y2 - fn->yshift) * script (fn->effective_size (), 1) / fn->effective_size () + 0.5);
 
   type= 0;
   if (!is_nil (b1)) type+= 1;
@@ -371,7 +371,7 @@ side_box_rep::side_box_rep (path ip, box ref, box l1, box l2, box r1, box r2,
   SI sup_lo_base= ref->sup_lo_base (level);
   SI sup_hi_lim = ref->sup_hi_lim (level);
   SI shift      = fn->yshift;
-  SI miny2      = (fn->y2 - fn->yshift) * script (fn->size, 1) / fn->size;
+  SI miny2      = (SI)((fn->y2 - fn->yshift) * script (fn->effective_size (), 1) / fn->effective_size () + 0.5);
   SI lsub= sub_lo_base, lsup= sup_lo_base;
   SI rsub= sub_lo_base, rsup= sup_lo_base;
 

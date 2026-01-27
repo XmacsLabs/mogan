@@ -46,11 +46,12 @@ get_math_type (string s) {
 
 font_rep::font_rep (string s)
     : rep<font> (s), type (FONT_TYPE_TEX), math_type (get_math_type (s)),
-      spc (0), extra (0), mspc (0), last_zoom (0.0), zoomed_fn (NULL),
-      global_lsub_correct (0), global_lsup_correct (0), global_rsub_correct (0),
-      global_rsup_correct (0), lsub_correct (0.0), lsup_correct (0.0),
-      rsub_correct (0.0), rsup_correct (0.0), above_correct (0.0),
-      below_correct (0.0), protrusion_maps (-1) {
+      size_int (0), design_size (0), display_size (0), size_float (0.0),
+      slope (0.0), spc (0), extra (0), mspc (0), sep (0), last_zoom (0.0),
+      zoomed_fn (NULL), global_lsub_correct (0), global_lsup_correct (0),
+      global_rsub_correct (0), global_rsup_correct (0), lsub_correct (0.0),
+      lsup_correct (0.0), rsub_correct (0.0), rsup_correct (0.0),
+      above_correct (0.0), below_correct (0.0), protrusion_maps (-1) {
   lsub_correct = lsub_guessed_table ();
   lsup_correct = lsup_guessed_table ();
   rsub_correct = rsub_guessed_table ();
@@ -61,10 +62,11 @@ font_rep::font_rep (string s)
 
 font_rep::font_rep (string s, font fn)
     : rep<font> (s), type (fn->type), math_type (fn->math_type),
-      size (fn->size), design_size (fn->design_size),
-      display_size (fn->display_size), slope (fn->slope), spc (fn->spc),
-      extra (fn->extra), mspc (fn->mspc), sep (fn->sep), last_zoom (0.0),
-      zoomed_fn (NULL), global_lsub_correct (0), global_lsup_correct (0),
+      size_int (fn->size_int), design_size (fn->design_size),
+      display_size (fn->display_size), size_float (fn->size_float),
+      slope (fn->slope), spc (fn->spc), extra (fn->extra), mspc (fn->mspc),
+      sep (fn->sep), last_zoom (0.0), zoomed_fn (NULL),
+      global_lsub_correct (0), global_lsup_correct (0),
       global_rsub_correct (0), global_rsup_correct (0), lsub_correct (0.0),
       lsup_correct (0.0), rsub_correct (0.0), rsup_correct (0.0),
       protrusion_maps (-1) {
@@ -573,13 +575,19 @@ rubber_font (font base) {
   return larger;
 }
 
-int
-script (int sz, int level) {
-  int i;
-  if (level < 0) level= 0;
-  if (level > 2) level= 2;
-  for (i= 0; i < level; i++)
-    sz= (sz * 2 + 2) / 3;
+double
+script (double sz, int level) {
+  // 验证输入是否为0.5倍数
+  if (!is_half_multiple (sz)) {
+    sz = round_to_half_multiple (sz);
+  }
+
+  if (level < 0) level = 0;
+  if (level > 2) level = 2;
+  for (int i = 0; i < level; i++)
+    sz = (sz * 2.0 + 2.0) / 3.0;  // 浮点除法，保持精度
+
+  // 输出可能不是0.5倍数，但这是设计允许的
   return sz;
 }
 
