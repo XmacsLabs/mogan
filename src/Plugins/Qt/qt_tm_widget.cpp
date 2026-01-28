@@ -352,7 +352,7 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   // 1. 社区版不显示
   // 2. 商业版：用户未登录时显示，用户已登录时不显示
   if (is_community_stem ()) {
-    // 社区版：不显示提示条 //用户没网络也不显示
+    // 社区版：不显示提示条
     guestNotificationBar->hide ();
   }
   else {
