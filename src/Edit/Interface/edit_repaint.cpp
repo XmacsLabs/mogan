@@ -181,7 +181,7 @@ edit_interface_rep::draw_selection (renderer ren, rectangle r) {
   }
 
   draw_image_resize_handles (ren);
-  draw_table_resize_handles (ren, visible);
+  draw_table_resize_handles (ren);
 }
 
 void
@@ -249,8 +249,7 @@ edit_interface_rep::draw_image_resize_handles (renderer ren) {
 }
 
 void
-edit_interface_rep::draw_table_resize_handles (renderer   ren,
-                                               rectangles visible) {
+edit_interface_rep::draw_table_resize_handles (renderer ren) {
   // 鼠标位于表格中时，绘制 handles
   SI        hs            = 8 * ren->pixel; // handles 半径（正方形半边长）
   rectangle new_table_brec= rectangle (0, 0, 0, 0);

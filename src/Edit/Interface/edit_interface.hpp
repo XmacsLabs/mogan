@@ -178,7 +178,7 @@ public:
   void draw_cursor (renderer ren);
   void draw_selection (renderer ren, rectangle r);
   void draw_image_resize_handles (renderer ren);
-  void draw_table_resize_handles (renderer ren, rectangles visible);
+  void draw_table_resize_handles (renderer ren);
   void draw_graphics (renderer ren);
   void draw_pre (renderer win, renderer ren, rectangle r);
   void draw_post (renderer win, renderer ren, rectangle r);
