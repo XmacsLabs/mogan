@@ -2219,23 +2219,26 @@ qt_tm_widget_rep::checkNetworkAvailable () {
   QUrl testUrl("https://www.liiistem.cn");
   QNetworkRequest request(testUrl);
   QNetworkReply* reply = manager->head(request);
-  
+  // QNetworkRequest test_request("https://www.bing.com/");
+
+  // 检查网络连接
+
   // 设置1000ms超时计时器
-  QTimer* timeoutTimer = new QTimer(mainwindow());
-  timeoutTimer->setSingleShot(true);
-  timeoutTimer->start(1000);
+  // QTimer* timeoutTimer = new QTimer(mainwindow());
+  // timeoutTimer->setSingleShot(true);
+  // timeoutTimer->start(1000);
+  // 
+  // QObject::connect(timeoutTimer, &QTimer::timeout, [this, reply]() {
+    // debug_std <<"222\n";
+    // reply->abort();
+    // if (guestNotificationBar) {
+      // guestNotificationBar->hide ();
+    // }
+  // });
   
-  QObject::connect(timeoutTimer, &QTimer::timeout, [this, reply]() {
-    debug_std <<"222\n";
-    reply->abort();
-    if (guestNotificationBar) {
-      guestNotificationBar->hide ();
-    }
-  });
-  
-  QObject::connect(reply, &QNetworkReply::finished, [this, reply, timeoutTimer]() {
-    timeoutTimer->stop();
-    timeoutTimer->deleteLater();
+  QObject::connect(reply, &QNetworkReply::finished, [this, reply ]() {
+    // timeoutTimer->stop();
+    // timeoutTimer->deleteLater();
     bool success = (reply->error() == QNetworkReply::NoError);
     reply->deleteLater();
     debug_std <<"333\n";
