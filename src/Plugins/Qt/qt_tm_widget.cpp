@@ -2214,34 +2214,14 @@ qt_tm_widget_rep::openRenewalPage () {
 
 void
 qt_tm_widget_rep::checkNetworkAvailable () {
-  debug_std <<"111\n";
   QNetworkAccessManager* manager = new QNetworkAccessManager(mainwindow());
   QUrl testUrl("https://www.liiistem.cn");
   QNetworkRequest request(testUrl);
   QNetworkReply* reply = manager->head(request);
-  // QNetworkRequest test_request("https://www.bing.com/");
-
-  // 检查网络连接
-
-  // 设置1000ms超时计时器
-  // QTimer* timeoutTimer = new QTimer(mainwindow());
-  // timeoutTimer->setSingleShot(true);
-  // timeoutTimer->start(1000);
-  // 
-  // QObject::connect(timeoutTimer, &QTimer::timeout, [this, reply]() {
-    // debug_std <<"222\n";
-    // reply->abort();
-    // if (guestNotificationBar) {
-      // guestNotificationBar->hide ();
-    // }
-  // });
   
   QObject::connect(reply, &QNetworkReply::finished, [this, reply ]() {
-    // timeoutTimer->stop();
-    // timeoutTimer->deleteLater();
     bool success = (reply->error() == QNetworkReply::NoError);
     reply->deleteLater();
-    debug_std <<"333\n";
     if (guestNotificationBar) {
       bool isLoggedIn = as_bool (call ("logged-in?"));
       if (isLoggedIn || !success) {
