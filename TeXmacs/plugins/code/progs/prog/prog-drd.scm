@@ -19,12 +19,12 @@
   (inline-code-tag) (block-code-tag))
 
 (define-group inline-code-tag
-  verbatim scm cpp mmx r fortran octave
+  verbatim scm cpp mmx r fortran
   python scilab shell)
 
 (define-group block-code-tag
   verbatim-code scm-code cpp-code mmx-code r-code fortran-code
-  octave-code python-code scilab-code shell-code)
+  python-code scilab-code shell-code)
 
 ;; Listings
 (define-group listing-tag

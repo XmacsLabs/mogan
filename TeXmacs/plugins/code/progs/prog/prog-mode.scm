@@ -19,8 +19,6 @@
   (in-prog-cpp% #t in-prog% in-cpp%)
   (in-dot% (== (get-env "prog-language") "dot"))
   (in-prog-dot% #t in-prog% in-dot%)
-  (in-octave% (== (get-env "prog-language") "octave"))
-  (in-prog-octave% #t in-prog% in-octave%)
   (in-java% (== (get-env "prog-language") "java"))
   (in-prog-java% #t in-prog% in-java%)
   (in-javascript% (== (get-env "prog-language") "javascript"))
