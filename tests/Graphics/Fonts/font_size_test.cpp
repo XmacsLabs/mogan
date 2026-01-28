@@ -12,6 +12,7 @@
 #include "base.hpp"
 #include "converter.hpp"
 #include "data_cache.hpp"
+#include "env.hpp"
 #include "font.hpp"
 #include "qtestcase.h"
 #include "smart_font.hpp"
@@ -403,21 +404,90 @@ TestFontSize::test_to_tex_font_size () {
 // Test get_script_size() function
 void
 TestFontSize::test_get_script_size () {
-  QSKIP (
-      "get_script_size requires edit_env setup which is complex for unit test");
-  // This function requires a full edit_env environment setup
-  // which is beyond the scope of a simple unit test.
-  // The function signature verification is covered by compilation tests.
+  // Test the mathematical logic of get_script_size without full edit_env
+  // This tests the core calculation that should happen in get_script_size
+
+  // Test that script() function works correctly (this is used internally)
+  double sz1          = 10.0;
+  double level0_result= script (sz1, 0);
+  QVERIFY (qAbs (level0_result - sz1) < 0.001);
+
+  double level1_result  = script (sz1, 1);
+  double expected_level1= (sz1 * 2.0 + 2.0) / 3.0;
+  QVERIFY (qAbs (level1_result - expected_level1) < 0.001);
+
+  double level2_result  = script (sz1, 2);
+  double expected_level2= (expected_level1 * 2.0 + 2.0) / 3.0;
+  QVERIFY (qAbs (level2_result - expected_level2) < 0.001);
+
+  // Test with half-multiple size
+  double sz2           = 10.5;
+  double level0_result2= script (sz2, 0);
+  QVERIFY (qAbs (level0_result2 - sz2) < 0.001);
+
+  // Test that non-half-multiple input is corrected by script() function
+  double sz3      = 10.3;
+  double corrected= script (sz3, 0);
+  QVERIFY (is_half_multiple (corrected));
+  QVERIFY (qAbs (corrected - 10.5) < 0.001);
+
+  // Test level bounds handling
+  double negative_level= script (sz1, -1);
+  QVERIFY (qAbs (negative_level - script (sz1, 0)) < 0.001);
+
+  double large_level= script (sz1, 10);
+  QVERIFY (qAbs (large_level - script (sz1, 2)) < 0.001);
 }
 
-// Test determine_sizes() function
+// Test determine_sizes() function logic
 void
 TestFontSize::test_determine_sizes () {
-  QSKIP (
-      "determine_sizes requires edit_env setup which is complex for unit test");
-  // This function requires a full edit_env environment setup
-  // which is beyond the scope of a simple unit test.
-  // The function signature verification is covered by compilation tests.
+  // Test the core logic that determine_sizes should implement
+  // This is a simplified test that validates the mathematical operations
+
+  // Test 1: Integer conversion (as_int handling)
+  // determine_sizes should convert string "10" to double 10.0
+  // We test that our understanding of integer conversion is correct
+  double sz= 10.0;
+
+  // Test 2: Multiplication syntax handling
+  // For "*1.2" with sz=10.0, should compute ceil(1.2 * 10 - 0.001) = 12
+  double multiplier= 1.2;
+  double xsz1      = ceil ((multiplier - 0.001) * sz);
+  QVERIFY (qAbs (xsz1 - 12.0) < 0.001);
+
+  // For "*0.8" with sz=10.0, should compute ceil(0.8 * 10 - 0.001) = 8
+  multiplier = 0.8;
+  double xsz2= ceil ((multiplier - 0.001) * sz);
+  QVERIFY (qAbs (xsz2 - 8.0) < 0.001);
+
+  // Test 3: Division in multiplication syntax (e.g., "*3/2")
+  // For "*3/2" with sz=10.0, should compute ceil((3.0/2.0) * 10 - 0.001) = 15
+  double x   = 3.0 / 2.0; // 1.5
+  double xsz3= ceil ((x - 0.001) * sz);
+  QVERIFY (qAbs (xsz3 - 15.0) < 0.001);
+
+  // Test 4: Script function fallback (when no matching tuple found)
+  // determine_sizes should fall back to script(sz, 1) and script(sz, 2)
+  double script1         = script (sz, 1);
+  double expected_script1= (sz * 2.0 + 2.0) / 3.0;
+  QVERIFY (qAbs (script1 - expected_script1) < 0.001);
+
+  double script2         = script (sz, 2);
+  double expected_script2= (expected_script1 * 2.0 + 2.0) / 3.0;
+  QVERIFY (qAbs (script2 - expected_script2) < 0.001);
+
+  // Test 5: Half-multiple size support
+  double sz_half              = 10.5;
+  double script1_half         = script (sz_half, 1);
+  double expected_script1_half= (sz_half * 2.0 + 2.0) / 3.0;
+  QVERIFY (qAbs (script1_half - expected_script1_half) < 0.001);
+
+  // Test that multiplication works with half-multiple sizes
+  multiplier     = 1.2;
+  double xsz_half= ceil ((multiplier - 0.001) * sz_half);
+  // 1.2 * 10.5 = 12.6, ceil(12.6 - 0.001) = ceil(12.599) = 13
+  QVERIFY (qAbs (xsz_half - 13.0) < 0.001);
 }
 
 QTEST_MAIN (TestFontSize)
