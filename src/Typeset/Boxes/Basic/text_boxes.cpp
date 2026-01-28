@@ -387,13 +387,6 @@ text_box_rep::find_cursor (path bp) {
     if (l == N (str)) cu->ox+= xk->right;
     STACK_DELETE_ARRAY (xpos);
   }
-  else if (N (str) >= 5 && str (0, 5) == "<big-") {
-    // 对于大运算符，使用 get_xpositions 计算更合理的 ox 值
-    STACK_NEW_ARRAY (xpos, SI, N (str) + 1);
-    fn->get_xpositions (str, xpos, 0); // padding = 0
-    cu->ox= xpos[l];
-    STACK_DELETE_ARRAY (xpos);
-  }
   if (l != 0) {
     int k= l;
     tm_char_backwards (str, k);
@@ -432,14 +425,6 @@ text_box_rep::find_selection (path lbp, path rbp) {
     if (rbp->item == 0) x2+= d;
     if (lbp->item == N (str)) x1+= xk->right;
     if (rbp->item == N (str)) x2+= xk->right;
-    STACK_DELETE_ARRAY (xpos);
-  }
-  else if (N (str) >= 5 && str (0, 5) == "<big-") {
-    // 对于大运算符，使用 get_xpositions 计算更合理的 x1, x2 值
-    STACK_NEW_ARRAY (xpos, SI, N (str) + 1);
-    fn->get_xpositions (str, xpos, 0); // padding = 0
-    x1= xpos[lbp->item];
-    x2= xpos[rbp->item];
     STACK_DELETE_ARRAY (xpos);
   }
   fn->get_extents (str (lbp->item, rbp->item), ex);
