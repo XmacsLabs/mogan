@@ -72,17 +72,17 @@ TestSmartFont::test_resolve_chinese_puncts () {
   // sys-chinese-rm-medium-right-10-600-smart
   font fn= smart_font ("sys-chinese", "rm", "medium", "right", 10, 600);
   smart_font_rep* fn_rep= (smart_font_rep*) fn.rep;
-  auto puncts= array<string> ("<#2018>", "<#2019>", // Chinese: 单引号
-                              "<#201C>", "<#201D>" // Chinese: 双引号
-  );
+  auto   puncts= array<string> ("<#2018>", "<#2019>", // Chinese: 单引号
+                                "<#201C>", "<#201D>"  // Chinese: 双引号
+    );
   string cjk_font_name;
 #if defined(OS_WIN32) || defined(OS_WIN)
-  cjk_font_name = "SimSun";
+  cjk_font_name= "SimSun";
 #elif defined(OS_MACOS)
-  cjk_font_name = "PingFang SC";
+  cjk_font_name= "PingFang SC";
 #else
   // Linux and other platforms
-  cjk_font_name = "Noto CJK SC";
+  cjk_font_name= "Noto CJK SC";
 #endif
 
   for (int i= 0; i < N (puncts); i++) {

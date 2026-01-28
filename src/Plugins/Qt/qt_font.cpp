@@ -33,10 +33,10 @@ qt_font_rep::qt_font_rep (string name, string family2, double size2, int dpi2)
       qfm (qfn) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
     // 重新初始化 QFont 和 QFontMetricsF 使用修正后的尺寸
-    qfn = QFont (to_qstring (family), size);
-    qfm = QFontMetricsF (qfn);
+    qfn= QFont (to_qstring (family), size);
+    qfm= QFontMetricsF (qfn);
   }
   type= FONT_TYPE_QT;
 
@@ -44,7 +44,7 @@ qt_font_rep::qt_font_rep (string name, string family2, double size2, int dpi2)
   y1          = FLOOR (-qfm.descent ());
   y2          = CEIL (qfm.ascent () + 1);
   display_size= y2 - y1;
-  design_size = (SI)(size * 256.0);
+  design_size = (SI) (size * 256.0);
 
   // get character dimensions
   metric ex;
@@ -135,12 +135,12 @@ font
 qt_font (string family, double size, int dpi) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
   }
   // 浮点尺寸字符串处理：整数如"10"，0.5倍数如"10.5"
   string sz_str;
-  if (size == round (size)) sz_str = as_string ((int) size);  // 整数
-  else sz_str = as_string (size);  // 0.5倍数，保留一位小数
+  if (size == round (size)) sz_str= as_string ((int) size); // 整数
+  else sz_str= as_string (size); // 0.5倍数，保留一位小数
   string name= "qt:" * family * sz_str * "@" * as_string (dpi);
   if (font::instances->contains (name)) return font (name);
   else return tm_new<qt_font_rep> (name, family, size, dpi);

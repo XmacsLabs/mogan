@@ -43,14 +43,14 @@ to_tex_font_size (double sz) {
   if (sz == 0.0) return 0.0;
   if (sz >= 316.0) {
     // 已经可能是乘以100的值，检查是否为错误转换的结果
-    double original = sz / 100.0;
+    double original= sz / 100.0;
     if (original < 316.0) {
-      double doubled = original * 2.0;
-      if (fabs(original - round(original)) < 0.1) {
+      double doubled= original * 2.0;
+      if (fabs (original - round (original)) < 0.1) {
         // original是整数，sz可能是错误转换的结果（如1000表示10），返回original
         return original;
       }
-      if (fabs(doubled - round(doubled)) < 0.1) {
+      if (fabs (doubled - round (doubled)) < 0.1) {
         // original是0.5倍数，sz是正确的乘以100的值
         return sz;
       }
@@ -59,10 +59,10 @@ to_tex_font_size (double sz) {
     return sz;
   }
   // 检查是否为0.5倍数
-  double doubled = sz * 2.0;
-  if (fabs(doubled - round(doubled)) < 0.1) {
+  double doubled= sz * 2.0;
+  if (fabs (doubled - round (doubled)) < 0.1) {
     // 是0.5倍数，检查是否为整数
-    if (fabs(sz - round(sz)) < 0.1) {
+    if (fabs (sz - round (sz)) < 0.1) {
       // 是整数（如10.0），直接返回
       return sz;
     }
@@ -70,7 +70,7 @@ to_tex_font_size (double sz) {
     return sz * 100.0;
   }
   // 不是0.5倍数，四舍五入到最近的整数
-  return round(sz);
+  return round (sz);
 }
 
 /******************************************************************************
@@ -78,10 +78,11 @@ to_tex_font_size (double sz) {
  ******************************************************************************/
 
 bool
-try_tfm (string family, double size, double osize, tex_font_metric& tfm, bool make) {
+try_tfm (string family, double size, double osize, tex_font_metric& tfm,
+         bool make) {
   // 转换为 TeX 字体尺寸表示
   double tex_size = to_tex_font_size (size);
-  double tex_osize = to_tex_font_size (osize);
+  double tex_osize= to_tex_font_size (osize);
 
   // cout << "Try tfm " << family << tex_size << " (" << tex_osize << ")\n";
   make= make && use_texlive_fonts () &&
@@ -91,7 +92,9 @@ try_tfm (string family, double size, double osize, tex_font_metric& tfm, bool ma
     tfm= tex_font_metric (name_tfm);
     return true;
   }
-  string name= family * (tex_size == 0 ? string ("") : as_string ((int) tex_size)) * ".tfm";
+  string name= family *
+               (tex_size == 0 ? string ("") : as_string ((int) tex_size)) *
+               ".tfm";
   if (DEBUG_STD) debug_fonts << "Try tfm " << name << "\n";
   url u= resolve_tex (name);
   if (is_none (u)) {
@@ -112,16 +115,18 @@ try_tfm (string family, double size, double osize, tex_font_metric& tfm, bool ma
     }
     if (is_none (u)) return false;
   }
-  // cout << "Tfm " << family << tex_osize << " -> " << family << tex_size << "\n";
+  // cout << "Tfm " << family << tex_osize << " -> " << family << tex_size <<
+  // "\n";
   tfm= load_tfm (u, family, (int) tex_osize);
   if (tex_size != tex_osize)
     cache_set ("font_cache.scm", "tfm:" * family * as_string ((int) tex_osize),
                as_string ((int) tex_size));
   if (tex_size == 0) {
-    tex_size = (double) tfm->size;
+    tex_size= (double) tfm->size;
     if (DEBUG_STD) debug_fonts << "Design size = " << tex_size << "\n";
   }
-  if (tex_size != tex_osize) tfm->header[1]= mag (tfm->header[1], tex_osize, tex_size);
+  if (tex_size != tex_osize)
+    tfm->header[1]= mag (tfm->header[1], tex_osize, tex_size);
   return true;
 }
 
@@ -165,7 +170,7 @@ load_tex_tfm (string family, double size, int dsize, tex_font_metric& tfm,
   }
   if (((double) dsize != size) && (dsize != 0))
     if (try_tfm (family, (double) dsize, size, tfm, make)) return true;
-  if ((dsize != 10) && (fabs(size - 10.0) > 0.1))
+  if ((dsize != 10) && (fabs (size - 10.0) > 0.1))
     if (try_tfm (family, 10.0, size, tfm, make)) return true;
   return false;
 }
@@ -233,12 +238,15 @@ try_pk (string family, double size, int dpi, int dsize, tex_font_metric& tfm,
         font_glyphs& pk) {
   // 转换为 TeX 字体尺寸表示
   double tex_size = to_tex_font_size (size);
-  double tex_dsize = (double) dsize;
+  double tex_dsize= (double) dsize;
   // cout << "Try pk " << family << tex_size << " at " << dpi << " dpi\n";
 #ifdef USE_FREETYPE
   // Substitute by True Type font ?
-  int    tt_size= tex_size < 333.0 ? (int)(tex_size + 0.5) : (int)((tex_size + 50.0) / 100.0 + 0.5);
-  int    tt_dpi = tex_size < 333.0 ? dpi : (int)((tex_size * dpi) / (100.0 * tt_size) + 0.5);
+  int    tt_size= tex_size < 333.0 ? (int) (tex_size + 0.5)
+                                   : (int) ((tex_size + 50.0) / 100.0 + 0.5);
+  int    tt_dpi = tex_size < 333.0
+                      ? dpi
+                      : (int) ((tex_size * dpi) / (100.0 * tt_size) + 0.5);
   string tt_name= tt_find_name (family, tt_size);
   if (tt_name != "") {
     if (font_glyphs::instances->contains (tt_name)) pk= font_glyphs (tt_name);
@@ -248,17 +256,19 @@ try_pk (string family, double size, int dpi, int dsize, tex_font_metric& tfm,
 #endif // USE_FREETYPE
 
   // Open regular pk font
-  string name_pk= family * as_string ((int) tex_size) * "." * as_string (dpi) * "pk";
+  string name_pk=
+      family * as_string ((int) tex_size) * "." * as_string (dpi) * "pk";
   if (font_glyphs::instances->contains (name_pk)) {
     pk= font_glyphs (name_pk);
     return true;
   }
   if (tex_dsize == 0.0) {
     double old_size= tex_size;
-    tex_size      = (double) tfm->size;
-    dpi           = mag (dpi, old_size, tex_size);
+    tex_size       = (double) tfm->size;
+    dpi            = mag (dpi, old_size, tex_size);
   }
-  string size_name (tex_dsize == 0.0 ? string ("") : as_string ((int) tex_size));
+  string size_name (tex_dsize == 0.0 ? string ("")
+                                     : as_string ((int) tex_size));
   string name (family * size_name * "." * as_string (dpi) * "pk");
   if (DEBUG_STD) debug_fonts << "Open pk " << name << "\n";
   url u= resolve_tex (name);
@@ -290,14 +300,16 @@ try_pk (string family, double size, int dpi, int dsize, tex_font_metric& tfm,
 }
 
 bool
-load_tex_pk (string family, double size, int dpi, int dsize, tex_font_metric& tfm,
-             font_glyphs& pk) {
+load_tex_pk (string family, double size, int dpi, int dsize,
+             tex_font_metric& tfm, font_glyphs& pk) {
   if (try_pk (family, size, dpi, dsize, tfm, pk)) return true;
   if (((double) dsize != size) && (dsize != 0))
-    if (try_pk (family, (double) dsize, mag (dpi, size, (double) dsize), dsize, tfm, pk))
+    if (try_pk (family, (double) dsize, mag (dpi, size, (double) dsize), dsize,
+                tfm, pk))
       return true;
-  if ((dsize != 10) && (fabs(size - 10.0) > 0.1))
-    if (try_pk (family, 10.0, mag (dpi, size, 10.0), dsize, tfm, pk)) return true;
+  if ((dsize != 10) && (fabs (size - 10.0) > 0.1))
+    if (try_pk (family, 10.0, mag (dpi, size, 10.0), dsize, tfm, pk))
+      return true;
   if (size > 333.0) {
     double sz= (size + 50.0) / 100.0;
     return load_tex_pk (family, sz, mag (dpi, size, sz), dsize, tfm, pk);

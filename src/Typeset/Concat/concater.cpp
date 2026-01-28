@@ -127,7 +127,7 @@ concater_rep::flag_ok (string s, path ip, color col) {
   }
   else if (info == INFO_DETAILED || info == INFO_PAPER) {
     double sz= env->get_script_size (env->fn_size, env->index_level + 2);
-    font gfn;
+    font   gfn;
     if (lolly::data::has_cjk_unified_ideographs (s)) {
       gfn= smart_font (env->get_string (FONT), env->get_string (FONT_FAMILY),
                        env->get_string (FONT_SERIES),

@@ -2057,15 +2057,16 @@ virtual_font (font base, string name, double size, int hdpi, int vdpi,
               bool extend) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
   }
 
   // 将浮点尺寸转换为字符串表示，只保留一位小数（0.5倍数）
   string size_str;
   if (size == round (size)) {
-    size_str = as_string ((int) size);  // 整数
-  } else {
-    size_str = as_string (size);  // 0.5倍数，保留一位小数
+    size_str= as_string ((int) size); // 整数
+  }
+  else {
+    size_str= as_string (size); // 0.5倍数，保留一位小数
   }
 
   string full_name= base->res_name *

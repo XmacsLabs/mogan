@@ -54,12 +54,14 @@ struct font_glyphs;
  ******************************************************************************/
 
 // 浮点字体尺寸支持辅助函数（只支持0.5倍数）
-inline bool is_half_multiple (double sz) {
-  double doubled = sz * 2.0;
+inline bool
+is_half_multiple (double sz) {
+  double doubled= sz * 2.0;
   return fabs (doubled - round (doubled)) < 0.001;
 }
 
-inline double round_to_half_multiple (double sz) {
+inline double
+round_to_half_multiple (double sz) {
   return round (sz * 2.0) / 2.0;
 }
 
@@ -180,15 +182,15 @@ struct font_rep : rep<font> {
   double effective_size () const {
     if (size_float > 0.0) {
       // 验证是否为0.5倍数
-      if (!is_half_multiple(size_float)) {
+      if (!is_half_multiple (size_float)) {
         // 自动修正到最近的0.5倍数
-        double corrected = round_to_half_multiple(size_float);
+        double corrected= round_to_half_multiple (size_float);
         // 记录警告日志
         return corrected;
       }
       return size_float;
     }
-    return (double)size_int;
+    return (double) size_int;
   }
 
   array<space> get_spacing_table (int mode, int id, array<array<space>>& t);
@@ -215,7 +217,8 @@ string default_korean_font_name ();
 string default_emoji_font_name ();
 
 font error_font (font fn);
-font virtual_font (font base, string fam, double sz, int hdpi, int vdpi, bool ext);
+font virtual_font (font base, string fam, double sz, int hdpi, int vdpi,
+                   bool ext);
 font virtual_enhance_font (font base, string virt);
 font rubber_font (font base);
 bool use_poor_rubber (font fn);
@@ -354,23 +357,28 @@ bool          use_macos_fonts ();
 pair<string, int> font_name_unpack (string font_name);
 
 // 辅助函数，用于双字段兼容性处理（包含0.5倍数验证）
-inline double get_font_size (const font_rep* rep) {
-  return rep->effective_size ();  // 使用effective_size()获取实际尺寸
+inline double
+get_font_size (const font_rep* rep) {
+  return rep->effective_size (); // 使用effective_size()获取实际尺寸
 }
 
 // 设置字体尺寸（自动处理双字段，验证0.5倍数）
-inline void set_font_size (font_rep* rep, double size) {
+inline void
+set_font_size (font_rep* rep, double size) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
     // 可记录日志或发出警告
   }
-  rep->size_float = size;
-  rep->size_int = (SI) (size + 0.5);  // 同时更新整数字段用于兼容
+  rep->size_float= size;
+  rep->size_int  = (SI) (size + 0.5); // 同时更新整数字段用于兼容
 }
 
 // 兼容性包装函数（用于现有整数代码）
-inline int font_size_as_int (double sz) { return (int) (sz + 0.5); } // 四舍五入
+inline int
+font_size_as_int (double sz) {
+  return (int) (sz + 0.5);
+} // 四舍五入
 
 #ifdef USE_FREETYPE
 
@@ -428,14 +436,15 @@ inline font
 tt_font (string family, double size, int dpi) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
   }
   // 将浮点尺寸转换为字符串表示，只保留一位小数（0.5倍数）
   string size_str;
   if (size == round (size)) {
-    size_str = as_string ((int) size);  // 整数
-  } else {
-    size_str = as_string (size);  // 0.5倍数，保留一位小数
+    size_str= as_string ((int) size); // 整数
+  }
+  else {
+    size_str= as_string (size); // 0.5倍数，保留一位小数
   }
   string name= "tt:" * family * size_str * "@" * as_string (dpi);
   failed_error << "Font name= " << name << "\n";

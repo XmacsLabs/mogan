@@ -65,11 +65,10 @@ font_rep::font_rep (string s, font fn)
       size_int (fn->size_int), design_size (fn->design_size),
       display_size (fn->display_size), size_float (fn->size_float),
       slope (fn->slope), spc (fn->spc), extra (fn->extra), mspc (fn->mspc),
-      sep (fn->sep), last_zoom (0.0), zoomed_fn (NULL),
-      global_lsub_correct (0), global_lsup_correct (0),
-      global_rsub_correct (0), global_rsup_correct (0), lsub_correct (0.0),
-      lsup_correct (0.0), rsub_correct (0.0), rsup_correct (0.0),
-      protrusion_maps (-1) {
+      sep (fn->sep), last_zoom (0.0), zoomed_fn (NULL), global_lsub_correct (0),
+      global_lsup_correct (0), global_rsub_correct (0), global_rsup_correct (0),
+      lsub_correct (0.0), lsup_correct (0.0), rsub_correct (0.0),
+      rsup_correct (0.0), protrusion_maps (-1) {
   lsub_correct = lsub_guessed_table ();
   lsup_correct = lsup_guessed_table ();
   rsub_correct = rsub_guessed_table ();
@@ -579,13 +578,13 @@ double
 script (double sz, int level) {
   // 验证输入是否为0.5倍数
   if (!is_half_multiple (sz)) {
-    sz = round_to_half_multiple (sz);
+    sz= round_to_half_multiple (sz);
   }
 
-  if (level < 0) level = 0;
-  if (level > 2) level = 2;
-  for (int i = 0; i < level; i++)
-    sz = (sz * 2.0 + 2.0) / 3.0;  // 浮点除法，保持精度
+  if (level < 0) level= 0;
+  if (level > 2) level= 2;
+  for (int i= 0; i < level; i++)
+    sz= (sz * 2.0 + 2.0) / 3.0; // 浮点除法，保持精度
 
   // 输出可能不是0.5倍数，但这是设计允许的
   return sz;

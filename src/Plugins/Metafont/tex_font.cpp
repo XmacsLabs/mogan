@@ -112,15 +112,15 @@ struct tex_font_rep : font_rep {
 
 #define conv(x) ((SI) (((double) (x)) * unit))
 
-tex_font_rep::tex_font_rep (string name, int status2, string family2, double size2,
-                            int dpi2, int dsize2)
+tex_font_rep::tex_font_rep (string name, int status2, string family2,
+                            double size2, int dpi2, int dsize2)
     : font_rep (name), status (status2), dsize (dsize2) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size2)) {
-    size2 = round_to_half_multiple (size2);
+    size2= round_to_half_multiple (size2);
   }
-  type = FONT_TYPE_TEX;
-  set_font_size (this, size2);  // 使用辅助函数设置双字段
+  type= FONT_TYPE_TEX;
+  set_font_size (this, size2); // 使用辅助函数设置双字段
 
   load_tex (family2, size2, dpi2, dsize, tfm, pk);
 
@@ -158,8 +158,10 @@ tex_font_rep::tex_font_rep (string name, int status2, string family2, double siz
   wquad= conv (tfm->spc_quad ());
 
   if ((family == "cmr") || (family == "ecrm") || (family == "cmmi")) {
-    double sz = effective_size();
-    if (sz < 8) wline= wfn / (fabs(sz - 7.0) < 0.1 ? 16 : (fabs(sz - 6.0) < 0.1 ? 14 : 12));
+    double sz= effective_size ();
+    if (sz < 8)
+      wline= wfn /
+             (fabs (sz - 7.0) < 0.1 ? 16 : (fabs (sz - 6.0) < 0.1 ? 14 : 12));
     else if (sz < 10) yfrac+= (sz * wfn) / 1600;
     else if (sz <= 14) yfrac+= (sz * wfn) / 1000;
     else {
@@ -845,8 +847,8 @@ tex_font_rep::draw_fixed (renderer ren, string s, SI ox, SI y) {
 font
 tex_font_rep::magnify (double zoomx, double zoomy) {
   if (zoomx != zoomy) return poor_magnify (zoomx, zoomy);
-  int ndpi= (int) tm_round (dpi * zoomx);
-  double sz = effective_size();
+  int    ndpi= (int) tm_round (dpi * zoomx);
+  double sz  = effective_size ();
   switch (status) {
   case TEX_ANY:
     return tex_font (family, sz, ndpi, dsize);
@@ -1125,7 +1127,7 @@ font
 tex_font (string family, double size, int dpi, int dsize) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
   }
   string name= "tex:" * family * as_string (size) * "@" * as_string (dpi);
   return make (font, name,
@@ -1136,7 +1138,7 @@ font
 tex_cm_font (string family, double size, int dpi, int dsize) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
   }
   string name= "cm:" * family * as_string (size) * "@" * as_string (dpi);
   return make (font, name,
@@ -1147,7 +1149,7 @@ font
 tex_ec_font (string family, double size, int dpi, int dsize) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
   }
   string name= "ec:" * family * as_string (size) * "@" * as_string (dpi);
   return make (font, name,
@@ -1158,7 +1160,7 @@ font
 tex_la_font (string family, double size, int dpi, int dsize) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
   }
   string name= "la:" * family * as_string (size) * "@" * as_string (dpi);
   return make (font, name,
@@ -1169,7 +1171,7 @@ font
 tex_gr_font (string family, double size, int dpi, int dsize) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
   }
   string name= "gr:" * family * as_string (size) * "@" * as_string (dpi);
   return make (font, name,
@@ -1180,7 +1182,7 @@ font
 tex_adobe_font (string family, double size, int dpi, int dsize) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
   }
   string name= "adobe:" * family * as_string (size) * "@" * as_string (dpi);
   return make (

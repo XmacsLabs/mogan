@@ -349,7 +349,8 @@ edit_env_rep::exec_cc_length () {
 tree
 edit_env_rep::exec_fs_length () {
   double fs=
-      (get_double (FONT_BASE_SIZE) * magn * inch * get_double (FONT_SIZE)) / 72.0;
+      (get_double (FONT_BASE_SIZE) * magn * inch * get_double (FONT_SIZE)) /
+      72.0;
   return tree (TMLEN, as_string (fs));
 }
 
@@ -383,7 +384,8 @@ edit_env_rep::exec_ex_length () {
 tree
 edit_env_rep::exec_fn_length () {
   double fn=
-      (get_double (FONT_BASE_SIZE) * magn * inch * get_double (FONT_SIZE)) / 72.0;
+      (get_double (FONT_BASE_SIZE) * magn * inch * get_double (FONT_SIZE)) /
+      72.0;
   return tree (TMLEN, as_string (0.5 * fn), as_string (fn),
                as_string (1.5 * fn));
 }
@@ -391,14 +393,16 @@ edit_env_rep::exec_fn_length () {
 tree
 edit_env_rep::exec_fns_length () {
   double fn=
-      (get_double (FONT_BASE_SIZE) * magn * inch * get_double (FONT_SIZE)) / 72.0;
+      (get_double (FONT_BASE_SIZE) * magn * inch * get_double (FONT_SIZE)) /
+      72.0;
   return tree (TMLEN, "0", "0", as_string (fn));
 }
 
 tree
 edit_env_rep::exec_bls_length () {
   double fn=
-      (get_double (FONT_BASE_SIZE) * magn * inch * get_double (FONT_SIZE)) / 72.0;
+      (get_double (FONT_BASE_SIZE) * magn * inch * get_double (FONT_SIZE)) /
+      72.0;
   return tmlen_plus (tree (TMLEN, as_string (fn)), get_vspace (PAR_SEP));
 }
 

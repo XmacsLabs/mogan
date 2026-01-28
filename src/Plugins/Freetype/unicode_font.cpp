@@ -132,12 +132,12 @@ unicode_font_rep::unicode_font_rep (string name, string family2, double size2,
       native (0) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size2)) {
-    size2 = round_to_half_multiple (size2);
+    size2= round_to_half_multiple (size2);
   }
   type= FONT_TYPE_UNICODE;
-  set_font_size (this, size2);  // 使用辅助函数设置双字段
-  fnm = tt_font_metric (family, size2, std_dpi, (std_dpi * vdpi) / hdpi);
-  fng = tt_font_glyphs (family, size2, hdpi, vdpi);
+  set_font_size (this, size2); // 使用辅助函数设置双字段
+  fnm= tt_font_metric (family, size2, std_dpi, (std_dpi * vdpi) / hdpi);
+  fng= tt_font_glyphs (family, size2, hdpi, vdpi);
   if (fnm->bad_font_metric || fng->bad_font_glyphs) {
     fnm= std_font_metric (res_name, NULL, 0, -1);
     fng= std_font_glyphs (res_name, NULL, 0, -1);
@@ -158,7 +158,7 @@ unicode_font_rep::unicode_font_rep (string name, string family2, double size2,
   y1          = min (y1, ex->y1);
   y2          = max (y2, ex->y2);
   display_size= y2 - y1;
-  design_size = (SI)(size2 * 256.0);
+  design_size = (SI) (size2 * 256.0);
 
   // get character dimensions
   get_extents ("x", ex);
@@ -778,7 +778,7 @@ unicode_font_rep::draw_fixed (renderer ren, string s, SI x, SI y) {
 
 font
 unicode_font_rep::magnify (double zoomx, double zoomy) {
-  return unicode_font (family, effective_size(), (int) tm_round (hdpi * zoomx),
+  return unicode_font (family, effective_size (), (int) tm_round (hdpi * zoomx),
                        (int) tm_round (vdpi * zoomy));
 }
 
@@ -1032,15 +1032,16 @@ font
 unicode_font (string family, double size, int hdpi, int vdpi) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (size)) {
-    size = round_to_half_multiple (size);
+    size= round_to_half_multiple (size);
   }
 
   // 将浮点尺寸转换为字符串表示，只保留一位小数（0.5倍数）
   string size_str;
   if (size == round (size)) {
-    size_str = as_string ((int) size);  // 整数
-  } else {
-    size_str = as_string (size);  // 0.5倍数，保留一位小数
+    size_str= as_string ((int) size); // 整数
+  }
+  else {
+    size_str= as_string (size); // 0.5倍数，保留一位小数
   }
 
   string name= "unicode:" * family * size_str * "@" * as_string (hdpi);

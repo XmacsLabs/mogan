@@ -12,9 +12,9 @@
 #include "Boxes/construct.hpp"
 #include "analyze.hpp"
 #include "env.hpp"
+#include "font.hpp"
 #include "page_type.hpp"
 #include "typesetter.hpp"
-#include "font.hpp"
 
 using namespace moebius;
 
@@ -525,13 +525,13 @@ double
 edit_env_rep::get_script_size (double sz, int level) {
   // 确保输入为0.5倍数
   if (!is_half_multiple (sz)) {
-    sz = round_to_half_multiple (sz);
+    sz= round_to_half_multiple (sz);
   }
   // 将0.5倍数转换为整数索引（乘以2）
-  int isz = (int)(sz * 2.0);
+  int isz= (int) (sz * 2.0);
   while (isz >= N (size_cache)) {
     // 需要为整数尺寸 xsz/2.0 计算缓存
-    double xsz = (double) N (size_cache) / 2.0;
+    double xsz= (double) N (size_cache) / 2.0;
     size_cache << determine_sizes (math_font_sizes, xsz);
   }
   array<double>& a (size_cache[isz]);
@@ -545,8 +545,8 @@ edit_env_rep::get_script_size (double sz, int level) {
 
 void
 edit_env_rep::update_font () {
-  double base_size = get_double (FONT_BASE_SIZE);
-  fn_size = base_size * get_double (FONT_SIZE);  // fn_size现在应该是double类型
+  double base_size= get_double (FONT_BASE_SIZE);
+  fn_size= base_size * get_double (FONT_SIZE); // fn_size现在应该是double类型
   switch (mode) {
   case 0:
   case 1:

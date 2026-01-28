@@ -31,8 +31,8 @@ using lolly::data::decode_from_utf8;
 using lolly::data::to_Hex;
 
 bool virtually_defined (string c, string name);
-font smart_font_bis (string f, string v, string s, string sh, double sz, int hdpi,
-                     int vdpi);
+font smart_font_bis (string f, string v, string s, string sh, double sz,
+                     int hdpi, int vdpi);
 
 smart_map
 get_smart_map (tree fn) {
@@ -1725,23 +1725,23 @@ smart_font_bis (string family, string variant, string series, string shape,
                 double sz, int hdpi, int vdpi) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (sz)) {
-    sz = round_to_half_multiple (sz);
+    sz= round_to_half_multiple (sz);
   }
 
   // 将浮点尺寸转换为字符串表示，只保留一位小数（0.5倍数）
   string sz_str;
   if (sz == round (sz)) {
-    sz_str = as_string ((int) sz);  // 整数
-  } else {
-    sz_str = as_string (sz);  // 0.5倍数，保留一位小数
+    sz_str= as_string ((int) sz); // 整数
+  }
+  else {
+    sz_str= as_string (sz); // 0.5倍数，保留一位小数
   }
 
   string name= family * "-" * variant * "-" * series * "-" * shape * "-" *
                sz_str * "-" * as_string (vdpi) * "-smart";
   if (hdpi != vdpi)
-    name= family * "-" * variant * "-" * series * "-" * shape * "-" *
-          sz_str * "-" * as_string (hdpi) * "-" * as_string (vdpi) *
-          "-smart";
+    name= family * "-" * variant * "-" * series * "-" * shape * "-" * sz_str *
+          "-" * as_string (hdpi) * "-" * as_string (vdpi) * "-smart";
   if (font::instances->contains (name)) return font (name);
   if (starts (family, "tc")) {
     // FIXME: temporary hack for symbols from std-symbol.ts
@@ -1781,11 +1781,11 @@ smart_font_bis (string family, string variant, string series, string shape,
 }
 
 font
-smart_font (string family, string variant, string series, string shape, double sz,
-            int dpi) {
+smart_font (string family, string variant, string series, string shape,
+            double sz, int dpi) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (sz)) {
-    sz = round_to_half_multiple (sz);
+    sz= round_to_half_multiple (sz);
   }
   if (variant == "rm")
     return smart_font_bis (family, variant, series, shape, sz, dpi, dpi);
@@ -1809,7 +1809,7 @@ math_smart_font (string family, string variant, string series, string shape,
                  int dpi) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (sz)) {
-    sz = round_to_half_multiple (sz);
+    sz= round_to_half_multiple (sz);
   }
   if (tfam == "roman" || starts (tfam, "sys-")) {
     tfam= family;
@@ -1828,7 +1828,7 @@ prog_smart_font (string family, string variant, string series, string shape,
                  int dpi) {
   // 验证输入是否为0.5倍数，如果不是则修正
   if (!is_half_multiple (sz)) {
-    sz = round_to_half_multiple (sz);
+    sz= round_to_half_multiple (sz);
   }
   if (tfam == "roman") {
     tfam= family;
