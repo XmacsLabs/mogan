@@ -78,8 +78,6 @@ TestSmartFont::test_resolve_chinese_puncts () {
   string cjk_font_name;
 #if defined(OS_WIN32) || defined(OS_WIN)
   cjk_font_name= "SimSun";
-#elif defined(OS_MACOS)
-  cjk_font_name= "PingFang SC";
 #else
   // Linux and other platforms
   cjk_font_name= "Noto CJK SC";
