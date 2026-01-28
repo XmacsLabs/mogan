@@ -38,7 +38,7 @@ mag (double dpi, double size, double dsize) {
 
 // 将点值尺寸转换为 TeX 字体尺寸表示
 // 规则：整数尺寸（如10）保持不变，0.5倍数尺寸（如10.5）转换为乘以100（1050）
-static double
+double
 to_tex_font_size (double sz) {
   if (sz == 0.0) return 0.0;
   if (sz >= 316.0) {
@@ -46,13 +46,13 @@ to_tex_font_size (double sz) {
     double original = sz / 100.0;
     if (original < 316.0) {
       double doubled = original * 2.0;
-      if (fabs(doubled - round(doubled)) < 0.1) {
-        // original是0.5倍数，sz是正确的乘以100的值
-        return sz;
-      }
       if (fabs(original - round(original)) < 0.1) {
         // original是整数，sz可能是错误转换的结果（如1000表示10），返回original
         return original;
+      }
+      if (fabs(doubled - round(doubled)) < 0.1) {
+        // original是0.5倍数，sz是正确的乘以100的值
+        return sz;
       }
     }
     // 其他情况，保持原样
