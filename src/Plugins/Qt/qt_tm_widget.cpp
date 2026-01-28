@@ -16,7 +16,6 @@
 #include <QDesktopServices>
 #include <QDialog>
 #include <QDockWidget>
-#include <QEventLoop>
 #include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QIcon>
@@ -26,11 +25,9 @@
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QNetworkAccessManager>
-#include <QNetworkInformation>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QObject>
-#include <QProcess>
 #include <QResource>
 #include <QScreen>
 #include <QSettings>
