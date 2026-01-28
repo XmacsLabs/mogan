@@ -256,7 +256,7 @@ tt_font_find (string font_basename) {
 
 bool
 tt_font_exists (string name) {
-  if (tt_fonts->contains (name)) return true;
+  if (tt_fonts->contains (name)) return tt_fonts (name);
   bench_start ("tt_font_exists " * name);
   bool yes= !is_none (tt_font_find (name));
   // Cache the result (true if exists, false if not)
