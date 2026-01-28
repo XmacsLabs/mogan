@@ -11,6 +11,7 @@
 
 #include "Modify/edit_table.hpp"
 #include "analyze.hpp"
+#include "convert.hpp"
 #include "edit_interface.hpp"
 #include "link.hpp"
 #include "message.hpp"
@@ -70,6 +71,26 @@ edit_interface_rep::should_show_image_popup (tree t) {
     }
     p= path_up (p);
   }
+  return true;
+}
+
+bool
+edit_interface_rep::should_show_code_popup (tree t) {
+  if (is_nil (t)) return false;
+  path ip= obtain_ip (t);
+  if (is_nil (ip) || ip->item == DETACHED) return false;
+  return true;
+}
+
+static bool
+is_code_tree (tree t) {
+  if (is_compound (t, "listing") || is_compound (t, "shell-listing") ||
+      is_compound (t, "scm-listing") || is_compound (t, "cpp-listing")) {
+    return true;
+  }
+  if (!is_verbatim (t)) return false;
+  if (is_compound (t, "latex_preview")) return false;
+  if (is_compound (t, "picture-mixed")) return false;
   return true;
 }
 
@@ -746,10 +767,13 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
     }
   }
   bool             hovering_image= false;
+  bool             hovering_code = false;
   bool             over_handles  = false;
   string           handle_cursor = "";
   static path      current_path  = path ();
   static rectangle selr          = rectangle ();
+  static rectangle code_selr     = rectangle ();
+  static tree      code_tree     = tree ();
   if (type == "move") {
     if (!is_zero (last_image_brec)) { // already clicked on image
       // 检测鼠标是否在handles上
@@ -786,12 +810,33 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
         path      p= reverse (obtain_ip (current_tree));
         selection sel=
             search_selection (p * start (current_tree), p * end (current_tree));
-        selr= least_upper_bound (sel->rs);
-        if (last_x >= selr->x1 && last_y >= selr->y1 && last_x <= selr->x2 &&
-            last_y <= selr->y2 * 0.8) {
-          hovering_image= true;
+        if (sel->valid) {
+          selr= least_upper_bound (sel->rs);
+          if (last_x >= selr->x1 && last_y >= selr->y1 && last_x <= selr->x2 &&
+              last_y <= selr->y2 * 0.8) {
+            hovering_image= true;
+          }
         }
       }
+    }
+
+    path p= current_path;
+    while (true) {
+      tree t= subtree (et, p);
+      if (is_code_tree (t)) {
+        code_tree    = t;
+        path      ip = reverse (obtain_ip (t));
+        selection sel= search_selection (ip * start (t), ip * end (t));
+        if (!sel->valid) break;
+        code_selr= least_upper_bound (sel->rs);
+        if (last_x >= code_selr->x1 && last_y >= code_selr->y1 &&
+            last_x <= code_selr->x2 && last_y <= code_selr->y2) {
+          hovering_code= true;
+        }
+        break;
+      }
+      if (p == path ()) break;
+      p= path_up (p);
     }
   }
   if (over_handles) {
@@ -804,8 +849,12 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
       // draw table resizing handles
     }
     else set_cursor_style (hovering_table == 1 ? "size_ver" : "size_hor");
+    hide_code_popup ();
   }
-  else if (hovering_hlink) set_cursor_style ("pointing_hand");
+  else if (hovering_hlink) {
+    set_cursor_style ("pointing_hand");
+    hide_code_popup ();
+  }
   else if (hovering_image) {
     set_cursor_style ("pointing_hand");
     path path_of_image_parent= path_up (current_path);
@@ -814,10 +863,21 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
       show_image_popup (tree_of_image_parent, selr, magf, get_scroll_x (),
                         get_scroll_y (), get_canvas_x (), get_canvas_y ());
     }
+    hide_code_popup ();
+  }
+  else if (hovering_code) {
+    set_cursor_style ("pointing_hand");
+    if (should_show_code_popup (code_tree)) {
+      show_code_popup (code_tree, code_selr, magf, get_scroll_x (),
+                       get_scroll_y (), get_canvas_x (), get_canvas_y ());
+    }
+    else hide_code_popup ();
+    hide_image_popup ();
   }
   else {
     set_cursor_style ("normal");
     hide_image_popup ();
+    hide_code_popup ();
   }
 
   if (type == "move") mouse_message ("move", x, y);

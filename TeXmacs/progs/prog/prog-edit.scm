@@ -13,7 +13,8 @@
 
 (texmacs-module (prog prog-edit)
   (:use (utils library tree)
-        (utils library cursor)))
+        (utils library cursor)
+        (utils edit selections)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Basic routines for textual programs
@@ -25,6 +26,12 @@
   (let* ((ct (cursor-tree))
          (dt (tree-ref ct :up)))
     (and (tree-atomic? ct) (tree-is? dt 'document))))
+
+(tm-define (code-popup-copy t)
+  (:synopsis "Copy code tree to clipboard")
+  (when (tree-select t)
+    (clipboard-copy-export "verbatim" "primary")
+    (selection-cancel)))
 
 (tm-define (program-tree)
   (:synopsis "get the entire program tree")
