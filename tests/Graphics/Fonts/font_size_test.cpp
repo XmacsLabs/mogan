@@ -17,6 +17,7 @@
 #include "qtestcase.h"
 #include "smart_font.hpp"
 #include "sys_utils.hpp"
+#include "tm_debug.hpp"
 #include "tm_sys_utils.hpp"
 #include "tree_helper.hpp"
 #include <QtTest/QtTest>
@@ -53,6 +54,11 @@ private slots:
   void test_to_tex_font_size ();
   void test_get_script_size ();
   void test_determine_sizes ();
+
+  // Performance tests
+  void test_performance_script_function ();
+  void test_performance_to_tex_font_size ();
+  void test_performance_float_calculations ();
 };
 
 // Test is_half_multiple() function
@@ -488,6 +494,111 @@ TestFontSize::test_determine_sizes () {
   double xsz_half= ceil ((multiplier - 0.001) * sz_half);
   // 1.2 * 10.5 = 12.6, ceil(12.6 - 0.001) = ceil(12.599) = 13
   QVERIFY (qAbs (xsz_half - 13.0) < 0.001);
+}
+
+// Performance test for script() function
+void
+TestFontSize::test_performance_script_function () {
+  // Reset performance counters before test
+  bench_reset ("font_script_calculation");
+
+  const int iterations  = 10000;
+  double    total_result= 0.0;
+
+  // Warm up cache
+  for (int i= 0; i < 100; i++) {
+    total_result+= script (10.0, 1);
+  }
+
+  // Performance test with various sizes
+  QVector<double> test_sizes = {8.0, 8.5, 10.0, 10.5, 12.0, 12.5};
+  QVector<int>    test_levels= {0, 1, 2};
+
+  for (double size : test_sizes) {
+    for (int level : test_levels) {
+      for (int i= 0; i < iterations; i++) {
+        total_result+= script (size, level);
+      }
+    }
+  }
+
+  // Prevent optimization from removing the loop
+  Q_UNUSED (total_result);
+
+  qDebug () << "Performance test for script() function completed.";
+  qDebug () << "Enabled DEBUG_BENCH to see detailed timing information.";
+  qDebug ()
+      << "Set environment variable TM_DEBUG_BENCH=1 to enable benchmarks.";
+
+  // Print performance results for font_script_calculation
+  debug_set ("bench", true);
+  lolly::system::bench_print (std_bench, "font_script_calculation", 0);
+}
+
+// Performance test for to_tex_font_size() function
+void
+TestFontSize::test_performance_to_tex_font_size () {
+  // Reset performance counters before test
+  bench_reset ("to_tex_font_size_conversion");
+
+  const int iterations  = 10000;
+  double    total_result= 0.0;
+
+  QVector<double> test_sizes= {0.0,  0.5,  1.0,   8.0,    8.5,   10.0,  10.5,
+                               12.0, 12.5, 100.0, 1050.0, 316.0, 1000.0};
+
+  for (double size : test_sizes) {
+    for (int i= 0; i < iterations; i++) {
+      total_result+= to_tex_font_size (size);
+    }
+  }
+
+  Q_UNUSED (total_result);
+
+  qDebug () << "Performance test for to_tex_font_size() function completed.";
+
+  // Print performance results for to_tex_font_size_conversion
+  debug_set ("bench", true);
+  lolly::system::bench_print (std_bench, "to_tex_font_size_conversion", 0);
+}
+
+// Performance test for general float calculations
+void
+TestFontSize::test_performance_float_calculations () {
+  // Test various float operations used in font size calculations
+  const int iterations= 100000;
+  double    total     = 0.0;
+
+  // Test is_half_multiple and round_to_half_multiple
+  QVector<double> test_values= {8.0, 8.5, 10.0, 10.3, 10.7, 10.5, 12.0, 12.5};
+
+  for (int i= 0; i < iterations; i++) {
+    for (double val : test_values) {
+      bool is_half= is_half_multiple (val);
+      if (!is_half) {
+        double rounded= round_to_half_multiple (val);
+        total+= rounded;
+      }
+    }
+  }
+
+  // Test basic float arithmetic patterns used in script()
+  for (int i= 0; i < iterations; i++) {
+    for (double val : test_values) {
+      // Simulate script() calculation: (val * 2.0 + 2.0) / 3.0
+      double result= (val * 2.0 + 2.0) / 3.0;
+      total+= result;
+    }
+  }
+
+  Q_UNUSED (total);
+
+  qDebug () << "Performance test for float calculations completed.";
+  qDebug () << "Total iterations:" << iterations * test_values.size () * 2;
+
+  // Print all performance results
+  debug_set ("bench", true);
+  lolly::system::bench_print (std_bench);
 }
 
 QTEST_MAIN (TestFontSize)

@@ -18,6 +18,7 @@
 #include "path.hpp"
 #include "preferences.hpp"
 #include "tex_files.hpp"
+#include "tm_debug.hpp"
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
 #include <cmath>
@@ -40,7 +41,12 @@ mag (double dpi, double size, double dsize) {
 // 规则：整数尺寸（如10）保持不变，0.5倍数尺寸（如10.5）转换为乘以100（1050）
 double
 to_tex_font_size (double sz) {
-  if (sz == 0.0) return 0.0;
+  bench_start ("to_tex_font_size_conversion");
+
+  if (sz == 0.0) {
+    bench_cumul ("to_tex_font_size_conversion");
+    return 0.0;
+  }
   if (sz >= 316.0) {
     // 已经可能是乘以100的值，检查是否为错误转换的结果
     double original= sz / 100.0;
@@ -48,14 +54,17 @@ to_tex_font_size (double sz) {
       double doubled= original * 2.0;
       if (fabs (original - round (original)) < 0.1) {
         // original是整数，sz可能是错误转换的结果（如1000表示10），返回original
+        bench_cumul ("to_tex_font_size_conversion");
         return original;
       }
       if (fabs (doubled - round (doubled)) < 0.1) {
         // original是0.5倍数，sz是正确的乘以100的值
+        bench_cumul ("to_tex_font_size_conversion");
         return sz;
       }
     }
     // 其他情况，保持原样
+    bench_cumul ("to_tex_font_size_conversion");
     return sz;
   }
   // 检查是否为0.5倍数
@@ -64,12 +73,15 @@ to_tex_font_size (double sz) {
     // 是0.5倍数，检查是否为整数
     if (fabs (sz - round (sz)) < 0.1) {
       // 是整数（如10.0），直接返回
+      bench_cumul ("to_tex_font_size_conversion");
       return sz;
     }
     // 是0.5倍数但不是整数（如10.5），返回乘以100的值
+    bench_cumul ("to_tex_font_size_conversion");
     return sz * 100.0;
   }
   // 不是0.5倍数，四舍五入到最近的整数
+  bench_cumul ("to_tex_font_size_conversion");
   return round (sz);
 }
 

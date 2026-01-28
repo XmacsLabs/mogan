@@ -576,6 +576,8 @@ rubber_font (font base) {
 
 double
 script (double sz, int level) {
+  bench_start ("font_script_calculation");
+
   // 验证输入是否为0.5倍数
   if (!is_half_multiple (sz)) {
     sz= round_to_half_multiple (sz);
@@ -587,6 +589,7 @@ script (double sz, int level) {
     sz= (sz * 2.0 + 2.0) / 3.0; // 浮点除法，保持精度
 
   // 输出可能不是0.5倍数，但这是设计允许的
+  bench_cumul ("font_script_calculation");
   return sz;
 }
 

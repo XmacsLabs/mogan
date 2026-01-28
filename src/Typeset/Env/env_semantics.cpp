@@ -14,6 +14,7 @@
 #include "env.hpp"
 #include "font.hpp"
 #include "page_type.hpp"
+#include "tm_debug.hpp"
 #include "typesetter.hpp"
 
 using namespace moebius;
@@ -490,6 +491,7 @@ edit_env_rep::get_art_box_parameters (tree t) {
 
 static array<double>
 determine_sizes (tree szt, double sz) {
+  bench_start ("determine_sizes");
   array<double> r;
   r << sz;
   if (is_tuple (szt))
@@ -513,16 +515,21 @@ determine_sizes (tree szt, double sz) {
               }
             }
           // cout << szt << ", " << sz << " -> " << r << LF;
+          bench_cumul ("determine_sizes");
           return r;
         }
   r << script (sz, 1);
   r << script (sz, 2);
   // cout << szt << ", " << sz << " -> " << r << LF;
+  bench_cumul ("determine_sizes");
   return r;
 }
 
 double
 edit_env_rep::get_script_size (double sz, int level) {
+  bench_start ("get_script_size");
+  double result= 0.0;
+
   // 确保输入为0.5倍数
   if (!is_half_multiple (sz)) {
     sz= round_to_half_multiple (sz);
@@ -535,8 +542,11 @@ edit_env_rep::get_script_size (double sz, int level) {
     size_cache << determine_sizes (math_font_sizes, xsz);
   }
   array<double>& a (size_cache[isz]);
-  if (level < N (a)) return a[level];
-  else return a[N (a) - 1];
+  if (level < N (a)) result= a[level];
+  else result= a[N (a) - 1];
+
+  bench_cumul ("get_script_size");
+  return result;
 }
 
 /******************************************************************************
