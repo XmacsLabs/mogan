@@ -855,8 +855,17 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
   static path      current_path  = path ();
   static rectangle selr          = rectangle ();
   if (type == "move") {
-    if (!is_zero (last_image_brec)) { // already clicked on image
-      // 检测鼠标是否在handles上
+    if (!is_zero (last_table_brec)) {
+      // 检测鼠标是否在表格 handles 上
+      if (table_scale_hit (x, y)) {
+        over_handles= true;
+        if (table_scale_handle_type == 1) handle_cursor= "size_ver";
+        else if (table_scale_handle_type == 2) handle_cursor= "size_hor";
+        else if (table_scale_handle_type == 3) handle_cursor= "size_fdiag";
+      }
+    }
+    else if (!is_zero (last_image_brec)) { // already clicked on image
+      // 检测鼠标是否在图片 handles 上
       SI        handle_r= last_image_hr > 0 ? last_image_hr : 10 * pixel;
       rectangle h       = last_image_brec;
       SI        x1      = h->x1 + handle_r;
