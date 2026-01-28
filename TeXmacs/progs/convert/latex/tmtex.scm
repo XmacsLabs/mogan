@@ -479,10 +479,10 @@
         ((string-starts? s "bbb-") (tmtex-modified-token 'mathbb s 4))
         ((string-starts? s "cal-") (tmtex-modified-token 'mathcal s 4))
         ((and (string-starts? s "cal*-")
-              (>= (string-length s) 6))  ; 至少 "cal*-A" 6个字符
+              (>= (string-length s) 6))  
          (tmtex-modified-token 'mathscr s 5))
         ((and (string-starts? s "cal**-")
-              (>= (string-length s) 7))  ; 至少 "cal**-A" 7个字符
+              (>= (string-length s) 7))  
          (tmtex-modified-token 'EuScript s 6))
         ((string-starts? s "frak-") (tmtex-modified-token 'mathfrak s 5))
         ((string-starts? s "b-cal-")
