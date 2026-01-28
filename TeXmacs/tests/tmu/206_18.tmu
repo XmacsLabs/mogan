@@ -1,0 +1,16 @@
+<TMU|<tuple|1.1.0|2026.1.2>>
+
+<style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref>>
+
+<\body>
+  <tabular*|<tformat|<cwith|1|1|1|-1|cell-vmode|exact>|<cwith|2|2|1|-1|cell-vmode|exact>|<cwith|1|1|1|-1|cell-height|28159tmpt>|<cwith|2|2|1|-1|cell-height|24701tmpt>|<cwith|1|-1|1|-1|cell-valign|c>|<cwith|2|2|2|2|font-base-size|10.5>|<cwith|2|2|3|3|font-base-size|11>|<cwith|3|3|1|1|cell-vmode|exact>|<cwith|4|4|1|1|cell-vmode|exact>|<cwith|3|3|1|1|cell-height|28159tmpt>|<cwith|4|4|1|1|cell-height|24701tmpt>|<cwith|3|4|1|1|cell-valign|c>|<cwith|4|4|1|1|font-base-size|10.5>|<cwith|5|5|1|1|cell-vmode|exact>|<cwith|6|6|1|1|cell-vmode|exact>|<cwith|5|5|1|1|cell-height|28159tmpt>|<cwith|6|6|1|1|cell-height|24701tmpt>|<cwith|5|6|1|1|cell-valign|c>|<cwith|6|6|1|1|font-base-size|11>|<table|<row|<cell|10pt>|<cell|10.5pt>|<cell|11pt>>|<row|<cell|你好>|<cell|你好>|<cell|你好>>|<row|<cell|10.5pt>|<cell|>|<cell|>>|<row|<cell|你好>|<cell|>|<cell|>>|<row|<cell|11pt>|<cell|>|<cell|>>|<row|<cell|你好>|<cell|>|<cell|>>>>>
+</body>
+
+<\initial>
+  <\collection>
+    <associate|font|SimSun>
+    <associate|font-family|rm>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
