@@ -2219,7 +2219,7 @@ qt_tm_widget_rep::checkNetworkAvailable () {
   QNetworkRequest request(testUrl);
   QNetworkReply* reply = manager->head(request);
   
-  QObject::connect(reply, &QNetworkReply::finished, [this, reply ]() {
+  QObject::connect(reply, &QNetworkReply::finished, [this, reply]() {
     bool success = (reply->error() == QNetworkReply::NoError);
     reply->deleteLater();
     if (guestNotificationBar) {
