@@ -358,8 +358,8 @@ qt_tm_widget_rep::qt_tm_widget_rep (int mask, command _quit)
   else {
     // 商业版：检查用户登录状态（使用和OCR功能相同的判断方法）
     // 初始隐藏，等网络检查完成后再决定是否显示guestNotificationBar->hide ();
-      guestNotificationBar->hide ();
-      checkNetworkAvailable ();
+    guestNotificationBar->hide ();
+    checkNetworkAvailable ();
   }
 
   // there is a bug in the early implementation of toolbars in Qt 4.6
@@ -2211,22 +2211,22 @@ qt_tm_widget_rep::openRenewalPage () {
   QDesktopServices::openUrl (QUrl (fullUrl));
 }
 
-
 void
 qt_tm_widget_rep::checkNetworkAvailable () {
-  QNetworkAccessManager* manager = new QNetworkAccessManager(mainwindow());
-  QUrl testUrl("https://www.liiistem.cn");
-  QNetworkRequest request(testUrl);
-  QNetworkReply* reply = manager->head(request);
-  
-  QObject::connect(reply, &QNetworkReply::finished, [this, reply]() {
-    bool success = (reply->error() == QNetworkReply::NoError);
-    reply->deleteLater();
+  QNetworkAccessManager* manager= new QNetworkAccessManager (mainwindow ());
+  QUrl                   testUrl ("https://www.liiistem.cn");
+  QNetworkRequest        request (testUrl);
+  QNetworkReply*         reply= manager->head (request);
+
+  QObject::connect (reply, &QNetworkReply::finished, [this, reply] () {
+    bool success= (reply->error () == QNetworkReply::NoError);
+    reply->deleteLater ();
     if (guestNotificationBar) {
-      bool isLoggedIn = as_bool (call ("logged-in?"));
+      bool isLoggedIn= as_bool (call ("logged-in?"));
       if (isLoggedIn || !success) {
         guestNotificationBar->hide ();
-      } else {
+      }
+      else {
         guestNotificationBar->show ();
       }
     }
