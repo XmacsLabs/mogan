@@ -15,6 +15,7 @@
 #include "config.h"
 #include "data_cache.hpp"
 #include "file.hpp"
+#include "hashmap.hpp"
 #include "path.hpp"
 #include "preferences.hpp"
 #include "tex_files.hpp"
@@ -22,6 +23,10 @@
 #include "tm_file.hpp"
 #include "tm_timer.hpp"
 #include <cmath>
+
+// Memory caches for TFM and PK files to avoid repeated disk loading
+static hashmap<string, tex_font_metric> tfm_cache;
+static hashmap<string, font_glyphs>     pk_cache;
 
 /*
  For certain LaTeX fonts, it is possible to have non integer font sizes,
@@ -145,8 +150,19 @@ try_tfm (string family, double size, double osize, tex_font_metric& tfm,
 bool
 load_tex_tfm (string family, double size, int dsize, tex_font_metric& tfm,
               bool make) {
+  // Check memory cache first
+  string cache_key= family * ":" * as_string (size) * ":" * as_string (dsize);
+  if (tfm_cache->contains (cache_key)) {
+    tfm= tfm_cache[cache_key];
+    return true;
+  }
+
   // cout << "Load TeX tfm " << family << size << " (dsize= " << dsize << ")\n";
-  if (try_tfm (family, size, size, tfm, make)) return true;
+  if (try_tfm (family, size, size, tfm, make)) {
+    // Store in cache before returning
+    tfm_cache (cache_key)= tfm;
+    return true;
+  }
   if (size > 333.0)
     return load_tex_tfm (family, (size + 50.0) / 100.0, dsize, tfm, make);
   if (false) { // NOTE: only use Type 1 fonts
@@ -314,7 +330,19 @@ try_pk (string family, double size, int dpi, int dsize, tex_font_metric& tfm,
 bool
 load_tex_pk (string family, double size, int dpi, int dsize,
              tex_font_metric& tfm, font_glyphs& pk) {
-  if (try_pk (family, size, dpi, dsize, tfm, pk)) return true;
+  // Check memory cache first
+  string cache_key= family * ":" * as_string (size) * ":" * as_string (dpi) *
+                    ":" * as_string (dsize);
+  if (pk_cache->contains (cache_key)) {
+    pk= pk_cache[cache_key];
+    return true;
+  }
+
+  if (try_pk (family, size, dpi, dsize, tfm, pk)) {
+    // Store in cache before returning
+    pk_cache (cache_key)= pk;
+    return true;
+  }
   if (((double) dsize != size) && (dsize != 0))
     if (try_pk (family, (double) dsize, mag (dpi, size, (double) dsize), dsize,
                 tfm, pk))
