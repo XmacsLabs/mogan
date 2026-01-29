@@ -738,8 +738,8 @@ edit_interface_rep::table_scale_apply (SI x, SI y) {
   if (scale_x != 1.0) {
     SI col_width=
         max ((SI) (table_scale_initial_width * scale_x) / cols, 16 * PIXEL);
-    et->table_set_format_region (table_scale_path, 1, 1, -1, -1,
-                                 "cell-hmode", tree ("exact"));
+    et->table_set_format_region (table_scale_path, 1, 1, -1, -1, "cell-hmode",
+                                 tree ("exact"));
     et->table_set_format_region (
         table_scale_path, 1, 1, -1, -1, "cell-width",
         tree (as_string (col_width) * string ("tmpt")));
@@ -748,8 +748,8 @@ edit_interface_rep::table_scale_apply (SI x, SI y) {
   if (scale_y != 1.0) {
     SI row_height=
         max ((SI) (table_scale_initial_height * scale_y) / rows, 16 * PIXEL);
-    et->table_set_format_region (table_scale_path, 1, 1, -1, -1,
-                                 "cell-vmode", tree ("exact"));
+    et->table_set_format_region (table_scale_path, 1, 1, -1, -1, "cell-vmode",
+                                 tree ("exact"));
     et->table_set_format_region (
         table_scale_path, 1, 1, -1, -1, "cell-height",
         tree (as_string (row_height) * string ("tmpt")));
