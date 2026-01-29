@@ -138,6 +138,7 @@
            (s (string-append (upcase-first name) ":"))
            (active? (inputter-active? (tree-ref t i) type))
            (props (child-proposals t i))
+           (show-verbatim? (and props (list-find props (lambda (x) (and (list? x) (== (car x) 'verbatim))))))
            (in (if active? (inputter-decode (tree-ref t i) type) "n.a."))
            (fm (type->format type))
            (w (type->width type))
@@ -149,14 +150,20 @@
       (dynamic (string-input-name t i))
       (assuming props
         (mini #t
-          (=> (eval in)
+          (=> (eval (if show-verbatim? (list 'verbatim in) in))
               (for (prop props)
-                (assuming (string? prop)
-                  ((eval prop) (setter prop)))
-                (assuming (== prop :other)
-                  ---
-                  ("Other"
-                   (interactive setter (list (upcase-first name) fm in))))))))
+                (cond ((string? prop)
+                       (let ((eval-result (eval prop)))
+                         ;; 处理verbatim表达式
+                         (if (and (list? eval-result) (== (car eval-result) 'verbatim))
+                             (eval-result (setter (cadr eval-result)))
+                             (eval-result (setter prop)))))
+                      ((and (list? prop) (== (car prop) 'verbatim))
+                       ((eval prop) (setter (cadr prop))))
+                      ((== prop :other)
+                       ---
+                       ("Other"
+                        (interactive setter (list (upcase-first name) fm in)))))))))
       (assuming (not props)
         (when active?
           (mini #t
@@ -198,6 +205,7 @@
            (fm (type->format type))
            (active? (inputter-active? (tree-ref t i) type))
            (props (child-proposals t i))
+           (show-verbatim? (and props (list-find props (lambda (x) (and (list? x) (== (car x) 'verbatim))))))
            (in (if active? (inputter-decode (tree-ref t i) type) "n.a."))
            (setter (lambda (x)
                      (pull-focus t
@@ -206,14 +214,20 @@
                          (focus-tree-modified t))))))
       (assuming (!= name "")
         (assuming props
-          (-> (eval s)
+          (=> (eval (if show-verbatim? (list 'verbatim s) s))
               (for (prop props)
-                (assuming (string? prop)
-                  ((eval prop) (setter prop)))
-                (assuming (== prop :other)
-                  ---
-                  ("Other"
-                   (interactive setter (list (upcase-first name) fm in)))))))
+                (cond ((string? prop)
+                       (let ((eval-result (eval prop)))
+                         ;; 处理verbatim表达式
+                         (if (and (list? eval-result) (== (car eval-result) 'verbatim))
+                             (eval-result (setter (cadr eval-result)))
+                             (eval-result (setter prop)))))
+                      ((and (list? prop) (== (car prop) 'verbatim))
+                       ((eval prop) (setter (cadr prop))))
+                      ((== prop :other)
+                       ---
+                       ("Other"
+                        (interactive setter (list (upcase-first name) fm in))))))))
         (assuming (not props)
           (when (inputter-active? (tree-ref t i) type)
             ((eval s)
