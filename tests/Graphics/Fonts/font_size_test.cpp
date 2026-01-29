@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  * MODULE     : font_size_test.cpp
  * DESCRIPTION: Tests for font size support with 0.5 multiples
