@@ -115,10 +115,7 @@ struct tex_font_rep : font_rep {
 tex_font_rep::tex_font_rep (string name, int status2, string family2,
                             double size2, int dpi2, int dsize2)
     : font_rep (name), status (status2), dsize (dsize2) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size2)) {
-    size2= round_to_half_multiple (size2);
-  }
+  size2= normalize_half_multiple_size (size2);
   type= FONT_TYPE_TEX;
   set_font_size (this, size2); // 使用辅助函数设置双字段
 
@@ -1125,10 +1122,7 @@ tfm_font_metric (tex_font_metric tfm, font_glyphs pk, double unit) {
 
 font
 tex_font (string family, double size, int dpi, int dsize) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
-  }
+  size= normalize_half_multiple_size (size);
   string name= "tex:" * family * as_string (size) * "@" * as_string (dpi);
   return make (font, name,
                tm_new<tex_font_rep> (name, TEX_ANY, family, size, dpi, dsize));
@@ -1136,10 +1130,7 @@ tex_font (string family, double size, int dpi, int dsize) {
 
 font
 tex_cm_font (string family, double size, int dpi, int dsize) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
-  }
+  size= normalize_half_multiple_size (size);
   string name= "cm:" * family * as_string (size) * "@" * as_string (dpi);
   return make (font, name,
                tm_new<tex_font_rep> (name, TEX_CM, family, size, dpi, dsize));
@@ -1147,10 +1138,7 @@ tex_cm_font (string family, double size, int dpi, int dsize) {
 
 font
 tex_ec_font (string family, double size, int dpi, int dsize) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
-  }
+  size= normalize_half_multiple_size (size);
   string name= "ec:" * family * as_string (size) * "@" * as_string (dpi);
   return make (font, name,
                tm_new<tex_font_rep> (name, TEX_EC, family, size, dpi, dsize));
@@ -1158,10 +1146,7 @@ tex_ec_font (string family, double size, int dpi, int dsize) {
 
 font
 tex_la_font (string family, double size, int dpi, int dsize) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
-  }
+  size= normalize_half_multiple_size (size);
   string name= "la:" * family * as_string (size) * "@" * as_string (dpi);
   return make (font, name,
                tm_new<tex_font_rep> (name, TEX_LA, family, size, dpi, dsize));
@@ -1169,10 +1154,7 @@ tex_la_font (string family, double size, int dpi, int dsize) {
 
 font
 tex_gr_font (string family, double size, int dpi, int dsize) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
-  }
+  size= normalize_half_multiple_size (size);
   string name= "gr:" * family * as_string (size) * "@" * as_string (dpi);
   return make (font, name,
                tm_new<tex_font_rep> (name, TEX_GR, family, size, dpi, dsize));
@@ -1180,10 +1162,7 @@ tex_gr_font (string family, double size, int dpi, int dsize) {
 
 font
 tex_adobe_font (string family, double size, int dpi, int dsize) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
-  }
+  size= normalize_half_multiple_size (size);
   string name= "adobe:" * family * as_string (size) * "@" * as_string (dpi);
   return make (
       font, name,

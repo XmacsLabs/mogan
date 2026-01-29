@@ -31,9 +31,9 @@ qt_font_rep::qt_font_rep (string name, string family2, double size2, int dpi2)
       qfn (to_qstring (family), size),
       // qfn (to_qstring (family), size, QFont::Normal, false),
       qfm (qfn) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
+  double normalized_size= normalize_half_multiple_size (size);
+  if (fabs (normalized_size - size) > 1e-6) {
+    size= normalized_size;
     // 重新初始化 QFont 和 QFontMetricsF 使用修正后的尺寸
     qfn= QFont (to_qstring (family), size);
     qfm= QFontMetricsF (qfn);
@@ -133,10 +133,7 @@ qt_font_rep::magnify (double zoomx, double zoomy) {
 
 font
 qt_font (string family, double size, int dpi) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
-  }
+  size= normalize_half_multiple_size (size);
   // 浮点尺寸字符串处理：整数如"10"，0.5倍数如"10.5"
   string sz_str;
   if (size == round (size)) sz_str= as_string ((int) size); // 整数

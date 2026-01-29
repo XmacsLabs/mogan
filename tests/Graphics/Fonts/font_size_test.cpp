@@ -37,6 +37,7 @@ private slots:
   // Test helper functions
   void test_is_half_multiple ();
   void test_round_to_half_multiple ();
+  void test_normalize_half_multiple_size ();
   void test_font_size_as_int ();
   void test_effective_size ();
   void test_set_get_font_size ();
@@ -113,6 +114,68 @@ TestFontSize::test_round_to_half_multiple () {
   QCOMPARE (round_to_half_multiple (0.74), 0.5);
   QCOMPARE (round_to_half_multiple (0.75), 1.0);
   QCOMPARE (round_to_half_multiple (0.76), 1.0);
+}
+
+// Test normalize_half_multiple_size() function
+void
+TestFontSize::test_normalize_half_multiple_size () {
+  // Exact integer sizes should stay the same
+  QCOMPARE (normalize_half_multiple_size (10.0), 10.0);
+  QCOMPARE (normalize_half_multiple_size (12.0), 12.0);
+  QCOMPARE (normalize_half_multiple_size (8.0), 8.0);
+
+  // Exact half multiples should stay the same
+  QCOMPARE (normalize_half_multiple_size (10.5), 10.5);
+  QCOMPARE (normalize_half_multiple_size (11.5), 11.5);
+  QCOMPARE (normalize_half_multiple_size (8.5), 8.5);
+
+  // Values within tolerance of half multiples should stay the same
+  // Tolerance is 0.001 in is_half_multiple()
+  QCOMPARE (normalize_half_multiple_size (10.5001), 10.5001);  // Within tolerance
+  QCOMPARE (normalize_half_multiple_size (10.4999), 10.4999);  // Within tolerance
+  QCOMPARE (normalize_half_multiple_size (11.5001), 11.5001);  // Within tolerance
+  QCOMPARE (normalize_half_multiple_size (11.4999), 11.4999);  // Within tolerance
+
+  // Values outside tolerance should round to nearest half multiple
+  QCOMPARE (normalize_half_multiple_size (10.501), 10.5);    // Outside tolerance
+  QCOMPARE (normalize_half_multiple_size (10.499), 10.5);    // Outside tolerance
+  QCOMPARE (normalize_half_multiple_size (11.502), 11.5);    // Outside tolerance
+  QCOMPARE (normalize_half_multiple_size (11.498), 11.5);    // Outside tolerance
+
+  // Non-half multiples should round to nearest half multiple
+  QCOMPARE (normalize_half_multiple_size (10.1), 10.0);
+  QCOMPARE (normalize_half_multiple_size (10.2), 10.0);
+  QCOMPARE (normalize_half_multiple_size (10.3), 10.5);
+  QCOMPARE (normalize_half_multiple_size (10.4), 10.5);
+  QCOMPARE (normalize_half_multiple_size (10.6), 10.5);
+  QCOMPARE (normalize_half_multiple_size (10.7), 10.5);
+  QCOMPARE (normalize_half_multiple_size (10.8), 11.0);
+  QCOMPARE (normalize_half_multiple_size (10.9), 11.0);
+
+  // Edge cases
+  QCOMPARE (normalize_half_multiple_size (0.0), 0.0);
+  QCOMPARE (normalize_half_multiple_size (0.5), 0.5);
+  QCOMPARE (normalize_half_multiple_size (1.0), 1.0);
+  QCOMPARE (normalize_half_multiple_size (0.1), 0.0);
+  QCOMPARE (normalize_half_multiple_size (0.24), 0.0);
+  QCOMPARE (normalize_half_multiple_size (0.25), 0.5);
+  QCOMPARE (normalize_half_multiple_size (0.26), 0.5);
+  QCOMPARE (normalize_half_multiple_size (0.74), 0.5);
+  QCOMPARE (normalize_half_multiple_size (0.75), 1.0);
+  QCOMPARE (normalize_half_multiple_size (0.76), 1.0);
+
+  // Verify behavior matches is_half_multiple() + round_to_half_multiple()
+  double test_values[] = {10.0, 10.5, 10.5001, 10.4999, 10.501, 10.499, 10.3, 10.7, 0.0, 0.5, 1.0};
+  for (double val : test_values) {
+    double result = normalize_half_multiple_size(val);
+    if (is_half_multiple(val)) {
+      // If value is within tolerance of a half multiple, should return original
+      QCOMPARE (result, val);
+    } else {
+      // Otherwise should round to nearest half multiple
+      QCOMPARE (result, round_to_half_multiple(val));
+    }
+  }
 }
 
 // Test font_size_as_int() function

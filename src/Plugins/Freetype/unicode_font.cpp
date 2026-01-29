@@ -130,10 +130,7 @@ unicode_font_rep::unicode_font_rep (string name, string family2, double size2,
                                     int hdpi2, int vdpi2)
     : font_rep (name), family (family2), hdpi (hdpi2), vdpi (vdpi2), ligs (0),
       native (0) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size2)) {
-    size2= round_to_half_multiple (size2);
-  }
+  size2= normalize_half_multiple_size (size2);
   type= FONT_TYPE_UNICODE;
   set_font_size (this, size2); // 使用辅助函数设置双字段
   fnm= tt_font_metric (family, size2, std_dpi, (std_dpi * vdpi) / hdpi);
@@ -1030,10 +1027,7 @@ unicode_font_rep::get_wide_correction (string s, int mode) {
 
 font
 unicode_font (string family, double size, int hdpi, int vdpi) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
-  }
+  size= normalize_half_multiple_size (size);
 
   // 将浮点尺寸转换为字符串表示，只保留一位小数（0.5倍数）
   string size_str;

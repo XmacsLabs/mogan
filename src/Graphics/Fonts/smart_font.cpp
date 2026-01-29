@@ -1723,10 +1723,7 @@ smart_font_rep::get_wide_correction (string s, int mode) {
 font
 smart_font_bis (string family, string variant, string series, string shape,
                 double sz, int hdpi, int vdpi) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (sz)) {
-    sz= round_to_half_multiple (sz);
-  }
+  sz= normalize_half_multiple_size (sz);
 
   // 将浮点尺寸转换为字符串表示，只保留一位小数（0.5倍数）
   string sz_str;
@@ -1783,10 +1780,7 @@ smart_font_bis (string family, string variant, string series, string shape,
 font
 smart_font (string family, string variant, string series, string shape,
             double sz, int dpi) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (sz)) {
-    sz= round_to_half_multiple (sz);
-  }
+  sz= normalize_half_multiple_size (sz);
   if (variant == "rm")
     return smart_font_bis (family, variant, series, shape, sz, dpi, dpi);
   array<string> lfn1= logical_font (family, "rm", series, shape);
@@ -1807,10 +1801,7 @@ font
 math_smart_font (string family, string variant, string series, string shape,
                  string tfam, string tvar, string tser, string tsh, double sz,
                  int dpi) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (sz)) {
-    sz= round_to_half_multiple (sz);
-  }
+  sz= normalize_half_multiple_size (sz);
   if (tfam == "roman" || starts (tfam, "sys-")) {
     tfam= family;
   }
@@ -1826,10 +1817,7 @@ font
 prog_smart_font (string family, string variant, string series, string shape,
                  string tfam, string tvar, string tser, string tsh, double sz,
                  int dpi) {
-  // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (sz)) {
-    sz= round_to_half_multiple (sz);
-  }
+  sz= normalize_half_multiple_size (sz);
   if (tfam == "roman") {
     tfam= family;
   }

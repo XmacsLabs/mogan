@@ -578,10 +578,7 @@ double
 script (double sz, int level) {
   bench_start ("font_script_calculation");
 
-  // 验证输入是否为0.5倍数
-  if (!is_half_multiple (sz)) {
-    sz= round_to_half_multiple (sz);
-  }
+  sz= normalize_half_multiple_size (sz);
 
   if (level < 0) level= 0;
   if (level > 2) level= 2;

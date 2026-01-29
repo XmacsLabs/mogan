@@ -530,10 +530,7 @@ edit_env_rep::get_script_size (double sz, int level) {
   bench_start ("get_script_size");
   double result= 0.0;
 
-  // 确保输入为0.5倍数
-  if (!is_half_multiple (sz)) {
-    sz= round_to_half_multiple (sz);
-  }
+  sz= normalize_half_multiple_size (sz);
   // 将0.5倍数转换为整数索引（乘以2）
   int isz= (int) (sz * 2.0);
   while (isz >= N (size_cache)) {

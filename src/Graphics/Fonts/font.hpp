@@ -65,6 +65,13 @@ round_to_half_multiple (double sz) {
   return round (sz * 2.0) / 2.0;
 }
 
+// 验证输入是否为0.5倍数，如果不是则四舍五入到最近的0.5倍数
+inline double
+normalize_half_multiple_size (double sz) {
+  if (!is_half_multiple (sz)) return round_to_half_multiple (sz);
+  return sz;
+}
+
 struct font_rep : rep<font> {
   int    type;         // font type
   int    math_type;    // For TeX Gyre math fonts and Stix and OpenType fonts
@@ -181,14 +188,7 @@ struct font_rep : rep<font> {
   // 获取有效字体尺寸（优先使用浮点尺寸，验证0.5倍数）
   double effective_size () const {
     if (size_float > 0.0) {
-      // 验证是否为0.5倍数
-      if (!is_half_multiple (size_float)) {
-        // 自动修正到最近的0.5倍数
-        double corrected= round_to_half_multiple (size_float);
-        // 记录警告日志
-        return corrected;
-      }
-      return size_float;
+      return normalize_half_multiple_size (size_float);
     }
     return (double) size_int;
   }
@@ -366,10 +366,8 @@ get_font_size (const font_rep* rep) {
 inline void
 set_font_size (font_rep* rep, double size) {
   // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
-    // 可记录日志或发出警告
-  }
+  size= normalize_half_multiple_size (size);
+  // 可记录日志或发出警告
   rep->size_float= size;
   rep->size_int  = (SI) (size + 0.5); // 同时更新整数字段用于兼容
 }
@@ -435,9 +433,7 @@ rubber_assemble_font (font base) {
 inline font
 tt_font (string family, double size, int dpi) {
   // 验证输入是否为0.5倍数，如果不是则修正
-  if (!is_half_multiple (size)) {
-    size= round_to_half_multiple (size);
-  }
+  size= normalize_half_multiple_size (size);
   // 将浮点尺寸转换为字符串表示，只保留一位小数（0.5倍数）
   string size_str;
   if (size == round (size)) {
