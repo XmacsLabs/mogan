@@ -47,7 +47,8 @@ StartupLoginDialog::setupUi () {
   iconLabel->setGraphicsEffect (shadowEffect);
 
   // 创建子标题
-  subtitleLabel= new QLabel (qt_translate("免费畅享核心功能，付费升级AI高效体验！"), this);
+  subtitleLabel= new QLabel (
+      qt_translate ("免费畅享核心功能，付费升级AI高效体验！"), this);
   subtitleLabel->setAlignment (Qt::AlignCenter);
   subtitleLabel->setObjectName ("subtitleLabel");
 
@@ -238,11 +239,11 @@ StartupLoginDialog::styleSheet () const {
 }
 
 StartupLoginDialog::StartupLoginDialog (QWidget* parent)
-    : QDialog (parent), titleLabel (nullptr), iconLabel(nullptr), subtitleLabel(nullptr),
-      featureLabel1 (nullptr), featureLabel2 (nullptr), featureLabel3 (nullptr),
-      featureLabel4 (nullptr), loginButton (nullptr), skipButton (nullptr),
-      mainLayout (nullptr), featureLayout (nullptr), buttonLayout (nullptr),
-      progressBar (nullptr), statusLabel (nullptr),
+    : QDialog (parent), titleLabel (nullptr), iconLabel (nullptr),
+      subtitleLabel (nullptr), featureLabel1 (nullptr), featureLabel2 (nullptr),
+      featureLabel3 (nullptr), featureLabel4 (nullptr), loginButton (nullptr),
+      skipButton (nullptr), mainLayout (nullptr), featureLayout (nullptr),
+      buttonLayout (nullptr), progressBar (nullptr), statusLabel (nullptr),
       timeEstimationLabel (nullptr),
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
       windowAgent (nullptr),
@@ -462,8 +463,7 @@ StartupLoginDialog::handleInitializationComplete (bool success) {
 
   if (success) {
     // 初始化成功
-    updateProgressUI (100,
-                      qt_translate ("初始化完成，注册即送14天会员！"),
+    updateProgressUI (100, qt_translate ("初始化完成，注册即送14天会员！"),
                       qt_translate ("准备就绪"));
 
     // 如果用户已经做出选择，触发过渡
