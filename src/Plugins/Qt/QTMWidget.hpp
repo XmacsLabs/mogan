@@ -44,6 +44,7 @@ public:
   virtual void  scrollContentsBy (int dx, int dy);
 
   void                  setCursorPos (QPoint pos) { cursor_pos= pos; }
+  QPoint                cursorPos () const { return cursor_pos; }
   qt_simple_widget_rep* tm_widget () const;
 
   bool isPreediting () { return preediting; }
