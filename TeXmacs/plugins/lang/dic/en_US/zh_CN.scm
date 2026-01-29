@@ -1874,7 +1874,7 @@
 ("remove" "删除")
 ("rename" "重命名")
 ("rendering options for tag" "标记的渲染选项")
-("Register now and receive a 14-day membership." "注册即送14天会员期限")
+("Register now and receive a 14-day membership." "注册即送14天会员")
 ("Renew" "续费")
 ("Renew Early" "提前续费")
 ("Renew Now" "续费会员")

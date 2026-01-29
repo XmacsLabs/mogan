@@ -82,6 +82,7 @@ private:
 
   // UI elements
   QLabel*      titleLabel;
+  QLabel*      iconLabel;
   QLabel*      subtitleLabel;
   QLabel*      featureLabel1;
   QLabel*      featureLabel2;
