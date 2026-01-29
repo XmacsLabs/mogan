@@ -25,6 +25,11 @@
 ;; Preferred scripting language
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(tm-define (restart-required-message)
+  (if (community-stem?)
+      (translate "Requires restarting Mogan STEM to take full effect. Restart now?")
+      (translate "Requires restarting Liii STEM to take full effect. Restart now?")))
+
 (tm-menu (scripts-preferences-menu)
   (let* ((dummy (lazy-plugin-force))
          (l (scripts-list)))
@@ -59,7 +64,7 @@
   (let ((old (get-preference "language")))
     (if (== lan old)
         (set-preference "language" lan)
-        (let ((msg (translate "Requires restarting Mogan STEM to take full effect. Restart now?")))
+        (let ((msg (restart-required-message)))
           (user-confirm msg #f
             (lambda (answ)
               (if answ

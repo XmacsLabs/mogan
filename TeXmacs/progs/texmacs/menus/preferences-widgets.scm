@@ -62,7 +62,7 @@ pretty-val : string
 (tm-define (set-pretty-preference* which pretty-val)
   (let* ((old (get-pretty-preference which)))
     (when (!= old pretty-val)
-      (let ((msg (translate "Requires restarting Mogan STEM to take full effect. Restart now?")))
+      (let ((msg (restart-required-message)))
         (user-confirm msg #f
           (lambda (answ)
             (set-pretty-preference which pretty-val)
