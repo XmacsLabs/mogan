@@ -766,14 +766,17 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
       hovering_hlink= true;
     }
   }
-  bool             hovering_image= false;
-  bool             hovering_code = false;
-  bool             over_handles  = false;
-  string           handle_cursor = "";
-  static path      current_path  = path ();
-  static rectangle selr          = rectangle ();
-  static rectangle code_selr     = rectangle ();
-  static tree      code_tree     = tree ();
+  bool             hovering_image       = false;
+  bool             hovering_code        = false;
+  bool             over_handles         = false;
+  string           handle_cursor        = "";
+  static path      current_path         = path ();
+  static rectangle selr                 = rectangle ();
+  static rectangle code_selr            = rectangle ();
+  static tree      code_tree            = tree ();
+  static tree      shown_code_tree      = tree ();
+  static time_t    last_image_hover_time= 0;
+  static time_t    last_code_hover_time = 0;
   if (type == "move") {
     if (!is_zero (last_image_brec)) { // already clicked on image
       // 检测鼠标是否在handles上
@@ -814,7 +817,8 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
           selr= least_upper_bound (sel->rs);
           if (last_x >= selr->x1 && last_y >= selr->y1 && last_x <= selr->x2 &&
               last_y <= selr->y2 * 0.8) {
-            hovering_image= true;
+            hovering_image       = true;
+            last_image_hover_time= texmacs_time ();
           }
         }
       }
@@ -831,7 +835,8 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
         code_selr= least_upper_bound (sel->rs);
         if (last_x >= code_selr->x1 && last_y >= code_selr->y1 &&
             last_x <= code_selr->x2 && last_y <= code_selr->y2) {
-          hovering_code= true;
+          hovering_code       = true;
+          last_code_hover_time= texmacs_time ();
         }
         break;
       }
@@ -850,10 +855,12 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
     }
     else set_cursor_style (hovering_table == 1 ? "size_ver" : "size_hor");
     hide_code_popup ();
+    shown_code_tree= tree ();
   }
   else if (hovering_hlink) {
     set_cursor_style ("pointing_hand");
     hide_code_popup ();
+    shown_code_tree= tree ();
   }
   else if (hovering_image) {
     set_cursor_style ("pointing_hand");
@@ -864,20 +871,30 @@ edit_interface_rep::mouse_any (string type, SI x, SI y, int mods, time_t t,
                         get_scroll_y (), get_canvas_x (), get_canvas_y ());
     }
     hide_code_popup ();
+    shown_code_tree= tree ();
   }
   else if (hovering_code) {
     set_cursor_style ("pointing_hand");
     if (should_show_code_popup (code_tree)) {
+      if (!(code_tree == shown_code_tree)) hide_code_popup ();
       show_code_popup (code_tree, code_selr, magf, get_scroll_x (),
                        get_scroll_y (), get_canvas_x (), get_canvas_y ());
+      shown_code_tree= code_tree;
     }
-    else hide_code_popup ();
+    else {
+      hide_code_popup ();
+      shown_code_tree= tree ();
+    }
     hide_image_popup ();
   }
   else {
     set_cursor_style ("normal");
-    hide_image_popup ();
-    hide_code_popup ();
+    time_t now= texmacs_time ();
+    if (now - last_image_hover_time >= 500) hide_image_popup ();
+    if (now - last_code_hover_time >= 500) {
+      hide_code_popup ();
+      shown_code_tree= tree ();
+    }
   }
 
   if (type == "move") mouse_message ("move", x, y);

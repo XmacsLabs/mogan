@@ -14,8 +14,10 @@
 #include "qt_simple_widget.hpp"
 #include "rectangles.hpp"
 
+#include <QActionGroup>
 #include <QGraphicsDropShadowEffect>
 #include <QHBoxLayout>
+#include <QMenu>
 #include <QToolButton>
 #include <QWidget>
 
@@ -34,6 +36,9 @@ protected:
   double                     cached_magf;
   tree                       current_tree;
   QToolButton*               copyBtn;
+  QToolButton*               langBtn;
+  QMenu*                     langMenu;
+  QActionGroup*              langGroup;
   bool                       painted;
   int                        painted_count;
 
@@ -49,6 +54,7 @@ public:
 
 protected:
   void autoSize ();
+  void refreshLanguageMenu ();
   void cachePosition (rectangle selr, double magf, int scroll_x, int scroll_y,
                       int canvas_x, int canvas_y);
   void getCachedPosition (qt_renderer_rep* ren, int& x, int& y);

@@ -8,7 +8,7 @@
   <\cpp-code>
     #include \<less\>stdio.h\<gtr\>
 
-    cout\<less\>\<less\>"Hello World!";
+    cout\<less\>\<less\>"Hello World!"
   </cpp-code>
 
   C++行内代码：
@@ -23,6 +23,8 @@
     cout\<less\>\<less\>"Hello World!";
   </cpp-listing>
 
+  <with|par-mode|center|>
+
   \;
 
   Python代码块：
@@ -35,13 +37,17 @@
     \ \ \ \ print(x)
   </python>
 
-  Python行内代码：
+  Python行内代码
+
+  \;
 
   <\python>
     print("Hello, World!")
 
     \;
   </python>
+
+  \;
 
   Scheme代码清单：
 
