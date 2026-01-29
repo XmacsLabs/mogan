@@ -131,7 +131,7 @@ unicode_font_rep::unicode_font_rep (string name, string family2, double size2,
     : font_rep (name), family (family2), hdpi (hdpi2), vdpi (vdpi2), ligs (0),
       native (0) {
   size2= normalize_half_multiple_size (size2);
-  type= FONT_TYPE_UNICODE;
+  type = FONT_TYPE_UNICODE;
   set_font_size (this, size2); // 使用辅助函数设置双字段
   fnm= tt_font_metric (family, size2, std_dpi, (std_dpi * vdpi) / hdpi);
   fng= tt_font_glyphs (family, size2, hdpi, vdpi);

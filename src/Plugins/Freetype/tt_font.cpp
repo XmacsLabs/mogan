@@ -56,7 +56,7 @@ tt_font_rep::tt_font_rep (string name, string family2, double size2, int hdpi2,
                           int vdpi2)
     : font_rep (name), family (family2), hdpi (hdpi2), vdpi (vdpi2) {
   size2= normalize_half_multiple_size (size2);
-  type= FONT_TYPE_TT;
+  type = FONT_TYPE_TT;
   set_font_size (this, size2); // 使用辅助函数设置双字段
   fnm= tt_font_metric (family, size2, std_dpi, (std_dpi * vdpi) / hdpi);
   fng= tt_font_glyphs (family, size2, hdpi, vdpi);
