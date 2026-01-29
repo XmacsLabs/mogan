@@ -70,11 +70,11 @@ QTMImagePopup::QTMImagePopup (QWidget* parent, qt_simple_widget_rep* owner)
   ocrBtn->setProperty ("icon-name", "ocr");
   // 设置tooltip - 由于tooltip会挡住图片，建议用户将鼠标移到按钮右侧查看完整提示
 #if defined(Q_OS_MAC)
-  ocrBtn->setToolTip (
-      qt_translate ("Enter math mode and press Command+v for math OCR"));
+  ocrBtn->setToolTip (qt_translate ("Copy the image and press Command+Shift+v "
+                                    "to paste the OCR recognition result"));
 #else
-  ocrBtn->setToolTip (
-      qt_translate ("Enter math mode and press Ctrl+v for math OCR"));
+  ocrBtn->setToolTip (qt_translate ("Copy the image and press Ctrl+Shift+v to "
+                                    "paste the OCR recognition result"));
 #endif
   QButtonGroup* alignGroup= new QButtonGroup (this);
   alignGroup->addButton (leftBtn);
