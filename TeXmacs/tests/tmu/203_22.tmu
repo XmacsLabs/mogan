@@ -1,0 +1,84 @@
+<TMU|<tuple|1.1.0|2026.1.2-rc2>>
+
+<style|<tuple|generic|number-europe|preview-ref>>
+
+<\body>
+  <math|\<cal*-Q\>>
+
+  <math|\<cal*-W\>>
+
+  <math|\<cal*-E\>>
+
+  <math|\<cal*-R\>>
+
+  <math|\<cal*-T\>>
+
+  <math|\<cal*-Y\>>
+
+  <math|\<cal*-U\>>
+
+  <math|\<cal*-I\>>
+
+  <math|\<cal*-O\>>
+
+  <math|\<cal*-P\>>
+
+  <math|\<cal*-A\>>
+
+  <math|\<cal*-S\>>
+
+  <math|\<cal*-D\>>
+
+  <math|\<cal*-F\>>
+
+  <math|\<cal*-G\>>
+
+  <math|\<cal*-H\>>
+
+  <math|\<cal*-J\>>
+
+  <math|\<cal*-K\>>
+
+  <math|\<cal*-L\>>
+
+  <math|\<cal*-Z\>>
+
+  <math|\<cal*-X\>>
+
+  <math|\<cal*-C\>>
+
+  <math|\<cal*-V\>>
+
+  <math|\<cal*-B\>>
+
+  <math|\<cal*-N\>>
+
+  <math|\<cal*-M\>>
+
+  选中上述手写花体字母，点击右键选择复制到LaTeX，再粘贴一下，看看粘贴出来的效果是
+
+  $\\nonconverted{cal*M}$
+
+  \;
+
+  还是
+
+  $\\mathscr{M}$
+
+  \;
+
+  后者是期望的
+
+  \;
+
+  \;
+
+  \;
+</body>
+
+<\initial>
+  <\collection>
+    <associate|page-medium|paper>
+    <associate|page-screen-margin|false>
+  </collection>
+</initial>
