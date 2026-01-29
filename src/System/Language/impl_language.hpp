@@ -90,7 +90,11 @@ struct prog_language_rep : abstract_language_rep {
   void customize_string (tree config);
   void customize_preprocessor (tree config);
   void customize_comment (tree config);
+  void customize_path (tree config);
   tree get_parser_config (string lan, string key);
+
+  bool inline_comment_requires_space;
+  bool path_parser_enabled;
 };
 
 struct scheme_language_rep : language_rep {

@@ -25,6 +25,8 @@ prog_language_rep::prog_language_rep (string name)
     : abstract_language_rep (name) {
   if (DEBUG_PARSER)
     debug_packrat << "Building the " * name * " language parser" << LF;
+  inline_comment_requires_space= false;
+  path_parser_enabled          = false;
 
   string use_modules= "(use-modules (code " * name * "-lang))";
   eval (use_modules);
@@ -49,6 +51,9 @@ prog_language_rep::prog_language_rep (string name)
 
   tree preprocessor_config= get_parser_config (name, "preprocessor");
   customize_preprocessor (preprocessor_config);
+
+  tree path_config= get_parser_config (name, "path");
+  customize_path (path_config);
 }
 
 tree
@@ -207,6 +212,9 @@ prog_language_rep::customize_comment (tree config) {
       }
       inline_comment_parser.set_starts (inline_comment_starts);
     }
+    else if (label == "inline_require_space") {
+      inline_comment_requires_space= true;
+    }
   }
 }
 
@@ -225,6 +233,78 @@ prog_language_rep::customize_preprocessor (tree config) {
     }
   }
   if (DEBUG_PARSER) debug_packrat << preprocessor_parser.to_string ();
+}
+
+void
+prog_language_rep::customize_path (tree config) {
+  for (int i= 0; i < N (config); i++) {
+    tree   feature= config[i];
+    string label  = get_label (feature);
+    if (label == "enable") {
+      path_parser_enabled= true;
+    }
+  }
+}
+
+static bool
+is_path_token_delim (char c) {
+  return is_space (c) || c == '(' || c == ')' || c == '{' || c == '}' ||
+         c == '[' || c == ']' || c == ';' || c == '|' || c == '&' || c == '<' ||
+         c == '>';
+}
+
+static bool
+looks_like_path_token (string token) {
+  if (is_empty (token)) return false;
+  if (token == "." || token == "..") return false;
+
+  url parsed= url_path (token);
+  if (is_rooted (parsed) || is_rooted_web (parsed) || is_concat (parsed))
+    return true;
+
+  bool has_dot  = false;
+  bool has_alpha= false;
+  bool has_digit= false;
+  bool has_at   = false;
+  bool has_colon= false;
+  bool has_dash = false;
+  for (int i= 0; i < N (token); i++) {
+    char c= token[i];
+    if (c == '/' || c == '\\') return true;
+    if (c == '.') has_dot= true;
+    if (is_alpha (c)) has_alpha= true;
+    if (is_digit (c)) has_digit= true;
+    if (c == '-') has_dash= true;
+    if (c == '@') has_at= true;
+    if (c == ':') has_colon= true;
+    if (c == ':' && i + 2 < N (token) && token[i + 1] == '/' &&
+        token[i + 2] == '/')
+      return true;
+  }
+
+  if (N (token) >= 2 && token[0] == '.' && token[1] == '/') return true;
+  if (N (token) >= 3 && token[0] == '.' && token[1] == '.' && token[2] == '/')
+    return true;
+  if (N (token) >= 2 && token[0] == '~' && token[1] == '/') return true;
+  if (has_at && has_colon) return true;
+  if (has_dot && has_alpha) return true;
+  if (token[0] != '-' && has_dash && has_alpha && has_digit) return true;
+  return false;
+}
+
+static bool
+parse_path_token (string s, int& pos) {
+  if (pos >= N (s)) return false;
+  if (is_path_token_delim (s[pos])) return false;
+
+  int start= pos;
+  int end  = pos;
+  while (end < N (s) && !is_path_token_delim (s[end]))
+    end++;
+  string token= s (start, end);
+  if (!looks_like_path_token (token)) return false;
+  pos= end;
+  return true;
 }
 
 text_property
@@ -253,6 +333,10 @@ prog_language_rep::advance (tree t, int& pos) {
   }
   if (string_parser.parse (s, pos)) {
     current_parser= string_parser.get_parser_name ();
+    return &tp_normal_rep;
+  }
+  if (path_parser_enabled && parse_path_token (s, pos)) {
+    current_parser= "path_parser";
     return &tp_normal_rep;
   }
   if (keyword_parser.parse (s, pos)) {
@@ -313,7 +397,8 @@ prog_language_rep::get_color (tree t, int start, int end) {
   int pos= 0;
   while (pos <= start) {
     if (inline_comment_parser.can_parse (s, pos)) {
-      return decode_color (lan_name, encode_color ("comment"));
+      if (!inline_comment_requires_space || (pos == 0 || is_space (s[pos - 1])))
+        return decode_color (lan_name, encode_color ("comment"));
     }
     pos++;
   }
