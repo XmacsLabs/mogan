@@ -38,6 +38,7 @@ qt_font_rep::qt_font_rep (string name, string family2, double size2, int dpi2)
     qfn= QFont (to_qstring (family), size);
     qfm= QFontMetricsF (qfn);
   }
+  set_font_size (this, size);
   type= FONT_TYPE_QT;
 
   // get main font parameters
