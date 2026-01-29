@@ -137,7 +137,7 @@ box composite_box (path ip, array<box> bs, bool bfl= true);
 box composite_box (path ip, array<box> bs, array<SI> x, array<SI> y,
                    bool bfl= true);
 box table_box (path ip, array<box> bs, array<SI> x, array<SI> y,
-               array<string> halign, int cols);
+               array<string> halign, int cols, bool wide_flag);
 box superpose_box (path ip, array<box> bs, bool bfl= true);
 box case_box (path ip, array<tree> conds, array<box> bs);
 box scatter_box (path ip, array<box> bs, array<SI> x, array<SI> y,

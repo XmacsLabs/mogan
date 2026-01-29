@@ -878,7 +878,8 @@ table_rep::finish () {
   array<SI>     x;
   array<SI>     y;
   array<string> ha;
-  bool          ext_flag= true;
+  bool          ext_flag = true;
+  bool          wide_flag= false;
   for (i= 0; i < nr_rows; i++)
     for (j= 0; j < nr_cols; j++)
       if (!is_nil (T[i][j])) {
@@ -893,8 +894,16 @@ table_rep::finish () {
       }
       else ext_flag= false;
 
+  string table_block= var->contains (TABLE_BLOCK)
+                          ? as_string (env->exec (var[TABLE_BLOCK]))
+                          : as_string (env->read (TABLE_BLOCK));
+  string table_width= var->contains (TABLE_WIDTH)
+                          ? as_string (env->exec (var[TABLE_WIDTH]))
+                          : string ("");
+  if (table_block == "yes" && ends (table_width, "par")) wide_flag= true;
+
   box tb;
-  if (ext_flag) tb= table_box (ip, bs, x, y, ha, nr_cols);
+  if (ext_flag) tb= table_box (ip, bs, x, y, ha, nr_cols, wide_flag);
   else tb= composite_box (ip, bs, x, y, false);
 
   SI    x1= tb->x1;
