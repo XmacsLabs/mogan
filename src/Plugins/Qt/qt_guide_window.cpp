@@ -9,11 +9,14 @@
  ******************************************************************************/
 
 #include "qt_guide_window.hpp"
+#include "qlabel.h"
+#include "qnamespace.h"
 #include "qt_guide_task_executor.hpp"
 #include "qt_utilities.hpp"
 #include <QApplication>
 #include <QCloseEvent>
 #include <QColor>
+#include <QGraphicsDropShadowEffect>
 #include <QIcon>
 #include <QPixmap>
 #include <QPropertyAnimation>
@@ -30,10 +33,22 @@ StartupLoginDialog::setupUi () {
   titleLabel->setAlignment (Qt::AlignCenter);
   titleLabel->setObjectName ("titleLabel");
 
-  // 创建副标题标签
-  subtitleLabel=
-      new QLabel (qt_translate ("登录即可同步设置并访问所有功能"),
-                  this); // Log in to sync settings and access all features
+  // 创建图标标签
+  iconLabel= new QLabel (this);
+  iconLabel->setPixmap (QIcon (":/app/stem.png").pixmap (128, 128));
+  iconLabel->setAlignment (Qt::AlignCenter);
+  iconLabel->setObjectName ("iconLabel");
+
+  // 为图标添加阴影效果 - 明显的蓝色光晕
+  QGraphicsDropShadowEffect* shadowEffect= new QGraphicsDropShadowEffect (this);
+  shadowEffect->setBlurRadius (30); // 更大的模糊半径，光晕更扩散
+  shadowEffect->setColor (QColor (0, 122, 255, 180)); // 更深的蓝色，更不透明
+  shadowEffect->setOffset (0, 0); // 设置为0，使阴影均匀分布在四周
+  iconLabel->setGraphicsEffect (shadowEffect);
+
+  // 创建子标题
+  subtitleLabel= new QLabel (
+      qt_translate ("免费畅享核心功能，付费升级AI高效体验！"), this);
   subtitleLabel->setAlignment (Qt::AlignCenter);
   subtitleLabel->setObjectName ("subtitleLabel");
 
@@ -81,8 +96,11 @@ StartupLoginDialog::setupUi () {
 
   mainLayout= new QVBoxLayout (this);
   mainLayout->addWidget (titleLabel);
+  mainLayout->addSpacing (10);
   mainLayout->addWidget (subtitleLabel);
-  mainLayout->addSpacing (20);
+  mainLayout->addSpacing (10);
+  mainLayout->addWidget (iconLabel);
+  mainLayout->addSpacing (15);
   mainLayout->addLayout (featureLayout);
   mainLayout->addStretch ();
   mainLayout->addLayout (buttonLayout);
@@ -100,10 +118,13 @@ StartupLoginDialog::setupFramelessWindow () {
   windowAgent= new QWK::WidgetWindowAgent (this);
   windowAgent->setup (this);
 
-  // 设置标题和副标题标签为可拖动区域
+  // 设置标题、图标和副标题标签为可拖动区域
   if (windowAgent) {
     if (titleLabel) {
       windowAgent->setHitTestVisible (titleLabel, true);
+    }
+    if (iconLabel) {
+      windowAgent->setHitTestVisible (iconLabel, true);
     }
     if (subtitleLabel) {
       windowAgent->setHitTestVisible (subtitleLabel, true);
@@ -139,12 +160,17 @@ StartupLoginDialog::styleSheet () const {
             color: #ffffff;
             font-size: 28px;
             font-weight: 700;
-            margin: 40px 0 16px 0;
+            margin: 20px 0 16px 0;
+        }
+        QLabel#iconLabel {
+            margin: 0;
+            padding: 0;
         }
         QLabel#subtitleLabel {
-            color: #a0a0a0;
-            font-size: 16px;
-            margin: 0 0 32px 0;
+            color: #ffcc00;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
         }
         QLabel#featureLabel {
             color: #cccccc;
@@ -176,7 +202,7 @@ StartupLoginDialog::styleSheet () const {
         QPushButton#skipButton {
             background-color: transparent;
             color: #a0a0a0;
-            border: 1px solid #444444;
+            border: none;
             font-weight: 500;
         }
         QPushButton#skipButton:hover {
@@ -213,11 +239,11 @@ StartupLoginDialog::styleSheet () const {
 }
 
 StartupLoginDialog::StartupLoginDialog (QWidget* parent)
-    : QDialog (parent), titleLabel (nullptr), subtitleLabel (nullptr),
-      featureLabel1 (nullptr), featureLabel2 (nullptr), featureLabel3 (nullptr),
-      featureLabel4 (nullptr), loginButton (nullptr), skipButton (nullptr),
-      mainLayout (nullptr), featureLayout (nullptr), buttonLayout (nullptr),
-      progressBar (nullptr), statusLabel (nullptr),
+    : QDialog (parent), titleLabel (nullptr), iconLabel (nullptr),
+      subtitleLabel (nullptr), featureLabel1 (nullptr), featureLabel2 (nullptr),
+      featureLabel3 (nullptr), featureLabel4 (nullptr), loginButton (nullptr),
+      skipButton (nullptr), mainLayout (nullptr), featureLayout (nullptr),
+      buttonLayout (nullptr), progressBar (nullptr), statusLabel (nullptr),
       timeEstimationLabel (nullptr),
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX) || defined(Q_OS_WIN)
       windowAgent (nullptr),
@@ -234,7 +260,7 @@ StartupLoginDialog::StartupLoginDialog (QWidget* parent)
   setWindowIcon (QIcon (":/app/stem.png"));
 
   // 固定窗口大小
-  setFixedSize (500, 400);
+  setFixedSize (500, 520);
   setWindowTitle (QObject::tr (" "));
 
   // 设置样式表
@@ -437,8 +463,7 @@ StartupLoginDialog::handleInitializationComplete (bool success) {
 
   if (success) {
     // 初始化成功
-    updateProgressUI (100,
-                      qt_translate ("初始化完成，注册即送14天会员期限哦！"),
+    updateProgressUI (100, qt_translate ("初始化完成，注册即送14天会员！"),
                       qt_translate ("准备就绪"));
 
     // 如果用户已经做出选择，触发过渡
