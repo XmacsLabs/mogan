@@ -1,4 +1,4 @@
-<TMU|<tuple|1.1.0|2026.1.1>>
+<TMU|<tuple|1.1.0|2026.1.2>>
 
 <style|<tuple|generic|chinese|table-captions-above|number-europe|preview-ref|bash>>
 
@@ -23,6 +23,38 @@
     set -euo pipefail
 
     IFS=$'\\n\\t'
+
+    # ---------- path -------------
+
+    \;
+
+    tar xzvf nvim-linux-x86_64.tar.gz
+
+    sudo mv nvim-linux-x86_64 /opt/nvim
+
+    git clone git@gitee.com:XmacsLabs/mogan.git
+
+    cat chapter-3.1.tmu
+
+    3.2 4.5
+
+    \;
+
+    # ----------- commment ---------
+
+    echo $# # 行尾注释
+
+    \;
+
+    echo ${#PATH}#not_comment
+
+    echo "${#PATH}#still_not_comment"
+
+    \;
+
+    echo ${#PATH} # 这里才是注释
+
+    \;
 
     \;
 

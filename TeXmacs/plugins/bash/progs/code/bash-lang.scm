@@ -139,6 +139,12 @@
       "##" "#" "%%" "%"                   ;; ${var##pat} ${var%pat} ...
       )))
 
+;; Paths / urls
+(tm-define (parser-feature lan key)
+  (:require (and (== lan "bash") (== key "path")))
+  `(,(string->symbol key)
+    (enable)))
+
 ;; Numbers
 (tm-define (parser-feature lan key)
   (:require (and (== lan "bash") (== key "number")))
@@ -163,7 +169,8 @@
 (tm-define (parser-feature lan key)
   (:require (and (== lan "bash") (== key "comment")))
   `(,(string->symbol key)
-    (inline "#")))
+    (inline "#")
+    (inline_require_space)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Preferences for syntax highlighting
