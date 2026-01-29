@@ -124,7 +124,7 @@ QTMMathCompletionPopup::cachePosition (struct cursor cu, double magf,
 
 void
 QTMMathCompletionPopup::getCachedPosition (int& x, int& y) {
-  QTMWidget* canvas          = owner ? owner->canvas () : nullptr;
+  QTMWidget* canvas= owner ? owner->canvas () : nullptr;
   QPoint     cursor_pos;
   QPoint     origin;
   QPoint     surface_top_left;
