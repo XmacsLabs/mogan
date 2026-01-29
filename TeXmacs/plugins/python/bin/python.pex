@@ -124,7 +124,9 @@ def flush_matplotlib_figure(fig):
 def is_matplotlib_object(obj):
     if MATPLOTLIB_AVALIABLE:
         module = type(obj)
-        if "matplotlib" in module.__module__:
+        if module.__module__ is None:
+            return False
+        elif "matplotlib" in module.__module__:
             return True
         elif "mpl_toolkits" in module.__module__:
             return True
@@ -206,8 +208,12 @@ def convert_dataframe_to_scheme_str(obj):
 
 def is_sympy_object(obj):
     if SYMPY_AVALIABLE:
+        if isinstance(obj, (sympy.Basic, sympy.MatrixBase)):
+            return True
         module = type(obj)
-        if "sympy" in module.__module__:
+        if module.__module__ is None:
+            return False
+        elif "sympy" in module.__module__:
             return True
         elif isinstance(obj, (list, tuple, set)) and all(isinstance(item, (Basic, MatrixBase)) for item in obj):
             return True
